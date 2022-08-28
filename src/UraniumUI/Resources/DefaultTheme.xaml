@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?xaml-comp compile="true" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:local="clr-namespace:UraniumUI.Resources">
+
+    <Color x:Key="Accent">#FFF8B5</Color>
+    <Color x:Key="Primary">#52D681</Color> 
+    <Color x:Key="Secondary">#00AD7C</Color>
+    <Color x:Key="Tertiary">#B5FF7D</Color>
+
+    <Color x:Key="PrimaryBack">#E3DFC8</Color>
+    <Color x:Key="PrimarySurface">#032D3C</Color>
+    <Color x:Key="SecondaryBack">#F5F1DA</Color>
+    <Color x:Key="SecondarySurface">#5E6073</Color>
+    
+    <Color x:Key="White">White</Color>
+    <Color x:Key="Black">Black</Color>
+
+    <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource Accent}"/>
+    <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource Primary}"/>
+    <SolidColorBrush x:Key="SecondaryBrush" Color="{StaticResource Secondary}"/>
+    <SolidColorBrush x:Key="TertiaryBrush" Color="{StaticResource Tertiary}"/>
+
+    <SolidColorBrush x:Key="PrimaryBackBrush" Color="{StaticResource PrimaryBack}"/>
+    <SolidColorBrush x:Key="PrimarySurfaceBrush" Color="{StaticResource PrimarySurface}"/>
+    <SolidColorBrush x:Key="SecondaryBackBrush" Color="{StaticResource SecondaryBack}"/>
+    <SolidColorBrush x:Key="SecondarySurfaceBrush" Color="{StaticResource SecondarySurface}"/>
+
+    <SolidColorBrush x:Key="WhiteBrush" Color="{StaticResource White}"/>
+    <SolidColorBrush x:Key="BlackBrush" Color="{StaticResource Black}"/>
+</ResourceDictionary>

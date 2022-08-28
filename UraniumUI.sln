@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.32804.182
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "demo", "demo", "{4536E7FC-FB48-4B7A-A59D-E27095C3FFD2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UraniumApp", "demo\UraniumApp\UraniumApp.csproj", "{18739C30-B705-4F5C-8785-FF26E3558875}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{32493E5D-A757-4289-A168-DA0E8DDE9B29}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UraniumUI", "src\UraniumUI\UraniumUI.csproj", "{11132496-C4D9-4DDA-BED7-6E143A35735A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{18739C30-B705-4F5C-8785-FF26E3558875}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18739C30-B705-4F5C-8785-FF26E3558875}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18739C30-B705-4F5C-8785-FF26E3558875}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{18739C30-B705-4F5C-8785-FF26E3558875}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18739C30-B705-4F5C-8785-FF26E3558875}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18739C30-B705-4F5C-8785-FF26E3558875}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{11132496-C4D9-4DDA-BED7-6E143A35735A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11132496-C4D9-4DDA-BED7-6E143A35735A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11132496-C4D9-4DDA-BED7-6E143A35735A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11132496-C4D9-4DDA-BED7-6E143A35735A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11132496-C4D9-4DDA-BED7-6E143A35735A}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{18739C30-B705-4F5C-8785-FF26E3558875} = {4536E7FC-FB48-4B7A-A59D-E27095C3FFD2}
+		{11132496-C4D9-4DDA-BED7-6E143A35735A} = {32493E5D-A757-4289-A168-DA0E8DDE9B29}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {31946918-5DA1-40D1-8BD7-6834BB21D0FF}
+	EndGlobalSection
+EndGlobal

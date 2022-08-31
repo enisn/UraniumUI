@@ -1,6 +1,8 @@
-﻿namespace UraniumApp;
+﻿using UraniumUI.Pages;
 
-public partial class MainPage : ContentPage
+namespace UraniumApp;
+
+public partial class MainPage : UraniumContentPage
 {
 	int count = 0;
 

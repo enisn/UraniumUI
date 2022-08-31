@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<uranium:UraniumContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:uranium="clr-namespace:UraniumUI.Pages;assembly=UraniumUI"
              x:Class="UraniumApp.MainPage">
 
     <ScrollView>
@@ -38,4 +39,17 @@
         </VerticalStackLayout>
     </ScrollView>
 
-</ContentPage>
+    <uranium:UraniumContentPage.BottomSheet>
+        <FlexLayout Margin="20" JustifyContent="SpaceEvenly" Direction="Row" FlowDirection="MatchParent" Wrap="Wrap">
+            <Button Text="1" HorizontalOptions="Center" CornerRadius="30" WidthRequest="60" HeightRequest="60"/>
+            <Button Text="2" HorizontalOptions="Center" CornerRadius="30" WidthRequest="60" HeightRequest="60"/>
+            <Button Text="3" HorizontalOptions="Center" CornerRadius="30" WidthRequest="60" HeightRequest="60"/>
+            <Button Text="4" HorizontalOptions="Center" CornerRadius="30" WidthRequest="60" HeightRequest="60"/>
+            <Button Text="5" HorizontalOptions="Center" CornerRadius="30" WidthRequest="60" HeightRequest="60"/>
+            <Button Text="6" HorizontalOptions="Center" CornerRadius="30" WidthRequest="60" HeightRequest="60"/>
+            <Button Text="7" HorizontalOptions="Center" CornerRadius="30" WidthRequest="60" HeightRequest="60"/>
+            <Button Text="8" HorizontalOptions="Center" CornerRadius="30" WidthRequest="60" HeightRequest="60"/>
+            <Button Text="9" HorizontalOptions="Center" CornerRadius="30" WidthRequest="60" HeightRequest="60"/>
+        </FlexLayout>
+    </uranium:UraniumContentPage.BottomSheet>
+</uranium:UraniumContentPage>

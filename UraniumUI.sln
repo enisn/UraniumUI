@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{32493E5D-A75
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UraniumUI", "src\UraniumUI\UraniumUI.csproj", "{11132496-C4D9-4DDA-BED7-6E143A35735A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "themes", "themes", "{3175CAD5-73A1-4CC4-B901-C0BF6DFD5DBF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

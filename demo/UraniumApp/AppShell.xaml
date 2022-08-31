@@ -4,11 +4,30 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:UraniumApp"
+    xmlns:bsheet="clr-namespace:UraniumApp.Pages.BottomSheets"
     Shell.FlyoutBehavior="Disabled">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
+        <Tab Title="Bottom Sheets">
+            <ShellContent Title="Bottom Sheets"
+                          ContentTemplate="{DataTemplate bsheet:BottomSheetsIndexPage}" />
+        </Tab>
+        <!--
+        Shell has implicit conversion operators that enable the Shell visual hierarchy to be simplified.
+        This is possible because a subclassed Shell object can only ever contain a FlyoutItem object or a TabBar object,
+        which can only ever contain Tab objects, which can only ever contain ShellContent objects.
+
+        The implicit conversion automatically wraps the ShellContent objects below in Tab objects.
+        -->
+        <!--<ShellContent Title="Monkeys"
+                      Icon="monkey.png"
+                      ContentTemplate="{DataTemplate views:MonkeysPage}" />
+        <ShellContent Title="Elephants"
+                      Icon="elephant.png"
+                      ContentTemplate="{DataTemplate views:ElephantsPage}" />
+        <ShellContent Title="Bears"
+                      Icon="bear.png"
+                      ContentTemplate="{DataTemplate views:BearsPage}" />-->
+    </FlyoutItem>
 
 </Shell>

@@ -1,41 +1,48 @@
-﻿using Microsoft.Maui.Controls;
+﻿using InputKit.Shared.Helpers;
+using UraniumUI.Extensions;
+using UraniumUI.Pages;
 
-namespace UraniumUI.Pages.Views;
+namespace UraniumUI.Material.Views;
 
 [ContentProperty(nameof(Body))]
-public class BottomSheetView : Frame
+public partial class BottomSheetView : Frame, IPageAttachment
 {
-    public Page Page { get; }
+    public UraniumContentPage AttachedPage { get; protected set; }
+    public View Body { get; set; }
 
-    public View Body { get => body; set { body = value; Init(); } }
+    public View Header { get; set; }
 
     private bool isPresented;
     public bool IsPresented { get => isPresented; set { isPresented = value; AlignBottomSheet(); } }
 
-    PanGestureRecognizer panGestureRecognizer = new PanGestureRecognizer();
-    private View body;
-
-    public BottomSheetView(View content, Page page)
+    public void OnAttached(UraniumContentPage page)
     {
-        Page = page;
+        Init();
+
+        AttachedPage = page;
+        page.SizeChanged += (s, e) => { AlignBottomSheet(false); };
     }
 
     protected virtual void Init()
     {
+        Header ??= GenerateAnchor();
         Padding = 0;
-        this.CornerRadius = 20;
+        this.CornerRadius = 10;
         this.VerticalOptions = LayoutOptions.End;
         this.HorizontalOptions = LayoutOptions.Fill;
         this.Content = new VerticalStackLayout()
         {
             Children =
             {
-                GenerateAnchor(),
+                Header,
                 Body
             }
         };
 
+        var panGestureRecognizer = new PanGestureRecognizer();
         panGestureRecognizer.PanUpdated += PanGestureRecognizer_PanUpdated;
+        Header.GestureRecognizers.Add(panGestureRecognizer);
+
         AlignBottomSheet(false);
     }
 
@@ -47,18 +54,15 @@ public class BottomSheetView : Frame
             Padding = 10,
             Content = new BoxView
             {
-                HeightRequest = 4,
+                HeightRequest = 2,
                 CornerRadius = 2,
                 WidthRequest = 50,
-                BackgroundColor = Colors.Gray,
+                Color = this.BackgroundColor?.ToSurfaceColor() ?? Colors.Gray,
                 HorizontalOptions = LayoutOptions.Center,
                 InputTransparent = true,
             }
         };
 
-        anchor.GestureRecognizers.Add(panGestureRecognizer);
-
-        Page.SizeChanged += (s, e) => { AlignBottomSheet(); };
         return anchor;
     }
 
@@ -67,8 +71,7 @@ public class BottomSheetView : Frame
         switch (e.StatusType)
         {
             case GestureStatus.Running:
-                //this.TranslateTo(this.X, this.TranslationY + e.TotalY, 50); // TODO: ax value
-                this.TranslationY = this.TranslationY + e.TotalY;
+                this.TranslationY += e.TotalY;
                 break;
             case GestureStatus.Completed:
             case GestureStatus.Canceled:
@@ -86,7 +89,7 @@ public class BottomSheetView : Frame
 
     private void AlignBottomSheet(bool animate = true)
     {
-        double y = this.Height - 25;
+        double y = this.Height - Header.Height;
         if (IsPresented)
         {
             y = 0;
@@ -95,10 +98,23 @@ public class BottomSheetView : Frame
         if (animate)
         {
             this.TranslateTo(this.X, y, 50);
+
         }
         else
         {
             this.TranslationY = y;
+        }
+
+        UpdateDisabledStateOfPage();
+    }
+
+    protected void UpdateDisabledStateOfPage()
+    {
+        if (AttachedPage?.PageBody != null && DisablePageWhenOpened)
+        {
+            AttachedPage.PageBody.InputTransparent = IsPresented;
+
+            AttachedPage.PageBody.FadeTo(IsPresented ? .5 : 1);
         }
     }
 }

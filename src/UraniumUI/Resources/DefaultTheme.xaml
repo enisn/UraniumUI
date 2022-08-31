@@ -12,7 +12,7 @@
     <Color x:Key="PrimaryBack">#E3DFC8</Color>
     <Color x:Key="PrimarySurface">#032D3C</Color>
     <Color x:Key="SecondaryBack">#F5F1DA</Color>
-    <Color x:Key="SecondarySurface">#5E6073</Color>
+    <Color x:Key="SecondarySurface">#F5F1DA</Color>
     
     <Color x:Key="White">White</Color>
     <Color x:Key="Black">Black</Color>

@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UraniumUI", "src\UraniumUI\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "themes", "themes", "{3175CAD5-73A1-4CC4-B901-C0BF6DFD5DBF}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UraniumUI.Material", "src\UraniumUI.Material\UraniumUI.Material.csproj", "{FA8B7299-0352-482B-8C0C-C8D843AE497A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +32,11 @@ Global
 		{11132496-C4D9-4DDA-BED7-6E143A35735A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{11132496-C4D9-4DDA-BED7-6E143A35735A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{11132496-C4D9-4DDA-BED7-6E143A35735A}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{FA8B7299-0352-482B-8C0C-C8D843AE497A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA8B7299-0352-482B-8C0C-C8D843AE497A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA8B7299-0352-482B-8C0C-C8D843AE497A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA8B7299-0352-482B-8C0C-C8D843AE497A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA8B7299-0352-482B-8C0C-C8D843AE497A}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -37,6 +44,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{18739C30-B705-4F5C-8785-FF26E3558875} = {4536E7FC-FB48-4B7A-A59D-E27095C3FFD2}
 		{11132496-C4D9-4DDA-BED7-6E143A35735A} = {32493E5D-A757-4289-A168-DA0E8DDE9B29}
+		{FA8B7299-0352-482B-8C0C-C8D843AE497A} = {32493E5D-A757-4289-A168-DA0E8DDE9B29}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {31946918-5DA1-40D1-8BD7-6834BB21D0FF}

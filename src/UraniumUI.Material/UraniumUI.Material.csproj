@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFrameworks>net6.0;net6.0-android;net6.0-ios;net6.0-maccatalyst</TargetFrameworks>
@@ -18,15 +18,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="InputKit.Maui">
-	    <Version>4.0.2</Version>
-	  </PackageReference>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <MauiXaml Update="Resources\DefaultTheme.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
+	  <ProjectReference Include="..\UraniumUI\UraniumUI.csproj" />
 	</ItemGroup>
 
 </Project>

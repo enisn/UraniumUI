@@ -2,13 +2,27 @@
 <Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:UraniumApp"
+             xmlns:c="clr-namespace:Microsoft.Maui.Controls;assembly=Microsoft.Maui.Controls"
              x:Class="UraniumApp.App">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
+
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
+        
+        <!--<Style TargetType="Button">
+            <Setter Property="FontSize"
+                    Value="Medium" />
+            <Setter Property="BackgroundColor"
+                    Value="{StaticResource AppPrimaryColor}" />
+            <Setter Property="TextColor"
+                    Value="{StaticResource SecondaryColor}" />
+            <Setter Property="CornerRadius"
+                    Value="5" />
+        </Style>-->
+
     </Application.Resources>
 </Application>

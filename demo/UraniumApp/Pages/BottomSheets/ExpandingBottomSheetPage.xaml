@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<uranium:UraniumContentPage x:Class="UraniumApp.Pages.BottomSheets.ExpandingBottomSheetPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:uranium="clr-namespace:UraniumUI.Pages;assembly=UraniumUI"
+             xmlns:material="clr-namespace:UraniumUI.Material.Views;assembly=UraniumUI.Material"
+             xmlns:local="clr-namespace:UraniumApp.Pages.BottomSheets">
+    <ScrollView>
+        <VerticalStackLayout
+            Spacing="25"
+            Padding="30,0"
+            VerticalOptions="Center">
+
+            <Image
+                Source="dotnet_bot.png"
+                SemanticProperties.Description="Cute dot net bot waving hi to you!"
+                HeightRequest="200"
+                HorizontalOptions="Center" />
+
+            <Label
+                Text="Hello, World!"
+                SemanticProperties.HeadingLevel="Level1"
+                FontSize="32"
+                HorizontalOptions="Center" />
+
+            <Label
+                Text="Welcome to .NET Multi-platform App UI"
+                SemanticProperties.HeadingLevel="Level2"
+                SemanticProperties.Description="Swipe UP the song!"
+                FontSize="18"
+                HorizontalOptions="Center" />
+
+            <Button
+                Text="Show/Hide"
+                Clicked="OnCounterClicked"
+                HorizontalOptions="Center" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+    <uranium:UraniumContentPage.Attachments>
+        <material:BottomSheetView x:Name="bottomPage" BackgroundColor="{DynamicResource Primary}">
+            <material:BottomSheetView.Header>
+                <Grid
+                BackgroundColor="{StaticResource Secondary}"
+                ColumnDefinitions="60,*,Auto,Auto" ColumnSpacing="10">
+
+                    <Image Source="tell_it_to_my_heart.jpg" />
+
+                    <Label Grid.Column="1" 
+                       Text="Tell it to my heart" 
+                       TextColor="{StaticResource SecondarySurface}"
+                       VerticalOptions="Center"
+                       FontSize="Medium"/>
+
+                    <Label Grid.Column="2"
+                           Text="-1:42"
+                           TextColor="{StaticResource SecondarySurface}"
+                           VerticalOptions="Center"/>
+
+                    <ImageButton Grid.Column="3" BackgroundColor="Transparent" Source="pause.png" VerticalOptions="Center" HeightRequest="15" WidthRequest="15" Margin="20"/>
+
+                </Grid>
+            </material:BottomSheetView.Header>
+            <TableView Intent="Menu" Margin="15">
+                <TableRoot>
+                    <TableSection Title="Song Queue" TextColor="{StaticResource SecondarySurface}">
+                        <TextCell Text="1. Self Control" TextColor="{StaticResource PrimarySurface}"
+                                Detail="Laura Branigan" DetailColor="{StaticResource SecondarySurface}"/>
+                        <TextCell Text="2. Like a Prayer" TextColor="{StaticResource PrimarySurface}"
+                      Detail="Madonna" DetailColor="{StaticResource SecondarySurface}"/>
+                        <TextCell Text="3. Johnny B." TextColor="{StaticResource PrimarySurface}"
+                      Detail="The Hooters" DetailColor="{StaticResource SecondarySurface}" />
+                        <TextCell Text="4. Final Countdown"  TextColor="{StaticResource PrimarySurface}"
+                      Detail="Europe" DetailColor="{StaticResource SecondarySurface}"/>
+                        <TextCell Text="5. Live I Life"  TextColor="{StaticResource PrimarySurface}"
+                      Detail="Opus" DetailColor="{StaticResource SecondarySurface}"/>
+                    </TableSection>
+                </TableRoot>
+            </TableView>
+        </material:BottomSheetView>
+    </uranium:UraniumContentPage.Attachments>
+</uranium:UraniumContentPage>

@@ -1,16 +1,16 @@
-﻿using Microsoft.Maui.Controls;
-using UraniumUI.Pages.Views;
+﻿using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 
 namespace UraniumUI.Pages;
 
-[ContentProperty(nameof(PageContent))]
+[ContentProperty(nameof(PageBody))]
 public class UraniumContentPage : ContentPage
 {
     protected Grid _contentGrid;
-    private View bottomSheet;
-    public View PageContent { get => MainContent.Content; set => MainContent.Content = value; }
 
-    public View BottomSheet { get => bottomSheet; set { bottomSheet = value; OnBottomSheetSet(); } }
+    public View PageBody { get => MainContent.Content; set => MainContent.Content = value; }
+
+    public ObservableCollection<IPageAttachment> Attachments { get; set; } = new();
 
     protected ContentView MainContent { get; } = new ContentView();
 
@@ -23,10 +23,27 @@ public class UraniumContentPage : ContentPage
                 MainContent
             }
         };
+        Attachments.CollectionChanged += Attachments_CollectionChanged;
     }
 
-    protected virtual void OnBottomSheetSet()
+    private void Attachments_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
     {
-        _contentGrid.Add(new BottomSheetView(BottomSheet, this), 0, 0);
+        if (e.Action == NotifyCollectionChangedAction.Add)
+        {
+            foreach (IPageAttachment attachment in e.NewItems)
+            {
+                _contentGrid.Add(attachment, 0, 0);
+
+                attachment.OnAttached(this);
+            }
+        }
+
+        else if (e.Action == NotifyCollectionChangedAction.Remove)
+        {
+            foreach (IPageAttachment attachment in e.OldItems)
+            {
+                _contentGrid.Remove(attachment);
+            }
+        }
     }
 }

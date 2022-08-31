@@ -1,10 +1,10 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<uranium:UraniumContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<?xml version="1.0" encoding="UTF-8" ?>
+<uranium:UraniumContentPage x:Class="UraniumApp.Pages.BottomSheets.RegularBottomSheetPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:uranium="clr-namespace:UraniumUI.Pages;assembly=UraniumUI"
              xmlns:material="clr-namespace:UraniumUI.Material.Views;assembly=UraniumUI.Material"
-             x:Class="UraniumApp.MainPage">
-
+             xmlns:local="clr-namespace:UraniumApp.Pages.BottomSheets">
     <ScrollView>
         <VerticalStackLayout
             Spacing="25"
@@ -49,16 +49,15 @@
                       Detail="Learn about .NET MAUI and what it provides." />
                         <TextCell Text="2. Anatomy of an app"
                       Detail="Learn about the visual elements in .NET MAUI" />
-                        <!--<TextCell Text="3. Text"
+                        <TextCell Text="3. Text"
                       Detail="Learn about the .NET MAUI controls that display text." />
                         <TextCell Text="4. Dealing with sizes"
                       Detail="Learn how to size .NET MAUI controls on screen." />
                         <TextCell Text="5. XAML vs code"
-                      Detail="Learn more about creating your UI in XAML." />-->
+                      Detail="Learn more about creating your UI in XAML." />
                     </TableSection>
                 </TableRoot>
             </TableView>
         </material:BottomSheetView>
-
     </uranium:UraniumContentPage.Attachments>
 </uranium:UraniumContentPage>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+﻿<?xml version="1.0" encoding="UTF-8" ?>
 <uranium:UraniumContentPage x:Class="UraniumApp.Pages.BottomSheets.ExpandingBottomSheetPage"
              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -42,6 +42,7 @@
         <material:BottomSheetView x:Name="bottomPage" BackgroundColor="{DynamicResource Primary}">
             <material:BottomSheetView.Header>
                 <Grid
+                    HeightRequest="60"
                 BackgroundColor="{StaticResource Secondary}"
                 ColumnDefinitions="60,*,Auto,Auto" ColumnSpacing="10">
 
@@ -62,7 +63,7 @@
 
                 </Grid>
             </material:BottomSheetView.Header>
-            <TableView Intent="Menu" Margin="15">
+            <TableView Intent="Menu" Margin="15" BackgroundColor="Transparent">
                 <TableRoot>
                     <TableSection Title="Song Queue" TextColor="{StaticResource SecondarySurface}">
                         <TextCell Text="1. Self Control" TextColor="{StaticResource PrimarySurface}"

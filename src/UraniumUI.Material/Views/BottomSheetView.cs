@@ -71,7 +71,12 @@ public partial class BottomSheetView : Frame, IPageAttachment
         switch (e.StatusType)
         {
             case GestureStatus.Running:
-                this.TranslationY += e.TotalY;
+                var isApple = DeviceInfo.Current.Platform == DevicePlatform.iOS || DeviceInfo.Current.Platform == DevicePlatform.MacCatalyst;
+
+                var y = TranslationY + (isApple ? e.TotalY *.05 : e.TotalY);
+
+                this.TranslationY = y.Clamp(-50, this.Height);
+                
                 break;
             case GestureStatus.Completed:
             case GestureStatus.Canceled:

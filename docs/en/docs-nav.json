@@ -8,12 +8,8 @@
         "text":"Infrastructure",
         "items":[
             {
-                "text":"Uranium UI ContentPage",
+                "text":"Uranium Content Page",
                 "path":"infrastructure/UraniumContentPage.md"
-            },
-            {
-                "text":"Attachments",
-                "path":"infrastructure/Attachments.md"
             }
         ]
     },
@@ -22,7 +18,18 @@
         "items": [
             {
                 "text": "Material Theme",
-                "path": "themes/material/Index.md"
+                "path": "themes/material/Index.md",
+                "items":[
+                    {
+                        "text": "Components",
+                        "items":[
+                            {
+                                "text": "Bottom Sheet",
+                                "path": "themes/material/components/BottomSheet.md"
+                            }
+                        ]
+                    }
+                ]
             }
         ]
     }

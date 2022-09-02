@@ -11,7 +11,9 @@
             Padding="30,0"
             VerticalOptions="Center">
 
+            <ImageButton  />
             <Image
+
                 Source="dotnet_bot.png"
                 SemanticProperties.Description="Cute dot net bot waving hi to you!"
                 HeightRequest="200"

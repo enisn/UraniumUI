@@ -12,9 +12,6 @@ public partial class BottomSheetView : Frame, IPageAttachment
 
     public View Header { get; set; }
 
-    private bool isPresented;
-    public bool IsPresented { get => isPresented; set { isPresented = value; AlignBottomSheet(); } }
-
     public void OnAttached(UraniumContentPage page)
     {
         Init();

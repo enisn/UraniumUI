@@ -22,5 +22,10 @@ public partial class MainPage : UraniumContentPage
 
 		SemanticScreenReader.Announce(CounterBtn.Text);
 	}
+
+	private void ImageButton_Clicked(object sender, EventArgs e)
+	{
+
+	}
 }
 

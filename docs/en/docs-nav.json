@@ -1,0 +1,30 @@
+{
+  "items": [
+    {
+      "text": "Getting Started",
+      "path": "Getting-Started.md"
+    },
+    {
+        "text":"Infrastructure",
+        "items":[
+            {
+                "text":"Uranium UI ContentPage",
+                "path":"infrastructure/UraniumContentPage.md"
+            },
+            {
+                "text":"Attachments",
+                "path":"infrastructure/Attachments.md"
+            }
+        ]
+    },
+    {
+        "text": "Themes",
+        "items": [
+            {
+                "text": "Material Theme",
+                "path": "themes/material/Index.md"
+            }
+        ]
+    }
+  ]
+}

@@ -15,6 +15,10 @@
 
     <Color x:Key="White">White</Color>
     <Color x:Key="Black">Black</Color>
+    <Color x:Key="Background">#fff</Color>
+    <Color x:Key="OnBackground">#000</Color>
+    <Color x:Key="Surface">#f1f1f2</Color>
+    <Color x:Key="OnSurface">#010102</Color>
 
     <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource Accent}"/>
     <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource Primary}"/>

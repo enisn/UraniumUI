@@ -1,4 +1,4 @@
-﻿namespace UraniumUI.Resources;
+﻿namespace UraniumUI.Material.Resources;
 
 public partial class ThemeResource : ResourceDictionary
 {

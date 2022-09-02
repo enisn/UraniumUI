@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ResourceDictionary x:Class="UraniumUI.Resources.StyleResource"
+                    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:local="clr-namespace:UraniumUI.Resources">
+
+
+
+
+    <!--<Style TargetType="input:CheckBox">
+        <Setter Property="Color" Value="{StaticResource Primary}"  />
+        <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource Background}}" />
+    </Style>-->
+
+    <!--<Style TargetType="input:RadioButton">
+        <Setter Property="Color" Value="{StaticResource Primary}" />
+        <Setter Property="CircleColor" Value="{AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource Background}}" />
+    </Style>-->
+</ResourceDictionary>

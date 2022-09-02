@@ -5,8 +5,7 @@
              xmlns:root="clr-namespace:UraniumApp"
              xmlns:uranium="clr-namespace:UraniumUI.Pages;assembly=UraniumUI"
              xmlns:material="clr-namespace:UraniumUI.Material.Views;assembly=UraniumUI.Material"
-             xmlns:local="clr-namespace:UraniumApp.Pages.BottomSheets"
-                            BackgroundColor="{StaticResource Gray100}">
+             xmlns:local="clr-namespace:UraniumApp.Pages.BottomSheets">
     <ScrollView>
         <root:DemoContent />
     </ScrollView>

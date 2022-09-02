@@ -21,4 +21,16 @@
 	  <ProjectReference Include="..\UraniumUI\UraniumUI.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Compile Update="Resources\ThemeResource.xaml.cs">
+	    <DependentUpon>ThemeResource.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="Resources\ThemeResource.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
 </Project>

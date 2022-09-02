@@ -15,21 +15,21 @@
             <material:BottomSheetView.Header>
                 <Grid
                     HeightRequest="60"
-                BackgroundColor="{StaticResource Secondary}"
-                ColumnDefinitions="60,*,Auto,Auto" ColumnSpacing="10">
+                    BackgroundColor="{StaticResource Primary}"
+                    ColumnDefinitions="60,*,Auto,Auto" ColumnSpacing="10">
 
                     <Image Source="tell_it_to_my_heart.jpg" />
 
                     <Label Grid.Column="1" 
-                       Text="Tell it to my heart" 
-                       TextColor="{StaticResource SecondarySurface}"
-                       VerticalOptions="Center"
-                       FontSize="Medium"/>
+                           Text="Tell it to my heart" 
+                           VerticalOptions="Center"
+                           FontSize="Medium"
+                           TextColor="{StaticResource OnPrimary}"/>
 
                     <Label Grid.Column="2"
                            Text="-1:42"
-                           TextColor="{StaticResource SecondarySurface}"
-                           VerticalOptions="Center"/>
+                           VerticalOptions="Center"
+                           TextColor="{StaticResource OnPrimary}"/>
 
                     <ImageButton Grid.Column="3" BackgroundColor="Transparent" Source="pause.png" VerticalOptions="Center" HeightRequest="15" WidthRequest="15" Margin="20"/>
 
@@ -37,17 +37,17 @@
             </material:BottomSheetView.Header>
             <TableView Intent="Menu" Margin="15" BackgroundColor="Transparent">
                 <TableRoot>
-                    <TableSection Title="Song Queue" TextColor="{StaticResource SecondarySurface}">
-                        <TextCell Text="1. Self Control" TextColor="{StaticResource PrimarySurface}"
-                                Detail="Laura Branigan" DetailColor="{StaticResource SecondarySurface}"/>
-                        <TextCell Text="2. Like a Prayer" TextColor="{StaticResource PrimarySurface}"
-                      Detail="Madonna" DetailColor="{StaticResource SecondarySurface}"/>
-                        <TextCell Text="3. Johnny B." TextColor="{StaticResource PrimarySurface}"
-                      Detail="The Hooters" DetailColor="{StaticResource SecondarySurface}" />
-                        <TextCell Text="4. Final Countdown"  TextColor="{StaticResource PrimarySurface}"
-                      Detail="Europe" DetailColor="{StaticResource SecondarySurface}"/>
-                        <TextCell Text="5. Live I Life"  TextColor="{StaticResource PrimarySurface}"
-                      Detail="Opus" DetailColor="{StaticResource SecondarySurface}"/>
+                    <TableSection Title="Song Queue" TextColor="{StaticResource OnPrimary}">
+                        <TextCell Text="1. Self Control" TextColor="{StaticResource PrimaryContainer}"
+                                Detail="Laura Branigan" DetailColor="{StaticResource OnPrimary}"/>
+                        <TextCell Text="2. Like a Prayer" TextColor="{StaticResource PrimaryContainer}"
+                              Detail="Madonna" DetailColor="{StaticResource OnPrimary}"/>
+                        <TextCell Text="3. Johnny B." TextColor="{StaticResource PrimaryContainer}"
+                              Detail="The Hooters" DetailColor="{StaticResource OnPrimary}" />
+                        <TextCell Text="4. Final Countdown"  TextColor="{StaticResource PrimaryContainer}"
+                              Detail="Europe" DetailColor="{StaticResource OnPrimary}"/>
+                        <TextCell Text="5. Live I Life"  TextColor="{StaticResource PrimaryContainer}"
+                              Detail="Opus" DetailColor="{StaticResource OnPrimary}"/>
                     </TableSection>
                 </TableRoot>
             </TableView>

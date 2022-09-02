@@ -3,17 +3,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:UraniumApp"
              xmlns:c="clr-namespace:Microsoft.Maui.Controls;assembly=Microsoft.Maui.Controls"
-             xmlns:u="clr-namespace:UraniumUI.Resources;assembly=UraniumUI"
+             xmlns:m="clr-namespace:UraniumUI.Material.Resources;assembly=UraniumUI.Material"
              x:Class="UraniumApp.App">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
-                <u:ThemeResource />
+                <m:ThemeResource />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
-        
+
         <!--<Style TargetType="Button">
             <Setter Property="FontSize"
                     Value="Medium" />

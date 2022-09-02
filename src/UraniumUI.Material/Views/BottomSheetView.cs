@@ -63,17 +63,17 @@ public partial class BottomSheetView : Frame, IPageAttachment
         return anchor;
     }
 
-    private void PanGestureRecognizer_PanUpdated(object sender, PanUpdatedEventArgs e)
+    private async void PanGestureRecognizer_PanUpdated(object sender, PanUpdatedEventArgs e)
     {
         switch (e.StatusType)
         {
             case GestureStatus.Running:
                 var isApple = DeviceInfo.Current.Platform == DevicePlatform.iOS || DeviceInfo.Current.Platform == DevicePlatform.MacCatalyst;
 
-                var y = TranslationY + (isApple ? e.TotalY *.05 : e.TotalY);
+                var y = TranslationY + (isApple ? e.TotalY * .05 : e.TotalY);
 
                 this.TranslationY = y.Clamp(-50, this.Height);
-                
+
                 break;
             case GestureStatus.Completed:
             case GestureStatus.Canceled:
@@ -85,6 +85,7 @@ public partial class BottomSheetView : Frame, IPageAttachment
                 {
                     IsPresented = false;
                 }
+                AlignBottomSheet();
                 break;
         }
     }

@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace UraniumUI.Pages;
+﻿namespace UraniumUI.Pages;
 
 public interface IPageAttachment : IView
 {
     void OnAttached(UraniumContentPage attachedPage);
+
+    AttachmentPosition AttachmentPosition { get; }
 }
 
 public interface IStickedPageAttachment : IPageAttachment

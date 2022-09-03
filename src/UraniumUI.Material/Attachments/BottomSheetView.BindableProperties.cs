@@ -1,4 +1,4 @@
-﻿namespace UraniumUI.Material.Views;
+﻿namespace UraniumUI.Material.Attachments;
 public partial class BottomSheetView
 {
     public bool IsPresented { get => (bool)GetValue(IsPresentedProperty); set => SetValue(IsPresentedProperty, value); }

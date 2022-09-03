@@ -2,12 +2,14 @@
 using UraniumUI.Extensions;
 using UraniumUI.Pages;
 
-namespace UraniumUI.Material.Views;
+namespace UraniumUI.Material.Attachments;
 
 [ContentProperty(nameof(Body))]
 public partial class BottomSheetView : Frame, IPageAttachment
 {
     public UraniumContentPage AttachedPage { get; protected set; }
+    public AttachmentPosition AttachmentPosition => AttachmentPosition.Front;
+
     public View Body { get; set; }
 
     public View Header { get; set; }

@@ -26,13 +26,20 @@ public class UraniumContentPage : ContentPage
         Attachments.CollectionChanged += Attachments_CollectionChanged;
     }
 
-    private void Attachments_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+    private void Attachments_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
     {
         if (e.Action == NotifyCollectionChangedAction.Add)
         {
             foreach (IPageAttachment attachment in e.NewItems)
             {
-                _contentGrid.Add(attachment, 0, 0);
+                if (attachment.AttachmentPosition == AttachmentPosition.Front)
+                {
+                    _contentGrid.Add(attachment, 0, 0);
+                }
+                else
+                {
+                    _contentGrid.Insert(0, attachment);
+                }
 
                 attachment.OnAttached(this);
             }

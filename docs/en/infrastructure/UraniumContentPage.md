@@ -29,7 +29,6 @@ This is the main page for the Uranium Content system. It has some infrastructure
     }
     ```
 
-
 ## Attachments
 
 Attachments is a feature of [UraniumContentPage](UraniumContentPage.md) that allows you to add attachments to your content page. Attachments must implement `IPageAttachment` interface. That interface also implements `IView`. So, attachments are View that implements `IPageAttachments`. Different UI packs can include different attachments. 
@@ -51,11 +50,18 @@ Attachments aren't same layer with page content and they will automatically rend
     </uranium:UraniumContentPage>
 ```
 
+### IPageAttachment
+`IPageAttachment` is an interface and contains 2 members that you should implement. 
+
+- `OnAttached(UraniumContentPage attachedPage)`: A mothod that is executed right after attachment is added to the page. You can use this method to initialize your attachment.
+
+- `AttachmentPosition`: A property you should return either of `Front` or `Behind` enum value. This property determines the position of the attachment. 
+  - `Front`: The attachment will be rendered at the front.
+  - `Behind`: The attachment will be rendered at the back of the entire page. In the **behind** case, your attachment will not be appeared, you should make something with the main page content like making it transparent or slide it away according to your logic.
 
 ### Creating an attachment
 
-You can either create an attachment with XAML or C# code.
-
+You can either create an attachment with XAML or C# code. 
 
 - Creating a simple Floating Action Button attachment
 ```csharp

@@ -40,6 +40,9 @@ public partial class BottomSheetView : Frame, IPageAttachment
         panGestureRecognizer.PanUpdated += PanGestureRecognizer_PanUpdated;
         Header.GestureRecognizers.Add(panGestureRecognizer);
 
+        var tapGestureRecognizer = new TapGestureRecognizer();
+        tapGestureRecognizer.Tapped += (s, e) => IsPresented = !IsPresented;
+        Header.GestureRecognizers.Add(tapGestureRecognizer);
         AlignBottomSheet(false);
     }
 
@@ -63,7 +66,7 @@ public partial class BottomSheetView : Frame, IPageAttachment
         return anchor;
     }
 
-    private async void PanGestureRecognizer_PanUpdated(object sender, PanUpdatedEventArgs e)
+    private void PanGestureRecognizer_PanUpdated(object sender, PanUpdatedEventArgs e)
     {
         switch (e.StatusType)
         {

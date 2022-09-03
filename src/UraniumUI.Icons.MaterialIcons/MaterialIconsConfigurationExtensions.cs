@@ -2,13 +2,15 @@
 
 public static class MaterialIconsConfigurationExtensions
 {
-    public static IFontCollection AddFontAwesomeIconFonts(this IFontCollection fonts)
+    public static IFontCollection AddMaterialIconFonts(this IFontCollection fonts)
     {
-        fonts.AddFont("MaterialIconsOutlined-Regular.otf", "MaterialOutlined");
-        fonts.AddFont("MaterialIcons-Regular.ttf", "MaterialRegular");
-        fonts.AddFont("MaterialIconsRound-Regular.otf", "MaterialRoundRegular");
-        fonts.AddFont("MaterialIconsSharp-Regular.otf", "MaterialSharpRegular");
-        fonts.AddFont("MaterialIconsTwoTone-Regular.otf", "MaterialTwoTone");
+        var thisAssembly = typeof(MaterialIconsConfigurationExtensions).Assembly;
+
+        fonts.AddEmbeddedResourceFont(thisAssembly, "MaterialIconsOutlined-Regular.otf", "MaterialOutlined");
+        fonts.AddEmbeddedResourceFont(thisAssembly, "MaterialIcons-Regular.ttf", "MaterialRegular");
+        fonts.AddEmbeddedResourceFont(thisAssembly, "MaterialIconsRound-Regular.otf", "MaterialRoundRegular");
+        fonts.AddEmbeddedResourceFont(thisAssembly, "MaterialIconsSharp-Regular.otf", "MaterialSharpRegular");
+        fonts.AddEmbeddedResourceFont(thisAssembly, "MaterialIconsTwoTone-Regular.otf", "MaterialTwoTone");
 
         return fonts;
     }

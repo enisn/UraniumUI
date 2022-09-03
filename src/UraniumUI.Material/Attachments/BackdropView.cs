@@ -15,19 +15,20 @@ public partial class BackdropView : ContentView, IPageAttachment
         this.VerticalOptions = LayoutOptions.Fill;
 
         this.Padding = new Thickness(20, 0, 20, 30);
-        if (Shell.Current?.BackgroundColor != null)
-        {
-            this.BackgroundColor = Shell.Current.BackgroundColor;
-        }
-        else
-        {
-            this.SetDynamicResource(BackgroundColorProperty, "Primary");
-        }
     }
 
     public virtual void OnAttached(UraniumContentPage attachedPage)
     {
         AttachedPage = attachedPage;
+        if (Shell.Current?.BackgroundColor != null)
+        {
+            this.BackgroundColor = Shell.Current.BackgroundColor;
+        }
+        if (Shell.Current?.Background != null)
+        {
+            this.Background = Shell.Current.Background;
+        }
+
         this.Content.VerticalOptions = LayoutOptions.Start;
 
         toolbarItem.SetBinding(ToolbarItem.IconImageSourceProperty, new Binding(nameof(IconImageSource), source: this));
@@ -35,6 +36,11 @@ public partial class BackdropView : ContentView, IPageAttachment
         toolbarItem.Clicked += (s,e)=> IsPresented = !IsPresented;
 
         AttachedPage.ToolbarItems.Add(toolbarItem);
+    }
+
+    private void Current_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        throw new NotImplementedException();
     }
 
     protected virtual void SlideToState(bool isPresented)

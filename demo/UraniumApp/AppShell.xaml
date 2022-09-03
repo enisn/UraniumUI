@@ -7,7 +7,7 @@
     xmlns:fa="clr-namespace:UraniumUI.Icons.FontAwesome;assembly=UraniumUI.Icons.FontAwesome"
     xmlns:bsheet="clr-namespace:UraniumApp.Pages.BottomSheets"
     xmlns:backdrop="clr-namespace:UraniumApp.Pages.Backdrops"
-    Shell.FlyoutBehavior="Flyout">
+    Shell.FlyoutBehavior="{OnIdiom Desktop=Locked, Default=Flyout}">
 
     <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
         <ShellContent Title="MainPage" ContentTemplate="{DataTemplate local:MainPage}">

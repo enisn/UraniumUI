@@ -5,7 +5,7 @@
     "name": "Uranium UI MAUI Blank Template",
     "identity": "UraniumUI.App.Blank",         
     "groupIdentity":"UraniumUI.App",
-    "shortName": "uranium-blank",
+    "shortName": "uraniumui",
     "tags": {
       "language": "C#",
       "type":"project"
@@ -25,16 +25,20 @@
           {
             "choice": "MaterialIcons",
             "description":"Configure material icons by default."
+          },
+          {
+            "choice": "None",
+            "description":"Configure no icons by default."
           }
         ]
       },
       "FontAwesome":{
         "type": "computed",
-        "value": "(Database == \"FontAwesome\")"
+        "value": "(Icons == \"FontAwesome\")"
       },
       "MaterialIcons":{
         "type": "computed",
-        "value": "(Database == \"MaterialIcons\")"
+        "value": "(Icons == \"MaterialIcons\")"
       }
     }
   }

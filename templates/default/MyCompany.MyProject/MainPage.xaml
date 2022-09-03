@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--#if (FontAwesome)-->
+<!--<uranium:UraniumContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:uranium="clr-namespace:UraniumUI.Pages;assembly=UraniumUI"
+             xmlns:material="clr-namespace:UraniumUI.Material.Attachments;assembly=UraniumUI.Material"
+             xmlns:fa="clr-namespace:UraniumUI.Icons.FontAwesome;assembly=UraniumUI.Icons.FontAwesome"
+             xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
+             x:Class="MyCompany.MyProject.MainPage"
+             xmlns:local="clr-namespace:MyCompany.MyProject"
+             x:Name="page">
+    <uranium:UraniumContentPage.BindingContext>
+        <local:MainPageViewModel />
+    </uranium:UraniumContentPage.BindingContext>
+
+    <ScrollView>
+        <CollectionView ItemsSource="{Binding Items}">
+            <CollectionView.Header>
+                <Label Text="Swipe right to delete 👉" />
+            </CollectionView.Header>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <SwipeView>
+                        <SwipeView.LeftItems>
+                            <SwipeItems Mode="Execute">
+                                <SwipeItem CommandParameter="{Binding .}"
+                                           Command="{Binding Source={x:Reference page}, Path=BindingContext.RemoveItemCommand}"/>
+                            </SwipeItems>
+                        </SwipeView.LeftItems>
+                        <Grid RowDefinitions="Auto,Auto" BackgroundColor="{StaticResource PrimaryContainer}" Margin="5" Padding="10">
+                            <input:CheckBox Text="{Binding Content}" IsChecked="{Binding IsDone}" IsDisabled="{Binding IsDone}"/>
+
+                            <Frame Grid.Row="1" BackgroundColor="{StaticResource Secondary}" CornerRadius="10" HorizontalOptions="Start" Padding="5">
+                                <Label  Text="{Binding Type}" TextColor="{StaticResource OnSecondary}"/>
+                            </Frame>
+                        </Grid>
+                    </SwipeView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+            <CollectionView.Footer>
+                <ImageButton Clicked="ShowBottomSheet" Source="{FontImageSource FontFamily=FASolid, Glyph={x:Static fa:Solid.Ellipsis}, Color={StaticResource Primary}}" BackgroundColor="Transparent" />
+            </CollectionView.Footer>
+        </CollectionView>
+    </ScrollView>
+
+    <uranium:UraniumContentPage.Attachments>
+        <material:BackdropView
+            Title="Filter" 
+            IconImageSource="{FontImageSource FontFamily=FASolid, Glyph={x:Static fa:Solid.Plus}, Color={StaticResource OnPrimary}}"
+            BackgroundColor="{StaticResource Primary}">
+            <VerticalStackLayout Spacing="10" Padding="25,30">
+                <input:AdvancedEntry Text="{Binding NewItem.Content}" Title="What to do?" BorderColor="{StaticResource OnPrimary}" TextColor="{StaticResource OnPrimary}" TitleColor="{StaticResource OnPrimary}" BackgroundColor="Transparent" />
+                <input:CheckBox IsChecked="{Binding NewItem.IsDone}" Text="Is done" Color="{StaticResource Primary}" BorderColor="{StaticResource OnPrimary}" Type="Filled" TextColor="{StaticResource OnPrimary}" />
+                <input:SelectionView Color="{StaticResource Secondary}" ItemsSource="{x:Static local:TodoItem.AvailableTypes}" SelectedItem="{Binding NewItem.Type}" ColumnSpacing="-2" ColumnNumber="4"/>
+                <Button Command="{Binding AddNewItemCommand}" Text="Add" BackgroundColor="{StaticResource OnPrimary}" TextColor="{StaticResource Primary}" />
+            </VerticalStackLayout>
+        </material:BackdropView>
+        <material:BottomSheetView x:Name="bottomSheet">
+            <TableView Intent="Menu" Margin="0,0,0,40" BackgroundColor="Transparent">
+                <TableRoot>
+                    <TableSection Title="Actions">
+                        <ImageCell Text="Share" ImageSource="{FontImageSource FontFamily=FASolid, Glyph={x:Static fa:Solid.Share}, Color={StaticResource Primary}}"
+                            Detail="Share this content with friends." />
+                        <ImageCell Text="Link" ImageSource="{FontImageSource FontFamily=FASolid, Glyph={x:Static fa:Solid.Link}, Color={StaticResource Primary}}"
+                            Detail="Get link to this content" />
+                        <ImageCell Text="Report" ImageSource="{FontImageSource FontFamily=FASolid, Glyph={x:Static fa:Solid.Exclamation}, Color={StaticResource Primary}}"
+                            Detail="Report this content." />
+                    </TableSection>
+                </TableRoot>
+            </TableView>
+        </material:BottomSheetView>
+    </uranium:UraniumContentPage.Attachments>
+</uranium:UraniumContentPage>-->
+<!--#endif-->
+
+<!--#if (MaterialIcons)-->
+<uranium:UraniumContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:uranium="clr-namespace:UraniumUI.Pages;assembly=UraniumUI"
+             xmlns:material="clr-namespace:UraniumUI.Material.Attachments;assembly=UraniumUI.Material"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+             xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
+             x:Class="MyCompany.MyProject.MainPage"
+             xmlns:local="clr-namespace:MyCompany.MyProject"
+             x:Name="page">
+    <uranium:UraniumContentPage.BindingContext>
+        <local:MainPageViewModel />
+    </uranium:UraniumContentPage.BindingContext>
+
+    <ScrollView>
+        <CollectionView ItemsSource="{Binding Items}">
+            <CollectionView.Header>
+                <Label Text="Swipe right to delete 👉" />
+            </CollectionView.Header>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <SwipeView>
+                        <SwipeView.LeftItems>
+                            <SwipeItems Mode="Execute">
+                                <SwipeItem CommandParameter="{Binding .}"
+                                           Command="{Binding Source={x:Reference page}, Path=BindingContext.RemoveItemCommand}"/>
+                            </SwipeItems>
+                        </SwipeView.LeftItems>
+                        <Grid RowDefinitions="Auto,Auto" BackgroundColor="{StaticResource PrimaryContainer}" Margin="5" Padding="10">
+                            <input:CheckBox Text="{Binding Content}" IsChecked="{Binding IsDone}" IsDisabled="{Binding IsDone}"/>
+
+                            <Frame Grid.Row="1" BackgroundColor="{StaticResource Secondary}" CornerRadius="10" HorizontalOptions="Start" Padding="5">
+                                <Label  Text="{Binding Type}" TextColor="{StaticResource OnSecondary}"/>
+                            </Frame>
+                        </Grid>
+                    </SwipeView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+            <CollectionView.Footer>
+                <ImageButton Clicked="ShowBottomSheet" Source="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.More_horiz}, Color={StaticResource Primary}}" BackgroundColor="Transparent" />
+            </CollectionView.Footer>
+        </CollectionView>
+    </ScrollView>
+
+    <uranium:UraniumContentPage.Attachments>
+        <material:BackdropView
+            Title="Add" 
+            IconImageSource="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Add_circle}, Color={StaticResource OnPrimary}}"
+            BackgroundColor="{StaticResource Primary}">
+            <VerticalStackLayout Spacing="10" Padding="25,30">
+                <input:AdvancedEntry Text="{Binding NewItem.Content}" Title="What to do?" BorderColor="{StaticResource OnPrimary}" TextColor="{StaticResource OnPrimary}" TitleColor="{StaticResource OnPrimary}" BackgroundColor="Transparent" />
+                <input:CheckBox IsChecked="{Binding NewItem.IsDone}" Text="Is done" Color="{StaticResource Primary}" BorderColor="{StaticResource OnPrimary}" Type="Filled" TextColor="{StaticResource OnPrimary}" />
+                <input:SelectionView Color="{StaticResource Secondary}" ItemsSource="{x:Static local:TodoItem.AvailableTypes}" SelectedItem="{Binding NewItem.Type}" ColumnSpacing="-2" ColumnNumber="4"/>
+                <Button Command="{Binding AddNewItemCommand}" Text="Add" BackgroundColor="{StaticResource OnPrimary}" TextColor="{StaticResource Primary}" />
+            </VerticalStackLayout>
+        </material:BackdropView>
+        <material:BottomSheetView x:Name="bottomSheet">
+            <TableView Intent="Menu" Margin="0,0,0,40" BackgroundColor="Transparent">
+                <TableRoot>
+                    <TableSection Title="Actions">
+                        <ImageCell Text="Share" ImageSource="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Share}, Color={StaticResource Primary}}"
+                            Detail="Share this content with friends." />
+                        <ImageCell Text="Link" ImageSource="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Link}, Color={StaticResource Primary}}"
+                            Detail="Get link to this content" />
+                        <ImageCell Text="Report" ImageSource="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Report}, Color={StaticResource Primary}}"
+                            Detail="Report this content." />
+                    </TableSection>
+                </TableRoot>
+            </TableView>
+        </material:BottomSheetView>
+    </uranium:UraniumContentPage.Attachments>
+</uranium:UraniumContentPage>
+<!--#endif-->

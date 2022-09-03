@@ -47,7 +47,7 @@ Uranium UI provides a project template to start a new project with Uranium UI. Y
             <Application.Resources>
                 <ResourceDictionary>
                     <ResourceDictionary.MergedDictionaries>
-                        <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
+                        <!-- <ResourceDictionary Source="Resources/Styles/Colors.xaml" /> --> <!-- 👈 Remove/comment this if you want to use theme colors -->
                         <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
                         
                         <!-- 👇 Define at the end of the existing resources. -->

@@ -12,7 +12,7 @@
             Padding="30,0"
             VerticalOptions="Center">
 
-            <Image
+            <!--<Image
 
                 Source="dotnet_bot.png"
                 SemanticProperties.Description="Cute dot net bot waving hi to you!"
@@ -30,7 +30,7 @@
                 SemanticProperties.HeadingLevel="Level2"
                 SemanticProperties.Description="Welcome to dot net Multi platform App U I"
                 FontSize="18"
-                HorizontalOptions="Center" />
+                HorizontalOptions="Center" />-->
 
             <Button
                 x:Name="CounterBtn"
@@ -39,6 +39,41 @@
                 Clicked="OnCounterClicked"
                 HorizontalOptions="Center" />
 
+
+
+            <Frame HasShadow="False" Padding="0,10" HorizontalOptions="Start">
+
+                <Grid ColumnDefinitions="Auto,Auto" RowDefinitions="*,*,*,*,*" RowSpacing="10" ColumnSpacing="20">
+                    <Grid.Resources>
+                        <Style TargetType="Label">
+                            <Setter Property="VerticalOptions" Value="Center"/>
+                            <Setter Property="HorizontalOptions" Value="Center"/>
+                            <Setter Property="Margin" Value="20"/>
+                        </Style>
+                        <Style TargetType="BoxView">
+                            <Setter Property="Color" Value="{StaticResource Gray100}" />
+                            <Setter Property="HeightRequest" Value="2" />
+                            <Setter Property="CornerRadius" Value="1" />
+                        </Style>
+                    </Grid.Resources>
+
+                    <Label Grid.Column="0" Text="Header A" FontAttributes="Bold" />
+                    <Label Grid.Column="1" Text="Header B" FontAttributes="Bold" />
+
+                    <BoxView Grid.Row="1" Grid.ColumnSpan="2" HorizontalOptions="Fill"/>
+
+
+
+                    <Label Grid.Row="2" Grid.Column="0" Text="Data A.1" />
+                    <Label Grid.Row="2" Grid.Column="1" Text="Data B.1" />
+
+                    <BoxView Grid.Row="3" Grid.ColumnSpan="2" HorizontalOptions="Fill"/>
+
+                    <Label Grid.Row="4" Grid.Column="0" Text="Data A.2" />
+                    <Label Grid.Row="4" Grid.Column="1" Text="Data B.2" />
+
+                </Grid>
+            </Frame>
 
         </VerticalStackLayout>
     </ScrollView>

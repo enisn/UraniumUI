@@ -49,6 +49,10 @@
                                 "path": "themes/material/components/Backdrop.md"
                             }
                         ]
+                    },
+                    {
+                        "text": "Components",
+                        "path": "themes/material/components/DataGrid.md",
                     }
                 ]
             }

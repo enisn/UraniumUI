@@ -2,7 +2,8 @@
 <ResourceDictionary x:Class="UraniumUI.Material.Resources.ThemeResource"
                     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                    xmlns:local="clr-namespace:UraniumUI.Material.Resources">
+                    xmlns:local="clr-namespace:UraniumUI.Material.Resources"
+                    xmlns:controls="clr-namespace:UraniumUI.Material.Controls">
 
     <Color x:Key="Primary">#52D681</Color>
     <Color x:Key="OnPrimary">#fff</Color> 
@@ -85,6 +86,10 @@
 
     <Style TargetType="Label" ApplyToDerivedTypes="True">
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource Background}}" />
+    </Style>
+
+    <Style TargetType="controls:DataGrid">
+        <Setter Property="LineSeperatorColor" Value="{StaticResource Gray300}"/>
     </Style>
     
 </ResourceDictionary>

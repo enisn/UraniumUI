@@ -7,7 +7,7 @@ Uranium UI uses font icons to render icons on all platforms. Uranium Core provid
 Uranium Core provides [Font Awesome](https://fontawesome.com/) by default. Each theme can provide its own icon set. Visit the theme documentation to learn more about the icons it provides.
 
 ### Fontawesome
-It's included and configured in `UraniumUI` package.
+It's included and configured in [UraniumUI.Icons.FontAwesome](https://www.nuget.org/packages/UraniumUI.Icons.FontAwesome) package.
 
 After adding the package, you have to configure fonts in `MauiProgram.cs` file.
 
@@ -32,11 +32,26 @@ builder
 Glyphs are provided with `FontAwesomeRegular` and `FontAwesomeSolid` classes. They can be accessed like `FontAwesomeRegular.Filter`. This class icluded in `UraniumUI` namespace. You should include following xml namespace to use it.
 
 ```
-xmlns:u="clr-namespace:UraniumUI;assembly=UraniumUI"
+xmlns:fa="clr-namespace:UraniumUI.Icons.FontAwesome;assembly=UraniumUI.Icons.FontAwesome"
 ```
 
+#### Usage
+MAUI support font icons by using `FontImageSource` class. You can use it in `Image`, `Button` and any control that has a `ImageSource` typed property.
+
+```xml
+<Image>
+    <Image.Source>
+        <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.User}" Color="Orange" />
+    </Image.Source>
+</Image>
+```
+
+![MAUI FontAwesome](images/fontawesome-demo.png)
+
+---
+
 ### Material Icons
-Material icons are included in `UraniumUI.Material` package. After adding the package, you have to configure fonts in `MauiProgram.cs` file.
+Material icons are included in [UraniumUI.Icons.MaterialIcons](https://www.nuget.org/packages/UraniumUI.Icons.MaterialIcons) package. After adding the package, you have to configure fonts in `MauiProgram.cs` file.
 
 ```csharp
 builder
@@ -61,22 +76,17 @@ builder
 #### Glyphs
 Glyphs are provided with `MaterialOutlined`, `MaterialRegular`, `MaterialRoundRegular`, `MaterialSharpRegular` and `MaterialTwoTone`  classes. They can be accessed like `MaterialTwoTone.Account_circle`. This class icluded in `UraniumUI` namespace. You should include following xml namespace to use it.
 
-
 ```
-xmlns:u="clr-namespace:UraniumUI;assembly=UraniumUI"
+xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
 ```
 
----
-
-## Usage
-MAUI support font icons by using `FontImageSource` class. You can use it in `Image`, `Button` and any control that has `FontImageSource` property.
+### Usage
+MAUI support font icons by using `FontImageSource` class. You can use it in `Image`, `Button` and any control that has a `ImageSource` typed property.
 
 ```xml
 <Image>
     <Image.Source>
-        <FontImageSource FontFamily="FASolid" Glyph="{x:Static u:FontAwesomeSolid.User}" Color="Orange" />
+        <FontImageSource FontFamily="MaterialRegular" Glyph="{x:Static m:Regular.Warning}" Color="Red" />
     </Image.Source>
 </Image>
 ```
-
-![MAUI FontAwesome](images/fontawesome-demo.png)

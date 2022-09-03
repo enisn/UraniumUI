@@ -10,9 +10,15 @@ There are 2 ways to get started with Uranium UI:
 
 Uranium UI provides a project template to start a new project with Uranium UI. You can customize the startup project with parameters like icon library, theme, and more.
 
-- Install latest templates from NuGet: `dotnet new -i UraniumUI.Templates`
+- Install latest templates from NuGet: 
+    ```bash
+    dotnet new -i UraniumUI.Templates
+    ```
 
-- Create a new project: `dotnet new uraniumui -n MyProject`
+- Create a new project: 
+  ```bash
+  dotnet new uraniumui -n MyProject
+  ```
 
 ### Parameters
 

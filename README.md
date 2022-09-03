@@ -32,13 +32,12 @@ Visit documentation for onboarding.
 - [ ] Chips (multiple selection)
 - [ ] CheckBox (customize inputkit's one)
 - [ ] RadioButton (customize inputkit's one)
-- [ ] AdvancedEntry
-- [ ] Cards (Head, Body, Footer)
-- [ ] DataGrid
+- [ ] AdvancedEntry (customize inputkit's one)
+- [ ] Cards (Head, Body, Footer) 
 - [ ] TreeView
 - [ ] TabView (with Custom DataTemplate)
 
-- [ ] SelectionView
+- [ ] SelectionView 
 - [ ] BadgeView
 - [ ] RateView
 - [ ] StatefulButton ( SaveButton )

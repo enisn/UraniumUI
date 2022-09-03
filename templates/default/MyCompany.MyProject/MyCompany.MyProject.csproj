@@ -32,10 +32,10 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#52D681" />
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
+		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#52D681" BaseSize="128,128" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
@@ -49,12 +49,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
-    <PackageReference Include="UraniumUI.Material" Version="0.2.2" />
+    <PackageReference Include="UraniumUI.Material" Version="0.2.3" />
 		<!--#if (FontAwesome)-->
-    <PackageReference Include="UraniumUI.Icons.FontAwesome" Version="0.2.2" />
+    <PackageReference Include="UraniumUI.Icons.FontAwesome" Version="0.2.3" />
     <!--#endif-->
     <!--#if (MaterialIcons)-->
-    <PackageReference Include="UraniumUI.Icons.MaterialIcons" Version="0.2.2" />
+    <PackageReference Include="UraniumUI.Icons.MaterialIcons" Version="0.2.3" />
     <!--#endif-->
 	</ItemGroup>
 

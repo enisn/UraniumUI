@@ -25,11 +25,15 @@
                 "path": "themes/material/Index.md",
                 "items":[
                     {
-                        "text": "Components",
+                        "text": "Attachments",
                         "items":[
                             {
                                 "text": "Bottom Sheet",
                                 "path": "themes/material/components/BottomSheet.md"
+                            },
+                            {
+                                "text": "Backdrop",
+                                "path": "themes/material/components/Backdrop.md"
                             }
                         ]
                     }

@@ -22,7 +22,22 @@
         "items": [
             {
                 "text": "Material Theme",
-                "path": "themes/material/Index.md"
+                "path": "themes/material/Index.md",
+                "items":[
+                    {
+                        "text": "Attachments",
+                        "items":[
+                            {
+                                "text": "Bottom Sheet",
+                                "path": "themes/material/components/BottomSheet.md"
+                            },
+                            {
+                                "text": "Backdrop",
+                                "path": "themes/material/components/Backdrop.md"
+                            }
+                        ]
+                    }
+                ]
             }
         ]
     }

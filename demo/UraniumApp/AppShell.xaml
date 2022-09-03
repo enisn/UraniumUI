@@ -5,12 +5,16 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:UraniumApp"
     xmlns:bsheet="clr-namespace:UraniumApp.Pages.BottomSheets"
+    xmlns:backdrop="clr-namespace:UraniumApp.Pages.Backdrops"
     Shell.FlyoutBehavior="Disabled">
 
     <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
         <Tab Title="Bottom Sheets">
             <ShellContent Title="Bottom Sheets"
                           ContentTemplate="{DataTemplate bsheet:BottomSheetsIndexPage}" />
+        </Tab>
+        <Tab Title="Backdrop">
+            <ShellContent Title="Backdrop" ContentTemplate="{DataTemplate backdrop:BackdropsIndexPage}" />
         </Tab>
         <!--
         Shell has implicit conversion operators that enable the Shell visual hierarchy to be simplified.

@@ -121,11 +121,11 @@ public partial class BottomSheetView : Frame, IPageAttachment
 
     protected void UpdateDisabledStateOfPage()
     {
-        if (AttachedPage?.PageBody != null && DisablePageWhenOpened)
+        if (AttachedPage?.Body != null && DisablePageWhenOpened)
         {
-            AttachedPage.PageBody.InputTransparent = IsPresented;
+            AttachedPage.Body.InputTransparent = IsPresented;
 
-            AttachedPage.PageBody.FadeTo(IsPresented ? .5 : 1);
+            AttachedPage.Body.FadeTo(IsPresented ? .5 : 1);
         }
     }
 }

@@ -49,10 +49,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Remove="Resources\Images\pause.svg" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <ProjectReference Include="..\..\src\UraniumUI.Material\UraniumUI.Material.csproj" />
 	</ItemGroup>
 
@@ -64,6 +60,12 @@
 
 	<ItemGroup>
 	  <MauiXaml Update="DemoContent.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\Backdrops\BackdropsIndexPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\Backdrops\SimpleBackdropPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\BottomSheets\BottomSheetsIndexPage.xaml">

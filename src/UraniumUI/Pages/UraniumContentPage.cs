@@ -3,24 +3,26 @@ using System.Collections.Specialized;
 
 namespace UraniumUI.Pages;
 
-[ContentProperty(nameof(PageBody))]
+[ContentProperty(nameof(Body))]
 public class UraniumContentPage : ContentPage
 {
     protected Grid _contentGrid;
 
-    public View PageBody { get => MainContent.Content; set => MainContent.Content = value; }
+    public View Body { get => ContentFrame.Content; set => ContentFrame.Content = value; }
 
     public ObservableCollection<IPageAttachment> Attachments { get; set; } = new();
 
-    protected ContentView MainContent { get; } = new ContentView();
+    public Frame ContentFrame { get; } = new Frame()
+    { HorizontalOptions = LayoutOptions.Fill, VerticalOptions = LayoutOptions.Fill, HasShadow = false };
 
     public UraniumContentPage()
     {
+        ContentFrame.BackgroundColor = this.BackgroundColor;
         Content = _contentGrid = new Grid
         {
             Children =
             {
-                MainContent
+                ContentFrame
             }
         };
         Attachments.CollectionChanged += Attachments_CollectionChanged;

@@ -4,7 +4,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:root="clr-namespace:UraniumApp"
              xmlns:uranium="clr-namespace:UraniumUI.Pages;assembly=UraniumUI"
-             xmlns:material="clr-namespace:UraniumUI.Material.Views;assembly=UraniumUI.Material"
+             xmlns:material="clr-namespace:UraniumUI.Material.Attachments;assembly=UraniumUI.Material"
              xmlns:local="clr-namespace:UraniumApp.Pages.BottomSheets">
     <ScrollView>
         <root:DemoContent />

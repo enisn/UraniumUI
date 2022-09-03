@@ -5,7 +5,7 @@
              xmlns:local="clr-namespace:UraniumApp.Pages.BottomSheets">
     <ContentPage.Content>
         <ScrollView>
-            <VerticalStackLayout Padding="25" Spacing="10">
+            <VerticalStackLayout Padding="25" Spacing="10" MaximumWidthRequest="400">
                 <Button Text="Regular" Clicked="GoToRegular" />
                 <Button Text="Expanding" Clicked="GoToExpanding" />
 

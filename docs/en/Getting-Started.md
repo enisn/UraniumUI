@@ -61,7 +61,7 @@ Uranium UI provides a project template to start a new project with Uranium UI. Y
 
 - (Optional) Installing a font icon library is recommended. Choose one of the icons and install it.
   -  [FontAwesome](theming/Icons.md#fontawesome)
-  -  [Material](theming/Icons.md#material)
+  -  [Material](theming/Icons.md#material-icons)
 
 ## Themes avaialble
     - [Material Theme](themes/material/Index.md)

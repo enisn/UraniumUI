@@ -1,12 +1,23 @@
 ![MAUI Uranium UI Kit](art/logo.svg)
 # Uranium UI Kit
-End to end UI Kit for .Net MAUI.
+Uranium is a UI Kit for .NET MAUI. It provides a set of controls and utilities to build modern applications. It is built on top of the .NET MAUI infrastructure and provides a set of controls and layouts to build modern UIs. It also provides infrastructure for building custom controls and themes on it.
 
  ## Getting Started
 Visit documentation for onboarding.
 
 - [Getting Started](docs/en/Getting-Started.md)
 
+## Features
+
+- **Theming**: Allows you build themes and customize existing themes easily.
+  - [Material Theme](docs/en/themes/material/Index.md)
+
+- Font Icons
+  - [FontAwesome](docs/en/theming/Icons.md#fontawesome)
+  - [Material](docs/en/theming/Icons.md#material-icons)
+
+- Pre-Built Components
+- Startup Templates
 
 ## Roadmap
 
@@ -15,11 +26,12 @@ Visit documentation for onboarding.
 - [x] Icons
   - [x] FontAwesome
   - [x] Material Icons
+- [ ] DataGrid
 - [ ] SegmentedControl
 
 - [ ] Chips (multiple selection)
-- [ ] CheckBox
-- [ ] RadioButton
+- [ ] CheckBox (customize inputkit's one)
+- [ ] RadioButton (customize inputkit's one)
 - [ ] AdvancedEntry
 - [ ] Cards (Head, Body, Footer)
 - [ ] DataGrid

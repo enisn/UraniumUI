@@ -3,6 +3,8 @@ Bottom sheets are surfaces containing supplementary content that are anchored to
 
 You may visit [Material Design Bottom Sheets](https://material.io/components/sheets-bottom) to get more information.
 
+![Material Design Bottom Sheet](https://lh3.googleusercontent.com/jpgznwgTNSqcMUiebyimlsB0H6fAF9eyRfyVODFGwNZi370FKUH4_2SqSw4C36iMHCh6ECgRRCO1F0yoJObLGP9r7XTEBHyi8MZ5fbEmVw=s0)
+
 | Regular | Custom Header |
 | --- | --- |
 | ![MAUI Bottom Sheet Material](images/bottomsheet-regular-demo.gif) | ![MAUI Bottom Sheet Material](images/bottomsheet-expanding-demo.gif) |
@@ -14,7 +16,7 @@ BottomSheet has a default regular anchor that user can pull it up and down. But,
 
 Before starting to use BottomSheet, you should add material namespace to your XAML file.
 
-    `xmlns:material="clr-namespace:UraniumUI.Material.Views;assembly=UraniumUI.Material"`
+    `xmlns:material="clr-namespace:UraniumUI.Material.Attachments;assembly=UraniumUI.Material"`
 
 To use a regular bottom sheet, you should add a `BottomSheet` to `UraniumContentPage.Attachments`.
 
@@ -23,7 +25,7 @@ To use a regular bottom sheet, you should add a `BottomSheet` to `UraniumContent
             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             xmlns:uranium="clr-namespace:UraniumUI.Pages;assembly=UraniumUI"
-            xmlns:material="clr-namespace:UraniumUI.Material.Views;assembly=UraniumUI.Material">
+            xmlns:material="clr-namespace:UraniumUI.Material.Attachments;assembly=UraniumUI.Material">
 
     <!-- Content here -->
 
@@ -60,7 +62,7 @@ To use a custom header bottom sheet, you should add a `BottomSheet` to `UraniumC
             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             xmlns:uranium="clr-namespace:UraniumUI.Pages;assembly=UraniumUI"
-            xmlns:material="clr-namespace:UraniumUI.Material.Views;assembly=UraniumUI.Material">
+            xmlns:material="clr-namespace:UraniumUI.Material.Attachments;assembly=UraniumUI.Material">
 
     <!-- Content here -->
 
@@ -85,7 +87,7 @@ To use a custom header bottom sheet, you should add a `BottomSheet` to `UraniumC
             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             xmlns:uranium="clr-namespace:UraniumUI.Pages;assembly=UraniumUI"
-            xmlns:material="clr-namespace:UraniumUI.Material.Views;assembly=UraniumUI.Material">
+            xmlns:material="clr-namespace:UraniumUI.Material.Attachments;assembly=UraniumUI.Material">
 
     <!-- Content here -->
     <Button Text="Show" OnClick="ShowBottomSheet" />

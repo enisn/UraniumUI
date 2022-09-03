@@ -10,10 +10,23 @@
             {
                 "text":"Uranium Content Page",
                 "path":"infrastructure/UraniumContentPage.md"
+            }
+        ]
+    },
+    {
+        "text": "Theming",
+        "items":[
+            {
+                "text":"Color System",
+                "path": "theming/ColorSystem.md"
             },
             {
-                "text": "Color System",
-                "path": "infrastructure/ColorSystem.md"
+                "text":"Icons",
+                "path": "theming/Icons.md"
+            },
+            {
+                "text": "Creating a Theme",
+                "path": "theming/CreatingTheme.md"
             }
         ]
     },

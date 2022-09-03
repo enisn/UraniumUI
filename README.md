@@ -12,6 +12,9 @@ Visit documentation for onboarding.
 
 - [x] Backdrop
 - [x] BottomSheet
+- [x] Icons
+  - [x] FontAwesome
+  - [x] Material Icons
 - [ ] SegmentedControl
 
 - [ ] Chips (multiple selection)

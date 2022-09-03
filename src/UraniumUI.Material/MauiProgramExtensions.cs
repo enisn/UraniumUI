@@ -8,7 +8,7 @@ public static class MauiProgramExtensions
         fonts.AddFont("MaterialIconsRound-Regular.otf", "MaterialRoundRegular");
         fonts.AddFont("MaterialIconsSharp-Regular.otf", "MaterialSharpRegular");
         fonts.AddFont("MaterialIconsTwoTone-Regular.otf", "MaterialTwoTone");
-
+       
         return fonts;
     }
 }

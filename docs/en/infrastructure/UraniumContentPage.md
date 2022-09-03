@@ -78,12 +78,14 @@ public class FAB : ImageButton, IPageAttachment
         this.Click += (s, e) =>{ Console.WriteLine("FAB clicked"); };
     }
 
-     public void OnAttached(UraniumContentPage page)
-     {
-        // Place it right bottom of the page.
-        this.TranslationX = this.PageWidth - this.Width - 20;
-        this.TranslationY = this.PageHeight - this.Height - 20;
-     }
+    public AttachmentPosition AttachmentPosition => AttachmentPosition.Front;
+
+    public void OnAttached(UraniumContentPage page)
+    {
+    // Place it right bottom of the page.
+    this.TranslationX = this.PageWidth - this.Width - 20;
+    this.TranslationY = this.PageHeight - this.Height - 20;
+    }
 }
 ```
 

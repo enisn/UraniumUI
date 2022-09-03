@@ -36,9 +36,12 @@ public partial class BottomSheetView : Frame, IPageAttachment
             }
         };
 
-        var panGestureRecognizer = new PanGestureRecognizer();
-        panGestureRecognizer.PanUpdated += PanGestureRecognizer_PanUpdated;
-        Header.GestureRecognizers.Add(panGestureRecognizer);
+        if (DeviceInfo.Idiom != DeviceIdiom.Desktop)
+        {
+            var panGestureRecognizer = new PanGestureRecognizer();
+            panGestureRecognizer.PanUpdated += PanGestureRecognizer_PanUpdated;
+            Header.GestureRecognizers.Add(panGestureRecognizer);
+        }
 
         var tapGestureRecognizer = new TapGestureRecognizer();
         tapGestureRecognizer.Tapped += (s, e) => IsPresented = !IsPresented;

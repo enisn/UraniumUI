@@ -17,7 +17,11 @@
                     HeightRequest="60"
                     BackgroundColor="{StaticResource Primary}"
                     ColumnDefinitions="60,*,Auto,Auto" ColumnSpacing="10">
-
+                    <Grid.Shadow>
+                        <Shadow Brush="Black"
+                                Radius="20"
+                            Opacity="0.2" />
+                    </Grid.Shadow>
                     <Image Source="tell_it_to_my_heart.jpg" />
 
                     <Label Grid.Column="1" 

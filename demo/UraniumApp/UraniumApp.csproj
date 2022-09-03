@@ -49,6 +49,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\..\src\UraniumUI.Icons.FontAwesome\UraniumUI.Icons.FontAwesome.csproj" />
 	  <ProjectReference Include="..\..\src\UraniumUI.Material\UraniumUI.Material.csproj" />
 	</ItemGroup>
 

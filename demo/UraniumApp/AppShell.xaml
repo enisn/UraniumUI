@@ -4,28 +4,41 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:UraniumApp"
-    xmlns:u="clr-namespace:UraniumUI;assembly=UraniumUI"
+    xmlns:fa="clr-namespace:UraniumUI.Icons.FontAwesome;assembly=UraniumUI.Icons.FontAwesome"
     xmlns:bsheet="clr-namespace:UraniumApp.Pages.BottomSheets"
     xmlns:backdrop="clr-namespace:UraniumApp.Pages.Backdrops"
-    Shell.FlyoutBehavior="Disabled">
+    Shell.FlyoutBehavior="Flyout">
 
     <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
-        <ShellContent Title="MainPage" ContentTemplate="{DataTemplate local:MainPage}" />
-        
-        <Tab Title="Bottom Sheets">
+        <ShellContent Title="MainPage" ContentTemplate="{DataTemplate local:MainPage}">
+            <ShellContent.Icon>
+                <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.House}" Color="{StaticResource Primary}"/>
+            </ShellContent.Icon>
+        </ShellContent>
+    </FlyoutItem>
+
+    <!--<Tab Title="Bottom Sheets">
             <Tab.Icon>
-                <FontImageSource FontFamily="FASolid" Glyph="{x:Static u:FontAwesomeSolid.PersonArrowUpFromLine}" />
+                <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.PersonArrowUpFromLine}" Color="{StaticResource Primary}" />
             </Tab.Icon>
-            <ShellContent Title="Bottom Sheets"
-                          ContentTemplate="{DataTemplate bsheet:BottomSheetsIndexPage}" />
-        </Tab>
-        <Tab Title="Backdrop">
-            <Tab.Icon>
-                <FontImageSource FontFamily="FASolid" Glyph="{x:Static u:FontAwesomeSolid.HandPointDown}" />
-            </Tab.Icon>
-            <ShellContent Title="Backdrop" ContentTemplate="{DataTemplate backdrop:BackdropsIndexPage}" />
-        </Tab>
-        <!--
+            <ShellContent Title="Bottom Sheets" ContentTemplate="{DataTemplate bsheet:BottomSheetsIndexPage}"/>
+        </Tab>-->
+    <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
+
+        <ShellContent Title="Bottom Sheets" ContentTemplate="{DataTemplate bsheet:BottomSheetsIndexPage}">
+            <ShellContent.Icon>
+                <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.PersonArrowUpFromLine}" Color="{StaticResource Primary}" />
+            </ShellContent.Icon>
+        </ShellContent>
+
+        <ShellContent Title="Backdrop" ContentTemplate="{DataTemplate backdrop:BackdropsIndexPage}">
+            <ShellContent.Icon>
+                <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.HandPointDown}" Color="{StaticResource Primary}" />
+            </ShellContent.Icon>
+        </ShellContent>
+    </FlyoutItem>
+
+    <!--
         Shell has implicit conversion operators that enable the Shell visual hierarchy to be simplified.
         This is possible because a subclassed Shell object can only ever contain a FlyoutItem object or a TabBar object,
         which can only ever contain Tab objects, which can only ever contain ShellContent objects.
@@ -41,6 +54,5 @@
         <ShellContent Title="Bears"
                       Icon="bear.png"
                       ContentTemplate="{DataTemplate views:BearsPage}" />-->
-    </FlyoutItem>
 
 </Shell>

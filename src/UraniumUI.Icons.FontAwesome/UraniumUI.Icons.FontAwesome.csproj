@@ -17,20 +17,12 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
 	</PropertyGroup>
 
-	<ItemGroup>
-	  <ProjectReference Include="..\UraniumUI\UraniumUI.csproj" />
-	</ItemGroup>
+  <ItemGroup>
+    <None Remove="Resources\Fonts\*" />
+  </ItemGroup>
 
-	<ItemGroup>
-	  <Compile Update="Resources\ThemeResource.xaml.cs">
-	    <DependentUpon>ThemeResource.xaml</DependentUpon>
-	  </Compile>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <MauiXaml Update="Resources\ThemeResource.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	</ItemGroup>
+  <ItemGroup>
+    <MauiFont Include="Resources\Fonts\*" />
+  </ItemGroup>
 
 </Project>

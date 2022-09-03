@@ -15,6 +15,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "themes", "themes", "{3175CA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UraniumUI.Material", "src\UraniumUI.Material\UraniumUI.Material.csproj", "{FA8B7299-0352-482B-8C0C-C8D843AE497A}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UraniumUI.Icons.FontAwesome", "src\UraniumUI.Icons.FontAwesome\UraniumUI.Icons.FontAwesome.csproj", "{1262EB3C-6AE6-4A2F-A5EB-BCEB83ACCDE9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UraniumUI.Icons.MaterialIcons", "src\UraniumUI.Icons.MaterialIcons\UraniumUI.Icons.MaterialIcons.csproj", "{E11CF025-6E1F-4DE9-B1EB-503D63583937}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +41,16 @@ Global
 		{FA8B7299-0352-482B-8C0C-C8D843AE497A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA8B7299-0352-482B-8C0C-C8D843AE497A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FA8B7299-0352-482B-8C0C-C8D843AE497A}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{1262EB3C-6AE6-4A2F-A5EB-BCEB83ACCDE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1262EB3C-6AE6-4A2F-A5EB-BCEB83ACCDE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1262EB3C-6AE6-4A2F-A5EB-BCEB83ACCDE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1262EB3C-6AE6-4A2F-A5EB-BCEB83ACCDE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1262EB3C-6AE6-4A2F-A5EB-BCEB83ACCDE9}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{E11CF025-6E1F-4DE9-B1EB-503D63583937}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E11CF025-6E1F-4DE9-B1EB-503D63583937}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E11CF025-6E1F-4DE9-B1EB-503D63583937}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E11CF025-6E1F-4DE9-B1EB-503D63583937}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E11CF025-6E1F-4DE9-B1EB-503D63583937}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -45,6 +59,8 @@ Global
 		{18739C30-B705-4F5C-8785-FF26E3558875} = {4536E7FC-FB48-4B7A-A59D-E27095C3FFD2}
 		{11132496-C4D9-4DDA-BED7-6E143A35735A} = {32493E5D-A757-4289-A168-DA0E8DDE9B29}
 		{FA8B7299-0352-482B-8C0C-C8D843AE497A} = {32493E5D-A757-4289-A168-DA0E8DDE9B29}
+		{1262EB3C-6AE6-4A2F-A5EB-BCEB83ACCDE9} = {32493E5D-A757-4289-A168-DA0E8DDE9B29}
+		{E11CF025-6E1F-4DE9-B1EB-503D63583937} = {32493E5D-A757-4289-A168-DA0E8DDE9B29}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {31946918-5DA1-40D1-8BD7-6834BB21D0FF}

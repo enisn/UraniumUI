@@ -21,14 +21,6 @@
 	  <PackageReference Include="InputKit.Maui" Version="4.0.3" />
 	</ItemGroup>
 
-  <ItemGroup>
-    <None Remove="Resources\Fonts\*" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <MauiFont Include="Resources\Fonts\*" />
-  </ItemGroup>
-
 	<ItemGroup>
 	  <Compile Update="Resources\ColorResource.xaml.cs">
 	    <DependentUpon>ColorResource.xaml</DependentUpon>

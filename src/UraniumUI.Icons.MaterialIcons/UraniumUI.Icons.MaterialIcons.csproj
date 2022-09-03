@@ -18,19 +18,19 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\UraniumUI\UraniumUI.csproj" />
+	  <None Remove="Resources\Fonts\MaterialIcons-Regular.ttf" />
+	  <None Remove="Resources\Fonts\MaterialIconsOutlined-Regular.otf" />
+	  <None Remove="Resources\Fonts\MaterialIconsRound-Regular.otf" />
+	  <None Remove="Resources\Fonts\MaterialIconsSharp-Regular.otf" />
+	  <None Remove="Resources\Fonts\MaterialIconsTwoTone-Regular.otf" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Resources\ThemeResource.xaml.cs">
-	    <DependentUpon>ThemeResource.xaml</DependentUpon>
-	  </Compile>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <MauiXaml Update="Resources\ThemeResource.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
+	  <MauiFont Include="Resources\Fonts\MaterialIcons-Regular.ttf" />
+	  <MauiFont Include="Resources\Fonts\MaterialIconsOutlined-Regular.otf" />
+	  <MauiFont Include="Resources\Fonts\MaterialIconsRound-Regular.otf" />
+	  <MauiFont Include="Resources\Fonts\MaterialIconsSharp-Regular.otf" />
+	  <MauiFont Include="Resources\Fonts\MaterialIconsTwoTone-Regular.otf" />
 	</ItemGroup>
 
 </Project>

@@ -10,6 +10,7 @@
     <ContentPage.Content>
         <StackLayout>
             <material:DataGrid ItemsSource="{Binding Items}" HorizontalOptions="Center" Margin="30" />
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -20,7 +20,7 @@ public partial class DataGrid
             VerticalOptions = LayoutOptions.Center
         };
 
-        label.SetBinding(Label.TextProperty, ".");
+        label.SetBinding(Label.TextProperty, "Value");
 
         return label;
     }

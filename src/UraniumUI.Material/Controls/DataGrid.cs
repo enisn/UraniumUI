@@ -50,6 +50,11 @@ public partial class DataGrid : Frame
 
     protected virtual void Render()
     {
+        if (Columns == null || Columns.Length == 0)
+        {
+            return; // Not ready yet.
+        }
+
         var tableHeaderRows = 1;
         ResetGrid();
         ConfigureGridDefinitions(ItemsSource.Count + tableHeaderRows, Columns.Length);
@@ -78,7 +83,10 @@ public partial class DataGrid : Frame
             var label = LabelFactory() ?? CreateLabel();
             label.FontAttributes = FontAttributes.Bold;
             // TODO: Use an attribute to localize it.
-            label.BindingContext = Columns[i].Name;
+            label.BindingContext = new CellBindingContext
+            {
+                Value = Columns[i].Name
+            };
 
             _rootGrid.Add(label, column: i, row: 0);
         }
@@ -94,7 +102,13 @@ public partial class DataGrid : Frame
         {
             var view = (View)CellItemTemplate?.CreateContent() ?? LabelFactory() ?? CreateLabel();
 
-            view.BindingContext = Columns[columnNumber].GetValue(item);
+            view.BindingContext = new CellBindingContext
+            {
+                Column = columnNumber,
+                Row = row,
+                Data = item,
+                Value = Columns[columnNumber].GetValue(item)
+            };
 
             _rootGrid.Add(view, columnNumber, row: actualRow);
         }
@@ -124,5 +138,13 @@ public partial class DataGrid : Frame
         {
             _rootGrid.AddColumnDefinition(new ColumnDefinition(GridLength.Auto));
         }
+    }
+
+    public class CellBindingContext
+    {
+        public int Row { get; set; }
+        public int Column { get; set; }
+        public object Data { get; set; }
+        public object Value { get; set; }
     }
 }

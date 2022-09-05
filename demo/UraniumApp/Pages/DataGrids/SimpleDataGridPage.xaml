@@ -8,9 +8,10 @@
         <local:SimpleDataGridPageViewModel />
     </ContentPage.BindingContext>
     <ContentPage.Content>
-        <StackLayout>
-            <material:DataGrid ItemsSource="{Binding Items}" HorizontalOptions="Center" Margin="30" />
-
-        </StackLayout>
+        <ScrollView>
+            <StackLayout>
+                <material:DataGrid ItemsSource="{Binding Items}" UseAutoColumns="True" HorizontalOptions="Center" Margin="30" />
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

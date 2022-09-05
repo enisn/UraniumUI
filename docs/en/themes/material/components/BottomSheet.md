@@ -117,3 +117,5 @@ To use a custom header bottom sheet, you should add a `BottomSheet` to `UraniumC
 ```
 
 _It might be useful if you use bottom sheet for something like filtering the content of page._
+
+### CloseOnTapOutside 

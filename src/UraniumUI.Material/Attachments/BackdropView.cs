@@ -33,18 +33,18 @@ public partial class BackdropView : ContentView, IPageAttachment
 
         toolbarItem.SetBinding(ToolbarItem.IconImageSourceProperty, new Binding(nameof(IconImageSource), source: this));
         toolbarItem.SetBinding(ToolbarItem.TextProperty, new Binding(nameof(Title), source: this));
-        toolbarItem.Clicked += (s,e)=> IsPresented = !IsPresented;
+        toolbarItem.Clicked += (s, e) => IsPresented = !IsPresented;
 
         AttachedPage.ToolbarItems.Add(toolbarItem);
     }
 
-    private void Current_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-    {
-        throw new NotImplementedException();
-    }
-
     protected virtual void SlideToState(bool isPresented)
     {
+        foreach (BackdropView backdrop in AttachedPage.Attachments.Where(x => x is BackdropView))
+        {
+            backdrop.IsVisible = backdrop == this;
+        }
+
         AttachedPage.ContentFrame.TranslateTo(0, isPresented ? this.Content.Height : 0);
     }
 }

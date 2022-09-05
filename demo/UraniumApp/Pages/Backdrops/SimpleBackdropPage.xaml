@@ -22,10 +22,13 @@
                         <Setter Property="Color" Value="{StaticResource Primary}" />
                         <Setter Property="IconColor" Value="{StaticResource Primary}"/>
                         <Setter Property="TextColor" Value="{StaticResource OnPrimary}"/>
-                        <Setter Property="BorderColor" Value="{StaticResource OnPrimary}" />
+                        <Setter Property="BorderColor" Value="{StaticResource OnPrimary}"/>
                     </Style>
-                    <Style TargetType="Slider">
+                    <Style TargetType="Slider" ApplyToDerivedTypes="True">
                         <Setter Property="ThumbColor" Value="{StaticResource OnPrimary}" />
+                    </Style>
+                    <Style TargetType="input:AdvancedSlider">
+                        <Setter Property="TextColor" Value="{StaticResource OnPrimary}" />
                     </Style>
                 </ResourceDictionary>
             </material:BackdropView.Resources>

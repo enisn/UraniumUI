@@ -48,6 +48,7 @@ public partial class BottomSheetView : Frame, IPageAttachment
         var tapGestureRecognizer = new TapGestureRecognizer();
         tapGestureRecognizer.Tapped += (s, e) => IsPresented = !IsPresented;
         Header.GestureRecognizers.Add(tapGestureRecognizer);
+        Header.BackgroundColor = this.BackgroundColor;
         AlignBottomSheet(false);
     }
 
@@ -64,7 +65,6 @@ public partial class BottomSheetView : Frame, IPageAttachment
                 WidthRequest = 50,
                 Color = this.BackgroundColor?.ToSurfaceColor() ?? Colors.Gray,
                 HorizontalOptions = LayoutOptions.Center,
-                InputTransparent = true,
             }
         };
 

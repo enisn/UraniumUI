@@ -26,9 +26,9 @@ Visit documentation for onboarding.
 - [x] Icons
   - [x] FontAwesome
   - [x] Material Icons
-- [ ] DataGrid
+- [x] DataGrid
 - [ ] SegmentedControl
-
+- [ ] Slider (Header, with dots)
 - [ ] Chips (multiple selection)
 - [ ] CheckBox (customize inputkit's one)
 - [ ] RadioButton (customize inputkit's one)

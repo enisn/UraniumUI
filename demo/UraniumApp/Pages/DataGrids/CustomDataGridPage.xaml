@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage x:Class="UraniumApp.Pages.DataGrids.CustomDataGridPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:UraniumApp.Pages.DataGrids"
+             xmlns:material="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
+             x:Name="page">
+    <ContentPage.BindingContext>
+        <local:CustomDataGridPageViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout>
+
+                <Grid ColumnDefinitions="80,*,Auto" Padding="20">
+                    <Entry Text="{Binding Row}" Placeholder="RowIndex" Keyboard="Numeric" />
+                    <Entry Grid.Column="1" Text="{Binding Name}" Placeholder="Student Name" Keyboard="Plain" />
+                    <Button Grid.Column="2" Command="{Binding AddNewCommand}" Text="Add" BackgroundColor="{StaticResource Primary}" TextColor="{StaticResource OnPrimary}"/>
+                </Grid>
+
+
+                <Label Text="Fully Defined Columns:" />
+                <material:DataGrid ItemsSource="{Binding Items}" HorizontalOptions="Center" Margin="30">
+
+                    <ActivityIndicator IsRunning="True" Margin="40" />
+
+                    <material:DataGrid.Columns>
+                        <material:DataGridColumn PropertyName="Name" Title="Student Name">
+                            <material:DataGridColumn.CellItemTemplate>
+                                <DataTemplate>
+                                    <Frame>
+                                        <Label Text="{Binding Value}" TextColor="Red" />
+                                    </Frame>
+                                </DataTemplate>
+                            </material:DataGridColumn.CellItemTemplate>
+                        </material:DataGridColumn>
+
+                        <material:DataGridColumn PropertyName="Age" Title="Student Age">
+                            <material:DataGridColumn.CellItemTemplate>
+                                <DataTemplate>
+                                    <Frame BorderColor="Blue">
+                                        <Label Text="{Binding Value}" TextColor="Blue" />
+                                    </Frame>
+                                </DataTemplate>
+                            </material:DataGridColumn.CellItemTemplate>
+                        </material:DataGridColumn>
+
+                        <material:DataGridColumn PropertyName="Id" Title="Identity" />
+
+                        <material:DataGridColumn Title="Actions" >
+                            <material:DataGridColumn.CellItemTemplate>
+                                <DataTemplate>
+                                    <Button Text="Remove" BackgroundColor="{StaticResource Secondary}" TextColor="{StaticResource OnSecondary}" 
+                                            Command="{Binding Source={x:Reference page}, Path=BindingContext.RemoveItemCommand}"
+                                            CommandParameter="{Binding Data}"
+                                            />
+                                </DataTemplate>
+                            </material:DataGridColumn.CellItemTemplate>
+                        </material:DataGridColumn>
+
+                    </material:DataGrid.Columns>
+                </material:DataGrid>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

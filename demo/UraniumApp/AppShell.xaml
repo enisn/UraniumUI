@@ -7,6 +7,7 @@
     xmlns:fa="clr-namespace:UraniumUI.Icons.FontAwesome;assembly=UraniumUI.Icons.FontAwesome"
     xmlns:bsheet="clr-namespace:UraniumApp.Pages.BottomSheets"
     xmlns:backdrop="clr-namespace:UraniumApp.Pages.Backdrops"
+    xmlns:dataGrid="clr-namespace:UraniumApp.Pages.DataGrids"
     Shell.FlyoutBehavior="{OnIdiom Desktop=Locked, Default=Flyout}">
 
     <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
@@ -34,6 +35,15 @@
         <ShellContent Title="Backdrop" ContentTemplate="{DataTemplate backdrop:BackdropsIndexPage}">
             <ShellContent.Icon>
                 <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.HandPointDown}" Color="{StaticResource Primary}" />
+            </ShellContent.Icon>
+        </ShellContent>
+    </FlyoutItem>
+
+    <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
+
+        <ShellContent Title="DataGrid" ContentTemplate="{DataTemplate dataGrid:DataGridsIndexPage}">
+            <ShellContent.Icon>
+                <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.TableCells}" Color="{StaticResource Primary}" />
             </ShellContent.Icon>
         </ShellContent>
     </FlyoutItem>

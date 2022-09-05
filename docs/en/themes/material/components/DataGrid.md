@@ -39,15 +39,147 @@ public class MainPageViewModel : BindableObject
 Then use it in XAML like this:
 
 ```xml
- <controls:DataGrid ItemsSource="{Binding Items}" HorizontalOptions="Center" Margin="30" />
+ <controls:DataGrid ItemsSource="{Binding Items}" UseAutoColumns="True" Margin="30" />
 ```
-
-![MAUI datagrid](images/datagrid-demo.png)
+|Light - Desktop | Dark - Mobile|
+| :---: | :---: |
+| ![MAUI datagrid](images/datagrid-demo.png) | ![](images/datagrid-demo-android.png) |
 
 
 ## Customizations
 
-### Columns
-Columns are automatically detected by **DataGrid**. It uses reflection to get properties of the data source. You can customize the columns by using following attributes.
+### CellItemTemplate
 
-_... coming soon ..._
+You can customize the cell item template by using `CellItemTemplate` property. It is a `DataTemplate` that is used to render each cell item. You can use `DataGridCellItem` as the root element of the template. It has a `DataContext` of the cell item. You can use `Binding` to bind the properties of the cell item.
+
+You can use any property of [CellBindingContext](#cellbindingcontext) object inside DataTemplate.
+
+```xml
+<material:DataGrid ItemsSource="{Binding Items}" UseAutoColumns="True" HorizontalOptions="Center">
+	<material:DataGrid.CellItemTemplate>
+		<DataTemplate>
+			<VerticalStackLayout VerticalOptions="Center">
+				<Label Text="{Binding Value}" TextColor="Red" />
+				<Label Text="{Binding Row,StringFormat='Row:{0}'}" />
+				<Label Text="{Binding Column,StringFormat='Column:{0}'}" />                                
+			</VerticalStackLayout>
+		</DataTemplate>
+	</material:DataGrid.CellItemTemplate>
+</material:DataGrid>
+```
+
+![MAUI DataGrid Cell Item Template](images/datagrid-cellitemtemplate.png)
+
+### Columns
+
+
+#### Auto Columns
+Columns are automatically detected by **DataGrid** when `UseAutoColumns` property is set as `True`. It uses reflection to get properties of the data source. You can use DataAnnosations attributes to define Title of column in auto mode. Adding `[DisplayName]` attribute to the property will define the title of the column.
+
+```csharp
+[DisplayName("Identity Number")]
+public int Id { get; set; }
+```
+
+![MAUI Datagrid header](images/datagrid-displayname.png)
+
+
+#### Custom Columns
+You can also define columns manually by adding `DataGridColumn` to `Columns` property of **DataGrid**.
+`UseAutoColumns` must be false. You can remove it from XAML. Its default value is `false`.
+
+
+```xml
+<material:DataGrid ItemsSource="{Binding Items}" HorizontalOptions="Center" Margin="30">
+	<material:DataGrid.Columns>
+		<material:DataGridColumn PropertyName="Name" Title="Student Name"/>
+
+		<material:DataGridColumn PropertyName="Age" Title="Student Age"/>
+
+		<material:DataGridColumn PropertyName="Id" Title="Identity" />
+	</material:DataGrid.Columns>
+</material:DataGrid>
+```
+
+An ItemTemplate can be defined for each column via using `CellItemTemplate` property of `DataGridColumn` class.
+
+```xml
+<material:DataGrid ItemsSource="{Binding Items}" HorizontalOptions="Center" Margin="30">
+	<material:DataGrid.Columns>
+		<material:DataGridColumn PropertyName="Name" Title="Student Name"/>
+
+		<material:DataGridColumn PropertyName="Age" Title="Student Age">
+			<material:DataGridColumn.CellItemTemplate>
+				<DataTemplate>
+					<Frame BorderColor="Blue" BackgroundColor="Transparent" Padding="5" >
+						<Label Text="{Binding Value}" TextColor="Blue" />
+					</Frame>
+				</DataTemplate>
+			</material:DataGridColumn.CellItemTemplate>
+		</material:DataGridColumn>
+
+		<material:DataGridColumn PropertyName="Id" Title="Identity" />
+
+	</material:DataGrid.Columns>
+</material:DataGrid>
+```
+
+![MAUI DataGrid Custom Columns](images/datagrid-colum-template.png)
+
+
+Columns are not limited to the properties of the data source. You can also use custom columns without any property mapping. You can use `CellItemTemplate` to define the content of the column. That column will be rendered and [CellBindingContext](#cellbindingcontext) will be passed to the template. You can use `Data` property of `CellBindingContext` to get the data of current row.
+
+
+```xml
+<material:DataGrid ItemsSource="{Binding Items}" HorizontalOptions="Center" Margin="30">
+	<material:DataGrid.Columns>
+		<material:DataGridColumn PropertyName="Name" Title="Student Name"/>
+
+		<!-- This is a custom column without a property. -->
+		<material:DataGridColumn Title="Actions" >
+			<material:DataGridColumn.CellItemTemplate>
+				<DataTemplate>
+					<Button Text="Remove"
+							Command="{Binding Source={x:Reference page}, Path=BindingContext.RemoveItemCommand}"
+							CommandParameter="{Binding Data}"/>
+				</DataTemplate>
+			</material:DataGridColumn.CellItemTemplate>
+		</material:DataGridColumn>
+
+	</material:DataGrid.Columns>
+</material:DataGrid>
+```
+
+![MAUI DataGrid Custom Columns](images/datagrid-delete-sample.gif)
+
+
+## Tips
+
+You can place an activity indicator inside the DataGrid to show loading state if you make a network call to get data.
+
+```xml
+<material:DataGrid ItemsSource="{Binding Items}" HorizontalOptions="Center">
+	<ActivityIndicator IsRunning="{Binding IsBusy}" Margin="40" />
+</material:DataGrid>
+```
+
+![MAUI DataGrid Loading](images/datagrid-tips-indicator.gif)
+
+## Data
+
+### CellBindingContext
+`CellBindingContext` is an object that is used as the `DataContext` of the `CellItemTemplate`. It has the following properties:
+
+| Property | Description |
+| :--- | :--- |
+| `Data` | The data of the cell item. |
+| `Column` | The column number of the cell item. |
+| `Row` | The row number of the cell item. |
+| `Value` | The value of the cell item. _(You can bind it to the label directly)_ |
+
+### DataGridColumn
+`DataGridColumn` is a class that is used to define a column of **DataGrid**. It has the following properties:
+
+- `Title`: It's used in header of the column.
+- `CellItemTemplate`: It's used to define the template of the cell item of the column.
+- `PropertyName`: It's used to define the property of the data source that is used to get the value of the cell item. You can leave it empty if you want to use a custom column.

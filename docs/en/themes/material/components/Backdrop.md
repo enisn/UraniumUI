@@ -79,4 +79,3 @@ private void OnButtonClicked(object sender, EventArgs e)
     backdrop.IsPresented = true;
 }
 ```
-

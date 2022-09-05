@@ -103,8 +103,6 @@ public partial class DataGrid : Frame
                 Render();
                 break;
         }
-
-
     }
 
     protected virtual void SetAutoColumns()
@@ -114,7 +112,7 @@ public partial class DataGrid : Frame
             Columns = CurrentType?.GetProperties(BindingFlags.Instance | BindingFlags.Public)
                 .Select(s => new DataGridColumn
                 {
-                    Title = s.PropertyType.GetCustomAttribute<DisplayNameAttribute>()?.DisplayName ?? s.Name,
+                    Title = s.GetCustomAttribute<DisplayNameAttribute>()?.DisplayName ?? s.Name,
                     PropertyName = s.Name,
                     PropertyInfo = s,
                 }).ToList();

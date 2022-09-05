@@ -2,19 +2,21 @@
 # Uranium UI Kit
 Uranium is a UI Kit for .NET MAUI. It provides a set of controls and utilities to build modern applications. It is built on top of the .NET MAUI infrastructure and provides a set of controls and layouts to build modern UIs. It also provides infrastructure for building custom controls and themes on it.
 
+- Visit [Documentation](https://enisn-projects.io/docs/en/uranium/latest)
+
  ## Getting Started
 Visit documentation for onboarding.
 
-- [Getting Started](docs/en/Getting-Started.md)
+- [Getting Started](https://enisn-projects.io/docs/en/uranium/latest/Getting-Started)
 
 ## Features
 
 - **Theming**: Allows you build themes and customize existing themes easily.
-  - [Material Theme](docs/en/themes/material/Index.md)
+  - [Material Theme](https://enisn-projects.io/docs/en/uranium/latest/themes/material/Index)
 
 - Font Icons
-  - [FontAwesome](docs/en/theming/Icons.md#fontawesome)
-  - [Material](docs/en/theming/Icons.md#material-icons)
+  - [FontAwesome](https://enisn-projects.io/docs/en/uranium/latest/theming/Icons#fontawesome)
+  - [Material](https://enisn-projects.io/docs/en/uranium/latest/theming/Icons#material-icons)
 
 - Pre-Built Components
 - Startup Templates

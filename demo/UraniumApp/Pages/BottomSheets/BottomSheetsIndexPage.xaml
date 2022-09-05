@@ -8,9 +8,6 @@
             <VerticalStackLayout Padding="25" Spacing="10" MaximumWidthRequest="400">
                 <Button Text="Regular" Clicked="GoToRegular" />
                 <Button Text="Expanding" Clicked="GoToExpanding" />
-
-
-                <Image Source="https://dummyimage.com/600x400/000/fff" HeightRequest="150" WidthRequest="100" />
             </VerticalStackLayout>
         </ScrollView>
     </ContentPage.Content>

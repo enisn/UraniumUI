@@ -6,7 +6,7 @@
                     xmlns:controls="clr-namespace:UraniumUI.Material.Controls">
 
     <Color x:Key="Primary">#52D681</Color>
-    <Color x:Key="OnPrimary">#fff</Color> 
+    <Color x:Key="OnPrimary">#fff</Color>
     <Color x:Key="PrimaryContainer">#FFF8B5</Color>
     <Color x:Key="OnPrimaryContainer">#00AD7C</Color>
 
@@ -88,8 +88,13 @@
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource Background}}" />
     </Style>
 
+    <Style TargetType="Frame" ApplyToDerivedTypes="True">
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Surface}, Dark={StaticResource OnSurface}}" />
+    </Style>
+
     <Style TargetType="controls:DataGrid">
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Surface}, Dark={StaticResource OnSurface}}" />
         <Setter Property="LineSeperatorColor" Value="{StaticResource Gray300}"/>
     </Style>
-    
+
 </ResourceDictionary>

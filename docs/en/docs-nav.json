@@ -5,58 +5,53 @@
       "path": "Getting-Started.md"
     },
     {
-        "text":"Infrastructure",
-        "items":[
-            {
-                "text":"Uranium Content Page",
-                "path":"infrastructure/UraniumContentPage.md"
-            }
-        ]
+      "text": "Infrastructure",
+      "items": [
+        {
+          "text": "Uranium Content Page",
+          "path": "infrastructure/UraniumContentPage.md"
+        }
+      ]
     },
     {
-        "text": "Theming",
-        "items":[
-            {
-                "text":"Color System",
-                "path": "theming/ColorSystem.md"
-            },
-            {
-                "text":"Icons",
-                "path": "theming/Icons.md"
-            },
-            {
-                "text": "Creating a Theme",
-                "path": "theming/CreatingTheme.md"
-            }
-        ]
+      "text": "Theming",
+      "items": [
+        {
+          "text": "Color System",
+          "path": "theming/ColorSystem.md"
+        },
+        {
+          "text": "Icons",
+          "path": "theming/Icons.md"
+        },
+        {
+          "text": "Creating a Theme",
+          "path": "theming/CreatingTheme.md"
+        }
+      ]
     },
     {
-        "text": "Themes",
-        "items": [
+      "text": "Material Theme",
+      "path": "themes/material/Index.md",
+      "items": [
+        {
+          "text": "Attachments",
+          "items": [
             {
-                "text": "Material Theme",
-                "path": "themes/material/Index.md",
-                "items":[
-                    {
-                        "text": "Attachments",
-                        "items":[
-                            {
-                                "text": "Bottom Sheet",
-                                "path": "themes/material/components/BottomSheet.md"
-                            },
-                            {
-                                "text": "Backdrop",
-                                "path": "themes/material/components/Backdrop.md"
-                            }
-                        ]
-                    },
-                    {
-                        "text": "Components",
-                        "path": "themes/material/components/DataGrid.md",
-                    }
-                ]
+              "text": "Bottom Sheet",
+              "path": "themes/material/components/BottomSheet.md"
+            },
+            {
+              "text": "Backdrop",
+              "path": "themes/material/components/Backdrop.md"
             }
-        ]
+          ]
+        },
+        {
+          "text": "Components",
+          "path": "themes/material/components/DataGrid.md"
+        }
+      ]
     }
   ]
 }

@@ -49,7 +49,12 @@
         },
         {
           "text": "Components",
-          "path": "themes/material/components/DataGrid.md"
+          "items":[
+            {
+                "text": "DataGrid",
+                "path" : "themes/material/components/DataGrid.md"
+            }
+          ]
         }
       ]
     }

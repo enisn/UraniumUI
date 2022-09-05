@@ -5,6 +5,11 @@ You may visit [Material Design Backdrops](https://material.io/components/backdro
 
 ![material-design-backdrop](https://lh3.googleusercontent.com/R0GNFwPjno-UZka0vD60M8njUalePNGn_nCl7_9vkzzb9GofDEkCXO7HuSdcI7Ajs2XTuuioOj8ygk8lc2tnolBQ93PK8j-khbjKWA=w1064-v0)
 
+
+| Regular Implementation |
+| --- |
+| ![MAUI Material Design backdrop](images/backdrop-demo.gif) |
+
 ## Usage
 Backdrop is an [attachment](../../../infrastructure/UraniumContentPage.md#attachments) of [UraniumContentPage](../../../infrastructure/UraniumContentPage.md). So, it can be used only together with UraniumContentPage.
 
@@ -48,3 +53,29 @@ Both of `Title` and `IconImageSource` is used to add a toolbaritem. If you set `
 
 
 #### IsPresented
+`IsPresented` is used to show/hide the Backdrop. If you set it to `true`, Backdrop will be shown. If you set it to `false`, Backdrop will be hidden. It's a bindable property, you can even bind it in XAML page. You can define `x:Name` for the bottom sheet and use it in your code.
+
+
+```xml
+<uranium:UraniumContentPage x:Class="App1.MainPage"
+            xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:uranium="clr-namespace:UraniumUI.Pages;assembly=UraniumUI"
+            xmlns:material="clr-namespace:UraniumUI.Material.Attachments;assembly=UraniumUI.Material">
+
+    <!-- Content here -->
+
+    <uranium:UraniumContentPage.Attachments>
+        <material:BackdropView x:Name="backdrop" Title="Filter" IconImageSource="filter.png">
+            <!-- ... -->
+        </material:BackdropView>
+    </uranium:UraniumContentPage.Attachments>
+</uranium:UraniumContentPage>
+```
+
+```csharp
+private void OnButtonClicked(object sender, EventArgs e)
+{
+    backdrop.IsPresented = true;
+}
+```

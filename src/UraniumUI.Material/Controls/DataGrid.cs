@@ -103,8 +103,6 @@ public partial class DataGrid : Frame
                 Render();
                 break;
         }
-
-
     }
 
     protected virtual void SetAutoColumns()
@@ -114,7 +112,7 @@ public partial class DataGrid : Frame
             Columns = CurrentType?.GetProperties(BindingFlags.Instance | BindingFlags.Public)
                 .Select(s => new DataGridColumn
                 {
-                    Title = s.PropertyType.GetCustomAttribute<DisplayNameAttribute>()?.DisplayName ?? s.Name,
+                    Title = s.GetCustomAttribute<DisplayNameAttribute>()?.DisplayName ?? s.Name,
                     PropertyName = s.Name,
                     PropertyInfo = s,
                 }).ToList();
@@ -202,8 +200,23 @@ public partial class DataGrid : Frame
 
     protected virtual void RemoveRow(int row)
     {
-        
+        var actualRow = row * 2;
+
+        for (int i = 0; i < _rootGrid.Children.Count; i++)
+        {
+            if (Grid.GetRow(_rootGrid.Children[i] as View) == actualRow)
+            {
+                _rootGrid.Children.RemoveAt(i);
+                i--;
+            }
+        }
+
+        if (_rootGrid.LastOrDefault() is BoxView box)
+        {
+            _rootGrid.Remove(box);
+        }
     }
+    
     protected virtual void AddSeparator(int row)
     {
         var line = HorizontalLineFactory() ?? CreateHorizontalLine();

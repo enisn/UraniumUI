@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,6 +25,7 @@ public class SimpleDataGridPageViewModel : BindableObject
     }
 	public class Student
 	{
+		[DisplayName("Identity Number")]
 		public int Id { get; set; }
 		public string Name { get; set; }
 		public int Age { get; set; }

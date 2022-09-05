@@ -16,4 +16,9 @@ public partial class DataGridsIndexPage : ContentPage
     {
         Navigation.PushAsync(new CustomDataGridPage());
     }
+
+    private void GoToSelectableDataGrid(object sender, EventArgs e)
+    {
+        Navigation.PushAsync(new SelectableDataGridPage());
+    }
 }

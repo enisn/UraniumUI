@@ -5,7 +5,6 @@ There are 2 ways to get started with Uranium UI:
 - Existing Projects
 - New projects
 
-
 ## New Projects
 
 Uranium UI provides a project template to start a new project with Uranium UI. You can customize the startup project with parameters like icon library, theme, and more.
@@ -20,6 +19,11 @@ Uranium UI provides a project template to start a new project with Uranium UI. Y
   dotnet new uraniumui -n MyProject
   ```
 
+### Visual Studio
+Also, templates has `ide.host.json` implementation that allows to create a new project from Visual Studio.
+
+![Uranium UI Visual Studio](images/getting-started-visual-studio.gif)
+
 ### Parameters
 
 - `icons`: Defines icon library to use. Default is `FontAwesome`. Available values are `FontAwesome`, `Material`, and `None`.
@@ -27,7 +31,14 @@ Uranium UI provides a project template to start a new project with Uranium UI. Y
     Example: `dotnet new uraniumui -n MyProject -icons FontAwesome`
 
 ## Existing Projects
-- Install the [UraniumUI](https://www.nuget.org/packages/UraniumUI/) NuGet package.
+- Install the [UraniumUI.Material](https://www.nuget.org/packages/UraniumUI.Material/) NuGet package to your MAUI application.
+    ```bash
+    dotnet add package UraniumUI.Material
+    ```
+
+    > Uranium UI doesn't include any theme by default. Pick one of the themes and install it. Since there is only one theme for now, you can install [UraniumUI.Material](https://www.nuget.org/packages/UraniumUI.Material/) directly instead of installing both **UraniumUI** and **UraniumUI.Material**.
+
+
 
 - Go to `MauiProgram.cs` and add UraniumUI Handlers
 
@@ -38,7 +49,8 @@ Uranium UI provides a project template to start a new project with Uranium UI. Y
     });
     ```
 
-- Uranium UI doesnt include any theme by default. Pick one of the themes and install it. Since there is only one theme for now, you can install [UraniumUI.Material](https://www.nuget.org/packages/UraniumUI.Material/)
+
+
 
 - Go to `App.xaml` and add `ThemeResource` of **Material**
     - Define following xml namespace: `xmlns:material="clr-namespace:UraniumUI.Material.Resources;assembly=UraniumUI.Material"`
@@ -69,5 +81,5 @@ Uranium UI provides a project template to start a new project with Uranium UI. Y
   -  [FontAwesome](theming/Icons.md#fontawesome)
   -  [Material](theming/Icons.md#material-icons)
 
-## Themes avaialble
-    - [Material Theme](themes/material/Index.md)
+## Themes available
+ - [Material Theme](themes/material/Index.md)

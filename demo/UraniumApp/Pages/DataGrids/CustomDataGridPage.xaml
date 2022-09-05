@@ -18,19 +18,19 @@
                     <Button Grid.Column="2" Command="{Binding AddNewCommand}" Text="Add" BackgroundColor="{StaticResource Primary}" TextColor="{StaticResource OnPrimary}"/>
                 </Grid>
 
-
                 <Label Text="Fully Defined Columns:" />
+
+
+
                 <material:DataGrid ItemsSource="{Binding Items}" HorizontalOptions="Center" Margin="30">
 
-                    <ActivityIndicator IsRunning="True" Margin="40" />
+                    <ActivityIndicator IsRunning="{Binding IsBusy}" Margin="40" />
 
                     <material:DataGrid.Columns>
                         <material:DataGridColumn PropertyName="Name" Title="Student Name">
                             <material:DataGridColumn.CellItemTemplate>
                                 <DataTemplate>
-                                    <Frame>
-                                        <Label Text="{Binding Value}" TextColor="Red" />
-                                    </Frame>
+                                    <Label Text="{Binding Value}" TextColor="Red" HorizontalOptions="Center" VerticalOptions="Center" Margin="0" />
                                 </DataTemplate>
                             </material:DataGridColumn.CellItemTemplate>
                         </material:DataGridColumn>
@@ -38,7 +38,7 @@
                         <material:DataGridColumn PropertyName="Age" Title="Student Age">
                             <material:DataGridColumn.CellItemTemplate>
                                 <DataTemplate>
-                                    <Frame BorderColor="Blue">
+                                    <Frame BorderColor="Blue" BackgroundColor="Transparent" Padding="5" >
                                         <Label Text="{Binding Value}" TextColor="Blue" />
                                     </Frame>
                                 </DataTemplate>

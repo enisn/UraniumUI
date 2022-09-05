@@ -6,6 +6,7 @@
     <ContentPage.Content>
         <StackLayout Padding="25" Spacing="10" MaximumWidthRequest="400">
             <Button Text="Simple DataGrid" Clicked="GoToSimpleDataGrid" />
+            <Button Text="Custom DataGrid" Clicked="GoToCustomDataGrid" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

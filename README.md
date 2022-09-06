@@ -1,6 +1,6 @@
 ![MAUI Uranium UI Kit](art/logo.svg)
 # Uranium UI Kit
-Uranium is a UI Kit for .NET MAUI. It provides a set of controls and utilities to build modern applications. It is built on top of the .NET MAUI infrastructure and provides a set of controls and layouts to build modern UIs. It also provides infrastructure for building custom controls and themes on it.
+Uranium is a Free & Open-Source UI Kit for .NET MAUI. It provides a set of controls and utilities to build modern applications. It is built on top of the .NET MAUI infrastructure and provides a set of controls and layouts to build modern UIs. It also provides infrastructure for building custom controls and themes on it.
 
 - Visit [Documentation](https://enisn-projects.io/docs/en/uranium/latest)
 

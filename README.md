@@ -34,6 +34,7 @@ Visit documentation for onboarding.
   - [x] FontAwesome
   - [x] Material Icons
 - [x] DataGrid
+- [x] SelectableText
 - [ ] SegmentedControl
 - [ ] Slider (Header, with dots)
 - [ ] Chips (multiple selection)

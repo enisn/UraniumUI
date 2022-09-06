@@ -21,10 +21,10 @@ Visit documentation for onboarding.
 - Pre-Built Components
 - Startup Templates
 
-| - | - | - |
-| --- | --- | --- |
-| ![MAUI Material Design](docs/en/themes/material/components/images/backdrop-demo.gif) | ![MAUI Material Design Bottom Sheer](docs/en/themes/material/components/images/bottomsheet-expanding-demo.gif) | ![](docs/en/themes/material/components/images/bottomsheet-regular-demo.gif) |
-| ![MAUI DataGrid](docs\en\themes\material\components\images\datagrid-delete-sample.gif) | ![MAUI Datagrid](docs\en\themes\material\components\images\datagrid-demo.png) | - |
+| - | - |
+| --- | --- |
+| ![MAUI Material Design](docs/en/themes/material/components/images/backdrop-demo.gif) | ![MAUI Material Design Bottom Sheer](docs/en/themes/material/components/images/bottomsheet-expanding-demo.gif) | 
+| ![MAUI Material Design BottomSheet](docs/en/themes/material/components/images/bottomsheet-regular-demo.gif) | ![MAUI DataGrid](docs/en/themes/material/components/images/datagrid-delete-sample.gif) | ![MAUI Datagrid](docs\en\themes\material\components\images\datagrid-demo.png) | - |
 
 ## Roadmap
 

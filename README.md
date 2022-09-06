@@ -44,6 +44,7 @@ Visit documentation for onboarding.
 - [ ] Cards (Head, Body, Footer) 
 - [ ] TreeView
 - [ ] TabView (with Custom DataTemplate)
+- [ ] CalendarView
 
 - [ ] SelectionView 
 - [ ] BadgeView

@@ -14,6 +14,8 @@ public partial class BottomSheetView : Frame, IPageAttachment
 
     public View Header { get; set; }
 
+    private TapGestureRecognizer closeGestureRecognizer = new();
+
     public void OnAttached(UraniumContentPage page)
     {
         Init();
@@ -48,7 +50,10 @@ public partial class BottomSheetView : Frame, IPageAttachment
         var tapGestureRecognizer = new TapGestureRecognizer();
         tapGestureRecognizer.Tapped += (s, e) => IsPresented = !IsPresented;
         Header.GestureRecognizers.Add(tapGestureRecognizer);
+        Header.BackgroundColor = this.BackgroundColor;
         AlignBottomSheet(false);
+
+        closeGestureRecognizer.Tapped += (s, e) => IsPresented = false;
     }
 
     protected virtual View GenerateAnchor()
@@ -64,11 +69,26 @@ public partial class BottomSheetView : Frame, IPageAttachment
                 WidthRequest = 50,
                 Color = this.BackgroundColor?.ToSurfaceColor() ?? Colors.Gray,
                 HorizontalOptions = LayoutOptions.Center,
-                InputTransparent = true,
             }
         };
 
         return anchor;
+    }
+
+    protected virtual void OnOpened()
+    {
+        if (CloseOnTapOutside)
+        {
+            AttachedPage?.ContentFrame?.GestureRecognizers.Add(closeGestureRecognizer);
+        }
+    }
+
+    protected virtual void OnClosed()
+    {
+        if (CloseOnTapOutside)
+        {
+            AttachedPage?.ContentFrame?.GestureRecognizers.Remove(closeGestureRecognizer);
+        }
     }
 
     private void PanGestureRecognizer_PanUpdated(object sender, PanUpdatedEventArgs e)
@@ -104,6 +124,11 @@ public partial class BottomSheetView : Frame, IPageAttachment
         if (IsPresented)
         {
             y = 0;
+            OnOpened();
+        }
+        else
+        {
+            OnClosed();
         }
 
         if (animate)

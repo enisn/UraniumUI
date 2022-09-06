@@ -117,3 +117,12 @@ To use a custom header bottom sheet, you should add a `BottomSheet` to `UraniumC
 ```
 
 _It might be useful if you use bottom sheet for something like filtering the content of page._
+
+### CloseOnTapOutside
+`BottomSheetView.CloseOnTapOutside` property is used to close the bottom sheet when user taps outside of it. It is `true` by default. You can set it to `false` to disable it. It's a bindable property.
+
+```xml
+    <material:BottomSheetView CloseOnTapOutside="false">
+        <!-- Bottom Sheet Content here -->
+    </material:BottomSheetView>
+``` 

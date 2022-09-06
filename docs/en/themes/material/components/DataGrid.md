@@ -1,8 +1,8 @@
 # DataGrid
-DataGrid is a table to present complicated data.
+DataGrid displays sets of data across rows and columns.
 
 ## Getting Started
-DataGrid is included in the `Uranium.UI.Controls` namespace. You can add it to your XAML like this:
+DataGrid is included in the `UraniumUI.Material.Controls` namespace. You can add it to your XAML like this:
 
 ```
 xmlns:controls="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"

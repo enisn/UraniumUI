@@ -2,10 +2,23 @@
 <ContentPage x:Class="UraniumApp.Pages.DataGrids.SelectableDataGridPage"
              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:UraniumApp.Pages.DataGrids">
+             xmlns:local="clr-namespace:UraniumApp.Pages.DataGrids"
+             xmlns:material="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material">
+    <ContentPage.BindingContext>
+        <local:SelectableDataGridPageViewModel />
+    </ContentPage.BindingContext>
     <ContentPage.Content>
         <ScrollView>
             <StackLayout>
+                <Button Text="Delete Selected" Command="{Binding RemoveSelectedCommand}" Margin="30" HorizontalOptions="Center" />
+                <material:DataGrid ItemsSource="{Binding Items}" SelectedItems="{Binding SelectedItems}" HorizontalOptions="Center" Margin="30">
+                    <material:DataGrid.Columns>
+                        <material:DataGridSelectionColumn />
+                        <material:DataGridColumn PropertyName="Id" Title="Identity" />
+                        <material:DataGridColumn PropertyName="Name" Title="Name" />
+                        <material:DataGridColumn PropertyName="Age" Title="Age" />
+                    </material:DataGrid.Columns>
+                </material:DataGrid>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

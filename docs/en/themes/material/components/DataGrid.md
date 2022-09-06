@@ -152,6 +152,65 @@ Columns are not limited to the properties of the data source. You can also use c
 
 ![MAUI DataGrid Custom Columns](images/datagrid-delete-sample.gif)
 
+## Selection
+DataGrid supports multiple row selection. You can add `DataGridSelectionColumn` column to enable selection. Selected Items can be accessed via `SelectedItems` property of **DataGrid**. You can bind it to a property of your ViewModel.
+
+```xml
+<material:DataGrid ItemsSource="{Binding Items}" SelectedItems="{Binding SelectedItems}">
+	<material:DataGrid.Columns>
+		<material:DataGridSelectionColumn />
+		<material:DataGridColumn PropertyName="Id" Title="Identity" />
+		<material:DataGridColumn PropertyName="Name" Title="Name" />
+		<material:DataGridColumn PropertyName="Age" Title="Age" />
+	</material:DataGrid.Columns>
+</material:DataGrid>
+```
+
+| Dark - Desktop | Light - Mobile |
+| :---: | :---: |
+| ![MAUI DataGrid Selection](images/datagrid-selection-windows.gif) | ![MAUI DataGrid Selection android](images/datagrid-selection-android.gif)
+
+
+**SelectedItems** can be handled with `ObservableCollection` over `IList` interface. So you can use `INotifyCollectionChanged` to handle changes in selection. The bound list will be automatically updated. _You don't need to register to `CollectionChanged` event of `SelectedItems` property._
+	
+
+```csharp
+public class MainViewModel
+{
+    public ObservableCollection<Student> Items { get; set; }
+    public ObservableCollection<Student> SelectedItems { get; set; } = new ObservableCollection<Student>();
+    public ICommand RemoveSelectedCommand { get; set; }
+    
+    public MainViewModel()
+    {
+        Items = new ObservableCollection<Student>(GetStudents());
+        
+        RemoveSelectedCommand = new Command(() =>
+        {
+            foreach (var item in SelectedItems)
+            {
+                Items.Remove(item);
+            }
+        });
+    }
+}
+```
+
+```xml
+<StackLayout>
+	<Button Text="Delete Selected" Command="{Binding RemoveSelectedCommand}" />
+	<material:DataGrid ItemsSource="{Binding Items}" SelectedItems="{Binding SelectedItems}">
+		<material:DataGrid.Columns>
+			<material:DataGridSelectionColumn />
+			<material:DataGridColumn PropertyName="Id" Title="Identity" />
+			<material:DataGridColumn PropertyName="Name" Title="Name" />
+			<material:DataGridColumn PropertyName="Age" Title="Age" />
+		</material:DataGrid.Columns>
+	</material:DataGrid>
+</StackLayout>
+```
+
+![MAUI DataGrid Selection Deletion](images/datagrid-selection-deletion.gif)
 
 ## Tips
 

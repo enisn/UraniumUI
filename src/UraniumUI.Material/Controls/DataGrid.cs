@@ -8,15 +8,18 @@ namespace UraniumUI.Material.Controls;
 
 public partial class DataGrid : Frame
 {
-    private Grid _rootGrid = new Grid();
+    private Grid _rootGrid;
+
     public Type CurrentType { get; protected set; }
 
     public DataGrid()
     {
+        this.Content = _rootGrid = new Grid
+        {
+            HorizontalOptions = LayoutOptions.Fill
+        };
         InitializeFactoryMethods();
-        _rootGrid.HorizontalOptions = LayoutOptions.Fill;
         this.Padding = new Thickness(0, 10);
-        this.Content = _rootGrid;
     }
 
     private void OnItemSourceSet(IList oldSource, IList newSource)
@@ -51,6 +54,38 @@ public partial class DataGrid : Frame
 
     private void ItemsSource_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
     {
+        //switch (e.Action)
+        //{
+        //    case NotifyCollectionChangedAction.Add:
+        //        {
+        //            SlideRow(e.NewStartingIndex, e.NewItems.Count);
+
+        //            for (int i = 0; i < e.NewItems.Count; i++)
+        //            {
+        //                AddRow(e.NewStartingIndex, e.NewItems[i], e.NewStartingIndex + i == ItemsSource.Count);
+        //            }
+
+        //            ConfigureGridRowDefinitions(ItemsSource.Count + 1);
+        //        }
+        //        break;
+        //    case NotifyCollectionChangedAction.Remove:
+        //        {
+
+        //            for (int i = 0; i < e.OldItems.Count; i++)
+        //            {
+        //                RemoveRow(i);
+        //            }
+
+        //           /SlideRow(e.OldStartingIndex + e.OldItems.Count, (-1 * e.OldItems.Count));
+
+        //            ConfigureGridRowDefinitions(ItemsSource.Count + 1);
+        //        }
+        //        break;
+        //    default:
+        //        // TODO: Optimize
+        //        Render();
+        //        break;
+        //}
         Render();
     }
 
@@ -76,33 +111,7 @@ public partial class DataGrid : Frame
 
     private void Columns_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
     {
-        switch (e.Action)
-        {
-            case NotifyCollectionChangedAction.Add:
-                {
-                    SlideRow(e.NewStartingIndex, e.NewItems.Count);
-
-                    for (int i = 0; i < e.NewItems.Count; i++)
-                    {
-                        AddRow(e.NewStartingIndex, e.NewItems[i], e.NewStartingIndex + i == ItemsSource.Count);
-                    }
-                }
-                break;
-            case NotifyCollectionChangedAction.Remove:
-                {
-                    for (int i = 0; i < e.OldItems.Count; i++)
-                    {
-                        RemoveRow(i);
-                    }
-
-                    SlideRow(e.OldStartingIndex, -1 * (e.OldStartingIndex + e.OldItems.Count));
-                }
-                break;
-            default:
-                // TODO: Optimize
-                Render();
-                break;
-        }
+        Render();
     }
 
     protected virtual void SetAutoColumns()
@@ -130,7 +139,8 @@ public partial class DataGrid : Frame
 
         var tableHeaderRows = 1;
         ResetGrid();
-        ConfigureGridDefinitions(ItemsSource.Count + tableHeaderRows, Columns.Count);
+        ConfigureGridColumnDefinitions(Columns.Count);
+        ConfigureGridRowDefinitions(ItemsSource.Count + tableHeaderRows);
 
         AddTableHeaders();
 
@@ -148,8 +158,7 @@ public partial class DataGrid : Frame
     {
         _rootGrid.Clear();
         _rootGrid.Children.Clear();
-        _rootGrid.RowDefinitions.Clear();
-        _rootGrid.ColumnDefinitions.Clear();
+
         if (this.Content != _rootGrid)
         {
             this.Content = _rootGrid;
@@ -169,7 +178,6 @@ public partial class DataGrid : Frame
             };
             _rootGrid.Add(label, column: i, row: 0);
         }
-
         AddSeparator(1);
     }
 
@@ -219,11 +227,14 @@ public partial class DataGrid : Frame
                 i--;
             }
         }
+        _rootGrid.RowDefinitions.RemoveAt(0);
 
         if (_rootGrid.LastOrDefault() is BoxView box)
         {
             _rootGrid.Remove(box);
+            _rootGrid.RowDefinitions.RemoveAt(0);
         }
+
     }
 
     protected virtual void AddSeparator(int row)
@@ -234,16 +245,21 @@ public partial class DataGrid : Frame
         _rootGrid.Add(line, 0, row);
     }
 
-    private void ConfigureGridDefinitions(int rows, int columns)
+    private void ConfigureGridColumnDefinitions(int columns)
     {
-        for (int i = 0; i < (rows + (rows - 1)); i++)
-        {
-            _rootGrid.AddRowDefinition(new RowDefinition(GridLength.Star));
-        }
-
+        _rootGrid.ColumnDefinitions.Clear();
         for (int i = 0; i < columns; i++)
         {
             _rootGrid.AddColumnDefinition(new ColumnDefinition(GridLength.Auto));
+        }
+    }
+
+    private void ConfigureGridRowDefinitions(int rows)
+    {
+        _rootGrid.RowDefinitions.Clear();
+        for (int i = 0; i < (rows + (rows - 1)); i++)
+        {
+            _rootGrid.AddRowDefinition(new RowDefinition(GridLength.Star));
         }
     }
 
@@ -325,6 +341,11 @@ public partial class DataGrid : Frame
 
     protected void SetSelectionVisualStatesForAll()
     {
+        if (_rootGrid is null)
+        {
+            return;
+        }
+
         foreach (View child in _rootGrid.Children)
         {
             SetSelectionVisualStates(child);

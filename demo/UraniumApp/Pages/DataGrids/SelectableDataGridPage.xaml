@@ -5,12 +5,13 @@
              xmlns:local="clr-namespace:UraniumApp.Pages.DataGrids"
              xmlns:material="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material">
     <ContentPage.BindingContext>
-        <local:CustomDataGridPageViewModel />
+        <local:SelectableDataGridPageViewModel />
     </ContentPage.BindingContext>
     <ContentPage.Content>
         <ScrollView>
             <StackLayout>
-                <material:DataGrid ItemsSource="{Binding Items}" HorizontalOptions="Center" Margin="30">
+                <Button Text="Delete Selected" Command="{Binding RemoveSelectedCommand}" Margin="30" HorizontalOptions="Center" />
+                <material:DataGrid ItemsSource="{Binding Items}" SelectedItems="{Binding SelectedItems}" HorizontalOptions="Center" Margin="30">
                     <material:DataGrid.Columns>
                         <material:DataGridSelectionColumn />
                         <material:DataGridColumn PropertyName="Id" Title="Identity" />

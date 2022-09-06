@@ -14,8 +14,11 @@ public class DataGridSelectionColumn : DataGridColumn, IDataGridSelectionColumn
             {
                 VerticalOptions = LayoutOptions.Center,
                 HorizontalOptions = LayoutOptions.Center,
-                Type = CheckBox.CheckType.Filled
+                Type = CheckBox.CheckType.Filled,
+                Margin = 10
             };
+
+            checkBox.Children.Remove(checkBox.Children.FirstOrDefault(x => x is Label));
 
             var contentView = new ContentView
             {

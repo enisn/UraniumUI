@@ -140,14 +140,17 @@ public partial class DataGrid : Frame
 
             AddRow(row, ItemsSource[i], i == ItemsSource.Count - 1);
         }
+
+        RegisterSelectionChanges();
     }
 
     private void ResetGrid()
     {
+        _rootGrid.Clear();
         _rootGrid.Children.Clear();
         _rootGrid.RowDefinitions.Clear();
         _rootGrid.ColumnDefinitions.Clear();
-        if(this.Content != _rootGrid )
+        if (this.Content != _rootGrid)
         {
             this.Content = _rootGrid;
         }
@@ -164,7 +167,6 @@ public partial class DataGrid : Frame
             {
                 Value = Columns[i].Title
             };
-
             _rootGrid.Add(label, column: i, row: 0);
         }
 
@@ -177,9 +179,14 @@ public partial class DataGrid : Frame
 
         for (int columnNumber = 0; columnNumber < Columns.Count; columnNumber++)
         {
-            var view = (View)Columns[columnNumber].CellItemTemplate?.CreateContent()
+            var created = (View)Columns[columnNumber].CellItemTemplate?.CreateContent()
                 ?? (View)CellItemTemplate?.CreateContent()
                 ?? LabelFactory() ?? CreateLabel();
+
+            var view = new ContentView
+            {
+                Content = created
+            };
 
             view.BindingContext = new CellBindingContext
             {
@@ -188,6 +195,8 @@ public partial class DataGrid : Frame
                 Data = item,
                 Value = Columns[columnNumber].PropertyInfo?.GetValue(item)
             };
+
+            SetSelectionVisualStates(view);
 
             _rootGrid.Add(view, columnNumber, row: actualRow);
         }
@@ -216,7 +225,7 @@ public partial class DataGrid : Frame
             _rootGrid.Remove(box);
         }
     }
-    
+
     protected virtual void AddSeparator(int row)
     {
         var line = HorizontalLineFactory() ?? CreateHorizontalLine();
@@ -256,11 +265,107 @@ public partial class DataGrid : Frame
         }
     }
 
-    public class CellBindingContext
+    protected virtual void OnSelectedItemsSet()
     {
-        public int Row { get; set; }
-        public int Column { get; set; }
-        public object Data { get; set; }
-        public object Value { get; set; }
+        UpdateSelections();
+
+        if (SelectedItems is INotifyCollectionChanged observable)
+        {
+            observable.CollectionChanged += (s, e) => UpdateSelections();
+        }
+    }
+
+    protected void UpdateSelections()
+    {
+        foreach (View child in _rootGrid.Children)
+        {
+            if (child.BindingContext is CellBindingContext cellBindingContext)
+            {
+                SetSelected(child, SelectedItems.Contains(cellBindingContext.Data));
+            }
+        }
+    }
+
+    private void RegisterSelectionChanges()
+    {
+        foreach (IDataGridSelectionColumn selection in Columns.Where(x => x is IDataGridSelectionColumn))
+        {
+            selection.SelectionChanged += SelectionChanged;
+        }
+    }
+
+    private void SelectionChanged(object sender, bool isSelected)
+    {
+        if (sender is View view && view.BindingContext is CellBindingContext cellContext)
+        {
+            var actualRow = cellContext.Row * 2;
+
+            foreach (View child in _rootGrid.Children.Where(x => Grid.GetRow(x as View) == actualRow))
+            {
+                SetSelected(child, isSelected);
+            }
+
+            if (isSelected)
+            {
+                SelectedItems?.Add(cellContext.Data);
+            }
+            else
+            {
+                SelectedItems?.Remove(cellContext.Data);
+            }
+
+            OnPropertyChanged(nameof(SelectedItems));
+        }
+    }
+
+    protected virtual void SetSelected(View view, bool isSelected)
+    {
+        VisualStateManager.GoToState(view, isSelected ? "Selected" : "Unselected");
+    }
+
+    protected void SetSelectionVisualStatesForAll()
+    {
+        foreach (View child in _rootGrid.Children)
+        {
+            SetSelectionVisualStates(child);
+        }
+    }
+
+    protected virtual void SetSelectionVisualStates(View view)
+    {
+        VisualStateManager.SetVisualStateGroups(view, new VisualStateGroupList
+        {
+            new VisualStateGroup
+            {
+                Name = "DataGridSelectionStates",
+                States =
+                {
+                    new VisualState
+                    {
+                        Name = "Selected",
+                        Setters =
+                        {
+                            new Setter
+                            {
+                                Property = View.BackgroundColorProperty,
+                                Value = SelectionColor.MultiplyAlpha(0.2f)
+                            }
+                        }
+                    },
+                    new VisualState
+                    {
+                        Name = "Unselected",
+                        Setters =
+                        {
+                            new Setter
+                            {
+                                Property = View.BackgroundColorProperty,
+                                Value = Colors.Transparent
+                            }
+                        }
+                    }
+                }
+            }
+        });
     }
 }

@@ -27,6 +27,10 @@
                     <ActivityIndicator IsRunning="{Binding IsBusy}" Margin="40" />
 
                     <material:DataGrid.Columns>
+                        <material:DataGridColumn>
+                            
+                        </material:DataGridColumn>
+                        
                         <material:DataGridColumn PropertyName="Name" Title="Student Name">
                             <material:DataGridColumn.CellItemTemplate>
                                 <DataTemplate>

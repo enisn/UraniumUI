@@ -104,6 +104,7 @@
     <Style TargetType="controls:DataGrid">
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Surface}, Dark={StaticResource OnSurface}}" />
         <Setter Property="LineSeperatorColor" Value="{StaticResource Gray300}"/>
+        <Setter Property="SelectionColor" Value="{StaticResource Primary}" />
     </Style>
 
 </ResourceDictionary>

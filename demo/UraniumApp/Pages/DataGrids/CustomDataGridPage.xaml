@@ -28,11 +28,37 @@
 
                     <material:DataGrid.Columns>
 
-                        <material:DataGridColumn PropertyName="Name" Title="Student Name" Width="Auto"/>
+                        <material:DataGridColumn PropertyName="Name" Title="Student Name">
+                            <material:DataGridColumn.CellItemTemplate>
+                                <DataTemplate>
+                                    <Label Text="{Binding Value}" TextColor="Red" HorizontalOptions="Center" VerticalOptions="Center" Margin="0" />
+                                </DataTemplate>
+                            </material:DataGridColumn.CellItemTemplate>
+                        </material:DataGridColumn>
 
-                        <material:DataGridColumn PropertyName="Age" Title="Student Age" Width="*"/>
+                        <material:DataGridColumn PropertyName="Age" Title="Student Age">
+                            <material:DataGridColumn.CellItemTemplate>
+                                <DataTemplate>
+                                    <Frame BorderColor="Blue" BackgroundColor="Transparent" Padding="5" >
+                                        <Label Text="{Binding Value}" TextColor="Blue" />
+                                    </Frame>
+                                </DataTemplate>
+                            </material:DataGridColumn.CellItemTemplate>
+                        </material:DataGridColumn>
 
-                        <material:DataGridColumn PropertyName="Id" Title="Identity" Width="100"/>
+                        <material:DataGridColumn PropertyName="Id" Title="Identity" />
+
+                        <material:DataGridColumn Title="Actions" >
+                            <material:DataGridColumn.CellItemTemplate>
+                                <DataTemplate>
+                                    <Button Text="Remove" BackgroundColor="{StaticResource Secondary}" TextColor="{StaticResource OnSecondary}" 
+                                            Command="{Binding Source={x:Reference page}, Path=BindingContext.RemoveItemCommand}"
+                                            CommandParameter="{Binding Data}"
+                                            />
+                                </DataTemplate>
+                            </material:DataGridColumn.CellItemTemplate>
+                        </material:DataGridColumn>
+
 
                     </material:DataGrid.Columns>
                 </material:DataGrid>

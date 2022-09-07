@@ -41,7 +41,7 @@
 
 
 
-            <Frame HasShadow="False" Padding="0,10" HorizontalOptions="Start">
+            <Frame HasShadow="False" Padding="0,10" HorizontalOptions="Start" BackgroundColor="{StaticResource Primary}">
 
                 <Grid ColumnDefinitions="Auto,Auto" RowDefinitions="*,*,*,*,*" RowSpacing="10" ColumnSpacing="20">
                     <Grid.Resources>

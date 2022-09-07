@@ -7,11 +7,10 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-
-                <material:ThemeResource />
-                <!--<ResourceDictionary Source="Resources/Styles/Colors.xaml" />-->
+                <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
+                <material:ColorResource />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
-
+                <material:StyleResource />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

@@ -152,6 +152,25 @@ Columns are not limited to the properties of the data source. You can also use c
 
 ![MAUI DataGrid Custom Columns](images/datagrid-delete-sample.gif)
 
+#### Column Width
+Column width can be defined by using `Width` property of `DataGridColumn` class. It can be set as `Auto`, `Star` or a custom value. Its type is `GridLength` and it'll be passed as parameter to [ColumnDefinition](https://docs.microsoft.com/en-us/dotnet/maui/user-interface/layouts/grid#simplify-row-and-column-definitions). `Auto` is the default value. It will be calculated automatically. `Star` will take the remaining space of the grid. You can also set a custom value. It can be a `double` or a `GridLength`.
+
+```xml
+<material:DataGrid ItemsSource="{Binding Items}" HorizontalOptions="Center" Margin="30">
+	<material:DataGrid.Columns>
+
+		<material:DataGridColumn PropertyName="Name" Title="Student Name" Width="Auto"/>
+
+		<material:DataGridColumn PropertyName="Age" Title="Student Age" Width="Star"/>
+
+		<material:DataGridColumn PropertyName="Id" Title="Identity" Width="100"/>
+
+	</material:DataGrid.Columns>
+</material:DataGrid>
+```
+
+![MAUI DataGrid Column Width](images/datagrid-column-width.png)
+
 ## Selection
 DataGrid supports multiple row selection. You can add `DataGridSelectionColumn` column to enable selection. Selected Items can be accessed via `SelectedItems` property of **DataGrid**. You can bind it to a property of your ViewModel.
 

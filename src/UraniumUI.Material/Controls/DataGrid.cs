@@ -249,9 +249,9 @@ public partial class DataGrid : Frame
     private void ConfigureGridColumnDefinitions(int columns)
     {
         _rootGrid.ColumnDefinitions.Clear();
-        for (int i = 0; i < columns; i++)
+        for (int i = 0; i < Columns.Count; i++)
         {
-            _rootGrid.AddColumnDefinition(new ColumnDefinition(GridLength.Auto));
+            _rootGrid.AddColumnDefinition(new ColumnDefinition(Columns[i].Width));
         }
     }
 

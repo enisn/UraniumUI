@@ -1,6 +1,4 @@
-﻿using Microsoft.Maui.Controls;
-using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -14,6 +12,8 @@ public partial class DataGrid : Frame
 
     public Type CurrentType { get; protected set; }
 
+    public IList<DataGridColumn> Columns { get; protected set; } = new ObservableCollection<DataGridColumn>();
+
     public DataGrid()
     {
         this.Content = _rootGrid = new Grid
@@ -22,6 +22,7 @@ public partial class DataGrid : Frame
         };
         InitializeFactoryMethods();
         this.Padding = new Thickness(0, 10);
+        (Columns as INotifyCollectionChanged).CollectionChanged += Columns_CollectionChanged;
     }
 
     private void OnItemSourceSet(IList oldSource, IList newSource)
@@ -56,6 +57,18 @@ public partial class DataGrid : Frame
 
     private void ItemsSource_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
     {
+        if (ItemsSource.Count == 0)
+        {
+            ResetGrid();
+            return;
+        }
+
+        if (ItemsSource.Count == 1)
+        {
+            Render();
+            return;
+        }
+        
         switch (e.Action)
         {
             case NotifyCollectionChangedAction.Add:
@@ -87,26 +100,6 @@ public partial class DataGrid : Frame
         }
     }
 
-    protected virtual void OnColumnsSet(IList<DataGridColumn> oldValue, IList<DataGridColumn> newValue)
-    {
-        if (oldValue == newValue || CurrentType == null)
-        {
-            return;
-        }
-
-        if (oldValue is INotifyCollectionChanged oldObservable)
-        {
-            oldObservable.CollectionChanged -= Columns_CollectionChanged;
-        }
-
-        if (newValue is INotifyCollectionChanged newObservable)
-        {
-            newObservable.CollectionChanged += Columns_CollectionChanged;
-        }
-
-        Render();
-    }
-
     private void Columns_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
     {
         Render();
@@ -116,6 +109,11 @@ public partial class DataGrid : Frame
     {
         if (UseAutoColumns)
         {
+            if (Columns is INotifyCollectionChanged observable)
+            {
+                observable.CollectionChanged -= Columns_CollectionChanged;
+            }
+            
             Columns = CurrentType?.GetProperties(BindingFlags.Instance | BindingFlags.Public)
                 .Select(s => new DataGridColumn
                 {

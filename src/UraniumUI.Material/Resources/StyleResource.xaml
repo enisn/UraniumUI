@@ -36,18 +36,4 @@
             </Style>
         </ResourceDictionary>
     </ResourceDictionary.MergedDictionaries>
-
-    <!--<Style TargetType="attachments:BottomSheetView">
-        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"/>
-    </Style>
-
-    <Style TargetType="attachments:BackdropView">
-        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Gray950}}"/>
-    </Style>
-
-    <Style TargetType="controls:DataGrid">
-        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Surface}, Dark={StaticResource OnSurface}}" />
-        <Setter Property="LineSeperatorColor" Value="{StaticResource Gray300}"/>
-        <Setter Property="SelectionColor" Value="{StaticResource Primary}" />
-    </Style>-->
 </ResourceDictionary>

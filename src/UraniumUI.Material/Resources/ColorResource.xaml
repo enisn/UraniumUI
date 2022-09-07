@@ -10,7 +10,7 @@
 
         <ResourceDictionary>
 
-            <Color x:Key="Primary">#52D681</Color>
+            <!--<Color x:Key="Primary">#52D681</Color>
             <Color x:Key="OnPrimary">#fff</Color>
             <Color x:Key="PrimaryContainer">#FFF8B5</Color>
             <Color x:Key="OnPrimaryContainer">#00AD7C</Color>
@@ -49,7 +49,7 @@
             <SolidColorBrush x:Key="BackgroundBrush" Color="{StaticResource Background}" />
             <SolidColorBrush x:Key="OnBackgroundBrush" Color="{StaticResource OnBackground}" />
             <SolidColorBrush x:Key="SurfaceBrush" Color="{StaticResource Surface}" />
-            <SolidColorBrush x:Key="OnSurfaceBrush" Color="{StaticResource OnSurface}" />
+            <SolidColorBrush x:Key="OnSurfaceBrush" Color="{StaticResource OnSurface}" />-->
 
             <!--Regular colors of MAUI-->
 

@@ -14,6 +14,7 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <VerticalStackLayout Padding="50" Spacing="20">
+            <BoxView StyleClass="Elevation0" />
             <BoxView StyleClass="Elevation1" />
             <BoxView StyleClass="Elevation2" />
             <BoxView StyleClass="Elevation3" />

@@ -28,6 +28,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Resources\ColorResource.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Resources\ThemeResource.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

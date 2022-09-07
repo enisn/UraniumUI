@@ -55,6 +55,10 @@
                 "path" : "themes/material/components/DataGrid.md"
             }
           ]
+        },
+        {
+          "text": "Elevation",
+          "path": "themes/material/Elevation.md"
         }
       ]
     }

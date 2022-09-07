@@ -33,14 +33,17 @@
                 HorizontalOptions="Center" />-->
 
             <Button
-                x:Name="CounterBtn"
+                x:Name="CounterBtn" StyleClass="ElevatedButton"
                 Text="Click me"
                 SemanticProperties.Hint="Counts the number of times you click"
                 Clicked="OnCounterClicked"
-                HorizontalOptions="Center" />
+                HorizontalOptions="Center">
+                <Button.Shadow>
+                    <Shadow Brush="{StaticResource ShadowBrush}" Opacity="0.2" Offset="2,2" Radius="4" />
+                </Button.Shadow>
+            </Button>
 
-
-            <Frame HasShadow="False" Padding="0,10" HorizontalOptions="Start" BackgroundColor="{StaticResource Primary}">
+            <Frame Padding="0,10" HorizontalOptions="Start" BackgroundColor="{StaticResource Primary}">
 
                 <Grid ColumnDefinitions="Auto,Auto" RowDefinitions="*,*,*,*,*" RowSpacing="10" ColumnSpacing="20">
                     <Grid.Resources>

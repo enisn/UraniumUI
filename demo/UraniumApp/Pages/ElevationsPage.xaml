@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage x:Class="UraniumApp.Pages.ElevationsPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Title="Elevation"
+             xmlns:local="clr-namespace:UraniumApp.Pages">
+    <ContentPage.Resources>
+        <Style TargetType="BoxView">
+            <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource Surface},Dark={StaticResource SurfaceDark}}" />
+            <Setter Property="HeightRequest" Value="50" />
+            <Setter Property="WidthRequest" Value="50" />
+            <Setter Property="HorizontalOptions" Value="Center" />
+        </Style>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <VerticalStackLayout Padding="50" Spacing="20">
+            <BoxView StyleClass="Elevation1" />
+            <BoxView StyleClass="Elevation2" />
+            <BoxView StyleClass="Elevation3" />
+            <BoxView StyleClass="Elevation4" />
+            <BoxView StyleClass="Elevation5" />
+        </VerticalStackLayout>
+    </ContentPage.Content>
+</ContentPage>

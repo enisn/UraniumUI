@@ -21,6 +21,41 @@
                 <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Surface}, Dark={StaticResource OnSurface}}" />
             </Style>
 
+            <Shadow x:Key="ShadowElevation1" Opacity="0.2" Offset="2,2" Radius="4" Brush="{AppThemeBinding Light={StaticResource ShadowBrush},Dark={StaticResource ShadowDarkBrush}}" />
+            <Shadow x:Key="ShadowElevation2" Opacity="0.4" Offset="4,4" Radius="8" Brush="{AppThemeBinding Light={StaticResource ShadowBrush},Dark={StaticResource ShadowDarkBrush}}" />
+            <Shadow x:Key="ShadowElevation3" Opacity="0.6" Offset="6,6" Radius="12" Brush="{AppThemeBinding Light={StaticResource ShadowBrush},Dark={StaticResource ShadowDarkBrush}}" />
+            <Shadow x:Key="ShadowElevation4" Opacity="0.6" Offset="8,8" Radius="16" Brush="{AppThemeBinding Light={StaticResource ShadowBrush},Dark={StaticResource ShadowDarkBrush}}" />
+            <Shadow x:Key="ShadowElevation5" Opacity="0.8" Offset="10,10" Radius="20" Brush="{AppThemeBinding Light={StaticResource ShadowBrush},Dark={StaticResource ShadowDarkBrush}}" />
+
+            <Style TargetType="View" Class="Elevation1" ApplyToDerivedTypes="True" >
+                <Setter Property="Shadow" Value="{StaticResource ShadowElevation1}" />
+            </Style>
+            <Style TargetType="View" Class="Elevation2" ApplyToDerivedTypes="True" >
+                <Setter Property="Shadow" Value="{StaticResource ShadowElevation2}" />
+            </Style>
+            <Style TargetType="View" Class="Elevation3" ApplyToDerivedTypes="True" >
+                <Setter Property="Shadow" Value="{StaticResource ShadowElevation3}" />
+            </Style>
+            <Style TargetType="View" Class="Elevation4" ApplyToDerivedTypes="True" >
+                <Setter Property="Shadow" Value="{StaticResource ShadowElevation3}" />
+            </Style>
+            <Style TargetType="View" Class="Elevation5" ApplyToDerivedTypes="True" >
+                <Setter Property="Shadow" Value="{StaticResource ShadowElevation3}" />
+            </Style>
+
+            <Style TargetType="Button" x:Key="BaseButtonStyle">
+                <Setter Property="CornerRadius" Value="20" />
+                <Setter Property="HeightRequest" Value="40" />
+                <Setter Property="Padding" Value="24,0" />
+            </Style>
+
+            <Style TargetType="Button" Class="ElevatedButton" BaseResourceKey="BaseButtonStyle">
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Surface}, Dark={StaticResource SurfaceDark}}" />
+                <!--<Setter Property="Shadow" Value="{StaticResource ShadowElevation}"/>-->
+                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+            </Style>
+            
+
             <Style TargetType="a:BottomSheetView">
                 <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"/>
             </Style>

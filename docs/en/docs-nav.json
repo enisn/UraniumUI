@@ -57,6 +57,10 @@
           ]
         },
         {
+          "text": "Buttons",
+          "path": "themes/material/Buttons.md"
+        },
+        {
           "text": "Elevation",
           "path": "themes/material/Elevation.md"
         }

@@ -140,7 +140,7 @@
     <SolidColorBrush x:Key="OutlineVariantDarkBrush" Color="{StaticResource OutlineVariantDark}" />
 
     <SolidColorBrush x:Key="ShadowBrush" Color="{StaticResource Shadow}" />
-    <SolidColorBrush x:Key="ShadowBrushDark" Color="{StaticResource ShadowDark}" />
+    <SolidColorBrush x:Key="ShadowDarkBrush" Color="{StaticResource ShadowDark}" />
 
     <SolidColorBrush x:Key="SurfaceTintBrush" Color="{StaticResource SurfaceTint}" />
     <SolidColorBrush x:Key="SurfaceTintDarkBrush" Color="{StaticResource SurfaceTintDark}" />

@@ -25,10 +25,10 @@ public class DataGridSelectionColumn : DataGridColumn, IDataGridSelectionColumn
                 Content = checkBox
             };
 
-            checkBox.Color = ThemeResource.GetColor("Primary", Colors.Red);
-            checkBox.SetAppThemeColor(CheckBox.BorderColorProperty, 
-                ThemeResource.GetColor("OnBackground"),
-                ThemeResource.GetColor("Background"));
+            checkBox.Color = ColorResource.GetColor("Primary", Colors.Red);
+            checkBox.SetAppThemeColor(CheckBox.BorderColorProperty,
+                ColorResource.GetColor("OnBackground"),
+                ColorResource.GetColor("Background"));
             checkBox.CheckChanged += (s, e) =>
             {
                 SelectionChanged?.Invoke(checkBox, checkBox.IsChecked);

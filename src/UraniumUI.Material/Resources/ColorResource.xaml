@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<ResourceDictionary x:Class="UraniumUI.Material.Resources.ThemeResource"
+<ResourceDictionary x:Class="UraniumUI.Material.Resources.ColorResource"
                     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                    xmlns:local="clr-namespace:UraniumUI.Material.Resources"
                     xmlns:uranium="clr-namespace:UraniumUI.Resources;assembly=UraniumUI"
-                    xmlns:controls="clr-namespace:UraniumUI.Material.Controls"
-                    xmlns:attachments="clr-namespace:UraniumUI.Material.Attachments">
+                    xmlns:local="clr-namespace:UraniumUI.Material.Resources">
 
     <ResourceDictionary.MergedDictionaries>
         <uranium:ColorResource />
@@ -85,33 +83,6 @@
             <Color x:Key="Blue200Accent">#72ACF1</Color>
             <Color x:Key="Blue300Accent">#A7CBF6</Color>
             <!-- End Regular colors of MAUI-->
-
-
-            <Style TargetType="Page" ApplyToDerivedTypes="True">
-                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Background}, Dark={StaticResource OnBackground}}"/>
-            </Style>
-
-            <Style TargetType="Label" ApplyToDerivedTypes="True">
-                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource Background}}" />
-            </Style>
-
-            <Style TargetType="Frame" ApplyToDerivedTypes="True">
-                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Surface}, Dark={StaticResource OnSurface}}" />
-            </Style>
-
-            <Style TargetType="attachments:BottomSheetView">
-                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"/>
-            </Style>
-
-            <Style TargetType="attachments:BackdropView">
-                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Gray950}}"/>
-            </Style>
-
-            <Style TargetType="controls:DataGrid">
-                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Surface}, Dark={StaticResource OnSurface}}" />
-                <Setter Property="LineSeperatorColor" Value="{StaticResource Gray300}"/>
-                <Setter Property="SelectionColor" Value="{StaticResource Primary}" />
-            </Style>
         </ResourceDictionary>
 
     </ResourceDictionary.MergedDictionaries>

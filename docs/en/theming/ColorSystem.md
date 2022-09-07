@@ -6,9 +6,9 @@ Uranium Core provides a base color palette that can be used in your application.
 ## Configuration
 You should configure default Theme resources in your `App.xaml`. Default resources are included in `UraniumUI.Resources` namespace, it can be defined `xmlns:u="clr-namespace:UraniumUI.Resources;assembly=UraniumUI"` as xml namespace.
 
-You can either use only `ColorResource` or you can use `ThemeResource` to get all theme resources. 
+You can either use only `ColorResource` or you can use `StyleResource` to get all theme resources. 
 
-> If you're not developing a theme, you should use `ThemeResource` to get all theme resources.
+> If you're not developing a theme, you should use both of `StyleResource` and `ColorResource` to get all theme resources.
 > Resources are separated, because you may need specific resources while developing a theme.
 
 ```xml
@@ -22,12 +22,9 @@ You can either use only `ColorResource` or you can use `ThemeResource` to get al
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
-                <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
-                
-                <!-- 👇 You can configure entire resources -->
-                <u:ThemeResource />
-                <!-- 👇 Or you can use only colors -->
+                <!-- 👇 You can use theme colors right after your Colors.xaml -->
                 <u:ColorResource />
+                <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
                 
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

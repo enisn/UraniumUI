@@ -54,6 +54,10 @@
             Title="Elevation" 
             Icon="{FontImageSource FontFamily=FASolid, Glyph={x:Static fa:Solid.Elevator}, Color={StaticResource Primary}}"
             ContentTemplate="{DataTemplate pages:ElevationsPage}"/>
+        <ShellContent 
+            Title="Buttons" 
+            Icon="{FontImageSource FontFamily=FASolid, Glyph={x:Static fa:Solid.MobileButton}, Color={StaticResource Primary}}"
+            ContentTemplate="{DataTemplate pages:ButtonsPage}"/>
     </FlyoutItem>
 
     <!--

@@ -62,6 +62,12 @@ public partial class DataGrid : Frame
             ResetGrid();
             return;
         }
+
+        if (ItemsSource.Count == 1)
+        {
+            Render();
+            return;
+        }
         
         switch (e.Action)
         {

@@ -2,13 +2,12 @@
 <ResourceDictionary x:Class="UraniumUI.Material.Resources.StyleResource"
                     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                    xmlns:uranium="clr-namespace:UraniumUI.Resources;assembly=UraniumUI"
-                    xmlns:controls="clr-namespace:UraniumUI.Material.Controls"
-                    xmlns:local="clr-namespace:UraniumUI.Material.Resources">
+                    xmlns:local="clr-namespace:UraniumUI.Material.Resources"
+                    xmlns:a="clr-namespace:UraniumUI.Material.Attachments"
+                    xmlns:c="clr-namespace:UraniumUI.Material.Controls">
 
     <ResourceDictionary.MergedDictionaries>
-        <uranium:StyleResource />
-
+        <local:ColorResource />
         <ResourceDictionary>
             <Style TargetType="Page" ApplyToDerivedTypes="True">
                 <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Background}, Dark={StaticResource OnBackground}}"/>
@@ -22,19 +21,33 @@
                 <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Surface}, Dark={StaticResource OnSurface}}" />
             </Style>
 
-            <Style TargetType="attachments:BottomSheetView">
+            <Style TargetType="a:BottomSheetView">
                 <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"/>
             </Style>
 
-            <Style TargetType="attachments:BackdropView">
+            <Style TargetType="a:BackdropView">
                 <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Gray950}}"/>
             </Style>
 
-            <Style TargetType="controls:DataGrid">
+            <Style TargetType="c:DataGrid">
                 <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Surface}, Dark={StaticResource OnSurface}}" />
                 <Setter Property="LineSeperatorColor" Value="{StaticResource Gray300}"/>
                 <Setter Property="SelectionColor" Value="{StaticResource Primary}" />
             </Style>
         </ResourceDictionary>
     </ResourceDictionary.MergedDictionaries>
+
+    <!--<Style TargetType="attachments:BottomSheetView">
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"/>
+    </Style>
+
+    <Style TargetType="attachments:BackdropView">
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Gray950}}"/>
+    </Style>
+
+    <Style TargetType="controls:DataGrid">
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Surface}, Dark={StaticResource OnSurface}}" />
+        <Setter Property="LineSeperatorColor" Value="{StaticResource Gray300}"/>
+        <Setter Property="SelectionColor" Value="{StaticResource Primary}" />
+    </Style>-->
 </ResourceDictionary>

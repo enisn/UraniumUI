@@ -129,6 +129,7 @@
                             <VisualState x:Name="Disabled">
                                 <VisualState.Setters>
                                     <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={t:DynamicColor Color={StaticResource OnSurface}, Opacity=0.12},Dark={t:DynamicColor Color={StaticResource OnSurfaceDark}, Opacity=0.12}}"/>
+                                    <Setter Property="TextColor" Value="{AppThemeBinding Light={t:DynamicColor Color={StaticResource OnSurface}, Opacity=0.38},Dark={t:DynamicColor Color={StaticResource OnSurfaceDark}, Opacity=0.38}}"/>
                                 </VisualState.Setters>
                             </VisualState>
                             <VisualState x:Name="Hover">

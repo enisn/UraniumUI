@@ -9,22 +9,11 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <!--<ResourceDictionary Source="Resources/Styles/Colors.xaml" />-->
+                <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <m:ThemeResource />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
-
-        <!--<Style TargetType="Button">
-            <Setter Property="FontSize"
-                    Value="Medium" />
-            <Setter Property="BackgroundColor"
-                    Value="{StaticResource AppPrimaryColor}" />
-            <Setter Property="TextColor"
-                    Value="{StaticResource SecondaryColor}" />
-            <Setter Property="CornerRadius"
-                    Value="5" />
-        </Style>-->
 
     </Application.Resources>
 </Application>

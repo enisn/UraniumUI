@@ -4,6 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:UraniumApp"
+    xmlns:pages="clr-namespace:UraniumApp.Pages"
     xmlns:fa="clr-namespace:UraniumUI.Icons.FontAwesome;assembly=UraniumUI.Icons.FontAwesome"
     xmlns:bsheet="clr-namespace:UraniumApp.Pages.BottomSheets"
     xmlns:backdrop="clr-namespace:UraniumApp.Pages.Backdrops"
@@ -46,6 +47,17 @@
                 <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.TableCells}" Color="{StaticResource Primary}" />
             </ShellContent.Icon>
         </ShellContent>
+    </FlyoutItem>
+
+    <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
+        <ShellContent 
+            Title="Elevation" 
+            Icon="{FontImageSource FontFamily=FASolid, Glyph={x:Static fa:Solid.Elevator}, Color={StaticResource Primary}}"
+            ContentTemplate="{DataTemplate pages:ElevationsPage}"/>
+        <ShellContent 
+            Title="Buttons" 
+            Icon="{FontImageSource FontFamily=FASolid, Glyph={x:Static fa:Solid.MobileButton}, Color={StaticResource Primary}}"
+            ContentTemplate="{DataTemplate pages:ButtonsPage}"/>
     </FlyoutItem>
 
     <!--

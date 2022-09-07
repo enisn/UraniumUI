@@ -22,13 +22,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Resources\ThemeResource.xaml.cs">
-	    <DependentUpon>ThemeResource.xaml</DependentUpon>
-	  </Compile>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <MauiXaml Update="Resources\ThemeResource.xaml">
+	  <MauiXaml Update="Resources\ColorResource.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Resources\StyleResource.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

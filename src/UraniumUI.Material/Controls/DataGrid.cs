@@ -12,6 +12,8 @@ public partial class DataGrid : Frame
 
     public Type CurrentType { get; protected set; }
 
+    public IList<DataGridColumn> Columns { get; protected set; } = new ObservableCollection<DataGridColumn>();
+
     public DataGrid()
     {
         this.Content = _rootGrid = new Grid
@@ -20,6 +22,7 @@ public partial class DataGrid : Frame
         };
         InitializeFactoryMethods();
         this.Padding = new Thickness(0, 10);
+        (Columns as INotifyCollectionChanged).CollectionChanged += Columns_CollectionChanged;
     }
 
     private void OnItemSourceSet(IList oldSource, IList newSource)
@@ -54,59 +57,47 @@ public partial class DataGrid : Frame
 
     private void ItemsSource_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
     {
-        //switch (e.Action)
-        //{
-        //    case NotifyCollectionChangedAction.Add:
-        //        {
-        //            SlideRow(e.NewStartingIndex, e.NewItems.Count);
-
-        //            for (int i = 0; i < e.NewItems.Count; i++)
-        //            {
-        //                AddRow(e.NewStartingIndex, e.NewItems[i], e.NewStartingIndex + i == ItemsSource.Count);
-        //            }
-
-        //            ConfigureGridRowDefinitions(ItemsSource.Count + 1);
-        //        }
-        //        break;
-        //    case NotifyCollectionChangedAction.Remove:
-        //        {
-
-        //            for (int i = 0; i < e.OldItems.Count; i++)
-        //            {
-        //                RemoveRow(i);
-        //            }
-
-        //           /SlideRow(e.OldStartingIndex + e.OldItems.Count, (-1 * e.OldItems.Count));
-
-        //            ConfigureGridRowDefinitions(ItemsSource.Count + 1);
-        //        }
-        //        break;
-        //    default:
-        //        // TODO: Optimize
-        //        Render();
-        //        break;
-        //}
-        Render();
-    }
-
-    protected virtual void OnColumnsSet(IList<DataGridColumn> oldValue, IList<DataGridColumn> newValue)
-    {
-        if (oldValue == newValue || CurrentType == null)
+        if (ItemsSource.Count == 0)
         {
+            ResetGrid();
             return;
         }
 
-        if (oldValue is INotifyCollectionChanged oldObservable)
+        if (ItemsSource.Count == 1)
         {
-            oldObservable.CollectionChanged -= Columns_CollectionChanged;
+            Render();
+            return;
         }
-
-        if (newValue is INotifyCollectionChanged newObservable)
+        
+        switch (e.Action)
         {
-            newObservable.CollectionChanged += Columns_CollectionChanged;
-        }
+            case NotifyCollectionChangedAction.Add:
+                {
+                    SlideRow(e.NewStartingIndex + 1, 2 * e.NewItems.Count);
 
-        Render();
+                    for (int i = 0; i < e.NewItems.Count; i++)
+                    {
+                        AddRow(e.NewStartingIndex + 1 + i, e.NewItems[i], e.NewStartingIndex == ItemsSource.Count);
+                    }
+
+                    //ConfigureGridRowDefinitions(ItemsSource.Count + 1);
+                }
+                break;
+            case NotifyCollectionChangedAction.Remove:
+                {
+                    for (int i = 0; i < e.OldItems.Count; i++)
+                    {
+                        RemoveRow(e.OldStartingIndex + 1 + i);
+                    }
+
+                    SlideRow(e.OldStartingIndex + 1, (-2 * e.OldItems.Count));
+                }
+                break;
+            default:
+                // TODO: Optimize
+                Render();
+                break;
+        }
     }
 
     private void Columns_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -118,6 +109,11 @@ public partial class DataGrid : Frame
     {
         if (UseAutoColumns)
         {
+            if (Columns is INotifyCollectionChanged observable)
+            {
+                observable.CollectionChanged -= Columns_CollectionChanged;
+            }
+            
             Columns = CurrentType?.GetProperties(BindingFlags.Instance | BindingFlags.Public)
                 .Select(s => new DataGridColumn
                 {
@@ -125,6 +121,8 @@ public partial class DataGrid : Frame
                     PropertyName = s.Name,
                     PropertyInfo = s,
                 }).ToList();
+
+            Render();
         }
     }
 
@@ -140,6 +138,7 @@ public partial class DataGrid : Frame
         var tableHeaderRows = 1;
         ResetGrid();
         ConfigureGridColumnDefinitions(Columns.Count);
+        ConfigureGridRowDefinitions(ItemsSource.Count + tableHeaderRows);
         ConfigureGridRowDefinitions(ItemsSource.Count + tableHeaderRows);
 
         AddTableHeaders();
@@ -221,20 +220,24 @@ public partial class DataGrid : Frame
 
         for (int i = 0; i < _rootGrid.Children.Count; i++)
         {
-            if (Grid.GetRow(_rootGrid.Children[i] as View) == actualRow)
+            var child = _rootGrid.Children[i] as View;
+            if (Grid.GetRow(child) == actualRow)
+            {
+                _rootGrid.Children.RemoveAt(i);
+                i--;
+            }
+
+            if (Grid.GetRow(child) == actualRow + 1 && child is BoxView)
             {
                 _rootGrid.Children.RemoveAt(i);
                 i--;
             }
         }
-        _rootGrid.RowDefinitions.RemoveAt(0);
 
-        if (_rootGrid.LastOrDefault() is BoxView box)
+        if (_rootGrid.Children.LastOrDefault() is BoxView box)
         {
-            _rootGrid.Remove(box);
-            _rootGrid.RowDefinitions.RemoveAt(0);
+            _rootGrid.Children.Remove(box);
         }
-
     }
 
     protected virtual void AddSeparator(int row)
@@ -248,16 +251,17 @@ public partial class DataGrid : Frame
     private void ConfigureGridColumnDefinitions(int columns)
     {
         _rootGrid.ColumnDefinitions.Clear();
-        for (int i = 0; i < columns; i++)
+        for (int i = 0; i < Columns.Count; i++)
         {
-            _rootGrid.AddColumnDefinition(new ColumnDefinition(GridLength.Auto));
+            _rootGrid.AddColumnDefinition(new ColumnDefinition(Columns[i].Width));
         }
     }
 
     private void ConfigureGridRowDefinitions(int rows)
     {
         _rootGrid.RowDefinitions.Clear();
-        for (int i = 0; i < (rows + (rows - 1)); i++)
+        //for (int i = 0; i < (rows + (rows - 1)); i++)
+        for (int i = 0; i < (rows * 10); i++)
         {
             _rootGrid.AddRowDefinition(new RowDefinition(GridLength.Star));
         }
@@ -269,7 +273,12 @@ public partial class DataGrid : Frame
 
         foreach (View item in _rootGrid.Children.Where(x => x is View view && Grid.GetRow(view) >= actualRow))
         {
-            Grid.SetRow(item, row + amount);
+            var newRow = Grid.GetRow(item) + amount;
+            Grid.SetRow(item, newRow);
+            if (item.BindingContext is CellBindingContext cellContext)
+            {
+                cellContext.Row = newRow;
+            }
         }
     }
 

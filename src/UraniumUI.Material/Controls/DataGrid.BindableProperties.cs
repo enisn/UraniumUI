@@ -22,12 +22,6 @@ public partial class DataGrid
         BindableProperty.Create(nameof(LineSeperatorColor), typeof(Color), typeof(DataGrid), defaultValue: Colors.Gray,
             propertyChanged: (bo, ov, nv) => (bo as DataGrid).OnPropertyChanged(nameof(LineSeperatorColor)));
 
-    public IList<DataGridColumn> Columns { get => (IList<DataGridColumn>)GetValue(ColumnsProperty); set => SetValue(ColumnsProperty, value); }
-
-    public static readonly BindableProperty ColumnsProperty =
-        BindableProperty.Create(nameof(Columns), typeof(IList<DataGridColumn>), typeof(DataGrid), defaultValue: new ObservableCollection<DataGridColumn>(),
-            propertyChanged: (bo, ov, nv) => (bo as DataGrid).OnColumnsSet((IList<DataGridColumn>)ov, (IList<DataGridColumn>)nv));
-
     public bool UseAutoColumns { get => (bool)GetValue(UseAutoColumnsProperty); set => SetValue(UseAutoColumnsProperty, value); }
 
     public static readonly BindableProperty UseAutoColumnsProperty =

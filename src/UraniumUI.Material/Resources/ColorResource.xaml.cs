@@ -1,15 +1,15 @@
 ﻿namespace UraniumUI.Material.Resources;
 
-public partial class ThemeResource : ResourceDictionary
+public partial class ColorResource : ResourceDictionary
 {
-    public ThemeResource()
+    public ColorResource()
     {
         InitializeComponent();
     }
 
     public static Color GetColor(string key, Color fallBack = default)
     {
-        if(Application.Current.Resources.TryGetValue(key, out object value))
+        if (Application.Current.Resources.TryGetValue(key, out object value))
         {
             return (Color)value;
         }

@@ -52,9 +52,9 @@ Also, templates has `ide.host.json` implementation that allows to create a new p
 
 
 
-- Go to `App.xaml` and add `ThemeResource` of **Material**
+- Go to `App.xaml` and add `ColorResource` & `StyleResource` of **Material**
     - Define following xml namespace: `xmlns:material="clr-namespace:UraniumUI.Material.Resources;assembly=UraniumUI.Material"`
-    - Then define ThemeResource into **MergedDictionaries**
+    - Then define `ColorResource` and `StyleResource` into **MergedDictionaries**
         ```xml
         <?xml version = "1.0" encoding = "UTF-8" ?>
         <Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
@@ -65,11 +65,13 @@ Also, templates has `ide.host.json` implementation that allows to create a new p
             <Application.Resources>
                 <ResourceDictionary>
                     <ResourceDictionary.MergedDictionaries>
-                        <!-- <ResourceDictionary Source="Resources/Styles/Colors.xaml" /> --> <!-- 👈 Remove/comment this if you want to use theme colors -->
+                        <ResourceDictionary Source="Resources/Styles/Colors.xaml" /> 
+                        <!-- 👇 Define right after your local Colors.xaml. -->
+                        <material:ColorResource />
+
                         <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
-                        
-                        <!-- 👇 Define at the end of the existing resources. -->
-                        <u:ThemeResource />
+                        <!-- 👇 Define right after your local Styles.xaml -->
+                        <material:StyleResource />
                         
                     </ResourceDictionary.MergedDictionaries>
                 </ResourceDictionary>

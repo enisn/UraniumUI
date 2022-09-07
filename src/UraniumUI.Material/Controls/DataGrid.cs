@@ -121,6 +121,8 @@ public partial class DataGrid : Frame
                     PropertyName = s.Name,
                     PropertyInfo = s,
                 }).ToList();
+
+            Render();
         }
     }
 

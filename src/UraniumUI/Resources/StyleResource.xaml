@@ -2,24 +2,28 @@
 <ResourceDictionary x:Class="UraniumUI.Resources.StyleResource"
                     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
                     xmlns:local="clr-namespace:UraniumUI.Resources">
 
+    <ResourceDictionary.MergedDictionaries>
 
-    <Style TargetType="Page" ApplyToDerivedTypes="True">
-        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Background}, Dark={StaticResource OnBackground}}"/>
-    </Style>
+        <local:ColorResource />
+        <ResourceDictionary>
 
-    <Style TargetType="Label" ApplyToDerivedTypes="True">
-        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource Background}}" />
-    </Style>
+            <Style TargetType="Page" ApplyToDerivedTypes="True">
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Background}, Dark={StaticResource OnBackground}}"/>
+            </Style>
 
-    <!--<Style TargetType="input:CheckBox">
-        <Setter Property="Color" Value="{StaticResource Primary}"  />
-        <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource Background}}" />
-    </Style>-->
+            <Style TargetType="Label" ApplyToDerivedTypes="True">
+                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource Background}}" />
+            </Style>
 
-    <!--<Style TargetType="input:RadioButton">
-        <Setter Property="Color" Value="{StaticResource Primary}" />
-        <Setter Property="CircleColor" Value="{AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource Background}}" />
-    </Style>-->
+                <!--<Style TargetType="input:CheckBox">
+            <Setter Property="Color" Value="{StaticResource Primary}"  />
+            <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource Background}}" />
+        </Style>-->
+        </ResourceDictionary>
+
+    </ResourceDictionary.MergedDictionaries>
+
 </ResourceDictionary>

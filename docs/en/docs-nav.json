@@ -63,6 +63,14 @@
         {
           "text": "Elevation",
           "path": "themes/material/Elevation.md"
+        },
+        {
+          "text": "CheckBox",
+          "path": "themes/material/CheckBox.md"
+        },
+        {
+          "text": "RadioButton",
+          "path": "themes/material/RadioButton.md"
         }
       ]
     }

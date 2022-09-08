@@ -7,7 +7,6 @@
 
     <ResourceDictionary.MergedDictionaries>
 
-        <local:ColorResource />
         <ResourceDictionary>
 
             <Style TargetType="Page" ApplyToDerivedTypes="True">

@@ -3,8 +3,9 @@
              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:uranium="clr-namespace:UraniumUI.Pages;assembly=UraniumUI"
-             xmlns:fa="clr-namespace:UraniumUI.Icons.FontAwesome;assembly=UraniumUI.Icons.FontAwesome"
-             xmlns:material="clr-namespace:UraniumUI.Material.Attachments;assembly=UraniumUI.Material"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+             xmlns:attachments="clr-namespace:UraniumUI.Material.Attachments;assembly=UraniumUI.Material"
+             xmlns:material="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
              xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
              xmlns:root="clr-namespace:UraniumApp"
              xmlns:local="clr-namespace:UraniumApp.Pages.Backdrops">
@@ -12,32 +13,26 @@
     <root:DemoContent />
 
     <uranium:UraniumContentPage.Attachments>
-        <material:BackdropView Title="Filter">
-            <material:BackdropView.IconImageSource>
-                <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.Filter}" Color="{StaticResource OnPrimary}" />
-            </material:BackdropView.IconImageSource>
-            <material:BackdropView.Resources>
+        <attachments:BackdropView Title="Filter">
+            <attachments:BackdropView.IconImageSource>
+                <FontImageSource FontFamily="MaterialRound" Glyph="{x:Static m:MaterialRound.Filter}" Color="{DynamicResource OnPrimary}" />
+            </attachments:BackdropView.IconImageSource>
+            <attachments:BackdropView.Resources>
                 <ResourceDictionary>
-                    <Style TargetType="input:CheckBox">
-                        <Setter Property="Color" Value="{StaticResource Primary}" />
-                        <Setter Property="IconColor" Value="{StaticResource Primary}"/>
-                        <Setter Property="TextColor" Value="{StaticResource OnPrimary}"/>
-                        <Setter Property="BorderColor" Value="{StaticResource OnPrimary}"/>
-                    </Style>
                     <Style TargetType="Slider" ApplyToDerivedTypes="True">
-                        <Setter Property="ThumbColor" Value="{StaticResource OnPrimary}" />
+                        <Setter Property="ThumbColor" Value="{AppThemeBinding Light={StaticResource OnPrimary},Dark= {StaticResource OnBackground}}" />
                     </Style>
                     <Style TargetType="input:AdvancedSlider">
-                        <Setter Property="TextColor" Value="{StaticResource OnPrimary}" />
+                        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnPrimary},Dark= {StaticResource OnBackground}}" />
                     </Style>
                 </ResourceDictionary>
-            </material:BackdropView.Resources>
+            </attachments:BackdropView.Resources>
             <VerticalStackLayout>
-                <input:CheckBox Text="Include Disabled Items" Type="Filled" />
-                <input:CheckBox Text="Include Deleted Items" Type="Filled" />
-                <input:CheckBox Text="Show all categories" Type="Filled"/>
+                <material:CheckBox Text="Include Disabled Items" Type="Filled" />
+                <material:CheckBox Text="Include Deleted Items" Type="Filled" />
+                <material:CheckBox Text="Show all categories" Type="Filled"/>
                 <input:AdvancedSlider Title="Maximum Value" MinValue="0" MaxValue="1200" StepValue="10" MaxValueSuffix="items" />
             </VerticalStackLayout>
-        </material:BackdropView>
+        </attachments:BackdropView>
     </uranium:UraniumContentPage.Attachments>
 </uranium:UraniumContentPage>

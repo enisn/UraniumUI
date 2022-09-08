@@ -69,8 +69,8 @@ builder
 
 - `MaterialOutlined`
 - `MaterialRegular`
-- `MaterialRoundRegular`
-- `MaterialSharpRegular`
+- `MaterialRound`
+- `MaterialSharp`
 - `MaterialTwoTone`
 
 #### Glyphs

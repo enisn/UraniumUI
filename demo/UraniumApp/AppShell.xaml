@@ -5,7 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:UraniumApp"
     xmlns:pages="clr-namespace:UraniumApp.Pages"
-    xmlns:fa="clr-namespace:UraniumUI.Icons.FontAwesome;assembly=UraniumUI.Icons.FontAwesome"
+    xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
     xmlns:bsheet="clr-namespace:UraniumApp.Pages.BottomSheets"
     xmlns:backdrop="clr-namespace:UraniumApp.Pages.Backdrops"
     xmlns:dataGrid="clr-namespace:UraniumApp.Pages.DataGrids"
@@ -14,7 +14,7 @@
     <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
         <ShellContent Title="MainPage" ContentTemplate="{DataTemplate local:MainPage}">
             <ShellContent.Icon>
-                <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.House}" Color="{StaticResource Primary}"/>
+                <FontImageSource FontFamily="MaterialOutlined" Glyph="{x:Static m:MaterialOutlined.Home}" Color="{StaticResource Primary}"/>
             </ShellContent.Icon>
         </ShellContent>
     </FlyoutItem>
@@ -29,13 +29,13 @@
 
         <ShellContent Title="Bottom Sheets" ContentTemplate="{DataTemplate bsheet:BottomSheetsIndexPage}">
             <ShellContent.Icon>
-                <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.PersonArrowUpFromLine}" Color="{StaticResource Primary}" />
+                <FontImageSource FontFamily="MaterialOutlined" Glyph="{x:Static m:MaterialOutlined.Arrow_upward}" Color="{StaticResource Primary}" />
             </ShellContent.Icon>
         </ShellContent>
 
         <ShellContent Title="Backdrop" ContentTemplate="{DataTemplate backdrop:BackdropsIndexPage}">
             <ShellContent.Icon>
-                <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.HandPointDown}" Color="{StaticResource Primary}" />
+                <FontImageSource FontFamily="MaterialOutlined" Glyph="{x:Static m:MaterialOutlined.Arrow_downward}" Color="{StaticResource Primary}" />
             </ShellContent.Icon>
         </ShellContent>
     </FlyoutItem>
@@ -44,7 +44,7 @@
 
         <ShellContent Title="DataGrid" ContentTemplate="{DataTemplate dataGrid:DataGridsIndexPage}">
             <ShellContent.Icon>
-                <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.TableCells}" Color="{StaticResource Primary}" />
+                <FontImageSource FontFamily="MaterialOutlined" Glyph="{x:Static m:MaterialOutlined.Grid_3x3}" Color="{StaticResource Primary}" />
             </ShellContent.Icon>
         </ShellContent>
     </FlyoutItem>
@@ -52,16 +52,20 @@
     <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
         <ShellContent 
             Title="Elevation" 
-            Icon="{FontImageSource FontFamily=FASolid, Glyph={x:Static fa:Solid.Elevator}, Color={StaticResource Primary}}"
+            Icon="{FontImageSource FontFamily=MaterialOutlined, Glyph={x:Static m:MaterialOutlined.Vertical_shades}, Color={StaticResource Primary}}"
             ContentTemplate="{DataTemplate pages:ElevationsPage}"/>
         <ShellContent 
             Title="Buttons" 
-            Icon="{FontImageSource FontFamily=FASolid, Glyph={x:Static fa:Solid.MobileButton}, Color={StaticResource Primary}}"
+            Icon="{FontImageSource FontFamily=MaterialOutlined, Glyph={x:Static m:MaterialOutlined.All_inbox}, Color={StaticResource Primary}}"
             ContentTemplate="{DataTemplate pages:ButtonsPage}"/>        
         <ShellContent 
             Title="CheckBox" 
-            Icon="{FontImageSource FontFamily=FASolid, Glyph={x:Static fa:Solid.Check}}"
+            Icon="{FontImageSource FontFamily=MaterialOutlined, Glyph={x:Static m:MaterialOutlined.Check_box}}"
             ContentTemplate="{DataTemplate pages:CheckBoxesPage}"/>
+        <ShellContent 
+            Title="CheckBox" 
+            Icon="{FontImageSource FontFamily=MaterialOutlined, Glyph={x:Static m:MaterialOutlined.Radio_button_checked}, Color={StaticResource Primary}}"
+            ContentTemplate="{DataTemplate pages:RadioButtonsPage}"/>
     </FlyoutItem>
 
     <!--

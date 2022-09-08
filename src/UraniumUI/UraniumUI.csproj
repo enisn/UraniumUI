@@ -23,9 +23,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Resources\ColorResource.xaml.cs">
-	    <DependentUpon>ColorResource.xaml</DependentUpon>
-	  </Compile>
 	  <Compile Update="Resources\StyleResource.xaml.cs">
 	    <DependentUpon>StyleResource.xaml</DependentUpon>
 	  </Compile>
@@ -33,9 +30,6 @@
 
 	<ItemGroup>
 	  <MauiXaml Update="Resources\StyleResource.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Resources\ColorResource.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

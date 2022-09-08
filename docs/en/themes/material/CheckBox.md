@@ -1,6 +1,7 @@
 # CheckBox
 CheckBox is a control that allows the user to choose a boolean value. UraniumU UI uses [InputKit CheckBox](https://enisn-projects.io/docs/en/inputkit/latest/components/controls/CheckBox) instead of MAUI one. It is because InputKit CheckBox is more customizable and already has a Material theme.
 
+![MAUI Material Design CheckBox](https://lh3.googleusercontent.com/lzGG5PeqO9Eru69AybrsH5EgrB_PAIA2OIi17xLEQHdqRhLBjS8HLjYwVxzMbJ7DJFEnjTeZT_5iP2r4SSv-WgiC5LosxEtFcMTt=w1064-v0)
 
 ## Features
 
@@ -9,7 +10,9 @@ You can visit [InputKit CheckBox Documentation](https://enisn-projects.io/docs/e
 
 ## Usage
 
-CheckBox is defined in `UraniumUI.Material.Controls` namespace. You can use it like this:
+RadioButtons should be grouped together in a RadioButtonGroupView. Otherwise, they will not work properly and each one will be independent.
+
+RadioButton is defined in `UraniumUI.Material.Controls` namespace. You can use it like this:
 
 ```xml
 xmlns:material="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"

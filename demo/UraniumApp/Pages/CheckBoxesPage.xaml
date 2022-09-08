@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage x:Class="UraniumApp.Pages.CheckBoxesPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:material="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
+             xmlns:local="clr-namespace:UraniumApp.Pages">
+    <ContentPage.Resources>
+        <Style TargetType="BoxView">
+            <Setter Property="HorizontalOptions" Value="Fill" />
+            <Setter Property="Margin" Value="30,5" />
+            <Setter Property="HeightRequest" Value="1" />
+            <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource Surface}, Dark={StaticResource SurfaceDark}}" />
+        </Style>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout MaximumWidthRequest="400" Margin="20">
+            <material:CheckBox Text="Option 1" />
+            <material:CheckBox Text="Option 2" IsChecked="True" />
+            <material:CheckBox Text="Option 3 (Disabled)" IsDisabled="True" />
+            <material:CheckBox Text="Option 4 (Disabled)" IsDisabled="True" IsChecked="True" />
+
+            <BoxView />
+
+            <VerticalStackLayout Spacing="15">
+
+                <material:CheckBox Text="Option 1" LabelPosition="Before" />
+                <material:CheckBox Text="Option 2" LabelPosition="Before" IsChecked="True" />
+                <material:CheckBox Text="Option 3 (Disabled)" IsDisabled="True" LabelPosition="Before" />
+                <material:CheckBox Text="Option 4 (Disabled)" IsDisabled="True" IsChecked="True" LabelPosition="Before" />
+            </VerticalStackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

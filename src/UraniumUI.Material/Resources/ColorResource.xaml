@@ -10,14 +10,11 @@
 
         <ResourceDictionary>
             <Color x:Key="Primary">#52D681</Color>
-            <Color x:Key="OnPrimary">#FFFFFF</Color>
-            
+            <Color x:Key="OnPrimary">#FFFFFF</Color>            
             <Color x:Key="PrimaryDark">#ADCF9F</Color>
             <Color x:Key="OnPrimaryDark">#00AD7C</Color>
-
             <Color x:Key="PrimaryContainer">#ADCF9F</Color>
             <Color x:Key="OnPrimaryContainer">#00AD7C</Color>
-
             <Color x:Key="PrimaryContainerDark">#00AD7C</Color>
             <Color x:Key="OnPrimaryContainerDark">#CEE5D0</Color>
 
@@ -30,7 +27,7 @@
             <Color x:Key="SecondaryContainer">#F6F4E6</Color>
             <Color x:Key="OnSecondaryContainer">#3F4E4F</Color>
 
-            <Color x:Key="SecondaryContainerDark">#D5C455</Color>
+            <Color x:Key="SecondaryContainerDark">#EDE59A</Color>
             <Color x:Key="OnSecondaryContainerDark">#3F4E4F</Color>
 
             <Color x:Key="Tertiary">#21E1E1</Color>
@@ -63,7 +60,6 @@
             <Color x:Key="OnErrorDark">#601410</Color>
             <Color x:Key="OnErrorContainer">#370B1E</Color>
             <Color x:Key="OnErrorContainerDark">#F9DEDC</Color>
-
 
             <Color x:Key="OnBackground">#1C1B1F</Color>
             <Color x:Key="OnBackgroundDark">#E6E1E5</Color>

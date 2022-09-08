@@ -22,7 +22,6 @@
             <BoxView />
 
             <VerticalStackLayout Spacing="15">
-
                 <material:CheckBox Text="Option 1" LabelPosition="Before" />
                 <material:CheckBox Text="Option 2" LabelPosition="Before" IsChecked="True" />
                 <material:CheckBox Text="Option 3 (Disabled)" IsDisabled="True" LabelPosition="Before" />

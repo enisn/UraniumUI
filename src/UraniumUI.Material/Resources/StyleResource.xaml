@@ -19,7 +19,7 @@
             </Style>
 
             <Style TargetType="Label" ApplyToDerivedTypes="True">
-                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource Background}}" />
+                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}" />
             </Style>
 
             <Style TargetType="Frame" ApplyToDerivedTypes="True">
@@ -220,6 +220,22 @@
                 </Setter>
             </Style>
 
+            <Style TargetType="c:CheckBox">
+                <Setter Property="Type" Value="Material" />
+                <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource Outline}, Dark={StaticResource OutlineDark}}" />
+                <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}" />
+            </Style>
+
+            <Style TargetType="c:RadioButton" x:Key="RadoButtonStyle">
+                <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}" />
+                <Setter Property="CircleColor" Value="{AppThemeBinding Light={StaticResource Outline}, Dark={StaticResource OutlineDark}}" />
+            </Style>
+
+            <Style TargetType="c:RadioButton" Class="CheckRadioButton" BaseResourceKey="RadoButtonStyle">
+                <Setter Property="SelectedIconGeomerty" Value="{x:Static input:PredefinedShapes.CheckCircle}" />
+            </Style>
 
             <Style TargetType="a:BottomSheetView">
                 <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"/>

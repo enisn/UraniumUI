@@ -57,7 +57,11 @@
         <ShellContent 
             Title="Buttons" 
             Icon="{FontImageSource FontFamily=FASolid, Glyph={x:Static fa:Solid.MobileButton}, Color={StaticResource Primary}}"
-            ContentTemplate="{DataTemplate pages:ButtonsPage}"/>
+            ContentTemplate="{DataTemplate pages:ButtonsPage}"/>        
+        <ShellContent 
+            Title="CheckBox" 
+            Icon="{FontImageSource FontFamily=FASolid, Glyph={x:Static fa:Solid.Check}}"
+            ContentTemplate="{DataTemplate pages:CheckBoxesPage}"/>
     </FlyoutItem>
 
     <!--

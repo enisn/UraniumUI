@@ -209,10 +209,25 @@ public partial class DataGrid : Frame
                 Column = columnNumber,
                 Row = row,
                 Data = item,
-                Value = Columns[columnNumber].PropertyInfo?.GetValue(item)
+                Value = Columns[columnNumber].PropertyInfo?.GetValue(item),
+                IsSelected = SelectedItems?.Contains(item) ?? false
             };
 
             SetSelectionVisualStates(view);
+
+            view.Triggers.Add(new DataTrigger(typeof(ContentView))
+            {
+                Binding = new Binding(nameof(CellBindingContext.IsSelected)),
+                Value = true,
+                EnterActions =
+                {
+                    new GoToStateTriggerAction("Selected")
+                },
+                ExitActions =
+                {
+                    new GoToStateTriggerAction("Unselected")
+                }
+            });
 
             _rootGrid.Add(view, columnNumber, row: actualRow);
         }
@@ -315,7 +330,7 @@ public partial class DataGrid : Frame
         {
             if (child.BindingContext is CellBindingContext cellBindingContext)
             {
-                SetSelected(child, SelectedItems.Contains(cellBindingContext.Data));
+                cellBindingContext.IsSelected = SelectedItems.Contains(cellBindingContext.Data);
             }
         }
     }
@@ -345,13 +360,6 @@ public partial class DataGrid : Frame
     {
         if (sender is View view && view.BindingContext is CellBindingContext cellContext)
         {
-            var actualRow = cellContext.Row * 2;
-
-            foreach (View child in _rootGrid.Children.Where(x => Grid.GetRow(x as View) == actualRow))
-            {
-                SetSelected(child, isSelected);
-            }
-
             if (isSelected)
             {
                 SelectedItems?.Add(cellContext.Data);
@@ -363,11 +371,6 @@ public partial class DataGrid : Frame
 
             OnPropertyChanged(nameof(SelectedItems));
         }
-    }
-
-    protected virtual void SetSelected(View view, bool isSelected)
-    {
-        VisualStateManager.GoToState(view, isSelected ? "Selected" : "Unselected");
     }
 
     protected void SetSelectionVisualStatesForAll()
@@ -419,5 +422,19 @@ public partial class DataGrid : Frame
                 }
             }
         });
+    }
+
+    public class GoToStateTriggerAction : TriggerAction<View>
+    {
+        public GoToStateTriggerAction(string state)
+        {
+            State = state;
+        }
+
+        public string State { get; protected set; }
+        protected override void Invoke(View sender)
+        {
+            VisualStateManager.GoToState(sender, State);
+        }
     }
 }

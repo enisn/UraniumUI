@@ -10,7 +10,6 @@ public class CustomDataGridPageViewModel : BindableObject
     private ObservableCollection<Student> items;
     public ObservableCollection<Student> Items { get => items; protected set { items = value; OnPropertyChanged(); } }
     private bool isBusy;
-
     public bool IsBusy { get => isBusy; set { isBusy = value; OnPropertyChanged(); } }
     protected StudentDataStore DataStore { get; } = new StudentDataStore();
     public ICommand AddNewCommand { get; set; }
@@ -41,7 +40,7 @@ public class CustomDataGridPageViewModel : BindableObject
         });
     }
 
-    async void Initialize()
+    protected async virtual void Initialize()
     {
         IsBusy = true;
         Items = new ObservableCollection<Student>(await DataStore.GetListAsync());
@@ -59,9 +58,12 @@ public class CustomDataGridPageViewModel : BindableObject
 
     public class StudentDataStore
     {
-        public async Task<List<Student>> GetListAsync()
+        public async Task<List<Student>> GetListAsync(bool simulateNetwork = true)
         {
-            await Task.Delay(random.Next(500, 3000));
+            if (simulateNetwork)
+            {
+                await Task.Delay(random.Next(500, 2000));
+            }
 
             var list = new List<Student>();
 

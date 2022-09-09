@@ -38,5 +38,16 @@ public partial class DataGrid
 
     public static readonly BindableProperty SelectionColorProperty =
         BindableProperty.Create(nameof(SelectionColor), typeof(Color), typeof(DataGrid), defaultValue: InputKitOptions.GetAccentColor(),
-            propertyChanged: (bo,ov,nv)=>(bo as DataGrid).SetSelectionVisualStatesForAll());
+            propertyChanged: (bo, ov, nv) => (bo as DataGrid).SetSelectionVisualStatesForAll());
+
+    public View EmptyView { get => (View)GetValue(EmptyViewProperty); set => SetValue(EmptyViewProperty, value); }
+
+    public static readonly BindableProperty EmptyViewProperty = 
+        BindableProperty.Create(nameof(EmptyView), typeof(View), typeof(DataGrid));
+    
+    public DataTemplate EmptyViewTemplate { get => (DataTemplate)GetValue(EmptyViewTemplateProperty); set => SetValue(EmptyViewTemplateProperty, value); }
+
+    public static readonly BindableProperty EmptyViewTemplateProperty =
+        BindableProperty.Create(nameof(EmptyViewTemplate), typeof(DataTemplate), typeof(DataGrid),
+            propertyChanged: (bo, ov, nv) => (bo as DataGrid).OnEmptyViewTemplateSet());
 }

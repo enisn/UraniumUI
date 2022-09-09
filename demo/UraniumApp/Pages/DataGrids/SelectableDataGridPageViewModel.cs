@@ -23,4 +23,12 @@ public class SelectableDataGridPageViewModel : CustomDataGridPageViewModel
             }
         });
     }
+
+    protected override async void Initialize()
+    {
+        Items = new ObservableCollection<Student>(await DataStore.GetListAsync(simulateNetwork: false));
+
+        SelectedItems.Add(Items[0]);
+        SelectedItems.Add(Items[2]);
+    }
 }

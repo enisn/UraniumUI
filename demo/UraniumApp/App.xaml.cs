@@ -8,7 +8,7 @@ public partial class App : Application
 	{
 		InitializeComponent();
 
-		this.InitializeUraniumUIResources();
+		//this.InitializeUraniumUIResources();
 
 		MainPage = new AppShell();
 	}

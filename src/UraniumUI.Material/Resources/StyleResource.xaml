@@ -8,268 +8,250 @@
                     xmlns:t="clr-namespace:UraniumUI.Theming;assembly=UraniumUI"
                     xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui">
 
-    <ResourceDictionary.MergedDictionaries>
-        <local:ColorResource />
+    <Style TargetType="Page" ApplyToDerivedTypes="True">
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={DynamicResource Background}, Dark={DynamicResource BackgroundDark}}"/>
+    </Style>
 
-        <ResourceDictionary>
+    <Style TargetType="Label" ApplyToDerivedTypes="True">
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={DynamicResource OnBackground},Dark={DynamicResource OnBackgroundDark}}" />
+    </Style>
 
-            <Style TargetType="Page" ApplyToDerivedTypes="True">
-                <Setter Property="BackgroundColor" Value="{DynamicResource Background}"/>
-            </Style>
+    <Style TargetType="Frame" ApplyToDerivedTypes="True">
+        <Setter Property="BackgroundColor" Value="{DynamicResource Surface}" />
+    </Style>
 
-            <Style TargetType="Label" ApplyToDerivedTypes="True">
-                <Setter Property="TextColor" Value="{DynamicResource OnBackground}" />
-            </Style>
+    <Shadow x:Key="ShadowElevation0" Opacity="0" Offset="0,0" Radius="0" Brush="{DynamicResource  ShadowBrush}" />
+    <Shadow x:Key="ShadowElevation1" Opacity="0.2" Offset="2,2" Radius="4" Brush="{DynamicResource ShadowBrush}" />
+    <Shadow x:Key="ShadowElevation2" Opacity="0.4" Offset="4,4" Radius="8" Brush="{DynamicResource ShadowBrush}" />
+    <Shadow x:Key="ShadowElevation3" Opacity="0.6" Offset="6,6" Radius="12" Brush="{DynamicResource ShadowBrush}" />
+    <Shadow x:Key="ShadowElevation4" Opacity="0.6" Offset="8,8" Radius="16" Brush="{DynamicResource ShadowBrush}" />
+    <Shadow x:Key="ShadowElevation5" Opacity="0.8" Offset="10,10" Radius="20" Brush="{DynamicResource ShadowBrush}" />
 
-            <Style TargetType="Frame" ApplyToDerivedTypes="True">
-                <Setter Property="BackgroundColor" Value="{DynamicResource Surface}" />
-            </Style>
+    <Style TargetType="View" Class="Elevation0" ApplyToDerivedTypes="True" >
+        <Setter Property="Shadow" Value="{StaticResource ShadowElevation0}" />
+    </Style>
+    <Style TargetType="View" Class="Elevation1" ApplyToDerivedTypes="True" >
+        <Setter Property="Shadow" Value="{StaticResource ShadowElevation1}" />
+    </Style>
+    <Style TargetType="View" Class="Elevation2" ApplyToDerivedTypes="True" >
+        <Setter Property="Shadow" Value="{StaticResource ShadowElevation2}" />
+    </Style>
+    <Style TargetType="View" Class="Elevation3" ApplyToDerivedTypes="True" >
+        <Setter Property="Shadow" Value="{StaticResource ShadowElevation3}" />
+    </Style>
+    <Style TargetType="View" Class="Elevation4" ApplyToDerivedTypes="True" >
+        <Setter Property="Shadow" Value="{StaticResource ShadowElevation3}" />
+    </Style>
+    <Style TargetType="View" Class="Elevation5" ApplyToDerivedTypes="True" >
+        <Setter Property="Shadow" Value="{StaticResource ShadowElevation3}" />
+    </Style>
 
-            <Shadow x:Key="ShadowElevation0" Opacity="0" Offset="0,0" Radius="0" Brush="{DynamicResource  ShadowBrush}" />
-            <Shadow x:Key="ShadowElevation1" Opacity="0.2" Offset="2,2" Radius="4" Brush="{DynamicResource ShadowBrush}" />
-            <Shadow x:Key="ShadowElevation2" Opacity="0.4" Offset="4,4" Radius="8" Brush="{DynamicResource ShadowBrush}" />
-            <Shadow x:Key="ShadowElevation3" Opacity="0.6" Offset="6,6" Radius="12" Brush="{DynamicResource ShadowBrush}" />
-            <Shadow x:Key="ShadowElevation4" Opacity="0.6" Offset="8,8" Radius="16" Brush="{DynamicResource ShadowBrush}" />
-            <Shadow x:Key="ShadowElevation5" Opacity="0.8" Offset="10,10" Radius="20" Brush="{DynamicResource ShadowBrush}" />
+    <Style TargetType="Button" x:Key="BaseButtonStyle">
+        <Setter Property="CornerRadius" Value="20" />
+        <Setter Property="HeightRequest" Value="40" />
+        <Setter Property="Padding" Value="24,0" />
+    </Style>
 
-            <Style TargetType="View" Class="Elevation0" ApplyToDerivedTypes="True" >
-                <Setter Property="Shadow" Value="{StaticResource ShadowElevation0}" />
-            </Style>
-            <Style TargetType="View" Class="Elevation1" ApplyToDerivedTypes="True" >
-                <Setter Property="Shadow" Value="{StaticResource ShadowElevation1}" />
-            </Style>
-            <Style TargetType="View" Class="Elevation2" ApplyToDerivedTypes="True" >
-                <Setter Property="Shadow" Value="{StaticResource ShadowElevation2}" />
-            </Style>
-            <Style TargetType="View" Class="Elevation3" ApplyToDerivedTypes="True" >
-                <Setter Property="Shadow" Value="{StaticResource ShadowElevation3}" />
-            </Style>
-            <Style TargetType="View" Class="Elevation4" ApplyToDerivedTypes="True" >
-                <Setter Property="Shadow" Value="{StaticResource ShadowElevation3}" />
-            </Style>
-            <Style TargetType="View" Class="Elevation5" ApplyToDerivedTypes="True" >
-                <Setter Property="Shadow" Value="{StaticResource ShadowElevation3}" />
-            </Style>
+    <t:DynamicResourceColor x:Key="dynamicResource" />
 
-            <Style TargetType="Button" x:Key="BaseButtonStyle">
-                <Setter Property="CornerRadius" Value="20" />
-                <Setter Property="HeightRequest" Value="40" />
-                <Setter Property="Padding" Value="24,0" />
-            </Style>
+    <Style TargetType="Button" Class="ElevatedButton" BaseResourceKey="BaseButtonStyle">
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={DynamicResource Surface}, Dark={DynamicResource SurfaceDark}}" />
+        <Setter Property="Shadow" Value="{StaticResource ShadowElevation1}"/>
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={DynamicResource Primary}, Dark={DynamicResource Primary}}" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal">
+                        <VisualState.Setters>
+                            <Setter Property="Shadow" Value="{StaticResource ShadowElevation1}" />
+                            <Setter Property="TextColor" Value="{AppThemeBinding Light={DynamicResource Primary}, Dark={DynamicResource PrimaryDark}}" />
+                            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={DynamicResource Surface}, Dark={DynamicResource SurfaceDark}}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="Shadow" Value="{StaticResource ShadowElevation0}" />
+                            <Setter Property="TextColor" Value="{DynamicResource DisabledText}"/>
+                            <Setter Property="BackgroundColor" Value="{DynamicResource DisabledBackground}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Hover">
+                        <VisualState.Setters>
+                            <Setter Property="Shadow" Value="{StaticResource ShadowElevation2}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Pressed">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={DynamicResource Primary},Dark= {DynamicResource PrimaryDark}}"/>
+                            <Setter Property="Shadow" Value="{StaticResource ShadowElevation0}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
 
-            <Style TargetType="Button" Class="ElevatedButton" BaseResourceKey="BaseButtonStyle">
-                <Setter Property="BackgroundColor" Value="{DynamicResource Surface}" />
-                <Setter Property="Shadow" Value="{StaticResource ShadowElevation1}"/>
-                <Setter Property="TextColor" Value="{DynamicResource Primary}" />
-                <Setter Property="VisualStateManager.VisualStateGroups">
-                    <VisualStateGroupList>
-                        <VisualStateGroup x:Name="CommonStates">
-                            <VisualState x:Name="Normal">
-                                <VisualState.Setters>
-                                    <Setter Property="BackgroundColor" Value="{DynamicResource  Surface}" />
-                                    <Setter Property="Shadow" Value="{StaticResource ShadowElevation1}" />
-                                </VisualState.Setters>
-                            </VisualState>
-                            <VisualState x:Name="Disabled">
-                                <VisualState.Setters>
-                                    <Setter Property="BackgroundColor" Value="{DynamicResource OnSurface}"/>
-                                    <Setter Property="TextColor" Value="{DynamicResource OnSurface}"/>
-                                    <Setter Property="Shadow" Value="{StaticResource ShadowElevation0}" />
-                                    <Setter Property="t:ExtraParameters.TextColorOpacity" Value="0.38" />
-                                    <Setter Property="t:ExtraParameters.BackgroundColorOpacity" Value="0.12" />
-                                </VisualState.Setters>
-                            </VisualState>
-                            <VisualState x:Name="Hover">
-                                <VisualState.Setters>
-                                    <Setter Property="Shadow" Value="{StaticResource ShadowElevation2}" />
-                                </VisualState.Setters>
-                            </VisualState>
-                            <VisualState x:Name="Pressed">
-                                <VisualState.Setters>
-                                    <Setter Property="BackgroundColor" Value="{DynamicResource Primary}"/>
-                                    <Setter Property="Shadow" Value="{StaticResource ShadowElevation0}" />
-                                    <Setter Property="t:ExtraParameters.BackgroundColorOpacity" Value="0.4" />
-                                </VisualState.Setters>
-                            </VisualState>
-                        </VisualStateGroup>
-                    </VisualStateGroupList>
-                </Setter>
-            </Style>
+    <Style TargetType="Button" Class="FilledButton" BaseResourceKey="BaseButtonStyle">
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={DynamicResource Primary}, Dark={DynamicResource PrimaryDark}}" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={DynamicResource OnPrimary}, Dark={DynamicResource OnPrimaryDark}}" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={DynamicResource Primary}, Dark={DynamicResource PrimaryDark}}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="TextColor" Value="{DynamicResource DisabledText}"/>
+                            <Setter Property="BackgroundColor" Value="{DynamicResource DisabledBackground}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
 
-            <Style TargetType="Button" Class="FilledButton" BaseResourceKey="BaseButtonStyle">
-                <Setter Property="BackgroundColor" Value="{DynamicResource  Primary}" />
-                <Setter Property="TextColor" Value="{DynamicResource  OnPrimary}" />
-                <Setter Property="VisualStateManager.VisualStateGroups">
-                    <VisualStateGroupList>
-                        <VisualStateGroup x:Name="CommonStates">
-                            <VisualState x:Name="Normal">
-                                <VisualState.Setters>
-                                    <Setter Property="BackgroundColor" Value="{DynamicResource  Primary}" />
-                                </VisualState.Setters>
-                            </VisualState>
-                            <VisualState x:Name="Disabled">
-                                <VisualState.Setters>
-                                    <Setter Property="BackgroundColor" Value="{DynamicResource OnSurface}"/>
-                                    <Setter Property="TextColor" Value="{DynamicResource OnSurface}"/>
-                                    <Setter Property="t:ExtraParameters.TextColorOpacity" Value="0.38" />
-                                    <Setter Property="t:ExtraParameters.BackgroundColorOpacity" Value="0.12" />
-                                </VisualState.Setters>
-                            </VisualState>
-                        </VisualStateGroup>
-                    </VisualStateGroupList>
-                </Setter>
-            </Style>
+    <Style TargetType="Button" Class="FilledTonalButton" BaseResourceKey="BaseButtonStyle">
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={DynamicResource SecondaryContainer}, Dark={DynamicResource SecondaryContainerDark}}" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={DynamicResource OnSecondaryContainer}, Dark={DynamicResource OnSecondaryContainerDark}}" />
+        <Setter Property="Shadow" Value="{StaticResource ShadowElevation0}" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={DynamicResource SecondaryContainer}, Dark={DynamicResource SecondaryContainerDark}}" />
+                            <Setter Property="Shadow" Value="{StaticResource ShadowElevation0}"/>
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="TextColor" Value="{DynamicResource DisabledText}"/>
+                            <Setter Property="BackgroundColor" Value="{DynamicResource DisabledBackground}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Hover">
+                        <VisualState.Setters>
+                            <Setter Property="Shadow" Value="{StaticResource ShadowElevation1}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Pressed">
+                        <VisualState.Setters>
+                            <!--<Setter Property="BackgroundColor" Value="{DynamicResource OnSecondary08}"/>-->
+                            <Setter Property="Shadow" Value="{StaticResource ShadowElevation0}"/>
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
 
-            <Style TargetType="Button" Class="FilledTonalButton" BaseResourceKey="BaseButtonStyle">
-                <Setter Property="BackgroundColor" Value="{DynamicResource  SecondaryContainer}" />
-                <Setter Property="TextColor" Value="{DynamicResource  OnSecondaryContainer}" />
-                <Setter Property="Shadow" Value="{StaticResource ShadowElevation0}" />
-                <Setter Property="VisualStateManager.VisualStateGroups">
-                    <VisualStateGroupList>
-                        <VisualStateGroup x:Name="CommonStates">
-                            <VisualState x:Name="Normal">
-                                <VisualState.Setters>
-                                    <Setter Property="BackgroundColor" Value="{DynamicResource  SecondaryContainer}" />
-                                    <Setter Property="Shadow" Value="{StaticResource ShadowElevation0}"/>
-                                </VisualState.Setters>
-                            </VisualState>
-                            <VisualState x:Name="Disabled">
-                                <VisualState.Setters>
-                                    <Setter Property="BackgroundColor" Value="{DynamicResource OnSurface}"/>
-                                    <Setter Property="TextColor" Value="{DynamicResource OnSurface}"/>
-                                    <Setter Property="t:ExtraParameters.TextColorOpacity" Value="0.38" />
-                                    <Setter Property="t:ExtraParameters.BackgroundColorOpacity" Value="0.12" />
-                                </VisualState.Setters>
-                            </VisualState>
-                            <VisualState x:Name="Hover">
-                                <VisualState.Setters>
-                                    <Setter Property="Shadow" Value="{StaticResource ShadowElevation1}" />
-                                </VisualState.Setters>
-                            </VisualState>
-                            <VisualState x:Name="Pressed">
-                                <VisualState.Setters>
-                                    <Setter Property="BackgroundColor" Value="{DynamicResource OnSecondary}"/>
-                                    <Setter Property="Shadow" Value="{StaticResource ShadowElevation0}"/>
-                                </VisualState.Setters>
-                            </VisualState>
-                        </VisualStateGroup>
-                    </VisualStateGroupList>
-                </Setter>
-            </Style>
+    <Style TargetType="Button" Class="OutlinedButton" BaseResourceKey="BaseButtonStyle">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="BorderColor" Value="{AppThemeBinding Light={DynamicResource Outline}, Dark={DynamicResource OutlineDark}}" />
+        <Setter Property="BorderWidth" Value="1" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={DynamicResource  Primary}, Dark={DynamicResource  PrimaryDark}}" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="Transparent" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="Transparent"/>
+                            <Setter Property="TextColor" Value="{DynamicResource Gray300}"/>
+                            <Setter Property="BorderColor" Value="{DynamicResource Gray100}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Hover">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{DynamicResource SurfaceTint1}"/>
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Pressed">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{DynamicResource SurfaceTint2}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
 
-            <Style TargetType="Button" Class="OutlinedButton" BaseResourceKey="BaseButtonStyle">
-                <Setter Property="BackgroundColor" Value="Transparent" />
-                <Setter Property="BorderColor" Value="{DynamicResource Outline}" />
-                <Setter Property="BorderWidth" Value="1" />
-                <Setter Property="TextColor" Value="{DynamicResource  Primary}" />
-                <Setter Property="VisualStateManager.VisualStateGroups">
-                    <VisualStateGroupList>
-                        <VisualStateGroup x:Name="CommonStates">
-                            <VisualState x:Name="Normal">
-                                <VisualState.Setters>
-                                    <Setter Property="BackgroundColor" Value="Transparent" />
-                                    <Setter Property="t:ExtraParameters.BackgroundColorOpacity" Value="0" />
-                                </VisualState.Setters>
-                            </VisualState>
-                            <VisualState x:Name="Disabled">
-                                <VisualState.Setters>
-                                    <Setter Property="BackgroundColor" Value="Transparent"/>
-                                    <Setter Property="BorderColor" Value="{DynamicResource OnSurface}"/>
-                                    <Setter Property="TextColor" Value="{DynamicResource OnSurface}"/>
-                                    <Setter Property="t:ExtraParameters.TextColorOpacity" Value="0.38" />
-                                </VisualState.Setters>
-                            </VisualState>
-                            <VisualState x:Name="Hover">
-                                <VisualState.Setters>
-                                    <Setter Property="BackgroundColor" Value="{DynamicResource Primary}"/>
-                                    <Setter Property="t:ExtraParameters.BackgroundColorOpacity" Value="0.08" />
-                                </VisualState.Setters>
-                            </VisualState>
-                            <VisualState x:Name="Pressed">
-                                <VisualState.Setters>
-                                    <Setter Property="BackgroundColor" Value="{DynamicResource Outline}" />
-                                    <Setter Property="t:ExtraParameters.BackgroundColorOpacity" Value="0.2" />
-                                </VisualState.Setters>
-                            </VisualState>
-                        </VisualStateGroup>
-                    </VisualStateGroupList>
-                </Setter>
-            </Style>
+    <Style TargetType="Button" Class="TextButton" BaseResourceKey="BaseButtonStyle">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="BorderWidth" Value="0" />
+        <Setter Property="Margin" Value="0,2"/>
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={DynamicResource Primary},Dark={DynamicResource PrimaryDark}}" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="Transparent" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="Transparent" />
+                            <Setter Property="TextColor" Value="{DynamicResource DisabledText}"/>
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Hover">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{DynamicResource SurfaceTint1}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Pressed">
+                        <VisualState.Setters>
+                            <Setter Property="Background" Value="{DynamicResource SurfaceTint2}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
 
-            <Style TargetType="Button" Class="TextButton" BaseResourceKey="BaseButtonStyle">
-                <Setter Property="BackgroundColor" Value="Transparent" />
-                <Setter Property="BorderWidth" Value="0" />
-                <Setter Property="TextColor" Value="{DynamicResource  Primary}" />
-                <Setter Property="VisualStateManager.VisualStateGroups">
-                    <VisualStateGroupList>
-                        <VisualStateGroup x:Name="CommonStates">
-                            <VisualState x:Name="Normal">
-                                <VisualState.Setters>
-                                    <Setter Property="BackgroundColor" Value="Transparent" />
-                                    <Setter Property="t:ExtraParameters.BackgroundColorOpacity" Value="0" />
-                                </VisualState.Setters>
-                            </VisualState>
-                            <VisualState x:Name="Disabled">
-                                <VisualState.Setters>
-                                    <Setter Property="BackgroundColor" Value="Transparent" />
-                                    <Setter Property="TextColor" Value="{DynamicResource OnSurface}"/>
-                                    <Setter Property="t:ExtraParameters.TextColorOpacity" Value="0.38" />
-                                </VisualState.Setters>
-                            </VisualState>
-                            <VisualState x:Name="Hover">
-                                <VisualState.Setters>
-                                    <Setter Property="BackgroundColor" Value="{DynamicResource Primary}"/>
-                                    <Setter Property="t:ExtraParameters.BackgroundColorOpacity" Value="0.08" />
-                                </VisualState.Setters>
-                            </VisualState>
-                            <VisualState x:Name="Pressed">
-                                <VisualState.Setters>
-                                    <Setter Property="BackgroundColor" Value="{DynamicResource Primary}"/>
-                                    <Setter Property="t:ExtraParameters.BackgroundColorOpacity" Value="0.2" />
-                                </VisualState.Setters>
-                            </VisualState>
-                        </VisualStateGroup>
-                    </VisualStateGroupList>
-                </Setter>
-            </Style>
+    <Style TargetType="BoxView" Class="Divider">
+        <Setter Property="HeightRequest" Value="1" />
+        <Setter Property="Color" Value="{AppThemeBinding Light={DynamicResource OutlineVariant}, Dark={DynamicResource OutlineVariantDark}}" />
+        <Setter Property="Margin" Value="16"/>
+    </Style>
 
-            <Style TargetType="BoxView" Class="Divider">
-                <Setter Property="HeightRequest" Value="1" />
-                <Setter Property="Color" Value="{DynamicResource OutlineVariant}" />
-                <Setter Property="Margin" Value="16"/>
-            </Style>
+    <Style TargetType="c:CheckBox">
+        <Setter Property="Type" Value="Material" />
+        <Setter Property="BorderColor" Value="{AppThemeBinding Light={DynamicResource Outline}, Dark={DynamicResource  OutlineDark}}" />
+        <Setter Property="Color" Value="{AppThemeBinding Light={DynamicResource Primary}, Dark={DynamicResource PrimaryDark}}" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={DynamicResource OnBackground}, Dark={DynamicResource OnBackgroundDark}}" />
+    </Style>
 
-            <Style TargetType="c:CheckBox">
-                <Setter Property="Type" Value="Material" />
-                <Setter Property="BorderColor" Value="{DynamicResource  Outline}" />
-                <Setter Property="Color" Value="{DynamicResource Primary}" />
-                <Setter Property="TextColor" Value="{DynamicResource OnBackground}" />
-            </Style>
+    <Style TargetType="c:RadioButton">
+        <Setter Property="Color" Value="{AppThemeBinding Light={DynamicResource Primary}, Dark={DynamicResource PrimaryDark}}" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={DynamicResource OnBackground}, Dark={DynamicResource OnBackgroundDark}}" />
+        <Setter Property="CircleColor" Value="{AppThemeBinding Light={DynamicResource  Outline}, Dark={DynamicResource  OutlineDark}}" />
+    </Style>
 
-            <Style TargetType="c:RadioButton">
-                <Setter Property="Color" Value="{DynamicResource  Primary}" />
-                <Setter Property="TextColor" Value="{DynamicResource  OnBackground}" />
-                <Setter Property="CircleColor" Value="{DynamicResource  Outline}" />
-            </Style>
+    <Style TargetType="c:RadioButton" Class="CheckRadioButton">
+        <Setter Property="SelectedIconGeomerty" Value="{x:Static input:PredefinedShapes.CheckCircle}" />
+    </Style>
 
-            <Style TargetType="c:RadioButton" Class="CheckRadioButton">
-                <Setter Property="SelectedIconGeomerty" Value="{x:Static input:PredefinedShapes.CheckCircle}" />
-            </Style>
+    <Style TargetType="a:BottomSheetView">
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={DynamicResource Surface},Dark={DynamicResource SurfaceDark}}"/>
+    </Style>
 
-            <Style TargetType="a:BottomSheetView">
-                <Setter Property="BackgroundColor" Value="{DynamicResource Surface}"/>
-            </Style>
+    <Style TargetType="a:BackdropView">
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={DynamicResource Primary}, Dark={DynamicResource Gray950}}"/>
+    </Style>
 
-            <Style TargetType="a:BackdropView">
-                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={DynamicResource Primary}, Dark={StaticResource Gray950}}"/>
-            </Style>
-
-            <Style TargetType="c:DataGrid">
-                <Setter Property="BackgroundColor" Value="{DynamicResource  Surface}" />
-                <Setter Property="LineSeperatorColor" Value="{StaticResource Gray300}"/>
-                <Setter Property="SelectionColor" Value="{DynamicResource Primary}" />
-            </Style>
-        </ResourceDictionary>
-
-    </ResourceDictionary.MergedDictionaries>
+    <Style TargetType="c:DataGrid">
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={DynamicResource  Surface},Dark={DynamicResource  SurfaceDark}}" />
+        <Setter Property="LineSeperatorColor" Value="{DynamicResource Gray300}"/>
+        <Setter Property="SelectionColor" Value="{AppThemeBinding Light={DynamicResource Primary}, Dark={DynamicResource PrimaryDark}}" />
+    </Style>
+    
 </ResourceDictionary>

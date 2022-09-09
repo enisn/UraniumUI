@@ -1,5 +1,7 @@
 ﻿using InputKit.Handlers;
+using Microsoft.Maui.Platform;
 using UraniumUI.Handlers;
+using UraniumUI.Resources;
 
 namespace UraniumUI;
 public static class MauiProgramExtensions
@@ -33,6 +35,18 @@ public static class MauiProgramExtensions
         {
             app.Resources[item.Key] = item.Value;
         }
+
+        app.Resources["Primary08"] = ColorResource.GetColor("Primary").WithAlpha(0.08f);
+        app.Resources["Primary12"] = ColorResource.GetColor("Primary").WithAlpha(0.12f);
+        app.Resources["Primary20"] = ColorResource.GetColor("Primary").WithAlpha(0.20f);
+        
+        app.Resources["OnPrimary08"] = ColorResource.GetColor("OnPrimary").WithAlpha(0.08f);
+        app.Resources["OnPrimary12"] = ColorResource.GetColor("OnPrimary").WithAlpha(0.12f);
+        app.Resources["OnPrimary20"] = ColorResource.GetColor("OnPrimary").WithAlpha(0.20f);
+
+        app.Resources["OnSecondary08"] = ColorResource.GetColor("OnSecondary").WithAlpha(0.08f);
+
+        app.Resources["Outline20"] = ColorResource.GetColor("Outline").WithAlpha(0.20f);
 
         return app;
     }

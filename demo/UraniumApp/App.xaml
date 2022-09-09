@@ -7,11 +7,12 @@
              xmlns:m="clr-namespace:UraniumUI.Material.Resources;assembly=UraniumUI.Material"
              x:Class="UraniumApp.App">
     <Application.Resources>
+       
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
-                <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
                 <m:ColorResource />
+                <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
                 <m:StyleResource />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

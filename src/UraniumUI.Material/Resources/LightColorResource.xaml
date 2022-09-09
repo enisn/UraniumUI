@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ResourceDictionary x:Class="UraniumUI.Material.Resources.LightColorResource"
+                    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:local="clr-namespace:UraniumUI.Material.Resources">
+    <Color x:Key="Primary">#52D681</Color>
+    <Color x:Key="OnPrimary">#FFFFFF</Color>
+
+    <!--%60 Lighten of Primary-->
+    <!--%60 Darken of Primary-->
+    <Color x:Key="PrimaryContainer">#baefcd</Color>
+    <Color x:Key="OnPrimaryContainer">#176031</Color>
+
+    <Color x:Key="Secondary">#B5FF7D</Color>
+    <Color x:Key="OnSecondary">#2C3639</Color>
+    <Color x:Key="SecondaryContainer">#e1ffcb</Color>
+    <Color x:Key="OnSecondaryContainer">#3F4E4F</Color>
+
+    <Color x:Key="Tertiary">#FDDB3A</Color>
+    <Color x:Key="OnTertiary">#2C3639</Color>
+    <Color x:Key="TertiaryContainer">#786301</Color>
+    <Color x:Key="OnTertiaryContainer">#fef1b0</Color>
+
+    <Color x:Key="Surface">#F6F4E6</Color>
+    <Color x:Key="OnSurface">#3F4E4F</Color>
+    <Color x:Key="SurfaceVariant">#E7E0EC</Color>
+    <Color x:Key="OnSurfaceVariant">#49454E</Color>
+
+    <Color x:Key="Background">#FFFBFE</Color>
+    <Color x:Key="OnBackground">#1C1B1F</Color>
+
+    <Color x:Key="Error">#B3261E</Color>
+    <Color x:Key="ErrorContainer">#F9DEDC</Color>
+    <Color x:Key="OnError">#FFFFFF</Color>
+    <Color x:Key="OnErrorContainer">#370B1E</Color>
+
+    <Color x:Key="Outline">#79747E</Color>
+    <Color x:Key="OutlineVariant">#C4C7C5</Color>
+    <Color x:Key="Shadow">#000000</Color>
+
+    <Color x:Key="SurfaceTint">#6750A4</Color>
+
+    <Color x:Key="InverseSurface">#313033</Color>
+    <Color x:Key="InverseOnSurface">#F4EFF4</Color>
+
+    <Color x:Key="InversePrimary">#D0BCFF</Color>
+    <Color x:Key="Scrim">#000000</Color>
+</ResourceDictionary>

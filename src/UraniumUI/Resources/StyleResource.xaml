@@ -10,17 +10,12 @@
         <ResourceDictionary>
 
             <Style TargetType="Page" ApplyToDerivedTypes="True">
-                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Background}, Dark={StaticResource OnBackground}}"/>
+                <Setter Property="BackgroundColor" Value="{DynamicResource Background}"/>
             </Style>
 
             <Style TargetType="Label" ApplyToDerivedTypes="True">
-                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource Background}}" />
+                <Setter Property="TextColor" Value="{DynamicResource OnBackground}" />
             </Style>
-
-                <!--<Style TargetType="input:CheckBox">
-            <Setter Property="Color" Value="{StaticResource Primary}"  />
-            <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource Background}}" />
-        </Style>-->
         </ResourceDictionary>
 
     </ResourceDictionary.MergedDictionaries>

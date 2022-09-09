@@ -16,10 +16,12 @@ public partial class DataGrid : Frame
 
     public DataGrid()
     {
-        this.Content = _rootGrid = new Grid
+        _rootGrid = new Grid
         {
             HorizontalOptions = LayoutOptions.Fill
         };
+
+        RenderEmptyView();
         InitializeFactoryMethods();
         this.Padding = new Thickness(0, 10);
         (Columns as INotifyCollectionChanged).CollectionChanged += Columns_CollectionChanged;
@@ -60,6 +62,7 @@ public partial class DataGrid : Frame
         if (ItemsSource.Count == 0)
         {
             ResetGrid();
+            RenderEmptyView();
             return;
         }
 
@@ -68,7 +71,7 @@ public partial class DataGrid : Frame
             Render();
             return;
         }
-        
+
         switch (e.Action)
         {
             case NotifyCollectionChangedAction.Add:
@@ -113,7 +116,7 @@ public partial class DataGrid : Frame
             {
                 observable.CollectionChanged -= Columns_CollectionChanged;
             }
-            
+
             Columns = CurrentType?.GetProperties(BindingFlags.Instance | BindingFlags.Public)
                 .Select(s => new DataGridColumn
                 {
@@ -131,6 +134,12 @@ public partial class DataGrid : Frame
         if (Columns == null || Columns.Count == 0 || CurrentType == null)
         {
             return; // Not ready yet.
+        }
+
+        if (ItemsSource.Count == 0)
+        {
+            RenderEmptyView();
+            return;
         }
 
         EnsurePropertyInfosAreSet();
@@ -263,7 +272,7 @@ public partial class DataGrid : Frame
         //for (int i = 0; i < (rows + (rows - 1)); i++)
         for (int i = 0; i < (rows * 10); i++)
         {
-            _rootGrid.AddRowDefinition(new RowDefinition(GridLength.Star));
+            _rootGrid.AddRowDefinition(new RowDefinition(GridLength.Auto));
         }
     }
 
@@ -308,6 +317,19 @@ public partial class DataGrid : Frame
             {
                 SetSelected(child, SelectedItems.Contains(cellBindingContext.Data));
             }
+        }
+    }
+
+    protected virtual void RenderEmptyView()
+    {
+        this.Content = EmptyView ??= (View)EmptyViewTemplate?.CreateContent() ?? new BoxView { HorizontalOptions = LayoutOptions.Fill, Margin = 40 };
+    }
+
+    protected virtual void OnEmptyViewTemplateSet()
+    {
+        if (EmptyViewTemplate != null)
+        {
+            EmptyView = null;
         }
     }
 

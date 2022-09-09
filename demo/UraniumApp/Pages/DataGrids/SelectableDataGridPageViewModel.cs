@@ -23,4 +23,6 @@ public class SelectableDataGridPageViewModel : CustomDataGridPageViewModel
             }
         });
     }
+
+    protected override bool SimulateNetwork => false;
 }

@@ -68,8 +68,6 @@
                                 <VisualState.Setters>
                                     <Setter Property="BackgroundColor" Value="{DynamicResource  Surface}" />
                                     <Setter Property="Shadow" Value="{StaticResource ShadowElevation1}" />
-                                    <Setter Property="t:ExtraParameters.TextColorOpacity" Value="1" />
-                                    <Setter Property="t:ExtraParameters.BackgroundColorOpacity" Value="1" />
                                 </VisualState.Setters>
                             </VisualState>
                             <VisualState x:Name="Disabled">
@@ -170,7 +168,7 @@
                             <VisualState x:Name="Normal">
                                 <VisualState.Setters>
                                     <Setter Property="BackgroundColor" Value="Transparent" />
-                                    <Setter Property="t:ExtraParameters.BackgroundColorOpacity" Value="1" />
+                                    <Setter Property="t:ExtraParameters.BackgroundColorOpacity" Value="0" />
                                 </VisualState.Setters>
                             </VisualState>
                             <VisualState x:Name="Disabled">
@@ -179,7 +177,6 @@
                                     <Setter Property="BorderColor" Value="{DynamicResource OnSurface}"/>
                                     <Setter Property="TextColor" Value="{DynamicResource OnSurface}"/>
                                     <Setter Property="t:ExtraParameters.TextColorOpacity" Value="0.38" />
-                                    <Setter Property="t:ExtraParameters.BackgroundColorOpacity" Value="0.12" />
                                 </VisualState.Setters>
                             </VisualState>
                             <VisualState x:Name="Hover">
@@ -209,7 +206,7 @@
                             <VisualState x:Name="Normal">
                                 <VisualState.Setters>
                                     <Setter Property="BackgroundColor" Value="Transparent" />
-                                    <Setter Property="t:ExtraParameters.BackgroundColorOpacity" Value="1" />
+                                    <Setter Property="t:ExtraParameters.BackgroundColorOpacity" Value="0" />
                                 </VisualState.Setters>
                             </VisualState>
                             <VisualState x:Name="Disabled">

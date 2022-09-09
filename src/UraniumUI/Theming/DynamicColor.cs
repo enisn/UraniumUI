@@ -4,24 +4,6 @@ using Microsoft.Maui.Controls.Platform;
 
 namespace UraniumUI.Theming;
 
-//[ContentProperty("Color")]
-//public class DynamicColor : IMarkupExtension
-//{
-//    public object Value { get; set; }
-
-//    public float Opacity { get; set; }
-
-//    public object ProvideValue(IServiceProvider serviceProvider)
-//    {
-//        if (Value is Color color)
-//        {
-//            return color.MultiplyAlpha(Opacity);
-//        }
-
-//        return Value;
-//    }
-//}
-
 public static class ExtraParameters
 {
     public static readonly BindableProperty TextColorOpacityProperty =
@@ -38,7 +20,7 @@ public static class ExtraParameters
         var prop = view.GetType().GetProperty(propertyName);
         var color = prop.GetValue(view) as Color;
 
-        prop.SetValue(view, color.MultiplyAlpha(opacity));
+        prop.SetValue(view, color.WithAlpha(opacity));
     }
     public static float GetTextColorOpacity(BindableObject view)
     {

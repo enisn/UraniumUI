@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage x:Class="UraniumApp.Pages.TabViewPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:material="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+             xmlns:root="clr-namespace:UraniumApp"
+             xmlns:local="clr-namespace:UraniumApp.Pages">
+    <ContentPage.Content>
+        <StackLayout>
+            <material:TabView>
+                
+                <material:TabItem Title="Tab One">
+                    <material:TabItem.ContentTemplate>
+                        <DataTemplate>
+                            <root:DemoContent />
+                        </DataTemplate>
+                    </material:TabItem.ContentTemplate>
+                </material:TabItem>
+
+
+                <material:TabItem Title="Tab Two">
+                    <material:TabItem.ContentTemplate>
+                        <DataTemplate>
+                            <HorizontalStackLayout>
+                                <Image WidthRequest="40" Source="{FontImageSource FontFamily=MaterialRound, Glyph={x:Static m:MaterialRound.Table_bar}, Color={AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
+                                <Image WidthRequest="40" Source="{FontImageSource FontFamily=MaterialRound, Glyph={x:Static m:MaterialRound.Table_chart}, Color={AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
+                                <Image WidthRequest="40" Source="{FontImageSource FontFamily=MaterialRound, Glyph={x:Static m:MaterialRound.Table_restaurant}, Color={AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
+                                <Image WidthRequest="40" Source="{FontImageSource FontFamily=MaterialRound, Glyph={x:Static m:MaterialRound.Table_rows}, Color={AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
+                                <Image WidthRequest="40" Source="{FontImageSource FontFamily=MaterialRound, Glyph={x:Static m:MaterialRound.Table_view}, Color={AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
+                                <Image WidthRequest="40" Source="{FontImageSource FontFamily=MaterialRound, Glyph={x:Static m:MaterialRound.Tablet}, Color={AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
+                                <Image WidthRequest="40" Source="{FontImageSource FontFamily=MaterialRound, Glyph={x:Static m:MaterialRound.Tablet_android}, Color={AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
+                                <Image WidthRequest="40" Source="{FontImageSource FontFamily=MaterialRound, Glyph={x:Static m:MaterialRound.Tablet_mac}, Color={AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
+                            </HorizontalStackLayout>
+                        </DataTemplate>
+                    </material:TabItem.ContentTemplate>
+                </material:TabItem>
+
+                <material:TabItem Title="Tab Three">
+                    <material:TabItem.ContentTemplate>
+                        <DataTemplate>
+                            <root:DemoContent />
+                        </DataTemplate>
+                    </material:TabItem.ContentTemplate>
+                </material:TabItem>
+            </material:TabView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -47,6 +47,10 @@
                 <FontImageSource FontFamily="MaterialOutlined" Glyph="{x:Static m:MaterialOutlined.Grid_3x3}" Color="{StaticResource Primary}" />
             </ShellContent.Icon>
         </ShellContent>
+        <ShellContent 
+            Title="TabView" 
+            Icon="{FontImageSource FontFamily=MaterialOutlined, Glyph={x:Static m:MaterialOutlined.Tab}, Color={StaticResource Primary}}"
+            ContentTemplate="{DataTemplate pages:TabViewPage}"/>
     </FlyoutItem>
 
     <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">

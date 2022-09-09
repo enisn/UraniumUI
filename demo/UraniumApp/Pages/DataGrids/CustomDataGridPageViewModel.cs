@@ -39,12 +39,11 @@ public class CustomDataGridPageViewModel : BindableObject
             }
         });
     }
-    protected virtual bool SimulateNetwork => true;
 
-    async void Initialize()
+    protected async virtual void Initialize()
     {
         IsBusy = true;
-        Items = new ObservableCollection<Student>(await DataStore.GetListAsync(SimulateNetwork));
+        Items = new ObservableCollection<Student>(await DataStore.GetListAsync());
         IsBusy = false;
     }
 

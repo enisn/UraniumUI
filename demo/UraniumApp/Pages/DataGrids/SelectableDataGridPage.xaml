@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+﻿<?xml version="1.0" encoding="UTF-8" ?>
 <ContentPage x:Class="UraniumApp.Pages.DataGrids.SelectableDataGridPage"
              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -11,7 +11,7 @@
     <ContentPage.Content>
         <ScrollView>
             <StackLayout>
-                <Button Text="Delete Selected" Command="{Binding RemoveSelectedCommand}" Margin="30" HorizontalOptions="Center" />
+                <Button Text="Delete Selected" StyleClass="FilledTonalButton" Command="{Binding RemoveSelectedCommand}" Margin="30" HorizontalOptions="Center" />
                 <material:DataGrid ItemsSource="{Binding Items}" SelectedItems="{Binding SelectedItems}" HorizontalOptions="Center" Margin="30">
                     <material:DataGrid.EmptyView>
                         <VerticalStackLayout Margin="80,20">

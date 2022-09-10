@@ -41,9 +41,9 @@ Then use it in XAML like this:
 ```xml
  <controls:DataGrid ItemsSource="{Binding Items}" UseAutoColumns="True" Margin="30" />
 ```
-|Light - Desktop | Dark - Mobile|
-| :---: | :---: |
-| ![MAUI datagrid](images/datagrid-demo.png) | ![](images/datagrid-demo-android.png) |
+|Light - Desktop | Dark - Android | Light - iOS |
+| :---: | :---: | :---: |
+| ![MAUI datagrid](images/datagrid-demo.png) | ![](images/datagrid-demo-android.png) | ![](images/datagrid-selection-light-ios.gif) |
 
 
 ## Customizations

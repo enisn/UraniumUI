@@ -88,7 +88,8 @@ Following parameters can be used in DataTemplate for binding:
 | --- | --- |
 | ![MAUI TabView](images/tabview-simple-custom-light-android.gif) | ![MAUI TabView](images/tabview-simple-custom-dark-windows.gif)  |
 
-You can use triggers to customize your tabs even more.
+
+Also, tabs can be customized using [Triggers](https://docs.microsoft.com/en-us/dotnet/maui/fundamentals/triggers) according to the state of tab. `DataTrigger` can be used for styling tab item according to the state of tab. `IsSelected` property of `TabItem` can be used in DataTrigger.
 
 ```xml
 <material:TabView>
@@ -139,7 +140,12 @@ You can use triggers to customize your tabs even more.
 
 ---
 
-Even you can define DataTemplate tab by tab separetely. Use `TabItem.HeaderTemplate` property for that.
+Tabs can be styles separately using `HeaderTemplate` property of `TabItem`. Use `TabItem.HeaderTemplate` property while defining `TabItem` in `TabView`.
+
+When both of `TabView.TabHeaderItemTemplate` and `TabItem.HeaderTemplate` are defined, `TabItem.HeaderTemplate` will be used for that particular tab.
+
+
+Even you can define DataTemplate tab by tab separetely. 
 
 ```xml
 <material:TabView>

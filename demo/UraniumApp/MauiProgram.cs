@@ -1,4 +1,5 @@
-﻿using InputKit.Handlers;
+﻿using CommunityToolkit.Maui;
+using InputKit.Handlers;
 using Microsoft.Maui.Hosting;
 using UraniumUI;
 using UraniumUI.Handlers;
@@ -11,7 +12,7 @@ public static class MauiProgram
 	{
 		var builder = MauiApp.CreateBuilder();
 		builder
-			.UseMauiApp<App>().UseUraniumUI()
+			.UseMauiApp<App>().UseMauiCommunityToolkit().UseUraniumUI()
 			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+﻿<?xml version="1.0" encoding="UTF-8" ?>
 <ContentPage x:Class="UraniumApp.Pages.TabViews.TabViewPage"
              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -37,7 +37,7 @@
 
                 <BoxView StyleClass="Divider"/>
 
-                <Frame>
+                <Frame StyleClass="Elevation1">
                     <material:TabView TabPlacement="{Binding Source={x:Reference tabPlacementSelection}, Path=SelectedItem}">
                         <material:TabItem Title="Tab One">
                             <material:TabItem.ContentTemplate>

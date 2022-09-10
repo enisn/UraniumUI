@@ -37,6 +37,7 @@
     <Color x:Key="OutlineVariant">#C4C7C5</Color>
     <Color x:Key="Shadow">#000000</Color>
 
+    <Color x:Key="SurfaceTint0">#3052D681</Color>
     <Color x:Key="SurfaceTint1">#6052D681</Color>
     <Color x:Key="SurfaceTint2">#a052D681</Color>
     <Color x:Key="SurfaceTint3">#bb52D681</Color>

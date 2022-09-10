@@ -9,6 +9,7 @@
     xmlns:bsheet="clr-namespace:UraniumApp.Pages.BottomSheets"
     xmlns:backdrop="clr-namespace:UraniumApp.Pages.Backdrops"
     xmlns:dataGrid="clr-namespace:UraniumApp.Pages.DataGrids"
+    xmlns:tabs="clr-namespace:UraniumApp.Pages.TabViews"
     Shell.FlyoutBehavior="{OnIdiom Desktop=Locked, Default=Flyout}">
 
     <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
@@ -47,6 +48,10 @@
                 <FontImageSource FontFamily="MaterialOutlined" Glyph="{x:Static m:MaterialOutlined.Grid_3x3}" Color="{StaticResource Primary}" />
             </ShellContent.Icon>
         </ShellContent>
+        <ShellContent 
+            Title="TabView" 
+            Icon="{FontImageSource FontFamily=MaterialOutlined, Glyph={x:Static m:MaterialOutlined.Tab}, Color={StaticResource Primary}}"
+            ContentTemplate="{DataTemplate tabs:TabViewIndexPage}"/>
     </FlyoutItem>
 
     <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
@@ -59,11 +64,11 @@
             Icon="{FontImageSource FontFamily=MaterialOutlined, Glyph={x:Static m:MaterialOutlined.All_inbox}, Color={StaticResource Primary}}"
             ContentTemplate="{DataTemplate pages:ButtonsPage}"/>        
         <ShellContent 
-            Title="CheckBox" 
-            Icon="{FontImageSource FontFamily=MaterialOutlined, Glyph={x:Static m:MaterialOutlined.Check_box}}"
+            Title="CheckBox"
+            Icon="{FontImageSource FontFamily=MaterialOutlined, Glyph={x:Static m:MaterialOutlined.Check_box}, Color={StaticResource Primary}}}"
             ContentTemplate="{DataTemplate pages:CheckBoxesPage}"/>
         <ShellContent 
-            Title="CheckBox" 
+            Title="RadioButton" 
             Icon="{FontImageSource FontFamily=MaterialOutlined, Glyph={x:Static m:MaterialOutlined.Radio_button_checked}, Color={StaticResource Primary}}"
             ContentTemplate="{DataTemplate pages:RadioButtonsPage}"/>
     </FlyoutItem>

@@ -3,9 +3,20 @@
              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:UraniumApp">
+    <ContentView.Resources>
+        <Style TargetType="Frame">
+            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Surface},Dark={StaticResource SurfaceDark}}" />
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnSurface}, Dark={StaticResource OnSurfaceDark}}"/>
+        </Style>
+        <Style TargetType="Grid">
+            <Setter Property="RowDefinitions" Value="Auto" />
+        </Style>
+    </ContentView.Resources>
     <ContentView.Content>
         <StackLayout Padding="20" Spacing="10">
-            <Grid ColumnDefinitions="*,*" ColumnSpacing="10" HeightRequest="160">
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
                 <Frame CornerRadius="20" HasShadow="True" Padding="0">
                     <VerticalStackLayout Spacing="10">
                         <BoxView HorizontalOptions="Fill" Color="#D6EFED" HeightRequest="60"/>
@@ -21,7 +32,7 @@
                     </VerticalStackLayout>
                 </Frame>
             </Grid>
-            <Grid ColumnDefinitions="*,*" ColumnSpacing="10" HeightRequest="160">
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
                 <Frame CornerRadius="20" HasShadow="True" Padding="0">
                     <VerticalStackLayout Spacing="10">
                         <BoxView HorizontalOptions="Fill" Color="#FEFBE7" HeightRequest="60"/>
@@ -39,7 +50,7 @@
                 </Frame>
             </Grid>
 
-            <Grid ColumnDefinitions="*,*" ColumnSpacing="10" HeightRequest="160">
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
 
                 <Frame CornerRadius="20" HasShadow="True" Padding="0">
                     <VerticalStackLayout Spacing="10">

@@ -44,7 +44,8 @@ public class StatefulButtonHandler : ButtonHandler
 #if MACCATALYST || IOS
     protected override void ConnectHandler(UIButton platformView)
     {
-        PlatformView.AddGestureRecognizer(new UIContinousGestureRecognizer(Tapped));
+        // TODO: Find a better way to do this
+        //PlatformView.AddGestureRecognizer(new UIContinousGestureRecognizer(Tapped));
         base.ConnectHandler(platformView);
     }
 
@@ -69,6 +70,7 @@ public class StatefulButtonHandler : ButtonHandler
                         tgr.Command.Execute(element);
                     }
                 }
+
 
                 break;
         }

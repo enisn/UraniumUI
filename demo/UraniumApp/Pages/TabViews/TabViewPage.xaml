@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage x:Class="UraniumApp.Pages.TabViews.TabViewPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:material="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
+             xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+             xmlns:root="clr-namespace:UraniumApp"
+             xmlns:local="clr-namespace:UraniumApp.Pages">
+    <ContentPage.Resources>
+        <Style TargetType="Frame">
+            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Surface}, Dark={StaticResource SurfaceDark}}" />
+            <Setter Property="Padding" Value="0" />
+        </Style>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Padding="20">
+
+                <Label Text="Tab Placement: " FontAttributes="Bold"/>
+
+                <input:SelectionView
+                    Color="{StaticResource Primary}"
+                    SelectionType="RadioButton" 
+                    ColumnNumber="1" Padding="20"
+                    RowSpacing="5"
+                    x:Name="tabPlacementSelection">
+                    <input:SelectionView.ItemsSource>
+                        <x:Array Type="{x:Type material:TabViewTabPlacement}">
+                            <material:TabViewTabPlacement>Top</material:TabViewTabPlacement>
+                            <material:TabViewTabPlacement>Bottom</material:TabViewTabPlacement>
+                            <material:TabViewTabPlacement>Start</material:TabViewTabPlacement>
+                            <material:TabViewTabPlacement>End</material:TabViewTabPlacement>
+                        </x:Array>
+                    </input:SelectionView.ItemsSource>
+                </input:SelectionView>
+
+                <BoxView StyleClass="Divider"/>
+
+                <Frame>
+                    <material:TabView TabPlacement="{Binding Source={x:Reference tabPlacementSelection}, Path=SelectedItem}">
+                        <material:TabItem Title="Tab One">
+                            <material:TabItem.ContentTemplate>
+                                <DataTemplate>
+                                    <Label Text="First Tab" HorizontalOptions="Center" VerticalOptions="Center" Margin="50" />
+                                </DataTemplate>
+                            </material:TabItem.ContentTemplate>
+                        </material:TabItem>
+
+                        <material:TabItem Title="Tab Two">
+                            <material:TabItem.ContentTemplate>
+                                <DataTemplate>
+                                    <Label Text="Second Tab" HorizontalOptions="Center" VerticalOptions="Center" Margin="50" />
+                                </DataTemplate>
+                            </material:TabItem.ContentTemplate>
+                        </material:TabItem>
+
+                        <material:TabItem Title="Tab Three">
+                            <material:TabItem.ContentTemplate>
+                                <DataTemplate>
+                                    <Label Text="Third Tab" HorizontalOptions="Center" VerticalOptions="Center" Margin="50" />
+                                </DataTemplate>
+                            </material:TabItem.ContentTemplate>
+                        </material:TabItem>
+                    </material:TabView>
+                </Frame>
+
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

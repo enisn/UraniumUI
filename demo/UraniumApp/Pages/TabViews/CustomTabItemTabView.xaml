@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage x:Class="UraniumApp.Pages.TabViews.CustomTabItemTabView"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:material="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
+             xmlns:root="clr-namespace:UraniumApp"
+             xmlns:local="clr-namespace:UraniumApp.Pages.TabViews">
+    <ContentPage.Content>
+        <StackLayout>
+            <material:TabView>
+                <material:TabView.TabHeaderItemTemplate>
+                    <DataTemplate>
+                        <material:CheckBox IsChecked="{Binding IsSelected}" />
+                    </DataTemplate>
+                </material:TabView.TabHeaderItemTemplate>
+                <material:TabItem>
+                    <material:TabItem.Content>
+                        <root:DemoContent />
+                    </material:TabItem.Content>
+                </material:TabItem>
+            </material:TabView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

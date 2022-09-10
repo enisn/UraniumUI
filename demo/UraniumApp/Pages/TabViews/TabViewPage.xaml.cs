@@ -1,4 +1,4 @@
-﻿namespace UraniumApp.Pages;
+﻿namespace UraniumApp.Pages.TabViews;
 
 public partial class TabViewPage : ContentPage
 {

@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:UraniumApp.Pages">
     <ContentPage.Resources>
         <Style TargetType="BoxView">
-            <Setter Property="Color" Value="{DynamicResource Surface}" />
+            <Setter Property="Color" Value="{AppThemeBinding {StaticResource Surface}, Dark={StaticResource SurfaceDark}}" />
             <Setter Property="HeightRequest" Value="50" />
             <Setter Property="WidthRequest" Value="50" />
             <Setter Property="HorizontalOptions" Value="Center" />

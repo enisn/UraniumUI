@@ -16,10 +16,12 @@ public partial class DataGrid : Frame
 
     public DataGrid()
     {
-        this.Content = _rootGrid = new Grid
+        _rootGrid = new Grid
         {
             HorizontalOptions = LayoutOptions.Fill
         };
+
+        RenderEmptyView();
         InitializeFactoryMethods();
         this.Padding = new Thickness(0, 10);
         (Columns as INotifyCollectionChanged).CollectionChanged += Columns_CollectionChanged;
@@ -60,6 +62,7 @@ public partial class DataGrid : Frame
         if (ItemsSource.Count == 0)
         {
             ResetGrid();
+            RenderEmptyView();
             return;
         }
 
@@ -68,7 +71,7 @@ public partial class DataGrid : Frame
             Render();
             return;
         }
-        
+
         switch (e.Action)
         {
             case NotifyCollectionChangedAction.Add:
@@ -113,7 +116,7 @@ public partial class DataGrid : Frame
             {
                 observable.CollectionChanged -= Columns_CollectionChanged;
             }
-            
+
             Columns = CurrentType?.GetProperties(BindingFlags.Instance | BindingFlags.Public)
                 .Select(s => new DataGridColumn
                 {
@@ -131,6 +134,12 @@ public partial class DataGrid : Frame
         if (Columns == null || Columns.Count == 0 || CurrentType == null)
         {
             return; // Not ready yet.
+        }
+
+        if (ItemsSource.Count == 0)
+        {
+            RenderEmptyView();
+            return;
         }
 
         EnsurePropertyInfosAreSet();
@@ -200,10 +209,25 @@ public partial class DataGrid : Frame
                 Column = columnNumber,
                 Row = row,
                 Data = item,
-                Value = Columns[columnNumber].PropertyInfo?.GetValue(item)
+                Value = Columns[columnNumber].PropertyInfo?.GetValue(item),
+                IsSelected = SelectedItems?.Contains(item) ?? false
             };
 
             SetSelectionVisualStates(view);
+
+            view.Triggers.Add(new DataTrigger(typeof(ContentView))
+            {
+                Binding = new Binding(nameof(CellBindingContext.IsSelected)),
+                Value = true,
+                EnterActions =
+                {
+                    new GoToStateTriggerAction("Selected")
+                },
+                ExitActions =
+                {
+                    new GoToStateTriggerAction("Unselected")
+                }
+            });
 
             _rootGrid.Add(view, columnNumber, row: actualRow);
         }
@@ -263,7 +287,7 @@ public partial class DataGrid : Frame
         //for (int i = 0; i < (rows + (rows - 1)); i++)
         for (int i = 0; i < (rows * 10); i++)
         {
-            _rootGrid.AddRowDefinition(new RowDefinition(GridLength.Star));
+            _rootGrid.AddRowDefinition(new RowDefinition(GridLength.Auto));
         }
     }
 
@@ -306,8 +330,21 @@ public partial class DataGrid : Frame
         {
             if (child.BindingContext is CellBindingContext cellBindingContext)
             {
-                SetSelected(child, SelectedItems.Contains(cellBindingContext.Data));
+                cellBindingContext.IsSelected = SelectedItems.Contains(cellBindingContext.Data);
             }
+        }
+    }
+
+    protected virtual void RenderEmptyView()
+    {
+        this.Content = EmptyView ??= (View)EmptyViewTemplate?.CreateContent() ?? new BoxView { HorizontalOptions = LayoutOptions.Fill, Margin = 40 };
+    }
+
+    protected virtual void OnEmptyViewTemplateSet()
+    {
+        if (EmptyViewTemplate != null)
+        {
+            EmptyView = null;
         }
     }
 
@@ -323,13 +360,6 @@ public partial class DataGrid : Frame
     {
         if (sender is View view && view.BindingContext is CellBindingContext cellContext)
         {
-            var actualRow = cellContext.Row * 2;
-
-            foreach (View child in _rootGrid.Children.Where(x => Grid.GetRow(x as View) == actualRow))
-            {
-                SetSelected(child, isSelected);
-            }
-
             if (isSelected)
             {
                 SelectedItems?.Add(cellContext.Data);
@@ -341,11 +371,6 @@ public partial class DataGrid : Frame
 
             OnPropertyChanged(nameof(SelectedItems));
         }
-    }
-
-    protected virtual void SetSelected(View view, bool isSelected)
-    {
-        VisualStateManager.GoToState(view, isSelected ? "Selected" : "Unselected");
     }
 
     protected void SetSelectionVisualStatesForAll()
@@ -397,5 +422,19 @@ public partial class DataGrid : Frame
                 }
             }
         });
+    }
+
+    public class GoToStateTriggerAction : TriggerAction<View>
+    {
+        public GoToStateTriggerAction(string state)
+        {
+            State = state;
+        }
+
+        public string State { get; protected set; }
+        protected override void Invoke(View sender)
+        {
+            VisualStateManager.GoToState(sender, State);
+        }
     }
 }

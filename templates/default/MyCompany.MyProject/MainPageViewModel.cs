@@ -5,19 +5,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using UraniumUI;
 using static MyCompany.MyProject.TodoItem;
 
 namespace MyCompany.MyProject;
 public class MainPageViewModel : BindableObject
 {
-
     public ObservableCollection<TodoItem> Items { get; protected set; } = new ObservableCollection<TodoItem>();
+    public ObservableCollection<TodoItem> SelectedItems { get; set; } = new ObservableCollection<TodoItem>();
 
     private TodoItem newItem = new();
     public TodoItem NewItem { get => newItem; set { newItem = value; OnPropertyChanged(); } }
     public TodoItemFilter Filter { get; protected set; } = new();
     public ICommand AddNewItemCommand { get; protected set; }
-    public ICommand RemoveItemCommand { get; protected set; }
+    public ICommand RemoveSelectedItemsCommand { get; protected set; }
     public MainPageViewModel()
     {
         if (Items.Count == 0)
@@ -36,9 +37,12 @@ public class MainPageViewModel : BindableObject
             NewItem = new();
         });
 
-        RemoveItemCommand = new Command((item) =>
+        RemoveSelectedItemsCommand = new Command(() =>
         {
-            Items.Remove(item as TodoItem);
+            foreach (var item in SelectedItems)
+            {
+                Items.Remove(item);
+            }
         });
     }
 }
@@ -49,11 +53,12 @@ public class TodoItemFilter
     public bool? IsDone { get; set; }
 }
 
-public class TodoItem
+public class TodoItem : UraniumBindableObject
 {
     public string Content { get; set; }
 
-    public bool IsDone { get; set; }
+    private bool isDone;
+    public bool IsDone { get => isDone; set => SetProperty(ref isDone,value); }
 
     public TodoItemType Type { get; set; }
 

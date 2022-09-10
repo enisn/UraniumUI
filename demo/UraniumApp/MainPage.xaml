@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:uranium="clr-namespace:UraniumUI.Pages;assembly=UraniumUI"
              xmlns:material="clr-namespace:UraniumUI.Material.Attachments;assembly=UraniumUI.Material"
+             xmlns:t="clr-namespace:UraniumUI.Theming;assembly=UraniumUI"
              xmlns:u="clr-namespace:UraniumUI;assembly=UraniumUI"
              x:Class="UraniumApp.MainPage">
 
@@ -32,50 +33,15 @@
                 FontSize="18"
                 HorizontalOptions="Center" />-->
 
+
             <Button
                 x:Name="CounterBtn" StyleClass="ElevatedButton"
                 Text="Click me"
+                TextColor="{DynamicResource Error}"
                 SemanticProperties.Hint="Counts the number of times you click"
                 Clicked="OnCounterClicked"
                 HorizontalOptions="Center">
-                <Button.Shadow>
-                    <Shadow Brush="{StaticResource ShadowBrush}" Opacity="0.2" Offset="2,2" Radius="4" />
-                </Button.Shadow>
             </Button>
-
-            <Frame Padding="0,10" HorizontalOptions="Start" BackgroundColor="{StaticResource Primary}">
-
-                <Grid ColumnDefinitions="Auto,Auto" RowDefinitions="*,*,*,*,*" RowSpacing="10" ColumnSpacing="20">
-                    <Grid.Resources>
-                        <Style TargetType="Label">
-                            <Setter Property="VerticalOptions" Value="Center"/>
-                            <Setter Property="HorizontalOptions" Value="Center"/>
-                            <Setter Property="Margin" Value="20"/>
-                        </Style>
-                        <Style TargetType="BoxView">
-                            <Setter Property="Color" Value="{StaticResource Gray100}" />
-                            <Setter Property="HeightRequest" Value="2" />
-                            <Setter Property="CornerRadius" Value="1" />
-                        </Style>
-                    </Grid.Resources>
-
-                    <Label Grid.Column="0" Text="Header A" FontAttributes="Bold" />
-                    <Label Grid.Column="1" Text="Header B" FontAttributes="Bold" />
-
-                    <BoxView Grid.Row="1" Grid.ColumnSpan="2" HorizontalOptions="Fill"/>
-
-
-
-                    <Label Grid.Row="2" Grid.Column="0" Text="Data A.1" />
-                    <Label Grid.Row="2" Grid.Column="1" Text="Data B.1" />
-
-                    <BoxView Grid.Row="3" Grid.ColumnSpan="2" HorizontalOptions="Fill"/>
-
-                    <Label Grid.Row="4" Grid.Column="0" Text="Data A.2" />
-                    <Label Grid.Row="4" Grid.Column="1" Text="Data B.2" />
-
-                </Grid>
-            </Frame>
 
         </VerticalStackLayout>
     </ScrollView>

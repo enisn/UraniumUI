@@ -49,13 +49,22 @@
 	</ItemGroup>
 
 	<ItemGroup>
-    <PackageReference Include="UraniumUI.Material" Version="0.7.0-beta.1" />
+    <PackageReference Include="UraniumUI.Material" Version="0.8.0" />
 		<!--#if (FontAwesome)-->
-    <PackageReference Include="UraniumUI.Icons.FontAwesome" Version="0.7.0-beta.1" />
+    <PackageReference Include="UraniumUI.Icons.FontAwesome" Version="0.8.0" />
     <!--#endif-->
     <!--#if (MaterialIcons)-->
-    <PackageReference Include="UraniumUI.Icons.MaterialIcons" Version="0.7.0-beta.1" />
+    <PackageReference Include="UraniumUI.Icons.MaterialIcons" Version="0.8.0" />
     <!--#endif-->
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="Resources\Styles\MaterialColorOverride.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Resources\Styles\MaterialStyleOverride.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	</ItemGroup>
 
 </Project>

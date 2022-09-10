@@ -8,9 +8,9 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
-                <material:ColorResource />
+                <ResourceDictionary Source="Resources/Styles/MaterialColorOverride.xaml" />                
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
-                <material:StyleResource />
+                <ResourceDictionary Source="Resources/Styles/MaterialStyleOverride.xaml" />                
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

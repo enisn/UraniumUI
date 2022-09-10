@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage x:Class="UraniumApp.Pages.RadioButtonsPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:material="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
+             xmlns:local="clr-namespace:UraniumApp.Pages">
+    <ContentPage.Content>
+        <StackLayout MaximumWidthRequest="400" Margin="20">
+
+            <material:RadioButtonGroupView>
+                <material:RadioButton Text="Option 1" />
+                <material:RadioButton Text="Option 2" />
+                <material:RadioButton Text="Option 3 (Disabled)" IsDisabled="True" />
+                <material:RadioButton Text="Option 4 (Disabled)" IsDisabled="True" IsChecked="True" />
+            </material:RadioButtonGroupView>
+
+            <BoxView StyleClass="Divider" />
+
+            <material:RadioButtonGroupView>
+                <material:RadioButton Text="Option 1" LabelPosition="Before" />
+                <material:RadioButton Text="Option 2" LabelPosition="Before" />
+                <material:RadioButton Text="Option 3 (Disabled)" IsDisabled="True" LabelPosition="Before" />
+                <material:RadioButton Text="Option 4 (Disabled)" IsDisabled="True" IsChecked="True" LabelPosition="Before" />
+            </material:RadioButtonGroupView>
+
+            <BoxView StyleClass="Divider" />
+
+            <material:RadioButtonGroupView>
+                <material:RadioButton Text="Check Radio Button 1" StyleClass="CheckRadioButton" IsChecked="True"/>
+                <material:RadioButton Text="Check Radio Button 1" StyleClass="CheckRadioButton" />
+            </material:RadioButtonGroupView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

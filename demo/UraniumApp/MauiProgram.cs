@@ -11,17 +11,13 @@ public static class MauiProgram
 	{
 		var builder = MauiApp.CreateBuilder();
 		builder
-			.UseMauiApp<App>()
+			.UseMauiApp<App>().UseUraniumUI()
 			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-				fonts.AddFontAwesomeIconFonts();
-			})
-			.ConfigureMauiHandlers(handlers =>
-			{
-				handlers.AddUraniumUIHandlers();
-            });
+				fonts.AddMaterialIconFonts();
+			});
 
 		return builder.Build();
 	}

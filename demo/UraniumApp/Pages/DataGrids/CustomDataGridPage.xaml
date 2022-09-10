@@ -3,6 +3,7 @@
              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:UraniumApp.Pages.DataGrids"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
              xmlns:material="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
              x:Name="page">
     <ContentPage.BindingContext>
@@ -25,6 +26,18 @@
                 <material:DataGrid ItemsSource="{Binding Items}" HorizontalOptions="Center" Margin="30">
 
                     <ActivityIndicator IsRunning="{Binding IsBusy}" Margin="40" />
+
+                    <material:DataGrid.EmptyView>
+                        <VerticalStackLayout Margin="80,20">
+                            <Image
+                               WidthRequest="40"
+                               HeightRequest="40"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"
+                               Source="{FontImageSource FontFamily=MaterialOutlined, Glyph={x:Static m:MaterialOutlined.Backup_table}, Color={AppThemeBinding Light={StaticResource OnSurface}, Dark={StaticResource OnSurfaceDark}}}"/>
+                            <Label Text="No data available..." HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+                    </material:DataGrid.EmptyView>
 
                     <material:DataGrid.Columns>
 
@@ -51,7 +64,9 @@
                         <material:DataGridColumn Title="Actions" >
                             <material:DataGridColumn.CellItemTemplate>
                                 <DataTemplate>
-                                    <Button Text="Remove" BackgroundColor="{StaticResource Secondary}" TextColor="{StaticResource OnSecondary}" 
+                                    <Button Text="Remove" 
+                                            BackgroundColor="{AppThemeBinding Light={StaticResource Secondary},Dark={StaticResource SecondaryDark}}" 
+                                            TextColor="{AppThemeBinding Light={StaticResource OnSecondary},Dark={StaticResource OnSecondaryDark}}"
                                             Command="{Binding Source={x:Reference page}, Path=BindingContext.RemoveItemCommand}"
                                             CommandParameter="{Binding Data}"
                                             />

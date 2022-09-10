@@ -171,6 +171,30 @@ Column width can be defined by using `Width` property of `DataGridColumn` class.
 
 ![MAUI DataGrid Column Width](images/datagrid-column-width.png)
 
+---
+
+### EmptyView
+
+You can define a view to be shown when the data source is empty. It can be defined by using `EmptyView` property of **DataGrid**.
+
+```xml
+<material:DataGrid ItemsSource="{Binding Items}">
+	<material:DataGrid.EmptyView>
+		<VerticalStackLayout Margin="80,20">
+			<Image
+				WidthRequest="40"
+				HeightRequest="40"
+				HorizontalOptions="Center"
+				VerticalOptions="Center"
+				Source="{FontImageSource FontFamily=MaterialOutlined, Glyph={x:Static m:MaterialOutlined.Backup_table}, Color={AppThemeBinding Light={StaticResource OnSurface}, Dark={StaticResource OnSurfaceDark}}}"/>
+			<Label Text="No data available..." HorizontalOptions="Center"/>
+		</VerticalStackLayout>
+	</material:DataGrid.EmptyView>
+</material:DataGrid>
+```
+
+![MAUI DataGrid EmptyView](images/datagrid-emptyview-desktop-light.gif)
+
 ## Selection
 DataGrid supports multiple row selection. You can add `DataGridSelectionColumn` column to enable selection. Selected Items can be accessed via `SelectedItems` property of **DataGrid**. You can bind it to a property of your ViewModel.
 
@@ -231,6 +255,8 @@ public class MainViewModel
 
 ![MAUI DataGrid Selection Deletion](images/datagrid-selection-deletion.gif)
 
+### EmptyView
+
 ## Tips
 
 You can place an activity indicator inside the DataGrid to show loading state if you make a network call to get data.
@@ -243,7 +269,6 @@ You can place an activity indicator inside the DataGrid to show loading state if
 
 ![MAUI DataGrid Loading](images/datagrid-tips-indicator.gif)
 
-## Data
 
 ### CellBindingContext
 `CellBindingContext` is an object that is used as the `DataContext` of the `CellItemTemplate`. It has the following properties:
@@ -254,6 +279,7 @@ You can place an activity indicator inside the DataGrid to show loading state if
 | `Column` | The column number of the cell item. |
 | `Row` | The row number of the cell item. |
 | `Value` | The value of the cell item. _(You can bind it to the label directly)_ |
+| `IsSelected` | Indicates whether the cell item is selected or not. |
 
 ### DataGridColumn
 `DataGridColumn` is a class that is used to define a column of **DataGrid**. It has the following properties:

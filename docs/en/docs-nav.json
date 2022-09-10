@@ -53,12 +53,28 @@
             {
                 "text": "DataGrid",
                 "path" : "themes/material/components/DataGrid.md"
+            },
+            {
+                "text": "TabView",
+                "path" : "themes/material/components/TabView.md"
             }
           ]
         },
         {
+          "text": "Buttons",
+          "path": "themes/material/Buttons.md"
+        },
+        {
           "text": "Elevation",
           "path": "themes/material/Elevation.md"
+        },
+        {
+          "text": "CheckBox",
+          "path": "themes/material/CheckBox.md"
+        },
+        {
+          "text": "RadioButton",
+          "path": "themes/material/RadioButton.md"
         }
       ]
     }

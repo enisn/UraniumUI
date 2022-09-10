@@ -25,6 +25,12 @@
 	  <MauiXaml Update="Resources\ColorResource.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Resources\DarkColorResource.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Resources\LightColorResource.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Resources\StyleResource.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

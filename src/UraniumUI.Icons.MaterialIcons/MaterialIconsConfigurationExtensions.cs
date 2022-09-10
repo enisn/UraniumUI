@@ -8,8 +8,8 @@ public static class MaterialIconsConfigurationExtensions
 
         fonts.AddEmbeddedResourceFont(thisAssembly, "MaterialIconsOutlined-Regular.otf", "MaterialOutlined");
         fonts.AddEmbeddedResourceFont(thisAssembly, "MaterialIcons-Regular.ttf", "MaterialRegular");
-        fonts.AddEmbeddedResourceFont(thisAssembly, "MaterialIconsRound-Regular.otf", "MaterialRoundRegular");
-        fonts.AddEmbeddedResourceFont(thisAssembly, "MaterialIconsSharp-Regular.otf", "MaterialSharpRegular");
+        fonts.AddEmbeddedResourceFont(thisAssembly, "MaterialIconsRound-Regular.otf", "MaterialRound");
+        fonts.AddEmbeddedResourceFont(thisAssembly, "MaterialIconsSharp-Regular.otf", "MaterialSharp");
         fonts.AddEmbeddedResourceFont(thisAssembly, "MaterialIconsTwoTone-Regular.otf", "MaterialTwoTone");
 
         return fonts;

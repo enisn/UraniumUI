@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+﻿<?xml version="1.0" encoding="UTF-8" ?>
 <uranium:UraniumContentPage x:Class="UraniumApp.Pages.Backdrops.SimpleBackdropPage"
              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -15,15 +15,16 @@
     <uranium:UraniumContentPage.Attachments>
         <attachments:BackdropView Title="Filter">
             <attachments:BackdropView.IconImageSource>
-                <FontImageSource FontFamily="MaterialRound" Glyph="{x:Static m:MaterialRound.Filter}" Color="{DynamicResource OnPrimary}" />
+                <FontImageSource FontFamily="MaterialRound" Glyph="{x:Static m:MaterialRound.Filter_alt}" Color="{DynamicResource OnPrimary}" />
             </attachments:BackdropView.IconImageSource>
             <attachments:BackdropView.Resources>
                 <ResourceDictionary>
                     <Style TargetType="Slider" ApplyToDerivedTypes="True">
                         <Setter Property="ThumbColor" Value="{AppThemeBinding Light={StaticResource OnPrimary},Dark= {StaticResource OnBackground}}" />
                     </Style>
-                    <Style TargetType="input:AdvancedSlider">
-                        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnPrimary},Dark= {StaticResource OnBackground}}" />
+                    <Style TargetType="material:CheckBox">
+                        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnPrimary}, Dark={StaticResource OnPrimaryDark}}" />
+                        <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource OnPrimary}, Dark={StaticResource OnPrimaryDark}}" />
                     </Style>
                 </ResourceDictionary>
             </attachments:BackdropView.Resources>

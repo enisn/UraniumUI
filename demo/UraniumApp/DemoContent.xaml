@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+﻿<?xml version="1.0" encoding="UTF-8" ?>
 <ContentView x:Class="UraniumApp.DemoContent"
              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -6,68 +6,66 @@
     <ContentView.Resources>
         <Style TargetType="Frame">
             <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Surface},Dark={StaticResource SurfaceDark}}" />
+            <Setter Property="WidthRequest" Value="140" />
+            <Setter Property="Margin" Value="10" />
+            <Setter Property="HasShadow" Value="False" />
+            <Setter Property="Padding" Value="0" />
         </Style>
         <Style TargetType="Label">
             <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnSurface}, Dark={StaticResource OnSurfaceDark}}"/>
         </Style>
-        <Style TargetType="Grid">
-            <Setter Property="RowDefinitions" Value="Auto" />
-        </Style>
     </ContentView.Resources>
     <ContentView.Content>
-        <StackLayout Padding="20" Spacing="10">
-            <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
-                <Frame CornerRadius="20" HasShadow="True" Padding="0">
+        <ScrollView>
+            <FlexLayout Padding="20" JustifyContent="SpaceAround" Wrap="Wrap" >
+                 <Frame StyleClass="Elevation1">
                     <VerticalStackLayout Spacing="10">
                         <BoxView HorizontalOptions="Fill" Color="#D6EFED" HeightRequest="60"/>
-                        <Label Margin="20,0" FontSize="Header" Text="Lorem ipsum dolor sit amet" />
-                        <Label Margin="20,0" FontSize="Micro" Text="consectetur adipiscing elit. Nam volutpat luctus est"/>
+                        <Label Margin="20,0" FontSize="Medium" Text="Lorem ipsum" />
+                        <Label Margin="20,0" FontSize="Micro" Text="dolor sit amet consectetur adipiscing elit. Nam volutpat luctus est"/>
                     </VerticalStackLayout>
                 </Frame>
-                <Frame Grid.Column="1" CornerRadius="20" HasShadow="True" Padding="0">
+                 <Frame StyleClass="Elevation1">
                     <VerticalStackLayout Spacing="10">
                         <BoxView HorizontalOptions="Fill" Color="#FFE6E6" HeightRequest="60"/>
-                        <Label Margin="20,0" FontSize="Header" Text="Lorem ipsum dolor sit amet" />
+                        <Label Margin="20,0" FontSize="Medium" Text="Lorem ipsum dolor sit amet" />
                         <Label Margin="20,0" FontSize="Micro" Text="consectetur adipiscing elit. Nam volutpat luctus est"/>
                     </VerticalStackLayout>
                 </Frame>
-            </Grid>
-            <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
-                <Frame CornerRadius="20" HasShadow="True" Padding="0">
+
+                <Frame StyleClass="Elevation1">
                     <VerticalStackLayout Spacing="10">
                         <BoxView HorizontalOptions="Fill" Color="#FEFBE7" HeightRequest="60"/>
-                        <Label Margin="20,0" FontSize="Header" Text="Lorem ipsum dolor sit amet" />
+                        <Label Margin="20,0" FontSize="Medium" Text="Lorem ipsum dolor sit amet" />
                         <Label Margin="20,0" FontSize="Micro" Text="consectetur adipiscing elit. Nam volutpat luctus est"/>
                     </VerticalStackLayout>
                 </Frame>
 
-                <Frame Grid.Column="1" CornerRadius="20" HasShadow="True" Padding="0">
+                <Frame StyleClass="Elevation1">
                     <VerticalStackLayout Spacing="10">
                         <BoxView HorizontalOptions="Fill" Color="#B2B8A3" HeightRequest="60"/>
-                        <Label Margin="20,0" FontSize="Header" Text="Lorem ipsum dolor sit amet" />
+                        <Label Margin="20,0" FontSize="Medium" Text="Lorem ipsum dolor sit amet" />
                         <Label Margin="20,0" FontSize="Micro" Text="consectetur adipiscing elit. Nam volutpat luctus est"/>
                     </VerticalStackLayout>
                 </Frame>
-            </Grid>
 
-            <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
-
-                <Frame CornerRadius="20" HasShadow="True" Padding="0">
+                 <Frame StyleClass="Elevation1">
                     <VerticalStackLayout Spacing="10">
                         <BoxView HorizontalOptions="Fill" Color="#F0D9FF" HeightRequest="60"/>
-                        <Label Margin="20,0" FontSize="Header" Text="Lorem ipsum dolor sit amet" />
+                        <Label Margin="20,0" FontSize="Medium" Text="Lorem ipsum dolor sit amet" />
                         <Label Margin="20,0" FontSize="Micro" Text="consectetur adipiscing elit. Nam volutpat luctus est"/>
                     </VerticalStackLayout>
                 </Frame>
 
-                <Frame Grid.Column="1" CornerRadius="20" HasShadow="True" Padding="0">
+                <Frame StyleClass="Elevation1">
                     <VerticalStackLayout Spacing="10">
                         <BoxView HorizontalOptions="Fill" Color="#E7EAB5" HeightRequest="60"/>
-                        <Label Margin="20,0" FontSize="Header" Text="Lorem ipsum dolor sit amet" />
+                        <Label Margin="20,0" FontSize="Medium" Text="Lorem ipsum dolor sit amet" />
                         <Label Margin="20,0" FontSize="Micro" Text="consectetur adipiscing elit. Nam volutpat luctus est"/>
                     </VerticalStackLayout>
                 </Frame>
-            </Grid>
-        </StackLayout>
+
+            </FlexLayout>
+        </ScrollView>
     </ContentView.Content>
 </ContentView>

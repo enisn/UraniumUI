@@ -53,6 +53,10 @@
             {
                 "text": "DataGrid",
                 "path" : "themes/material/components/DataGrid.md"
+            },
+            {
+                "text": "TabView",
+                "path" : "themes/material/components/TabView.md"
             }
           ]
         },

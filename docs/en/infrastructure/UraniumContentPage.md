@@ -4,6 +4,29 @@ This is the main page for the Uranium Content system. It has some infrastructure
 
 ## Setting-up
 
+There are 2 ways to create a Uranium Content page. The first is to create from template with dotnet CLI. The second is to create from scratch.
+
+### Creating with CLI
+UraniumUI templates are packed in [UraniumUI.Template](https://www.nuget.org/packages/UraniumUI.Templates) NuGet package. If you haven't install it, run the following command in the terminal. 
+
+    ```bash
+    dotnet new -i UraniumUI.Templates
+    ```
+
+Then create a new ContentPage with the following command.
+
+    ```bash
+    dotnet new uraniumcontentpage -n MyPage -na MyNamespace
+    ```
+
+> `-na` parameter represents the namespace of the page. If you don't specify it, dotnet CLI can't find your namespace and it'll be `MauiApp1` by default. 
+> If you're creating with Visual Studio, you don't have to specify a namespace. IDE will automatically send that parameter.
+
+
+---
+
+### Creating from scratch
+
 - Create a Content Page (XAML) and replace ContentPage with UraniumContentPage.
 
     ```xml

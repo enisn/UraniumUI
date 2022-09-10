@@ -1,0 +1,43 @@
+{
+    "$schema": "http://json.schemastore.org/template",
+    "author": "enisn",
+    "classifications": [ "MAUI", "Android", "iOS", "macOS", "Mac Catalyst", "WinUI", "Tizen", "Xaml", "Code" ],
+    "identity": "UraniumUI.Maui.Templates.UraniumContentPageXaml",
+    "groupIdentity": "UraniumUI.Maui.Templates.Resources",
+    "name": ".NET MAUI UraniumContentPage (XAML)",
+    "shortName": "uraniumcontentpage",
+    "tags": {
+      "language": "C#",
+      "type": "item"
+    },
+    "primaryOutputs": [
+      {
+        "path": "NewPage1.xaml"
+      },
+      {
+        "path": "NewPage1.xaml.cs"
+      }
+    ],
+    "postActions": [
+        {
+            "id": "openInEditor",
+            "condition": "(HostIdentifier != \"dotnetcli\" && HostIdentifier != \"dotnetcli-preview\")",
+            "description": "Opens NewPage1.xaml in the editor.",
+            "manualInstructions": [],
+            "actionId": "84C0DA21-51C8-4541-9940-6CA19AF04EE6",
+            "args": {
+                "files": "0"
+            },
+            "continueOnError": true
+        }
+    ],
+    "sourceName": "NewPage1",
+    "defaultName": "NewPage1",
+    "symbols": {
+      "namespace": {
+        "description": "namespace for the generated code",
+        "replaces": "MauiApp1",
+        "type": "parameter"
+      }
+    }
+  }

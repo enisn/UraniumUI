@@ -2,23 +2,142 @@
 <ContentPage x:Class="UraniumApp.Pages.TabViews.CustomTabItemTabView"
              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
              xmlns:material="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
              xmlns:root="clr-namespace:UraniumApp"
              xmlns:local="clr-namespace:UraniumApp.Pages.TabViews">
+    <ContentPage.Resources>
+        <Style TargetType="Frame">
+            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Surface}, Dark={StaticResource SurfaceDark}}" />
+            <Setter Property="Padding" Value="0" />
+        </Style>
+    </ContentPage.Resources>
     <ContentPage.Content>
-        <StackLayout>
-            <material:TabView>
-                <material:TabView.TabHeaderItemTemplate>
-                    <DataTemplate>
-                        <material:CheckBox IsChecked="{Binding IsSelected}" />
-                    </DataTemplate>
-                </material:TabView.TabHeaderItemTemplate>
-                <material:TabItem>
-                    <material:TabItem.Content>
-                        <root:DemoContent />
-                    </material:TabItem.Content>
-                </material:TabItem>
-            </material:TabView>
-        </StackLayout>
+        <ScrollView>
+            <StackLayout Padding="20">
+
+                <Label Text="Custom Tab Item" FontSize="Large" />
+
+                <Frame>
+                    <material:TabView>
+                        <material:TabView.TabHeaderItemTemplate>
+                            <DataTemplate>
+                                <material:CheckBox 
+                                    Text="{Binding Title}" 
+                                    IsChecked="{Binding IsSelected}"
+                                    CheckChangedCommand="{Binding Command}"/>
+                            </DataTemplate>
+                        </material:TabView.TabHeaderItemTemplate>
+
+                        <material:TabItem Title="Custom Tab One">
+                            <material:TabItem.Content>
+                                <Label Text="Tab Content 1" Margin="60" />
+                            </material:TabItem.Content>
+                        </material:TabItem>
+
+                        <material:TabItem Title="Custom Tab Two">
+                            <material:TabItem.Content>
+                                <Label Text="Tab Content 2" Margin="60" />
+                            </material:TabItem.Content>
+                        </material:TabItem>
+
+                        <material:TabItem Title="Custom Tab Three">
+                            <material:TabItem.Content>
+                                <Label Text="Tab Content 3" Margin="60" />
+                            </material:TabItem.Content>
+                        </material:TabItem>
+                    </material:TabView>
+                </Frame>
+
+                <BoxView StyleClass="Divider" />
+
+                <Label Text="Custom Tab Item with Triggers" FontSize="Large" />
+
+                <Frame>
+                    <material:TabView>
+                        <material:TabView.TabHeaderItemTemplate>
+                            <DataTemplate>
+                                <Button 
+                                    Text="{Binding Title}"
+                                    Command="{Binding Command}">
+                                    <Button.Triggers>
+                                        <DataTrigger TargetType="Button" Binding="{Binding IsSelected}" Value="True">
+                                            <Setter Property="BackgroundColor" Value="{StaticResource SurfaceTint1}" />
+                                            <Setter Property="TextColor" Value="{StaticResource SurfaceTint3}" />
+                                            <Setter Property="ImageSource" Value="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Home}, Color={StaticResource SurfaceTint1}}" />
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Button" Binding="{Binding IsSelected}" Value="False">
+                                            <Setter Property="BackgroundColor" Value="Transparent" />
+                                            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnSurface}, Dark={StaticResource OnSurfaceDark}}" />
+                                            <Setter Property="ImageSource" Value="{FontImageSource FontFamily=MaterialOutlined, Glyph={x:Static m:MaterialOutlined.Home}, Color={StaticResource SurfaceTint3}}" />
+                                        </DataTrigger>
+                                    </Button.Triggers>
+                                </Button>
+                            </DataTemplate>
+                        </material:TabView.TabHeaderItemTemplate>
+                        <material:TabItem Title="Custom Tab One">
+                            <material:TabItem.Content>
+                                <Label Text="Tab Content 1" Margin="60" />
+                            </material:TabItem.Content>
+                        </material:TabItem>
+
+                        <material:TabItem Title="Custom Tab Two">
+                            <material:TabItem.Content>
+                                <Label Text="Tab Content 2" Margin="60" />
+                            </material:TabItem.Content>
+                        </material:TabItem>
+
+                        <material:TabItem Title="Custom Tab Three">
+                            <material:TabItem.Content>
+                                <Label Text="Tab Content 3" Margin="60" />
+                            </material:TabItem.Content>
+                        </material:TabItem>
+                    </material:TabView>
+                </Frame>
+
+
+                <BoxView StyleClass="Divider" />
+
+                <Label Text="Tab Specific Header Template" FontSize="Large" />
+
+                <Frame>
+                    <material:TabView>
+                        <material:TabItem Title="Custom Tab One">
+                            <material:TabItem.HeaderTemplate>
+                                <DataTemplate>
+                                    <Button Text="{Binding Title}" Command="{Binding Command}" BackgroundColor="Transparent">
+                                        <Button.Triggers>
+                                            <DataTrigger TargetType="Button" Binding="{Binding IsSelected}" Value="True">
+                                                <Setter Property="TextColor" Value="{StaticResource Primary}"/>
+                                                <Setter Property="Scale" Value="1.2"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Button" Binding="{Binding IsSelected}" Value="False">
+                                                <Setter Property="TextColor" Value="Gray"/>
+                                                <Setter Property="Scale" Value="0.8"/>
+                                            </DataTrigger>
+                                        </Button.Triggers>
+                                    </Button>
+                                </DataTemplate>
+                            </material:TabItem.HeaderTemplate>
+                            <material:TabItem.Content>
+                                <Label Text="Tab Content 1" Margin="60" />
+                            </material:TabItem.Content>
+                        </material:TabItem>
+
+                        <material:TabItem Title="Tab Two">
+                            <material:TabItem.Content>
+                                <Label Text="Tab Content 2" Margin="60" />
+                            </material:TabItem.Content>
+                        </material:TabItem>
+
+                        <material:TabItem Title="Tab Three">
+                            <material:TabItem.Content>
+                                <Label Text="Tab Content 3" Margin="60" />
+                            </material:TabItem.Content>
+                        </material:TabItem>
+                    </material:TabView>
+                </Frame>
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

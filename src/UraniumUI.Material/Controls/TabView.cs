@@ -93,15 +93,20 @@ public partial class TabView : Grid
         VerticalOptions = LayoutOptions.Fill
     };
 
+    protected readonly ScrollView _headerScrollView = new ScrollView
+    {
+        Orientation = ScrollOrientation.Horizontal,
+    };
+
     public TabView()
     {
+        _headerScrollView.Content = _headerContainer;
         InitializeLayout();
         if (Items is INotifyCollectionChanged observable)
         {
             observable.CollectionChanged -= Items_CollectionChanged;
             observable.CollectionChanged += Items_CollectionChanged;
         }
-
         Render();
     }
 
@@ -119,7 +124,7 @@ public partial class TabView : Grid
                     this.RowDefinitions.Add(new RowDefinition(GridLength.Star));
                     _headerContainer.Orientation = StackOrientation.Horizontal;
 
-                    this.Add(_headerContainer, row: 0);
+                    this.Add(_headerScrollView, row: 0);
                     this.Add(_contentContainer, row: 1);
                 }
                 break;
@@ -129,7 +134,7 @@ public partial class TabView : Grid
                     this.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
                     _headerContainer.Orientation = StackOrientation.Horizontal;
 
-                    this.Add(_headerContainer, row: 1);
+                    this.Add(_headerScrollView, row: 1);
                     this.Add(_contentContainer, row: 0);
                 }
                 break;
@@ -139,7 +144,7 @@ public partial class TabView : Grid
                     this.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Star));
                     _headerContainer.Orientation = StackOrientation.Vertical;
 
-                    this.Add(_headerContainer, column: 0);
+                    this.Add(_headerScrollView, column: 0);
                     this.Add(_contentContainer, column: 1);
                 }
                 break;
@@ -149,7 +154,7 @@ public partial class TabView : Grid
                     this.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Auto));
                     _headerContainer.Orientation = StackOrientation.Vertical;
 
-                    this.Add(_headerContainer, column: 1);
+                    this.Add(_headerScrollView, column: 1);
                     this.Add(_contentContainer, column: 0);
                 }
                 break;
@@ -219,7 +224,10 @@ public partial class TabView : Grid
     protected virtual void AddHeaderFor(TabItem tabItem)
     {
         tabItem.TabView = this;
-        var view = TabHeaderItemTemplate?.CreateContent() as View;
+        var view =
+            tabItem.HeaderTemplate?.CreateContent() as View
+            ?? TabHeaderItemTemplate?.CreateContent() as View;
+
         view.BindingContext = tabItem;
         view.GestureRecognizers.Add(new TapGestureRecognizer { Command = new Command(() => CurrentItem = tabItem) });
 
@@ -274,6 +282,7 @@ public class TabItem : UraniumBindableObject
     public string Title { get; set; }
     public object Data { get; set; }
     public DataTemplate ContentTemplate { get; set; }
+    public DataTemplate HeaderTemplate { get; set; }
     public View Content { get; set; }
     public TabView TabView { get; internal set; }
     public bool IsSelected => TabView.CurrentItem == this;

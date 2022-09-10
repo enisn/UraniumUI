@@ -44,9 +44,9 @@ Then you can use it like this:
 </material:TabView>
 ```
 
-| Light - Mobile | Dark - Desktop |
-| --- | --- |
-| ![MAUI TabView](images/tabview-simple-light-android.gif) | ![MAUI TabView](images/tabview-simple-dark-windows.gif)  |
+| Light - Mobile | Dark - Desktop | Light - iOS |
+| --- | --- | --- |
+| ![MAUI TabView](images/tabview-simple-light-android.gif) | ![MAUI TabView](images/tabview-simple-dark-windows.gif)  | ![MAUI TabView](images/tabview-simple-light-ios.gif) |
 
 
 ### TabHeader Placement
@@ -58,9 +58,9 @@ Table tabs can be placed at the top, bottom, start or left of the tab view. You 
 </material:TabView>
 ```
 
-| Light - Mobile | Dark - Desktop |
-| --- | --- |
-| ![MAUI TabView Tab Placement](images/tabview-tabplacement-light-android.gif)| ![MAUI TabView Tab Placement](images/tabview-tabplacement-dark-windows.gif)  |
+| Light - Android | Dark - Desktop | Light - iOS |
+| --- | --- | --- |
+| ![MAUI TabView Tab Placement](images/tabview-tabplacement-light-android.gif)| ![MAUI TabView Tab Placement](images/tabview-tabplacement-dark-windows.gif)  | ![MAUI TabView Tab Placement](images/tabview-tabplacement-light-ios.gif) |
 
 ### Custom Tab Header
 You can customize the tab header by setting the `TabHeaderItemTemplate` property. The `TabHeaderItemTemplate` property is a **DataTemplate** that is used to render the tab header. The `TabHeaderItemTemplate` property is useful when you want to customize the tab header. In the datatemplate `Command` must be used in binding. That Command must be triggered when use tapped in the custom tab header.

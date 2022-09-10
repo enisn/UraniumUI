@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+﻿<?xml version="1.0" encoding="UTF-8" ?>
 <uranium:UraniumContentPage x:Class="UraniumApp.Pages.BottomSheets.RegularBottomSheetPage"
              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -12,7 +12,7 @@
 
     <uranium:UraniumContentPage.Attachments>
         <material:BottomSheetView>
-            <TableView Intent="Menu" Margin="0,0,0,40">
+            <TableView Intent="Menu" Margin="0,0,0,40" BackgroundColor="Transparent">
                 <TableRoot>
                     <TableSection Title="Chapters">
                         <TextCell Text="1. Introduction to .NET MAUI"

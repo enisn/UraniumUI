@@ -6,8 +6,9 @@ Uranium UI Material Theme on MAUI uses [Static Resources](https://docs.microsoft
 Best way to replace resources is putting files that include resources into `Resources/Styles` folder in your project. Then, you can override any resource by editing an existing resource in those files or creatişng a new one.
 
 You can check the latest version and place it into yor project from GitHub repository:
-    - [StyleResource.xaml](https://github.com/enisn/UraniumUI/blob/master/src/UraniumUI.Material/Resources/StyleResource.xaml)
-    - [ColorResource.xaml](https://github.com/enisn/UraniumUI/blob/master/src/UraniumUI.Material/Resources/StyleResource.xaml)
+
+- [StyleResource.xaml](https://github.com/enisn/UraniumUI/blob/master/src/UraniumUI.Material/Resources/StyleResource.xaml)
+- [ColorResource.xaml](https://github.com/enisn/UraniumUI/blob/master/src/UraniumUI.Material/Resources/StyleResource.xaml)
 
 Manual copying and placing into project it's not easiest way and it's not recommended. You can create those resource files in your project with **dotnet CLI**. [UraniumUI.Templates](https://www.nuget.org/packages/UraniumUI.Templates) already includes those files. So, you can create them with following command.
 

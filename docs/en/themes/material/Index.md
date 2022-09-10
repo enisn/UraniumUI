@@ -4,4 +4,6 @@ This is an implementation of the Material Theme for the Uranium UI. Visit [Mater
 
 ## Installation
 
-- Install the [Uranium.UI.Material](https://www.nuget.org/packages/Uranium.UI.Material/) NuGet package.
+- Install the [UraniumUI.Material](https://www.nuget.org/packages/UraniumUI.Material/) NuGet package.
+
+

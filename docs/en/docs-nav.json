@@ -34,6 +34,10 @@
       "text": "Material Theme",
       "items": [
         {
+            "text" : "Colors & STyles",
+            "path" : "themes/material/ColorsAndStyles.md"
+        },
+        {
           "text": "Elevation",
           "path": "themes/material/Elevation.md"
         },

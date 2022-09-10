@@ -16,7 +16,7 @@
       "Icons":{
         "type":"parameter",
         "datatype": "choice",
-        "defaultValue":"FontAwesome",
+        "defaultValue":"MaterialIcons",
         "choices": [
           {
             "choice": "FontAwesome",

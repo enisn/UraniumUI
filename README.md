@@ -11,6 +11,15 @@ Visit documentation for onboarding.
 
 ## Features
 
+- Pre-built layouts and controls for building modern UIs.
+- Infrastructure for building custom controls.
+- Multiple Theme support.
+
+## Contributing
+We welcome contributions and suggestions. Please read our [contributing guide](#).
+
+## Features
+
 - **Theming**: Allows you build themes and customize existing themes easily.
   - [Material Theme](https://enisn-projects.io/docs/en/uranium/latest/themes/material/Index)
 
@@ -28,14 +37,14 @@ Visit documentation for onboarding.
 | - | - |
 
 ## Roadmap
-
-- [x] Backdrop
-- [x] BottomSheet
-- [x] Icons
-  - [x] FontAwesome
-  - [x] Material Icons
-- [x] DataGrid
-- [x] SelectableText
+- [x] [Elevation](https://enisn-projects.io/docs/en/uranium/latest/themes/material/Elevation)
+- [x] [Backdrop](https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/Backdrop)
+- [x] [BottomSheet](https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/BottomSheet)
+- [x] [Icons](https://enisn-projects.io/docs/en/uranium/latest/theming/Icons)
+  - [x] [FontAwesome](https://enisn-projects.io/docs/en/uranium/latest/theming/Icons#fontawesome)
+  - [x] [Material Icons](https://enisn-projects.io/docs/en/uranium/latest/theming/Icons#material-icons)
+- [x] [DataGrid](https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/DataGrid)
+- [ ] SelectableText
 - [ ] SegmentedControl
 - [ ] Slider (Header, with dots)
 - [ ] Chips (multiple selection)
@@ -44,7 +53,7 @@ Visit documentation for onboarding.
 - [ ] AdvancedEntry (customize inputkit's one)
 - [ ] Cards (Head, Body, Footer) 
 - [ ] TreeView (https://github.com/enisn/TreeView.Maui)
-- [x] TabView (with Custom DataTemplate)
+- [x] [TabView](https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/TabView)
 - [ ] CalendarView
 
 - [ ] SelectionView 
@@ -55,3 +64,12 @@ Visit documentation for onboarding.
 - [ ] Slider (RangeSlider)
 - [ ] Banners 
 - [ ] OTP Pin Entry
+- [ ] Data Visualization
+  - [ ] Pie Chart
+  - [ ] Column Chart
+  - [ ] Line Chart
+
+## Support
+If you like this project and want to support it, you can sponsor it on ~~[GitHub](), [Patreon]()~~ or [BuyMeACoffee](https://www.buymeacoffee.com/enisn).
+
+<a href="https://www.buymeacoffee.com/enisn"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=enisn&button_colour=40DCA5&font_colour=ffffff&font_family=Lato&outline_colour=000000&coffee_colour=FFDD00" /></a>

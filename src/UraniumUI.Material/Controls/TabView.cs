@@ -115,7 +115,7 @@ public partial class TabView : Grid
         {
             case TabViewTabPlacement.Top:
                 {
-                    this.RowDefinitions.Add(new RowDefinition(GridLength.Star));
+                    this.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
                     this.RowDefinitions.Add(new RowDefinition(GridLength.Star));
                     _headerContainer.Orientation = StackOrientation.Horizontal;
 
@@ -126,7 +126,7 @@ public partial class TabView : Grid
             case TabViewTabPlacement.Bottom:
                 {
                     this.RowDefinitions.Add(new RowDefinition(GridLength.Star));
-                    this.RowDefinitions.Add(new RowDefinition(GridLength.Star));
+                    this.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
                     _headerContainer.Orientation = StackOrientation.Horizontal;
 
                     this.Add(_headerContainer, row: 1);

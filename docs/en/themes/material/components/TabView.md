@@ -60,6 +60,8 @@ Table tabs can be placed at the top, bottom, start or left of the tab view. You 
 
 | Light - Mobile | Dark - Desktop |
 | --- | --- |
-| ![]() | ![MAUI TabView Tab Placement](images/tabview-tabplacement-dark-windows.gif)  |
+| ![MAUI TabView Tab Placement](images/tabview-tabplacement-light-android.gif)| ![MAUI TabView Tab Placement](images/tabview-tabplacement-dark-windows.gif)  |
 
 ### Custom Tab Header
+
+

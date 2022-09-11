@@ -267,6 +267,7 @@ public partial class TabView : Grid
         }
 
         content.Opacity = 0;
+
         _contentContainer.Content = content;
 
         await content.FadeTo(1, 125);
@@ -277,6 +278,7 @@ public partial class TabView : Grid
     }
 }
 
+[ContentProperty(nameof(Content))]
 public class TabItem : UraniumBindableObject
 {
     public string Title { get; set; }

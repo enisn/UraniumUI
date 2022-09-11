@@ -224,20 +224,20 @@
                     <Setter Property="Margin" Value="16"/>
                 </Style>
 
-                <Style TargetType="c:CheckBox">
+                <Style TargetType="input:CheckBox" ApplyToDerivedTypes="True">
                     <Setter Property="Type" Value="Material" />
                     <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource Outline}, Dark={StaticResource  OutlineDark}}" />
                     <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
                     <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}" />
                 </Style>
 
-                <Style TargetType="c:RadioButton">
+                <Style TargetType="input:RadioButton" ApplyToDerivedTypes="True">
                     <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
                     <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}" />
                     <Setter Property="CircleColor" Value="{AppThemeBinding Light={StaticResource  Outline}, Dark={StaticResource  OutlineDark}}" />
                 </Style>
 
-                <Style TargetType="c:RadioButton" Class="CheckRadioButton">
+                <Style TargetType="input:RadioButton" Class="CheckRadioButton">
                     <Setter Property="SelectedIconGeomerty" Value="{x:Static input:PredefinedShapes.CheckCircle}" />
                 </Style>
 

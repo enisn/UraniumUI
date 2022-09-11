@@ -1,4 +1,6 @@
-﻿using UraniumUI.Pages;
+﻿using CommunityToolkit.Maui.Views;
+using UraniumUI.Extensions;
+using UraniumUI.Pages;
 
 namespace UraniumApp;
 
@@ -11,7 +13,7 @@ public partial class MainPage : UraniumContentPage
 		InitializeComponent();
 	}
 
-	private void OnCounterClicked(object sender, EventArgs e)
+	private async void OnCounterClicked(object sender, EventArgs e)
 	{
 		count++;
 
@@ -20,7 +22,14 @@ public partial class MainPage : UraniumContentPage
 		else
 			CounterBtn.Text = $"Clicked {count} times";
 
-		SemanticScreenReader.Announce(CounterBtn.Text);
+		var result = await this.DisplayRadioButtonPromptAsync("Pick one of them", new[] 
+		{
+			"Selection A",
+			"Selection B",
+			"Selection C",
+			"Selection D",
+		}, "Selection A");
+        
+        SemanticScreenReader.Announce(CounterBtn.Text);
 	}
 }
-

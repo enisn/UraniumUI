@@ -54,6 +54,10 @@
           "path": "themes/material/RadioButton.md"
         },
         {
+          "text": "Dialogs",
+          "path": "themes/material/Dialogs.md"
+        },
+        {
           "text": "Backdrop",
           "path": "themes/material/components/Backdrop.md"
         },

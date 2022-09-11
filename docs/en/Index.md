@@ -12,7 +12,7 @@ Uranium is available on [GitHub](https://github.com/enisn/UraniumUI)
 - Multiple Theme support.
 
 ## Contributing
-We welcome contributions and suggestions. Please read our [contributing guide]().
+We welcome contributions and suggestions. Please read our [contributing guide](#).
 
 ## Support
 If you like this project and want to support it, you can sponsor it on ~~[GitHub](), [Patreon]()~~ or [BuyMeACoffee](https://www.buymeacoffee.com/enisn).

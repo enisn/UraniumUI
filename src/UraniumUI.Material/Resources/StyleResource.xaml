@@ -23,7 +23,7 @@
                 </Style>
 
                 <Style TargetType="Frame" ApplyToDerivedTypes="True">
-                    <Setter Property="BackgroundColor" Value="{StaticResource Surface}" />
+                    <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Surface}, Dark={StaticResource SurfaceDark}}" />
                 </Style>
 
                 <Shadow x:Key="ShadowElevation0" Opacity="0" Offset="0,0" Radius="0" Brush="{StaticResource  ShadowBrush}" />
@@ -226,17 +226,17 @@
                 <Style TargetType="BoxView" Class="Divider">
                     <Setter Property="HeightRequest" Value="1" />
                     <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource OutlineVariant}, Dark={StaticResource OutlineVariantDark}}" />
-                    <Setter Property="Margin" Value="16"/>
+                    <Setter Property="Margin" Value="16,8"/>
                 </Style>
 
-                <Style TargetType="c:CheckBox">
+                <Style TargetType="input:CheckBox" ApplyToDerivedTypes="True">
                     <Setter Property="Type" Value="Material" />
                     <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource Outline}, Dark={StaticResource  OutlineDark}}" />
                     <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
                     <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}" />
                 </Style>
 
-                <Style TargetType="c:RadioButton">
+                <Style TargetType="input:RadioButton" ApplyToDerivedTypes="True">
                     <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
                     <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}" />
                     <Setter Property="CircleColor" Value="{AppThemeBinding Light={StaticResource  Outline}, Dark={StaticResource  OutlineDark}}" />

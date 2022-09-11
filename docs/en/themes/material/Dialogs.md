@@ -37,7 +37,7 @@ The easiest way to use RadioButton prompt is to pass a string array to it. It wi
 ```csharp
 private async void Button_Clicked(object sender, EventArgs e)
 {
-    var result = await this..DisplayCheckBoxPromptAsync(
+    var result = await this..DisplayRadioButtonPromptAsync(
             "Pick some of them below",
             new [] {"Option 1", "Option 2", "Option 3"});
 }

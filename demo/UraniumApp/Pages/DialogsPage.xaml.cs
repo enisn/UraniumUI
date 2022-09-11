@@ -21,7 +21,7 @@ public partial class DialogsPage : ContentPage
             options,
             labelSelected.Text ?? options.FirstOrDefault());
 
-        labelSelected.Text = "Selected: " + result;
+        labelSelected.Text = result;
     }
 
     private async void AskCheckBoxes(object sender, EventArgs e)

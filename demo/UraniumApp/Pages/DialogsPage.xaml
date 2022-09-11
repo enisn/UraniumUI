@@ -18,7 +18,7 @@
                 <material:TabItem Title="Radio Button">
                     <VerticalStackLayout Padding="20">
                         <Label Text="Amount of RadioButton options" />
-                        <Slider x:Name="sliderForRadioButtons" Minimum="1" Maximum="30" />
+                        <Slider x:Name="sliderForRadioButtons" Minimum="1" Maximum="12" Value="3" />
                         <Button Text="Ask RadioButtons" Clicked="AskRadioButtons" StyleClass="FilledButton" HorizontalOptions="Center" />
                         <HorizontalStackLayout Margin="20">
                             <Label Text="Result: " FontAttributes="Bold" />
@@ -32,7 +32,7 @@
                     <VerticalStackLayout Padding="20" VerticalOptions="Fill">
                         <VerticalStackLayout>
                             <Label Text="Amount of CheckBox options" />
-                            <Slider x:Name="sliderForCheckBoxes" Minimum="1" Maximum="30" />
+                            <Slider x:Name="sliderForCheckBoxes" Minimum="1" Maximum="12" Value="3" />
                             <Button Text="Ask CheckBoxes" Clicked="AskCheckBoxes" StyleClass="TextButton" HorizontalOptions="Center" />
                         </VerticalStackLayout>
 

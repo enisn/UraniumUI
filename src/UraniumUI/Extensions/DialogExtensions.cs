@@ -89,7 +89,7 @@ public static class DialogExtensions
         IEnumerable<T> selectionSource,
         T selected = default(T),
         string accept = "Ok",
-         string cancel = "Cancel", string displayMember = null)
+        string cancel = "Cancel", string displayMember = null)
     {
         var tcs = new TaskCompletionSource<T>();
         var calculatedSize = CalculateSize(page);
@@ -200,17 +200,31 @@ public static class DialogExtensions
             Keyboard = keyboard,
             TextColor = ColorResource.GetColor("OnBackground", "OnBackgroundDark"),
             PlaceholderColor = ColorResource.GetColor("Background", "BackgroundDark").WithAlpha(.5f),
-            BackgroundColor = Colors.Transparent
+            BackgroundColor = Colors.Transparent,
+            Text = initialValue,
         };
 
-        var entryContainer = new Frame
+        var entryholder = new Frame
         {
             BackgroundColor = ColorResource.GetColor("OnSurface", "OnSurfaceDark").WithAlpha(.2f),
             HasShadow = false,
             CornerRadius = 4,
             Padding = new Thickness(5,0),
-            Margin = 20,
             Content = entry
+        };
+
+        var entryContainer = new VerticalStackLayout
+        {
+            Margin = 20,
+            Spacing = 10,
+            Children =
+            {
+                new Label
+                {
+                    Text = message,
+                },
+                entryholder
+            }
         };
 
         View footer = GetFooter(
@@ -227,7 +241,7 @@ public static class DialogExtensions
                 popup.Close();
             }));
 
-        rootContainer.Add(GetHeader(message));
+        rootContainer.Add(GetHeader(title));
         rootContainer.Add(new ScrollView { Content = entryContainer, VerticalOptions = LayoutOptions.Start, MaximumHeightRequest = calculatedSize.Height });
         rootContainer.Add(GetDivider());
         rootContainer.Add(footer);

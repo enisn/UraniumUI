@@ -61,7 +61,7 @@
             ContentTemplate="{DataTemplate pages:ElevationsPage}"/>
         <ShellContent 
             Title="Dialogs" 
-            Icon="{FontImageSource FontFamily=MaterialOutlined, Glyph={x:Static m:MaterialOutlined.Cloud}, Color={StaticResource Primary}}"
+            Icon="{FontImageSource FontFamily=MaterialOutlined, Glyph={x:Static m:MaterialOutlined.Auto_awesome_motion}, Color={StaticResource Primary}}"
             ContentTemplate="{DataTemplate pages:DialogsPage}"/>
         <ShellContent 
             Title="Buttons" 

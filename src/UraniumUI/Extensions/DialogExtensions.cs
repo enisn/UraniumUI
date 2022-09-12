@@ -19,13 +19,25 @@ public static class DialogExtensions
     {
         var tcs = new TaskCompletionSource<IEnumerable<T>>();
         var calculatedSize = CalculateSize(page);
-        var rootContainer = new StackLayout(); ;
+        var rootContainer = new StackLayout();
 
+#if IOS || MACCATALYST
+        var popup = new Popup
+        {
+            Size = new Size(calculatedSize.Width, calculatedSize.Height),
+            Color = ColorResource.GetColor("Surface", "SurfaceDark", Colors.Transparent),
+            CanBeDismissedByTappingOutsideOfPopup = false,
+            Content = rootContainer
+        };
+        rootContainer.HeightRequest = calculatedSize.Height;
+#else
         var popup = new Popup()
         {
             Size = new Size(page.Width, page.Height),
             Color = Colors.Transparent,
             CanBeDismissedByTappingOutsideOfPopup = false,
+
+
             Content = new ContentView
             {
                 BackgroundColor = Colors.Transparent,
@@ -40,6 +52,7 @@ public static class DialogExtensions
                 }
             }
         };
+#endif
 
         var prop = displayMember != null ? typeof(T).GetProperty(displayMember) : null;
 
@@ -74,7 +87,11 @@ public static class DialogExtensions
           }));
 
         rootContainer.Add(GetHeader(message));
-        rootContainer.Add(new ScrollView { Content = checkBoxGroup, VerticalOptions = LayoutOptions.Start, MaximumHeightRequest = calculatedSize.Height});
+#if IOS || MACCATALYST
+        rootContainer.Add(new ScrollView { Content = checkBoxGroup, VerticalOptions = LayoutOptions.Start, HorizontalScrollBarVisibility = ScrollBarVisibility.Always, MaximumHeightRequest = calculatedSize.Height - 120 });
+#else
+        rootContainer.Add(new ScrollView { Content = checkBoxGroup, VerticalOptions = LayoutOptions.Start, MaximumHeightRequest = calculatedSize.Height });
+#endif
         rootContainer.Add(GetDivider());
         rootContainer.Add(footer);
 
@@ -95,6 +112,17 @@ public static class DialogExtensions
         var calculatedSize = CalculateSize(page);
         var rootContainer = new VerticalStackLayout();
 
+#if IOS || MACCATALYST
+        var popup = new Popup
+        {
+            Size = new Size(calculatedSize.Width, calculatedSize.Height),
+            Color = ColorResource.GetColor("Surface", "SurfaceDark", Colors.Transparent),
+            CanBeDismissedByTappingOutsideOfPopup = false,
+            Content = rootContainer
+        };
+        rootContainer.HeightRequest = calculatedSize.Height;
+#else
+
         var popup = new Popup()
         {
             Size = new Size(page.Width, page.Height),
@@ -114,7 +142,7 @@ public static class DialogExtensions
                 }
             }
         };
-
+#endif
         var prop = displayMember != null ? typeof(T).GetProperty(displayMember) : null;
 
         var rbGroup = new RadioButtonGroupView()
@@ -148,7 +176,11 @@ public static class DialogExtensions
             }));
 
         rootContainer.Add(GetHeader(message));
+#if IOS || MACCATALYST
+        rootContainer.Add(new ScrollView { Content = rbGroup, VerticalOptions = LayoutOptions.Start, MaximumHeightRequest = calculatedSize.Height - 120 });
+#else
         rootContainer.Add(new ScrollView { Content = rbGroup, VerticalOptions = LayoutOptions.Start, MaximumHeightRequest = calculatedSize.Height });
+#endif
         rootContainer.Add(GetDivider());
         rootContainer.Add(footer);
 
@@ -171,7 +203,16 @@ public static class DialogExtensions
         var tcs = new TaskCompletionSource<string>();
         var calculatedSize = CalculateSize(page);
         var rootContainer = new VerticalStackLayout();
-
+#if IOS || MACCATALYST
+        var popup = new Popup
+        {
+            Size = new Size(calculatedSize.Width, calculatedSize.Height),
+            Color = ColorResource.GetColor("Surface", "SurfaceDark", Colors.Transparent),
+            CanBeDismissedByTappingOutsideOfPopup = false,
+            Content = rootContainer
+        };
+        rootContainer.HeightRequest = calculatedSize.Height;
+#else
         var popup = new Popup()
         {
             Size = new Size(page.Width, page.Height),
@@ -191,7 +232,7 @@ public static class DialogExtensions
                 }
             }
         };
-
+#endif
         var entry = new Entry
         {
             Placeholder = placeholder,
@@ -242,7 +283,16 @@ public static class DialogExtensions
             }));
 
         rootContainer.Add(GetHeader(title));
-        rootContainer.Add(new ScrollView { Content = entryContainer, VerticalOptions = LayoutOptions.Start, MaximumHeightRequest = calculatedSize.Height });
+        rootContainer.Add(new ScrollView
+        {
+            Content = entryContainer,
+            VerticalOptions = LayoutOptions.Start,
+#if IOS || MACCATALYST
+            MaximumHeightRequest = calculatedSize.Height / 2
+#else
+            MaximumHeightRequest = calculatedSize.Height
+#endif
+        });
         rootContainer.Add(GetDivider());
         rootContainer.Add(footer);
 

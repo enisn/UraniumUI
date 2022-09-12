@@ -26,7 +26,7 @@ Also, templates has `ide.host.json` implementation that allows to create a new p
 
 ### Parameters
 
-- `icons`: Defines icon library to use. Default is `FontAwesome`. Available values are `FontAwesome`, `Material`, and `None`.
+- `icons`: Defines icon library to use. Default is `MaterialIcons`. Available values are `FontAwesome`, `MaterialIcons`, and `None`.
 
     Example: `dotnet new uraniumui -n MyProject -icons FontAwesome`
 

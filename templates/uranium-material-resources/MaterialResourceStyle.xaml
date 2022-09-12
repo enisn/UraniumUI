@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<ResourceDictionary x:Class="UraniumUI.Material.Resources.StyleResource"
-                    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<?xaml-comp compile="true" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                    xmlns:local="clr-namespace:UraniumUI.Material.Resources"
-                    xmlns:a="clr-namespace:UraniumUI.Material.Attachments"
-                    xmlns:c="clr-namespace:UraniumUI.Material.Controls"
-                    xmlns:t="clr-namespace:UraniumUI.Theming;assembly=UraniumUI"
-                    xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui">
-
+                    xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
+                    xmlns:c="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
+                    xmlns:a="clr-namespace:UraniumUI.Material.Attachments;assembly=UraniumUI.Material">
     <ResourceDictionary>
         <ResourceDictionary.MergedDictionaries>
 
-            <local:ColorResource />
+            <ResourceDictionary Source="MaterialResourceColor.xaml" />
 
             <ResourceDictionary>
                 <Style TargetType="Page" ApplyToDerivedTypes="True">
@@ -23,7 +20,7 @@
                 </Style>
 
                 <Style TargetType="Frame" ApplyToDerivedTypes="True">
-                    <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Surface}, Dark={StaticResource SurfaceDark}}" />
+                    <Setter Property="BackgroundColor" Value="{StaticResource Surface}" />
                 </Style>
 
                 <Shadow x:Key="ShadowElevation0" Opacity="0" Offset="0,0" Radius="0" Brush="{StaticResource  ShadowBrush}" />
@@ -57,8 +54,6 @@
                     <Setter Property="HeightRequest" Value="40" />
                     <Setter Property="Padding" Value="24,0" />
                 </Style>
-
-                <t:DynamicResourceColor x:Key="dynamicResource" />
 
                 <Style TargetType="Button" Class="ElevatedButton" BaseResourceKey="BaseButtonStyle">
                     <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Surface}, Dark={StaticResource SurfaceDark}}" />
@@ -226,7 +221,7 @@
                 <Style TargetType="BoxView" Class="Divider">
                     <Setter Property="HeightRequest" Value="1" />
                     <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource OutlineVariant}, Dark={StaticResource OutlineVariantDark}}" />
-                    <Setter Property="Margin" Value="16,8"/>
+                    <Setter Property="Margin" Value="16"/>
                 </Style>
 
                 <Style TargetType="input:CheckBox" ApplyToDerivedTypes="True">
@@ -242,7 +237,7 @@
                     <Setter Property="CircleColor" Value="{AppThemeBinding Light={StaticResource  Outline}, Dark={StaticResource  OutlineDark}}" />
                 </Style>
 
-                <Style TargetType="c:RadioButton" Class="CheckRadioButton">
+                <Style TargetType="input:RadioButton" Class="CheckRadioButton">
                     <Setter Property="SelectedIconGeomerty" Value="{x:Static input:PredefinedShapes.CheckCircle}" />
                 </Style>
 
@@ -261,7 +256,7 @@
                 </Style>
 
             </ResourceDictionary>
-            
+
         </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
 </ResourceDictionary>

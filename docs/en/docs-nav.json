@@ -32,41 +32,18 @@
     },
     {
       "text": "Material Theme",
-      "path": "themes/material/Index.md",
       "items": [
         {
-          "text": "Attachments",
-          "items": [
-            {
-              "text": "Bottom Sheet",
-              "path": "themes/material/components/BottomSheet.md"
-            },
-            {
-              "text": "Backdrop",
-              "path": "themes/material/components/Backdrop.md"
-            }
-          ]
-        },
-        {
-          "text": "Components",
-          "items":[
-            {
-                "text": "DataGrid",
-                "path" : "themes/material/components/DataGrid.md"
-            },
-            {
-                "text": "TabView",
-                "path" : "themes/material/components/TabView.md"
-            }
-          ]
-        },
-        {
-          "text": "Buttons",
-          "path": "themes/material/Buttons.md"
+            "text" : "Colors & Styles",
+            "path" : "themes/material/ColorsAndStyles.md"
         },
         {
           "text": "Elevation",
           "path": "themes/material/Elevation.md"
+        },
+        {
+          "text": "Buttons",
+          "path": "themes/material/Buttons.md"
         },
         {
           "text": "CheckBox",
@@ -75,6 +52,26 @@
         {
           "text": "RadioButton",
           "path": "themes/material/RadioButton.md"
+        },
+        {
+          "text": "Dialogs",
+          "path": "themes/material/Dialogs.md"
+        },
+        {
+          "text": "Backdrop",
+          "path": "themes/material/components/Backdrop.md"
+        },
+        {
+          "text": "Bottom Sheet",
+          "path": "themes/material/components/BottomSheet.md"
+        },
+        {
+          "text": "DataGrid",
+          "path" : "themes/material/components/DataGrid.md"
+        },
+        {
+            "text": "TabView",
+            "path" : "themes/material/components/TabView.md"
         }
       ]
     }

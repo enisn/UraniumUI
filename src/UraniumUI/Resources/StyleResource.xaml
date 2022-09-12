@@ -16,6 +16,13 @@
             <Style TargetType="Label" ApplyToDerivedTypes="True">
                 <Setter Property="TextColor" Value="{DynamicResource OnBackground}" />
             </Style>
+
+            <Style TargetType="BoxView" Class="Divider">
+                <Setter Property="HeightRequest" Value="1" />
+                <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource OutlineVariant}, Dark={StaticResource OutlineVariantDark}}" />
+                <Setter Property="Margin" Value="16"/>
+            </Style>
+
         </ResourceDictionary>
 
     </ResourceDictionary.MergedDictionaries>

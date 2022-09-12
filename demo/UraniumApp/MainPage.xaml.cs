@@ -22,14 +22,11 @@ public partial class MainPage : UraniumContentPage
 		else
 			CounterBtn.Text = $"Clicked {count} times";
 
-		var result = await this.DisplayRadioButtonPromptAsync("Pick one of them", new[] 
-		{
-			"Selection A",
-			"Selection B",
-			"Selection C",
-			"Selection D",
-		}, "Selection A");
-        
+
+        var result = await this.DisplayTextPromptAsync("Your Name", "What is your name?", placeholder: "Uvuvwevwevwe...Osas");
+
+        await DisplayAlert("Result:", result, "OK");
+
         SemanticScreenReader.Announce(CounterBtn.Text);
 	}
 }

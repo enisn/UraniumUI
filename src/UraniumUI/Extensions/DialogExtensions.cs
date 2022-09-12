@@ -19,13 +19,29 @@ public static class DialogExtensions
     {
         var tcs = new TaskCompletionSource<IEnumerable<T>>();
         var calculatedSize = CalculateSize(page);
-        var rootContainer = new StackLayout(); ;
+#if IOS || MACCATALYST
+        var rootContainer = new Grid()
+        {
+            HeightRequest = calculatedSize.Height
+        };
+        var popup = new Popup
+        {
+            Size = new Size(calculatedSize.Width, calculatedSize.Height),
+            Color = ColorResource.GetColor("Surface", "SurfaceDark", Colors.Transparent),
+            CanBeDismissedByTappingOutsideOfPopup = false,
+            Content = rootContainer
+        };
+        rootContainer.HeightRequest = calculatedSize.Height;
+#else
 
+        var rootContainer = new StackLayout();
         var popup = new Popup()
         {
             Size = new Size(page.Width, page.Height),
             Color = Colors.Transparent,
             CanBeDismissedByTappingOutsideOfPopup = false,
+
+
             Content = new ContentView
             {
                 BackgroundColor = Colors.Transparent,
@@ -40,6 +56,7 @@ public static class DialogExtensions
                 }
             }
         };
+#endif
 
         var prop = displayMember != null ? typeof(T).GetProperty(displayMember) : null;
 
@@ -47,6 +64,7 @@ public static class DialogExtensions
         {
             Margin = 20,
             VerticalOptions = LayoutOptions.Center,
+            HorizontalOptions = LayoutOptions.Start,
         };
 
         foreach (var item in selectionSource)
@@ -73,10 +91,21 @@ public static class DialogExtensions
               popup.Close();
           }));
 
+#if IOS || MACCATALYST
+        rootContainer.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
+        rootContainer.RowDefinitions.Add(new RowDefinition(GridLength.Star));
+        rootContainer.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
+        rootContainer.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
         rootContainer.Add(GetHeader(message));
-        rootContainer.Add(new ScrollView { Content = checkBoxGroup, VerticalOptions = LayoutOptions.Start, MaximumHeightRequest = calculatedSize.Height});
+        rootContainer.Add(new ScrollView { Content = checkBoxGroup }, row: 1);
+        rootContainer.Add(GetDivider(), row:2);
+        rootContainer.Add(footer, row:3);
+#else
+        rootContainer.Add(GetHeader(message));
+        rootContainer.Add(new ScrollView { Content = checkBoxGroup, VerticalOptions = LayoutOptions.Start, MaximumHeightRequest = calculatedSize.Height });
         rootContainer.Add(GetDivider());
         rootContainer.Add(footer);
+#endif
 
         page.ShowPopup(popup);
 
@@ -93,6 +122,21 @@ public static class DialogExtensions
     {
         var tcs = new TaskCompletionSource<T>();
         var calculatedSize = CalculateSize(page);
+
+#if IOS || MACCATALYST
+        var rootContainer = new Grid()
+        {
+            HeightRequest = calculatedSize.Height
+        };
+        var popup = new Popup
+        {
+            Size = new Size(calculatedSize.Width, calculatedSize.Height),
+            Color = ColorResource.GetColor("Surface", "SurfaceDark", Colors.Transparent),
+            CanBeDismissedByTappingOutsideOfPopup = false,
+            Content = rootContainer
+        };
+        rootContainer.HeightRequest = calculatedSize.Height;
+#else
         var rootContainer = new VerticalStackLayout();
 
         var popup = new Popup()
@@ -114,13 +158,14 @@ public static class DialogExtensions
                 }
             }
         };
-
+#endif
         var prop = displayMember != null ? typeof(T).GetProperty(displayMember) : null;
 
         var rbGroup = new RadioButtonGroupView()
         {
             Margin = 20,
             VerticalOptions = LayoutOptions.Center,
+            HorizontalOptions = LayoutOptions.Start
         };
 
         foreach (var item in selectionSource)
@@ -147,11 +192,21 @@ public static class DialogExtensions
                 popup.Close();
             }));
 
+#if IOS || MACCATALYST
+        rootContainer.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
+        rootContainer.RowDefinitions.Add(new RowDefinition(GridLength.Star));
+        rootContainer.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
+        rootContainer.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
+        rootContainer.Add(GetHeader(message));
+        rootContainer.Add(new ScrollView { Content = rbGroup }, row: 1);
+        rootContainer.Add(GetDivider(), row: 2);
+        rootContainer.Add(footer, row: 3);
+#else
         rootContainer.Add(GetHeader(message));
         rootContainer.Add(new ScrollView { Content = rbGroup, VerticalOptions = LayoutOptions.Start, MaximumHeightRequest = calculatedSize.Height });
         rootContainer.Add(GetDivider());
         rootContainer.Add(footer);
-
+#endif
         page.ShowPopup(popup);
 
         return tcs.Task;
@@ -172,6 +227,16 @@ public static class DialogExtensions
         var calculatedSize = CalculateSize(page);
         var rootContainer = new VerticalStackLayout();
 
+#if IOS || MACCATALYST
+        var popup = new Popup
+        {
+            Size = new Size(calculatedSize.Width, 230),
+            Color = ColorResource.GetColor("Surface", "SurfaceDark", Colors.Transparent),
+            CanBeDismissedByTappingOutsideOfPopup = false,
+            Content = rootContainer,
+        };
+        rootContainer.VerticalOptions = LayoutOptions.Center;
+#else
         var popup = new Popup()
         {
             Size = new Size(page.Width, page.Height),
@@ -191,7 +256,7 @@ public static class DialogExtensions
                 }
             }
         };
-
+#endif
         var entry = new Entry
         {
             Placeholder = placeholder,
@@ -242,7 +307,16 @@ public static class DialogExtensions
             }));
 
         rootContainer.Add(GetHeader(title));
-        rootContainer.Add(new ScrollView { Content = entryContainer, VerticalOptions = LayoutOptions.Start, MaximumHeightRequest = calculatedSize.Height });
+        rootContainer.Add(new ScrollView
+        {
+            Content = entryContainer,
+            VerticalOptions = LayoutOptions.Start,
+#if IOS || MACCATALYST
+            //MaximumHeightRequest = calculatedSize.Height
+#else
+            MaximumHeightRequest = calculatedSize.Height
+#endif
+        });
         rootContainer.Add(GetDivider());
         rootContainer.Add(footer);
 

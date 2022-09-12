@@ -80,7 +80,7 @@ Attachments aren't same layer with page content and they will automatically rend
 
 - `AttachmentPosition`: A property you should return either of `Front` or `Behind` enum value. This property determines the position of the attachment. 
   - `Front`: The attachment will be rendered at the front.
-  - `Behind`: The attachment will be rendered at the back of the entire page. In the **behind** case, your attachment will not be appeared, you should make something with the main page content like making it transparent or slide it away according to your logic.
+  - `Behind`: The attachment will be rendered at the back of the entire page. In the **behind** case, your attachment will not be appeared, you should make something like making the main page content transparent or slide it away to show the attachment according to your logic.
 
 ### Creating an attachment
 
@@ -105,9 +105,9 @@ public class FAB : ImageButton, IPageAttachment
 
     public void OnAttached(UraniumContentPage page)
     {
-    // Place it right bottom of the page.
-    this.TranslationX = this.PageWidth - this.Width - 20;
-    this.TranslationY = this.PageHeight - this.Height - 20;
+        // Place it right bottom of the page.
+        this.TranslationX = this.PageWidth - this.Width - 20;
+        this.TranslationY = this.PageHeight - this.Height - 20;
     }
 }
 ```

@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:uranium="clr-namespace:UraniumUI.Pages;assembly=UraniumUI"
              xmlns:material="clr-namespace:UraniumUI.Material.Attachments;assembly=UraniumUI.Material"
+             xmlns:controls="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
              xmlns:t="clr-namespace:UraniumUI.Theming;assembly=UraniumUI"
              xmlns:u="clr-namespace:UraniumUI;assembly=UraniumUI"
              x:Class="UraniumApp.MainPage">
@@ -12,6 +13,73 @@
             Spacing="25"
             Padding="30,0"
             VerticalOptions="Center">
+            <Slider x:Name="sliderOffset" Minimum="1" Maximum="500" ValueChanged="offsetChanged" />
+
+            <Grid>
+
+                <Border x:Name="border"
+                    Padding="0"
+                    Stroke="{AppThemeBinding Light=Blue, Dark=White}"
+                    StrokeThickness="2"
+                    BackgroundColor="Transparent"
+                    StrokeShape="RoundRectangle 10">
+
+
+                </Border>
+
+                <Border Stroke="Transparent"
+                        StrokeDashArray="5,65,500" StrokeThickness="2" x:Name="borderInner"
+                        StrokeShape="RoundRectangle 10">
+
+                    <Grid>
+                        <Entry x:Name="entry" Focused="entry_Focused" Unfocused="entry_Unfocused" />
+
+                    </Grid>
+                </Border>
+                <Label x:Name="title" Margin="15" Text="This is placeholder" HorizontalOptions="Start" InputTransparent="True" ZIndex="999999" />
+            </Grid>
+
+
+            <controls:TextField />
+
+            <Border WidthRequest="100"
+                    HeightRequest="100"
+                    Stroke="{AppThemeBinding Light=Blue, Dark=White}"
+                    StrokeThickness="4"
+                    StrokeDashArray="50"
+                    StrokeDashOffset="0"
+                    BackgroundColor="{AppThemeBinding Light=Orange, Dark=Pink}"
+                    StrokeShape="RoundRectangle 50">
+                <Border.Shadow>
+                    <Shadow Brush="red"
+                            Offset="10,1"
+                            Opacity=".8"/>
+                </Border.Shadow>
+                <Image
+                    Source="https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/baboon.jpg"
+                    HeightRequest="98"
+                    WidthRequest="98" />
+            </Border>
+
+
+            <Border WidthRequest="300"
+                    HeightRequest="100"
+                    Stroke="{AppThemeBinding Light=Blue, Dark=Black}"
+                    StrokeThickness="4"
+                    BackgroundColor="{AppThemeBinding Light=Orange, Dark=Pink}"
+                    StrokeShape="RoundRectangle 10">
+                <Border.Shadow>
+                    <Shadow Brush="red"
+                            Offset="10,1"
+                            Opacity=".8"/>
+                </Border.Shadow>
+
+                <Label
+                Text="Hello, World!"
+                SemanticProperties.HeadingLevel="Level1"
+                FontSize="32"
+                HorizontalOptions="Center" />
+            </Border>
 
             <!--<Image
 

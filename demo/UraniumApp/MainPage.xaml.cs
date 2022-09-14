@@ -47,28 +47,25 @@ public partial class MainPage : UraniumContentPage
 
     private void offsetChanged(object sender, ValueChangedEventArgs e)
     {
-        border.StrokeDashOffset = e.NewValue;
+        //borderInner.StrokeDashOffset = e.NewValue;
+        textField.border.StrokeDashOffset = e.NewValue;
     }
 
     private void entry_Focused(object sender, FocusEventArgs e)
     {
 
 
-        title.TranslateTo(title.TranslationX, title.TranslationY - 25);
+        //title.TranslateTo(title.TranslationX, title.TranslationY - 25);
 
-        border.Stroke = Brush.Transparent;
-        borderInner.Stroke = Colors.White;
+        //border.Stroke = Brush.Transparent;
+        //borderInner.Stroke = Colors.White;
     }
 
     private void entry_Unfocused(object sender, FocusEventArgs e)
     {
-        //border.StrokeDashArray[0] = 1;
-        //border.StrokeDashArray[1] = 28;
-        //border.StrokeDashArray[2] = 500;
-        //border.StrokeThickness = 1;
 
-        title.TranslateTo(title.TranslationX, title.TranslationY + 25);
-        border.Stroke = Colors.White;
-        borderInner.Stroke = Brush.Transparent;
+        //title.TranslateTo(title.TranslationX, title.TranslationY + 25);
+        //border.Stroke = Colors.White;
+        //borderInner.Stroke = Brush.Transparent;
     }
 }

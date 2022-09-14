@@ -13,7 +13,9 @@
             Spacing="25"
             Padding="30,0"
             VerticalOptions="Center">
-            <Slider x:Name="sliderOffset" Minimum="1" Maximum="500" ValueChanged="offsetChanged" />
+
+            <Label Text="{Binding Source={x:Reference sliderOffset}, Path=Value}" />
+            <Slider x:Name="sliderOffset" Minimum="-100" Maximum="500" ValueChanged="offsetChanged" />
 
             <Grid>
 
@@ -21,14 +23,15 @@
                     Padding="0"
                     Stroke="{AppThemeBinding Light=Blue, Dark=White}"
                     StrokeThickness="2"
+                        IsVisible="False"
                     BackgroundColor="Transparent"
                     StrokeShape="RoundRectangle 10">
 
 
                 </Border>
 
-                <Border Stroke="Transparent"
-                        StrokeDashArray="5,65,500" StrokeThickness="2" x:Name="borderInner"
+                <Border Stroke="{AppThemeBinding Light=Blue, Dark=White}"
+                        StrokeDashArray="5,16,3066" StrokeThickness="2" StrokeDashOffset="0" x:Name="borderInner"
                         StrokeShape="RoundRectangle 10">
 
                     <Grid>
@@ -40,7 +43,7 @@
             </Grid>
 
 
-            <controls:TextField />
+            <controls:TextField x:Name="textField"/>
 
             <Border WidthRequest="100"
                     HeightRequest="100"

@@ -14,26 +14,17 @@ public partial class TextField : Grid
         HorizontalOptions = LayoutOptions.Start,
         InputTransparent = true,
         Margin = 15,
+        TextColor = ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.Gray)
     };
 
-    Border borderUnfocused = new Border
+    public Border border = new Border
     {
         Padding = 0,
-        //Stroke = ColorResource.GetColor("Surface", "SurfaceDark", Colors.Gray),
+        Stroke = ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.Gray),
         StrokeThickness = 2,
+        StrokeDashOffset = 0,
+        BackgroundColor = Colors.Transparent,
         InputTransparent = true,
-        StrokeShape = new RoundRectangle
-        {
-            CornerRadius = 8
-        }
-    };
-
-    Border borderFocused = new Border
-    {
-        Stroke = ColorResource.GetColor("Primary", "PrimaryDark", Colors.Purple),
-        InputTransparent = true,
-        StrokeThickness = 2.5,
-        IsVisible = false,
         StrokeShape = new RoundRectangle
         {
             CornerRadius = 8
@@ -42,12 +33,10 @@ public partial class TextField : Grid
 
     public TextField()
     {
-        this.Add(borderUnfocused);
-        //this.Add(borderFocused);
+        //this.Add(border);
         this.Add(mainEntry);
         this.Add(labelTitle);
-        labelTitle.Scale = 1.2;
-        //borderFocused.Content = mainEntry;
+        labelTitle.Scale = 1;
 
         mainEntry.Focused += MainEntry_Focused;
         mainEntry.Unfocused += MainEntry_Unfocused;
@@ -55,50 +44,71 @@ public partial class TextField : Grid
 
     private void MainEntry_Focused(object sender, FocusEventArgs e)
     {
-        borderFocused.IsVisible = true;
-        borderUnfocused.IsVisible = false;
-
+        border.Stroke = ColorResource.GetColor("Primary", "PrimaryDark", Colors.Purple);
+        //AnimateBorderOffsetTo(0);
+        border.StrokeDashOffset = 0.1;
+        
         labelTitle.TranslateTo(labelTitle.TranslationX, labelTitle.TranslationY - 25, 90);
         labelTitle.TextColor = ColorResource.GetColor("Primary", "PrimaryDark", Colors.Purple);
-        labelTitle.ScaleTo(1, 90);
+        labelTitle.ScaleTo(.8, 90);
     }
 
     private void MainEntry_Unfocused(object sender, FocusEventArgs e)
     {
-        borderFocused.IsVisible = false;
-        borderUnfocused.IsVisible = true;
-
+        border.Stroke = ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.Gray);
+        //AnimateBorderOffsetTo(border.StrokeDashArray[0] + border.StrokeDashArray[1]);
+        border.StrokeDashOffset = border.StrokeDashArray[0] + border.StrokeDashArray[1] + 5;
+        
         labelTitle.TranslateTo(labelTitle.TranslationX, labelTitle.TranslationY + 25, 90);
         labelTitle.TextColor = ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.Gray);
-        labelTitle.ScaleTo(1.2, 90);
-    }
-
-    protected override SizeRequest OnMeasure(double widthConstraint, double heightConstraint)
-    {
-        //var space = (labelTitle.Width / 2) * 1.13;
-        //var perimeter = (widthConstraint + height) * 2;
-        return base.OnMeasure(widthConstraint, heightConstraint);
+        labelTitle.ScaleTo(1, 90);
     }
 
     protected override async void OnSizeAllocated(double width, double height)
     {
         await Task.Delay(100);
 
-        var space = (labelTitle.Width / 2) * 1.13;
+        var space = (labelTitle.Width / 2) * 4;
         var perimeter = (width + height) * 2;
 
-        if (borderFocused != null)
+        if (border != null)
         {
-            this.Remove(borderFocused);
+            this.Remove(border);
         }
 
-        borderFocused.StrokeDashArray = new double[] { 5, space, perimeter };
-        //borderFocused.StrokeDashArray.Add(5);
-        //borderFocused.StrokeDashArray.Add(space);
-        //borderFocused.StrokeDashArray.Add(perimeter);
+//#if ANDROID
 
-        this.Add(borderFocused);
+        border.StrokeDashArray = new double[] { 5, space, perimeter, 0};
+//#else
+//        border.StrokeDashArray = new double[] { 5, space, perimeter};
+
+//#endif
+
+        //border.StrokeDashOffset = space + 5;
+
+        this.Add(border);
+        border.StrokeThickness = 2;
 
         base.OnSizeAllocated(width, height);
+    }
+
+    private async void AnimateBorderOffsetTo(double to)
+    {
+        if (to > border.StrokeDashOffset)
+        {
+            for (var i = border.StrokeDashOffset; i < to ; i++)
+            {
+                await Task.Delay(10);
+                border.StrokeDashOffset = i;
+            }
+        }
+        else
+        {
+            for (var i = border.StrokeDashOffset; i >= to; i--)
+            {
+                await Task.Delay(10);
+                border.StrokeDashOffset = i;
+            }
+        }
     }
 }

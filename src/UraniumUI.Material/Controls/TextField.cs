@@ -1,4 +1,8 @@
-﻿using Microsoft.Maui.Controls.Shapes;
+﻿using Microsoft.Maui.Controls.Platform;
+using Microsoft.Maui.Controls.Shapes;
+#if IOS || MACCATALYST
+using UIKit;
+#endif
 using UraniumUI.Resources;
 
 namespace UraniumUI.Material.Controls;
@@ -40,6 +44,14 @@ public partial class TextField : Grid
 
         mainEntry.Focused += MainEntry_Focused;
         mainEntry.Unfocused += MainEntry_Unfocused;
+
+#if IOS || MACCATALYST
+        mainEntry.HandlerChanged += (s, e) =>
+        {
+            var textField = mainEntry.Handler.PlatformView as UITextField;
+            textField.BorderStyle = UITextBorderStyle.None;
+        };
+#endif
     }
 
     private void MainEntry_Focused(object sender, FocusEventArgs e)

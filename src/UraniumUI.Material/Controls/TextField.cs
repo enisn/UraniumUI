@@ -1,14 +1,11 @@
-﻿using Microsoft.Maui.Controls.Platform;
-using Microsoft.Maui.Controls.Shapes;
+﻿using Microsoft.Maui.Controls.Shapes;
 using Plainer.Maui.Controls;
-#if IOS || MACCATALYST
-using UIKit;
-#endif
 using UraniumUI.Resources;
 
 namespace UraniumUI.Material.Controls;
 public partial class TextField : Grid
 {
+    internal const double FirstDash = 5;
     Entry mainEntry = new EntryView
     {
         Margin = 1,
@@ -29,7 +26,6 @@ public partial class TextField : Grid
         StrokeThickness = 2,
         StrokeDashOffset = 0,
         BackgroundColor = Colors.Transparent,
-        InputTransparent = true,
         StrokeShape = new RoundRectangle
         {
             CornerRadius = 8
@@ -38,77 +34,113 @@ public partial class TextField : Grid
 
     public TextField()
     {
-        //this.Add(border);
-        this.Add(mainEntry);
+        this.Add(border);
+        border.Content = mainEntry;
         this.Add(labelTitle);
         labelTitle.Scale = 1;
 
         mainEntry.Focused += MainEntry_Focused;
         mainEntry.Unfocused += MainEntry_Unfocused;
+
+        mainEntry.SetBinding(Entry.TextProperty, new Binding(nameof(Text), source: this));
+        labelTitle.SetBinding(Label.TextProperty, new Binding(nameof(Title), source: this));
     }
 
     private void MainEntry_Focused(object sender, FocusEventArgs e)
     {
-        border.Stroke = ColorResource.GetColor("Primary", "PrimaryDark", Colors.Purple);
-        //AnimateBorderOffsetTo(0);
-        border.StrokeDashOffset = 0.1;
-        
-        labelTitle.TranslateTo(labelTitle.TranslationX, labelTitle.TranslationY - 25, 90);
-        labelTitle.TextColor = ColorResource.GetColor("Primary", "PrimaryDark", Colors.Purple);
-        labelTitle.ScaleTo(.8, 90);
+        border.Stroke = AccentColor;
+        labelTitle.TextColor = AccentColor;
+        UpdateState();
     }
 
     private void MainEntry_Unfocused(object sender, FocusEventArgs e)
     {
-        border.Stroke = ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.Gray);
-        border.StrokeDashOffset = border.StrokeDashArray[0] + border.StrokeDashArray[1] + 5;
-        
-        labelTitle.TranslateTo(labelTitle.TranslationX, labelTitle.TranslationY + 25, 90);
-        labelTitle.TextColor = ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.Gray);
-        labelTitle.ScaleTo(1, 90);
+        border.Stroke = BorderColor;
+        labelTitle.TextColor = TextColor;
+
+        UpdateState();
     }
 
-    protected virtual void UpdateState()
-    {
-        
-    }
-    
     protected override async void OnSizeAllocated(double width, double height)
     {
-        await Task.Delay(100);
-
-        var space = (labelTitle.Width / 2) * 1.5;
-        var perimeter = (width + height) * 2;
-
-        if (border != null)
-        {
-            this.Remove(border);
-        }
-        border.StrokeDashArray = new double[] { 5, space, perimeter, 0};
-
-        this.Add(border);
-        border.StrokeThickness = 2;
-
         base.OnSizeAllocated(width, height);
+        await Task.Delay(100);
+        InitializeBorder();
     }
 
-    private async void AnimateBorderOffsetTo(double to)
+    protected virtual void UpdateState(bool animate = true)
     {
-        if (to > border.StrokeDashOffset)
+        if (border.StrokeDashArray == null || border.StrokeDashArray.Count == 0)
         {
-            for (var i = border.StrokeDashOffset; i < to ; i++)
-            {
-                await Task.Delay(10);
-                border.StrokeDashOffset = i;
-            }
+            return;
+        }
+
+        if (!string.IsNullOrEmpty(Text) || mainEntry.IsFocused)
+        {
+            UpdateOffset(0.01, animate);
+            labelTitle.TranslateTo(labelTitle.TranslationX, -25, 90);
+            labelTitle.AnchorX = 0;
+            labelTitle.ScaleTo(.8, 90);
         }
         else
         {
-            for (var i = border.StrokeDashOffset; i >= to; i--)
+            var offsetToGo = border.StrokeDashArray[0] + border.StrokeDashArray[1] + FirstDash;
+            UpdateOffset(offsetToGo, animate);
+            labelTitle.TranslateTo(labelTitle.TranslationX, 0, 90);
+            labelTitle.AnchorX = 0;
+            labelTitle.ScaleTo(1, 90);
+        }
+    }
+
+    private void InitializeBorder()
+    {
+        var perimeter = (this.Width + this.Height) * 2;
+        var space = labelTitle.Width * .60;
+
+#if WINDOWS
+        if (space <= 0 || perimeter <= 0)
+        {
+            return;
+        }
+
+        border.Content = null;
+        this.Remove(border);
+        border = new Border
+        {
+            Padding = 0,
+            Stroke = ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.Gray),
+            StrokeThickness = 2,
+            StrokeDashOffset = 0,
+            BackgroundColor = Colors.Transparent,
+            StrokeShape = new RoundRectangle
             {
-                await Task.Delay(10);
-                border.StrokeDashOffset = i;
-            }
+                CornerRadius = 8
+            },
+            Content = mainEntry
+        };
+#endif
+        border.StrokeDashArray = new DoubleCollection { FirstDash, space, perimeter, 0 };
+
+#if WINDOWS
+        this.Add(border);
+#endif
+
+        UpdateState(animate: false);
+        border.StrokeThickness = 2;
+    }
+
+    private void UpdateOffset(double value, bool animate = true)
+    {
+        if (animate)
+        {
+            border.StrokeDashOffset = value;
+        }
+        else
+        {
+            border.Animate("borderOffset", new Animation((d) =>
+            {
+                border.StrokeDashOffset = d;
+            }, border.StrokeDashOffset, value, Easing.BounceIn), 2, 90);
         }
     }
 }

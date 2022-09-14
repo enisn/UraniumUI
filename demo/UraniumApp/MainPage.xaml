@@ -43,7 +43,12 @@
             </Grid>
 
 
-            <controls:TextField x:Name="textField"/>
+            <controls:TextField x:Name="textField" Text="de" Title="Name" />
+            <controls:TextField Title="Surname" />
+            <controls:TextField Title="Age" />
+            <controls:TextField Title="Much longer hint text" />
+            <controls:TextField Title="Type your name" />
+            <controls:TextField />
 
             <Border WidthRequest="100"
                     HeightRequest="100"

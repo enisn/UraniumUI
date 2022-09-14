@@ -1,5 +1,6 @@
 ﻿using Microsoft.Maui.Controls.Platform;
 using Microsoft.Maui.Controls.Shapes;
+using Plainer.Maui.Controls;
 #if IOS || MACCATALYST
 using UIKit;
 #endif
@@ -8,7 +9,7 @@ using UraniumUI.Resources;
 namespace UraniumUI.Material.Controls;
 public partial class TextField : Grid
 {
-    Entry mainEntry = new Entry
+    Entry mainEntry = new EntryView
     {
         Margin = 1,
     };
@@ -44,14 +45,6 @@ public partial class TextField : Grid
 
         mainEntry.Focused += MainEntry_Focused;
         mainEntry.Unfocused += MainEntry_Unfocused;
-
-#if IOS || MACCATALYST
-        mainEntry.HandlerChanged += (s, e) =>
-        {
-            var textField = mainEntry.Handler.PlatformView as UITextField;
-            textField.BorderStyle = UITextBorderStyle.None;
-        };
-#endif
     }
 
     private void MainEntry_Focused(object sender, FocusEventArgs e)
@@ -68,7 +61,6 @@ public partial class TextField : Grid
     private void MainEntry_Unfocused(object sender, FocusEventArgs e)
     {
         border.Stroke = ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.Gray);
-        //AnimateBorderOffsetTo(border.StrokeDashArray[0] + border.StrokeDashArray[1]);
         border.StrokeDashOffset = border.StrokeDashArray[0] + border.StrokeDashArray[1] + 5;
         
         labelTitle.TranslateTo(labelTitle.TranslationX, labelTitle.TranslationY + 25, 90);
@@ -76,27 +68,23 @@ public partial class TextField : Grid
         labelTitle.ScaleTo(1, 90);
     }
 
+    protected virtual void UpdateState()
+    {
+        
+    }
+    
     protected override async void OnSizeAllocated(double width, double height)
     {
         await Task.Delay(100);
 
-        var space = (labelTitle.Width / 2) * 4;
+        var space = (labelTitle.Width / 2) * 1.5;
         var perimeter = (width + height) * 2;
 
         if (border != null)
         {
             this.Remove(border);
         }
-
-//#if ANDROID
-
         border.StrokeDashArray = new double[] { 5, space, perimeter, 0};
-//#else
-//        border.StrokeDashArray = new double[] { 5, space, perimeter};
-
-//#endif
-
-        //border.StrokeDashOffset = space + 5;
 
         this.Add(border);
         border.StrokeThickness = 2;

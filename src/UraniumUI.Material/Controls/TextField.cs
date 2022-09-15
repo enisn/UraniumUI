@@ -7,6 +7,7 @@ public partial class TextField : InputField
 {
     protected EntryView mainEntry => Content as EntryView;
 
+    
     public override View Content { get; set; } = new EntryView
     {
         Margin = new Thickness(5,1),
@@ -15,24 +16,7 @@ public partial class TextField : InputField
 
     public TextField()
     {
-        mainEntry.Focused += MainEntry_Focused;
-        mainEntry.Unfocused += MainEntry_Unfocused;
         mainEntry.SetBinding(Entry.TextProperty, new Binding(nameof(Text), source: this));
-    }
-
-    private void MainEntry_Focused(object sender, FocusEventArgs e)
-    {
-        border.Stroke = AccentColor;
-        labelTitle.TextColor = AccentColor;
-        UpdateState();
-    }
-
-    private void MainEntry_Unfocused(object sender, FocusEventArgs e)
-    {
-        border.Stroke = BorderColor;
-        labelTitle.TextColor = TextColor;
-
-        UpdateState();
     }
 
     protected override void UpdateState(bool animate = true)

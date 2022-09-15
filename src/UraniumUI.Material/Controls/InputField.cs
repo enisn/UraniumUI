@@ -1,4 +1,5 @@
 ﻿using Microsoft.Maui.Controls.Shapes;
+using Microsoft.Maui.Graphics.Text;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,11 +23,11 @@ public class InputField : Grid
             content = value;
             if (border != null)
             {
-                border.Content = value;
+                Content = value;
+                RegisterForEvents();
             }
         }
     }
-
 
     protected Label labelTitle = new Label()
     {
@@ -52,6 +53,7 @@ public class InputField : Grid
 
     public InputField()
     {
+        RegisterForEvents();
         this.Add(border);
         border.Content = Content;
         this.Add(labelTitle);
@@ -59,6 +61,22 @@ public class InputField : Grid
 
         labelTitle.SetBinding(Label.TextProperty, new Binding(nameof(Title), source: this));
     }
+
+    private void Content_Unfocused(object sender, FocusEventArgs e)
+    {
+        border.Stroke = BorderColor;
+        labelTitle.TextColor = TitleColor;
+
+        UpdateState();
+    }
+
+    private void Content_Focused(object sender, FocusEventArgs e)
+    {
+        border.Stroke = AccentColor;
+        labelTitle.TextColor = AccentColor;
+        UpdateState();
+    }
+
     protected override async void OnSizeAllocated(double width, double height)
     {
         base.OnSizeAllocated(width, height);
@@ -102,6 +120,7 @@ public class InputField : Grid
         UpdateState(animate: false);
         border.StrokeThickness = 1;
     }
+
     protected virtual void UpdateState(bool animate = true)
     {
         if (border.StrokeDashArray == null || border.StrokeDashArray.Count == 0)
@@ -137,6 +156,14 @@ public class InputField : Grid
                 border.StrokeDashOffset = d;
             }, border.StrokeDashOffset, value, Easing.BounceIn), 2, 90);
         }
+    }
+
+    protected virtual void RegisterForEvents()
+    {
+        Content.Focused -= Content_Focused;
+        Content.Focused += Content_Focused;
+        Content.Unfocused -= Content_Unfocused;
+        Content.Unfocused += Content_Unfocused;
     }
 
     #region BindableProperties

@@ -14,51 +14,19 @@
             Padding="30,0"
             VerticalOptions="Center">
 
-            <controls:TextField x:Name="textField" Text="de" Title="Name" />
+            <controls:InputField Title="Pick a Time" HasValue="True">
+                <TimePicker BackgroundColor="Transparent"/>
+            </controls:InputField>
+
+            <controls:TextField x:Name="textField" Title="Name" />
+            
+            <controls:TextField Title="Name" Text="John Doe" />
+            
             <controls:TextField Title="Surname" />
             <controls:TextField Title="Age" />
             <controls:TextField Title="Much longer hint text" />
             <controls:TextField Title="Type your name" />
             <controls:TextField />
-
-            <Border WidthRequest="100"
-                    HeightRequest="100"
-                    Stroke="{AppThemeBinding Light=Blue, Dark=White}"
-                    StrokeThickness="4"
-                    StrokeDashArray="50"
-                    StrokeDashOffset="0"
-                    BackgroundColor="{AppThemeBinding Light=Orange, Dark=Pink}"
-                    StrokeShape="RoundRectangle 50">
-                <Border.Shadow>
-                    <Shadow Brush="red"
-                            Offset="10,1"
-                            Opacity=".8"/>
-                </Border.Shadow>
-                <Image
-                    Source="https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/baboon.jpg"
-                    HeightRequest="98"
-                    WidthRequest="98" />
-            </Border>
-
-
-            <Border WidthRequest="300"
-                    HeightRequest="100"
-                    Stroke="{AppThemeBinding Light=Blue, Dark=Black}"
-                    StrokeThickness="4"
-                    BackgroundColor="{AppThemeBinding Light=Orange, Dark=Pink}"
-                    StrokeShape="RoundRectangle 10">
-                <Border.Shadow>
-                    <Shadow Brush="red"
-                            Offset="10,1"
-                            Opacity=".8"/>
-                </Border.Shadow>
-
-                <Label
-                Text="Hello, World!"
-                SemanticProperties.HeadingLevel="Level1"
-                FontSize="32"
-                HorizontalOptions="Center" />
-            </Border>
 
             <!--<Image
 
@@ -84,6 +52,7 @@
             <Button
                 x:Name="CounterBtn" StyleClass="ElevatedButton"
                 Text="Click me"
+                Margin="50"
                 TextColor="{DynamicResource Error}"
                 SemanticProperties.Hint="Counts the number of times you click"
                 Clicked="OnCounterClicked"

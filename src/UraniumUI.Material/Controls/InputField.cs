@@ -21,9 +21,9 @@ public class InputField : Grid
         set
         {
             content = value;
-            if (border != null)
+            if (value != null)
             {
-                Content = value;
+                border.Content = value;
                 RegisterForEvents();
             }
         }
@@ -51,6 +51,18 @@ public class InputField : Grid
         }
     };
 
+    private bool hasValue;
+
+    public virtual bool HasValue
+    {
+        get => hasValue;
+        set
+        {
+            hasValue = value;
+            UpdateState();
+        }
+    }
+
     public InputField()
     {
         RegisterForEvents();
@@ -60,21 +72,6 @@ public class InputField : Grid
         labelTitle.Scale = 1;
 
         labelTitle.SetBinding(Label.TextProperty, new Binding(nameof(Title), source: this));
-    }
-
-    private void Content_Unfocused(object sender, FocusEventArgs e)
-    {
-        border.Stroke = BorderColor;
-        labelTitle.TextColor = TitleColor;
-
-        UpdateState();
-    }
-
-    private void Content_Focused(object sender, FocusEventArgs e)
-    {
-        border.Stroke = AccentColor;
-        labelTitle.TextColor = AccentColor;
-        UpdateState();
     }
 
     protected override async void OnSizeAllocated(double width, double height)
@@ -123,13 +120,14 @@ public class InputField : Grid
 
     protected virtual void UpdateState(bool animate = true)
     {
-        if (border.StrokeDashArray == null || border.StrokeDashArray.Count == 0)
+        if (border.StrokeDashArray == null || border.StrokeDashArray.Count == 0 || labelTitle.Width <= 0)
         {
             return;
         }
 
-        if (Content.IsFocused)
+        if (HasValue || Content.IsFocused)
         {
+            UpdateOffset(0.01, animate);
             labelTitle.TranslateTo(labelTitle.TranslationX, -25, 90, Easing.BounceOut);
             labelTitle.AnchorX = 0;
             labelTitle.ScaleTo(.8, 90);
@@ -137,6 +135,9 @@ public class InputField : Grid
         else
         {
             var offsetToGo = border.StrokeDashArray[0] + border.StrokeDashArray[1] + FirstDash;
+            UpdateOffset(offsetToGo, animate);
+
+            labelTitle.CancelAnimations();
             labelTitle.TranslateTo(labelTitle.TranslationX, 0, 90, Easing.BounceOut);
             labelTitle.AnchorX = 0;
             labelTitle.ScaleTo(1, 90);
@@ -160,10 +161,27 @@ public class InputField : Grid
 
     protected virtual void RegisterForEvents()
     {
-        Content.Focused -= Content_Focused;
-        Content.Focused += Content_Focused;
-        Content.Unfocused -= Content_Unfocused;
-        Content.Unfocused += Content_Unfocused;
+        if (Content != null)
+        {
+            Content.Focused -= Content_Focused;
+            Content.Focused += Content_Focused;
+            Content.Unfocused -= Content_Unfocused;
+            Content.Unfocused += Content_Unfocused;
+        }
+    }
+
+    private void Content_Unfocused(object sender, FocusEventArgs e)
+    {
+        border.Stroke = BorderColor;
+        labelTitle.TextColor = TitleColor;
+        UpdateState();
+    }
+
+    private void Content_Focused(object sender, FocusEventArgs e)
+    {
+        border.Stroke = AccentColor;
+        labelTitle.TextColor = AccentColor;
+        UpdateState();
     }
 
     #region BindableProperties
@@ -172,11 +190,11 @@ public class InputField : Grid
     public static readonly BindableProperty TitleProperty = BindableProperty.Create(
         nameof(Title),
         typeof(string),
-        typeof(TextField),
+        typeof(InputField),
         string.Empty,
         propertyChanged: (bindable, oldValue, newValue) =>
         {
-            var textField = (bindable as TextField);
+            var textField = (bindable as InputField);
             textField.labelTitle.Text = (string)newValue;
             textField.InitializeBorder();
         });
@@ -186,18 +204,18 @@ public class InputField : Grid
     public static readonly BindableProperty AccentColorProperty = BindableProperty.Create(
         nameof(AccentColor),
         typeof(Color),
-        typeof(TextField),
+        typeof(InputField),
         ColorResource.GetColor("Primary", "PrimaryDark", Colors.Purple),
-        propertyChanged: (bindable, oldValue, newValue) => (bindable as TextField).OnPropertyChanged(nameof(AccentColor)));
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as InputField).OnPropertyChanged(nameof(AccentColor)));
 
     public Color TitleColor { get => (Color)GetValue(TitleColorProperty); set => SetValue(TitleColorProperty, value); }
 
     public static readonly BindableProperty TitleColorProperty = BindableProperty.Create(
         nameof(TitleColor),
         typeof(Color),
-        typeof(TextField),
+        typeof(InputField),
         ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.Gray),
-        propertyChanged: (bindable, oldValue, newValue) => (bindable as TextField).labelTitle.TextColor = (Color)newValue
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as InputField).labelTitle.TextColor = (Color)newValue
         );
 
     public Color BorderColor { get => (Color)GetValue(BorderColorProperty); set => SetValue(BorderColorProperty, value); }
@@ -205,10 +223,8 @@ public class InputField : Grid
     public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(
         nameof(BorderColor),
         typeof(Color),
-        typeof(TextField),
+        typeof(InputField),
         ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.Gray),
-        propertyChanged: (bindable, oldValue, newValue) => (bindable as TextField).labelTitle.TextColor = (Color)newValue);
-
-
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as InputField).labelTitle.TextColor = (Color)newValue);
     #endregion
 }

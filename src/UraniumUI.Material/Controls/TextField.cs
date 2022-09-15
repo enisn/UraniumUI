@@ -1,6 +1,4 @@
-﻿using Microsoft.Maui.Controls.Shapes;
-using Plainer.Maui.Controls;
-using UraniumUI.Resources;
+﻿using Plainer.Maui.Controls;
 
 namespace UraniumUI.Material.Controls;
 public partial class TextField : InputField
@@ -14,32 +12,10 @@ public partial class TextField : InputField
         BackgroundColor = Colors.Transparent,
     };
 
+    public override bool HasValue { get => !string.IsNullOrEmpty(Text); }
+
     public TextField()
     {
         mainEntry.SetBinding(Entry.TextProperty, new Binding(nameof(Text), source: this));
-    }
-
-    protected override void UpdateState(bool animate = true)
-    {
-        if (border.StrokeDashArray == null || border.StrokeDashArray.Count == 0)
-        {
-            return;
-        }
-
-        if (!string.IsNullOrEmpty(Text) || mainEntry.IsFocused)
-        {
-            UpdateOffset(0.01, animate);
-            labelTitle.TranslateTo(labelTitle.TranslationX, -25, 90);
-            labelTitle.AnchorX = 0;
-            labelTitle.ScaleTo(.8, 90);
-        }
-        else
-        {
-            var offsetToGo = border.StrokeDashArray[0] + border.StrokeDashArray[1] + FirstDash;
-            UpdateOffset(offsetToGo, animate);
-            labelTitle.TranslateTo(labelTitle.TranslationX, 0, 90);
-            labelTitle.AnchorX = 0;
-            labelTitle.ScaleTo(1, 90);
-        }
     }
 }

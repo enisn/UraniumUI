@@ -10,6 +10,7 @@ public partial class TextField : InputField
     public override View Content { get; set; } = new EntryView
     {
         Margin = new Thickness(5,1),
+        BackgroundColor = Colors.Transparent,
     };
 
     public TextField()

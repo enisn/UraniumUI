@@ -12,7 +12,7 @@ namespace UraniumUI.Material.Controls;
 [ContentProperty(nameof(Content))]
 public class InputField : Grid
 {
-    internal const double FirstDash = 5;
+    internal const double FirstDash = 15;
     private View content;
     public virtual View Content
     {
@@ -41,7 +41,7 @@ public class InputField : Grid
     {
         Padding = 0,
         Stroke = ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.Gray),
-        StrokeThickness = 2,
+        StrokeThickness = 1,
         StrokeDashOffset = 0,
         BackgroundColor = Colors.Transparent,
         StrokeShape = new RoundRectangle
@@ -68,7 +68,8 @@ public class InputField : Grid
     private void InitializeBorder()
     {
         var perimeter = (this.Width + this.Height) * 2;
-        var space = (labelTitle.Width / 2) + 5;
+
+        var space = (labelTitle.Width);
 
 #if WINDOWS
         if (space <= 0 || perimeter <= 0)
@@ -99,7 +100,7 @@ public class InputField : Grid
 #endif
 
         UpdateState(animate: false);
-        border.StrokeThickness = 2;
+        border.StrokeThickness = 1;
     }
     protected virtual void UpdateState(bool animate = true)
     {

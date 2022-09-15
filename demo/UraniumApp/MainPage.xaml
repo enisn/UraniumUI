@@ -14,35 +14,6 @@
             Padding="30,0"
             VerticalOptions="Center">
 
-            <Label Text="{Binding Source={x:Reference sliderOffset}, Path=Value}" />
-            <Slider x:Name="sliderOffset" Minimum="-100" Maximum="500" ValueChanged="offsetChanged" />
-
-            <Grid>
-
-                <Border x:Name="border"
-                    Padding="0"
-                    Stroke="{AppThemeBinding Light=Blue, Dark=White}"
-                    StrokeThickness="2"
-                        IsVisible="False"
-                    BackgroundColor="Transparent"
-                    StrokeShape="RoundRectangle 10">
-
-
-                </Border>
-
-                <Border Stroke="{AppThemeBinding Light=Blue, Dark=White}"
-                        StrokeDashArray="5,16,3066" StrokeThickness="2" StrokeDashOffset="0" x:Name="borderInner"
-                        StrokeShape="RoundRectangle 10">
-
-                    <Grid>
-                        <Entry x:Name="entry" Focused="entry_Focused" Unfocused="entry_Unfocused" />
-
-                    </Grid>
-                </Border>
-                <Label x:Name="title" Margin="15" Text="This is placeholder" HorizontalOptions="Start" InputTransparent="True" ZIndex="999999" />
-            </Grid>
-
-
             <controls:TextField x:Name="textField" Text="de" Title="Name" />
             <controls:TextField Title="Surname" />
             <controls:TextField Title="Age" />

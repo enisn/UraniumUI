@@ -1,17 +1,13 @@
-﻿using Microsoft.Maui.Controls.Shapes;
-using Microsoft.Maui.Graphics.Text;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using InputKit.Shared.Abstraction;
+using Microsoft.Maui.Controls.Shapes;
+using System.ComponentModel.DataAnnotations;
+using UraniumUI.Pages;
 using UraniumUI.Resources;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace UraniumUI.Material.Controls;
 
 [ContentProperty(nameof(Content))]
-public class InputField : Grid
+public partial class InputField : Grid
 {
     internal const double FirstDash = 15;
     private View content;
@@ -51,6 +47,8 @@ public class InputField : Grid
         }
     };
 
+    protected Grid rootGrid = new Grid();
+
     private bool hasValue;
 
     public virtual bool HasValue
@@ -67,11 +65,13 @@ public class InputField : Grid
     {
         RegisterForEvents();
         this.Add(border);
-        border.Content = Content;
+
+        border.Content = rootGrid;
+        rootGrid.Add(Content);
         this.Add(labelTitle);
         labelTitle.Scale = 1;
-
         labelTitle.SetBinding(Label.TextProperty, new Binding(nameof(Title), source: this));
+        InitializeValidation();
     }
 
     protected override async void OnSizeAllocated(double width, double height)
@@ -80,6 +80,7 @@ public class InputField : Grid
         await Task.Delay(100);
         InitializeBorder();
     }
+
     private void InitializeBorder()
     {
         var perimeter = (this.Width + this.Height) * 2;
@@ -105,7 +106,7 @@ public class InputField : Grid
             {
                 CornerRadius = 8
             },
-            Content = this.Content
+            Content = rootGrid
         };
 #endif
         border.StrokeDashArray = new DoubleCollection { FirstDash, space, perimeter, 0 };
@@ -184,6 +185,11 @@ public class InputField : Grid
         UpdateState();
     }
 
+    public void DisplayValidation()
+    {
+        throw new NotImplementedException();
+    }
+
     #region BindableProperties
     public string Title { get => (string)GetValue(TitleProperty); set => SetValue(TitleProperty, value); }
 
@@ -218,7 +224,7 @@ public class InputField : Grid
         propertyChanged: (bindable, oldValue, newValue) => (bindable as InputField).labelTitle.TextColor = (Color)newValue
         );
 
-    public Color BorderColor { get => (Color)GetValue(BorderColorProperty); set => SetValue(BorderColorProperty, value); }
+    public Color BorderColor { get => (Color)GetValue(BorderColorProperty); set => SetValue(BorderColorProperty, value); } 
 
     public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(
         nameof(BorderColor),
@@ -226,5 +232,6 @@ public class InputField : Grid
         typeof(InputField),
         ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.Gray),
         propertyChanged: (bindable, oldValue, newValue) => (bindable as InputField).labelTitle.TextColor = (Color)newValue);
+
     #endregion
 }

@@ -2,6 +2,7 @@
 <uranium:UraniumContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:uranium="clr-namespace:UraniumUI.Pages;assembly=UraniumUI"
+             xmlns:validation="clr-namespace:UraniumUI.Validations;assembly=UraniumUI"
              xmlns:material="clr-namespace:UraniumUI.Material.Attachments;assembly=UraniumUI.Material"
              xmlns:controls="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
              xmlns:t="clr-namespace:UraniumUI.Theming;assembly=UraniumUI"
@@ -15,7 +16,12 @@
             VerticalOptions="Center">
 
             <controls:TextField Title="Name" Margin="0,25,0,0" />
-            <controls:TextField Title="Surname" />
+            <controls:TextField Title="Surname" >
+                <controls:TextField.Validations>
+                    <validation:RequiredValidation />
+                    <validation:MinLengthValidation MinLength="5" />
+                </controls:TextField.Validations>
+            </controls:TextField>
             <controls:TextField Title="Age" Keyboard="Numeric" />
 
             <!--<Image

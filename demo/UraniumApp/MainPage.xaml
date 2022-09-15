@@ -14,19 +14,9 @@
             Padding="30,0"
             VerticalOptions="Center">
 
-            <controls:InputField Title="Pick a Time" HasValue="True">
-                <TimePicker BackgroundColor="Transparent"/>
-            </controls:InputField>
-
-            <controls:TextField x:Name="textField" Title="Name" />
-            
-            <controls:TextField Title="Name" Text="John Doe" />
-            
+            <controls:TextField Title="Name" Margin="0,25,0,0" />
             <controls:TextField Title="Surname" />
-            <controls:TextField Title="Age" />
-            <controls:TextField Title="Much longer hint text" />
-            <controls:TextField Title="Type your name" />
-            <controls:TextField />
+            <controls:TextField Title="Age" Keyboard="Numeric" />
 
             <!--<Image
 
@@ -49,7 +39,7 @@
                 HorizontalOptions="Center" />-->
 
 
-            <Button
+            <!--<Button
                 x:Name="CounterBtn" StyleClass="ElevatedButton"
                 Text="Click me"
                 Margin="50"
@@ -57,7 +47,7 @@
                 SemanticProperties.Hint="Counts the number of times you click"
                 Clicked="OnCounterClicked"
                 HorizontalOptions="Center">
-            </Button>
+            </Button>-->
 
         </VerticalStackLayout>
     </ScrollView>

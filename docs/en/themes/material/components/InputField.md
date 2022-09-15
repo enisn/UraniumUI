@@ -4,6 +4,10 @@ InputField is an abstraction on MAUI Level for material inputs such as Entry, Ed
 
 ## Existing Controls
 
+- [TextField](TextField.md)
+- [PickerField](PickerField.md)
+- [DatePickerField](DatePickerField.md)
+- [TimePickerField](TimePickerField.md)
 
 ## Creating a Custom Control
 There are two ways to use InputField for custom controls. You can inherit from InputField or you can use it as a wrapper around your control.

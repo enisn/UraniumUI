@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:uranium="clr-namespace:UraniumUI.Pages;assembly=UraniumUI"
              xmlns:material="clr-namespace:UraniumUI.Material.Attachments;assembly=UraniumUI.Material"
+             xmlns:controls="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
              xmlns:t="clr-namespace:UraniumUI.Theming;assembly=UraniumUI"
              xmlns:u="clr-namespace:UraniumUI;assembly=UraniumUI"
              x:Class="UraniumApp.MainPage">
@@ -12,6 +13,10 @@
             Spacing="25"
             Padding="30,0"
             VerticalOptions="Center">
+
+            <controls:TextField Title="Name" Margin="0,25,0,0" />
+            <controls:TextField Title="Surname" />
+            <controls:TextField Title="Age" Keyboard="Numeric" />
 
             <!--<Image
 
@@ -34,14 +39,15 @@
                 HorizontalOptions="Center" />-->
 
 
-            <Button
+            <!--<Button
                 x:Name="CounterBtn" StyleClass="ElevatedButton"
                 Text="Click me"
+                Margin="50"
                 TextColor="{DynamicResource Error}"
                 SemanticProperties.Hint="Counts the number of times you click"
                 Clicked="OnCounterClicked"
                 HorizontalOptions="Center">
-            </Button>
+            </Button>-->
 
         </VerticalStackLayout>
     </ScrollView>

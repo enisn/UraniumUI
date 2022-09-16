@@ -47,11 +47,11 @@
         },
         {
           "text": "InputFields",
-          "path": "themes/material/InputField.md",
+          "path": "themes/material/components/InputField.md",
           "items": [
             {
               "text": "TextField",
-              "path": "themes/material/TextField.md"
+              "path": "themes/material/components/TextField.md"
             }
           ]
         },

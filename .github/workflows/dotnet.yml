@@ -19,11 +19,11 @@ jobs:
         dotnet-version: 6.0.x
 #    - name: Restore dependencies
 #      run: dotnet restore test/UraniumUI.Tests.sln
-    - name: maui-workload
-      run: dotnet workload install maui
-    - name: Restore Workload
-      run: dotnet workload restore test/UraniumUI.Tests.sln --framework net6.0
-    - name: Build
-      run: dotnet build test/UraniumUI.Tests.sln --framework net6.0
+#    - name: maui-workload
+#      run: dotnet workload install maui
+#    - name: Restore Workload
+#      run: dotnet workload restore test/UraniumUI.Tests.sln --framework net6.0
+#    - name: Build
+#      run: dotnet build test/UraniumUI.Tests.sln --framework net6.0
     - name: Test
       run: dotnet test test/UraniumUI.Tests.sln --framework net6.0

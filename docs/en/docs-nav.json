@@ -34,8 +34,8 @@
       "text": "Material Theme",
       "items": [
         {
-            "text" : "Colors & Styles",
-            "path" : "themes/material/ColorsAndStyles.md"
+          "text": "Colors & Styles",
+          "path": "themes/material/ColorsAndStyles.md"
         },
         {
           "text": "Elevation",
@@ -44,6 +44,16 @@
         {
           "text": "Buttons",
           "path": "themes/material/Buttons.md"
+        },
+        {
+          "text": "InputFields",
+          "path": "themes/material/components/InputField.md",
+          "items": [
+            {
+              "text": "TextField",
+              "path": "themes/material/components/TextField.md"
+            }
+          ]
         },
         {
           "text": "CheckBox",
@@ -67,11 +77,11 @@
         },
         {
           "text": "DataGrid",
-          "path" : "themes/material/components/DataGrid.md"
+          "path": "themes/material/components/DataGrid.md"
         },
         {
-            "text": "TabView",
-            "path" : "themes/material/components/TabView.md"
+          "text": "TabView",
+          "path": "themes/material/components/TabView.md"
         }
       ]
     }

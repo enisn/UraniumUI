@@ -17,7 +17,7 @@ public partial class DialogsPage : ContentPage
         var options = GenerateOptions(count);
 
         var result = await this.DisplayRadioButtonPromptAsync(
-            "Pick one of them below", 
+            "Pick one of them below",
             options,
             labelSelected.Text ?? options.FirstOrDefault());
 

@@ -49,12 +49,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
-    <PackageReference Include="UraniumUI.Material" Version="0.9.0" />
+    <PackageReference Include="UraniumUI.Material" Version="0.10.0" />
 		<!--#if (FontAwesome)-->
-    <PackageReference Include="UraniumUI.Icons.FontAwesome" Version="0.9.0" />
+    <PackageReference Include="UraniumUI.Icons.FontAwesome" Version="0.10.0" />
     <!--#endif-->
     <!--#if (MaterialIcons)-->
-    <PackageReference Include="UraniumUI.Icons.MaterialIcons" Version="0.9.0" />
+    <PackageReference Include="UraniumUI.Icons.MaterialIcons" Version="0.10.0" />
     <!--#endif-->
 	</ItemGroup>
 

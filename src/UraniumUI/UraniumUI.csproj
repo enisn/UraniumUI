@@ -21,7 +21,8 @@
 
 	<ItemGroup>
 	  <PackageReference Include="CommunityToolkit.Maui" Version="1.2.0" />
-	  <PackageReference Include="InputKit.Maui" Version="4.1.0-pre.2" />
+	  <PackageReference Include="InputKit.Maui" Version="4.1.2" />
+    <PackageReference Include="Plainer.Maui" Version="1.5.0" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -35,5 +36,4 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
-
 </Project>

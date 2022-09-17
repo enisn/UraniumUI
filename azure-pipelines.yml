@@ -12,7 +12,7 @@ pool:
 steps:
 - script: dotnet workload install maui
   displayName: 'Workload Install'
-- script: dotnet build --framework net6.0
+- script: dotnet build
   displayName: 'Build'
-- script: dotnet test --framework net6.0
+- script: dotnet test
   displayName: 'Test'

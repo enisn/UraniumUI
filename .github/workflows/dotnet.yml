@@ -1,4 +1,4 @@
-name: .NET
+name: .NET Build & Test
 
 on:
   push:
@@ -19,7 +19,9 @@ jobs:
         dotnet-version: 6.0.x
     - name: Restore dependencies
       run: dotnet restore
-    - name: maui-workload
-      run: ddotnet workload install maui
+#    - name: maui-workload
+#      run: ddotnet workload install maui
     - name: Build
-      run: dotnet build
+      run: dotnet build test/UraniumUI.Tests.sln
+    - name: Test
+      run: dotnet test test/UraniumUI.Tests.sln

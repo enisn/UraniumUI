@@ -104,6 +104,7 @@ public class TextField_Test
     {
         var control = AnimationReadyHandler.Prepare(new TextField());
         var viewModel = new TestViewModel();
+        viewModel.Keyboard = Keyboard.Email;
         control.BindingContext = viewModel;
 
         // Act
@@ -242,6 +243,7 @@ public class TextField_Test
         private Keyboard keyboard;
         private ClearButtonVisibility clearButtonVisibility;
         private double characterSpacing;
+        private object commandParameter = "My Command Parameter 1";
 
         public bool IsChecked { get => isChecked; set => SetProperty(ref isChecked, value); }
 
@@ -249,8 +251,7 @@ public class TextField_Test
 
         public ICommand Command { get => command; set => SetProperty(ref command, value); }
 
-        public object CommandParameter { get; set; } = "My Command Parameter 1";
-
+        public object CommandParameter { get => commandParameter; set => SetProperty(ref commandParameter, value); }
         public int SelectionLength { get => selectionLength; set => SetProperty(ref selectionLength, value); }
 
         public bool IsPassword { get => isPassword; set => SetProperty(ref isPassword, value); }

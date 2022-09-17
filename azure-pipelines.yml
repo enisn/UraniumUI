@@ -13,7 +13,7 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-- script: dotnet workload restore
+- script: dotnet workload install maui
   displayName: 'Workload Restore'
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'Build'

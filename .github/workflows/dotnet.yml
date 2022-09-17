@@ -23,9 +23,12 @@ jobs:
 #      run: dotnet workload install maui
 #    - name: Restore Workload
 #      run: dotnet workload restore test/UraniumUI.Tests.sln --framework net6.0
-    - name: Workload Tizen
-      run: dotnet workload install maui-tizen
-#    - name: Build
-#      run: dotnet build test/UraniumUI.Tests.sln --framework net6.0
+
+    - name: Build Source
+      run: dotnet build src/UraniumUI/UraniumUI.csproj --framework net6.0
+    - name: Build Material
+      run: dotnet build src/UraniumUI.Material/UraniumUI.Material.csproj --framework net6.0
+    - name: Build
+      run: dotnet build test/UraniumUI.Material.Tests/UraniumUI.Material.Tests.csproj --framework net6.0
     - name: Test
-      run: dotnet test test/UraniumUI.Tests.sln --framework net6.0
+      run: dotnet test test/UraniumUI.Material.Tests/UraniumUI.Material.Tests.csproj --framework net6.0

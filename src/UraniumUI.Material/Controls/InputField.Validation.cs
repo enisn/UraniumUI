@@ -72,7 +72,8 @@ public partial class InputField : IValidatable
     {
         foreach (var validation in Validations)
         {
-            var validated = validation.Validate(GetValueForValidator());
+            var value = GetValueForValidator();
+            var validated = validation.Validate(value);
             yield return new(validated, validation.Message);
         }
     }

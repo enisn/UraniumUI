@@ -11,6 +11,7 @@ public partial class TextField : InputField
     {
         Margin = new Thickness(5, 1),
         BackgroundColor = Colors.Transparent,
+        VerticalOptions = LayoutOptions.Center
     };
 
     public override bool HasValue { get => !string.IsNullOrEmpty(Text); }

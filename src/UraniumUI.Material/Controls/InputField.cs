@@ -1,8 +1,6 @@
-﻿using InputKit.Shared.Abstraction;
-using Microsoft.Maui.Controls.Shapes;
-using System.ComponentModel.DataAnnotations;
-using UraniumUI.Pages;
+﻿using Microsoft.Maui.Controls.Shapes;
 using UraniumUI.Resources;
+using UraniumUI.Extensions;
 
 namespace UraniumUI.Material.Controls;
 
@@ -49,6 +47,20 @@ public partial class InputField : Grid
 
     protected Grid rootGrid = new Grid();
 
+    protected Lazy<Image> imageIcon = new Lazy<Image>(() =>
+    {
+        return new Image
+        {
+            HorizontalOptions = LayoutOptions.Start,
+            VerticalOptions = LayoutOptions.Center,
+            WidthRequest = 20,
+            HeightRequest = 20,
+            Margin = new Thickness(10,0),
+        };
+    });
+
+    private Color LastFontimageColor;
+
     private bool hasValue;
 
     public virtual bool HasValue
@@ -64,11 +76,16 @@ public partial class InputField : Grid
     public InputField()
     {
         RegisterForEvents();
+
         this.Add(border);
+        this.Add(labelTitle);
 
         border.Content = rootGrid;
-        rootGrid.Add(Content);
-        this.Add(labelTitle);
+
+        rootGrid.AddColumnDefinition(new ColumnDefinition(GridLength.Auto));
+        rootGrid.AddColumnDefinition(new ColumnDefinition(GridLength.Star));
+        rootGrid.Add(Content, column: 1);
+
         labelTitle.Scale = 1;
         labelTitle.SetBinding(Label.TextProperty, new Binding(nameof(Title), source: this));
         InitializeValidation();
@@ -129,7 +146,7 @@ public partial class InputField : Grid
         if (HasValue || Content.IsFocused)
         {
             UpdateOffset(0.01, animate);
-            labelTitle.TranslateTo(labelTitle.TranslationX, -25, 90, Easing.BounceOut);
+            labelTitle.TranslateTo(0, -25, 90, Easing.BounceOut);
             labelTitle.AnchorX = 0;
             labelTitle.ScaleTo(.8, 90);
         }
@@ -139,7 +156,7 @@ public partial class InputField : Grid
             UpdateOffset(offsetToGo, animate);
 
             labelTitle.CancelAnimations();
-            labelTitle.TranslateTo(labelTitle.TranslationX, 0, 90, Easing.BounceOut);
+            labelTitle.TranslateTo(imageIcon.IsValueCreated ? imageIcon.Value.Width : 0, 0, 90, Easing.BounceOut);
             labelTitle.AnchorX = 0;
             labelTitle.ScaleTo(1, 90);
         }
@@ -176,6 +193,11 @@ public partial class InputField : Grid
         border.Stroke = BorderColor;
         labelTitle.TextColor = TitleColor;
         UpdateState();
+
+        if (Icon is FontImageSource fontImageSource)
+        {
+            fontImageSource.Color = LastFontimageColor;
+        }
     }
 
     private void Content_Focused(object sender, FocusEventArgs e)
@@ -183,11 +205,27 @@ public partial class InputField : Grid
         border.Stroke = AccentColor;
         labelTitle.TextColor = AccentColor;
         UpdateState();
+
+        if (Icon is FontImageSource fontImageSource && fontImageSource.Color != AccentColor)
+        {
+            LastFontimageColor = fontImageSource.Color?.WithAlpha(1); // To createnew instance.
+            fontImageSource.Color = AccentColor;
+        }
     }
 
-    public void DisplayValidation()
+    protected virtual void OnIconChanged()
     {
-        throw new NotImplementedException();
+        imageIcon.Value.Source = Icon;
+
+        if (Icon is FontImageSource font && font.Color.IsNullOrTransparent())
+        {
+            font.Color = ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.Gray);
+        }
+
+        if (!rootGrid.Contains(imageIcon.Value))
+        {
+            rootGrid.Add(imageIcon.Value, column: 0);
+        }
     }
 
     #region BindableProperties
@@ -224,7 +262,7 @@ public partial class InputField : Grid
         propertyChanged: (bindable, oldValue, newValue) => (bindable as InputField).labelTitle.TextColor = (Color)newValue
         );
 
-    public Color BorderColor { get => (Color)GetValue(BorderColorProperty); set => SetValue(BorderColorProperty, value); } 
+    public Color BorderColor { get => (Color)GetValue(BorderColorProperty); set => SetValue(BorderColorProperty, value); }
 
     public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(
         nameof(BorderColor),
@@ -233,5 +271,12 @@ public partial class InputField : Grid
         ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.Gray),
         propertyChanged: (bindable, oldValue, newValue) => (bindable as InputField).labelTitle.TextColor = (Color)newValue);
 
+    public ImageSource Icon { get => (ImageSource)GetValue(IconProperty); set => SetValue(IconProperty, value); }
+
+    public static readonly BindableProperty IconProperty = BindableProperty.Create(
+        nameof(Icon),
+        typeof(ImageSource),
+        typeof(InputField),
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as InputField).OnIconChanged());
     #endregion
 }

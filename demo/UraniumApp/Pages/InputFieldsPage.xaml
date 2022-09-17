@@ -2,13 +2,49 @@
 <ContentPage x:Class="UraniumApp.Pages.InputFieldsPage"
              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
+             xmlns:validation="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
+             xmlns:material="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
              xmlns:local="clr-namespace:UraniumApp.Pages">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to .NET MAUI!!!"
-                   HorizontalOptions="Center"
-                   TextColor="Purple"
-                   VerticalOptions="Center"/>
-        </StackLayout>
+        <ScrollView>
+            <VerticalStackLayout Padding="20">
+
+                <input:FormView Spacing="20">
+
+                    <material:TextField Title="E-mail" Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Email}}">
+                        <validation:RequiredValidation />
+                        <validation:RegexValidation Pattern="{x:Static input:AdvancedEntry.REGEX_EMAIL}" Message="Invalid email address" />
+                    </material:TextField>
+
+                    <material:TextField Title="Name" Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Person}}">
+                        <validation:LettersOnlyValidation AllowSpaces="True" />
+                        <validation:RequiredValidation />
+                        <validation:MinLengthValidation MinLength="5" />
+                    </material:TextField>
+
+                    <material:TextField Title="Surname" Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Tag}}" >
+                        <material:TextField.Validations>
+                            <validation:RequiredValidation />
+                            <validation:LettersOnlyValidation AllowSpaces="True" />
+                            <validation:MinLengthValidation MinLength="5" />
+                        </material:TextField.Validations>
+                    </material:TextField>
+                    <material:TextField Title="Age" Keyboard="Numeric" Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Calendar_month}}">
+                        <material:TextField.Validations>
+                            <validation:MinValueValidation MinValue="18" />
+                            <validation:DigitsOnlyValidation />
+                        </material:TextField.Validations>
+                    </material:TextField>
+
+                    <Button StyleClass="FilledButton"
+                            Text="Submit"
+                            input:FormView.IsSubmitButton="True"/>
+
+                </input:FormView>
+
+            </VerticalStackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

@@ -122,4 +122,12 @@ public partial class TextField
         typeof(bool),
         typeof(TextField),
         propertyChanged: (bindable, oldValue, newValue) => (bindable as TextField).EntryView.IsTextPredictionEnabled = (bool)newValue);
+
+    public int MaxLength { get => (int)GetValue(MaxLengthProperty); set => SetValue(MaxLengthProperty, value); }
+
+    public static readonly BindableProperty MaxLengthProperty = BindableProperty.Create(
+        nameof(MaxLength),
+        typeof(int),
+        typeof(TextField),
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as TextField).EntryView.MaxLength = (int)newValue);
 }

@@ -1,19 +1,22 @@
-﻿using Microsoft.Maui.Controls.Shapes;
+﻿using InputKit.Shared.Abstraction;
+using InputKit.Shared.Validations;
 using UraniumUI.Pages;
 using UraniumUI.Resources;
-using UraniumUI.Validations;
 using Path = Microsoft.Maui.Controls.Shapes.Path;
 
 namespace UraniumUI.Material.Controls;
-public partial class InputField
+
+public partial class InputField : IValidatable
 {
-    public IList<IValidation> Validations { get; } = new List<IValidation>();
+    public List<IValidation> Validations { get; } = new ();
+    public bool IsValid { get => ValidationResults().All(x => x.isValid); }
 
     protected Lazy<ContentView> iconValidation = new Lazy<ContentView>(() => new ContentView
     {
-        Padding = new Thickness(10,0),
         VerticalOptions = LayoutOptions.Center,
         HorizontalOptions = LayoutOptions.End,
+        HeightRequest = 25,
+        WidthRequest = 25,
         Content = new Path
         {
             Fill = ColorResource.GetColor("Error", "ErrorDark", Colors.Red),
@@ -28,20 +31,17 @@ public partial class InputField
     });
 
     protected bool lastValidationState = true;
+
     protected virtual void InitializeValidation()
     {
-        rootGrid.AddColumnDefinition(new ColumnDefinition(GridLength.Star));
-        rootGrid.AddColumnDefinition(new ColumnDefinition(GridLength.Auto));
-
         this.AddRowDefinition(new RowDefinition(GridLength.Auto));
         this.AddRowDefinition(new RowDefinition(GridLength.Auto));
-        // Keep for initialization.
     }
 
     protected virtual void CheckAndShowValidations()
     {
         var results = ValidationResults().ToArray();
-        var isValidationPassed = results.All(a => a.result);
+        var isValidationPassed = results.All(a => a.isValid);
 
         var isStateChanged = isValidationPassed != lastValidationState;
 
@@ -57,18 +57,18 @@ public partial class InputField
         }
         else
         {
-            var message = string.Join(",\n", results.Select(s => s.message));
+            var message = string.Join(",\n", results.Where(x => !x.isValid).Select(s => s.message));
             labelValidation.Value.Text = message;
 
             if (isStateChanged)
             {
-                rootGrid.Add(iconValidation.Value);
+                rootGrid.Add(iconValidation.Value, column: 1);
                 this.Add(labelValidation.Value, row: 1);
             }
         }
     }
 
-    protected IEnumerable<(bool result, string message)> ValidationResults()
+    protected IEnumerable<(bool isValid, string message)> ValidationResults()
     {
         foreach (var validation in Validations)
         {
@@ -80,5 +80,10 @@ public partial class InputField
     protected virtual object GetValueForValidator()
     {
         return new object();
+    }
+
+    public void DisplayValidation()
+    {
+        CheckAndShowValidations();
     }
 }

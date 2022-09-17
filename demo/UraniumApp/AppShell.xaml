@@ -75,6 +75,10 @@
             Title="RadioButton" 
             Icon="{FontImageSource FontFamily=MaterialOutlined, Glyph={x:Static m:MaterialOutlined.Radio_button_checked}, Color={StaticResource Primary}}"
             ContentTemplate="{DataTemplate pages:RadioButtonsPage}"/>
+        <ShellContent 
+            Title="InputField" 
+            Icon="{FontImageSource FontFamily=MaterialOutlined, Glyph={x:Static m:MaterialOutlined.Short_text}, Color={StaticResource Primary}}"
+            ContentTemplate="{DataTemplate pages:InputFieldsPage}"/>
     </FlyoutItem>
 
     <!--

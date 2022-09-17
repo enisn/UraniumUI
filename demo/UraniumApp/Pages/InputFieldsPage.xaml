@@ -24,13 +24,11 @@
                         <validation:MinLengthValidation MinLength="5" />
                     </material:TextField>
 
-                    <material:TextField Title="Surname" Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Tag}}" >
-                        <material:TextField.Validations>
-                            <validation:RequiredValidation />
-                            <validation:LettersOnlyValidation AllowSpaces="True" />
-                            <validation:MinLengthValidation MinLength="5" />
-                        </material:TextField.Validations>
-                    </material:TextField>
+                    <material:TimePickerField Title="Pick a time" Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Alarm}}">
+                        <validation:MinValueValidation MinValue="09:00" />
+                        <validation:MaxValueValidation MaxValue="12:00" />
+                    </material:TimePickerField>
+                    
                     <material:TextField Title="Age" Keyboard="Numeric" Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Calendar_month}}">
                         <material:TextField.Validations>
                             <validation:MinValueValidation MinValue="18" />

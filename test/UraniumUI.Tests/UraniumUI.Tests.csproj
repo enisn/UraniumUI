@@ -1,11 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+  <Import Project="..\..\maui.common.props" />
+  
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseMaui>true</UseMaui>
     <SingleProject>true</SingleProject>
-    <MauiVersion>6.0.486</MauiVersion>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 

@@ -80,7 +80,7 @@ public partial class TextField
     public static readonly BindableProperty ReturnCommandProperty = BindableProperty.Create(
         nameof(ReturnCommand),
         typeof(ICommand),
-        typeof(TextField),
+        typeof(TextField),defaultBindingMode: BindingMode.TwoWay,
         propertyChanged: (bindable, oldValue, newValue) => (bindable as TextField).OnPropertyChanged(nameof(ReturnCommand)));
 
     public double CharacterSpacing { get => (double)GetValue(CharacterSpacingProperty); set => SetValue(CharacterSpacingProperty, value); }

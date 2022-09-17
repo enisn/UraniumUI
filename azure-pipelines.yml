@@ -9,13 +9,10 @@ trigger:
 pool:
   vmImage: windows-latest
 
-variables:
-  buildConfiguration: 'Release'
-
 steps:
 - script: dotnet workload install maui
-  displayName: 'Workload Restore'
-- script: dotnet build --configuration $(buildConfiguration)
+  displayName: 'Workload Install'
+- script: dotnet build --framework net6.0
   displayName: 'Build'
-- script: dotnet test
+- script: dotnet test --framework net6.0
   displayName: 'Test'

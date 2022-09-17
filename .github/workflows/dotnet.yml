@@ -21,6 +21,8 @@ jobs:
 #      run: dotnet restore test/UraniumUI.Tests.sln
 #    - name: maui-workload
 #      run: ddotnet workload install maui
+    - name: Restore Workload
+      run: dotnet workload restore test/UraniumUI.Tests.sln
     - name: Build
       run: dotnet build test/UraniumUI.Tests.sln
     - name: Test

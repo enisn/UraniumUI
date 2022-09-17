@@ -22,6 +22,6 @@ jobs:
 #    - name: maui-workload
 #      run: ddotnet workload install maui
     - name: Build
-      run: dotnet build test/UraniumUI.Tests.sln
+      run: dotnet build test/UraniumUI.Tests.sln --framework net6.0
     - name: Test
-      run: dotnet test test/UraniumUI.Tests.sln
+      run: dotnet test test/UraniumUI.Tests.sln --framework net6.0

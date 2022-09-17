@@ -1,14 +1,9 @@
-﻿using CommunityToolkit.Maui.Views;
-using Microsoft.Maui.Animations;
-using UraniumUI.Extensions;
-using UraniumUI.Pages;
+﻿using UraniumUI.Pages;
 
 namespace UraniumApp;
 
 public partial class MainPage : UraniumContentPage
 {
-    int count = 0;
-
     public MainPage()
     {
         InitializeComponent();

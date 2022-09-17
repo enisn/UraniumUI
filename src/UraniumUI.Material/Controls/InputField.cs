@@ -1,17 +1,11 @@
 ﻿using Microsoft.Maui.Controls.Shapes;
-using Microsoft.Maui.Graphics.Text;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UraniumUI.Resources;
-using static System.Net.Mime.MediaTypeNames;
+using UraniumUI.Extensions;
 
 namespace UraniumUI.Material.Controls;
 
 [ContentProperty(nameof(Content))]
-public class InputField : Grid
+public partial class InputField : Grid
 {
     internal const double FirstDash = 15;
     private View content;
@@ -51,6 +45,22 @@ public class InputField : Grid
         }
     };
 
+    protected Grid rootGrid = new Grid();
+
+    protected Lazy<Image> imageIcon = new Lazy<Image>(() =>
+    {
+        return new Image
+        {
+            HorizontalOptions = LayoutOptions.Start,
+            VerticalOptions = LayoutOptions.Center,
+            WidthRequest = 20,
+            HeightRequest = 20,
+            Margin = new Thickness(10,0),
+        };
+    });
+
+    private Color LastFontimageColor;
+
     private bool hasValue;
 
     public virtual bool HasValue
@@ -66,12 +76,19 @@ public class InputField : Grid
     public InputField()
     {
         RegisterForEvents();
-        this.Add(border);
-        border.Content = Content;
-        this.Add(labelTitle);
-        labelTitle.Scale = 1;
 
+        this.Add(border);
+        this.Add(labelTitle);
+
+        border.Content = rootGrid;
+
+        rootGrid.AddColumnDefinition(new ColumnDefinition(GridLength.Auto));
+        rootGrid.AddColumnDefinition(new ColumnDefinition(GridLength.Star));
+        rootGrid.Add(Content, column: 1);
+
+        labelTitle.Scale = 1;
         labelTitle.SetBinding(Label.TextProperty, new Binding(nameof(Title), source: this));
+        InitializeValidation();
     }
 
     protected override async void OnSizeAllocated(double width, double height)
@@ -80,6 +97,7 @@ public class InputField : Grid
         await Task.Delay(100);
         InitializeBorder();
     }
+
     private void InitializeBorder()
     {
         var perimeter = (this.Width + this.Height) * 2;
@@ -105,7 +123,7 @@ public class InputField : Grid
             {
                 CornerRadius = 8
             },
-            Content = this.Content
+            Content = rootGrid
         };
 #endif
         border.StrokeDashArray = new DoubleCollection { FirstDash, space, perimeter, 0 };
@@ -128,7 +146,7 @@ public class InputField : Grid
         if (HasValue || Content.IsFocused)
         {
             UpdateOffset(0.01, animate);
-            labelTitle.TranslateTo(labelTitle.TranslationX, -25, 90, Easing.BounceOut);
+            labelTitle.TranslateTo(0, -25, 90, Easing.BounceOut);
             labelTitle.AnchorX = 0;
             labelTitle.ScaleTo(.8, 90);
         }
@@ -138,7 +156,7 @@ public class InputField : Grid
             UpdateOffset(offsetToGo, animate);
 
             labelTitle.CancelAnimations();
-            labelTitle.TranslateTo(labelTitle.TranslationX, 0, 90, Easing.BounceOut);
+            labelTitle.TranslateTo(imageIcon.IsValueCreated ? imageIcon.Value.Width : 0, 0, 90, Easing.BounceOut);
             labelTitle.AnchorX = 0;
             labelTitle.ScaleTo(1, 90);
         }
@@ -175,6 +193,11 @@ public class InputField : Grid
         border.Stroke = BorderColor;
         labelTitle.TextColor = TitleColor;
         UpdateState();
+
+        if (Icon is FontImageSource fontImageSource)
+        {
+            fontImageSource.Color = LastFontimageColor;
+        }
     }
 
     private void Content_Focused(object sender, FocusEventArgs e)
@@ -182,6 +205,27 @@ public class InputField : Grid
         border.Stroke = AccentColor;
         labelTitle.TextColor = AccentColor;
         UpdateState();
+
+        if (Icon is FontImageSource fontImageSource && fontImageSource.Color != AccentColor)
+        {
+            LastFontimageColor = fontImageSource.Color?.WithAlpha(1); // To createnew instance.
+            fontImageSource.Color = AccentColor;
+        }
+    }
+
+    protected virtual void OnIconChanged()
+    {
+        imageIcon.Value.Source = Icon;
+
+        if (Icon is FontImageSource font && font.Color.IsNullOrTransparent())
+        {
+            font.Color = ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.Gray);
+        }
+
+        if (!rootGrid.Contains(imageIcon.Value))
+        {
+            rootGrid.Add(imageIcon.Value, column: 0);
+        }
     }
 
     #region BindableProperties
@@ -226,5 +270,13 @@ public class InputField : Grid
         typeof(InputField),
         ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.Gray),
         propertyChanged: (bindable, oldValue, newValue) => (bindable as InputField).labelTitle.TextColor = (Color)newValue);
+
+    public ImageSource Icon { get => (ImageSource)GetValue(IconProperty); set => SetValue(IconProperty, value); }
+
+    public static readonly BindableProperty IconProperty = BindableProperty.Create(
+        nameof(Icon),
+        typeof(ImageSource),
+        typeof(InputField),
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as InputField).OnIconChanged());
     #endregion
 }

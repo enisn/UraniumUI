@@ -69,7 +69,7 @@ public class TimePickerField : InputField
         nameof(CharacterSpacing), typeof(double), typeof(TimePickerField), TimePicker.CharacterSpacingProperty.DefaultValue,
         propertyChanged: (bindable, oldValue, newValue) => (bindable as TimePickerField).TimePickerView.CharacterSpacing = (double)newValue);
 
-    public FontAttributes FontAttributes { get; set; }
+    public FontAttributes FontAttributes { get => (FontAttributes)GetValue(FontAttributesProperty); set => SetValue(FontAttributesProperty, value); }
 
     public static readonly BindableProperty FontAttributesProperty = BindableProperty.Create(
         nameof(FontAttributes), typeof(FontAttributes), typeof(TimePickerField), TimePicker.FontAttributesProperty.DefaultValue,

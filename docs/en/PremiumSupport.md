@@ -18,4 +18,4 @@ Premium support is a speaicl 1:1 meeting that you can book with the author of Ur
 <button class="btn btn-outline-light book-now">Book a Session</button>
 </center>
 
-<link rel="stylesheet" type="text/css" href="https://widgets.superpeer.com/widget.css"><script src="https://widgets.superpeer.com/widget.js"></script><script>window.addEventListener("load", () => {new Superpeer.Widget({embed:{type:"popup"},launcher:{type:"custom",options:{selector:".book-now"}},config:{username:"enisn",serviceSlug:"11-live-support"}})})</script>
+<link rel="stylesheet" type="text/css" href="https://widgets.superpeer.com/widget.css"><script src="https://widgets.superpeer.com/widget.js"></script><script>window.addEventListener("load", () => {new Superpeer.Widget({embed:{type:"popup"},launcher:{type:"custom",options:{selector:".book-now"}},config:{username:"enisn",serviceSlug:"UraniumUI-Support"}})})</script>

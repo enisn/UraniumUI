@@ -41,7 +41,7 @@ public class TimePickerField : InputField
         }
         else
         {
-            TimePickerView.Margin = 0;
+            TimePickerView.Margin = new Thickness(5, 1); 
         }
     }
 

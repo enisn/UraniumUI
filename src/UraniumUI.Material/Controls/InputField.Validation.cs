@@ -15,7 +15,7 @@ public partial class InputField : IValidatable
     {
         VerticalOptions = LayoutOptions.Center,
         HorizontalOptions = LayoutOptions.End,
-        WidthRequest = 30,
+        Padding = new Thickness(5,0),
         Content = new Path
         {
             Fill = ColorResource.GetColor("Error", "ErrorDark", Colors.Red),

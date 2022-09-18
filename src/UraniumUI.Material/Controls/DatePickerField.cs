@@ -9,6 +9,8 @@ using UraniumUI.Pages;
 using Path = Microsoft.Maui.Controls.Shapes.Path;
 
 namespace UraniumUI.Material.Controls;
+
+[ContentProperty(nameof(Validations))]
 public class DatePickerField : InputField
 {
     public DatePickerView DatePickerView => Content as DatePickerView;
@@ -23,12 +25,12 @@ public class DatePickerField : InputField
     {
         VerticalOptions = LayoutOptions.Center,
         HorizontalOptions = LayoutOptions.End,
-        WidthRequest = 30,
         IsVisible = false,
+        Padding = 10,
         Content = new Path
         {
             Data = UraniumShapes.X,
-            Fill = ColorResource.GetColor("Surface", "SurfaceDark", Colors.LightGray),
+            Fill = ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.DarkGray).WithAlpha(.5f),
         }
     };
 
@@ -47,7 +49,7 @@ public class DatePickerField : InputField
 
     protected override object GetValueForValidator()
     {
-        return DatePickerView.Date;
+        return Date;
     }
     protected void OnClearTapped(object sender, EventArgs e)
     {
@@ -62,6 +64,20 @@ public class DatePickerField : InputField
         iconClear.IsVisible = Date != null;
 
         UpdateState();
+    }
+
+    protected override void OnIconChanged()
+    {
+        base.OnIconChanged();
+
+        if (Icon == null)
+        {
+            DatePickerView.Margin = new Thickness(10, 0);
+        }
+        else
+        {
+            DatePickerView.Margin = new Thickness(5, 1);
+        }
     }
 
     public DateTime? Date { get => (DateTime?)GetValue(DateProperty); set => SetValue(DateProperty, value); }

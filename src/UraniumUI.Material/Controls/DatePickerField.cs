@@ -34,7 +34,7 @@ public class DatePickerField : InputField
         }
     };
 
-    public override bool HasValue => Date != null; // DateTime cannot be null
+    public override bool HasValue => Date != null;
 
     public DatePickerField()
     {
@@ -75,7 +75,6 @@ public class DatePickerField : InputField
     {
         OnPropertyChanged(nameof(Date));
         CheckAndShowValidations();
-        DatePickerView.Opacity = Date == null ? 0 : 1;
 
 #if IOS || MACCATALYST
         DatePickerView.Opacity = Date == null ? 0.1 : 1;
@@ -127,19 +126,19 @@ public class DatePickerField : InputField
     public string Format { get => (string)GetValue(FormatProperty); set => SetValue(FormatProperty, value); }
 
     public static readonly BindableProperty FormatProperty = BindableProperty.Create(
-            nameof(Format), typeof(string), typeof(DatePickerField), TimePicker.FormatProperty.DefaultValue,
+            nameof(Format), typeof(string), typeof(DatePickerField), DatePicker.FormatProperty.DefaultValue,
             propertyChanged: (bindable, oldValue, newValue) => (bindable as DatePickerField).DatePickerView.Format = (string)newValue);
 
     public Color TextColor { get => (Color)GetValue(TextColorProperty); set => SetValue(TextColorProperty, value); }
 
     public static readonly BindableProperty TextColorProperty = BindableProperty.Create(
-        nameof(TextColor), typeof(Color), typeof(DatePickerField), TimePicker.TextColorProperty.DefaultValue,
+        nameof(TextColor), typeof(Color), typeof(DatePickerField), DatePicker.TextColorProperty.DefaultValue,
         propertyChanged: (bindable, oldValue, newValue) => (bindable as DatePickerField).DatePickerView.TextColor = (Color)newValue);
 
     public double CharacterSpacing { get => (double)GetValue(CharacterSpacingProperty); set => SetValue(CharacterSpacingProperty, value); }
 
     public static readonly BindableProperty CharacterSpacingProperty = BindableProperty.Create(
-        nameof(CharacterSpacing), typeof(double), typeof(DatePickerField), TimePicker.CharacterSpacingProperty.DefaultValue,
+        nameof(CharacterSpacing), typeof(double), typeof(DatePickerField), DatePicker.CharacterSpacingProperty.DefaultValue,
         propertyChanged: (bindable, oldValue, newValue) => (bindable as DatePickerField).DatePickerView.CharacterSpacing = (double)newValue);
 
     public FontAttributes FontAttributes { get => (FontAttributes)GetValue(FontAttributesProperty); set => SetValue(FontAttributesProperty, value); }

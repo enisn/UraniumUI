@@ -3,9 +3,9 @@ using UraniumUI.Material.Controls;
 using UraniumUI.Tests.Core;
 
 namespace UraniumUI.Material.Tests.Controls;
-public class DateField_Test
+public class DatePickerField_Test
 {
-    public DateField_Test()
+    public DatePickerField_Test()
     {
         ApplicationExtensions.CreateAndSetMockApplication();
     }

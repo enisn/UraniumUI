@@ -1,24 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using UraniumUI;
-using static MyCompany.MyProject.TodoItem;
 
 namespace MyCompany.MyProject;
 public class MainPageViewModel : BindableObject
 {
     public ObservableCollection<TodoItem> Items { get; protected set; } = new ObservableCollection<TodoItem>();
+
     public ObservableCollection<TodoItem> SelectedItems { get; set; } = new ObservableCollection<TodoItem>();
 
     private TodoItem newItem = new();
     public TodoItem NewItem { get => newItem; set { newItem = value; OnPropertyChanged(); } }
-    public TodoItemFilter Filter { get; protected set; } = new();
+
     public ICommand AddNewItemCommand { get; protected set; }
+
     public ICommand RemoveSelectedItemsCommand { get; protected set; }
+
     public MainPageViewModel()
     {
         if (Items.Count == 0)
@@ -45,12 +42,6 @@ public class MainPageViewModel : BindableObject
             }
         });
     }
-}
-
-public class TodoItemFilter
-{
-    public string Content { get; set; }
-    public bool? IsDone { get; set; }
 }
 
 public class TodoItem : UraniumBindableObject

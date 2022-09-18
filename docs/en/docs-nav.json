@@ -52,6 +52,18 @@
             {
               "text": "TextField",
               "path": "themes/material/components/TextField.md"
+            },
+            {
+              "text": "PickerField",
+              "path": "themes/material/components/PickerField.md"
+            },
+            {
+              "text": "TimePickerField",
+              "path": "themes/material/components/TimePickerField.md"
+            },
+            {
+              "text": "DatePickerField",
+              "path": "themes/material/components/DatePickerField.md"
             }
           ]
         },
@@ -84,6 +96,16 @@
           "path": "themes/material/components/TabView.md"
         }
       ]
+    },
+    {
+        "text": "Support",
+        "path": "Support.md",
+        "items":[
+            {
+                "text": "Premium Support",
+                "path": "PremiumSupport.md"
+            }
+        ]
     }
   ]
 }

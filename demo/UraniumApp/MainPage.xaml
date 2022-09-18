@@ -1,21 +1,36 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <uranium:UraniumContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
              xmlns:uranium="clr-namespace:UraniumUI.Pages;assembly=UraniumUI"
              xmlns:validation="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
              xmlns:material="clr-namespace:UraniumUI.Material.Attachments;assembly=UraniumUI.Material"
              xmlns:controls="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
+             xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
              xmlns:t="clr-namespace:UraniumUI.Theming;assembly=UraniumUI"
              xmlns:u="clr-namespace:UraniumUI;assembly=UraniumUI"
+                            xmlns:plain="clr-namespace:Plainer.Maui.Controls;assembly=Plainer.Maui"
              x:Class="UraniumApp.MainPage">
 
     <ScrollView>
         <VerticalStackLayout
             Spacing="25"
-            Padding="30,0"
+            Padding="30"
             VerticalOptions="Center">
 
-       
+            <input:FormView Spacing="20">
+                
+                <controls:PickerField Title="Pick an option" Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Expand_circle_down}}">
+                    <controls:PickerField.Items>
+                        <x:String>Option 1</x:String>
+                        <x:String>Option 2</x:String>
+                        <x:String>Option 3</x:String>
+                        <x:String>Option 4</x:String>
+                    </controls:PickerField.Items>
+
+                    <validation:RequiredValidation />
+                </controls:PickerField>
+            </input:FormView>
 
             <!--<Image
 

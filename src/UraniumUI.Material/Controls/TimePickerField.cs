@@ -1,5 +1,8 @@
 ﻿using Plainer.Maui.Controls;
 using System.ComponentModel;
+using UraniumUI.Pages;
+using UraniumUI.Resources;
+using Path = Microsoft.Maui.Controls.Shapes.Path;
 
 namespace UraniumUI.Material.Controls;
 
@@ -13,16 +16,40 @@ public class TimePickerField : InputField
         Margin = new Thickness(10, 0)
     };
 
+    protected ContentView iconClear = new ContentView
+    {
+        VerticalOptions = LayoutOptions.Center,
+        HorizontalOptions = LayoutOptions.End,
+        IsVisible = false,
+        Padding = 10,
+        Content = new Path
+        {
+            Data = UraniumShapes.X,
+            Fill = ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.DarkGray).WithAlpha(.5f),
+        }
+    };
+
     public override bool HasValue => true; // TimeSpan cannot be null
 
     public TimePickerField()
     {
+        var clearGestureRecognizer = new TapGestureRecognizer();
+        clearGestureRecognizer.Tapped += OnClearTapped;
+        iconClear.GestureRecognizers.Add(clearGestureRecognizer);
+
+        endIconsContainer.Add(iconClear);
+
         TimePickerView.SetBinding(TimePicker.TimeProperty, new Binding(nameof(Time), source: this));
     }
 
     protected override object GetValueForValidator()
     {
-        return TimePickerView.Time;
+        return Time;
+    }
+
+    protected void OnClearTapped(object sender, EventArgs e)
+    {
+        Time = null;
     }
 
     protected virtual void OnTimeChanged()
@@ -41,14 +68,14 @@ public class TimePickerField : InputField
         }
         else
         {
-            TimePickerView.Margin = new Thickness(5, 1); 
+            TimePickerView.Margin = new Thickness(5, 1);
         }
     }
 
-    public TimeSpan Time { get => (TimeSpan)GetValue(TimeProperty); set => SetValue(TimeProperty, value); }
+    public TimeSpan? Time { get => (TimeSpan?)GetValue(TimeProperty); set => SetValue(TimeProperty, value); }
 
     public static readonly BindableProperty TimeProperty =
-        BindableProperty.Create(nameof(Time), typeof(TimeSpan), typeof(TimePickerField), TimePicker.TimeProperty.DefaultValue, defaultBindingMode: BindingMode.TwoWay,
+        BindableProperty.Create(nameof(Time), typeof(TimeSpan?), typeof(TimePickerField), null, defaultBindingMode: BindingMode.TwoWay,
             propertyChanged: (bindable, oldValue, newValue) => (bindable as TimePickerField).OnTimeChanged());
 
     public string Format { get => (string)GetValue(FormatProperty); set => SetValue(FormatProperty, value); }

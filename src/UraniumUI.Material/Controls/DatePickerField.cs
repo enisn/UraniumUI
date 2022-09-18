@@ -1,11 +1,6 @@
 ﻿using Plainer.Maui.Controls;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UraniumUI.Resources;
 using UraniumUI.Pages;
+using UraniumUI.Resources;
 using Path = Microsoft.Maui.Controls.Shapes.Path;
 
 namespace UraniumUI.Material.Controls;
@@ -51,6 +46,7 @@ public class DatePickerField : InputField
     {
         return Date;
     }
+
     protected void OnClearTapped(object sender, EventArgs e)
     {
         Date = null;

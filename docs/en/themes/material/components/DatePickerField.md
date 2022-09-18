@@ -19,7 +19,7 @@ Then you can use it like this:
 
 | Light | Dark |
 | --- | --- |
-| ![MAUI Material Design TimePicker](images/DatePickerField-demo-light-android.gif) | ![MAUI Material Design TimePicker](images/DatePickerField-demo-dark-ios.gif) |
+| ![MAUI Material Design TimePicker](images/datepickerfield-demo-light-android.gif) | ![MAUI Material Design TimePicker](images/datepickerfield-demo-dark-ios.gif) |
 
 
 ## Icon

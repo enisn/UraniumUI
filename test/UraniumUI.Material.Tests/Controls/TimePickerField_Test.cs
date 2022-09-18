@@ -183,7 +183,7 @@ public class TimePickerField_Test
 
     public class TestViewModel : UraniumBindableObject
     {
-        private TimeSpan time;
+        private TimeSpan? time;
         private string format;
         private Color textColor;
         private double characterSpacing;
@@ -191,7 +191,7 @@ public class TimePickerField_Test
         private string fontFamily;
         private double fontSize;
 
-        public TimeSpan Time { get => time; set => SetProperty(ref time, value); }
+        public TimeSpan? Time { get => time; set => SetProperty(ref time, value); }
 
         public string Format { get => format; set => SetProperty(ref format, value); }
 

@@ -7,7 +7,7 @@ namespace UraniumUI.Material.Controls;
 [ContentProperty(nameof(Content))]
 public partial class InputField : Grid
 {
-    internal const double FirstDash = 15;
+    internal const double FirstDash = 6;
     private View content;
     public virtual View Content
     {
@@ -39,10 +39,6 @@ public partial class InputField : Grid
         StrokeThickness = 1,
         StrokeDashOffset = 0,
         BackgroundColor = Colors.Transparent,
-        StrokeShape = new RoundRectangle
-        {
-            CornerRadius = 8
-        }
     };
 
     protected Grid rootGrid = new Grid();
@@ -75,6 +71,11 @@ public partial class InputField : Grid
 
     public InputField()
     {
+        border.StrokeShape = new RoundRectangle
+        {
+            CornerRadius = this.CornerRadius
+        };
+
         RegisterForEvents();
 
         this.Add(border);
@@ -88,6 +89,7 @@ public partial class InputField : Grid
 
         labelTitle.Scale = 1;
         labelTitle.SetBinding(Label.TextProperty, new Binding(nameof(Title), source: this));
+
         InitializeValidation();
     }
 
@@ -121,12 +123,13 @@ public partial class InputField : Grid
             BackgroundColor = Colors.Transparent,
             StrokeShape = new RoundRectangle
             {
-                CornerRadius = 8
+                CornerRadius = CornerRadius
             },
             Content = rootGrid
         };
 #endif
-        border.StrokeDashArray = new DoubleCollection { FirstDash, space, perimeter, 0 };
+
+        border.StrokeDashArray = new DoubleCollection { FirstDash + CornerRadius.Clamp(FirstDash, double.MaxValue) * 0.9 , space, perimeter, 0 };
 
 #if WINDOWS
         this.Add(border);
@@ -227,6 +230,13 @@ public partial class InputField : Grid
             rootGrid.Add(imageIcon.Value, column: 0);
         }
     }
+    protected virtual void OnCornerRadiusChanged()
+    {
+        if (border.StrokeShape is RoundRectangle roundRectangle)
+        {
+            roundRectangle.CornerRadius = CornerRadius;
+        }
+    }
 
     #region BindableProperties
     public string Title { get => (string)GetValue(TitleProperty); set => SetValue(TitleProperty, value); }
@@ -278,5 +288,14 @@ public partial class InputField : Grid
         typeof(ImageSource),
         typeof(InputField),
         propertyChanged: (bindable, oldValue, newValue) => (bindable as InputField).OnIconChanged());
+
+    public double CornerRadius { get => (double)GetValue(CornerRadiusProperty); set => SetValue(CornerRadiusProperty, value); }
+
+    public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create(
+        nameof(CornerRadius),
+        typeof(double),
+        typeof(InputField),
+        defaultValue: 20.0,
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as InputField).OnCornerRadiusChanged());
     #endregion
 }

@@ -46,7 +46,7 @@ DatePickerField supports validation rules such as `MinValueValidation` and `MaxV
 
 | Light | Dark |
 | --- | --- |
-| ![MAUI Material Input](images/DatePickerField-validation-light-android.gif) | ![MAUI Material Input](images/datepickerfield-validation-dark-ios.gif) |
+| ![MAUI Material Input](images/datepickerfield-validation-light-android.gif) | ![MAUI Material Input](images/datepickerfield-validation-dark-ios.gif) |
 
 
 ### FormView Compatibility

@@ -88,6 +88,16 @@
           "path": "themes/material/components/TabView.md"
         }
       ]
+    },
+    {
+        "text": "Support",
+        "path": "Support.md",
+        "items":[
+            {
+                "text": "Premium Support",
+                "path": "PremiumSupport.md"
+            }
+        ]
     }
   ]
 }

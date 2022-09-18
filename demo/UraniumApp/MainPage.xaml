@@ -24,7 +24,10 @@
                     <validation:MaxValueValidation MaxValue="12:00" />
                 </controls:TimePickerField>-->
 
-                <controls:DatePickerField Title="Pick a Date" Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Calendar_month}}"  />
+                <controls:DatePickerField Title="Pick a Date" Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Calendar_month}}">
+                    <validation:MinValueValidation MinValue="9/18/2022" />
+                    <validation:MaxValueValidation MaxValue="12/31/2022" />
+                </controls:DatePickerField>
 
                 <!--<Button StyleClass="TextButton"
                     Text="Submit"

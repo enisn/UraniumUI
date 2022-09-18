@@ -295,7 +295,7 @@ public partial class InputField : Grid
         nameof(CornerRadius),
         typeof(double),
         typeof(InputField),
-        defaultValue: 20.0,
+        defaultValue: 8.0,
         propertyChanged: (bindable, oldValue, newValue) => (bindable as InputField).OnCornerRadiusChanged());
     #endregion
 }

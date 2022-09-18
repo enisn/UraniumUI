@@ -14,7 +14,11 @@ public class TimePickerField : InputField
     {
         VerticalOptions = LayoutOptions.Center,
         Margin = new Thickness(10, 0),
+#if IOS || MACCATALYST
+        Opacity = 0.10,
+#else
         Opacity = 0,
+#endif
     };
 
     protected ContentView iconClear = new ContentView
@@ -40,6 +44,19 @@ public class TimePickerField : InputField
 
         endIconsContainer.Add(iconClear);
 
+#if MACCATALYST
+        labelTitle.InputTransparent = false;
+        labelTitle.GestureRecognizers.Add(new TapGestureRecognizer
+        {
+            Command = new Command(() =>
+            {
+                if (!HasValue)
+                {
+                    Time = (TimeSpan)TimePicker.TimeProperty.DefaultValue;
+                }
+            })
+        });
+#endif
         TimePickerView.SetBinding(TimePicker.TimeProperty, new Binding(nameof(Time), source: this));
     }
 
@@ -57,7 +74,11 @@ public class TimePickerField : InputField
     {
         OnPropertyChanged(nameof(Time));
         CheckAndShowValidations();
+#if IOS || MACCATALYST
+        TimePickerView.Opacity = Time == null ?  0.1 : 1;
+#else
         TimePickerView.Opacity = Time == null ? 0 : 1;
+#endif
         iconClear.IsVisible = Time != null;
 
         UpdateState();

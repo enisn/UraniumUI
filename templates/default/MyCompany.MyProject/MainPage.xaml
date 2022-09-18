@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <!--#if (FontAwesome)-->
-<uranium:UraniumContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<!--<uranium:UraniumContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:uranium="clr-namespace:UraniumUI.Pages;assembly=UraniumUI"
              xmlns:attachment="clr-namespace:UraniumUI.Material.Attachments;assembly=UraniumUI.Material"
@@ -24,7 +24,7 @@
 
         <VerticalStackLayout>
 
-            <Button Text="Delete" StyleClass="ElevatedButton"  Command="{Binding RemoveSelectedItemsCommand}" HorizontalOptions="Center" />
+            <Button Text="Delete" StyleClass="FilledTonalButton"  Command="{Binding RemoveSelectedItemsCommand}" HorizontalOptions="Center" />
             <material:DataGrid ItemsSource="{Binding Items}" SelectedItems="{Binding SelectedItems}" HorizontalOptions="Center" VerticalOptions="Center">
                 <material:DataGrid.Columns>
                     <material:DataGridSelectionColumn/>
@@ -46,15 +46,13 @@
                 Title="Add" 
                 IconImageSource="{FontImageSource FFontFamily=FASolid, Glyph={x:Static fa:Solid.Plus}, Color={StaticResource OnPrimary}}"
                 BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Gray950}}">
-            <VerticalStackLayout Spacing="10" Padding="25,30" MaximumWidthRequest="400">
-                <input:AdvancedEntry 
-                    Text="{Binding NewItem.Content}" 
+            <VerticalStackLayout Spacing="10" Padding="25,30" HorizontalOptions="Center"  MaximumWidthRequest="400">
+                <material:TextField 
                     Title="What to do?"
-                    Placeholder="Go to the store"
-                    TextColor="{StaticResource Primary}" 
-                    TitleColor="{StaticResource OnPrimary}"
-                    IconImage="{FontImageSource FontFamily=FASolid, Glyph={x:Static fa:Solid.Pencil}, Color={StaticResource Primary}}"
-                    BackgroundColor="{StaticResource OnPrimary}"/>
+                    Text="{Binding NewItem.Content}"
+                    TextColor="{StaticResource OnPrimary}"
+                    AccentColor="{StaticResource OnPrimary}"
+                    Icon="{FontImageSource FontFamily=FASolid, Glyph={x:Static fa:Solid.Pencil}, Color={StaticResource Primary}}"/>
                 <input:CheckBox 
                     IsChecked="{Binding NewItem.IsDone}" 
                     Text="Is done" Color="{StaticResource Primary}" 
@@ -69,9 +67,8 @@
                     ColumnNumber="4"/>
                 <Button 
                     Command="{Binding AddNewItemCommand}" 
-                    Text="Add" 
-                    BackgroundColor="{StaticResource OnPrimary}" 
-                    TextColor="{StaticResource Primary}" />
+                    Text="Add"
+                    StyleClass="ElevatedButton"/>
             </VerticalStackLayout>
         </attachment:BackdropView>
         <attachment:BottomSheetView x:Name="bottomSheet">
@@ -90,7 +87,7 @@
         </attachment:BottomSheetView>
     </uranium:UraniumContentPage.Attachments>
 </uranium:UraniumContentPage>
-<!--#endif-->
+--><!--#endif-->
 
 <!--#if (MaterialIcons)-->
 <uranium:UraniumContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
@@ -115,9 +112,9 @@
 
     <ScrollView>
 
-        <VerticalStackLayout>
+        <VerticalStackLayout Spacing="10">
 
-            <Button Text="Delete" StyleClass="ElevatedButton"  Command="{Binding RemoveSelectedItemsCommand}" HorizontalOptions="Center" />
+            <Button Text="Delete" StyleClass="FilledTonalButton"  Command="{Binding RemoveSelectedItemsCommand}" HorizontalOptions="Center" />
             <material:DataGrid ItemsSource="{Binding Items}" SelectedItems="{Binding SelectedItems}" HorizontalOptions="Center" VerticalOptions="Center">
                 <material:DataGrid.Columns>
                     <material:DataGridSelectionColumn/>
@@ -126,7 +123,7 @@
 
                     <material:DataGridColumn PropertyName="Type" Title="Type"/>
 
-                    <material:DataGridColumn PropertyName="Type" Title="Done"/>
+                    <material:DataGridColumn PropertyName="IsDone" Title="Done"/>
 
                 </material:DataGrid.Columns>
             </material:DataGrid>
@@ -139,15 +136,14 @@
                 Title="Add" 
                 IconImageSource="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Add_circle}, Color={StaticResource OnPrimary}}"
                 BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Gray950}}">
-            <VerticalStackLayout Spacing="10" Padding="25,30" MaximumWidthRequest="400">
-                <input:AdvancedEntry 
-                    Text="{Binding NewItem.Content}" 
+            <VerticalStackLayout Spacing="10" Padding="25,30" HorizontalOptions="Center"  MaximumWidthRequest="400">
+                <material:TextField 
                     Title="What to do?"
-                    Placeholder="Go to the store"
-                    TextColor="{StaticResource Primary}" 
-                    TitleColor="{StaticResource OnPrimary}"
-                    IconImage="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Sticky_note_2}, Color={StaticResource Primary}}"
-                    BackgroundColor="{StaticResource OnPrimary}"/>
+                    Text="{Binding NewItem.Content}"
+                    TextColor="{StaticResource OnPrimary}"
+                    AccentColor="{StaticResource OnPrimary}"
+                    Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Sticky_note_2}}"/>
+
                 <input:CheckBox 
                     IsChecked="{Binding NewItem.IsDone}" 
                     Text="Is done" Color="{StaticResource Primary}" 
@@ -162,9 +158,8 @@
                     ColumnNumber="4"/>
                 <Button 
                     Command="{Binding AddNewItemCommand}" 
-                    Text="Add" 
-                    BackgroundColor="{StaticResource OnPrimary}" 
-                    TextColor="{StaticResource Primary}" />
+                    Text="Add"
+                    StyleClass="ElevatedButton"/>
             </VerticalStackLayout>
         </attachment:BackdropView>
         <attachment:BottomSheetView x:Name="bottomSheet">

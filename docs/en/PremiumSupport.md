@@ -13,3 +13,9 @@ Premium support is a speaicl 1:1 meeting that you can book with the author of Ur
 - Prepare your questions and/or issues that you want to discuss.
 - Authorize [enisn](https://github.com/enisn) to access your project or sample project. *(If private)*
 - If it'll be a live session, post required environment tools such as OS, IDE, Database etc. on your book request.
+
+<center>
+<button class="btn btn-outline-light book-now">Book a Session</button>
+</center>
+
+<link rel="stylesheet" type="text/css" href="https://widgets.superpeer.com/widget.css"><script src="https://widgets.superpeer.com/widget.js"></script><script>window.addEventListener("load", () => {new Superpeer.Widget({embed:{type:"popup"},launcher:{type:"custom",options:{selector:".book-now"}},config:{username:"enisn",serviceSlug:"11-live-support"}})})</script>

@@ -15,11 +15,20 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <ScrollView>
-            <StackLayout Padding="20">
+            <StackLayout Padding="20" Spacing="15">
 
-                <Label Text="Tab Placement: " FontAttributes="Bold"/>
-
-                <input:SelectionView
+                <material:PickerField Title="Tab Placement:" x:Name="tabPlacementSelection">
+                    <material:PickerField.ItemsSource>
+                        <x:Array Type="{x:Type material:TabViewTabPlacement}">
+                            <material:TabViewTabPlacement>Top</material:TabViewTabPlacement>
+                            <material:TabViewTabPlacement>Bottom</material:TabViewTabPlacement>
+                            <material:TabViewTabPlacement>Start</material:TabViewTabPlacement>
+                            <material:TabViewTabPlacement>End</material:TabViewTabPlacement>
+                        </x:Array>
+                    </material:PickerField.ItemsSource>
+                </material:PickerField>
+                
+                <!--<input:SelectionView
                     Color="{StaticResource Primary}"
                     SelectionType="RadioButton" 
                     ColumnNumber="1" Padding="20"
@@ -33,7 +42,7 @@
                             <material:TabViewTabPlacement>End</material:TabViewTabPlacement>
                         </x:Array>
                     </input:SelectionView.ItemsSource>
-                </input:SelectionView>
+                </input:SelectionView>-->
 
                 <BoxView StyleClass="Divider"/>
 

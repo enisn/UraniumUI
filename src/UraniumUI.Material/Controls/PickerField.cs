@@ -6,6 +6,8 @@ using UraniumUI.Resources;
 using Path = Microsoft.Maui.Controls.Shapes.Path;
 
 namespace UraniumUI.Material.Controls;
+
+[ContentProperty(nameof(Validations))]
 public class PickerField : InputField
 {
     public PickerView PickerView => Content as PickerView;

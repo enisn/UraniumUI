@@ -13,7 +13,8 @@ public class TimePickerField : InputField
     public override View Content { get; set; } = new TimePickerView
     {
         VerticalOptions = LayoutOptions.Center,
-        Margin = new Thickness(10, 0)
+        Margin = new Thickness(10, 0),
+        Opacity = 0,
     };
 
     protected ContentView iconClear = new ContentView
@@ -29,7 +30,7 @@ public class TimePickerField : InputField
         }
     };
 
-    public override bool HasValue => true; // TimeSpan cannot be null
+    public override bool HasValue => Time != null;
 
     public TimePickerField()
     {
@@ -56,6 +57,10 @@ public class TimePickerField : InputField
     {
         OnPropertyChanged(nameof(Time));
         CheckAndShowValidations();
+        TimePickerView.Opacity = Time == null ? 0 : 1;
+        iconClear.IsVisible = Time != null;
+
+        UpdateState();
     }
 
     protected override void OnIconChanged()

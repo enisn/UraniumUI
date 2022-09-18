@@ -29,7 +29,7 @@
                         <validation:MaxValueValidation MaxValue="12:00" />
                     </material:TimePickerField>
                     
-                    <material:TextField Title="Age" Keyboard="Numeric" Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Icon18}}">
+                    <material:TextField Title="Age" Keyboard="Numeric" Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Numbers}}">
                         <material:TextField.Validations>
                             <validation:MinValueValidation MinValue="18" />
                             <validation:DigitsOnlyValidation />

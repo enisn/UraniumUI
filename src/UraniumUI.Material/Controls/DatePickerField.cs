@@ -1,4 +1,5 @@
 ﻿using Plainer.Maui.Controls;
+using System.ComponentModel;
 using UraniumUI.Pages;
 using UraniumUI.Resources;
 using Path = Microsoft.Maui.Controls.Shapes.Path;
@@ -82,4 +83,63 @@ public class DatePickerField : InputField
         nameof(Date), typeof(DateTime?), typeof(DatePickerField), defaultValue: null, defaultBindingMode: BindingMode.TwoWay,
         propertyChanged: (bindable, oldValue, newValue) => (bindable as DatePickerField).OnDateChanged()
         );
+
+    public DateTime MaximumDate { get => (DateTime)GetValue(MaximumDateProperty); set => SetValue(MaximumDateProperty, value); }
+
+    public static readonly BindableProperty MaximumDateProperty = BindableProperty.Create(
+         nameof(MaximumDate), typeof(DateTime?), typeof(DatePickerField), 
+         defaultValue: DatePicker.MaximumDateProperty.DefaultValue,
+         propertyChanged: (bindable, oldValue, newValue) => (bindable as DatePickerField).DatePickerView.MaximumDate = (DateTime)newValue
+         );
+
+    public DateTime MinimumDate { get => (DateTime)GetValue(MinimumDateProperty); set => SetValue(MinimumDateProperty, value); }
+
+    public static readonly BindableProperty MinimumDateProperty = BindableProperty.Create(
+         nameof(MinimumDate), typeof(DateTime?), typeof(DatePickerField),
+         defaultValue: DatePicker.MinimumDateProperty.DefaultValue,
+         propertyChanged: (bindable, oldValue, newValue) => (bindable as DatePickerField).DatePickerView.MinimumDate = (DateTime)newValue
+         );
+
+    public string Format { get => (string)GetValue(FormatProperty); set => SetValue(FormatProperty, value); }
+
+    public static readonly BindableProperty FormatProperty = BindableProperty.Create(
+            nameof(Format), typeof(string), typeof(DatePickerField), TimePicker.FormatProperty.DefaultValue,
+            propertyChanged: (bindable, oldValue, newValue) => (bindable as DatePickerField).DatePickerView.Format = (string)newValue);
+
+    public Color TextColor { get => (Color)GetValue(TextColorProperty); set => SetValue(TextColorProperty, value); }
+
+    public static readonly BindableProperty TextColorProperty = BindableProperty.Create(
+        nameof(TextColor), typeof(Color), typeof(DatePickerField), TimePicker.TextColorProperty.DefaultValue,
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as DatePickerField).DatePickerView.TextColor = (Color)newValue);
+
+    public double CharacterSpacing { get => (double)GetValue(CharacterSpacingProperty); set => SetValue(CharacterSpacingProperty, value); }
+
+    public static readonly BindableProperty CharacterSpacingProperty = BindableProperty.Create(
+        nameof(CharacterSpacing), typeof(double), typeof(DatePickerField), TimePicker.CharacterSpacingProperty.DefaultValue,
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as DatePickerField).DatePickerView.CharacterSpacing = (double)newValue);
+
+    public FontAttributes FontAttributes { get => (FontAttributes)GetValue(FontAttributesProperty); set => SetValue(FontAttributesProperty, value); }
+
+    public static readonly BindableProperty FontAttributesProperty = BindableProperty.Create(
+        nameof(FontAttributes), typeof(FontAttributes), typeof(DatePickerField), TimePicker.FontAttributesProperty.DefaultValue,
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as DatePickerField).DatePickerView.FontAttributes = (FontAttributes)newValue);
+
+    public string FontFamily { get => (string)GetValue(FontFamilyProperty); set => SetValue(FontFamilyProperty, value); }
+
+    public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(
+        nameof(FontFamily), typeof(string), typeof(DatePickerField), TimePicker.FontFamilyProperty.DefaultValue,
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as DatePickerField).DatePickerView.FontFamily = (string)newValue);
+
+    [TypeConverter(typeof(FontSizeConverter))]
+    public double FontSize { get => (double)GetValue(FontSizeProperty); set => SetValue(FontSizeProperty, value); }
+
+    public static readonly BindableProperty FontSizeProperty = BindableProperty.Create(
+        nameof(FontSize), typeof(double), typeof(DatePickerField), TimePicker.FontSizeProperty.DefaultValue,
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as DatePickerField).DatePickerView.FontSize = (double)newValue);
+
+    public bool FontAutoScalingEnabled { get => (bool)GetValue(FontAutoScalingEnabledProperty); set => SetValue(FontAutoScalingEnabledProperty, value); }
+
+    public static readonly BindableProperty FontAutoScalingEnabledProperty = BindableProperty.Create(
+        nameof(FontAutoScalingEnabled), typeof(bool), typeof(DatePickerField), TimePicker.FontAutoScalingEnabledProperty.DefaultValue,
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as DatePickerField).DatePickerView.FontAutoScalingEnabled = (bool)newValue);
 }

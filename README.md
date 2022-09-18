@@ -50,13 +50,18 @@ We welcome contributions and suggestions. Please read our [contributing guide](#
 - [ ] SegmentedControl
 - [ ] Slider (Header, with dots)
 - [ ] Chips (multiple selection)
-- [ ] CheckBox (customize inputkit's one)
-- [ ] RadioButton (customize inputkit's one)
-- [ ] AdvancedEntry (customize inputkit's one)
+- [x] CheckBox (customize inputkit's one)
+- [x] RadioButton (customize inputkit's one)
+- [x] [InputField](https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/InputField)
+ - [x] [TextField](https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/TextField)
+ - [x] [PickerField](https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/PickerField)
+ - [x] [TimePickerField](https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/TimePickerField)
+ - [x] [DatePickerField](https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/DatePickerField)
 - [ ] Cards (Head, Body, Footer) 
 - [ ] TreeView (https://github.com/enisn/TreeView.Maui)
 - [x] [TabView](https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/TabView)
 - [ ] CalendarView
+- [x] [Dialogs](https://enisn-projects.io/docs/en/uranium/latest/themes/material/Dialogs)
 
 - [ ] SelectionView 
 - [ ] BadgeView

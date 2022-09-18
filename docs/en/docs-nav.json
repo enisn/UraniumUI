@@ -56,6 +56,10 @@
             {
               "text": "TimePickerField",
               "path": "themes/material/components/TimePickerField.md"
+            },
+            {
+              "text": "DatePickerField",
+              "path": "themes/material/components/DatePickerField.md"
             }
           ]
         },

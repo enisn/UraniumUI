@@ -36,9 +36,12 @@
                         </material:TextField.Validations>
                     </material:TextField>
 
+                    <material:DatePickerField Title="What is your birth date?" />
+
                     <Button StyleClass="FilledButton"
                             Text="Submit"
                             input:FormView.IsSubmitButton="True"/>
+
 
                 </input:FormView>
 

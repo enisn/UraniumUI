@@ -50,7 +50,8 @@ public partial class InputField : IValidatable
         {
             if (isStateChanged)
             {
-                rootGrid.Remove(iconValidation.Value);
+                endIconsContainer.Remove(iconValidation.Value);
+                //rootGrid.Remove(iconValidation.Value);
                 this.Remove(labelValidation.Value);
             }
         }
@@ -61,7 +62,8 @@ public partial class InputField : IValidatable
 
             if (isStateChanged)
             {
-                rootGrid.Add(iconValidation.Value, column: 1);
+                endIconsContainer.Add(iconValidation.Value);
+                //rootGrid.Add(iconValidation.Value, column: 1);
                 this.Add(labelValidation.Value, row: 1);
             }
         }

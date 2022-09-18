@@ -13,7 +13,7 @@ public class TimePickerField : InputField
         Margin = new Thickness(10, 0)
     };
 
-    public override bool HasValue => true; // Timespan cannot be null
+    public override bool HasValue => true; // TimeSpan cannot be null
 
     public TimePickerField()
     {

@@ -59,6 +59,12 @@ public partial class InputField : Grid
         };
     });
 
+    protected HorizontalStackLayout endIconsContainer = new HorizontalStackLayout
+    {
+        HorizontalOptions = LayoutOptions.End,
+        Margin = 5,
+    };
+
     private Color LastFontimageColor;
 
     private bool hasValue;
@@ -85,6 +91,8 @@ public partial class InputField : Grid
         rootGrid.AddColumnDefinition(new ColumnDefinition(GridLength.Auto));
         rootGrid.AddColumnDefinition(new ColumnDefinition(GridLength.Star));
         rootGrid.Add(Content, column: 1);
+
+        rootGrid.Add(endIconsContainer, column: 2);
 
         labelTitle.Scale = 1;
         labelTitle.SetBinding(Label.TextProperty, new Binding(nameof(Title), source: this));

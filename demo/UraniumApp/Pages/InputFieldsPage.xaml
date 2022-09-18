@@ -29,16 +29,22 @@
                         <validation:MaxValueValidation MaxValue="12:00" />
                     </material:TimePickerField>
                     
-                    <material:TextField Title="Age" Keyboard="Numeric" Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Calendar_month}}">
+                    <material:TextField Title="Age" Keyboard="Numeric" Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Numbers}}">
                         <material:TextField.Validations>
                             <validation:MinValueValidation MinValue="18" />
                             <validation:DigitsOnlyValidation />
                         </material:TextField.Validations>
                     </material:TextField>
 
+                    <material:DatePickerField Title="What is your birth date?"  Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Calendar_month}}">
+                        <validation:MinValueValidation MinValue="9/18/2022" />
+                        <validation:RequiredValidation />
+                    </material:DatePickerField>
+
                     <Button StyleClass="FilledButton"
                             Text="Submit"
                             input:FormView.IsSubmitButton="True"/>
+
 
                 </input:FormView>
 

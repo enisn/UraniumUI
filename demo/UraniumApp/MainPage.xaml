@@ -19,14 +19,19 @@
 
             <input:FormView Spacing="20">
 
-                <controls:TimePickerField Title="Pick a time" Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Alarm}}">
+                <!--<controls:TimePickerField Title="Pick a time" Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Alarm}}">
                     <validation:MinValueValidation MinValue="09:00" />
                     <validation:MaxValueValidation MaxValue="12:00" />
-                </controls:TimePickerField>
+                </controls:TimePickerField>-->
 
-                <Button StyleClass="TextButton"
+                <controls:DatePickerField Title="Pick a Date" Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Calendar_month}}">
+                    <validation:MinValueValidation MinValue="9/18/2022" />
+                    <validation:MaxValueValidation MaxValue="12/31/2022" />
+                </controls:DatePickerField>
+
+                <!--<Button StyleClass="TextButton"
                     Text="Submit"
-                    input:FormView.IsSubmitButton="True"/>
+                    input:FormView.IsSubmitButton="True"/>-->
             </input:FormView>
 
             <!--<Image

@@ -81,6 +81,13 @@
             ContentTemplate="{DataTemplate pages:InputFieldsPage}"/>
     </FlyoutItem>
 
+    <FlyoutItem>
+        <ShellContent 
+            Title="TreeView" 
+            Icon="{FontImageSource FontFamily=MaterialOutlined, Glyph={x:Static m:MaterialOutlined.List_alt}, Color={StaticResource Primary}}"
+            ContentTemplate="{DataTemplate pages:TreeViewPage}"/>
+    </FlyoutItem>
+
     <!--
         Shell has implicit conversion operators that enable the Shell visual hierarchy to be simplified.
         This is possible because a subclassed Shell object can only ever contain a FlyoutItem object or a TabBar object,

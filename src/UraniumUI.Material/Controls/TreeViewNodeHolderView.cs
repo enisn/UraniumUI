@@ -35,12 +35,14 @@ public class TreeViewNodeHolderView : VerticalStackLayout
         IsVisible = false
     };
 
-    public TreeViewNodeHolderView()
+    public DataTemplate DataTemplate { get; private set; }
+
+    public TreeViewNodeHolderView(DataTemplate dataTemplate)
     {
+        DataTemplate = dataTemplate;
+
         //TODO: Experimental / Remove Later
-        var label = new Label { VerticalOptions = LayoutOptions.Center };
-        label.SetBinding(Label.TextProperty, new Binding("Name"));
-        nodeContainer.Content = label;
+        nodeContainer.Content = DataTemplate.CreateContent() as View;
         // Experimental
 
         this.Add(new HorizontalStackLayout
@@ -57,7 +59,7 @@ public class TreeViewNodeHolderView : VerticalStackLayout
 
         BindableLayout.SetItemTemplate(stackLayoutChildren, new DataTemplate(() =>
         {
-            return new TreeViewNodeHolderView();
+            return new TreeViewNodeHolderView(DataTemplate);
         }));
 
         stackLayoutChildren.SetBinding(BindableLayout.ItemsSourceProperty, new Binding("Children"));
@@ -88,7 +90,11 @@ public class TreeViewNodeHolderView : VerticalStackLayout
             stackLayoutChildren.IsVisible = false;
         }
 
+        Button btn = new Button();
+
         OnPropertyChanged("IsExpanded");
         OnPropertyChanged("IsExtended");
+
+
     }
 }

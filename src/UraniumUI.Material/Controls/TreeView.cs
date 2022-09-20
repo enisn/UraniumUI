@@ -1,16 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using Path = Microsoft.Maui.Controls.Shapes.Path;
 
 namespace UraniumUI.Material.Controls;
 public partial class TreeView : VerticalStackLayout
 {
+    public static DataTemplate DefaultItemTemplate = new DataTemplate(() =>
+    {
+        var label = new Label { VerticalOptions = LayoutOptions.Center };
+        label.SetBinding(Label.TextProperty, new Binding("Name"));
+        return label;
+    });
 
     public TreeView()
     {
         BindableLayout.SetItemTemplate(this, new DataTemplate(() =>
         {
-            return new TreeViewNodeHolderView();
+            return new TreeViewNodeHolderView(ItemTemplate);
         }));
     }
 
@@ -36,7 +43,7 @@ public partial class TreeView : VerticalStackLayout
 
     public static readonly BindableProperty ItemTemplateProperty = BindableProperty.Create(
         nameof(ItemTemplate), typeof(DataTemplate), typeof(TreeView),
-        new DataTemplate(typeof(TreeViewNodeHolderView)), propertyChanged: (b, o, n) => (b as TreeView).OnItemTemplateChanged());
+        defaultValue: DefaultItemTemplate, propertyChanged: (b, o, n) => (b as TreeView).OnItemTemplateChanged());
 
     public static readonly BindableProperty IsExpandedProperty =
         BindableProperty.CreateAttached("IsExpanded", typeof(bool), typeof(TreeViewNodeHolderView), false,

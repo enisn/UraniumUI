@@ -41,7 +41,7 @@
         </ShellContent>
     </FlyoutItem>
 
-    <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
+    <FlyoutItem FlyoutDisplayOptions="AsMultipleItems" Title="Infrastructural" >
 
         <ShellContent Title="DataGrid" ContentTemplate="{DataTemplate dataGrid:DataGridsIndexPage}">
             <ShellContent.Icon>
@@ -81,7 +81,7 @@
             ContentTemplate="{DataTemplate pages:InputFieldsPage}"/>
     </FlyoutItem>
 
-    <FlyoutItem>
+    <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
         <ShellContent 
             Title="TreeView" 
             Icon="{FontImageSource FontFamily=MaterialOutlined, Glyph={x:Static m:MaterialOutlined.List_alt}, Color={StaticResource Primary}}"

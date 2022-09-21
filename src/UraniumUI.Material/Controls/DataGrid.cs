@@ -148,7 +148,6 @@ public partial class DataGrid : Frame
         ResetGrid();
         ConfigureGridColumnDefinitions(Columns.Count);
         ConfigureGridRowDefinitions(ItemsSource.Count + tableHeaderRows);
-        ConfigureGridRowDefinitions(ItemsSource.Count + tableHeaderRows);
 
         AddTableHeaders();
 

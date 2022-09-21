@@ -1,5 +1,12 @@
 <Project>
     <PropertyGroup>
-        <Version>0.8.2</Version>
+        <Version>0.12.0</Version>
     </PropertyGroup>
+
+    <ItemGroup>
+      <None Include="..\..\art\logo_128.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
 </Project>

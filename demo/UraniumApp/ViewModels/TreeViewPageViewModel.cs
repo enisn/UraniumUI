@@ -20,10 +20,10 @@ namespace UraniumApp.ViewModels
             Nodes.Add(new MyItem("A")
             {
                 Children =
-            {
-                new MyItem("A.1"),
-                new MyItem("A.2"),
-            }
+                {
+                    new MyItem("A.1"),
+                    new MyItem("A.2"),
+                }
             });
             Nodes.Add(new MyItem("B")
             {

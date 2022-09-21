@@ -4,22 +4,45 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:material="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
              xmlns:vm="clr-namespace:UraniumApp.ViewModels"
+             xmlns:root="clr-namespace:UraniumApp"
              xmlns:local="clr-namespace:UraniumApp.Pages">
     <ContentPage.BindingContext>
         <vm:TreeViewPageViewModel />
     </ContentPage.BindingContext>
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to .NET MAUI!!!"
-                   HorizontalOptions="Center"
-                   TextColor="Purple"
-                   VerticalOptions="Center"/>
-            
-            <Button Text="Click me" Command="{Binding ExpandCommand}" />
 
-            <material:TreeView ItemsSource="{Binding Nodes}" IsExpandedPropertyName="IsExtended">
+            <material:TabView>
+                <material:TabItem Title="Simple">
+                    <material:TabItem.ContentTemplate>
+                        <DataTemplate>
+                            <material:TreeView ItemsSource="{Binding Nodes}" IsExpandedPropertyName="IsExtended">
+                            </material:TreeView>
+                        </DataTemplate>
+                    </material:TabItem.ContentTemplate>
+                </material:TabItem>
+                
+                <material:TabItem Title="Templated">
+                    <material:TabItem.ContentTemplate>
+                        <DataTemplate>
+                            <material:TreeView ItemsSource="{Binding Nodes}" IsExpandedPropertyName="IsExtended">
+                                <material:TreeView.ItemTemplate>
+                                    <DataTemplate>
+                                        <material:CheckBox Text="{Binding Name}">
+                                            <material:CheckBox.Behaviors>
+                                                <root:TreeViewChooseAllBehavior />
+                                                <root:TreeViewSemiSelectParentBehavior />
+                                            </material:CheckBox.Behaviors>
+                                        </material:CheckBox>
+                                    </DataTemplate>
+                                </material:TreeView.ItemTemplate>
+                            </material:TreeView>
+                        </DataTemplate>
+                    </material:TabItem.ContentTemplate>
+                </material:TabItem>
+            </material:TabView>
 
-            </material:TreeView>
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

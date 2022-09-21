@@ -9,7 +9,9 @@ public class TreeViewNodeHolderView : VerticalStackLayout
 {
     public View NodeView { get => nodeContainer.Content; set => nodeContainer.Content = value; }
 
-    public TreeViewNodeHolderView Parent { get; private set; }
+    public TreeViewNodeHolderView ParentHolderView { get; private set; }
+
+    public TreeView TreeView { get; internal set; }
 
     protected ContentView nodeContainer = new ContentView
     {
@@ -20,7 +22,7 @@ public class TreeViewNodeHolderView : VerticalStackLayout
     {
         VerticalOptions = LayoutOptions.Center,
         HorizontalOptions = LayoutOptions.Start,
-        Padding = 15,
+        Padding = new Thickness(15, 10),
         Content = new Path
         {
             Data = UraniumShapes.ArrowLeft,
@@ -28,17 +30,30 @@ public class TreeViewNodeHolderView : VerticalStackLayout
         }
     };
 
-    protected VerticalStackLayout stackLayoutChildren = new VerticalStackLayout
+    public VerticalStackLayout NodeChildrens => nodeChildrens;
+    
+    internal protected VerticalStackLayout nodeChildrens = new VerticalStackLayout
     {
         Margin = new Thickness(10, 0, 0, 0),
         IsVisible = false
     };
 
-    public DataTemplate DataTemplate { get; }
+    protected HorizontalStackLayout rowStack;
 
-    public bool IsLeaf => !stackLayoutChildren.Children.Any();
+    public DataTemplate DataTemplate { get; }
+    public BindingBase ChildrenBinding
+    {
+        get => childrenBinding;
+        internal set
+        {
+            childrenBinding = value;
+            nodeChildrens.SetBinding(BindableLayout.ItemsSourceProperty, new Binding((ChildrenBinding as Binding)?.Path));
+        }
+    }
+    public bool IsLeaf => !nodeChildrens.Children.Any();
 
     private string isTextendedProperty;
+    private BindingBase childrenBinding;
 
     public string IsTextendedProperty
     {
@@ -54,28 +69,11 @@ public class TreeViewNodeHolderView : VerticalStackLayout
         }
     }
 
-    public string isSelectedProperty;
-
-    public string IsSelectedProperty
-    {
-        get => isTextendedProperty;
-        set
-        {
-            isSelectedProperty = value;
-            this.SetBinding(TreeView.IsSelectedProperty, new Binding(value, BindingMode.TwoWay));
-            foreach (TreeViewNodeHolderView item in this.Children.Where(x => x is TreeViewNodeHolderView))
-            {
-                item.IsTextendedProperty = value;
-            }
-        }
-    }
-
-    public TreeViewNodeHolderView(DataTemplate dataTemplate, string isTextendedProperty)
+    public TreeViewNodeHolderView(DataTemplate dataTemplate, string isTextendedProperty, BindingBase childrenBinding)
     {
         DataTemplate = dataTemplate;
         nodeContainer.Content = DataTemplate.CreateContent() as View;
-
-        this.Add(new HorizontalStackLayout
+        this.Add(rowStack = new HorizontalStackLayout
         {
             Children =
             {
@@ -83,64 +81,44 @@ public class TreeViewNodeHolderView : VerticalStackLayout
                 nodeContainer
             }
         });
-        this.Add(stackLayoutChildren);
+        this.Add(nodeChildrens);
 
         this.SetBinding(TreeView.IsExpandedProperty, new Binding(isTextendedProperty, BindingMode.TwoWay));
-        this.SetBinding(TreeView.IsSelectedProperty, new Binding("IsSelected", BindingMode.TwoWay));
 
-        BindableLayout.SetItemTemplate(stackLayoutChildren, new DataTemplate(() =>
+        BindableLayout.SetItemTemplate(nodeChildrens, new DataTemplate(() =>
         {
-            var node = new TreeViewNodeHolderView(DataTemplate, isTextendedProperty);
+            var node = new TreeViewNodeHolderView(DataTemplate, isTextendedProperty, childrenBinding);
 
-            node.Parent = this;
-
+            node.ParentHolderView = this;
+            node.TreeView = TreeView;
             return node;
         }));
 
-        stackLayoutChildren.SetBinding(BindableLayout.ItemsSourceProperty, new Binding("Children"));
+        ChildrenBinding = childrenBinding;
 
-        stackLayoutChildren.ChildAdded += (s, e) => OnPropertyChanged(nameof(IsLeaf));
-        stackLayoutChildren.ChildRemoved += (s, e) => OnPropertyChanged(nameof(IsLeaf));
+        nodeChildrens.ChildAdded += (s, e) => OnPropertyChanged(nameof(IsLeaf));
+        nodeChildrens.ChildRemoved += (s, e) => OnPropertyChanged(nameof(IsLeaf));
 
         InitializeArrowButton();
-
-        NodeView.Triggers.Add(new DataTrigger(typeof(View))
-        {
-            Binding = new Binding("IsSelected", source: this),
-            Value = true,
-            EnterActions =
-            {
-                new GenericTriggerAction<View>((_) =>
-                {
-                    OnIsSelectedChanged();
-                })
-            },
-            ExitActions =
-            {
-                new GenericTriggerAction<View>((_) =>
-                {
-                    OnIsSelectedChanged();
-                })
-            }
-        });
     }
 
     private void InitializeArrowButton()
     {
         var tapGestureRecognizer = new TapGestureRecognizer();
         iconArrow.GestureRecognizers.Add(tapGestureRecognizer);
+        rowStack.GestureRecognizers.Add(tapGestureRecognizer);
         tapGestureRecognizer.Tapped += (s, e) =>
         {
             TreeView.SetIsExpanded(this, !TreeView.GetIsExpanded(this));
         };
 
-        iconArrow.Triggers.Add(new DataTrigger(typeof(ContentView))
+        iconArrow.Triggers.Add(new DataTrigger(typeof(View))
         {
             Binding = new Binding(nameof(IsLeaf), source: this),
             Value = true,
             EnterActions =
             {
-                new GenericTriggerAction<ContentView>((view) =>
+                new GenericTriggerAction<View>((view) =>
                 {
                     view.Opacity = 0;
                     view.InputTransparent = true;
@@ -148,7 +126,7 @@ public class TreeViewNodeHolderView : VerticalStackLayout
             },
             ExitActions =
             {
-                new GenericTriggerAction<ContentView>((view) =>
+                new GenericTriggerAction<View>((view) =>
                 {
                     view.Opacity = 1;
                     view.InputTransparent = false;
@@ -157,58 +135,28 @@ public class TreeViewNodeHolderView : VerticalStackLayout
         });
     }
 
-    protected internal virtual void OnIsExpandedChanged()
+    protected internal virtual async void OnIsExpandedChanged()
     {
 
         if (TreeView.GetIsExpanded(this))
         {
-            iconArrow.RotateTo(90);
-            stackLayoutChildren.IsVisible = true;
+            iconArrow.RotateTo(90, 90, easing: Easing.BounceOut);
+
+            nodeChildrens.IsVisible = true;
+            nodeChildrens.TranslateTo(0, 0, 50);
+            nodeChildrens.ScaleTo(1, 50);
+            nodeChildrens.FadeTo(1);
         }
         else
         {
-            iconArrow.RotateTo(0);
-            stackLayoutChildren.IsVisible = false;
+            iconArrow.RotateTo(0, 90, easing: Easing.BounceOut);
+            nodeChildrens.TranslateTo(0, -nodeChildrens.Height);
+            nodeChildrens.ScaleTo(0);
+            nodeChildrens.AnchorX = 0;
+            nodeChildrens.AnchorY = 0;
+
+            await nodeChildrens.FadeTo(0, 50);
+            nodeChildrens.IsVisible = false;
         }
-    }
-
-    protected internal virtual void OnIsSelectedChanged()
-    {
-        var isSelected = TreeView.GetIsSelected(NodeView);
-
-        VisualStateManager.GoToState(NodeView, isSelected == null ? "SemiSelected" : isSelected == true ? "Selected" : "UnSelected");
-
-        if (IsLeaf)
-        {
-            Parent?.OnChildSelectionChanged();
-            return;
-        }
-    }
-
-    protected void OnChildSelectionChanged()
-    {
-        var query = stackLayoutChildren.Children.OfType<TreeViewNodeHolderView>();
-
-        var first = query.FirstOrDefault(x => TreeView.GetIsSelected(x) != null);
-
-        if (first == null)
-        {
-            TreeView.SetIsSelected(NodeView, null);
-        }
-
-        var firstIsSelected = TreeView.GetIsSelected(first);
-
-        foreach (var item in query)
-        {
-            if (firstIsSelected != TreeView.GetIsSelected(item))
-            {
-                TreeView.SetIsSelected(NodeView, null);
-                break;
-            }
-        }
-
-        TreeView.SetIsSelected(NodeView, firstIsSelected);
-
-        Parent?.OnChildSelectionChanged();
     }
 }

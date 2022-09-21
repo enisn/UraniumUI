@@ -14,8 +14,12 @@
                    HorizontalOptions="Center"
                    TextColor="Purple"
                    VerticalOptions="Center"/>
+            
             <Button Text="Click me" Command="{Binding ExpandCommand}" />
-            <material:TreeView ItemsSource="{Binding Nodes}" />
+
+            <material:TreeView ItemsSource="{Binding Nodes}" IsExpandedPropertyName="IsExtended">
+
+            </material:TreeView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

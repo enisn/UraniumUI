@@ -228,6 +228,7 @@ public partial class DataGrid : Frame
                 }
             });
 
+            _rootGrid.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
             _rootGrid.Add(view, columnNumber, row: actualRow);
         }
 
@@ -253,13 +254,18 @@ public partial class DataGrid : Frame
             if (Grid.GetRow(child) == actualRow + 1 && child is BoxView)
             {
                 _rootGrid.Children.RemoveAt(i);
+                _rootGrid.RowDefinitions.RemoveAt(0); // Doesn't matter which one is.
                 i--;
             }
         }
 
+        _rootGrid.RowDefinitions.RemoveAt(0);
+
         if (_rootGrid.Children.LastOrDefault() is BoxView box)
         {
             _rootGrid.Children.Remove(box);
+            _rootGrid.RowDefinitions.RemoveAt(0);
+
         }
     }
 
@@ -268,6 +274,8 @@ public partial class DataGrid : Frame
         var line = HorizontalLineFactory() ?? CreateHorizontalLine();
 
         Grid.SetColumnSpan(line, Columns.Count);
+
+        _rootGrid.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
         _rootGrid.Add(line, 0, row);
     }
 
@@ -283,8 +291,9 @@ public partial class DataGrid : Frame
     private void ConfigureGridRowDefinitions(int rows)
     {
         _rootGrid.RowDefinitions.Clear();
-        //for (int i = 0; i < (rows + (rows - 1)); i++)
-        for (int i = 0; i < (rows * 10); i++)
+        var actualRows = rows * 2 - 1;
+        
+        for (int i = 0; i < actualRows; i++)
         {
             _rootGrid.AddRowDefinition(new RowDefinition(GridLength.Auto));
         }

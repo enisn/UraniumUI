@@ -13,7 +13,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
     <OutputType>Library</OutputType>
     
-    <IsRidAgnostic Condition="'$(TargetPlatformIdentifier)' == 'android' and '$(OutputType)' == 'Library'">true</IsRidAgnostic>
+    <IsRidAgnostic Condition="'$(OutputType)' == 'Library'">true</IsRidAgnostic>
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.2</SupportedOSPlatformVersion>
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">14.0</SupportedOSPlatformVersion>
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
@@ -24,11 +24,10 @@
 
 	<ItemGroup>
 	  <PackageReference Include="CommunityToolkit.Maui" Version="1.2.0" />
-	  <PackageReference Include="InputKit.Maui" Version="4.1.4" />
+	  <PackageReference Include="InputKit.Maui" Version="4.1.5" />
     <PackageReference Include="Plainer.Maui" Version="1.5.0" />
 	</ItemGroup>
-
-
+  
 	<ItemGroup>
 	  <Compile Update="Resources\StyleResource.xaml.cs">
 	    <DependentUpon>StyleResource.xaml</DependentUpon>

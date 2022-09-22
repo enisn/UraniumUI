@@ -73,7 +73,7 @@
             ContentTemplate="{DataTemplate pages:ButtonsPage}"/>        
         <ShellContent 
             Title="CheckBox"
-            Icon="{FontImageSource FontFamily=MaterialOutlined, Glyph={x:Static m:MaterialOutlined.Check_box}, Color={StaticResource Primary}}}"
+            Icon="{FontImageSource FontFamily=MaterialOutlined, Glyph={x:Static m:MaterialOutlined.Check_box}, Color={StaticResource Primary}}"
             ContentTemplate="{DataTemplate pages:CheckBoxesPage}"/>
         <ShellContent 
             Title="RadioButton" 
@@ -83,6 +83,12 @@
             Title="InputField" 
             Icon="{FontImageSource FontFamily=MaterialOutlined, Glyph={x:Static m:MaterialOutlined.Short_text}, Color={StaticResource Primary}}"
             ContentTemplate="{DataTemplate pages:InputFieldsPage}"/>
+    </FlyoutItem>
+    <FlyoutItem FlyoutDisplayOptions="AsSingleItem" Title="Validations">
+        <ShellContent 
+            Title="InputField" 
+            Icon="{FontImageSource FontFamily=MaterialOutlined, Glyph={x:Static m:MaterialOutlined.Warning}, Color={StaticResource Primary}}"
+            ContentTemplate="{DataTemplate pages:ValidationsPage}"/>
     </FlyoutItem>
 
     <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">

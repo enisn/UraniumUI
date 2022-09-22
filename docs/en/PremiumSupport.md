@@ -6,7 +6,7 @@ If you're looking for a premium support for speacial cases or specific implement
 - [Book a Session](https://superpeer.com/enisn)
 
 ## What is Premium Support?
-Premium support is a speaicl 1:1 meeting that you can book with the author of UraniumUI. You can book a session for any kind of support. You can book a session for a bug fix, feature request, implementation, or any other kind of support such as Live Coding together. 
+Premium support is a special 1:1 meeting that you can book with the author of UraniumUI. You can book a session for any kind of support. You can book a session for a bug fix, feature request, implementation, or any other kind of support such as Live Coding together. 
 
 ## How to prepare for a session?
 - Prepare your project or a sample project that you want to work on.

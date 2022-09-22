@@ -46,8 +46,14 @@ public partial class TabView : Grid
                     var button = sender.Children.FirstOrDefault(x=>x is Button) as Button;
                     button?.SetAppThemeColor(Button.TextColorProperty, ColorResource.GetColor("Primary"), ColorResource.GetColor("PrimaryDark"));
                 })
-            },
-            ExitActions =
+            }
+        });
+        
+        grid.Triggers.Add(new DataTrigger(typeof(Grid))
+        {
+            Binding = new Binding(nameof(TabItem.IsSelected), BindingMode.TwoWay),
+            Value = false,
+            EnterActions =
             {
                 new GenericTriggerAction<Grid>((sender) =>
                 {

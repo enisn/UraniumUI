@@ -30,8 +30,7 @@
                                     <DataTemplate>
                                         <material:CheckBox Text="{Binding Name}">
                                             <material:CheckBox.Behaviors>
-                                                <root:TreeViewChooseAllBehavior />
-                                                <root:TreeViewSemiSelectParentBehavior />
+                                                <root:TreeViewHierarchicalSelectBehavior />
                                             </material:CheckBox.Behaviors>
                                         </material:CheckBox>
                                     </DataTemplate>

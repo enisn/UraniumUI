@@ -66,6 +66,11 @@ public partial class TreeView : VerticalStackLayout
         }));
     }
 
+    /// <summary>
+    /// Only indicates if TreeView is busy or not. Doesn't affect anythig visually.
+    /// </summary>
+    public bool IsBusy { get; set; }
+
     public IList ItemsSource { get => (IList)GetValue(ItemsSourceProperty); set => SetValue(ItemsSourceProperty, value); }
 
     public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(

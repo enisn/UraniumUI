@@ -4,9 +4,9 @@ using CheckBox = UraniumUI.Material.Controls.CheckBox;
 
 namespace UraniumApp;
 
-
 public class TreeViewChooseAllBehavior : Behavior<CheckBox>
 {
+    public static object lockingObj = new object();
     protected override void OnAttachedTo(CheckBox bindable)
     {
         base.OnAttachedTo(bindable);
@@ -23,20 +23,23 @@ public class TreeViewChooseAllBehavior : Behavior<CheckBox>
 
     private void Bindable_CheckChanged(object sender, EventArgs e)
     {
-        var checkBox = sender as CheckBox;
-
-        var holder = checkBox.FindInParents<TreeViewNodeHolderView>();
-        if (holder == null)
+        lock (lockingObj)
         {
-            throw new InvalidOperationException("CheckBox isn't in a TreeView ItemTemplate");
-        }
+            var checkBox = sender as CheckBox;
 
-        foreach (TreeViewNodeHolderView child in holder.NodeChildrens.Where(x => x is TreeViewNodeHolderView))
-        {
-            var childCheckBox = (child.NodeView as CheckBox);
-            if (childCheckBox.IsChecked != checkBox.IsChecked)
+            var holder = checkBox.FindInParents<TreeViewNodeHolderView>();
+            if (holder == null)
             {
-                childCheckBox.IsChecked = checkBox.IsChecked;
+                throw new InvalidOperationException("CheckBox isn't in a TreeView ItemTemplate");
+            }
+
+            foreach (TreeViewNodeHolderView child in holder.NodeChildrens.Where(x => x is TreeViewNodeHolderView))
+            {
+                var childCheckBox = (child.NodeView as CheckBox);
+                if (childCheckBox.IsChecked != checkBox.IsChecked)
+                {
+                    childCheckBox.IsChecked = checkBox.IsChecked;
+                }
             }
         }
     }
@@ -69,52 +72,54 @@ public class TreeViewSemiSelectParentBehavior : Behavior<CheckBox>
 
     private void CheckItSelf(TreeViewNodeHolderView holder, bool forcedSemiSelected = false)
     {
-        if (holder == null || holder.Parent is null)
+        lock (TreeViewChooseAllBehavior.lockingObj)
         {
-            return;
-        }
-
-        var mainCheckBox = holder.NodeView as CheckBox;
-
-        if (forcedSemiSelected)
-        {
-            mainCheckBox.IconGeometry = InputKit.Shared.Controls.PredefinedShapes.Line;
-            if (!mainCheckBox.IsChecked)
+            if (holder == null || holder.Parent is null)
             {
-                mainCheckBox.IsChecked = true;
+                return;
             }
-            return;
-        }
-        else
-        {
-            mainCheckBox.IconGeometry = InputKit.Shared.Controls.PredefinedShapes.Check;
-        }
 
-        if (holder.NodeChildrens.Count > 0)
-        {
-            var children = holder.NodeChildrens.OfType<TreeViewNodeHolderView>();
+            var mainCheckBox = holder.NodeView as CheckBox;
 
-            var lastItemToCheck = (children.FirstOrDefault().NodeView as CheckBox)?.IsChecked ?? throw new InvalidOperationException("CheckBox isn't in a TreeView ItemTemplate");
-            foreach (TreeViewNodeHolderView child in holder.NodeChildrens.Where(x => x is TreeViewNodeHolderView))
+            if (forcedSemiSelected)
             {
-                var checkBox = (child.NodeView as CheckBox);
-                if (lastItemToCheck != checkBox.IsChecked)
+                mainCheckBox.IconGeometry = InputKit.Shared.Controls.PredefinedShapes.Line;
+                if (!mainCheckBox.IsChecked)
                 {
-                    mainCheckBox.IconGeometry = InputKit.Shared.Controls.PredefinedShapes.Line;
-                    if (!mainCheckBox.IsChecked)
+                    mainCheckBox.IsChecked = true;
+                }
+                return;
+            }
+            else
+            {
+                mainCheckBox.IconGeometry = InputKit.Shared.Controls.PredefinedShapes.Check;
+            }
+
+            if (holder.NodeChildrens.Count > 0)
+            {
+                var children = holder.NodeChildrens.OfType<TreeViewNodeHolderView>();
+
+                var lastItemToCheck = (children.FirstOrDefault().NodeView as CheckBox)?.IsChecked ?? throw new InvalidOperationException("CheckBox isn't in a TreeView ItemTemplate");
+                foreach (TreeViewNodeHolderView child in holder.NodeChildrens.Where(x => x is TreeViewNodeHolderView))
+                {
+                    var checkBox = (child.NodeView as CheckBox);
+                    if (lastItemToCheck != checkBox.IsChecked)
                     {
-                        mainCheckBox.IsChecked = true;
+                        mainCheckBox.IconGeometry = InputKit.Shared.Controls.PredefinedShapes.Line;
+                        if (!mainCheckBox.IsChecked)
+                        {
+                            mainCheckBox.IsChecked = true;
+                        }
+                        CheckItSelf(holder.ParentHolderView, true);
+                        return;
                     }
-                    CheckItSelf(holder.ParentHolderView, true);
-                    return;
+                }
+                if (mainCheckBox.IsChecked != lastItemToCheck)
+                {
+                    mainCheckBox.IsChecked = lastItemToCheck;
                 }
             }
-            if (mainCheckBox.IsChecked != lastItemToCheck)
-            {
-                mainCheckBox.IsChecked = lastItemToCheck;
-            }
         }
-
         CheckItSelf(holder.ParentHolderView);
     }
 }

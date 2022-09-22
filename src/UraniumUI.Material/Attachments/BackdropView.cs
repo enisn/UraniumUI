@@ -42,7 +42,7 @@ public partial class BackdropView : ContentView, IPageAttachment
     {
         foreach (BackdropView backdrop in AttachedPage.Attachments.Where(x => x is BackdropView))
         {
-            backdrop.IsVisible = backdrop == this;
+            backdrop.IsVisible = isPresented && backdrop == this;
         }
 
         AttachedPage.ContentFrame.TranslateTo(0, isPresented ? this.Content.Height : 0);

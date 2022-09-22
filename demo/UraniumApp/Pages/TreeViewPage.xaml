@@ -30,7 +30,7 @@
                                     <DataTemplate>
                                         <material:CheckBox Text="{Binding Name}">
                                             <material:CheckBox.Behaviors>
-                                                <root:TreeViewHierarchicalSelectBehavior />
+                                                <material:TreeViewHierarchicalSelectBehavior />
                                             </material:CheckBox.Behaviors>
                                         </material:CheckBox>
                                     </DataTemplate>

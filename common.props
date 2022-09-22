@@ -1,12 +1,28 @@
 <Project>
     <PropertyGroup>
-        <Version>0.12.0</Version>
+        <Version>0.12.1</Version>
+        <PackageIcon>logo_128.png</PackageIcon>
+        <NeutralLanguage>en</NeutralLanguage>
+        <RepositoryUrl>https://github.com/enisn/UraniumUI</RepositoryUrl>
+        <PackageProjectUrl>https://github.com/enisn/UraniumUI</PackageProjectUrl>
+        <Authors>enisn</Authors>
+        <Description>Uranium is a Free &amp; Open-Source UI Kit for MAUI.</Description>
+        <PackageReleaseNotes>Check GitHub releases for changelog.</PackageReleaseNotes>
+
+        <!--Source-Linking-->
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
+        <IncludeSymbols>true</IncludeSymbols>
     </PropertyGroup>
 
     <ItemGroup>
       <None Include="..\..\art\logo_128.png">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
+        <Pack>True</Pack>
+        <PackagePath></PackagePath>
+      </None>
+   </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All"/>
   </ItemGroup>
 </Project>

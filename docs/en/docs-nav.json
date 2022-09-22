@@ -68,6 +68,10 @@
           ]
         },
         {
+          "text": "Validations",
+          "path": "themes/material/Validations.md"
+        },
+        {
           "text": "CheckBox",
           "path": "themes/material/CheckBox.md"
         },

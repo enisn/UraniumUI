@@ -5,6 +5,10 @@ _You may visit [Validations](https://enisn-projects.io/docs/en/inputkit/latest/c
 
 Validations are working compatible together FormView. So, you can use a FormView to create a form and validate the inputs.
 
+| Light - Mobile | Dark - Desktop |
+|--- | --- |
+| ![MAUI Validation](images/validations-all-demo-light-android.gif) | ![MAUI Validation](images/validations-all-demo-dark-windows.gif) |
+
 ## Prebuilt Validations
 UraniumUI Material doesn't provide any prebuilt validations. You can use validations from [InputKit](https://enisn-projects.io/docs/en/inputkit/latest/components/controls/FormView#validations) or create your own.
 

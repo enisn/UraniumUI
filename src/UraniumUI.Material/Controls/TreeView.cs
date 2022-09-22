@@ -64,6 +64,8 @@ public partial class TreeView : VerticalStackLayout
             holder.TreeView = this;
             return holder;
         }));
+
+        OnItemsSourceSet();
     }
 
     /// <summary>

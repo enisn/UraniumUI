@@ -31,7 +31,7 @@ public class TreeViewNodeHolderView : VerticalStackLayout
     };
 
     public VerticalStackLayout NodeChildrens => nodeChildrens;
-    
+
     internal protected VerticalStackLayout nodeChildrens = new VerticalStackLayout
     {
         Margin = new Thickness(10, 0, 0, 0),
@@ -83,7 +83,10 @@ public class TreeViewNodeHolderView : VerticalStackLayout
         });
         this.Add(nodeChildrens);
 
-        this.SetBinding(TreeView.IsExpandedProperty, new Binding(isTextendedProperty, BindingMode.TwoWay));
+        if (!string.IsNullOrEmpty(isTextendedProperty))
+        {
+            this.SetBinding(TreeView.IsExpandedProperty, new Binding(isTextendedProperty, BindingMode.TwoWay));
+        }
 
         BindableLayout.SetItemTemplate(nodeChildrens, new DataTemplate(() =>
         {

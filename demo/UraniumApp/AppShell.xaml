@@ -41,7 +41,7 @@
         </ShellContent>
     </FlyoutItem>
 
-    <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
+    <FlyoutItem FlyoutDisplayOptions="AsMultipleItems" Title="Infrastructural" >
 
         <ShellContent Title="DataGrid" ContentTemplate="{DataTemplate dataGrid:DataGridsIndexPage}">
             <ShellContent.Icon>
@@ -52,6 +52,10 @@
             Title="TabView" 
             Icon="{FontImageSource FontFamily=MaterialOutlined, Glyph={x:Static m:MaterialOutlined.Tab}, Color={StaticResource Primary}}"
             ContentTemplate="{DataTemplate tabs:TabViewIndexPage}"/>
+        <ShellContent 
+            Title="TreeView" 
+            Icon="{FontImageSource FontFamily=MaterialOutlined, Glyph={x:Static m:MaterialOutlined.List_alt}, Color={StaticResource Primary}}"
+            ContentTemplate="{DataTemplate pages:TreeViewPage}"/>
     </FlyoutItem>
 
     <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
@@ -85,6 +89,10 @@
             Title="InputField" 
             Icon="{FontImageSource FontFamily=MaterialOutlined, Glyph={x:Static m:MaterialOutlined.Warning}, Color={StaticResource Primary}}"
             ContentTemplate="{DataTemplate pages:ValidationsPage}"/>
+    </FlyoutItem>
+
+    <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
+
     </FlyoutItem>
 
     <!--

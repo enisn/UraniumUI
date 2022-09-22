@@ -96,6 +96,10 @@
           "path": "themes/material/components/DataGrid.md"
         },
         {
+          "text": "TreeView",
+          "path": "themes/material/components/TreeView.md"
+        },
+        {
           "text": "TabView",
           "path": "themes/material/components/TabView.md"
         }

@@ -46,7 +46,7 @@ public class TreeViewHierarchicalSelectBehavior : Behavior<CheckBox>
             throw new InvalidOperationException("CheckBox isn't in a TreeView ItemTemplate");
         }
 
-        foreach (TreeViewNodeHolderView child in holder.NodeChildrens.Where(x => x is TreeViewNodeHolderView))
+        foreach (TreeViewNodeHolderView child in holder.NodeChildren.Where(x => x is TreeViewNodeHolderView))
         {
             var childCheckBox = (child.NodeView as CheckBox);
             if (childCheckBox.IsChecked != checkBox.IsChecked)
@@ -80,12 +80,12 @@ public class TreeViewHierarchicalSelectBehavior : Behavior<CheckBox>
             mainCheckBox.IconGeometry = InputKit.Shared.Controls.PredefinedShapes.Check;
         }
 
-        if (holder.NodeChildrens.Count > 0)
+        if (holder.NodeChildren.Count > 0)
         {
-            var children = holder.NodeChildrens.OfType<TreeViewNodeHolderView>();
+            var children = holder.NodeChildren.OfType<TreeViewNodeHolderView>();
 
             var lastItemToCheck = (children.FirstOrDefault().NodeView as CheckBox)?.IsChecked ?? throw new InvalidOperationException("CheckBox isn't in a TreeView ItemTemplate");
-            foreach (TreeViewNodeHolderView child in holder.NodeChildrens.Where(x => x is TreeViewNodeHolderView))
+            foreach (TreeViewNodeHolderView child in holder.NodeChildren.Where(x => x is TreeViewNodeHolderView))
             {
                 var checkBox = (child.NodeView as CheckBox);
                 if (lastItemToCheck != checkBox.IsChecked)

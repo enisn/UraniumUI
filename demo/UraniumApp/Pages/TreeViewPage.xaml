@@ -17,7 +17,7 @@
                 <material:TabItem Title="Simple">
                     <material:TabItem.ContentTemplate>
                         <DataTemplate>
-                            <material:TreeView ItemsSource="{Binding Nodes}" IsExpandedPropertyName="IsExtended">
+                            <material:TreeView ItemsSource="{Binding Nodes}" UseAnimation="False" IsExpandedPropertyName="IsExtended" ArrowColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}">
                             </material:TreeView>
                         </DataTemplate>
                     </material:TabItem.ContentTemplate>
@@ -26,7 +26,7 @@
                 <material:TabItem Title="Templated" >
                     <material:TabItem.ContentTemplate>
                         <DataTemplate>
-                            <material:TreeView ItemsSource="{Binding Nodes}">
+                            <material:TreeView ItemsSource="{Binding Nodes}" UseAnimation="False">
                                 <material:TreeView.ItemTemplate>
                                     <DataTemplate>
                                         <HorizontalStackLayout Spacing="5" VerticalOptions="Center">

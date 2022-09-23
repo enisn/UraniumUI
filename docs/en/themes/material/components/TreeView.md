@@ -164,3 +164,30 @@ TreeView provides `TreeViewHierarchicalSelectBehavior` that can be used only wit
 | Light | Dark |
 | --- | --- |
 | ![TreeView Light](images/treeview-selection-light-android.gif) | ![TreeView Dark](images/treeview-selection-dark-windows.gif) |
+
+
+## Customizations
+TreeView allows you to customize its appearance in a couple of ways.
+
+### ArrowColor
+You can change the color of the arrow icon with `ArrowColor` property:
+
+```xml
+<material:TreeView ItemsSource="{Binding Nodes}" ArrowColor="{StaticResource Primary}"/>
+```
+
+| Light | Dark |
+| --- | --- |
+| ![TreeView Light](images/treeview-arrowcolor-light-android.png) | ![TreeView Dark](images/treeview-arrowcolor-dark-windows.png) |
+
+
+### UseAnimation
+Determines whether to use animations when expanding and collapsing nodes. Default value is `true`. You may want to disable animations if you want to improve performance while working with huge amount of tree nodes.
+
+```xml
+<material:TreeView ItemsSource="{Binding Nodes}" UseAnimation="False"/>
+```
+
+| Enabled | Disabled |
+| --- | --- |
+| ![TreeView Animations Enabled](images/treeview-useanimation-dark-windows-enabled.gif) | ![TreeView Animations Disabled](images/treeview-useanimation-dark-windows-disabled.gif) |

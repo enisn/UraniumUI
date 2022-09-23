@@ -23,7 +23,7 @@
                     </material:TabItem.ContentTemplate>
                 </material:TabItem>
 
-                <material:TabItem Title="Templated" >
+                <material:TabItem Title="Templated">
                     <material:TabItem.ContentTemplate>
                         <DataTemplate>
                             <material:TreeView ItemsSource="{Binding Nodes}">

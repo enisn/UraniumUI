@@ -3,7 +3,7 @@ Uranium UI Material Theme on MAUI uses [Static Resources](https://docs.microsoft
 
 
 ## Replacing Resources
-Best way to replace resources is putting files that include resources into `Resources/Styles` folder in your project. Then, you can override any resource by editing an existing resource in those files or creatişng a new one.
+Best way to replace resources is putting files that include resources into `Resources/Styles` folder in your project. Then, you can override any resource by editing an existing resource in those files or creating a new one.
 
 You can check the latest version and place it into yor project from GitHub repository:
 

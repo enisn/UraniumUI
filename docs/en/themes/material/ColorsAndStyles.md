@@ -30,5 +30,5 @@ dotnet new uranium-material-resources -n MaterialOverride
     </ResourceDictionary.MergedDictionaries>
     ```
 
-> _You can remove `<material:ColorResource />` and `<material:StyleResource />` declarions from `App.xaml` file if you configured them before. They're already included in your project now. But after removing them, you'll not be able to get updates. So, you have to update those files after each project update. You can consider keeping you customizations in a separate file._
+> _You can remove `<material:ColorResource />` and `<material:StyleResource />` declarions from `App.xaml` file if you configured them before. They're already included in your project now. But after removing them, you'll not be able to get updates. So, you have to update those files after each project update. You can consider keeping your customizations in a separate file._
 

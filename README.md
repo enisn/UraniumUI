@@ -1,8 +1,17 @@
-![MAUI Uranium UI Kit](art/logo.svg)
-# Uranium UI Kit
-Uranium is a Free & Open-Source UI Kit for .NET MAUI. It provides a set of controls and utilities to build modern applications. It is built on top of the .NET MAUI infrastructure and provides a set of controls and layouts to build modern UIs. It also provides infrastructure for building custom controls and themes on it.
+<div align="center">
+    <img align="center" src="./art/logo.svg" width="33%">
+    <h1 align="center">Uranium UI Kit</h1>
+</div>
 
-[![CodeFactor](https://www.codefactor.io/repository/github/enisn/uraniumui/badge)](https://www.codefactor.io/repository/github/enisn/uraniumui) ![Nuget](https://img.shields.io/nuget/v/UraniumUI?color=blue&logo=nuget) [![NuGet](https://img.shields.io/nuget/dt/UraniumUI.svg)](https://www.nuget.org/packages/UraniumUI/) [![GitHub](https://img.shields.io/github/license/enisn/UraniumUI.svg)](https://www.nuget.org/packages/UraniumUI/) [![Build Status](https://enisn.visualstudio.com/Uranium%20UI/_apis/build/status/enisn.UraniumUI?branchName=master)](https://enisn.visualstudio.com/Uranium%20UI/_build/latest?definitionId=15&branchName=master)
+<div align="center">
+   <a href="https://www.codefactor.io/repository/github/enisn/uraniumui"><img src="https://www.codefactor.io/repository/github/enisn/uraniumui/badge"></a>
+   <a href="https://www.nuget.org/packages/UraniumUI/"><img src="https://img.shields.io/nuget/v/UraniumUI?color=blue&logo=nuget"></a>
+   <a href="https://www.nuget.org/packages/UraniumUI/"><img src="https://img.shields.io/nuget/dt/UraniumUI.svg"></a>
+   <a href="./LICENSE"><img src="https://img.shields.io/github/license/enisn/UraniumUI.svg"></a>
+   <a href="https://enisn.visualstudio.com/Uranium%20UI/_build/latest?definitionId=15&branchName=master"><img src="https://enisn.visualstudio.com/Uranium%20UI/_apis/build/status/enisn.UraniumUI?branchName=master"></a>
+</div>
+
+Uranium is a Free & Open-Source UI Kit for .NET MAUI. It provides a set of controls and utilities to build modern applications. It is built on top of the .NET MAUI infrastructure and provides a set of controls and layouts to build modern UIs. It also provides infrastructure for building custom controls and themes on it.
 
 - Visit [Documentation](https://enisn-projects.io/docs/en/uranium/latest)
 

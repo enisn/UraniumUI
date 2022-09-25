@@ -55,7 +55,7 @@
         <ShellContent 
             Title="TreeView" 
             Icon="{FontImageSource FontFamily=MaterialOutlined, Glyph={x:Static m:MaterialOutlined.List_alt}, Color={StaticResource Primary}}"
-            ContentTemplate="{DataTemplate pages:TreeViewPage}"/>
+            ContentTemplate="{DataTemplate pages:TreeViewIndexPage}"/>
     </FlyoutItem>
 
     <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">

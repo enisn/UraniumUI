@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using UraniumUI;
 
@@ -56,7 +50,6 @@ public class TreeViewFileSystemViewModel : UraniumBindableObject
                 Path = d,
                 IsDirectory = true,
                 IsLeaf = false,
-                //GetChildren = (node) => new ObservableCollection<MyTreeViewNode>(GetContent(node.Value.ToString()))
             };
         }
         var files = Directory.GetFiles(dir);

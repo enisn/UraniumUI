@@ -1,4 +1,4 @@
-﻿namespace UraniumApp.Pages;
+﻿namespace UraniumApp.Pages.TreeViews;
 
 public partial class TreeViewPage : ContentPage
 {

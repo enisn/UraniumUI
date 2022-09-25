@@ -131,6 +131,14 @@ public TreeViewPageViewModel()
 
 They will be rendered as expanded when treeview is initialized.
 
+### IsLeafPropertyName
+If the node object contain its children in a different property, you can set `IsLeafPropertyName` property of the TreeView to the name of the property that contains the state of the node. Default value is `IsLeaf`. If you have a `IsLeaf` property in your node object, it'll be automatically binded. If your property that declares leaf state has a different name, you should consider to set `IsLeafPropertyName`.
+
+```xml
+ <material:TreeView ItemsSource="{Binding Nodes}" IsLeafPropertyName="IsLeaf" />
+```
+
+> Note: **Leaf** status is already managed by the TreeView. But when lazy-loading is used, TreeView can't know if the node is a leaf or not. So you should set `IsLeafPropertyName` to the name of the property that contains the state of the node.
 
 ### ChildrenBinding
 If the node object contain its children in a different property, you can set `ChildrenBinding` property of the TreeView to the name of the property that contains the children. For example, if you have a `SubItems` property in your node object, you should set `ChildrenBinding` to `SubItems`:
@@ -138,6 +146,34 @@ If the node object contain its children in a different property, you can set `Ch
 ```xml
  <material:TreeView ItemsSource="{Binding Nodes}" ChildrenBinding="{Binding SubItems}" />
 ```
+
+---
+
+## Customizations
+TreeView allows you to customize its appearance in a couple of ways.
+
+### ArrowColor
+You can change the color of the arrow icon with `ArrowColor` property:
+
+```xml
+<material:TreeView ItemsSource="{Binding Nodes}" ArrowColor="{StaticResource Primary}"/>
+```
+
+| Light | Dark |
+| --- | --- |
+| ![TreeView Light](images/treeview-arrowcolor-light-android.png) | ![TreeView Dark](images/treeview-arrowcolor-dark-windows.png) |
+
+
+### UseAnimation
+Determines whether to use animations when expanding and collapsing nodes. Default value is `true`. You may want to disable animations if you want to improve performance while working with huge amount of tree nodes.
+
+```xml
+<material:TreeView ItemsSource="{Binding Nodes}" UseAnimation="False"/>
+```
+
+| Enabled | Disabled |
+| --- | --- |
+| ![TreeView Animations Enabled](images/treeview-useanimation-dark-windows-enabled.gif) | ![TreeView Animations Disabled](images/treeview-useanimation-dark-windows-disabled.gif) |
 
 ---
 
@@ -165,29 +201,120 @@ TreeView provides `TreeViewHierarchicalSelectBehavior` that can be used only wit
 | --- | --- |
 | ![TreeView Light](images/treeview-selection-light-android.gif) | ![TreeView Dark](images/treeview-selection-dark-windows.gif) |
 
+---
 
-## Customizations
-TreeView allows you to customize its appearance in a couple of ways.
+## Lazy-Loading
+TreeView supprots lazy-loading of children. It means that children will be loaded only when the node is expanded. TreeView executes `LoadChildrenCommand` command with node item that is expanded as parameter when the node is expanded. You can set `LoadChildrenCommand` property of the TreeView to the command that will be executed when the node is expanded. For example, you can load children from the database when the node is expanded.
 
-### ArrowColor
-You can change the color of the arrow icon with `ArrowColor` property:
+Following properies can be used to define a propert lazy-loading behavior:
+- `IsLeafPropertyName` - The name of the property that contains the state of the node. Default value is `IsLeaf`.
+- `LoadChildrenCommand` - The command that will be executed when the node is expanded.
 
-```xml
-<material:TreeView ItemsSource="{Binding Nodes}" ArrowColor="{StaticResource Primary}"/>
+### Example
+A file system is a good example of lazy-loading. When you open a folder, you don't want to load all of its children. You want to load children only when the folder is expanded. You can use `LoadChildrenCommand` to load children from the database when the folder is expanded.
+
+```csharp
+public class TreeViewFileSystemViewModel : UraniumBindableObject
+{
+    public ObservableCollection<NodeItem> Nodes { get; private set; }
+
+    public ICommand LoadChildrenCommand { get; set; }
+
+    public TreeViewFileSystemViewModel()
+    {
+        InitializeNodes();
+        LoadChildrenCommand = new Command<NodeItem>((node) =>
+        {
+            foreach (var item in GetContent(node.Path))
+            {
+                node.Children.Add(item);
+            }
+
+            if (node.Children.Count == 0)
+            {
+                node.IsLeaf = true;
+            }
+        });
+    }
+
+    void InitializeNodes()
+    {
+        var path = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+
+        if (DeviceInfo.Platform == DevicePlatform.WinUI)
+        {
+            path = "C:\\";
+        }
+
+        Nodes = new ObservableCollection<NodeItem>(
+            GetContent(path));
+    }
+
+    IEnumerable<NodeItem> GetContent(string dir)
+    {
+        var directories = Directory.GetDirectories(dir);
+        foreach (string d in directories)
+        {
+            yield return new NodeItem
+            {
+                Name = d.Split(Path.DirectorySeparatorChar).LastOrDefault(),
+                Path = d,
+                IsDirectory = true,
+                IsLeaf = false,
+            };
+        }
+        var files = Directory.GetFiles(dir);
+
+        foreach (string f in files)
+        {
+            var node = new NodeItem
+            {
+                Name = f.Split(Path.DirectorySeparatorChar).LastOrDefault(),
+                Path = f,
+                IsDirectory = false,
+                IsLeaf = true,
+            };
+            yield return node;
+        }
+    }
+
+    public class NodeItem : UraniumBindableObject
+    {
+        private bool isLeaf;
+
+        public string Name { get; set; }
+        public string Path { get; set; }
+        public bool IsDirectory { get; set; }
+        public bool IsLeaf { get => isLeaf; set => SetProperty(ref isLeaf, value); }
+        public ObservableCollection<NodeItem> Children { get; } = new();
+    }
+}
 ```
 
-| Light | Dark |
-| --- | --- |
-| ![TreeView Light](images/treeview-arrowcolor-light-android.png) | ![TreeView Dark](images/treeview-arrowcolor-dark-windows.png) |
-
-
-### UseAnimation
-Determines whether to use animations when expanding and collapsing nodes. Default value is `true`. You may want to disable animations if you want to improve performance while working with huge amount of tree nodes.
-
 ```xml
-<material:TreeView ItemsSource="{Binding Nodes}" UseAnimation="False"/>
+<material:TreeView 
+        ItemsSource="{Binding Nodes}" 
+        LoadChildrenCommand="{Binding LoadChildrenCommand}">
+    <material:TreeView.ItemTemplate>
+        <DataTemplate>
+            <HorizontalStackLayout Spacing="5" VerticalOptions="Center">
+                <Image>
+                    <Image.Triggers>
+                        <DataTrigger TargetType="Image" Binding="{Binding IsDirectory}" Value="True">
+                            <Setter Property="Source" Value="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Folder}, Color={AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}}" />
+                        </DataTrigger>
+                        <DataTrigger TargetType="Image" Binding="{Binding IsDirectory}" Value="False">
+                            <Setter Property="Source" Value="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Insert_drive_file}, Color={AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}}" />
+                        </DataTrigger>
+                    </Image.Triggers>
+                </Image>
+                <Label Text="{Binding Name}" FontAttributes="Bold" />
+            </HorizontalStackLayout>
+        </DataTemplate>
+    </material:TreeView.ItemTemplate>
+</material:TreeView>
 ```
 
-| Enabled | Disabled |
-| --- | --- |
-| ![TreeView Animations Enabled](images/treeview-useanimation-dark-windows-enabled.gif) | ![TreeView Animations Disabled](images/treeview-useanimation-dark-windows-disabled.gif) |
+| Dark |
+| --- |
+| ![MAUI TreeView lazy-loading](images/treeview-filesystem-dark-windows.gif) |

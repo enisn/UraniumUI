@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<ContentPage x:Class="UraniumApp.Pages.TreeViewPage"
+<ContentPage x:Class="UraniumApp.Pages.TreeViews.TreeViewPage"
              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:material="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
@@ -17,7 +17,7 @@
                 <material:TabItem Title="Simple">
                     <material:TabItem.ContentTemplate>
                         <DataTemplate>
-                            <material:TreeView ItemsSource="{Binding Nodes}" IsExpandedPropertyName="IsExtended">
+                            <material:TreeView LoadChildrenCommand="{Binding LoadChildrenCommand}" ItemsSource="{Binding Nodes}" IsExpandedPropertyName="IsExtended">
                             </material:TreeView>
                         </DataTemplate>
                     </material:TabItem.ContentTemplate>
@@ -59,7 +59,6 @@
                     </material:TabItem.ContentTemplate>
                 </material:TabItem>
             </material:TabView>
-
 
         </StackLayout>
     </ContentPage.Content>

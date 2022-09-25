@@ -1,4 +1,5 @@
 ﻿using InputKit.Shared.Controls;
+using System.Windows.Input;
 using UraniumUI.Pages;
 using UraniumUI.Resources;
 using UraniumUI.Triggers;
@@ -48,8 +49,6 @@ public class TreeViewNodeHolderView : VerticalStackLayout
         }
     }
 
-    public bool IsLeaf => !nodeChildren.Children.Any();
-
     public TreeViewNodeHolderView(DataTemplate dataTemplate, TreeView treeView, BindingBase childrenBinding)
     {
         if (treeView is null)
@@ -73,6 +72,11 @@ public class TreeViewNodeHolderView : VerticalStackLayout
         if (!string.IsNullOrEmpty(TreeView.IsExpandedPropertyName))
         {
             this.SetBinding(TreeView.IsExpandedProperty, new Binding(TreeView.IsExpandedPropertyName, BindingMode.TwoWay));
+        }
+
+        if (!string.IsNullOrEmpty(TreeView.IsLeafPropertyName))
+        {
+            this.SetBinding(IsLeafProperty, new Binding(TreeView.IsLeafPropertyName, BindingMode.TwoWay));
         }
 
         BindableLayout.SetItemTemplate(nodeChildren, new DataTemplate(() =>
@@ -152,9 +156,17 @@ public class TreeViewNodeHolderView : VerticalStackLayout
         }
     }
 
+    public virtual void ApplyIsLeafPropertyBindings()
+    {
+        this.SetBinding(IsLeafProperty, new Binding(this.TreeView.IsLeafPropertyName, BindingMode.TwoWay));
+        foreach (TreeViewNodeHolderView item in this.Children.Where(x => x is TreeViewNodeHolderView))
+        {
+            item.ApplyIsLeafPropertyBindings();
+        }
+    }
+
     protected internal virtual async void OnIsExpandedChanged()
     {
-
         if (TreeView.GetIsExpanded(this))
         {
             if (TreeView.UseAnimation)
@@ -191,5 +203,24 @@ public class TreeViewNodeHolderView : VerticalStackLayout
 
             nodeChildren.IsVisible = false;
         }
+
+        LoadChildrenIfNecessary();
     }
+
+    protected virtual void LoadChildrenIfNecessary()
+    {
+        if (!IsLeaf && !NodeChildren.Children.Any()) // TODO: And children is empty
+        {
+            TreeView.LoadChildrenCommand?.Execute(this.BindingContext);
+        }
+    }
+
+    public bool IsLeaf
+    {
+        get => (bool?)GetValue(IsLeafProperty) ?? !nodeChildren.Children.Any();
+        set => SetValue(IsLeafProperty, value);
+    }
+
+    public static readonly BindableProperty IsLeafProperty = BindableProperty.Create(
+        nameof(IsLeaf), typeof(bool?), typeof(TreeViewNodeHolderView), null, BindingMode.TwoWay);
 }

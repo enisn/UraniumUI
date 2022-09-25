@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Windows.Input;
 using UraniumUI.Resources;
 
 namespace UraniumUI.Material.Controls;
@@ -34,16 +35,30 @@ public partial class TreeView : VerticalStackLayout
         }
     }
 
-    private string isExpandedBinding;
+    private string isExpandedPropertyName = "IsExpanded";
     public string IsExpandedPropertyName
     {
-        get => isExpandedBinding;
+        get => isExpandedPropertyName;
         set
         {
-            isExpandedBinding = value;
+            isExpandedPropertyName = value;
             foreach (TreeViewNodeHolderView view in this.Children.Where(x => x is TreeViewNodeHolderView))
             {
                 view.ApplyIsExpandedPropertyBindings();
+            }
+        }
+    }
+
+    private string isLeafPropertyName = "IsLeaf";
+    public string IsLeafPropertyName
+    {
+        get => isLeafPropertyName;
+        set
+        {
+            isLeafPropertyName = value;
+            foreach (TreeViewNodeHolderView view in this.Children.Where(x => x is TreeViewNodeHolderView))
+            {
+                view.ApplyIsLeafPropertyBindings();
             }
         }
     }
@@ -90,6 +105,11 @@ public partial class TreeView : VerticalStackLayout
     public static readonly BindableProperty ItemTemplateProperty = BindableProperty.Create(
         nameof(ItemTemplate), typeof(DataTemplate), typeof(TreeView),
         defaultValue: DefaultItemTemplate, propertyChanged: (b, o, n) => (b as TreeView).OnItemTemplateChanged());
+
+    public ICommand LoadChildrenCommand { get => (ICommand)GetValue(LoadChildrenCommandProperty); set => SetValue(LoadChildrenCommandProperty, value); }
+
+    public static readonly BindableProperty LoadChildrenCommandProperty = BindableProperty.Create(
+        nameof(LoadChildrenCommand), typeof(ICommand), typeof(TreeView), null);
 
     public Color ArrowColor { get => (Color)GetValue(ArrowColorProperty); set => SetValue(ArrowColorProperty, value); }
 

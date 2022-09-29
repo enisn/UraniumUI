@@ -49,6 +49,8 @@ We welcome contributions and suggestions. Please read our [contributing guide](#
 | - | - |
 
 ## Roadmap
+
+### v1.0
 - [x] [Elevation](https://enisn-projects.io/docs/en/uranium/latest/themes/material/Elevation)
 - [x] [Backdrop](https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/Backdrop)
 - [x] [BottomSheet](https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/BottomSheet)
@@ -70,16 +72,19 @@ We welcome contributions and suggestions. Please read our [contributing guide](#
 - [ ] Cards (Head, Body, Footer) 
 - [x] [TreeView](https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/TreeView)
 - [x] [TabView](https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/TabView)
-- [ ] CalendarView
 - [x] [Dialogs](https://enisn-projects.io/docs/en/uranium/latest/themes/material/Dialogs)
 
-- [ ] SelectionView 
-- [ ] BadgeView
+- [x] SelectionView 
 - [ ] RateView
-- [ ] StatefulButton ( SaveButton )
+- [ ] FAB Floating Action Button
 - [ ] ColorPicker
-- [ ] Slider (RangeSlider)
 - [ ] Banners 
+
+### v2.0
+- [ ] Typeahead (AutoComplete)
+- [ ] Slider (RangeSlider)
+- [ ] CalendarView
+- [ ] BadgeView
 - [ ] OTP Pin Entry
 - [ ] Data Visualization
   - [ ] Pie Chart

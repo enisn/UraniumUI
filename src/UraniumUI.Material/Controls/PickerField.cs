@@ -16,7 +16,20 @@ public class PickerField : InputField
     {
         VerticalOptions = LayoutOptions.Center,
         Margin = new Thickness(10, 0),
+#if WINDOWS
+        Opacity = 0,
+#endif
     };
+
+#if WINDOWS
+    Label labelSelectedItem = new Label
+    {
+        InputTransparent = true,
+        HorizontalOptions = LayoutOptions.Start,
+        VerticalOptions = LayoutOptions.Center,
+        TextColor = ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.Gray)
+    };
+#endif
 
     protected ContentView iconClear = new ContentView
     {
@@ -43,6 +56,10 @@ public class PickerField : InputField
 
         PickerView.SetBinding(PickerView.SelectedItemProperty, new Binding(nameof(SelectedItem), source: this));
         PickerView.SetBinding(PickerView.SelectedIndexProperty, new Binding(nameof(SelectedIndex), source: this));
+
+#if WINDOWS
+        rootGrid.Add(labelSelectedItem, column: 1);
+#endif
     }
 
     protected override object GetValueForValidator()
@@ -63,7 +80,16 @@ public class PickerField : InputField
 
         iconClear.IsVisible = SelectedItem != null;
 
+#if WINDOWS
+        labelSelectedItem.Text = SelectedItem?.ToString();
+#endif
+
         UpdateState();
+    }
+
+    protected override void UpdateState(bool animate = true)
+    {
+        base.UpdateState(animate);
     }
 
     public IList<string> Items => PickerView.Items;

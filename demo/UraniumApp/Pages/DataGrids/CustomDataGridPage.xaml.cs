@@ -6,4 +6,12 @@ public partial class CustomDataGridPage : ContentPage
     {
         InitializeComponent();
     }
+
+    private void Button_Clicked(object sender, EventArgs e)
+    {
+        if (sender is Button button)
+        {
+            Console.WriteLine(button.BindingContext);
+        }
+    }
 }

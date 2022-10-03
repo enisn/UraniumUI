@@ -69,6 +69,7 @@
                                             TextColor="{AppThemeBinding Light={StaticResource OnSecondary},Dark={StaticResource OnSecondaryDark}}"
                                             Command="{Binding Source={x:Reference page}, Path=BindingContext.RemoveItemCommand}"
                                             CommandParameter="{Binding Data}"
+                                            Clicked="Button_Clicked"
                                             />
                                 </DataTemplate>
                             </material:DataGridColumn.CellItemTemplate>

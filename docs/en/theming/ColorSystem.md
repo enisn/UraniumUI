@@ -84,7 +84,7 @@ Color Palette is presented below. You can get it as a base for your own color pa
     <Color x:Key="OnSecondaryContainerDark">#E8DEF8</Color>
 
     <Color x:Key="OnTertiary">#FFFFFF</Color>
-    <Color x:Key="OnTertiary">#492532</Color>
+    <Color x:Key="OnTertiaryDark">#492532</Color>
     <Color x:Key="OnTertiaryContainer">#370B1E</Color>
     <Color x:Key="OnTertiaryContainerDark">#FFD8E4</Color>
 

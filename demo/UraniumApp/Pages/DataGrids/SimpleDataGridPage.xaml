@@ -10,7 +10,13 @@
     <ContentPage.Content>
         <ScrollView>
             <StackLayout>
-                <material:DataGrid ItemsSource="{Binding Items}" UseAutoColumns="True" HorizontalOptions="Center" Margin="30" />
+                <material:DataGrid ItemsSource="{Binding Items}" UseAutoColumns="True" HorizontalOptions="Center" Margin="30">
+                    <material:DataGrid.TitleTemplate>
+                        <DataTemplate>
+                            <Label Text="{Binding Value}" FontSize="Subtitle" Margin="10" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+                        </DataTemplate>
+                    </material:DataGrid.TitleTemplate>
+                </material:DataGrid>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

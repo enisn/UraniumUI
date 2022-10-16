@@ -16,6 +16,12 @@ public partial class DataGrid
         BindableProperty.Create(nameof(CellItemTemplate), typeof(DataTemplate), typeof(DataGrid), defaultValue: null,
             propertyChanged: (bo, ov, nv) => (bo as DataGrid).Render());
 
+    public DataTemplate TitleTemplate { get => (DataTemplate)GetValue(TitleTemplateProperty); set => SetValue(TitleTemplateProperty, value); }
+
+    public static readonly BindableProperty TitleTemplateProperty =
+        BindableProperty.Create(nameof(TitleTemplate), typeof(DataTemplate), typeof(DataGrid), defaultValue: null,
+            propertyChanged: (bo, ov, nv) => (bo as DataGrid).OnTitleTemplateChanged());
+
     public Color LineSeperatorColor { get => (Color)GetValue(LineSeperatorColorProperty); set => SetValue(LineSeperatorColorProperty, value); }
 
     public static readonly BindableProperty LineSeperatorColorProperty =

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage x:Class="UraniumApp.Pages.DataGrids.SimpleCustomTitleDataGridPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+             xmlns:material="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
+             xmlns:local="clr-namespace:UraniumApp.Pages.DataGrids">
+    <ContentPage.BindingContext>
+        <local:SimpleDataGridPageViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout>
+                <material:DataGrid ItemsSource="{Binding Items}" HorizontalOptions="Center" Margin="30">
+                    <material:DataGrid.Columns>
+                        <material:DataGridColumn PropertyName="Id">
+                            <material:DataGridColumn.TitleView>
+                                <Image Source="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Fingerprint}, Color={AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}}" />
+                            </material:DataGridColumn.TitleView>
+                        </material:DataGridColumn>
+
+                        <material:DataGridColumn PropertyName="Name">
+                            <material:DataGridColumn.TitleView>
+                                <Image Source="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Badge}, Color={AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}}" />
+                            </material:DataGridColumn.TitleView>
+                        </material:DataGridColumn>
+
+                        <material:DataGridColumn PropertyName="Age">
+                            <material:DataGridColumn.TitleView>
+                                <Image Source="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Calendar_today}, Color={AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}}" />
+                            </material:DataGridColumn.TitleView>
+                        </material:DataGridColumn>
+                    </material:DataGrid.Columns>
+                </material:DataGrid>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

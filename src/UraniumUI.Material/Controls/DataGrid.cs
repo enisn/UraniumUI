@@ -172,19 +172,29 @@ public partial class DataGrid : Frame
         }
     }
 
-    protected virtual void AddTableHeaders()
+    protected virtual void AddTableHeaders(int row = 0)
     {
         for (int i = 0; i < Columns.Count; i++)
         {
-            var label = LabelFactory() ?? CreateLabel();
-            label.FontAttributes = FontAttributes.Bold;
+            var titleView = Columns[i].TitleView 
+                ?? TitleTemplate?.CreateContent() as View
+                ?? LabelFactory() 
+                ?? CreateLabel();
+
+            if (titleView is Label label)
+            {
+                label.FontAttributes = FontAttributes.Bold;
+            }
+
             // TODO: Use an attribute to localize it.
-            label.BindingContext = new CellBindingContext
+            titleView.BindingContext = new CellBindingContext
             {
                 Value = Columns[i].Title
             };
-            _rootGrid.Add(label, column: i, row: 0);
+
+            _rootGrid.Add(titleView, column: i, row);
         }
+
         AddSeparator(1);
     }
 
@@ -292,7 +302,7 @@ public partial class DataGrid : Frame
     {
         _rootGrid.RowDefinitions.Clear();
         var actualRows = rows * 2 - 1;
-        
+
         for (int i = 0; i < actualRows; i++)
         {
             _rootGrid.AddRowDefinition(new RowDefinition(GridLength.Auto));
@@ -353,6 +363,15 @@ public partial class DataGrid : Frame
         if (EmptyViewTemplate != null)
         {
             EmptyView = null;
+        }
+    }
+
+    protected virtual void OnTitleTemplateChanged()
+    {
+        if (_rootGrid.Children.Any())
+        {
+            RemoveRow(0);
+            AddTableHeaders();
         }
     }
 

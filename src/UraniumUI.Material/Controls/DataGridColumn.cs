@@ -6,6 +6,8 @@ public class DataGridColumn
 {
     public string Title { get; set; }
 
+    public View TitleView { get; set; }
+
     public DataTemplate CellItemTemplate { get; set; }
 
     public string PropertyName { get; set; }

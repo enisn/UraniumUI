@@ -21,4 +21,9 @@ public partial class DataGridsIndexPage : ContentPage
     {
         Navigation.PushAsync(new SelectableDataGridPage());
     }
+
+    private void GoToSimpleCustomTitleDataGrid(object sender, EventArgs e)
+    {
+        Navigation.PushAsync(new SimpleCustomTitleDataGridPage());
+    }
 }

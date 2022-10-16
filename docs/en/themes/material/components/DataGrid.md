@@ -72,7 +72,6 @@ You can use any property of [CellBindingContext](#cellbindingcontext) object ins
 
 ### Columns
 
-
 #### Auto Columns
 Columns are automatically detected by **DataGrid** when `UseAutoColumns` property is set as `True`. It uses reflection to get properties of the data source. You can use DataAnnosations attributes to define Title of column in auto mode. Adding `[DisplayName]` attribute to the property will define the title of the column.
 
@@ -161,7 +160,7 @@ Column width can be defined by using `Width` property of `DataGridColumn` class.
 
 		<material:DataGridColumn PropertyName="Name" Title="Student Name" Width="Auto"/>
 
-		<material:DataGridColumn PropertyName="Age" Title="Student Age" Width="Star"/>
+		<material:DataGridColumn PropertyName="Age" Title="Student Age" Width="*"/>
 
 		<material:DataGridColumn PropertyName="Id" Title="Identity" Width="100"/>
 
@@ -171,7 +170,55 @@ Column width can be defined by using `Width` property of `DataGridColumn` class.
 
 ![MAUI DataGrid Column Width](images/datagrid-column-width.png)
 
+#### TitleView
+You can define a custom view for the header of the column by using `TitleView` property of `DataGridColumn` class. It is a `View` that will be rendered as the header of the column. You can use `Binding` to bind the properties of the column. Since it's a regular cell of the DataGrid its binding context is [CellBindingContext](#cellbindingcontext). 
+
+```xml
+ <material:DataGrid ItemsSource="{Binding Items}">
+	<material:DataGrid.Columns>
+		<material:DataGridColumn PropertyName="Id">
+			<material:DataGridColumn.TitleView>
+				<Image Source="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Fingerprint}, Color={StaticResource Primary}}" />
+			</material:DataGridColumn.TitleView>
+		</material:DataGridColumn>
+
+		<material:DataGridColumn PropertyName="Name">
+			<material:DataGridColumn.TitleView>
+				<Image Source="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Badge}, Color={StaticResource Primary}}" />
+			</material:DataGridColumn.TitleView>
+		</material:DataGridColumn>
+
+		<material:DataGridColumn PropertyName="Age">
+			<material:DataGridColumn.TitleView>
+				<Image Source="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Calendar_today}, Color={StaticResource Primary}}" />
+			</material:DataGridColumn.TitleView>
+		</material:DataGridColumn>
+	</material:DataGrid.Columns>
+</material:DataGrid>
+```
+
+| Light | Dark |
+| --- | --- |
+| ![MAUI DataGrid TitleView](images/datagrid-titleview-demo-light.png) | ![MAUI DataGrid TitleView](images/datagrid-titleview-demo-dark.png) |
+
 ---
+
+### TitleTemplate
+You can define a custom template for the title of the **DataGrid** by using `TitleTemplate` property. This is still a table cell and its binding context will be [CellBindingContext](#cellbindingcontext). You can use `Value` property of `CellBindingContext` to get the title of the column.
+
+```xml
+<material:DataGrid ItemsSource="{Binding Items}" HorizontalOptions="Center" Margin="30">
+	<material:DataGrid.TitleTemplate>
+		<DataTemplate>
+			<Label Text="{Binding Value}" FontSize="Big" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+		</DataTemplate>
+	</material:DataGrid.TitleTemplate>
+</material:DataGrid>
+```
+
+| Light | Dark |
+| --- | --- |
+| ![MAUI DataGrid Title Template](images/datagrid-titletemplate-demo-light.png) | ![MAUI DataGrid Title Template](images/datagrid-titletemplate-demo-dark.png) |
 
 ### EmptyView
 
@@ -254,8 +301,6 @@ public class MainViewModel
 ```
 
 ![MAUI DataGrid Selection Deletion](images/datagrid-selection-deletion.gif)
-
-### EmptyView
 
 ## Tips
 

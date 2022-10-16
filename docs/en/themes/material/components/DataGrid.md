@@ -255,8 +255,6 @@ public class MainViewModel
 
 ![MAUI DataGrid Selection Deletion](images/datagrid-selection-deletion.gif)
 
-### EmptyView
-
 ## Tips
 
 You can place an activity indicator inside the DataGrid to show loading state if you make a network call to get data.

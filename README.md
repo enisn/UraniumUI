@@ -58,10 +58,8 @@ We welcome contributions and suggestions. Please read our [contributing guide](#
   - [x] [FontAwesome](https://enisn-projects.io/docs/en/uranium/latest/theming/Icons#fontawesome)
   - [x] [Material Icons](https://enisn-projects.io/docs/en/uranium/latest/theming/Icons#material-icons)
 - [x] [DataGrid](https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/DataGrid)
-- [ ] SelectableText
-- [ ] SegmentedControl
-- [ ] Slider (Header, with dots)
-- [ ] Chips (multiple selection)
+ - [ ] Pagination
+ - [ ] Sorting
 - [x] CheckBox (customize inputkit's one)
 - [x] RadioButton (customize inputkit's one)
 - [x] [InputField](https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/InputField)
@@ -69,16 +67,22 @@ We welcome contributions and suggestions. Please read our [contributing guide](#
  - [x] [PickerField](https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/PickerField)
  - [x] [TimePickerField](https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/TimePickerField)
  - [x] [DatePickerField](https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/DatePickerField)
-- [ ] Cards (Head, Body, Footer) 
+- [x] SelectionView 
 - [x] [TreeView](https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/TreeView)
+ - [ ] Drag & Drop
 - [x] [TabView](https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/TabView)
 - [x] [Dialogs](https://enisn-projects.io/docs/en/uranium/latest/themes/material/Dialogs)
 
-- [x] SelectionView 
+### v1.1
+- [ ] SelectableText
+- [ ] SegmentedControl
+- [ ] Slider (Header, with dots)
+- [ ] Chips (multiple selection)
 - [ ] RateView
 - [ ] FAB Floating Action Button
 - [ ] ColorPicker
 - [ ] Banners 
+- [ ] Cards (Head, Body, Footer) 
 
 ### v2.0
 - [ ] Typeahead (AutoComplete)

@@ -50,23 +50,8 @@ We welcome contributions and suggestions. Please read our [contributing guide](#
 
 ## Roadmap
 
-### v1.0
-- [x] [Elevation](https://enisn-projects.io/docs/en/uranium/latest/themes/material/Elevation)
-- [x] [Backdrop](https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/Backdrop)
-- [x] [BottomSheet](https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/BottomSheet)
-- [x] [Icons](https://enisn-projects.io/docs/en/uranium/latest/theming/Icons)
-  - [x] [FontAwesome](https://enisn-projects.io/docs/en/uranium/latest/theming/Icons#fontawesome)
-  - [x] [Material Icons](https://enisn-projects.io/docs/en/uranium/latest/theming/Icons#material-icons)
-- [x] CheckBox (customize inputkit's one)
-- [x] RadioButton (customize inputkit's one)
-- [x] [InputField](https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/InputField)
- - [x] [TextField](https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/TextField)
- - [x] [PickerField](https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/PickerField)
- - [x] [TimePickerField](https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/TimePickerField)
- - [x] [DatePickerField](https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/DatePickerField)
-- [x] SelectionView
-- [x] [TabView](https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/TabView)
-- [x] [Dialogs](https://enisn-projects.io/docs/en/uranium/latest/themes/material/Dialogs)
+See [milestones](https://github.com/enisn/UraniumUI/milestones) section in the repository.
+
 
 ### v1.1
 - [x] [DataGrid]

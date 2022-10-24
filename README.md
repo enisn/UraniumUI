@@ -8,7 +8,7 @@
    <a href="https://www.nuget.org/packages/UraniumUI/"><img src="https://img.shields.io/nuget/v/UraniumUI?color=blue&logo=nuget"></a>
    <a href="https://www.nuget.org/packages/UraniumUI/"><img src="https://img.shields.io/nuget/dt/UraniumUI.svg"></a>
    <a href="./LICENSE"><img src="https://img.shields.io/github/license/enisn/UraniumUI.svg"></a>
-   <a href="https://enisn.visualstudio.com/Uranium%20UI/_build/latest?definitionId=15&branchName=master"><img src="https://enisn.visualstudio.com/Uranium%20UI/_apis/build/status/enisn.UraniumUI?branchName=master"></a>
+   <a href="https://enisn.visualstudio.com/Uranium%20UI/_build/latest?definitionId=15&branchName=develop"><img src="https://enisn.visualstudio.com/Uranium%20UI/_apis/build/status/enisn.UraniumUI?branchName=develop"></a>
 </div>
 
 Uranium is a Free & Open-Source UI Kit for .NET MAUI. It provides a set of controls and utilities to build modern applications. It is built on top of the .NET MAUI infrastructure and provides a set of controls and layouts to build modern UIs. It also provides infrastructure for building custom controls and themes on it.

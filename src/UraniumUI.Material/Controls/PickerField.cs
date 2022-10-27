@@ -56,6 +56,7 @@ public class PickerField : InputField
 
         PickerView.SetBinding(PickerView.SelectedItemProperty, new Binding(nameof(SelectedItem), source: this));
         PickerView.SetBinding(PickerView.SelectedIndexProperty, new Binding(nameof(SelectedIndex), source: this));
+        PickerView.SetBinding(PickerView.IsEnabledProperty, new Binding(nameof(SelectedIndex), source: this));
 
 #if WINDOWS
         rootGrid.Add(labelSelectedItem, column: 1);

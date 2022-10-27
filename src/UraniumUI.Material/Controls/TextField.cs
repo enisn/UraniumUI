@@ -42,6 +42,11 @@ public partial class TextField : InputField
 
     private void EntryView_TextChanged(object sender, TextChangedEventArgs e)
     {
+        if (string.IsNullOrEmpty(e.OldTextValue) || string.IsNullOrEmpty(e.NewTextValue))
+        {
+            UpdateState();
+        }
+
         CheckAndShowValidations();
     }
 

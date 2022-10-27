@@ -8,14 +8,14 @@ namespace UraniumUI.Material.Controls;
 
 public partial class InputField : IValidatable
 {
-    public List<IValidation> Validations { get; } = new ();
+    public List<IValidation> Validations { get; } = new();
     public bool IsValid { get => ValidationResults().All(x => x.isValid); }
 
     protected Lazy<ContentView> iconValidation = new Lazy<ContentView>(() => new ContentView
     {
         VerticalOptions = LayoutOptions.Center,
         HorizontalOptions = LayoutOptions.End,
-        Padding = new Thickness(5,0),
+        Padding = new Thickness(5, 0),
         Content = new Path
         {
             Fill = ColorResource.GetColor("Error", "ErrorDark", Colors.Red),
@@ -51,7 +51,6 @@ public partial class InputField : IValidatable
             if (isStateChanged)
             {
                 endIconsContainer.Remove(iconValidation.Value);
-                //rootGrid.Remove(iconValidation.Value);
                 this.Remove(labelValidation.Value);
             }
         }
@@ -63,7 +62,6 @@ public partial class InputField : IValidatable
             if (isStateChanged)
             {
                 endIconsContainer.Add(iconValidation.Value);
-                //rootGrid.Add(iconValidation.Value, column: 1);
                 this.Add(labelValidation.Value, row: 1);
             }
         }
@@ -73,9 +71,21 @@ public partial class InputField : IValidatable
     {
         foreach (var validation in Validations)
         {
+            yield return ValidateOne(validation);
+        }
+    }
+
+    protected (bool isValid, string message) ValidateOne(IValidation validation)
+    {
+        try
+        {
             var value = GetValueForValidator();
             var validated = validation.Validate(value);
-            yield return new(validated, validation.Message);
+            return new(validated, validation.Message);
+        }
+        catch (Exception ex)
+        {
+            return new(false, ex.Message);
         }
     }
 

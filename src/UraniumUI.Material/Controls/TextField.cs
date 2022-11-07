@@ -17,7 +17,7 @@ public partial class TextField : InputField
 		VerticalOptions = LayoutOptions.Center
 	};
 
-	protected Lazy<ContentView> iconClear = new Lazy<ContentView>(() => new ContentView
+	protected ContentView iconClear = new ContentView
 	{
 		VerticalOptions = LayoutOptions.Center,
 		HorizontalOptions = LayoutOptions.End,
@@ -28,12 +28,19 @@ public partial class TextField : InputField
 			Data = UraniumShapes.X,
 			Fill = ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.DarkGray).WithAlpha(.5f),
 		}
-	});
+	};
 
 	public override bool HasValue { get => !string.IsNullOrEmpty(Text); }
 
 	public TextField()
 	{
+		iconClear.GestureRecognizers.Add(new TapGestureRecognizer
+		{
+			Command = new Command(Clear)
+		});
+
+		UpdateClearIconState();
+
 		EntryView.SetBinding(Entry.TextProperty, new Binding(nameof(Text), source: this));
 		EntryView.SetBinding(Entry.ReturnCommandParameterProperty, new Binding(nameof(ReturnCommandParameter), source: this));
 		EntryView.SetBinding(Entry.ReturnCommandProperty, new Binding(nameof(ReturnCommand), source: this));
@@ -55,6 +62,14 @@ public partial class TextField : InputField
 #endif
 	}
 
+	public void Clear()
+	{
+		if (IsEnabled)
+		{
+			Text = string.Empty;
+		}
+	}
+
 	private void EntryView_TextChanged(object sender, TextChangedEventArgs e)
 	{
 		if (string.IsNullOrEmpty(e.OldTextValue) || string.IsNullOrEmpty(e.NewTextValue))
@@ -63,6 +78,11 @@ public partial class TextField : InputField
 		}
 
 		CheckAndShowValidations();
+
+		if (AllowClear)
+		{
+			iconClear.IsVisible = !string.IsNullOrEmpty(e.NewTextValue);
+		}
 	}
 
 	protected override object GetValueForValidator()
@@ -70,21 +90,28 @@ public partial class TextField : InputField
 		return EntryView.Text;
 	}
 
+	protected virtual void OnClearTapped()
+	{
+		EntryView.Text = string.Empty;
+	}
+
 	protected virtual void OnAllowClearChanged()
+	{
+		UpdateClearIconState();
+	}
+
+	protected virtual void UpdateClearIconState()
 	{
 		if (AllowClear)
 		{
-			if (!endIconsContainer.Contains(iconClear.Value))
+			if (!endIconsContainer.Contains(iconClear))
 			{
-				endIconsContainer.Add(iconClear.Value);
+				endIconsContainer.Add(iconClear);
 			}
 		}
 		else
 		{
-			if (iconClear.IsValueCreated)
-			{
-				endIconsContainer.Remove(iconClear.Value);
-			}
+			endIconsContainer.Remove(iconClear);
 		}
 	}
 }

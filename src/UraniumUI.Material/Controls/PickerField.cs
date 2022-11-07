@@ -82,7 +82,10 @@ public class PickerField : InputField
 		OnPropertyChanged(nameof(SelectedItem));
 		CheckAndShowValidations();
 
-		iconClear.IsVisible = SelectedItem != null;
+		if (AllowClear)
+		{
+			iconClear.IsVisible = SelectedItem != null;
+		}
 
 #if WINDOWS
 		labelSelectedItem.Text = SelectedItem?.ToString();

@@ -80,7 +80,10 @@ public class TimePickerField : InputField
 #else
 		TimePickerView.Opacity = Time == null ? 0 : 1;
 #endif
-		iconClear.IsVisible = Time != null;
+		if (AllowClear)
+		{
+			iconClear.IsVisible = Time != null;
+		}
 
 		UpdateState();
 	}

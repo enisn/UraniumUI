@@ -8,7 +8,7 @@
    <a href="https://www.nuget.org/packages/UraniumUI/"><img src="https://img.shields.io/nuget/v/UraniumUI?color=blue&logo=nuget"></a>
    <a href="https://www.nuget.org/packages/UraniumUI/"><img src="https://img.shields.io/nuget/dt/UraniumUI.svg"></a>
    <a href="./LICENSE"><img src="https://img.shields.io/github/license/enisn/UraniumUI.svg"></a>
-   <a href="https://enisn.visualstudio.com/Uranium%20UI/_build/latest?definitionId=15&branchName=master"><img src="https://enisn.visualstudio.com/Uranium%20UI/_apis/build/status/enisn.UraniumUI?branchName=master"></a>
+   <a href="https://enisn.visualstudio.com/Uranium%20UI/_build/latest?definitionId=15&branchName=develop"><img src="https://enisn.visualstudio.com/Uranium%20UI/_apis/build/status/enisn.UraniumUI?branchName=develop"></a>
 </div>
 
 Uranium is a Free & Open-Source UI Kit for .NET MAUI. It provides a set of controls and utilities to build modern applications. It is built on top of the .NET MAUI infrastructure and provides a set of controls and layouts to build modern UIs. It also provides infrastructure for building custom controls and themes on it.
@@ -50,35 +50,24 @@ We welcome contributions and suggestions. Please read our [contributing guide](#
 
 ## Roadmap
 
-### v1.0
-- [x] [Elevation](https://enisn-projects.io/docs/en/uranium/latest/themes/material/Elevation)
-- [x] [Backdrop](https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/Backdrop)
-- [x] [BottomSheet](https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/BottomSheet)
-- [x] [Icons](https://enisn-projects.io/docs/en/uranium/latest/theming/Icons)
-  - [x] [FontAwesome](https://enisn-projects.io/docs/en/uranium/latest/theming/Icons#fontawesome)
-  - [x] [Material Icons](https://enisn-projects.io/docs/en/uranium/latest/theming/Icons#material-icons)
-- [x] [DataGrid](https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/DataGrid)
+See [milestones](https://github.com/enisn/UraniumUI/milestones) section in the repository.
+
+
+### v1.1
+- [x] [DataGrid]
+ - [ ] Pagination
+ - [ ] Sorting
+- [x] [TreeView]
+ - [ ] Drag & Drop
 - [ ] SelectableText
 - [ ] SegmentedControl
 - [ ] Slider (Header, with dots)
 - [ ] Chips (multiple selection)
-- [x] CheckBox (customize inputkit's one)
-- [x] RadioButton (customize inputkit's one)
-- [x] [InputField](https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/InputField)
- - [x] [TextField](https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/TextField)
- - [x] [PickerField](https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/PickerField)
- - [x] [TimePickerField](https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/TimePickerField)
- - [x] [DatePickerField](https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/DatePickerField)
-- [ ] Cards (Head, Body, Footer) 
-- [x] [TreeView](https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/TreeView)
-- [x] [TabView](https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/TabView)
-- [x] [Dialogs](https://enisn-projects.io/docs/en/uranium/latest/themes/material/Dialogs)
-
-- [x] SelectionView 
 - [ ] RateView
 - [ ] FAB Floating Action Button
 - [ ] ColorPicker
 - [ ] Banners 
+- [ ] Cards (Head, Body, Footer) 
 
 ### v2.0
 - [ ] Typeahead (AutoComplete)

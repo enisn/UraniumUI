@@ -68,7 +68,10 @@ public class TimePickerField : InputField
 
 	protected void OnClearTapped(object sender, EventArgs e)
 	{
-		Time = null;
+		if (IsEnabled)
+		{
+			Time = null;
+		}
 	}
 
 	protected virtual void OnTimeChanged()

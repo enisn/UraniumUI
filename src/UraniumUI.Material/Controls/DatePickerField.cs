@@ -69,7 +69,10 @@ public class DatePickerField : InputField
 
 	protected void OnClearTapped(object sender, EventArgs e)
 	{
-		Date = null;
+		if (IsEnabled)
+		{
+			Date = null;
+		}
 	}
 
 	protected virtual void OnDateChanged()

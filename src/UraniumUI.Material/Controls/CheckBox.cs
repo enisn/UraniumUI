@@ -5,6 +5,5 @@ public class CheckBox : InputKit.Shared.Controls.CheckBox
 {
 	public CheckBox()
 	{
-        
 	}
 }

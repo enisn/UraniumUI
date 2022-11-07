@@ -52,7 +52,7 @@ public class PickerField : InputField
 		clearGestureRecognizer.Tapped += OnClearTapped;
 		iconClear.GestureRecognizers.Add(clearGestureRecognizer);
 
-		endIconsContainer.Add(iconClear);
+		UpdateClearIconState();
 
 		PickerView.SetBinding(PickerView.SelectedItemProperty, new Binding(nameof(SelectedItem), source: this));
 		PickerView.SetBinding(PickerView.SelectedIndexProperty, new Binding(nameof(SelectedIndex), source: this));
@@ -91,9 +91,24 @@ public class PickerField : InputField
 		UpdateState();
 	}
 
-	protected override void UpdateState(bool animate = true)
+	protected virtual void OnAllowClearChanged()
 	{
-		base.UpdateState(animate);
+		UpdateClearIconState();
+	}
+
+	protected virtual void UpdateClearIconState()
+	{
+		if (AllowClear)
+		{
+			if (!endIconsContainer.Contains(iconClear))
+			{
+				endIconsContainer.Add(iconClear);
+			}
+		}
+		else
+		{
+			endIconsContainer.Remove(iconClear);
+		}
 	}
 
 	public IList<string> Items => PickerView.Items;
@@ -161,4 +176,11 @@ public class PickerField : InputField
 	public static readonly BindableProperty CharacterSpacingProperty = BindableProperty.Create(
 		nameof(CharacterSpacing), typeof(double), typeof(PickerField), Picker.CharacterSpacingProperty.DefaultValue,
 		propertyChanged: (bindable, oldValue, newValue) => (bindable as PickerField).PickerView.CharacterSpacing = (double)newValue);
+	public bool AllowClear { get => (bool)GetValue(AllowClearProperty); set => SetValue(AllowClearProperty, value); }
+
+	public static BindableProperty AllowClearProperty = BindableProperty.Create(
+		nameof(AllowClear),
+		typeof(bool), typeof(PickerField),
+		true,
+		propertyChanged: (bindable, oldValue, newValue) => (bindable as PickerField).OnAllowClearChanged());
 }

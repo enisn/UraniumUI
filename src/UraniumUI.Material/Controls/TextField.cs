@@ -30,7 +30,6 @@ public partial class TextField : InputField
         EntryView.HandlerChanged += (s, e) =>
         {
             var textBox = EntryView.Handler.PlatformView as Microsoft.UI.Xaml.Controls.TextBox;
-            Console.WriteLine(EntryView.Handler.PlatformView as Microsoft.UI.Xaml.Controls.TextBox);
 
             textBox.FocusVisualPrimaryThickness = new Microsoft.UI.Xaml.Thickness(0);
             textBox.FocusVisualSecondaryThickness = new Microsoft.UI.Xaml.Thickness(0);

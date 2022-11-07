@@ -106,6 +106,16 @@
       ]
     },
     {
+      "text": "Migration Guide",
+      "items":[
+        {
+          "text": "Migration to v1.1",
+          "path": "migration-guides/Migrating-To-1.1.md"
+        }
+      ]
+      ]
+    },
+    {
         "text": "Support",
         "path": "Support.md",
         "items":[

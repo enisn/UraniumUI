@@ -45,6 +45,7 @@ public class DatePickerField : InputField
         endIconsContainer.Add(iconClear);
 
         DatePickerView.SetBinding(DatePickerView.DateProperty, new Binding(nameof(Date), source: this));
+        DatePickerView.SetBinding(DatePickerView.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
 
 #if MACCATALYST
         labelTitle.InputTransparent = false;

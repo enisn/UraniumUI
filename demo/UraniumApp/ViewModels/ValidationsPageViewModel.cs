@@ -13,10 +13,10 @@ public class ValidationsPageViewModel : UraniumBindableObject
 {
     private string email = string.Empty;
     private string fullName = string.Empty;
-    private Gender gender;
+    private Gender? gender;
     private DateTime? birthDate;
     private TimeSpan? meetingTime;
-    private int numberOfSeats;
+    private int? numberOfSeats;
     private bool isTermsAndConditionsAccepted;
 
     public ValidationsPageViewModel()
@@ -46,18 +46,31 @@ public class ValidationsPageViewModel : UraniumBindableObject
             NumberOfSeats = default;
             IsTermsAndConditionsAccepted = default;
         });
+
+        FillCommand = new Command(() =>
+        {
+            Email = "a@b.c";
+            FullName = "Full Name";
+            Gender = ViewModels.Gender.Male;
+            BirthDate = DateTime.UtcNow.AddYears(-26);
+            MeetingTime = new TimeSpan(10,00,00);
+            NumberOfSeats = 2;
+            IsTermsAndConditionsAccepted = true;
+        });
     }
 
     public ICommand SubmitCommand { get; set; }
 
     public ICommand ClearCommand { get; set; }
 
+    public ICommand FillCommand { get; set; }
+
     public string Email { get => email; set => SetProperty(ref email, value); }
     public string FullName { get => fullName; set => SetProperty(ref fullName, value); }
-    public Gender Gender { get => gender; set => SetProperty(ref gender, value); }
+    public Gender? Gender { get => gender; set => SetProperty(ref gender, value); }
     public DateTime? BirthDate { get => birthDate; set => SetProperty(ref birthDate, value); }
     public TimeSpan? MeetingTime { get => meetingTime; set => SetProperty(ref meetingTime, value); }
-    public int NumberOfSeats { get => numberOfSeats; set => SetProperty(ref numberOfSeats, value); }
+    public int? NumberOfSeats { get => numberOfSeats; set => SetProperty(ref numberOfSeats, value); }
     public bool IsTermsAndConditionsAccepted { get => isTermsAndConditionsAccepted; set => SetProperty(ref isTermsAndConditionsAccepted, value); }
 }
 public enum Gender

@@ -16,14 +16,14 @@
             <StackLayout Padding="25" HorizontalOptions="Center" MaximumWidthRequest="400">
                 <input:FormView SubmitCommand="{Binding SubmitCommand}" Spacing="20">
 
-                    <material:TextField Title="Email" 
+                    <material:TextField Title="Email"
                                         Text="{Binding Email}" 
                                         Icon="{FontImage FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Email}}">
                         <validation:RequiredValidation />
                         <validation:RegexValidation Message="Please type a valid e-mail address." Pattern="{x:Static input:AdvancedEntry.REGEX_EMAIL}"/>
                     </material:TextField>
 
-                    <material:TextField Title="Fullname" 
+                    <material:TextField Title="Fullname"
                                         Text="{Binding FullName}" 
                                         Icon="{FontImage FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Person}}">
                         <validation:RequiredValidation />
@@ -43,13 +43,13 @@
                         <validation:RequiredValidation />
                     </material:PickerField>
 
-                    <material:DatePickerField Title="Birth Date" 
+                    <material:DatePickerField Title="Birth Date"
                                         Date="{Binding BirthDate}" 
                                         Icon="{FontImage FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Calendar_month}}">
                         <validation:RequiredValidation />
                     </material:DatePickerField>
-                    
-                    <material:TimePickerField Title="Preferred Meeting Time" 
+
+                    <material:TimePickerField Title="Preferred Meeting Time"
                                         Time="{Binding MeetingTime}" 
                                         Icon="{FontImage FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Alarm}}">
                         <validation:RequiredValidation />
@@ -57,7 +57,7 @@
                         <validation:MinValueValidation MinValue="10:30" />
                     </material:TimePickerField>
 
-                    <material:TextField Title="Number of seats" 
+                    <material:TextField Title="Number of seats"
                                         Text="{Binding NumberOfSeats}"
                                         Keyboard="Numeric"
                                         Icon="{FontImage FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Airline_seat_recline_normal}}">
@@ -77,6 +77,10 @@
                     <Button Text="Clear"
                             Command="{Binding ClearCommand}"
                             StyleClass="OutlinedButton"/>
+
+                    <Button Text="Fill" 
+                            Command="{Binding FillCommand}"
+                            StyleClass="FilledTonalButton"/>
                 </input:FormView>
             </StackLayout>
         </ScrollView>

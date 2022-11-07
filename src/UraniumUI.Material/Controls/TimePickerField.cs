@@ -58,6 +58,7 @@ public class TimePickerField : InputField
         });
 #endif
         TimePickerView.SetBinding(TimePicker.TimeProperty, new Binding(nameof(Time), source: this));
+        TimePickerView.SetBinding(TimePicker.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
     }
 
     protected override object GetValueForValidator()

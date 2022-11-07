@@ -33,6 +33,22 @@ DatePickerFields support setting an icon on the left side of the control. You ca
 | --- | --- |
 | ![MAUI Material Input](images/datepickerfield-icon-light-android.gif) | ![MAUI Material Input](images/datepickerfield-icon-dark-ios.gif) |
 
+## AllowClear
+DatePickerFields support clearing the selected date by setting the `AllowClear` property to `true`. Default value is `true`. You can make it `false` to disable clearing.
+
+```xml
+<material:DatePickerField 
+    Title="Pick a Date (Clearable)"
+    AllowClear="True" />
+
+<material:DatePickerField 
+    Title="Pick a Date (Unclearable)"
+    AllowClear="False" />
+```
+
+| Dark | Light|
+| --- | --- |
+| ![MAUI Material Input](images/datepickerfield-allowclear-dark-android.gif) | ![MAUI Material Input](images/datepickerfield-allowclear-light-android.gif) |
 
 ## Validation
 DatePickerField supports validation rules such as `MinValueValidation` and `MaxValueValidation`. You can use them like this:

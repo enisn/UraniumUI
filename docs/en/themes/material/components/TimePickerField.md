@@ -21,7 +21,6 @@ Then you can use it like this:
 | --- | --- |
 | ![MAUI Material Design TimePicker](images/timepickerfield-demo-light-android.gif) | ![MAUI Material Design TimePicker](images/timepickerfield-demo-dark-windows.gif) |
 
-
 ## Icon
 TimePickerFields support setting an icon on the left side of the control. You can set the icon by setting the `Icon` property. The icon can be any `ImageSource` object. FontImageSource is recommended as Icon since its color can be changed when focused.
 
@@ -29,6 +28,22 @@ TimePickerFields support setting an icon on the left side of the control. You ca
 | --- | --- |
 | ![MAUI Material Input](images/timepickerfield-icon-light-android.png) | ![MAUI Material Input](images/timepickerfield-icon-dark-android.png) |
 
+## AllowClear
+TimePickerFields support clearing the selected time by setting the `AllowClear` property to `true`. Default value is `true`. You can make it `false` to disable clearing.
+
+```xml
+<material:TimePickerField 
+    Title="Pick a Time (Clearable)"
+    AllowClear="True" />
+
+<material:TimePickerField 
+    Title="Pick a Time (Unclearable)"
+    AllowClear="False" />
+```
+
+| Dark | Light|
+| --- | --- |
+| ![MAUI Material Input](images/timepickerfield-allowclear-dark-android.gif) | ![MAUI Material Input](images/timepickerfield-allowclear-light-android.gif) |
 
 ## Validation
 TimePickerField supports validation rules such as `MinValueValidation` and `MaxValueValidation`. You can use them like this:

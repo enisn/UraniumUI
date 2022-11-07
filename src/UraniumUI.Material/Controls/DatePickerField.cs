@@ -42,9 +42,9 @@ public class DatePickerField : InputField
         clearGestureRecognizer.Tapped += OnClearTapped;
         iconClear.GestureRecognizers.Add(clearGestureRecognizer);
 
-        endIconsContainer.Add(iconClear);
+        UpdateClearIconState();
 
-        DatePickerView.SetBinding(DatePickerView.DateProperty, new Binding(nameof(Date), source: this));
+		DatePickerView.SetBinding(DatePickerView.DateProperty, new Binding(nameof(Date), source: this));
         DatePickerView.SetBinding(DatePickerView.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
 
 #if MACCATALYST
@@ -99,9 +99,28 @@ public class DatePickerField : InputField
         {
             DatePickerView.Margin = new Thickness(5, 1);
         }
-    }
+	}
+	protected virtual void OnAllowClearChanged()
+	{
+		UpdateClearIconState();
+	}
 
-    public DateTime? Date { get => (DateTime?)GetValue(DateProperty); set => SetValue(DateProperty, value); }
+	protected virtual void UpdateClearIconState()
+	{
+		if (AllowClear)
+		{
+			if (!endIconsContainer.Contains(iconClear))
+			{
+				endIconsContainer.Add(iconClear);
+			}
+		}
+		else
+		{
+			endIconsContainer.Remove(iconClear);
+		}
+	}
+
+	public DateTime? Date { get => (DateTime?)GetValue(DateProperty); set => SetValue(DateProperty, value); }
 
     public static readonly BindableProperty DateProperty = BindableProperty.Create(
         nameof(Date), typeof(DateTime?), typeof(DatePickerField), defaultValue: null, defaultBindingMode: BindingMode.TwoWay,
@@ -166,4 +185,11 @@ public class DatePickerField : InputField
     public static readonly BindableProperty FontAutoScalingEnabledProperty = BindableProperty.Create(
         nameof(FontAutoScalingEnabled), typeof(bool), typeof(DatePickerField), TimePicker.FontAutoScalingEnabledProperty.DefaultValue,
         propertyChanged: (bindable, oldValue, newValue) => (bindable as DatePickerField).DatePickerView.FontAutoScalingEnabled = (bool)newValue);
+	public bool AllowClear { get => (bool)GetValue(AllowClearProperty); set => SetValue(AllowClearProperty, value); }
+
+	public static BindableProperty AllowClearProperty = BindableProperty.Create(
+		nameof(AllowClear),
+		typeof(bool), typeof(DatePickerField),
+		true,
+		propertyChanged: (bindable, oldValue, newValue) => (bindable as DatePickerField).OnAllowClearChanged());
 }

@@ -29,25 +29,6 @@ Each input has a disabled state now. It's working well after updating to v1.1. B
     </Setter>
 </Style>
 
-<Style TargetType="c:CheckBox" ApplyToDerivedTypes="True">
-    <Setter Property="VisualStateManager.VisualStateGroups">
-        <VisualStateGroupList>
-            <VisualStateGroup x:Name="CommonStates">
-                <VisualState x:Name="Normal">
-                    <VisualState.Setters>
-                        <Setter Property="Opacity" Value="1"/>
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState x:Name="Disabled">
-                    <VisualState.Setters>
-                        <Setter Property="Opacity" Value="0.6" />
-                    </VisualState.Setters>
-                </VisualState>
-            </VisualStateGroup>
-        </VisualStateGroupList>
-    </Setter>
-</Style>
-
 <Style TargetType="c:RadioButton" ApplyToDerivedTypes="True">
     <Setter Property="VisualStateManager.VisualStateGroups">
         <VisualStateGroupList>
@@ -68,6 +49,56 @@ Each input has a disabled state now. It's working well after updating to v1.1. B
 </Style>
 ```
 
+- Find input:CheckBox in your StyleOverride file and update CheckBox styles like following. _(**VisualStateManager.VisualStateGroups** should be added.)_
+```xml
+
+ <Style TargetType="input:CheckBox" ApplyToDerivedTypes="True">
+    <!-- ... -->
+
+    <!-- Following section should be added. 👇 -->
+    <Setter Property="VisualStateManager.VisualStateGroups">
+        <VisualStateGroupList>
+            <VisualStateGroup x:Name="CommonStates">
+                <VisualState x:Name="Normal">
+                    <VisualState.Setters>
+                        <Setter Property="Opacity" Value="1"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Disabled">
+                    <VisualState.Setters>
+                        <Setter Property="Opacity" Value="0.6" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateGroupList>
+    </Setter>
+</Style>
+```
+
+- Find input:RadioButton in your StyleOverride file and update RadioButton styles like following. _(**VisualStateManager.VisualStateGroups** should be added.)_
+```xml
+<Style TargetType="input:RadioButton" ApplyToDerivedTypes="True">
+    <!-- ... -->
+
+    <!-- Following section should be added. 👇 -->
+    <Setter Property="VisualStateManager.VisualStateGroups">
+        <VisualStateGroupList>
+            <VisualStateGroup x:Name="CommonStates">
+                <VisualState x:Name="Normal">
+                    <VisualState.Setters>
+                        <Setter Property="Opacity" Value="1"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Disabled">
+                    <VisualState.Setters>
+                        <Setter Property="Opacity" Value="0.6" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateGroupList>
+    </Setter>
+</Style>
+```
 > _**Note**: If you're not sure about it, you can back-up your custom styles and re-add styles with `dotnet new uranium-material-resources -n MaterialOverride` command._
 
 

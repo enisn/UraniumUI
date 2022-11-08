@@ -58,6 +58,20 @@ public class PickerField : InputField
 		PickerView.SetBinding(PickerView.SelectedIndexProperty, new Binding(nameof(SelectedIndex), source: this));
 		PickerView.SetBinding(PickerView.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
 
+		// TODO: Move platform specific codes into separate files.
+#if ANDROID
+		PickerView.HandlerChanged += (s, e) =>
+		{
+			if (PickerView.Handler != null)
+			{
+				var editText = PickerView.Handler.PlatformView as AndroidX.AppCompat.Widget.AppCompatEditText;
+				editText.AfterTextChanged += (_, args) =>
+				{
+					editText.ClearFocus();
+				};
+			}
+		};
+#endif
 #if WINDOWS
 		rootGrid.Add(labelSelectedItem, column: 1);
 #endif

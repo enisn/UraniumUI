@@ -35,6 +35,18 @@ TextFields support setting an icon on the left side of the control. You can set 
 | --- | --- |
 | ![MAUI Material Input](images/textfield-icon-light-andoid.gif) | ![MAUI Material Input](images/textfield-icon-dark-windows.gif) |
 
+## AllowClear
+TextFields support clearing the text by setting the `AllowClear` property to `true`. Default value is `false`.
+
+```xml
+ <material:TextField
+    Title="E-mail"
+    AllowClear="True"/>
+```
+
+|Dark| Light|
+| --- | --- |
+| ![MAUI Material Input](images/textfield-allowclear-dark-android.gif) | ![MAUI Material Input](images/textfield-allowclear-light-android.gif) |
 
 ## Validation
 

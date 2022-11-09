@@ -10,9 +10,25 @@ pool:
   vmImage: windows-latest
 
 steps:
-- script: dotnet workload install maui
-  displayName: 'Workload Install'
-- script: dotnet build
-  displayName: 'Build'
-- script: dotnet test
-  displayName: 'Test'
+- task: UseDotNet@2
+  displayName: 'Install .NET Core SDK'
+  inputs:
+    version: 7.x
+    performMultiLevelLookup: true
+    includePreviewVersions: true # Required for preview versions
+
+- task: DotNetCoreCLI@2
+  displayName: "Workload install"
+  inputs:
+    command: 'custom'
+    custom: 'workload install maui'
+
+- task: DotNetCoreCLI@2
+  displayName: "Build"
+  inputs:
+    command: 'build'
+    
+- task: DotNetCoreCLI@2
+  displayName: "Build"
+  inputs:
+    command: 'test'

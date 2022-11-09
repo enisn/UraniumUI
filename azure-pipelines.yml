@@ -21,7 +21,7 @@ steps:
   displayName: "Workload install"
   inputs:
     command: 'custom'
-    custom: 'workload install maui'
+    custom: workload install maui
 
 - task: DotNetCoreCLI@2
   displayName: "Build"

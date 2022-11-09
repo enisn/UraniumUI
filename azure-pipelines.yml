@@ -17,11 +17,8 @@ steps:
     performMultiLevelLookup: true
     includePreviewVersions: true # Required for preview versions
 
-- task: DotNetCoreCLI@2
-  displayName: "Workload install"
-  inputs:
-    command: 'custom'
-    custom: workload install maui
+- script: dotnet workload install maui
+  displayName: 'Workload Install'
 
 - task: DotNetCoreCLI@2
   displayName: "Build"

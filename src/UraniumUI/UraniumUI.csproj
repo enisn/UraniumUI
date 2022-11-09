@@ -23,7 +23,7 @@
   </PropertyGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="CommunityToolkit.Maui" Version="1.2.0" />
+	  <PackageReference Include="CommunityToolkit.Maui" Version="1.4.0" />
 	  <PackageReference Include="InputKit.Maui" Version="4.1.5" />
     <PackageReference Include="Plainer.Maui" Version="1.5.0" />
 	</ItemGroup>

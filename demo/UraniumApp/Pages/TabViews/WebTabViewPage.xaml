@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage x:Class="UraniumApp.Pages.TabViews.WebTabViewPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:UraniumApp.ViewModels.TabViews"
+             xmlns:material="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
+             xmlns:local="clr-namespace:UraniumApp.Pages.TabViews">
+
+    <ContentPage.BindingContext>
+        <vm:WebTabViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+
+
+        <Frame Padding="0" Margin="25">
+            <Grid RowDefinitions="Auto,*">
+                <Button
+                        Text="New Tab" 
+                        StyleClass="OutlinedButton"
+                        Margin="10"
+                        HorizontalOptions="Center" 
+                        Command="{Binding CreateNewTabCommand}" />
+
+                <material:TabView 
+                        Grid.Row="1" 
+                        Items="{Binding TabItems}" 
+                        CurrentItem="{Binding CurrentTab}"/>
+            </Grid>
+        </Frame>
+    </ContentPage.Content>
+</ContentPage>

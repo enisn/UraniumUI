@@ -16,6 +16,7 @@ Each input has a disabled state now. It's working well after updating to v1.1. B
                     <VisualState.Setters>
                         <Setter Property="Opacity" Value="1"/>
                         <Setter Property="AccentColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+                        <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="Disabled">

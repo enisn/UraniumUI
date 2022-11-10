@@ -276,7 +276,6 @@ public partial class TabView : Grid
 	{
 		var content = newCurrentTabItem.Content ??= (View)newCurrentTabItem.ContentTemplate?.CreateContent();
 
-
 		foreach (var item in Items)
 		{
 			item.NotifyIsSelectedChanged();

@@ -7,6 +7,7 @@
         <StackLayout Padding="25" Spacing="10" MaximumWidthRequest="400">
             <Button Text="Simple TabView" Clicked="GoToSimpleTabView" />
             <Button Text="Custom TabItem TabView" Clicked="GoToCustomTabItemTabview" />
+            <Button Text="Web Browser (Dynamic Tabs)" Clicked="GoToWebTabview" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

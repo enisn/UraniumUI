@@ -9,6 +9,7 @@ public partial class TabView
 		nameof(Items),
 		typeof(IList<TabItem>),
 		typeof(TabView), new ObservableCollection<TabItem>(),
+		defaultBindingMode: BindingMode.TwoWay,
 		propertyChanged: (bindable, oldValue, newValue) => (bindable as TabView).OnItemsChanged((IList<TabItem>)oldValue, (IList<TabItem>)newValue));
 
 	public DataTemplate TabHeaderItemTemplate { get => (DataTemplate)GetValue(TabHeaderItemTemplateProperty); set => SetValue(TabHeaderItemTemplateProperty, value); }

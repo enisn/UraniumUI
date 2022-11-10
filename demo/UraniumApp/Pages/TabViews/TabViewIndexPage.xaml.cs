@@ -16,4 +16,9 @@ public partial class TabViewIndexPage : ContentPage
     {
         Navigation.PushAsync(new CustomTabItemTabView());
     }
+
+	private void GoToWebTabview(object sender, EventArgs e)
+	{
+		Navigation.PushAsync(new WebTabViewPage());
+	}
 }

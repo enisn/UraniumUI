@@ -62,7 +62,12 @@ public partial class TextField : InputField
 #endif
 	}
 
-	public void Clear()
+	~TextField()
+	{
+		EntryView.TextChanged -= EntryView_TextChanged;
+	}
+
+	public void ClearValue()
 	{
 		if (IsEnabled)
 		{

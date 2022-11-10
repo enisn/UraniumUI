@@ -100,6 +100,10 @@ public partial class InputField : Grid
 
         InitializeValidation();
     }
+    ~InputField()
+    {
+        ReleaseEvents();
+    }
 
     protected override async void OnSizeAllocated(double width, double height)
     {
@@ -108,7 +112,18 @@ public partial class InputField : Grid
         InitializeBorder();
     }
 
-    private void InitializeBorder()
+	// TODO: Remove this member hiding after android unfocus fixed.
+	public new void Unfocus()
+	{
+		base.Unfocus();
+#if ANDROID
+        var view = Content.Handler.PlatformView as Android.Views.View;
+
+        view?.ClearFocus();
+#endif
+	}
+
+	private void InitializeBorder()
     {
         var perimeter = (this.Width + this.Height) * 2;
 
@@ -199,7 +214,13 @@ public partial class InputField : Grid
         }
     }
 
-    private void Content_Unfocused(object sender, FocusEventArgs e)
+	protected virtual void ReleaseEvents()
+	{
+		Content.Focused -= Content_Focused;
+		Content.Unfocused -= Content_Unfocused;
+	}
+
+	private void Content_Unfocused(object sender, FocusEventArgs e)
     {
         border.Stroke = BorderColor;
         labelTitle.TextColor = TitleColor;

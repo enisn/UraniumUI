@@ -111,6 +111,10 @@
         {
           "text": "Migration to v1.1",
           "path": "migration-guides/Migrating-To-1.1.md"
+        },
+        {
+          "text": "Migration to v2.0",
+          "path": "migration-guides/Migrating-To-2.0.md"
         }
       ]
     },

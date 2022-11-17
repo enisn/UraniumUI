@@ -52,34 +52,6 @@ We welcome contributions and suggestions. Please read our [contributing guide](#
 
 See [milestones](https://github.com/enisn/UraniumUI/milestones) section in the repository.
 
-
-### v1.1
-- [x] [DataGrid]
- - [ ] Pagination
- - [ ] Sorting
-- [x] [TreeView]
- - [ ] Drag & Drop
-- [ ] SelectableText
-- [ ] SegmentedControl
-- [ ] Slider (Header, with dots)
-- [ ] Chips (multiple selection)
-- [ ] RateView
-- [ ] FAB Floating Action Button
-- [ ] ColorPicker
-- [ ] Banners 
-- [ ] Cards (Head, Body, Footer) 
-
-### v2.0
-- [ ] Typeahead (AutoComplete)
-- [ ] Slider (RangeSlider)
-- [ ] CalendarView
-- [ ] BadgeView
-- [ ] OTP Pin Entry
-- [ ] Data Visualization
-  - [ ] Pie Chart
-  - [ ] Column Chart
-  - [ ] Line Chart
-
 ## Support
 If you like this project and want to support it, you can [BuyMeACoffee](https://www.buymeacoffee.com/enisn). Your coffee will keep me awake while developing this project. ☕
 

@@ -8,7 +8,7 @@ Best way to replace resources is putting files that include resources into `Reso
 You can check the latest version and place it into yor project from GitHub repository:
 
 - [StyleResource.xaml](https://github.com/enisn/UraniumUI/blob/master/src/UraniumUI.Material/Resources/StyleResource.xaml)
-- [ColorResource.xaml](https://github.com/enisn/UraniumUI/blob/master/src/UraniumUI.Material/Resources/StyleResource.xaml)
+- [ColorResource.xaml](https://github.com/enisn/UraniumUI/blob/master/src/UraniumUI.Material/Resources/ColorResource.xaml)
 
 Manual copying and placing into project it's not easiest way and it's not recommended. You can create those resource files in your project with **dotnet CLI**. [UraniumUI.Templates](https://www.nuget.org/packages/UraniumUI.Templates) already includes those files. So, you can create them with following command.
 

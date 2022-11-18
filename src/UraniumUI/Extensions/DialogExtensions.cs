@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Maui.Views;
 using InputKit.Shared.Controls;
 using Microsoft.Maui.Controls.Shapes;
+using Plainer.Maui.Controls;
 using System.Text.RegularExpressions;
 using UraniumUI.Resources;
 using CheckBox = InputKit.Shared.Controls.CheckBox;
@@ -257,8 +258,9 @@ public static class DialogExtensions
             }
         };
 #endif
-        var entry = new Entry
+        var entry = new EntryView
         {
+			HorizontalOptions = LayoutOptions.Fill,
             Placeholder = placeholder,
             MaxLength = maxLength != -1 ? maxLength : int.MaxValue,
             ClearButtonVisibility = ClearButtonVisibility.WhileEditing,

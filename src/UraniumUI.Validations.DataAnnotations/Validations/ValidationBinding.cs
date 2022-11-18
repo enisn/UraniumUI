@@ -24,7 +24,6 @@ public class ValidationBinding : IMarkupExtension
 
         var source = Source ?? root.BindingContext;
 
-
         var attributes = source.GetType().GetProperty(Path).GetCustomAttributes<ValidationAttribute>(true);
 
         if (targetObject is IValidatable validatable)

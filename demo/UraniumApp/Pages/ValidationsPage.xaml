@@ -4,6 +4,7 @@
              xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
              xmlns:material="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
              xmlns:validation="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
+             xmlns:v="clr-namespace:UraniumUI.Validations;assembly=UraniumUI.Validations.DataAnnotations"
              xmlns:vm="clr-namespace:UraniumApp.ViewModels"
              xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -12,23 +13,18 @@
         <vm:ValidationsPageViewModel />
     </ContentPage.BindingContext>
     <ContentPage.Content>
-        <ScrollView>
-            <StackLayout Padding="25" HorizontalOptions="Center" MaximumWidthRequest="400">
+        <ScrollView HorizontalOptions="Fill">
+            <StackLayout Padding="25" MaximumWidthRequest="400">
                 <input:FormView SubmitCommand="{Binding SubmitCommand}" Spacing="20">
 
                     <material:TextField Title="Email"
-                                        Text="{Binding Email}" 
-                                        Icon="{FontImage FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Email}}">
-                        <validation:RequiredValidation />
-                        <validation:RegexValidation Message="Please type a valid e-mail address." Pattern="{x:Static input:AdvancedEntry.REGEX_EMAIL}"/>
-                    </material:TextField>
+                                        Text="{v:ValidationBinding Email}" 
+                                        Icon="{FontImage FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Email}}"/>
+
 
                     <material:TextField Title="Fullname"
-                                        Text="{Binding FullName}" 
-                                        Icon="{FontImage FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Person}}">
-                        <validation:RequiredValidation />
-                        <validation:LettersOnlyValidation AllowSpaces="True" />
-                    </material:TextField>
+                                        Text="{v:ValidationBinding FullName}" 
+                                        Icon="{FontImage FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Person}}"/>
 
                     <material:PickerField Title="Gender"
                                           SelectedItem="{Binding Gender}"

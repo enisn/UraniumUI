@@ -1,8 +1,6 @@
 ﻿using InputKit.Handlers;
-using Microsoft.Maui.Platform;
 using Plainer.Maui;
 using UraniumUI.Handlers;
-using UraniumUI.Resources;
 using UraniumUI.Views;
 
 namespace UraniumUI;
@@ -40,7 +38,6 @@ public static class MauiProgramExtensions
             .AddInputKitHandlers()
             .AddHandler(typeof(Button), typeof(StatefulButtonHandler))
             .AddHandler(typeof(StatefulContentView), typeof(StatefulContentViewHandler))
-            .AddPlainer()
-            ;
+            .AddPlainer();
     }
 }

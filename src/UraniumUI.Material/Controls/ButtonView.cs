@@ -1,8 +1,20 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Input;
+using UraniumUI.Views;
 
-namespace UraniumUI.Views;
-public class StatefulContentView : ContentView, IStatefulView
+namespace UraniumUI.Material.Controls;
+
+[ContentProperty(nameof(Content))]
+public class ButtonView : Border, IStatefulView
 {
+	public ButtonView()
+	{
+        Padding = 10;
+	}
     public ICommand PressedCommand { get => (ICommand)GetValue(PressedCommandProperty); set => SetValue(PressedCommandProperty, value); }
 
     public static BindableProperty PressedCommandProperty = BindableProperty.Create(nameof(PressedCommand), typeof(ICommand), typeof(StatefulContentView));

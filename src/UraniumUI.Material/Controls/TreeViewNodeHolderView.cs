@@ -3,6 +3,7 @@ using System.Windows.Input;
 using UraniumUI.Pages;
 using UraniumUI.Resources;
 using UraniumUI.Triggers;
+using UraniumUI.Views;
 using Path = Microsoft.Maui.Controls.Shapes.Path;
 
 namespace UraniumUI.Material.Controls;
@@ -19,7 +20,7 @@ public class TreeViewNodeHolderView : VerticalStackLayout
         HorizontalOptions = LayoutOptions.Fill,
     };
 
-    protected ContentView iconArrow = new ContentView
+    protected ButtonView iconArrow = new ButtonView
     {
         VerticalOptions = LayoutOptions.Center,
         HorizontalOptions = LayoutOptions.Start,
@@ -97,13 +98,15 @@ public class TreeViewNodeHolderView : VerticalStackLayout
 
     private void InitializeArrowButton()
     {
-        var tapGestureRecognizer = new TapGestureRecognizer();
-        iconArrow.GestureRecognizers.Add(tapGestureRecognizer);
-        rowStack.GestureRecognizers.Add(tapGestureRecognizer);
-        tapGestureRecognizer.Tapped += (s, e) =>
+        iconArrow.PressedCommand = new Command(() =>
         {
             TreeView.SetIsExpanded(this, !TreeView.GetIsExpanded(this));
-        };
+        });
+        
+        //rowStack.GestureRecognizers.Add(new TapGestureRecognizer
+        //{
+        //    Command = iconArrow.PressedCommand
+        //});
 
         iconArrow.Content = new Path
         {

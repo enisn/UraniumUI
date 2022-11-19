@@ -12,7 +12,7 @@ xmlns:views="clr-namespace:UraniumUI.Views;assembly=UraniumUI"
 Then you can use it with `views:StatefulContentView` tag.
 
 ```xml
-<views:StatefulContentView>
+<views:StatefulContentView LongPressCommand="{Binding DoSomethingCommand}">
     <Border Padding="20" BackgroundColor="{StaticResource Primary}" Stroke="{StaticResource Tertiary}" StrokeShape="{RoundRectangle CornerRadius=5}">
         <Label Text="This is a stateful view" TextColor="{StaticResource OnPrimary}" />
     </Border>

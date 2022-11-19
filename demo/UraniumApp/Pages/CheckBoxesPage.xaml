@@ -5,7 +5,7 @@
              xmlns:material="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
              xmlns:local="clr-namespace:UraniumApp.Pages">
     <ContentPage.Content>
-        <StackLayout MaximumWidthRequest="400" Margin="20">
+        <StackLayout MaximumWidthRequest="400" Margin="20" Spacing="15">
             <material:CheckBox Text="Option 1" />
             <material:CheckBox Text="Option 2" IsChecked="True" />
             <material:CheckBox Text="Option 3 (Disabled)" IsDisabled="True" />
@@ -13,12 +13,10 @@
 
             <BoxView StyleClass="Divider" />
 
-            <VerticalStackLayout Spacing="15">
-                <material:CheckBox Text="Option 1" LabelPosition="Before" />
-                <material:CheckBox Text="Option 2" LabelPosition="Before" IsChecked="True" />
-                <material:CheckBox Text="Option 3 (Disabled)" IsDisabled="True" LabelPosition="Before" />
-                <material:CheckBox Text="Option 4 (Disabled)" IsDisabled="True" IsChecked="True" LabelPosition="Before" />
-            </VerticalStackLayout>
+            <material:CheckBox Text="Option 1" LabelPosition="Before" />
+            <material:CheckBox Text="Option 2" LabelPosition="Before" IsChecked="True" />
+            <material:CheckBox Text="Option 3 (Disabled)" IsDisabled="True" LabelPosition="Before" />
+            <material:CheckBox Text="Option 4 (Disabled)" IsDisabled="True" IsChecked="True" LabelPosition="Before" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

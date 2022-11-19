@@ -4,7 +4,6 @@ using Android.Views;
 #if WINDOWS
 using Microsoft.UI.Xaml.Input;
 #endif
-using Foundation;
 using Microsoft.Maui.Handlers;
 using Microsoft.Maui.Platform;
 using System;
@@ -14,6 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 #if IOS || MACCATALYST
+using Foundation;
 using UIKit;
 #endif
 using UraniumUI.Views;

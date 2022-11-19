@@ -19,11 +19,14 @@
             Padding="30"
             VerticalOptions="Center">
 
+            <Label Text="I'm another label outside 'MyContainer'" />
 
-            <controls:ButtonView Padding="10" BackgroundColor="{StaticResource Secondary}">
-                <Label Text="Hello UraniumUI 👋" />
-            </controls:ButtonView>
-            
+            <StackLayout StyleClass="MyContainer">
+                <Frame>
+                    <Label Text="Hello, Uranium ☢️" />
+                </Frame>
+            </StackLayout>
+
         </VerticalStackLayout>
     </ScrollView>
 </uranium:UraniumContentPage>

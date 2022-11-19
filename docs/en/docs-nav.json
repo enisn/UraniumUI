@@ -43,6 +43,10 @@
           "path": "theming/Icons.md"
         },
         {
+        "text": "Cascading Styling",
+        "path": "theming/CascadingStyling.md"
+        },
+        {
           "text": "Creating a Theme",
           "path": "theming/CreatingTheme.md"
         }
@@ -62,7 +66,7 @@
         {
           "text" : "ButtonView",
           "path": "themes/material/ButtonView.md"
-        }
+        },
         {
           "text": "Buttons",
           "path": "themes/material/Buttons.md"

@@ -27,8 +27,6 @@ public class TreeViewNodeHolderView : VerticalStackLayout
         HorizontalOptions = LayoutOptions.Start,
         StyleClass = new [] { "TreeViewExpandButton" },
         Padding = 0,
-        HeightRequest = 40,
-        WidthRequest = 40,
         StrokeShape = new RoundRectangle
         {
             CornerRadius = 20,
@@ -113,6 +111,9 @@ public class TreeViewNodeHolderView : VerticalStackLayout
 
         iconArrow.Content = new ContentView
         {
+            HeightRequest = 40,
+            WidthRequest = 40,
+            Padding = 10,
             Content = new Path
             {
                 Data = UraniumShapes.ArrowRight,

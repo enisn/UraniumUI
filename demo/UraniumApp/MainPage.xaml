@@ -19,8 +19,6 @@
             Padding="30"
             VerticalOptions="Center">
 
-            <Label Text="I'm another label outside 'MyContainer'" />
-
             <StackLayout>
                 <Frame>
                     <Label Text="Hello, Uranium ☢️" />

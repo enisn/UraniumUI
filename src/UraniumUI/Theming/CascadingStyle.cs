@@ -41,7 +41,6 @@ public static class CascadingStyle
         null,
         propertyChanged: OnStyleClassChanged);
 
-
     public static string GetStyleClass(BindableObject view)
     {
         return (string)view.GetValue(StyleClassProperty);

@@ -19,11 +19,29 @@
             Padding="30"
             VerticalOptions="Center">
 
-            <StackLayout>
+            <StackLayout StyleClass="PrimaryContainer" Padding="10">
+                <Label Text="Hello from primary container" />
+            </StackLayout>
+
+            <StackLayout StyleClass="SecondaryContainer" Padding="10">
+                <Label Text="Hello from secondary container" />
+            </StackLayout>
+
+            <StackLayout StyleClass="TertiaryContainer" Padding="10">
+                <Label Text="Hello from tertiary container" />
+            </StackLayout>
+
+            <StackLayout StyleClass="ErrorContainer" Padding="10">
+                <Label Text="Hello from error container" />
+            </StackLayout>
+            
+            
+
+            <!--<StackLayout>
                 <Frame>
                     <Label Text="Hello, Uranium ☢️" />
                 </Frame>
-            </StackLayout>
+            </StackLayout>-->
 
         </VerticalStackLayout>
     </ScrollView>

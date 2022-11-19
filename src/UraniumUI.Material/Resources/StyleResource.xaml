@@ -391,6 +391,51 @@
                         </VisualStateGroupList>
                     </Setter>
                 </Style>
+
+                <Style TargetType="View" Class="PrimaryContainer" ApplyToDerivedTypes="True">
+                    <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource PrimaryContainer}, Dark={StaticResource PrimaryContainerDark}}" />
+                    <Setter Property="t:CascadingStyle.Resources">
+                        <ResourceDictionary>
+                            <Style TargetType="Label">
+                                <Setter Property="TextColor" Value="{AppThemeBinding Light={DynamicResource OnPrimaryContainer},Dark={DynamicResource OnPrimaryContainerDark}}" />
+                            </Style>
+                        </ResourceDictionary>
+                    </Setter>
+                </Style>
+
+                <Style TargetType="View" Class="SecondaryContainer" ApplyToDerivedTypes="True">
+                    <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource SecondaryContainer}, Dark={StaticResource SecondaryContainerDark}}" />
+                    <Setter Property="t:CascadingStyle.Resources">
+                        <ResourceDictionary>
+                            <Style TargetType="Label">
+                                <Setter Property="TextColor" Value="{AppThemeBinding Light={DynamicResource OnSecondaryContainer},Dark={DynamicResource OnSecondaryContainerDark}}" />
+                            </Style>
+                        </ResourceDictionary>
+                    </Setter>
+                </Style>
+
+                <Style TargetType="View" Class="TertiaryContainer" ApplyToDerivedTypes="True">
+                    <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource TertiaryContainer}, Dark={StaticResource TertiaryContainerDark}}" />
+                    <Setter Property="t:CascadingStyle.Resources">
+                        <ResourceDictionary>
+                            <Style TargetType="Label">
+                                <Setter Property="TextColor" Value="{AppThemeBinding Light={DynamicResource OnTertiaryContainer},Dark={DynamicResource OnTertiaryContainerDark}}" />
+                            </Style>
+                        </ResourceDictionary>
+                    </Setter>
+                </Style>
+                
+                <Style TargetType="View" Class="ErrorContainer" ApplyToDerivedTypes="True">
+                    <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource ErrorContainer}, Dark={StaticResource ErrorContainerDark}}" />
+                    <Setter Property="t:CascadingStyle.Resources">
+                        <ResourceDictionary>
+                            <Style TargetType="Label">
+                                <Setter Property="TextColor" Value="{AppThemeBinding Light={DynamicResource OnErrorContainer},Dark={DynamicResource OnErrorContainerDark}}" />
+                            </Style>
+                        </ResourceDictionary>
+                    </Setter>
+                </Style>
+                
             </ResourceDictionary>
         </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>

@@ -132,6 +132,10 @@
         {
           "text": "TabView",
           "path": "themes/material/components/TabView.md"
+        },
+        {
+          "text": "Containers",
+          "path": "themes/material/Containers.md"
         }
       ]
     },

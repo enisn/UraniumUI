@@ -8,15 +8,15 @@ UraniumUI has a couple of changes in this version. Applying following changes to
 
     ```csharp
     builder
-                .UseMauiApp<App>()
-                .UseUraniumUI()
-                .UseUraniumUIMaterial() // 👈 This is new!
-                .ConfigureFonts(fonts =>
-                {
-                    fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                    fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-                    fonts.AddMaterialIconFonts();
-                });
+        .UseMauiApp<App>()
+        .UseUraniumUI()
+        .UseUraniumUIMaterial() // 👈 This is new!
+        .ConfigureFonts(fonts =>
+        {
+            fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+            fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+            fonts.AddMaterialIconFonts();
+        });
     ```
 
 - You should add following style to your resources **if you overrided** the default style.

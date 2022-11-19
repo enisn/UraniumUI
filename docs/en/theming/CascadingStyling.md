@@ -105,3 +105,28 @@ You can also reference existing styles in the `CascadingStyle.Resources` propert
     </Setter>
 </Style>
 ```
+
+## Setting StyleClass
+By default `StyleClass` property is not a bindable property and you can't set it in a style XAML. `CascadeStyle.StyleClass` allows you set StyleClasses for other views in a style XAML. It can be used like the following example:
+
+```xml
+<!-- Already defined style -->
+<Style TargetType="Button" Class="YellowButton">
+    <Setter Property="BackgroundColor" Value="Yellow" />
+    <Setter Property="TextColor" Value="DarkSlateGray" />
+</Style>
+
+<Style TargetType="View" Class="MyContainer" ApplyToDerivedTypes="True" >
+    <Setter Property="BackgroundColor" Value="YellowGreen" />
+    <Setter Property="t:CascadingStyle.Resources">
+        <ResourceDictionary>
+            <!-- All the buttons under 'MyContainer' will has YellowButton as StyleClass -->
+            <Style TargetType="Button">
+                <Setter Property="t:CascadingStyle.StyleClass"  Value="YellowButton" />
+            </Style>
+        </ResourceDictionary>
+    </Setter>
+</Style>
+```
+
+![uranium ui cascading style](images/cascadingstyle-styleclass.png)

@@ -1,7 +1,9 @@
 # Validations
 Validations are a way to validate the input of a field. They are defined in the `Validations` property of a control that implements `IValidatable`. The `validations` property is an array of validation objects which implements `IValidation` interface. They are some prebuilt validations that you can use or you can create your own validation. Unfortunetely, plain MAUI controls can't be validated at the moment.
 
-_You may visit [Validations](https://enisn-projects.io/docs/en/inputkit/latest/components/controls/FormView#validations) section of [FormView](https://enisn-projects.io/docs/en/inputkit/latest/components/controls/FormView) documentation of InputKit to see existing validations._
+> _You may visit [Validations](https://enisn-projects.io/docs/en/inputkit/latest/components/controls/FormView#validations) section of [FormView](https://enisn-projects.io/docs/en/inputkit/latest/components/controls/FormView) documentation of InputKit to see existing validations._
+
+> _If you're looking for **DataAnnotations** validation, you should check out the [DataAnnotations](../../validations/DataAnnotations.md) documentation.
 
 Validations are working compatible together FormView. So, you can use a FormView to create a form and validate the inputs.
 

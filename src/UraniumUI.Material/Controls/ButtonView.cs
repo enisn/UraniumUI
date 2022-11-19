@@ -15,6 +15,7 @@ public class ButtonView : Border, IStatefulView
 	{
         Padding = 10;
 	}
+    
     public ICommand PressedCommand { get => (ICommand)GetValue(PressedCommandProperty); set => SetValue(PressedCommandProperty, value); }
 
     public static BindableProperty PressedCommandProperty = BindableProperty.Create(nameof(PressedCommand), typeof(ICommand), typeof(StatefulContentView));

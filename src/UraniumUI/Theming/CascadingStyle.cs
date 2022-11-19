@@ -33,4 +33,45 @@ public static class CascadingStyle
             }
         }
     }
+
+    public static readonly BindableProperty StyleClassProperty = BindableProperty.CreateAttached(
+        "StyleClass",
+        typeof(string),
+        typeof(CascadingStyle),
+        null,
+        propertyChanged: OnStyleClassChanged);
+
+
+    public static string GetStyleClass(BindableObject view)
+    {
+        return (string)view.GetValue(StyleClassProperty);
+    }
+
+    public static void SetStyleClass(BindableObject view, string value)
+    {
+        view.SetValue(StyleClassProperty, value);
+    }
+
+    private static void OnStyleClassChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        if (bindable is not View view)
+        {
+            return;
+        }
+
+        if (newValue is string newStyleClass)
+        {
+            var newStyleClasses = new ListStringTypeConverter().ConvertFrom(newStyleClass) as List<string>;
+            if (view.StyleClass is null)
+            {
+                view.StyleClass = newStyleClasses;
+                return;
+            }
+            
+            foreach (var styleClass in newStyleClasses)
+            {
+                view.StyleClass.Add(styleClass);
+            }
+        }
+    }
 }

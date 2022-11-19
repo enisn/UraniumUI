@@ -107,7 +107,7 @@ public class TreeViewNodeHolderView : VerticalStackLayout
 
         iconArrow.Content = new Path
         {
-            Data = UraniumShapes.ArrowLeft,
+            Data = UraniumShapes.ArrowRight,
             Fill = TreeView.ArrowColor,
         };
 

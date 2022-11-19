@@ -1,4 +1,5 @@
 ﻿using InputKit.Shared.Controls;
+using Microsoft.Maui.Controls.Shapes;
 using System.Windows.Input;
 using UraniumUI.Pages;
 using UraniumUI.Resources;
@@ -24,7 +25,14 @@ public class TreeViewNodeHolderView : VerticalStackLayout
     {
         VerticalOptions = LayoutOptions.Center,
         HorizontalOptions = LayoutOptions.Start,
-        Padding = new Thickness(15, 10),
+        StyleClass = new [] { "TreeViewExpandButton" },
+        Padding = 0,
+        HeightRequest = 40,
+        WidthRequest = 40,
+        StrokeShape = new RoundRectangle
+        {
+            CornerRadius = 20,
+        },
     };
 
     public VerticalStackLayout NodeChildren => nodeChildren;
@@ -102,16 +110,16 @@ public class TreeViewNodeHolderView : VerticalStackLayout
         {
             TreeView.SetIsExpanded(this, !TreeView.GetIsExpanded(this));
         });
-        
-        //rowStack.GestureRecognizers.Add(new TapGestureRecognizer
-        //{
-        //    Command = iconArrow.PressedCommand
-        //});
 
-        iconArrow.Content = new Path
+        iconArrow.Content = new ContentView
         {
-            Data = UraniumShapes.ArrowRight,
-            Fill = TreeView.ArrowColor,
+            Content = new Path
+            {
+                Data = UraniumShapes.ArrowRight,
+                Fill = TreeView.ArrowColor,
+                HorizontalOptions = LayoutOptions.Center,
+                VerticalOptions = LayoutOptions.Center,
+            }
         };
 
         iconArrow.Triggers.Add(new DataTrigger(typeof(View))

@@ -21,11 +21,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UraniumUI.Icons.MaterialIco
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{B1C4067C-DAE1-4650-9EDA-7F555A2094E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UraniumUI.Tests.Core", "test\UraniumUI.Tests.Core\UraniumUI.Tests.Core.csproj", "{823535E1-3941-47BB-AE72-C31C582A5965}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UraniumUI.Tests.Core", "test\UraniumUI.Tests.Core\UraniumUI.Tests.Core.csproj", "{823535E1-3941-47BB-AE72-C31C582A5965}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UraniumUI.Tests", "test\UraniumUI.Tests\UraniumUI.Tests.csproj", "{D31A541B-B3B1-4697-B7DC-AF718899A07E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UraniumUI.Tests", "test\UraniumUI.Tests\UraniumUI.Tests.csproj", "{D31A541B-B3B1-4697-B7DC-AF718899A07E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UraniumUI.Material.Tests", "test\UraniumUI.Material.Tests\UraniumUI.Material.Tests.csproj", "{C2BD49C5-9F27-4C21-B1BC-D8A93A79F376}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UraniumUI.Material.Tests", "test\UraniumUI.Material.Tests\UraniumUI.Material.Tests.csproj", "{C2BD49C5-9F27-4C21-B1BC-D8A93A79F376}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UraniumUI.Validations.DataAnnotations", "src\UraniumUI.Validations.DataAnnotations\UraniumUI.Validations.DataAnnotations.csproj", "{67A0CB34-D871-47BB-A9E0-80CA328BA144}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,6 +73,10 @@ Global
 		{C2BD49C5-9F27-4C21-B1BC-D8A93A79F376}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2BD49C5-9F27-4C21-B1BC-D8A93A79F376}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C2BD49C5-9F27-4C21-B1BC-D8A93A79F376}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67A0CB34-D871-47BB-A9E0-80CA328BA144}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67A0CB34-D871-47BB-A9E0-80CA328BA144}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67A0CB34-D871-47BB-A9E0-80CA328BA144}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67A0CB34-D871-47BB-A9E0-80CA328BA144}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -84,6 +90,7 @@ Global
 		{823535E1-3941-47BB-AE72-C31C582A5965} = {B1C4067C-DAE1-4650-9EDA-7F555A2094E5}
 		{D31A541B-B3B1-4697-B7DC-AF718899A07E} = {B1C4067C-DAE1-4650-9EDA-7F555A2094E5}
 		{C2BD49C5-9F27-4C21-B1BC-D8A93A79F376} = {B1C4067C-DAE1-4650-9EDA-7F555A2094E5}
+		{67A0CB34-D871-47BB-A9E0-80CA328BA144} = {32493E5D-A757-4289-A168-DA0E8DDE9B29}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {31946918-5DA1-40D1-8BD7-6834BB21D0FF}

@@ -54,6 +54,7 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\..\src\UraniumUI.Icons.MaterialIcons\UraniumUI.Icons.MaterialIcons.csproj" />
 	  <ProjectReference Include="..\..\src\UraniumUI.Material\UraniumUI.Material.csproj" />
+	  <ProjectReference Include="..\..\src\UraniumUI.Validations.DataAnnotations\UraniumUI.Validations.DataAnnotations.csproj" />
 	</ItemGroup>
   
 	<ItemGroup>

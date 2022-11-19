@@ -2,6 +2,7 @@
 using CommunityToolkit.Maui.Core;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -65,7 +66,13 @@ public class ValidationsPageViewModel : UraniumBindableObject
 
     public ICommand FillCommand { get; set; }
 
+    [EmailAddress]
+    [Required]
+    [MinLength(5)]
     public string Email { get => email; set => SetProperty(ref email, value); }
+
+    [Required]
+    [MinLength(3)]
     public string FullName { get => fullName; set => SetProperty(ref fullName, value); }
     public Gender? Gender { get => gender; set => SetProperty(ref gender, value); }
     public DateTime? BirthDate { get => birthDate; set => SetProperty(ref birthDate, value); }

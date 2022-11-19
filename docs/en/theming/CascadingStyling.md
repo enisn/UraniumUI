@@ -129,4 +129,14 @@ By default `StyleClass` property is not a bindable property and you can't set it
 </Style>
 ```
 
+The following usage is enough to apply the style to all buttons under `MyContainer`:
+
+```xml
+<StackLayout StyleClass="MyContainer" Padding="20">
+
+    <Button Text="Hello, Uranium ☢️" />
+    
+</StackLayout>
+```
+
 ![uranium ui cascading style](images/cascadingstyle-styleclass.png)

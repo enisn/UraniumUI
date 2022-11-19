@@ -18,6 +18,7 @@ using UIKit;
 #endif
 using UraniumUI.Views;
 using static Microsoft.Maui.Controls.VisualStateManager;
+using System.Windows.Input;
 
 namespace UraniumUI.Handlers;
 
@@ -34,6 +35,7 @@ public class StatefulContentViewHandler : ContentViewHandler
 
         platformView.Touch += OnTouch;
         platformView.Hover += NativeView_Hover;
+        platformView.LongClick += PlatformView_LongClick;
         return platformView;
     }
 
@@ -41,6 +43,7 @@ public class StatefulContentViewHandler : ContentViewHandler
     {
         platformView.Touch -= OnTouch;
         platformView.Hover -= NativeView_Hover;
+        platformView.LongClick -= PlatformView_LongClick;
         base.DisconnectHandler(platformView);
     }
 
@@ -49,14 +52,14 @@ public class StatefulContentViewHandler : ContentViewHandler
         if (e.Event.Action == MotionEventActions.HoverEnter)
         {
             GoToState(StatefulView, CommonStates.PointerOver);
-            StatefulView.HoverCommand?.Execute(StatefulView.CommandParameter);
+            ExecuteCommandIfCan(StatefulView.HoverCommand);
             return;
         }
 
         if (e.Event.Action == MotionEventActions.HoverExit)
         {
             GoToState(StatefulView, CommonStates.Normal);
-            StatefulView.HoverExitCommand?.Execute(StatefulView.CommandParameter);
+            ExecuteCommandIfCan(StatefulView.HoverExitCommand);
         }
     }
 
@@ -65,13 +68,18 @@ public class StatefulContentViewHandler : ContentViewHandler
         if (e.Event.Action == MotionEventActions.Down)
         {
             GoToState(StatefulView, "Pressed");
-            StatefulView.PressedCommand?.Execute(StatefulView.CommandParameter);
+            ExecuteCommandIfCan(StatefulView.PressedCommand);
         }
         else if (e.Event.Action == MotionEventActions.Up || e.Event.Action == MotionEventActions.Cancel)
         {
             GoToState(StatefulView, CommonStates.Normal);
-            StatefulView.TappedCommand?.Execute(StatefulView.CommandParameter);
+            ExecuteCommandIfCan(StatefulView.TappedCommand);
         }
+    }
+
+    private void PlatformView_LongClick(object sender, Android.Views.View.LongClickEventArgs e)
+    {
+        ExecuteCommandIfCan(StatefulView.LongPressCommand);
     }
 #endif
 
@@ -104,24 +112,35 @@ public class StatefulContentViewHandler : ContentViewHandler
     private void PlatformView_PointerExited(object sender, PointerRoutedEventArgs e)
     {
         GoToState(StatefulView, CommonStates.Normal);
-        StatefulView.HoverExitCommand?.Execute(StatefulView.CommandParameter);
+        ExecuteCommandIfCan(StatefulView.HoverExitCommand);
     }
 
     private void PlatformView_PointerEntered(object sender, PointerRoutedEventArgs e)
     {
         GoToState(StatefulView, CommonStates.PointerOver);
-        StatefulView.HoverCommand?.Execute(StatefulView.CommandParameter);
+        ExecuteCommandIfCan(StatefulView.HoverCommand);
     }
 
+    long lastPressed;
+    
     private void PlatformView_PointerPressed(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
     {
+        lastPressed = DateTime.Now.Ticks;
+        
         GoToState(StatefulView, "Pressed");
-        StatefulView.PressedCommand?.Execute(StatefulView.CommandParameter);
+        ExecuteCommandIfCan(StatefulView.PressedCommand);
     }
+
     private void PlatformView_PointerReleased(object sender, PointerRoutedEventArgs e)
     {
+        // TODO: Implement better.
+        if (DateTime.Now.Ticks - lastPressed >=  TimeSpan.TicksPerMillisecond * 500)
+        {
+            ExecuteCommandIfCan(StatefulView.LongPressCommand);
+        }
+
         GoToState(StatefulView, CommonStates.Normal);
-        StatefulView.TappedCommand?.Execute(StatefulView.CommandParameter);
+        ExecuteCommandIfCan(StatefulView.TappedCommand);
     }
 #endif
 
@@ -130,7 +149,13 @@ public class StatefulContentViewHandler : ContentViewHandler
     {
         platformView.AddGestureRecognizer(new UIContinousGestureRecognizer(Tapped));
         platformView.AddGestureRecognizer(new UIHoverGestureRecognizer(OnHover));
+        platformView.AddGestureRecognizer(new UILongPressGestureRecognizer(OnLongPress));
         base.ConnectHandler(platformView);
+    }
+
+    private void OnLongPress(UILongPressGestureRecognizer recognizer)
+    {
+        ExecuteCommandIfCan(StatefulView.LongPressCommand);
     }
 
     private void OnHover(UIHoverGestureRecognizer recognizer)
@@ -139,13 +164,13 @@ public class StatefulContentViewHandler : ContentViewHandler
         {
             case UIGestureRecognizerState.Began:
                 GoToState(StatefulView, CommonStates.PointerOver);
-                StatefulView.HoverCommand?.Execute(StatefulView.CommandParameter);
+                ExecuteCommandIfCan(StatefulView.HoverCommand);
                 break;
             case UIGestureRecognizerState.Ended:
             case UIGestureRecognizerState.Cancelled:
             case UIGestureRecognizerState.Failed:
                 GoToState(StatefulView, CommonStates.Normal);
-                StatefulView.HoverExitCommand?.Execute(StatefulView.CommandParameter);
+                ExecuteCommandIfCan(StatefulView.HoverExitCommand);
                 break;
         }
     }
@@ -156,12 +181,12 @@ public class StatefulContentViewHandler : ContentViewHandler
         {
             case UIGestureRecognizerState.Began:
                 GoToState(StatefulView, "Pressed");
-                StatefulView.PressedCommand?.Execute(StatefulView.CommandParameter);
+                ExecuteCommandIfCan(StatefulView.PressedCommand);
 
                 break;
             case UIGestureRecognizerState.Ended:
                 GoToState(StatefulView, CommonStates.Normal);
-                StatefulView.TappedCommand?.Execute(StatefulView.CommandParameter);
+                ExecuteCommandIfCan(StatefulView.TappedCommand);
 
                 //// TODO: Fix working of native gesture recognizers of MAUI
                 foreach (var item in StatefulView.GestureRecognizers)
@@ -185,7 +210,7 @@ public class StatefulContentViewHandler : ContentViewHandler
         {
             this.action = action;
         }
-
+        
         public override void TouchesBegan(NSSet touches, UIEvent evt)
         {
             State = UIGestureRecognizerState.Began;
@@ -205,4 +230,12 @@ public class StatefulContentViewHandler : ContentViewHandler
         }
     }
 #endif
+
+    private void ExecuteCommandIfCan(ICommand command)
+    {
+        if (command?.CanExecute(StatefulView.CommandParameter) ?? false)
+        {
+            command.Execute(StatefulView.CommandParameter);
+        }
+    }
 }

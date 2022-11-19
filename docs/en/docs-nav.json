@@ -10,6 +10,10 @@
         {
           "text": "Uranium Content Page",
           "path": "infrastructure/UraniumContentPage.md"
+        },
+        {
+          "text": "Stateful Content View",
+          "path": "infrastructure/StatefulContentView.md"
         }
       ]
     },

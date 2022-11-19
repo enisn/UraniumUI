@@ -10,6 +10,8 @@ public static class MauiProgram
 		var builder = MauiApp.CreateBuilder();
 		builder
 			.UseMauiApp<App>()
+			.UseUraniumUI()
+			.UseUraniumUIMaterial()
 			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -21,11 +23,7 @@ public static class MauiProgram
 #if MaterialIcons
 				fonts.AddMaterialIconFonts();
 #endif
-            })
-			.ConfigureMauiHandlers(handlers =>
-			{
-				handlers.AddUraniumUIHandlers();
-			});
+            });
 
 		return builder.Build();
 	}

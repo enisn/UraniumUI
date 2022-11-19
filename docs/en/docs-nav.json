@@ -60,6 +60,10 @@
           "path": "themes/material/Elevation.md"
         },
         {
+          "text" : "ButtonView",
+          "path": "themes/material/ButtonView.md"
+        }
+        {
           "text": "Buttons",
           "path": "themes/material/Buttons.md"
         },
@@ -133,6 +137,10 @@
         {
           "text": "Migration to v2.0",
           "path": "migration-guides/Migrating-To-2.0.md"
+        },
+        {
+          "text": "Migration to v2.1",
+          "path": "migration-guides/Migrating-To-2.1.md"
         }
       ]
     },

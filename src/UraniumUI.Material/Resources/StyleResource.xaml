@@ -340,6 +340,15 @@
 
                 <Style TargetType="c:ButtonView" ApplyToDerivedTypes="True">
                     <Setter Property="BackgroundColor"  Value="{StaticResource Primary}" />
+                    <Setter Property="t:CascadingStyle.Resources">
+                        <Setter.Value>
+                            <ResourceDictionary>
+                                <Style TargetType="Label">
+                                    <Setter Property="TextColor" Value="{DynamicResource OnSecondary}" />
+                                </Style>
+                            </ResourceDictionary>
+                        </Setter.Value>
+                    </Setter>                    
                     <Setter Property="VisualStateManager.VisualStateGroups">
                         <VisualStateGroupList>
                             <VisualStateGroup x:Name="CommonStates">
@@ -361,7 +370,6 @@
                         </VisualStateGroupList>
                     </Setter>
                 </Style>
-
             </ResourceDictionary>
         </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>

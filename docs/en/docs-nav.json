@@ -110,6 +110,10 @@
           "path": "themes/material/Dialogs.md"
         },
         {
+          "text": "Divider",
+          "path": "themes/material/Divider.md"
+        },
+        {
           "text": "Backdrop",
           "path": "themes/material/components/Backdrop.md"
         },

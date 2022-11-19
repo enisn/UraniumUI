@@ -7,9 +7,10 @@
              xmlns:material="clr-namespace:UraniumUI.Material.Attachments;assembly=UraniumUI.Material"
              xmlns:controls="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
              xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
+             xmlns:views="clr-namespace:UraniumUI.Views;assembly=UraniumUI"
              xmlns:t="clr-namespace:UraniumUI.Theming;assembly=UraniumUI"
              xmlns:u="clr-namespace:UraniumUI;assembly=UraniumUI"
-                            xmlns:plain="clr-namespace:Plainer.Maui.Controls;assembly=Plainer.Maui"
+             xmlns:plain="clr-namespace:Plainer.Maui.Controls;assembly=Plainer.Maui"
              x:Class="UraniumApp.MainPage">
 
     <ScrollView>
@@ -18,8 +19,15 @@
             Padding="30"
             VerticalOptions="Center">
 
+            <views:StatefulContentView>
+
+                <Border Padding="20" BackgroundColor="{StaticResource Primary}" Stroke="{StaticResource Tertiary}" StrokeShape="{RoundRectangle CornerRadius=5}">
+                    <Label Text="This is a stateful view" TextColor="{StaticResource OnPrimary}" />
+                </Border>
+            </views:StatefulContentView>
+
             <input:FormView Spacing="20">
-                
+
                 <controls:PickerField Title="Pick an option" Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Expand_circle_down}}">
                     <controls:PickerField.Items>
                         <x:String>Option 1</x:String>

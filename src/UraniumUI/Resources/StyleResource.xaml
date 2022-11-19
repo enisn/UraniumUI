@@ -3,6 +3,7 @@
                     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                     xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
+                    xmlns:views="clr-namespace:UraniumUI.Views"
                     xmlns:local="clr-namespace:UraniumUI.Resources">
 
     <ResourceDictionary.MergedDictionaries>
@@ -21,6 +22,30 @@
                 <Setter Property="HeightRequest" Value="1" />
                 <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource OutlineVariant}, Dark={StaticResource OutlineVariantDark}}" />
                 <Setter Property="Margin" Value="16"/>
+            </Style>
+
+            <Style TargetType="views:StatefulContentView">
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="PointerOver">
+                                <VisualState.Setters>
+                                    <Setter Property="Opacity" Value="0.8" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="Opacity" Value="1.0" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Pressed">
+                                <VisualState.Setters>
+                                    <Setter Property="Opacity" Value="0.5" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
             </Style>
 
         </ResourceDictionary>

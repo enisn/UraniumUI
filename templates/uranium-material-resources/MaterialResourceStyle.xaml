@@ -11,7 +11,7 @@
             <ResourceDictionary Source="MaterialResourceColor.xaml" />
 
             <ResourceDictionary>
-               <Style TargetType="Page" ApplyToDerivedTypes="True">
+                <Style TargetType="Page" ApplyToDerivedTypes="True">
                     <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Background}, Dark={StaticResource BackgroundDark}}"/>
                 </Style>
 
@@ -20,7 +20,7 @@
                 </Style>
 
                 <Style TargetType="Frame" ApplyToDerivedTypes="True">
-                    <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Surface}, Dark={StaticResource SurfaceDark}}" />
+                    <Setter Property="BackgroundColor" Value="{StaticResource Surface}" />
                 </Style>
 
                 <Shadow x:Key="ShadowElevation0" Opacity="0" Offset="0,0" Radius="0" Brush="{StaticResource  ShadowBrush}" />
@@ -221,7 +221,7 @@
                 <Style TargetType="BoxView" Class="Divider">
                     <Setter Property="HeightRequest" Value="1" />
                     <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource OutlineVariant}, Dark={StaticResource OutlineVariantDark}}" />
-                    <Setter Property="Margin" Value="16,8"/>
+                    <Setter Property="Margin" Value="16"/>
                 </Style>
 
                 <Style TargetType="input:CheckBox" ApplyToDerivedTypes="True">
@@ -230,47 +230,15 @@
                     <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
                     <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}" />
                     <Setter Property="ValidationColor" Value="{AppThemeBinding Light={StaticResource Error}, Dark={StaticResource ErrorDark}}"/>
-                    <Setter Property="VisualStateManager.VisualStateGroups">
-                        <VisualStateGroupList>
-                            <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Normal">
-                                    <VisualState.Setters>
-                                        <Setter Property="Opacity" Value="1"/>
-                                    </VisualState.Setters>
-                                </VisualState>
-                                <VisualState x:Name="Disabled">
-                                    <VisualState.Setters>
-                                        <Setter Property="Opacity" Value="0.6" />
-                                    </VisualState.Setters>
-                                </VisualState>
-                            </VisualStateGroup>
-                        </VisualStateGroupList>
-                    </Setter>
                 </Style>
 
                 <Style TargetType="input:RadioButton" ApplyToDerivedTypes="True">
                     <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
                     <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}" />
                     <Setter Property="CircleColor" Value="{AppThemeBinding Light={StaticResource  Outline}, Dark={StaticResource  OutlineDark}}" />
-                    <Setter Property="VisualStateManager.VisualStateGroups">
-                        <VisualStateGroupList>
-                            <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Normal">
-                                    <VisualState.Setters>
-                                        <Setter Property="Opacity" Value="1"/>
-                                    </VisualState.Setters>
-                                </VisualState>
-                                <VisualState x:Name="Disabled">
-                                    <VisualState.Setters>
-                                        <Setter Property="Opacity" Value="0.6" />
-                                    </VisualState.Setters>
-                                </VisualState>
-                            </VisualStateGroup>
-                        </VisualStateGroupList>
-                    </Setter>
                 </Style>
 
-                <Style TargetType="c:RadioButton" Class="CheckRadioButton">
+                <Style TargetType="input:RadioButton" Class="CheckRadioButton">
                     <Setter Property="SelectedIconGeomerty" Value="{x:Static input:PredefinedShapes.CheckCircle}" />
                 </Style>
 
@@ -307,128 +275,6 @@
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateGroupList>
-                    </Setter>
-                </Style>
-
-                <Style TargetType="views:StatefulContentView" ApplyToDerivedTypes="True">
-                    <Setter Property="VisualStateManager.VisualStateGroups">
-                        <VisualStateGroupList>
-                            <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="PointerOver">
-                                    <VisualState.Setters>
-                                        <Setter Property="Opacity" Value="0.8" />
-                                    </VisualState.Setters>
-                                </VisualState>
-                                <VisualState x:Name="Normal">
-                                    <VisualState.Setters>
-                                        <Setter Property="Opacity" Value="1.0" />
-                                    </VisualState.Setters>
-                                </VisualState>
-                                <VisualState x:Name="Pressed">
-                                    <VisualState.Setters>
-                                        <Setter Property="Opacity" Value="0.5" />
-                                    </VisualState.Setters>
-                                </VisualState>
-                            </VisualStateGroup>
-                        </VisualStateGroupList>
-                    </Setter>
-                </Style>
-
-                <Style TargetType="c:ButtonView" ApplyToDerivedTypes="True" x:Key="ButtonViewDefault">
-                    <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
-                    <Setter Property="t:CascadingStyle.Resources">
-                        <Setter.Value>
-                            <ResourceDictionary>
-                                <Style TargetType="Label">
-                                    <Setter Property="TextColor" Value="{DynamicResource OnPrimary}" />
-                                </Style>
-                            </ResourceDictionary>
-                        </Setter.Value>
-                    </Setter>
-                    <Setter Property="VisualStateManager.VisualStateGroups">
-                        <VisualStateGroupList>
-                            <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="PointerOver">
-                                    <VisualState.Setters>
-                                        <Setter Property="BackgroundColor" Value="{StaticResource SurfaceTint1}" />
-                                        <Setter Property="Opacity" Value="0.9" />
-                                    </VisualState.Setters>
-                                </VisualState>
-                                <VisualState x:Name="Normal"/>
-
-                                <VisualState x:Name="Pressed">
-                                    <VisualState.Setters>
-                                        <Setter Property="BackgroundColor" Value="{StaticResource SurfaceTint2}" />
-                                        <Setter Property="Opacity" Value="0.8" />
-                                    </VisualState.Setters>
-                                </VisualState>
-                            </VisualStateGroup>
-                        </VisualStateGroupList>
-                    </Setter>
-                </Style>
-
-                <Style TargetType="c:ButtonView" Class="TreeViewExpandButton" >
-                    <Setter Property="BackgroundColor" Value="Transparent" />
-                    <Setter Property="VisualStateManager.VisualStateGroups">
-                        <VisualStateGroupList>
-                            <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="PointerOver">
-                                    <VisualState.Setters>
-                                        <Setter Property="BackgroundColor" Value="{StaticResource SurfaceTint0}" />
-                                    </VisualState.Setters>
-                                </VisualState>
-                                <VisualState x:Name="Normal"/>
-                                <VisualState x:Name="Pressed">
-                                    <VisualState.Setters>
-                                        <Setter Property="BackgroundColor" Value="{StaticResource SurfaceTint1}" />
-                                    </VisualState.Setters>
-                                </VisualState>
-                            </VisualStateGroup>
-                        </VisualStateGroupList>
-                    </Setter>
-                </Style>
-
-                <Style TargetType="View" Class="PrimaryContainer" ApplyToDerivedTypes="True">
-                    <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource PrimaryContainer}, Dark={StaticResource PrimaryContainerDark}}" />
-                    <Setter Property="t:CascadingStyle.Resources">
-                        <ResourceDictionary>
-                            <Style TargetType="Label">
-                                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnPrimaryContainer},Dark={StaticResource OnPrimaryContainerDark}}" />
-                            </Style>
-                        </ResourceDictionary>
-                    </Setter>
-                </Style>
-
-                <Style TargetType="View" Class="SecondaryContainer" ApplyToDerivedTypes="True">
-                    <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource SecondaryContainer}, Dark={StaticResource SecondaryContainerDark}}" />
-                    <Setter Property="t:CascadingStyle.Resources">
-                        <ResourceDictionary>
-                            <Style TargetType="Label">
-                                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnSecondaryContainer},Dark={StaticResource OnSecondaryContainerDark}}" />
-                            </Style>
-                        </ResourceDictionary>
-                    </Setter>
-                </Style>
-
-                <Style TargetType="View" Class="TertiaryContainer" ApplyToDerivedTypes="True">
-                    <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource TertiaryContainer}, Dark={StaticResource TertiaryContainerDark}}" />
-                    <Setter Property="t:CascadingStyle.Resources">
-                        <ResourceDictionary>
-                            <Style TargetType="Label">
-                                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnTertiaryContainer},Dark={StaticResource OnTertiaryContainerDark}}" />
-                            </Style>
-                        </ResourceDictionary>
-                    </Setter>
-                </Style>
-
-                <Style TargetType="View" Class="ErrorContainer" ApplyToDerivedTypes="True">
-                    <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource ErrorContainer}, Dark={StaticResource ErrorContainerDark}}" />
-                    <Setter Property="t:CascadingStyle.Resources">
-                        <ResourceDictionary>
-                            <Style TargetType="Label">
-                                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnErrorContainer},Dark={StaticResource OnErrorContainerDark}}" />
-                            </Style>
-                        </ResourceDictionary>
                     </Setter>
                 </Style>
 

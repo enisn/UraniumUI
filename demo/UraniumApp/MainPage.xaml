@@ -19,9 +19,9 @@
             Padding="30"
             VerticalOptions="Center">
 
-            <Frame>
+            <controls:ButtonView HorizontalOptions="Center">
                 <Label Text="Hello, Uranium ☢️" />
-            </Frame>
+            </controls:ButtonView>
 
         </VerticalStackLayout>
     </ScrollView>

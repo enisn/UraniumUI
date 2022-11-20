@@ -1,4 +1,4 @@
-﻿using UraniumUI.Material.Resources;
+﻿using UraniumUI.Resources;
 
 namespace UraniumUI.Material.Controls;
 

@@ -62,14 +62,14 @@
                                     Command="{Binding Command}">
                                     <Button.Triggers>
                                         <DataTrigger TargetType="Button" Binding="{Binding IsSelected}" Value="True">
-                                            <Setter Property="BackgroundColor" Value="{StaticResource SurfaceTint1}" />
-                                            <Setter Property="TextColor" Value="{StaticResource SurfaceTint3}" />
-                                            <Setter Property="ImageSource" Value="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Home}, Color={StaticResource SurfaceTint1}}" />
+                                            <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+                                            <Setter Property="TextColor" Value="{StaticResource Primary}" />
+                                            <Setter Property="ImageSource" Value="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Home}, Color={StaticResource Primary}}" />
                                         </DataTrigger>
                                         <DataTrigger TargetType="Button" Binding="{Binding IsSelected}" Value="False">
                                             <Setter Property="BackgroundColor" Value="Transparent" />
                                             <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnSurface}, Dark={StaticResource OnSurfaceDark}}" />
-                                            <Setter Property="ImageSource" Value="{FontImageSource FontFamily=MaterialOutlined, Glyph={x:Static m:MaterialOutlined.Home}, Color={StaticResource SurfaceTint3}}" />
+                                            <Setter Property="ImageSource" Value="{FontImageSource FontFamily=MaterialOutlined, Glyph={x:Static m:MaterialOutlined.Home}, Color={StaticResource OnSurface}}" />
                                         </DataTrigger>
                                     </Button.Triggers>
                                 </Button>

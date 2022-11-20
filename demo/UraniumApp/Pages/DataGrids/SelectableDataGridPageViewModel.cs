@@ -17,9 +17,9 @@ public class SelectableDataGridPageViewModel : CustomDataGridPageViewModel
     {
         RemoveSelectedCommand = new Command(() =>
         {
-            foreach (var item in SelectedItems)
+            for (int i = 0; i < SelectedItems.Count; i++)
             {
-                Items.Remove(item);
+                Items.Remove(SelectedItems[i]);
             }
         });
     }

@@ -19,58 +19,12 @@ UraniumUI has a couple of changes in this version. Applying following changes to
         });
     ```
 
-- You should add following style to your resources **if you overrided** the default style.
+- You should add following style changes into your resources **if you overrided** the default style.
 
-    ```xml
-        xmlns:views="clr-namespace:UraniumUI.Views;assembly=UraniumUI"
-    ```
+    - The following xml namespace should be added to the root element of your resource file.
+        ```xml
+            xmlns:views="clr-namespace:UraniumUI.Views;assembly=UraniumUI"
+        ```
 
-
-    ```xml
-    <Style TargetType="views:StatefulContentView" ApplyToDerivedTypes="True">
-        <Setter Property="VisualStateManager.VisualStateGroups">
-            <VisualStateGroupList>
-                <VisualStateGroup x:Name="CommonStates">
-                    <VisualState x:Name="PointerOver">
-                        <VisualState.Setters>
-                            <Setter Property="Opacity" Value="0.8" />
-                        </VisualState.Setters>
-                    </VisualState>
-                    <VisualState x:Name="Normal">
-                        <VisualState.Setters>
-                            <Setter Property="Opacity" Value="1.0" />
-                        </VisualState.Setters>
-                    </VisualState>
-                    <VisualState x:Name="Pressed">
-                        <VisualState.Setters>
-                            <Setter Property="Opacity" Value="0.5" />
-                        </VisualState.Setters>
-                    </VisualState>
-                </VisualStateGroup>
-            </VisualStateGroupList>
-        </Setter>
-    </Style>
-
-    <Style TargetType="c:ButtonView" ApplyToDerivedTypes="True">
-        <Setter Property="BackgroundColor"  Value="{StaticResource Primary}" />
-        <Setter Property="VisualStateManager.VisualStateGroups">
-            <VisualStateGroupList>
-                <VisualStateGroup x:Name="CommonStates">
-                    <VisualState x:Name="PointerOver">
-                        <VisualState.Setters>
-                            <Setter Property="BackgroundColor" Value="{StaticResource SurfaceTint1}" />
-                            <Setter Property="Opacity" Value="0.9" />
-                        </VisualState.Setters>
-                    </VisualState>
-                    <VisualState x:Name="Normal"/>
-                    <VisualState x:Name="Pressed">
-                        <VisualState.Setters>
-                            <Setter Property="BackgroundColor" Value="{StaticResource SurfaceTint2}" />
-                            <Setter Property="Opacity" Value="0.8" />
-                        </VisualState.Setters>
-                    </VisualState>
-                </VisualStateGroup>
-            </VisualStateGroupList>
-        </Setter>
-    </Style>
-    ```
+    Make sure those changes are applied in your style file: 
+    https://github.com/enisn/UraniumUI/commit/3e1038d0b6d6d1cacc8d160e44fc4ae93d69fc34

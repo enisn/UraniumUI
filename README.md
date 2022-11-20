@@ -28,7 +28,7 @@ Visit documentation for onboarding.
 - Multiple Theme support.
 
 ## Contributing
-We welcome contributions and suggestions. Please read our [contributing guide](#).
+We welcome contributions and suggestions. Please read our [contributing guide](CONTRIBUTING.md).
 
 ## Features
 

@@ -33,7 +33,7 @@
                         <VerticalStackLayout>
                             <Label Text="Amount of CheckBox options" />
                             <Slider x:Name="sliderForCheckBoxes" Minimum="1" Maximum="12" Value="3" />
-                            <Button Text="Ask CheckBoxes" Clicked="AskCheckBoxes" StyleClass="TextButton" HorizontalOptions="Center" />
+                            <Button Text="Ask CheckBoxes" Clicked="AskCheckBoxes" StyleClass="FilledButton" HorizontalOptions="Center" />
                         </VerticalStackLayout>
 
                         <ListView Margin="20" x:Name="checkBoxResultListView" VerticalOptions="FillAndExpand">
@@ -53,7 +53,7 @@
 
                 <material:TabItem Title="Text Prompt">
                     <VerticalStackLayout Padding="20">
-                        <Button Text="Ask Text Prompt" Clicked="AskTextPrompt" />
+                        <Button Text="Ask Text Prompt" Clicked="AskTextPrompt" StyleClass="FilledButton" />
                     </VerticalStackLayout>
                 </material:TabItem>
             </material:TabView>

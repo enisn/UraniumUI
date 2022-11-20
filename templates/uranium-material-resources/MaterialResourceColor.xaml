@@ -7,8 +7,7 @@
     You can customize colors of UraniumUI.Material theme here
     -->
 
-
-    <Color x:Key="Primary">#52D681</Color>
+     <Color x:Key="Primary">#52D681</Color>
     <Color x:Key="OnPrimary">#FFFFFF</Color>
     <Color x:Key="PrimaryContainer">#baefcd</Color>
     <Color x:Key="OnPrimaryContainer">#176031</Color>
@@ -39,11 +38,6 @@
     <Color x:Key="Outline">#79747E</Color>
     <Color x:Key="OutlineVariant">#C4C7C5</Color>
     <Color x:Key="Shadow">#000000</Color>
-
-    <Color x:Key="SurfaceTint0">#3052D681</Color>
-    <Color x:Key="SurfaceTint1">#6052D681</Color>
-    <Color x:Key="SurfaceTint2">#a052D681</Color>
-    <Color x:Key="SurfaceTint3">#bb52D681</Color>
 
     <Color x:Key="InverseSurface">#313033</Color>
     <Color x:Key="InverseOnSurface">#F4EFF4</Color>
@@ -127,4 +121,5 @@
     <SolidColorBrush x:Key="InversePrimaryBrush" Color="{StaticResource InversePrimary}" />
 
     <SolidColorBrush x:Key="ScrimBrush" Color="{StaticResource Scrim}" />
+
 </ResourceDictionary>

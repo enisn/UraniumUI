@@ -15,7 +15,7 @@ CheckBox is defined in `UraniumUI.Material.Controls` namespace. You can use it l
 
 
 ```xml
-xmlns:material="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
+xmlns:material="http://schemas.microsoft.com/dotnet/2022/maui/uraniumui/material"
 ```
 
 ```xml

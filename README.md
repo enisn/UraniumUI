@@ -42,12 +42,6 @@ We welcome contributions and suggestions. Please read our [contributing guide](#
 - Pre-Built Components
 - Startup Templates
 
-| - | - |
-| --- | --- |
-| ![MAUI Material Design](docs/en/themes/material/components/images/backdrop-demo.gif) | ![MAUI Material Design Bottom Sheer](docs/en/themes/material/components/images/bottomsheet-expanding-demo.gif) | 
-| ![MAUI Material Design BottomSheet](docs/en/themes/material/components/images/bottomsheet-regular-demo.gif) | ![MAUI DataGrid](docs/en/themes/material/components/images/datagrid-selection-light-ios.gif) |
-| - | - |
-
 ## Roadmap
 
 See [milestones](https://github.com/enisn/UraniumUI/milestones) section in the repository.

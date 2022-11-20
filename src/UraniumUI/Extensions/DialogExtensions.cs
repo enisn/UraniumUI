@@ -36,6 +36,7 @@ public static class DialogExtensions
 #else
 
         var rootContainer = new StackLayout();
+
         var popup = new Popup()
         {
             Size = new Size(page.Width, page.Height),
@@ -64,6 +65,7 @@ public static class DialogExtensions
         var checkBoxGroup = new VerticalStackLayout
         {
             Margin = 20,
+            Spacing = 10,
             VerticalOptions = LayoutOptions.Center,
             HorizontalOptions = LayoutOptions.Start,
         };

@@ -176,9 +176,9 @@ public partial class DataGrid : Frame
     {
         for (int i = 0; i < Columns.Count; i++)
         {
-            var titleView = Columns[i].TitleView 
+            var titleView = Columns[i].TitleView
                 ?? TitleTemplate?.CreateContent() as View
-                ?? LabelFactory() 
+                ?? LabelFactory()
                 ?? CreateLabel();
 
             if (titleView is Label label)
@@ -389,7 +389,10 @@ public partial class DataGrid : Frame
         {
             if (isSelected)
             {
-                SelectedItems?.Add(cellContext.Data);
+                if (!SelectedItems?.Contains(cellContext.Data) ?? false)
+                {
+                    SelectedItems?.Add(cellContext.Data);
+                }
             }
             else
             {

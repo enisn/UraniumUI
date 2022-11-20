@@ -19,7 +19,7 @@
             Padding="30"
             VerticalOptions="Center">
 
-            <controls:ButtonView>
+            <controls:ButtonView HorizontalOptions="Center">
                 <Label Text="Hello, Uranium ☢️" />
             </controls:ButtonView>
 

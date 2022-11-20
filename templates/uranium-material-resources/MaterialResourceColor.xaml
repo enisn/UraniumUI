@@ -7,7 +7,7 @@
     You can customize colors of UraniumUI.Material theme here
     -->
 
-     <Color x:Key="Primary">#52D681</Color>
+    <Color x:Key="Primary">#52D681</Color>
     <Color x:Key="OnPrimary">#FFFFFF</Color>
     <Color x:Key="PrimaryContainer">#baefcd</Color>
     <Color x:Key="OnPrimaryContainer">#176031</Color>

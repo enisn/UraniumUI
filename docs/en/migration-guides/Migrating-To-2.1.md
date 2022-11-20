@@ -26,5 +26,6 @@ UraniumUI has a couple of changes in this version. Applying following changes to
             xmlns:views="clr-namespace:UraniumUI.Views;assembly=UraniumUI"
         ```
 
-    Make sure those changes are applied in your style file: 
-    https://github.com/enisn/UraniumUI/commit/3e1038d0b6d6d1cacc8d160e44fc4ae93d69fc34
+    - Make sure those changes are applied in your style file: 
+      - https://github.com/enisn/UraniumUI/commit/9a1628409a94fd97f9a32aa318d6eca0742d0746 _(Style changes)_
+      - https://github.com/enisn/UraniumUI/commit/b2ff5e5209b046ef9252a3786b93d4ac4b18b7d5 _(Color changes)_

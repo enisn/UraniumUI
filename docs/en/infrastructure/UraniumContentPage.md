@@ -33,7 +33,7 @@ dotnet new uraniumcontentpage -n MyPage -na MyNamespace
     <uranium:UraniumContentPage x:Class="App1.MainPage"
                 xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                xmlns:uranium="clr-namespace:UraniumUI.Pages;assembly=UraniumUI"
+                xmlns:uranium="http://schemas.microsoft.com/dotnet/2022/maui/uraniumui"
                 xmlns:local="clr-namespace:App1">
 
         <!-- Content here -->
@@ -62,7 +62,7 @@ Attachments aren't same layer with page content and they will automatically rend
     <uranium:UraniumContentPage x:Class="App1.MainPage"
                 xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                xmlns:uranium="clr-namespace:UraniumUI.Pages;assembly=UraniumUI"
+                xmlns:uranium="http://schemas.microsoft.com/dotnet/2022/maui/uraniumui"
                 xmlns:local="clr-namespace:App1">
 
         <!-- Content here -->
@@ -118,7 +118,7 @@ public class FAB : ImageButton, IPageAttachment
     <uranium:UraniumContentPage x:Class="App1.MainPage"
                 xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                xmlns:uranium="clr-namespace:UraniumUI.Pages;assembly=UraniumUI"
+                xmlns:uranium="http://schemas.microsoft.com/dotnet/2022/maui/uraniumui"
                 xmlns:local="clr-namespace:App1">
 
         <!-- Content here -->

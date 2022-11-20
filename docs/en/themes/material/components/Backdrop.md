@@ -16,7 +16,7 @@ Backdrop is an [attachment](../../../infrastructure/UraniumContentPage.md#attach
 Backdrop is included in `UraniumUI.Material.Attachments` namespace. Before starting to use Backdrop, you should add material namespace to your XAML file.
 
 ```
-xmlns:material="clr-namespace:UraniumUI.Material.Attachments;assembly=UraniumUI.Material"
+xmlns:material="http://schemas.microsoft.com/dotnet/2022/maui/uraniumui/material"
 ```
 
 To use a Backdrop, you should add a `Backdrop` to `UraniumContentPage.Attachments`. B
@@ -27,9 +27,9 @@ Backdrop has `Title` and `IconImageSource` property and one of them should be se
 <uranium:UraniumContentPage x:Class="App1.MainPage"
             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-            xmlns:uranium="clr-namespace:UraniumUI.Pages;assembly=UraniumUI"
+            xmlns:uranium="http://schemas.microsoft.com/dotnet/2022/maui/uraniumui"
             xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
-            xmlns:material="clr-namespace:UraniumUI.Material.Attachments;assembly=UraniumUI.Material">
+            xmlns:material="http://schemas.microsoft.com/dotnet/2022/maui/uraniumui/material">
 
     <!-- Content here -->
 
@@ -60,8 +60,8 @@ Both of `Title` and `IconImageSource` is used to add a toolbaritem. If you set `
 <uranium:UraniumContentPage x:Class="App1.MainPage"
             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-            xmlns:uranium="clr-namespace:UraniumUI.Pages;assembly=UraniumUI"
-            xmlns:material="clr-namespace:UraniumUI.Material.Attachments;assembly=UraniumUI.Material">
+            xmlns:uranium="http://schemas.microsoft.com/dotnet/2022/maui/uraniumui"
+            xmlns:material="http://schemas.microsoft.com/dotnet/2022/maui/uraniumui/material">
 
     <!-- Content here -->
 

@@ -8,7 +8,7 @@ DatePickerField is a control that allows users to select a date. It is a wrapper
 DatePickerField is included in the `UraniumUI.Material.Controls` namespace. You should add it to your XAML like this:
 
 ```xml
-xmlns:material="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
+xmlns:material="http://schemas.microsoft.com/dotnet/2022/maui/uraniumui/material"
 ```
 
 Then you can use it like this:

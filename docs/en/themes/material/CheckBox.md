@@ -15,7 +15,7 @@ RadioButtons should be grouped together in a RadioButtonGroupView. Otherwise, th
 RadioButton is defined in `UraniumUI.Material.Controls` namespace. You can use it like this:
 
 ```xml
-xmlns:material="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
+xmlns:material="http://schemas.microsoft.com/dotnet/2022/maui/uraniumui/material"
 ```
 
 ```xml

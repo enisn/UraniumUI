@@ -338,7 +338,7 @@
                     </Setter>
                 </Style>
 
-                <Style TargetType="c:ButtonView" ApplyToDerivedTypes="True" x:Key="ButtonViewDefault">
+                <Style TargetType="c:ButtonView" ApplyToDerivedTypes="True">
                     <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
                     <Setter Property="t:CascadingStyle.Resources">
                         <Setter.Value>
@@ -354,16 +354,14 @@
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="PointerOver">
                                     <VisualState.Setters>
-                                        <Setter Property="BackgroundColor" Value="{StaticResource SurfaceTint1}" />
-                                        <Setter Property="Opacity" Value="0.9" />
+                                        <Setter Property="t:DynamicTint.BackgroundColorOpacity" Value="0.9" />
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="Normal"/>
 
                                 <VisualState x:Name="Pressed">
                                     <VisualState.Setters>
-                                        <Setter Property="BackgroundColor" Value="{StaticResource SurfaceTint2}" />
-                                        <Setter Property="Opacity" Value="0.8" />
+                                        <Setter Property="t:DynamicTint.BackgroundColorOpacity" Value="0.8" />
                                     </VisualState.Setters>
                                 </VisualState>
                             </VisualStateGroup>
@@ -378,13 +376,19 @@
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="PointerOver">
                                     <VisualState.Setters>
-                                        <Setter Property="BackgroundColor" Value="{StaticResource SurfaceTint0}" />
+                                        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+                                        <Setter Property="t:DynamicTint.BackgroundColorOpacity" Value="0.1" />
                                     </VisualState.Setters>
                                 </VisualState>
-                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="Normal">
+                                    <VisualState.Setters>
+                                        <Setter Property="BackgroundColor" Value="Transparent" />
+                                    </VisualState.Setters>
+                                </VisualState>
                                 <VisualState x:Name="Pressed">
                                     <VisualState.Setters>
-                                        <Setter Property="BackgroundColor" Value="{StaticResource SurfaceTint1}" />
+                                        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+                                        <Setter Property="t:DynamicTint.BackgroundColorOpacity" Value="0.15" />
                                     </VisualState.Setters>
                                 </VisualState>
                             </VisualStateGroup>

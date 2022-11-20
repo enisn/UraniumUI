@@ -2,7 +2,7 @@
 using System.Collections.Specialized;
 using System.Reflection;
 using System.Windows.Input;
-using UraniumUI.Material.Resources;
+using UraniumUI.Resources;
 using UraniumUI.Triggers;
 
 namespace UraniumUI.Material.Controls;
@@ -35,9 +35,9 @@ public partial class TabView : Grid
 			{
 				new GenericTriggerAction<Grid>((sender) =>
 				{
-					sender.BackgroundColor = ColorResource.GetColor("SurfaceTint0");
+                    sender.BackgroundColor = ColorResource.GetColor("Primary", "PrimaryDark").WithAlpha(.2f);
 
-					var box = (sender.Children.FirstOrDefault(x => x is BoxView) as BoxView);
+                    var box = (sender.Children.FirstOrDefault(x => x is BoxView) as BoxView);
 
 					box.FadeTo(1, easing: Easing.SpringIn);
 					sender.FadeTo(1);
@@ -79,8 +79,8 @@ public partial class TabView : Grid
 		};
 
 		selectionIndicator.SetAppThemeColor(BoxView.ColorProperty,
-			ColorResource.GetColor("SurfaceTint2"),
-			ColorResource.GetColor("PrimaryDark"));
+			ColorResource.GetColor("Primary").WithAlpha(.2f),
+			ColorResource.GetColor("PrimaryDark").WithAlpha(.2f));
 
 		grid.Add(selectionIndicator, row: 0);
 

@@ -1,4 +1,6 @@
-﻿using InputKit.Shared.Controls;
+﻿
+using CommunityToolkit.Maui;
+using InputKit.Shared.Controls;
 using UraniumUI;
 
 namespace MyCompany.MyProject;
@@ -10,6 +12,7 @@ public static class MauiProgram
 		var builder = MauiApp.CreateBuilder();
 		builder
 			.UseMauiApp<App>()
+			.UseMauiCommunityToolkit()
 			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

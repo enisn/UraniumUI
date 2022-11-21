@@ -35,7 +35,6 @@ public partial class InputField : Grid
     protected Border border = new Border
     {
         Padding = 0,
-        Stroke = ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.Gray),
         StrokeThickness = 1,
         StrokeDashOffset = 0,
         BackgroundColor = Colors.Transparent,
@@ -79,7 +78,8 @@ public partial class InputField : Grid
     {
         border.StrokeShape = new RoundRectangle
         {
-            CornerRadius = this.CornerRadius
+            CornerRadius = this.CornerRadius,
+            Stroke = this.BorderColor,
         };
 
         RegisterForEvents();
@@ -308,7 +308,7 @@ public partial class InputField : Grid
         typeof(Color),
         typeof(InputField),
         ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.Gray),
-        propertyChanged: (bindable, oldValue, newValue) => (bindable as InputField).labelTitle.TextColor = (Color)newValue);
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as InputField).border.Stroke = (Color)newValue);
 
     public ImageSource Icon { get => (ImageSource)GetValue(IconProperty); set => SetValue(IconProperty, value); }
 

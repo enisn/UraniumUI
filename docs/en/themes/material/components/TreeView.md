@@ -5,7 +5,7 @@ TreeView is a component that displays a hierarchical list of items. It's a MAUI 
 TreeView is included in the `UraniumUI.Material.Controls` namespace. You should add it to your XAML like this:
 
 ```xml
-xmlns:material="http://schemas.microsoft.com/dotnet/2022/maui/uraniumui/material"
+xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
 ```
 
 Then you can use it like this:

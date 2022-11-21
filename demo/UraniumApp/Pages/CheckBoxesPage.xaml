@@ -2,7 +2,7 @@
 <ContentPage x:Class="UraniumApp.Pages.CheckBoxesPage"
              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:material="http://schemas.microsoft.com/dotnet/2022/maui/uraniumui/material"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
              xmlns:local="clr-namespace:UraniumApp.Pages">
     <ContentPage.Content>
         <StackLayout MaximumWidthRequest="400" Margin="20" Spacing="15">

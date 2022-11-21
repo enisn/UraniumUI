@@ -11,7 +11,7 @@
 
 class Constants
 {
-    public const string XamlNamespace = "http://schemas.microsoft.com/dotnet/2022/maui/uraniumui";
+    public const string XamlNamespace = "http://schemas.enisn-projects.io/dotnet/maui/uraniumui";
 
     public const string NamespacePrefix = $"{nameof(UraniumUI)}.";
 }

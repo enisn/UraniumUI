@@ -8,7 +8,7 @@ ButtonView included in **Material Theme**.
 `ButtonView` is defined in `UraniumUI.Material.Controls` namespace. You can add it to your XAML like this:
 
 ```xml
-xmlns:material="http://schemas.microsoft.com/dotnet/2022/maui/uraniumui/material"
+xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
 ```
 
 Then you can use it like this:

@@ -4,7 +4,7 @@ Uranium UI has a color system that allows you to use colors in a more flexible w
 Uranium Core provides a base color palette that can be used in your application. Each theme can provide their own colors. You can also use your own colors.
 
 ## Configuration
-You should configure default Theme resources in your `App.xaml`. Default resources are included in `UraniumUI.Resources` namespace, it can be defined `xmlns:u="http://schemas.microsoft.com/dotnet/2022/maui/uraniumui"` as xml namespace.
+You should configure default Theme resources in your `App.xaml`. Default resources are included in `UraniumUI.Resources` namespace, it can be defined `xmlns:u="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"` as xml namespace.
 
 You can either use only `ColorResource` or you can use `StyleResource` to get all theme resources. 
 
@@ -16,7 +16,7 @@ You can either use only `ColorResource` or you can use `StyleResource` to get al
 <Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:App1"
-             xmlns:u="http://schemas.microsoft.com/dotnet/2022/maui/uraniumui"
+             xmlns:u="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
              x:Class="App1.App">
     <Application.Resources>
         <ResourceDictionary>

@@ -2,7 +2,7 @@
 <ContentPage x:Class="UraniumApp.Pages.TreeViews.TreeViewPage"
              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:material="http://schemas.microsoft.com/dotnet/2022/maui/uraniumui/material"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
              xmlns:vm="clr-namespace:UraniumApp.ViewModels"
              xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
              xmlns:root="clr-namespace:UraniumApp"

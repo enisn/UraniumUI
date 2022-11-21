@@ -11,7 +11,7 @@
             <ResourceDictionary Source="MaterialColorOverride.xaml" />
 
             <ResourceDictionary>
-                <Style TargetType="Page" ApplyToDerivedTypes="True">
+                  <Style TargetType="Page" ApplyToDerivedTypes="True">
                     <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Background}, Dark={StaticResource BackgroundDark}}"/>
                 </Style>
 

@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using UraniumUI;
+using UraniumUI.Resources;
 
 namespace UraniumApp.ViewModels;
 public class ValidationsPageViewModel : UraniumBindableObject
@@ -26,13 +27,12 @@ public class ValidationsPageViewModel : UraniumBindableObject
         {
             var snackbarOptions = new SnackbarOptions
             {
-                BackgroundColor = Colors.Red,
-                TextColor = Colors.Green,
-                ActionButtonTextColor = Colors.Yellow,
-                CornerRadius = new CornerRadius(10),
-                CharacterSpacing = 0.5
+                BackgroundColor = ColorResource.GetColor("Surface", "SurfaceDark"),
+                TextColor = ColorResource.GetColor("OnSurface", "OnSurfaceDark"),
+                ActionButtonTextColor = ColorResource.GetColor("Primary", "PrimaryDark"),
+                CornerRadius = new CornerRadius(8),
             };
-            Snackbar.Make($"Thank you {FullName}. You successfully registered!", duration: TimeSpan.FromSeconds(6) , visualOptions: snackbarOptions)
+            Snackbar.Make($"Thank you {FullName}. You successfully registered!", duration: TimeSpan.FromSeconds(6), visualOptions: snackbarOptions)
             .Show();
             ClearCommand.Execute(null);
         });

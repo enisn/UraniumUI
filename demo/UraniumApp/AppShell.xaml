@@ -12,6 +12,20 @@
     xmlns:tabs="clr-namespace:UraniumApp.Pages.TabViews"
     Shell.FlyoutBehavior="{OnIdiom Desktop=Locked, Default=Flyout}">
 
+    <Shell.FlyoutHeader>
+        <VerticalStackLayout StyleClass="PrimaryContainer" Padding="20">
+            <Label Text="☢️&#xA;Uranium UI" FontSize="Large" HorizontalTextAlignment="Center" Margin="10" />
+
+            <Label Text="App Theme" HorizontalOptions="Center"/>
+
+            <HorizontalStackLayout HorizontalOptions="Center">
+                <Label Text="Light" VerticalOptions="Center" />
+                <Switch x:Name="themeSwitch" Toggled="ThemeToggled"/>
+                <Label Text="Dark" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </Shell.FlyoutHeader>
+
     <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
         <ShellContent Title="MainPage" ContentTemplate="{DataTemplate local:MainPage}">
             <ShellContent.Icon>
@@ -70,7 +84,7 @@
         <ShellContent 
             Title="Buttons" 
             Icon="{FontImageSource FontFamily=MaterialOutlined, Glyph={x:Static m:MaterialOutlined.All_inbox}, Color={StaticResource Primary}}"
-            ContentTemplate="{DataTemplate pages:ButtonsPage}"/>        
+            ContentTemplate="{DataTemplate pages:ButtonsPage}"/>
         <ShellContent 
             Title="CheckBox"
             Icon="{FontImageSource FontFamily=MaterialOutlined, Glyph={x:Static m:MaterialOutlined.Check_box}, Color={StaticResource Primary}}"
@@ -102,7 +116,7 @@
 
         The implicit conversion automatically wraps the ShellContent objects below in Tab objects.
         -->
-        <!--<ShellContent Title="Monkeys"
+    <!--<ShellContent Title="Monkeys"
                       Icon="monkey.png"
                       ContentTemplate="{DataTemplate views:MonkeysPage}" />
         <ShellContent Title="Elephants"

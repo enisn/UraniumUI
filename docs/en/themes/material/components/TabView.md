@@ -8,7 +8,7 @@ TabView is a component that allows you to switch between different views by sele
 `TabView` is defined in `UraniumUI.Material.Controls` namespace. You can add it to your XAML like this:
 
 ```xml
-xmlns:material="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
+xmlns:material="http://schemas.microsoft.com/dotnet/2022/maui/uraniumui/material"
 ```
 
 Then you can use it like this:

@@ -16,7 +16,7 @@ BottomSheet has a default regular anchor that user can pull it up and down. But,
 
 Before starting to use BottomSheet, you should add material namespace to your XAML file.
 
-    `xmlns:material="http://schemas.microsoft.com/dotnet/2022/maui/uraniumui/material"`
+    `xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"`
 
 To use a regular bottom sheet, you should add a `BottomSheet` to `UraniumContentPage.Attachments`.
 
@@ -24,8 +24,8 @@ To use a regular bottom sheet, you should add a `BottomSheet` to `UraniumContent
 <uranium:UraniumContentPage x:Class="App1.MainPage"
             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-            xmlns:uranium="http://schemas.microsoft.com/dotnet/2022/maui/uraniumui"
-            xmlns:material="http://schemas.microsoft.com/dotnet/2022/maui/uraniumui/material>
+            xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
+            xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material>
 
     <!-- Content here -->
 
@@ -61,8 +61,8 @@ To use a custom header bottom sheet, you should add a `BottomSheet` to `UraniumC
 <uranium:UraniumContentPage x:Class="App1.MainPage"
             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-            xmlns:uranium="http://schemas.microsoft.com/dotnet/2022/maui/uraniumui"
-            xmlns:material="http://schemas.microsoft.com/dotnet/2022/maui/uraniumui/material">
+            xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
+            xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material">
 
     <!-- Content here -->
 
@@ -86,8 +86,8 @@ To use a custom header bottom sheet, you should add a `BottomSheet` to `UraniumC
 <uranium:UraniumContentPage x:Class="App1.MainPage"
             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-            xmlns:uranium="http://schemas.microsoft.com/dotnet/2022/maui/uraniumui"
-            xmlns:material="http://schemas.microsoft.com/dotnet/2022/maui/uraniumui/material">
+            xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
+            xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material">
 
     <!-- Content here -->
     <Button Text="Show" OnClick="ShowBottomSheet" />

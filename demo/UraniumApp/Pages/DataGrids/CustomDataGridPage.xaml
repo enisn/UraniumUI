@@ -4,7 +4,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:UraniumApp.Pages.DataGrids"
              xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
-             xmlns:material="http://schemas.microsoft.com/dotnet/2022/maui/uraniumui/material"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
              x:Name="page">
     <ContentPage.BindingContext>
         <local:CustomDataGridPageViewModel />

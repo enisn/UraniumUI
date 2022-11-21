@@ -12,7 +12,7 @@ Elevation styles come from `StyleResource` from `UraniumUI.Material.Resources` n
 <Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:MyCompany.MyProject"
-             xmlns:material="http://schemas.microsoft.com/dotnet/2022/maui/uraniumui/material
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material
              x:Class="MyCompany.MyProject.App">
     <Application.Resources>
         <ResourceDictionary>

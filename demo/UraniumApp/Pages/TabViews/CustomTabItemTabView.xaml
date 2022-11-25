@@ -24,8 +24,7 @@
                             <DataTemplate>
                                 <material:CheckBox 
                                     Text="{Binding Title}" 
-                                    IsChecked="{Binding IsSelected}"
-                                    CheckChangedCommand="{Binding Command}"/>
+                                    IsChecked="{Binding IsSelected}"/>
                             </DataTemplate>
                         </material:TabView.TabHeaderItemTemplate>
 

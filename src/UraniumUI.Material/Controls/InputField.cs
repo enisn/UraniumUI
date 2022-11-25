@@ -50,7 +50,7 @@ public partial class InputField : Grid
             VerticalOptions = LayoutOptions.Center,
             WidthRequest = 20,
             HeightRequest = 20,
-            Margin = new Thickness(10,0),
+            Margin = new Thickness(10, 0, 0, 0),
         };
     });
 
@@ -100,6 +100,7 @@ public partial class InputField : Grid
 
         InitializeValidation();
     }
+
     ~InputField()
     {
         ReleaseEvents();
@@ -112,18 +113,18 @@ public partial class InputField : Grid
         InitializeBorder();
     }
 
-	// TODO: Remove this member hiding after android unfocus fixed.
-	public new void Unfocus()
-	{
-		base.Unfocus();
+    // TODO: Remove this member hiding after android unfocus fixed.
+    public new void Unfocus()
+    {
+        base.Unfocus();
 #if ANDROID
         var view = Content.Handler.PlatformView as Android.Views.View;
 
         view?.ClearFocus();
 #endif
-	}
+    }
 
-	private void InitializeBorder()
+    private void InitializeBorder()
     {
         var perimeter = (this.Width + this.Height) * 2;
         var calculatedFirstDash = FirstDash + CornerRadius.Clamp(FirstDash, double.MaxValue);
@@ -212,13 +213,13 @@ public partial class InputField : Grid
         }
     }
 
-	protected virtual void ReleaseEvents()
-	{
-		Content.Focused -= Content_Focused;
-		Content.Unfocused -= Content_Unfocused;
-	}
+    protected virtual void ReleaseEvents()
+    {
+        Content.Focused -= Content_Focused;
+        Content.Unfocused -= Content_Unfocused;
+    }
 
-	private void Content_Unfocused(object sender, FocusEventArgs e)
+    private void Content_Unfocused(object sender, FocusEventArgs e)
     {
         border.Stroke = BorderColor;
         labelTitle.TextColor = TitleColor;
@@ -256,6 +257,10 @@ public partial class InputField : Grid
         {
             rootGrid.Add(imageIcon.Value, column: 0);
         }
+
+        var leftMargin = Icon != null ? 5 : 10;
+        this.Content.Margin = new Thickness(leftMargin, 0, 0, 0);
+
     }
     protected virtual void OnCornerRadiusChanged()
     {

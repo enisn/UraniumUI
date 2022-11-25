@@ -27,6 +27,7 @@ public class PickerField : InputField
 		InputTransparent = true,
 		HorizontalOptions = LayoutOptions.Start,
 		VerticalOptions = LayoutOptions.Center,
+        Margin = new Thickness(10,0),
 		TextColor = ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.Gray)
 	};
 #endif

@@ -8,7 +8,7 @@ public partial class TabView
 	public static BindableProperty ItemsProperty = BindableProperty.Create(
 		nameof(Items),
 		typeof(IList<TabItem>),
-		typeof(TabView), new ObservableCollection<TabItem>(),
+		typeof(TabView), null,
 		defaultBindingMode: BindingMode.TwoWay,
 		propertyChanged: (bindable, oldValue, newValue) => (bindable as TabView).OnItemsChanged((IList<TabItem>)oldValue, (IList<TabItem>)newValue));
 

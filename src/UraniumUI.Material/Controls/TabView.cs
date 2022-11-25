@@ -106,6 +106,8 @@ public partial class TabView : Grid
 	public TabView()
 	{
 		_headerScrollView.Content = _headerContainer;
+		Items = new ObservableCollection<TabItem>();
+        
 		InitializeLayout();
 		if (Items is INotifyCollectionChanged observable)
 		{

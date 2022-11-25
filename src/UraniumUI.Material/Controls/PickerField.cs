@@ -15,7 +15,7 @@ public class PickerField : InputField
 	public override View Content { get; set; } = new PickerView
 	{
 		VerticalOptions = LayoutOptions.Center,
-		Margin = new Thickness(10, 0),
+		Margin = new Thickness(15,0),
 #if WINDOWS
 		Opacity = 0,
 #endif
@@ -27,6 +27,7 @@ public class PickerField : InputField
 		InputTransparent = true,
 		HorizontalOptions = LayoutOptions.Start,
 		VerticalOptions = LayoutOptions.Center,
+        Margin = new Thickness(15,0),
 		TextColor = ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.Gray)
 	};
 #endif

@@ -12,7 +12,7 @@ public partial class TextField : InputField
 
     public override View Content { get; set; } = new EntryView
     {
-        Margin = new Thickness(5, 1),
+        Margin = new Thickness(10, 0),
         BackgroundColor = Colors.Transparent,
         VerticalOptions = LayoutOptions.Center
     };

@@ -11,7 +11,7 @@ Uranium UI provides a project template to start a new project with Uranium UI. Y
 
 - Install latest templates from NuGet: 
     ```bash
-    dotnet new -i UraniumUI.Templates
+    dotnet new install UraniumUI.Templates
     ```
 
 - Create a new project: 

@@ -1,5 +1,5 @@
 <div align="center">
-    <img align="center" src="./art/logo.svg" width="33%">
+    <img align="center" src="https://github.com/enisn/UraniumUI/raw/develop/art/logo.svg" width="33%">
     <h1 align="center">Uranium UI</h1>
 </div>
 Modern, extensible, customizable, and easy to use UI framework for .NET MAUI.
@@ -27,33 +27,7 @@ We welcome contributions and suggestions. Please read our [contributing guide](#
 
 ## Roadmap
 
-See [milestones](https://github.com/enisn/UraniumUI/milestones) section in the repository.
-### v1.1
-- [x] [DataGrid]
- - [ ] Pagination
- - [ ] Sorting
-- [x] [TreeView]
- - [ ] Drag & Drop
-- [ ] SelectableText
-- [ ] SegmentedControl
-- [ ] Slider (Header, with dots)
-- [ ] Chips (multiple selection)
-- [ ] RateView
-- [ ] FAB Floating Action Button
-- [ ] ColorPicker
-- [ ] Banners 
-- [ ] Cards (Head, Body, Footer) 
-
-### v2.0
-- [ ] Typeahead (AutoComplete)
-- [ ] Slider (RangeSlider)
-- [ ] CalendarView
-- [ ] BadgeView
-- [ ] OTP Pin Entry
-- [ ] Data Visualization
-  - [ ] Pie Chart
-  - [ ] Column Chart
-  - [ ] Line Chart
+See [milestones](https://github.com/enisn/UraniumUI/milestones) section in the GitHub repository.
 
 ## Support
 If you like this project and want to support it, you can sponsor it on [BuyMeACoffee](https://www.buymeacoffee.com/enisn).

@@ -12,6 +12,9 @@
     <ContentPage.BindingContext>
         <vm:ValidationsPageViewModel />
     </ContentPage.BindingContext>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Clicked="ToolbarItem_Clicked" IconImageSource="{FontImage FontFamily=MaterialRegular,Glyph={x:Static m:MaterialRegular.Open_in_new}, Color={StaticResource OnPrimary}}" />
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <ScrollView HorizontalOptions="Fill">
             <StackLayout Padding="25" MaximumWidthRequest="400">

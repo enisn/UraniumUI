@@ -10,7 +10,7 @@ public partial class ButtonViewHandler
     protected override ContentPanel CreatePlatformView()
     {
         var platformView = base.CreatePlatformView();
-
+#if DEBUG        
         platformView.AddHandler(
            Microsoft.UI.Xaml.Controls.Button.PointerPressedEvent,
            new PointerEventHandler(PlatformView_PointerPressed), true);
@@ -18,6 +18,10 @@ public partial class ButtonViewHandler
         platformView.AddHandler(
             Microsoft.UI.Xaml.Controls.Button.PointerReleasedEvent,
             new PointerEventHandler(PlatformView_PointerReleased), true);
+#else
+        platformView.PointerPressed += PlatformView_PointerPressed;
+        platformView.PointerReleased += PlatformView_PointerReleased;
+#endif
 
         platformView.PointerEntered += PlatformView_PointerEntered;
         platformView.PointerExited += PlatformView_PointerExited;
@@ -27,6 +31,11 @@ public partial class ButtonViewHandler
 
     protected override void DisconnectHandler(ContentPanel platformView)
     {
+#if !DEBUG
+        platformView.PointerPressed -= PlatformView_PointerPressed;
+        platformView.PointerReleased -= PlatformView_PointerReleased;
+#endif
+
         platformView.PointerEntered -= PlatformView_PointerEntered;
         platformView.PointerExited -= PlatformView_PointerExited;
         base.DisconnectHandler(platformView);

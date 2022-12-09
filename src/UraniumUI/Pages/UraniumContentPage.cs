@@ -26,6 +26,8 @@ public class UraniumContentPage : ContentPage
             }
         };
         Attachments.CollectionChanged += Attachments_CollectionChanged;
+
+        ContentFrame.SetBinding(View.BackgroundColorProperty, new Binding(nameof(BackgroundColor), source: this));
     }
 
     private void Attachments_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)

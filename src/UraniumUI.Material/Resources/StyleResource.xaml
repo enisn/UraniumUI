@@ -279,17 +279,15 @@
                     <Setter Property="SelectionColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
                 </Style>
 
-                <Style TargetType="c:InputField" ApplyToDerivedTypes="True">
+                <Style TargetType="c:InputField" ApplyToDerivedTypes="True" x:Key="InputFieldBaseStyle">
+                    <Setter Property="Opacity" Value="1"/>
+                    <Setter Property="AccentColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+                    <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}" />
+                    <Setter Property="TitleColor" Value="{AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}" />
                     <Setter Property="VisualStateManager.VisualStateGroups">
                         <VisualStateGroupList>
                             <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Normal">
-                                    <VisualState.Setters>
-                                        <Setter Property="Opacity" Value="1"/>
-                                        <Setter Property="AccentColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
-                                        <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}" />
-                                    </VisualState.Setters>
-                                </VisualState>
+                                <VisualState x:Name="Normal"/>
                                 <VisualState x:Name="Disabled">
                                     <VisualState.Setters>
                                         <Setter Property="Opacity" Value="0.6" />
@@ -299,6 +297,12 @@
                             </VisualStateGroup>
                         </VisualStateGroupList>
                     </Setter>
+                </Style>
+
+                <Style TargetType="c:InputField" ApplyToDerivedTypes="True" BaseResourceKey="InputFieldBaseStyle" />
+
+                <Style TargetType="c:TextField" BaseResourceKey="InputFieldBaseStyle" >
+                    <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}" />
                 </Style>
 
                 <Style TargetType="views:StatefulContentView" ApplyToDerivedTypes="True">

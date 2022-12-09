@@ -6,4 +6,9 @@ public partial class ValidationsPage : ContentPage
     {
         InitializeComponent();
     }
+
+    private void ToolbarItem_Clicked(object sender, EventArgs e)
+    {
+        Navigation.PushAsync(new ValidationsPage());
+    }
 }

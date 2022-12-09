@@ -252,6 +252,7 @@ public partial class InputField : Grid
 
         if (Icon is FontImageSource font && font.Color.IsNullOrTransparent())
         {
+            // TODO: Add IconColor bindable property.??? What if it's not FontImage?
             font.Color = ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.Gray);
         }
 

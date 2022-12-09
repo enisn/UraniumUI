@@ -10,7 +10,7 @@ There are 2 ways to create a Uranium Content page. The first is to create from t
 UraniumUI templates are packed in [UraniumUI.Template](https://www.nuget.org/packages/UraniumUI.Templates) NuGet package. If you haven't install it, run the following command in the terminal. 
 
 ```bash
-dotnet new -i UraniumUI.Templates
+dotnet new install UraniumUI.Templates
 ```
 
 Then create a new ContentPage with the following command.

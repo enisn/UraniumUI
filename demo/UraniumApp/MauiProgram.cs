@@ -1,9 +1,5 @@
 ﻿using CommunityToolkit.Maui;
-using InputKit.Handlers;
-using Microsoft.Maui.Hosting;
 using UraniumUI;
-using UraniumUI.Handlers;
-using UraniumUI.Material;
 
 namespace UraniumApp;
 

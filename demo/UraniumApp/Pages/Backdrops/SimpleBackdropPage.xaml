@@ -8,6 +8,10 @@
              xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
              xmlns:root="clr-namespace:UraniumApp"
              xmlns:local="clr-namespace:UraniumApp.Pages.Backdrops">
+    <uranium:UraniumContentPage.Resources>
+
+
+    </uranium:UraniumContentPage.Resources>
 
     <root:DemoContent />
 
@@ -27,11 +31,18 @@
                     </Style>
                 </ResourceDictionary>
             </material:BackdropView.Resources>
-            <VerticalStackLayout>
+            <VerticalStackLayout Spacing="10" Padding="10">
                 <material:CheckBox Text="Include Disabled Items" Type="Filled" />
                 <material:CheckBox Text="Include Deleted Items" Type="Filled" />
                 <material:CheckBox Text="Show all categories" Type="Filled"/>
-                <input:AdvancedSlider Title="Maximum Value" MinValue="0" MaxValue="1200" StepValue="10" MaxValueSuffix="items" />
+                <input:AdvancedSlider Title="Maximum Value" MinValue="0" MaxValue="1200" StepValue="10" MaxValueSuffix="items" HorizontalOptions="FillAndExpand">
+                    <input:AdvancedSlider.Resources>
+                        <Style TargetType="Slider">
+                            <Setter Property="WidthRequest" Value="300" />
+                        </Style>
+
+                    </input:AdvancedSlider.Resources>
+                </input:AdvancedSlider>
             </VerticalStackLayout>
         </material:BackdropView>
     </uranium:UraniumContentPage.Attachments>

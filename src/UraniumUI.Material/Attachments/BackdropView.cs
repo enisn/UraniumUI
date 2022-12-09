@@ -38,13 +38,21 @@ public partial class BackdropView : ContentView, IPageAttachment
         AttachedPage.ToolbarItems.Add(toolbarItem);
     }
 
-    protected virtual void SlideToState(bool isPresented)
+    protected virtual async void SlideToState(bool isPresented)
     {
+        if (!isPresented)
+        {
+            await AttachedPage.ContentFrame.TranslateTo(0, isPresented ? this.Content.Height : 0);
+        }
+
         foreach (BackdropView backdrop in AttachedPage.Attachments.Where(x => x is BackdropView))
         {
             backdrop.IsVisible = isPresented && backdrop == this;
         }
 
-        AttachedPage.ContentFrame.TranslateTo(0, isPresented ? this.Content.Height : 0);
+        if (isPresented)
+        {
+            await AttachedPage.ContentFrame.TranslateTo(0, isPresented ? this.Content.Height : 0);
+        }
     }
 }

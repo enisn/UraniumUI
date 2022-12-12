@@ -18,27 +18,20 @@ using System.Threading.Tasks;
 using UraniumUI.Material.Controls;
 
 namespace UraniumUI.Material.Handlers;
-public partial class AutoCompleteViewHandler : ViewHandler<AutoCompleteView, TextInputLayout>
+public partial class AutoCompleteViewHandler : ViewHandler<AutoCompleteView, AppCompatAutoCompleteTextView>
 {
     public AutoCompleteView TypedView => VirtualView as AutoCompleteView;
-    
-    private AppCompatAutoCompleteTextView NativeControl =>  PlatformView?.EditText as AppCompatAutoCompleteTextView;
 
-    protected override TextInputLayout CreatePlatformView()
+    private AppCompatAutoCompleteTextView NativeControl => PlatformView as AppCompatAutoCompleteTextView;
+
+    protected override AppCompatAutoCompleteTextView CreatePlatformView()
     {
-        var textInputLayout = new TextInputLayout(Context)
-        {
-            MinWidth = 1000
-        };
         var autoComplete = new AppCompatAutoCompleteTextView(Context)
         {
-            BackgroundTintList = ColorStateList.ValueOf(VirtualView.PlaceholderColor.ToAndroid()),
             Text = TypedView?.Text,
             Hint = TypedView?.Placeholder,
-            
         };
-        
-        
+
         GradientDrawable gd = new GradientDrawable();
         gd.SetColor(global::Android.Graphics.Color.Transparent);
         autoComplete.SetBackground(gd);
@@ -47,8 +40,8 @@ public partial class AutoCompleteViewHandler : ViewHandler<AutoCompleteView, Tex
             autoComplete.SetHintTextColor(TypedView.PlaceholderColor.ToAndroid());
             autoComplete.SetTextColor(TypedView.TextColor.ToAndroid());
         }
-        textInputLayout.AddView(autoComplete);
-        return textInputLayout;
+
+        return autoComplete;
     }
 
     private void SetItemsSource()
@@ -63,7 +56,7 @@ public partial class AutoCompleteViewHandler : ViewHandler<AutoCompleteView, Tex
         var adapter = new BoxArrayAdapter(Context,
             Android.Resource.Layout.SimpleDropDownItem1Line,
             TypedView.ItemsSource.ToList());
-        
+
         NativeControl.Adapter = adapter;
 
         adapter.NotifyDataSetChanged();

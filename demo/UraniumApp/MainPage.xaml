@@ -10,7 +10,7 @@
     <VerticalStackLayout
             Padding="30">
 
-        <material:AutoCompleteView HorizontalOptions="Fill" BackgroundColor="Red">
+        <material:AutoCompleteView HorizontalOptions="Fill">
             <material:AutoCompleteView.ItemsSource>
                 <x:String>Item 1</x:String>
                 <x:String>Item 2</x:String>

@@ -32,6 +32,12 @@ public partial class AutoCompleteViewHandler : ViewHandler<AutoCompleteView, UIA
         return view;
     }
 
+    public override void PlatformArrange(Rect rect)
+    {
+        base.PlatformArrange(rect);
+        Draw(rect);
+    }
+
     public static void MapText(AutoCompleteViewHandler handler, AutoCompleteView view)
     {
         handler.PlatformView.Text = view.Text;
@@ -47,9 +53,19 @@ public partial class AutoCompleteViewHandler : ViewHandler<AutoCompleteView, UIA
         if (VirtualView.ItemsSource != null)
         {
             var items = VirtualView.ItemsSource.ToList();
-            PlatformView.UpdateItems(items);
-            
+            PlatformView.UpdateItems(items);   
         }
+    }
+
+    public void Draw(CGRect rect)
+    {
+        var scrollView = GetParentScrollView(PlatformView);
+        var ctrl = UIApplication.SharedApplication.GetTopViewController();
+
+        var relativePosition = UIApplication.SharedApplication.KeyWindow;
+        var relativeFrame = PlatformView.Superview.ConvertRectToView(PlatformView.Frame, relativePosition);
+
+        PlatformView.Draw(ctrl, PlatformView.Layer, scrollView, relativeFrame.Y);
     }
 
     private void AutoCompleteViewSourceOnSelected(object sender, SelectedItemChangedEventArgs args)

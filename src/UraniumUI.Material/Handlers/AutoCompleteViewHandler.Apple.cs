@@ -24,7 +24,7 @@ public partial class AutoCompleteViewHandler : ViewHandler<AutoCompleteView, UIA
             SortingAlgorithm = (d, b) => b,
         };
 
-        view.AttributedPlaceholder = new NSAttributedString(VirtualView.Placeholder, null, VirtualView.PlaceholderColor.ToUIColor());
+        //view.AttributedPlaceholder = new NSAttributedString(VirtualView.Placeholder, null, VirtualView.PlaceholderColor.ToUIColor());
         view.Text = VirtualView.Text;
         //view.TextColor = VirtualView.TextColor.ToUIColor();
 
@@ -280,6 +280,27 @@ public class AutoCompleteDefaultDataSource : AutoCompleteViewSource
         cell.TextLabel.Text = item;
 
         return cell;
+    }
+}
+
+internal class AutoCompleteTableView : UITableView
+{
+    private readonly UIScrollView _parentScrollView;
+
+    public AutoCompleteTableView(UIScrollView parentScrollView)
+    {
+        _parentScrollView = parentScrollView;
+    }
+
+    public override bool Hidden
+    {
+        get { return base.Hidden; }
+        set
+        {
+            base.Hidden = value;
+            if (_parentScrollView == null) return;
+            _parentScrollView.DelaysContentTouches = !value;
+        }
     }
 }
 #endif

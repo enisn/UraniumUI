@@ -8,7 +8,14 @@ using System.Threading.Tasks;
 namespace UraniumUI.Material.Controls;
 public class AutoCompleteView : View
 {
-    public string Text { get; set; }
+    public string Text { get => (string)GetValue(TextProperty); set => SetValue(TextProperty, value); }
+
+    public static readonly BindableProperty TextProperty = BindableProperty.Create(
+        nameof(Text),
+        typeof(string),
+        typeof(AutoCompleteView),
+        string.Empty,
+        BindingMode.TwoWay);
 
     public string Placeholder { get; set; }
     

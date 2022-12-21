@@ -6,6 +6,7 @@ using Microsoft.Maui.Controls.Compatibility.Platform.iOS;
 using Microsoft.Maui.Handlers;
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using UIKit;
@@ -49,12 +50,18 @@ public partial class AutoCompleteViewHandler : ViewHandler<AutoCompleteView, UIA
 
     private void PlatformView_ValueChanged(object sender, EventArgs e)
     {
-        throw new NotImplementedException();
+        if (VirtualView.Text != PlatformView.Text)
+        {
+            VirtualView.Text = PlatformView.Text;
+        }
     }
 
     public static void MapText(AutoCompleteViewHandler handler, AutoCompleteView view)
     {
-        handler.PlatformView.Text = view.Text;
+        if (handler.PlatformView.Text != view.Text)
+        {
+            handler.PlatformView.Text = view.Text;
+        }
     }
 
     public static void MapItemsSource(AutoCompleteViewHandler handler, AutoCompleteView view)
@@ -133,7 +140,7 @@ public class UIAutoCompleteTextField : UITextField, IUITextFieldDelegate
 #if NET6_0
     public void Draw(UIViewController viewController, CALayer layer, UIScrollView scrollView, NFloat y)
 #else
-    public void Draw(UIViewController viewController, CALayer layer, UIScrollView scrollView, nfloat y)
+    public void Draw(UIViewController viewController, CALayer layer, UIScrollView scrollView, NFloat y)
 #endif
     {
         _scrollView = scrollView;

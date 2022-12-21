@@ -163,6 +163,32 @@ You can change the color of the arrow icon with `ArrowColor` property:
 | --- | --- |
 | ![TreeView Light](images/treeview-arrowcolor-light-android.png) | ![TreeView Dark](images/treeview-arrowcolor-dark-windows.png) |
 
+### Spacing
+You can change the spacing between the arrow icon and the content with `Spacing` property. Default value is `10`.
+
+```xml
+<material:TreeView ItemsSource="{Binding Nodes}" Spacing="25"/>
+```
+![TreeView Spacing](images/treeview-spacing-dark-android.png)
+
+### ExpanderTemplate
+You can completely customize the expander with `ExpanderTemplate` property. It's an arrow by default. You can use any view as an expander. For example, you can use a `Switch` to expand and collapse nodes.
+
+You can use following binding properties in the `ExpanderTemplate`:
+- `IsExpanded` - `true` if the node is expanded, otherwise `false`.
+- `IsLeaf` - `true` if the node is a leaf, otherwise `false`. You can use it to manage visibility of the control.
+
+```xml
+<material:TreeView ItemsSource="{Binding Nodes}">
+    <material:TreeView.ExpanderTemplate>
+        <DataTemplate>
+            <Switch IsToggled="{Binding IsExpanded}" />
+        </DataTemplate>
+    </material:TreeView.ExpanderTemplate>
+</material:TreeView
+```
+
+![Treeview Expander](images/treeview-expander-dark-android.gif)
 
 ### UseAnimation
 Determines whether to use animations when expanding and collapsing nodes. Default value is `true`. You may want to disable animations if you want to improve performance while working with huge amount of tree nodes.

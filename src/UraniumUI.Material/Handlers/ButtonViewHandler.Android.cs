@@ -28,7 +28,11 @@ public partial class ButtonViewHandler
     {
         if (e.Event.Action == MotionEventActions.HoverEnter)
         {
+#if NET6_0
+            VisualStateManager.GoToState(StatefulView, "PointerOver");
+#else
             VisualStateManager.GoToState(StatefulView, VisualStateManager.CommonStates.PointerOver);
+#endif
             ExecuteCommandIfCan(StatefulView.HoverCommand);
             return;
         }

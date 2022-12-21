@@ -51,7 +51,11 @@ public class StatefulContentViewHandler : ContentViewHandler
     {
         if (e.Event.Action == MotionEventActions.HoverEnter)
         {
+#if NET6_0
+            GoToState(StatefulView, "PointerOver");
+#else
             GoToState(StatefulView, CommonStates.PointerOver);
+#endif
             ExecuteCommandIfCan(StatefulView.HoverCommand);
             return;
         }
@@ -101,7 +105,7 @@ public class StatefulContentViewHandler : ContentViewHandler
 
         return platformView;
     }
-    
+
     protected override void DisconnectHandler(ContentPanel platformView)
     {
         platformView.PointerEntered -= PlatformView_PointerEntered;
@@ -117,16 +121,20 @@ public class StatefulContentViewHandler : ContentViewHandler
 
     private void PlatformView_PointerEntered(object sender, PointerRoutedEventArgs e)
     {
+#if NET6_0
+        GoToState(StatefulView, "PointerOver");
+#else
         GoToState(StatefulView, CommonStates.PointerOver);
+#endif
         ExecuteCommandIfCan(StatefulView.HoverCommand);
     }
 
     long lastPressed;
-    
+
     private void PlatformView_PointerPressed(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
     {
         lastPressed = DateTime.Now.Ticks;
-        
+
         GoToState(StatefulView, "Pressed");
         ExecuteCommandIfCan(StatefulView.PressedCommand);
     }
@@ -134,7 +142,7 @@ public class StatefulContentViewHandler : ContentViewHandler
     private void PlatformView_PointerReleased(object sender, PointerRoutedEventArgs e)
     {
         // TODO: Implement better.
-        if (DateTime.Now.Ticks - lastPressed >=  TimeSpan.TicksPerMillisecond * 500)
+        if (DateTime.Now.Ticks - lastPressed >= TimeSpan.TicksPerMillisecond * 500)
         {
             ExecuteCommandIfCan(StatefulView.LongPressCommand);
         }
@@ -163,7 +171,12 @@ public class StatefulContentViewHandler : ContentViewHandler
         switch (recognizer.State)
         {
             case UIGestureRecognizerState.Began:
+
+#if NET6_0
+                GoToState(StatefulView, "PointerOver");
+#else
                 GoToState(StatefulView, CommonStates.PointerOver);
+#endif
                 ExecuteCommandIfCan(StatefulView.HoverCommand);
                 break;
             case UIGestureRecognizerState.Ended:

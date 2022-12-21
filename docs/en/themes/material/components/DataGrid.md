@@ -52,23 +52,18 @@ Then use it in XAML like this:
 
 You can customize the cell item template by using `CellItemTemplate` property. It is a `DataTemplate` that is used to render each cell item. You can use `DataGridCellItem` as the root element of the template. It has a `DataContext` of the cell item. You can use `Binding` to bind the properties of the cell item.
 
-You can use any property of [CellBindingContext](#cellbindingcontext) object inside DataTemplate.
 
 ```xml
 <material:DataGrid ItemsSource="{Binding Items}" UseAutoColumns="True" HorizontalOptions="Center">
 	<material:DataGrid.CellItemTemplate>
 		<DataTemplate>
-			<VerticalStackLayout VerticalOptions="Center">
-				<Label Text="{Binding Value}" TextColor="Red" />
-				<Label Text="{Binding Row,StringFormat='Row:{0}'}" />
-				<Label Text="{Binding Column,StringFormat='Column:{0}'}" />                                
-			</VerticalStackLayout>
+			<Editor Margin="10" Text="{Binding Value}" />
 		</DataTemplate>
 	</material:DataGrid.CellItemTemplate>
 </material:DataGrid>
 ```
 
-![MAUI DataGrid Cell Item Template](images/datagrid-cellitemtemplate.png)
+![MAUI DataGrid Cell Item Template](images/datagrid-cellitemtemplate-editor-windows-dark.gif)
 
 ### Columns
 
@@ -91,11 +86,11 @@ You can also define columns manually by adding `DataGridColumn` to `Columns` pro
 ```xml
 <material:DataGrid ItemsSource="{Binding Items}" HorizontalOptions="Center" Margin="30">
 	<material:DataGrid.Columns>
-		<material:DataGridColumn PropertyName="Name" Title="Student Name"/>
+		<material:DataGridColumn Binding="{Binding Name}" Title="Student Name"/>
 
-		<material:DataGridColumn PropertyName="Age" Title="Student Age"/>
+		<material:DataGridColumn Binding="{Binding Age}" Title="Student Age"/>
 
-		<material:DataGridColumn PropertyName="Id" Title="Identity" />
+		<material:DataGridColumn Binding="{Binding Id}" Title="Identity" />
 	</material:DataGrid.Columns>
 </material:DataGrid>
 ```
@@ -105,19 +100,19 @@ An ItemTemplate can be defined for each column via using `CellItemTemplate` prop
 ```xml
 <material:DataGrid ItemsSource="{Binding Items}" HorizontalOptions="Center" Margin="30">
 	<material:DataGrid.Columns>
-		<material:DataGridColumn PropertyName="Name" Title="Student Name"/>
+		<material:DataGridColumn Binding="{Binding Name}" Title="Student Name"/>
 
-		<material:DataGridColumn PropertyName="Age" Title="Student Age">
+		<material:DataGridColumn Title="Student Age">
 			<material:DataGridColumn.CellItemTemplate>
 				<DataTemplate>
 					<Frame BorderColor="Blue" BackgroundColor="Transparent" Padding="5" >
-						<Label Text="{Binding Value}" TextColor="Blue" />
+						<Label Text="{Binding Age}" TextColor="Blue" />
 					</Frame>
 				</DataTemplate>
 			</material:DataGridColumn.CellItemTemplate>
 		</material:DataGridColumn>
 
-		<material:DataGridColumn PropertyName="Id" Title="Identity" />
+		<material:DataGridColumn Binding="{Binding Id}" Title="Identity" />
 
 	</material:DataGrid.Columns>
 </material:DataGrid>
@@ -126,7 +121,7 @@ An ItemTemplate can be defined for each column via using `CellItemTemplate` prop
 ![MAUI DataGrid Custom Columns](images/datagrid-colum-template.png)
 
 
-Columns are not limited to the properties of the data source. You can also use custom columns without any property mapping. You can use `CellItemTemplate` to define the content of the column. That column will be rendered and [CellBindingContext](#cellbindingcontext) will be passed to the template. You can use `Data` property of `CellBindingContext` to get the data of current row.
+Columns are not limited to the properties of the data source. You can also use custom columns without any property mapping. You can use `CellItemTemplate` to define the content of the column. That column will be rendered with your custom template. You can use any property of row for current binding.
 
 
 ```xml
@@ -140,7 +135,7 @@ Columns are not limited to the properties of the data source. You can also use c
 				<DataTemplate>
 					<Button Text="Remove"
 							Command="{Binding Source={x:Reference page}, Path=BindingContext.RemoveItemCommand}"
-							CommandParameter="{Binding Data}"/>
+							CommandParameter="{Binding .}"/>
 				</DataTemplate>
 			</material:DataGridColumn.CellItemTemplate>
 		</material:DataGridColumn>
@@ -158,11 +153,11 @@ Column width can be defined by using `Width` property of `DataGridColumn` class.
 <material:DataGrid ItemsSource="{Binding Items}" HorizontalOptions="Center" Margin="30">
 	<material:DataGrid.Columns>
 
-		<material:DataGridColumn PropertyName="Name" Title="Student Name" Width="Auto"/>
+		<material:DataGridColumn Binding="{Binding Name}" Title="Student Name" Width="Auto"/>
 
-		<material:DataGridColumn PropertyName="Age" Title="Student Age" Width="*"/>
+		<material:DataGridColumn Binding="{Binding Age}" Title="Student Age" Width="*"/>
 
-		<material:DataGridColumn PropertyName="Id" Title="Identity" Width="100"/>
+		<material:DataGridColumn Binding="{Binding Id}" Title="Identity" Width="100"/>
 
 	</material:DataGrid.Columns>
 </material:DataGrid>
@@ -171,24 +166,24 @@ Column width can be defined by using `Width` property of `DataGridColumn` class.
 ![MAUI DataGrid Column Width](images/datagrid-column-width.png)
 
 #### TitleView
-You can define a custom view for the header of the column by using `TitleView` property of `DataGridColumn` class. It is a `View` that will be rendered as the header of the column. You can use `Binding` to bind the properties of the column. Since it's a regular cell of the DataGrid its binding context is [CellBindingContext](#cellbindingcontext). 
+You can define a custom view for the header of the column by using `TitleView` property of `DataGridColumn` class. It is a `View` that will be rendered as the header of the column. You can use `Binding` to bind the properties of the column. 
 
 ```xml
  <material:DataGrid ItemsSource="{Binding Items}">
 	<material:DataGrid.Columns>
-		<material:DataGridColumn PropertyName="Id">
+		<material:DataGridColumn Binding="{Binding Id}">
 			<material:DataGridColumn.TitleView>
 				<Image Source="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Fingerprint}, Color={StaticResource Primary}}" />
 			</material:DataGridColumn.TitleView>
 		</material:DataGridColumn>
 
-		<material:DataGridColumn PropertyName="Name">
+		<material:DataGridColumn Binding="{Binding Name}">
 			<material:DataGridColumn.TitleView>
 				<Image Source="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Badge}, Color={StaticResource Primary}}" />
 			</material:DataGridColumn.TitleView>
 		</material:DataGridColumn>
 
-		<material:DataGridColumn PropertyName="Age">
+		<material:DataGridColumn Binding="{Binding Age}">
 			<material:DataGridColumn.TitleView>
 				<Image Source="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Calendar_today}, Color={StaticResource Primary}}" />
 			</material:DataGridColumn.TitleView>
@@ -204,7 +199,7 @@ You can define a custom view for the header of the column by using `TitleView` p
 ---
 
 ### TitleTemplate
-You can define a custom template for the title of the **DataGrid** by using `TitleTemplate` property. This is still a table cell and its binding context will be [CellBindingContext](#cellbindingcontext). You can use `Value` property of `CellBindingContext` to get the title of the column.
+You can define a custom template for the title of the **DataGrid** by using `TitleTemplate` property. You can use `Value` property for binding title name of the column.
 
 ```xml
 <material:DataGrid ItemsSource="{Binding Items}" HorizontalOptions="Center" Margin="30">
@@ -249,9 +244,9 @@ DataGrid supports multiple row selection. You can add `DataGridSelectionColumn` 
 <material:DataGrid ItemsSource="{Binding Items}" SelectedItems="{Binding SelectedItems}">
 	<material:DataGrid.Columns>
 		<material:DataGridSelectionColumn />
-		<material:DataGridColumn PropertyName="Id" Title="Identity" />
-		<material:DataGridColumn PropertyName="Name" Title="Name" />
-		<material:DataGridColumn PropertyName="Age" Title="Age" />
+		<material:DataGridColumn Binding="{Binding Id}" Title="Identity" />
+		<material:DataGridColumn Binding="{Binding Name}" Title="Name" />
+		<material:DataGridColumn Binding="{Binding Age}" Title="Age" />
 	</material:DataGrid.Columns>
 </material:DataGrid>
 ```
@@ -292,9 +287,9 @@ public class MainViewModel
 	<material:DataGrid ItemsSource="{Binding Items}" SelectedItems="{Binding SelectedItems}">
 		<material:DataGrid.Columns>
 			<material:DataGridSelectionColumn />
-			<material:DataGridColumn PropertyName="Id" Title="Identity" />
-			<material:DataGridColumn PropertyName="Name" Title="Name" />
-			<material:DataGridColumn PropertyName="Age" Title="Age" />
+			<material:DataGridColumn Binding="{Binding Id}" Title="Identity" />
+			<material:DataGridColumn Binding="{Binding Name}" Title="Name" />
+			<material:DataGridColumn Binding="{Binding Age}" Title="Age" />
 		</material:DataGrid.Columns>
 	</material:DataGrid>
 </StackLayout>
@@ -313,22 +308,9 @@ You can place an activity indicator inside the DataGrid to show loading state if
 ```
 
 ![MAUI DataGrid Loading](images/datagrid-tips-indicator.gif)
-
-
-### CellBindingContext
-`CellBindingContext` is an object that is used as the `DataContext` of the `CellItemTemplate`. It has the following properties:
-
-| Property | Description |
-| :--- | :--- |
-| `Data` | The data of the cell item. |
-| `Column` | The column number of the cell item. |
-| `Row` | The row number of the cell item. |
-| `Value` | The value of the cell item. _(You can bind it to the label directly)_ |
-| `IsSelected` | Indicates whether the cell item is selected or not. |
-
 ### DataGridColumn
 `DataGridColumn` is a class that is used to define a column of **DataGrid**. It has the following properties:
 
 - `Title`: It's used in header of the column.
 - `CellItemTemplate`: It's used to define the template of the cell item of the column.
-- `PropertyName`: It's used to define the property of the data source that is used to get the value of the cell item. You can leave it empty if you want to use a custom column.
+- `Binding`: It's used to define the binding of the cell item of the column.

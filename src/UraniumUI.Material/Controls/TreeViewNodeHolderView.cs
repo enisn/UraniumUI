@@ -27,6 +27,7 @@ public class TreeViewNodeHolderView : VerticalStackLayout
         HorizontalOptions = LayoutOptions.Start,
         StyleClass = new [] { "TreeViewExpandButton" },
         Padding = 0,
+        Margin = 0,
         StrokeShape = new RoundRectangle
         {
             CornerRadius = 20,

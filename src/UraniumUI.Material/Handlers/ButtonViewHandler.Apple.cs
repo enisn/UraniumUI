@@ -24,7 +24,11 @@ public partial class ButtonViewHandler
         switch (recognizer.State)
         {
             case UIGestureRecognizerState.Began:
+#if NET6_0
+                VisualStateManager.GoToState(StatefulView, "PointerOver");
+#else
                 VisualStateManager.GoToState(StatefulView, VisualStateManager.CommonStates.PointerOver);
+#endif
                 ExecuteCommandIfCan(StatefulView.HoverCommand);
                 break;
             case UIGestureRecognizerState.Ended:

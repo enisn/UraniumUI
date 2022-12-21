@@ -17,8 +17,12 @@
     <IsRidAgnostic Condition="'$(OutputType)' == 'Library'">true</IsRidAgnostic>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="InputKit.Maui" Version="4.2.0" />
+  <ItemGroup Condition="$(TargetFramework.Contains('net6'))">
+    <PackageReference Include="InputKit.Maui" Version="4.1.6" />
+  </ItemGroup>
+
+  <ItemGroup Condition="$(TargetFramework.Contains('net7'))">
+    <PackageReference Include="InputKit.Maui" Version="4.2.1" />
   </ItemGroup>
 
 </Project>

@@ -1,8 +1,10 @@
-﻿using System.Collections;
+﻿using Microsoft.Maui.Controls;
+using System.Collections;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Reflection;
+using System.Security.Cryptography.X509Certificates;
 
 namespace UraniumUI.Material.Controls;
 
@@ -80,10 +82,8 @@ public partial class DataGrid : Frame
 
                     for (int i = 0; i < e.NewItems.Count; i++)
                     {
-                        AddRow(e.NewStartingIndex + 1 + i, e.NewItems[i], e.NewStartingIndex == ItemsSource.Count);
+                        AddRow(e.NewStartingIndex + 1 + i, e.NewItems[i], e.NewStartingIndex + i == ItemsSource.Count);
                     }
-
-                    //ConfigureGridRowDefinitions(ItemsSource.Count + 1);
                 }
                 break;
             case NotifyCollectionChangedAction.Remove:
@@ -121,7 +121,7 @@ public partial class DataGrid : Frame
                 .Select(s => new DataGridColumn
                 {
                     Title = s.GetCustomAttribute<DisplayNameAttribute>()?.DisplayName ?? s.Name,
-                    PropertyName = s.Name,
+                    Binding = new Binding(s.Name),
                     PropertyInfo = s,
                 }).ToList();
 
@@ -178,8 +178,8 @@ public partial class DataGrid : Frame
         {
             var titleView = Columns[i].TitleView
                 ?? TitleTemplate?.CreateContent() as View
-                ?? LabelFactory()
-                ?? CreateLabel();
+                ?? LabelFactory("Value")
+                ?? CreateLabel("Value");
 
             if (titleView is Label label)
             {
@@ -187,7 +187,7 @@ public partial class DataGrid : Frame
             }
 
             // TODO: Use an attribute to localize it.
-            titleView.BindingContext = new CellBindingContext
+            titleView.BindingContext = new
             {
                 Value = Columns[i].Title
             };
@@ -204,39 +204,24 @@ public partial class DataGrid : Frame
 
         for (int columnNumber = 0; columnNumber < Columns.Count; columnNumber++)
         {
+            var binding = Columns[columnNumber].Binding as Binding;
+
+            var path = binding?.Path ?? Columns[columnNumber].PropertyName ?? "Value"; // Backward compatibility.
+
             var created = (View)Columns[columnNumber].CellItemTemplate?.CreateContent()
                 ?? (View)CellItemTemplate?.CreateContent()
-                ?? LabelFactory() ?? CreateLabel();
+                ?? LabelFactory(path) ?? CreateLabel(path);
 
             var view = new ContentView
             {
-                Content = created
-            };
-
-            view.BindingContext = new CellBindingContext
-            {
-                Column = columnNumber,
-                Row = row,
-                Data = item,
-                Value = Columns[columnNumber].PropertyInfo?.GetValue(item),
-                IsSelected = SelectedItems?.Contains(item) ?? false
+                Content = created,
+                BindingContext = !UseAutoColumns ? item : new
+                {
+                    Value = Columns[columnNumber].PropertyInfo.GetValue(item)
+                }
             };
 
             SetSelectionVisualStates(view);
-
-            view.Triggers.Add(new DataTrigger(typeof(ContentView))
-            {
-                Binding = new Binding(nameof(CellBindingContext.IsSelected)),
-                Value = true,
-                EnterActions =
-                {
-                    new GoToStateTriggerAction("Selected")
-                },
-                ExitActions =
-                {
-                    new GoToStateTriggerAction("Unselected")
-                }
-            });
 
             _rootGrid.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
             _rootGrid.Add(view, columnNumber, row: actualRow);
@@ -317,13 +302,10 @@ public partial class DataGrid : Frame
         {
             var newRow = Grid.GetRow(item) + amount;
             Grid.SetRow(item, newRow);
-            if (item.BindingContext is CellBindingContext cellContext)
-            {
-                cellContext.Row = newRow;
-            }
         }
     }
 
+    // TODO: Remove later. [Obsolete]
     protected virtual void EnsurePropertyInfosAreSet()
     {
         foreach (var column in Columns.Where(x => x.PropertyInfo == null && x.PropertyName != null))
@@ -346,9 +328,13 @@ public partial class DataGrid : Frame
     {
         foreach (View child in _rootGrid.Children)
         {
-            if (child.BindingContext is CellBindingContext cellBindingContext)
+            if (SelectedItems.Contains(child.BindingContext))
             {
-                cellBindingContext.IsSelected = SelectedItems.Contains(cellBindingContext.Data);
+                VisualStateManager.GoToState(child, DataGridCellVisualStates.Selected);
+            }
+            else
+            {
+                VisualStateManager.GoToState(child, DataGridCellVisualStates.Unselected);
             }
         }
     }
@@ -385,18 +371,23 @@ public partial class DataGrid : Frame
 
     private void SelectionChanged(object sender, bool isSelected)
     {
-        if (sender is View view && view.BindingContext is CellBindingContext cellContext)
+        if (SelectedItems is null)
+        {
+            SelectedItems = new ObservableCollection<object>();
+        }
+
+        if (sender is View cell && cell.BindingContext is not null)
         {
             if (isSelected)
             {
-                if (!SelectedItems?.Contains(cellContext.Data) ?? false)
+                if (!SelectedItems.Contains(cell.BindingContext))
                 {
-                    SelectedItems?.Add(cellContext.Data);
+                    SelectedItems.Add(cell.BindingContext);
                 }
             }
             else
             {
-                SelectedItems?.Remove(cellContext.Data);
+                SelectedItems.Remove(cell.BindingContext);
             }
 
             OnPropertyChanged(nameof(SelectedItems));
@@ -452,6 +443,12 @@ public partial class DataGrid : Frame
                 }
             }
         });
+    }
+
+    public static class DataGridCellVisualStates
+    {
+        public const string Selected = "Selected";
+        public const string Unselected = "Unselected";
     }
 
     public class GoToStateTriggerAction : TriggerAction<View>

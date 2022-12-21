@@ -4,6 +4,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:UraniumApp.Pages.DataGrids"
              xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+             xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
              x:Name="page">
     <ContentPage.BindingContext>
@@ -20,8 +21,6 @@
                 </Grid>
 
                 <Label Text="Fully Defined Columns:" />
-
-
 
                 <material:DataGrid ItemsSource="{Binding Items}" HorizontalOptions="Center" Margin="30">
 
@@ -41,25 +40,25 @@
 
                     <material:DataGrid.Columns>
 
-                        <material:DataGridColumn PropertyName="Name" Title="Student Name">
+                        <material:DataGridColumn Title="Student Name">
                             <material:DataGridColumn.CellItemTemplate>
                                 <DataTemplate>
-                                    <Label Text="{Binding Value}" TextColor="Red" HorizontalOptions="Center" VerticalOptions="Center" Margin="0" />
+                                    <Label Text="{Binding Name}" TextColor="Red" HorizontalOptions="Center" VerticalOptions="Center" Margin="0" />
                                 </DataTemplate>
                             </material:DataGridColumn.CellItemTemplate>
                         </material:DataGridColumn>
 
-                        <material:DataGridColumn PropertyName="Age" Title="Student Age">
+                        <material:DataGridColumn Title="Student Age">
                             <material:DataGridColumn.CellItemTemplate>
                                 <DataTemplate>
-                                    <Frame BorderColor="Blue" BackgroundColor="Transparent" Padding="5" >
-                                        <Label Text="{Binding Value}" TextColor="Blue" />
+                                    <Frame BackgroundColor="Green" uranium:DynamicTint.BackgroundColorOpacity="0.5" Padding="5" CornerRadius="0">
+                                        <Label Text="{Binding Age}" TextColor="Blue" />
                                     </Frame>
                                 </DataTemplate>
                             </material:DataGridColumn.CellItemTemplate>
                         </material:DataGridColumn>
 
-                        <material:DataGridColumn PropertyName="Id" Title="Identity" />
+                        <material:DataGridColumn Binding="{Binding Id}" Title="Identity" />
 
                         <material:DataGridColumn Title="Actions" >
                             <material:DataGridColumn.CellItemTemplate>
@@ -74,8 +73,7 @@
                                 </DataTemplate>
                             </material:DataGridColumn.CellItemTemplate>
                         </material:DataGridColumn>
-
-
+                        
                     </material:DataGrid.Columns>
                 </material:DataGrid>
             </StackLayout>

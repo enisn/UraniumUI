@@ -19,7 +19,7 @@ public class DataGridSelectionColumn : DataGridColumn, IDataGridSelectionColumn
 
             checkBox.Children.Remove(checkBox.Children.FirstOrDefault(x => x is Label));
 
-            checkBox.SetBinding(CheckBox.IsCheckedProperty, new Binding(nameof(CellBindingContext.IsSelected), BindingMode.TwoWay));
+            //checkBox.SetBinding(CheckBox.IsCheckedProperty, new Binding(nameof(CellBindingContext.IsSelected), BindingMode.TwoWay));
 
             var contentView = new ContentView
             {

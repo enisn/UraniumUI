@@ -7,6 +7,7 @@ using Microsoft.Maui.Handlers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using UIKit;
@@ -116,12 +117,15 @@ public class UIAutoCompleteTextField : UITextField, IUITextFieldDelegate
 
     public int AutocompleteTableViewHeight { get; set; } = 150;
 
+#if NET6_0
+    public void Draw(UIViewController viewController, CALayer layer, UIScrollView scrollView, NFloat y)
+#else
     public void Draw(UIViewController viewController, CALayer layer, UIScrollView scrollView, nfloat y)
+#endif
     {
         _scrollView = scrollView;
         _drawnFrame = layer.Frame;
         _parentViewController = viewController ?? throw new ArgumentNullException(nameof(viewController), "View cannot be null");
-
 
         //Make new tableview and do some settings
         AutoCompleteTableView = new AutoCompleteTableView(_scrollView)

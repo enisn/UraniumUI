@@ -53,6 +53,7 @@ public class TreeViewNodeHolderView : VerticalStackLayout
         DataTemplate = dataTemplate;
         nodeContainer.Content = DataTemplate.CreateContent() as View;
         expanderView = TreeView.ExpanderTemplate?.CreateContent() as View ?? InitializeArrowExpander();
+        expanderView.BindingContext = this;
 
         this.SetBinding(SpacingProperty, new Binding(nameof(TreeView.Spacing), source: treeView));
         nodeChildren.SetBinding(VerticalStackLayout.SpacingProperty, new Binding(nameof(TreeView.Spacing), source: treeView));
@@ -117,7 +118,7 @@ public class TreeViewNodeHolderView : VerticalStackLayout
 
         iconArrow.Triggers.Add(new DataTrigger(typeof(View))
         {
-            Binding = new Binding(nameof(IsLeaf), source: this),
+            Binding = new Binding(nameof(IsLeaf)),
             Value = true,
             EnterActions =
             {
@@ -139,7 +140,7 @@ public class TreeViewNodeHolderView : VerticalStackLayout
 
         iconArrow.Triggers.Add(new DataTrigger(typeof(View))
         {
-            Binding = new Binding(IsExpandedProperty.PropertyName, source: this),
+            Binding = new Binding(IsExpandedProperty.PropertyName),
             Value = true,
             EnterActions =
             {

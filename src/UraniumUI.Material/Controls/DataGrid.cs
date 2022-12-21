@@ -215,7 +215,10 @@ public partial class DataGrid : Frame
             var view = new ContentView
             {
                 Content = created,
-                BindingContext = item
+                BindingContext = !UseAutoColumns ? item : new
+                {
+                    Value = Columns[columnNumber].PropertyInfo.GetValue(item)
+                }
             };
 
             SetSelectionVisualStates(view);
@@ -368,18 +371,23 @@ public partial class DataGrid : Frame
 
     private void SelectionChanged(object sender, bool isSelected)
     {
+        if (SelectedItems is null)
+        {
+            SelectedItems = new ObservableCollection<object>();
+        }
+
         if (sender is View cell && cell.BindingContext is not null)
         {
             if (isSelected)
             {
-                if (!SelectedItems?.Contains(cell.BindingContext) ?? false)
+                if (!SelectedItems.Contains(cell.BindingContext))
                 {
-                    SelectedItems?.Add(cell.BindingContext);
+                    SelectedItems.Add(cell.BindingContext);
                 }
             }
             else
             {
-                SelectedItems?.Remove(cell.BindingContext);
+                SelectedItems.Remove(cell.BindingContext);
             }
 
             OnPropertyChanged(nameof(SelectedItems));

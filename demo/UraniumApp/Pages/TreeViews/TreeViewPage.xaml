@@ -41,14 +41,13 @@
                     </material:TabItem.ContentTemplate>
                 </material:TabItem>
 
-
                 <material:TabItem Title="Expander">
                     <material:TabItem.ContentTemplate>
                         <DataTemplate>
                             <material:TreeView ItemsSource="{Binding Nodes}" IsExpandedPropertyName="IsExtended">
                                 <material:TreeView.ExpanderTemplate>
                                     <DataTemplate>
-                                        <Switch IsToggled="{Binding IsExtended}" />
+                                        <Switch IsToggled="{Binding IsExpanded}" />
                                     </DataTemplate>
                                 </material:TreeView.ExpanderTemplate>
                             </material:TreeView>

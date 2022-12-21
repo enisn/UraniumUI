@@ -27,7 +27,6 @@ public static class ViewExtensions
             {
                 return found;
             }
-            
             else if (item is Layout anotherLayout)
             {
                 return anotherLayout.FindInChildrenHierarchy<T>();
@@ -46,7 +45,6 @@ public static class ViewExtensions
             {
                 yield return found;
             }
-
             else if (item is Layout anotherLayout)
             {
                 foreach (var child in anotherLayout.FindManyInChildrenHierarchy<T>())

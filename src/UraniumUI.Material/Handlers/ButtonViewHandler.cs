@@ -1,4 +1,4 @@
-﻿#if NET7_0
+﻿#if NET7_0 || NET6_0
 
 using Microsoft.Maui.Handlers;
 using System.Windows.Input;

@@ -25,13 +25,13 @@
 	<ItemGroup Condition="$(TargetFramework.Contains('net6'))">
 	  <PackageReference Include="CommunityToolkit.Maui" Version="1.4.0" />
 	  <PackageReference Include="InputKit.Maui" Version="4.1.6" />
-    <PackageReference Include="Plainer.Maui" Version="1.5.0" />
+	  <PackageReference Include="Plainer.Maui" Version="1.5.0" />
 	</ItemGroup>
 
 	<ItemGroup Condition="$(TargetFramework.Contains('net7'))">
 	  <PackageReference Include="CommunityToolkit.Maui" Version="3.0.0" />
 	  <PackageReference Include="InputKit.Maui" Version="4.2.1" />
-    <PackageReference Include="Plainer.Maui" Version="1.6.2" />
+	  <PackageReference Include="Plainer.Maui" Version="1.6.2" />
 	</ItemGroup>
   
 	<ItemGroup>

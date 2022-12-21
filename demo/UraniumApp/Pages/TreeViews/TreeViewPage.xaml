@@ -29,13 +29,28 @@
                             <material:TreeView ItemsSource="{Binding Nodes}">
                                 <material:TreeView.ItemTemplate>
                                     <DataTemplate>
-                                        <HorizontalStackLayout Spacing="5" VerticalOptions="Center">
+                                        <HorizontalStackLayout Margin="0,25" Spacing="5" VerticalOptions="Center">
                                             <Image Source="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Folder}, Color={AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}}" />
                                             <Label Text="{Binding Name}" FontAttributes="Bold" />
                                             <Label Text="{Binding Children.Count, StringFormat='({0})'}" />
                                         </HorizontalStackLayout>
                                     </DataTemplate>
                                 </material:TreeView.ItemTemplate>
+                            </material:TreeView>
+                        </DataTemplate>
+                    </material:TabItem.ContentTemplate>
+                </material:TabItem>
+
+
+                <material:TabItem Title="Expander">
+                    <material:TabItem.ContentTemplate>
+                        <DataTemplate>
+                            <material:TreeView ItemsSource="{Binding Nodes}" IsExpandedPropertyName="IsExtended">
+                                <material:TreeView.ExpanderTemplate>
+                                    <DataTemplate>
+                                        <Switch IsToggled="{Binding IsExtended}" />
+                                    </DataTemplate>
+                                </material:TreeView.ExpanderTemplate>
                             </material:TreeView>
                         </DataTemplate>
                     </material:TabItem.ContentTemplate>

@@ -1,10 +1,6 @@
-﻿using InputKit.Shared.Controls;
-using Microsoft.Maui.Controls.Shapes;
-using System.Windows.Input;
+﻿using UraniumUI.Extensions;
 using UraniumUI.Pages;
-using UraniumUI.Resources;
 using UraniumUI.Triggers;
-using UraniumUI.Views;
 using Path = Microsoft.Maui.Controls.Shapes.Path;
 
 namespace UraniumUI.Material.Controls;
@@ -19,19 +15,6 @@ public class TreeViewNodeHolderView : VerticalStackLayout
     protected ContentView nodeContainer = new ContentView
     {
         HorizontalOptions = LayoutOptions.Fill,
-    };
-
-    protected ButtonView iconArrow = new ButtonView
-    {
-        VerticalOptions = LayoutOptions.Center,
-        HorizontalOptions = LayoutOptions.Start,
-        StyleClass = new [] { "TreeViewExpandButton" },
-        Padding = 0,
-        Margin = 0,
-        StrokeShape = new RoundRectangle
-        {
-            CornerRadius = 20,
-        },
     };
 
     public VerticalStackLayout NodeChildren => nodeChildren;
@@ -57,21 +40,29 @@ public class TreeViewNodeHolderView : VerticalStackLayout
         }
     }
 
+    private View expanderView;
+
     public TreeViewNodeHolderView(DataTemplate dataTemplate, TreeView treeView, BindingBase childrenBinding)
     {
         if (treeView is null)
         {
             throw new ArgumentNullException(nameof(treeView));
         }
-
+        
         TreeView = treeView;
         DataTemplate = dataTemplate;
         nodeContainer.Content = DataTemplate.CreateContent() as View;
+        expanderView = TreeView.ExpanderTemplate?.CreateContent() as View ?? InitializeArrowExpander();
+        expanderView.BindingContext = this;
+
+        this.SetBinding(SpacingProperty, new Binding(nameof(TreeView.Spacing), source: treeView));
+        nodeChildren.SetBinding(VerticalStackLayout.SpacingProperty, new Binding(nameof(TreeView.Spacing), source: treeView));
+
         this.Add(rowStack = new HorizontalStackLayout
         {
             Children =
             {
-                iconArrow,
+                expanderView,
                 nodeContainer
             }
         });
@@ -79,7 +70,7 @@ public class TreeViewNodeHolderView : VerticalStackLayout
 
         if (!string.IsNullOrEmpty(TreeView.IsExpandedPropertyName))
         {
-            this.SetBinding(TreeView.IsExpandedProperty, new Binding(TreeView.IsExpandedPropertyName, BindingMode.TwoWay));
+            this.SetBinding(IsExpandedProperty, new Binding(TreeView.IsExpandedPropertyName, BindingMode.TwoWay));
         }
 
         if (!string.IsNullOrEmpty(TreeView.IsLeafPropertyName))
@@ -99,22 +90,23 @@ public class TreeViewNodeHolderView : VerticalStackLayout
 
         nodeChildren.ChildAdded += (s, e) => OnPropertyChanged(nameof(IsLeaf));
         nodeChildren.ChildRemoved += (s, e) => OnPropertyChanged(nameof(IsLeaf));
-
-        InitializeArrowButton();
     }
 
-    private void InitializeArrowButton()
+    protected virtual View InitializeArrowExpander()
     {
-        iconArrow.PressedCommand = new Command(() =>
+        var iconArrow = new ButtonView
         {
-            TreeView.SetIsExpanded(this, !TreeView.GetIsExpanded(this));
-        });
+            VerticalOptions = LayoutOptions.Center,
+            HorizontalOptions = LayoutOptions.Start,
+            StyleClass = new[] { "TreeViewExpandButton" },
+            Padding = 0,
+            Margin = 0,
+            PressedCommand = new Command(() => IsExpanded = !IsExpanded),
+        };
 
         iconArrow.Content = new ContentView
         {
-            HeightRequest = 40,
-            WidthRequest = 40,
-            Padding = 10,
+            Margin = new Thickness(0, 0, 5, 0),
             Content = new Path
             {
                 Data = UraniumShapes.ArrowRight,
@@ -126,7 +118,7 @@ public class TreeViewNodeHolderView : VerticalStackLayout
 
         iconArrow.Triggers.Add(new DataTrigger(typeof(View))
         {
-            Binding = new Binding(nameof(IsLeaf), source: this),
+            Binding = new Binding(nameof(IsLeaf)),
             Value = true,
             EnterActions =
             {
@@ -145,13 +137,63 @@ public class TreeViewNodeHolderView : VerticalStackLayout
                 })
             }
         });
+
+        iconArrow.Triggers.Add(new DataTrigger(typeof(View))
+        {
+            Binding = new Binding(IsExpandedProperty.PropertyName),
+            Value = true,
+            EnterActions =
+            {
+                new GenericTriggerAction<View>((view) =>
+                {
+                    if (TreeView.UseAnimation)
+                    {
+                        view.RotateTo(90, 90, easing: Easing.BounceOut);
+                    }
+                    else
+                    {
+                        iconArrow.Rotation = 90;
+                    }
+                })
+            },
+            ExitActions =
+            {
+                new GenericTriggerAction<ButtonView>((view) =>
+                {
+                    if (TreeView.UseAnimation)
+                    {
+                        view.RotateTo(0, 90, easing: Easing.BounceOut);
+                    }
+                    else
+                    {
+                        iconArrow.Rotation = 0;
+                    }
+                })
+            }
+        });
+
+        return iconArrow;
     }
 
     public virtual void ReFillArrowColor()
     {
-        if (iconArrow.Content is Path iconPath)
+        Layout expanderLayout = null;
+        
+        if (expanderView is ContentView contentView && contentView.Content is Layout)
         {
-            iconPath.Fill = TreeView.ArrowColor;
+            expanderLayout = contentView.Content as Layout;
+        }
+        else if(expanderView is Layout layout)
+        {
+            expanderLayout = layout;
+        }
+
+        if (expanderLayout is not null)
+        {
+            foreach (var path in expanderLayout.FindManyInChildrenHierarchy<Path>())
+            {
+                path.Fill = TreeView.ArrowColor;
+            }
         }
 
         foreach (var childHolder in nodeChildren.Children.OfType<TreeViewNodeHolderView>())
@@ -162,8 +204,8 @@ public class TreeViewNodeHolderView : VerticalStackLayout
 
     public virtual void ApplyIsExpandedPropertyBindings()
     {
-        this.SetBinding(TreeView.IsExpandedProperty, new Binding(this.TreeView.IsExpandedPropertyName, BindingMode.TwoWay));
-        foreach (TreeViewNodeHolderView item in this.Children.Where(x => x is TreeViewNodeHolderView))
+        this.SetBinding(IsExpandedProperty, new Binding(TreeView.IsExpandedPropertyName, BindingMode.TwoWay));
+        foreach (TreeViewNodeHolderView item in Children.Where(x => x is TreeViewNodeHolderView))
         {
             item.ApplyIsExpandedPropertyBindings();
         }
@@ -172,20 +214,18 @@ public class TreeViewNodeHolderView : VerticalStackLayout
     public virtual void ApplyIsLeafPropertyBindings()
     {
         this.SetBinding(IsLeafProperty, new Binding(this.TreeView.IsLeafPropertyName, BindingMode.TwoWay));
-        foreach (TreeViewNodeHolderView item in this.Children.Where(x => x is TreeViewNodeHolderView))
+        foreach (TreeViewNodeHolderView item in Children.Where(x => x is TreeViewNodeHolderView))
         {
             item.ApplyIsLeafPropertyBindings();
         }
     }
 
-    protected internal virtual async void OnIsExpandedChanged()
+    protected internal virtual async void OnIsExpandedChanged(bool isExpanded)
     {
-        if (TreeView.GetIsExpanded(this))
+        if (isExpanded)
         {
             if (TreeView.UseAnimation)
             {
-                iconArrow.RotateTo(90, 90, easing: Easing.BounceOut);
-
                 nodeChildren.IsVisible = true;
                 nodeChildren.TranslateTo(0, 0, 50);
                 nodeChildren.ScaleTo(1, 50);
@@ -193,7 +233,6 @@ public class TreeViewNodeHolderView : VerticalStackLayout
             }
             else
             {
-                iconArrow.Rotation = 90;
                 nodeChildren.IsVisible = true;
             }
         }
@@ -201,17 +240,12 @@ public class TreeViewNodeHolderView : VerticalStackLayout
         {
             if (TreeView.UseAnimation)
             {
-                iconArrow.RotateTo(0, 90, easing: Easing.BounceOut);
                 nodeChildren.TranslateTo(0, -nodeChildren.Height);
                 nodeChildren.ScaleTo(0);
                 nodeChildren.AnchorX = 0;
                 nodeChildren.AnchorY = 0;
 
                 await nodeChildren.FadeTo(0, 50);
-            }
-            else
-            {
-                iconArrow.Rotation = 0;
             }
 
             nodeChildren.IsVisible = false;
@@ -236,4 +270,17 @@ public class TreeViewNodeHolderView : VerticalStackLayout
 
     public static readonly BindableProperty IsLeafProperty = BindableProperty.Create(
         nameof(IsLeaf), typeof(bool?), typeof(TreeViewNodeHolderView), null, BindingMode.TwoWay);
+
+    public bool IsExpanded { get => (bool)GetValue(IsExpandedProperty); set => SetValue(IsExpandedProperty, value); }
+
+    public static readonly BindableProperty IsExpandedProperty =
+        BindableProperty.Create(nameof(IsExpanded), typeof(bool), typeof(TreeViewNodeHolderView), false,
+            propertyChanged: (bindable, oldValue, newValue) =>
+            {
+                if (bindable is TreeViewNodeHolderView holderView)
+                {
+                    holderView.OnPropertyChanged(nameof(IsExpanded));
+                    holderView.OnIsExpandedChanged((bool)newValue);
+                }
+            });
 }

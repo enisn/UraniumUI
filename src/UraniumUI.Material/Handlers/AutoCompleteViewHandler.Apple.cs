@@ -6,8 +6,6 @@ using Microsoft.Maui.Controls.Compatibility.Platform.iOS;
 using Microsoft.Maui.Handlers;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using UIKit;
@@ -37,6 +35,21 @@ public partial class AutoCompleteViewHandler : ViewHandler<AutoCompleteView, UIA
     {
         base.PlatformArrange(rect);
         Draw(rect);
+    }
+
+    protected override void ConnectHandler(UIAutoCompleteTextField platformView)
+    {
+        PlatformView.ValueChanged += PlatformView_ValueChanged;
+    }
+
+    protected override void DisconnectHandler(UIAutoCompleteTextField platformView)
+    {
+        PlatformView.ValueChanged -= PlatformView_ValueChanged;
+    }
+
+    private void PlatformView_ValueChanged(object sender, EventArgs e)
+    {
+        throw new NotImplementedException();
     }
 
     public static void MapText(AutoCompleteViewHandler handler, AutoCompleteView view)

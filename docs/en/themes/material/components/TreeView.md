@@ -185,7 +185,7 @@ You can use following binding properties in the `ExpanderTemplate`:
             <Switch IsToggled="{Binding IsExpanded}" />
         </DataTemplate>
     </material:TreeView.ExpanderTemplate>
-</material:TreeView
+</material:TreeView>
 ```
 
 ![Treeview Expander](images/treeview-expander-dark-android.gif)
@@ -230,7 +230,7 @@ TreeView provides `TreeViewHierarchicalSelectBehavior` that can be used only wit
 ---
 
 ## Lazy-Loading
-TreeView supprots lazy-loading of children. It means that children will be loaded only when the node is expanded. TreeView executes `LoadChildrenCommand` command with node item that is expanded as parameter when the node is expanded. You can set `LoadChildrenCommand` property of the TreeView to the command that will be executed when the node is expanded. For example, you can load children from the database when the node is expanded.
+TreeView supports lazy-loading of children. It means that children will be loaded only when the node is expanded. TreeView executes `LoadChildrenCommand` command with node item that is expanded as parameter when the node is expanded. You can set `LoadChildrenCommand` property of the TreeView to the command that will be executed when the node is expanded. For example, you can load children from the database when the node is expanded.
 
 Following properies can be used to define a propert lazy-loading behavior:
 - `IsLeafPropertyName` - The name of the property that contains the state of the node. Default value is `IsLeaf`.

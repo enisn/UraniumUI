@@ -7,16 +7,53 @@
              xmlns:plain="clr-namespace:Plainer.Maui.Controls;assembly=Plainer.Maui"
              x:Class="UraniumApp.MainPage">
 
-    <ScrollView>
-        <VerticalStackLayout
-            Spacing="25"
-            Padding="30"
-            VerticalOptions="Center">
+    <VerticalStackLayout
+            Padding="30">
 
-            <material:ButtonView HorizontalOptions="Center">
-                <Label Text="Hello, Uranium ☢️" />
-            </material:ButtonView>
+        <material:AutoCompleteView HorizontalOptions="Fill" BackgroundColor="{AppThemeBinding Light={StaticResource Surface}, Dark={StaticResource SurfaceDark}}">
+            <material:AutoCompleteView.ItemsSource>
+                <x:String>Item 1</x:String>
+                <x:String>Item 2</x:String>
+                <x:String>Item 3</x:String>
+                <x:String>Item 4</x:String>
+                <x:String>Item 5</x:String>
+                <x:String>Item 6</x:String>
+                <x:String>Item 7</x:String>
+                <x:String>Item 8</x:String>
+                <x:String>Item 9</x:String>
+                <x:String>Item 10</x:String>
+                <x:String>Item 11</x:String>
+                <x:String>Item 12</x:String>
+                <x:String>Item 13</x:String>
+                <x:String>Item 14</x:String>
+                <x:String>Item 15</x:String>
+                <x:String>Item 16</x:String>
+                <x:String>Item 17</x:String>
+                <x:String>Item 18</x:String>
+                <x:String>Item 19</x:String>
+                <x:String>Item 20</x:String>
+                <x:String>Item 21</x:String>
+                <x:String>Item 22</x:String>
+                <x:String>Item 23</x:String>
+                <x:String>Item 24</x:String>
+                <x:String>Item 25</x:String>
+                <x:String>Item 26</x:String>
+                <x:String>Item 27</x:String>
+                <x:String>Item 28</x:String>
+                <x:String>Item 29</x:String>
+                <x:String>Item 30</x:String>
+                <x:String>Item 31</x:String>
+                <x:String>Item 32</x:String>
+                <x:String>Item 33</x:String>
+                <x:String>Item 34</x:String>
+                <x:String>Item 35</x:String>
+                <x:String>Item 36</x:String>
+                <x:String>Item 37</x:String>
+                <x:String>Item 38</x:String>
+                <x:String>Item 39</x:String>
+                <x:String>Item 40</x:String>
+            </material:AutoCompleteView.ItemsSource>
+        </material:AutoCompleteView>
 
-        </VerticalStackLayout>
-    </ScrollView>
+    </VerticalStackLayout>
 </uranium:UraniumContentPage>

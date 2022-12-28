@@ -1,4 +1,4 @@
-# StatafulContentView
+# StatefulContentView
 StatefulContentView is a typical ContentView that has `Normal`, `Pressed`, `PointerOver` states. It is used to display a button, a checkbox, a radio button, etc. It's a useful when you want to create a custom button or a clickable area.
 
 ## Usage

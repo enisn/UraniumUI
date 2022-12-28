@@ -215,10 +215,7 @@ public partial class DataGrid : Frame
             var view = new ContentView
             {
                 Content = created,
-                BindingContext = !UseAutoColumns ? item : new
-                {
-                    Value = Columns[columnNumber].PropertyInfo.GetValue(item)
-                }
+                BindingContext = item
             };
 
             SetSelectionVisualStates(view);

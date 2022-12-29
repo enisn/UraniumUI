@@ -1,4 +1,4 @@
-# StatafulContentView
+# StatefulContentView
 StatefulContentView is a typical ContentView that has `Normal`, `Pressed`, `PointerOver` states. It is used to display a button, a checkbox, a radio button, etc. It's a useful when you want to create a custom button or a clickable area.
 
 ## Usage
@@ -6,17 +6,17 @@ StatefulContentView is a typical ContentView that has `Normal`, `Pressed`, `Poin
 StatefulContentView is defined in `UraniumUI.Views` namespace. You can use it in XAML like this:
 
 ```xml
-xmlns:views="clr-namespace:UraniumUI.Views;assembly=UraniumUI"
+xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
 ```
 
-Then you can use it with `views:StatefulContentView` tag.
+Then you can use it with `uranium:StatefulContentView` tag.
 
 ```xml
-<views:StatefulContentView LongPressCommand="{Binding DoSomethingCommand}">
+<uranium:StatefulContentView LongPressCommand="{Binding DoSomethingCommand}">
     <Border Padding="20" BackgroundColor="{StaticResource Primary}" Stroke="{StaticResource Tertiary}" StrokeShape="{RoundRectangle CornerRadius=5}">
         <Label Text="This is a stateful view" TextColor="{StaticResource OnPrimary}" />
     </Border>
-</views:StatefulContentView>
+</uranium:StatefulContentView>
 ```
 
 | Windows (Dark) | MAC Catalyst (Light) |
@@ -39,7 +39,7 @@ UraniumUI provides a set visual states for StatefulContentView by default. You c
 
 Get the following style and customize it according to your requirements in your application.
 ```xml
-<Style TargetType="views:StatefulContentView">
+<Style TargetType="uranium:StatefulContentView">
     <Setter Property="VisualStateManager.VisualStateGroups">
         <VisualStateGroupList>
             <VisualStateGroup x:Name="CommonStates">

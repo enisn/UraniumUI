@@ -4,6 +4,7 @@ using CoreGraphics;
 using Foundation;
 using Microsoft.Maui.Controls.Compatibility.Platform.iOS;
 using Microsoft.Maui.Handlers;
+using Microsoft.Maui.Platform;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
@@ -23,10 +24,8 @@ public partial class AutoCompleteViewHandler : ViewHandler<AutoCompleteView, UIA
             AutoCompleteViewSource = new AutoCompleteDefaultDataSource(),
             SortingAlgorithm = (d, b) => b,
         };
-
-        //view.AttributedPlaceholder = new NSAttributedString(VirtualView.Placeholder, null, VirtualView.PlaceholderColor.ToUIColor());
         view.Text = VirtualView.Text;
-        //view.TextColor = VirtualView.TextColor.ToUIColor();
+        view.TextColor = VirtualView.TextColor.ToPlatform();
 
         view.AutoCompleteViewSource.Selected += AutoCompleteViewSourceOnSelected;
         return view;
@@ -40,12 +39,13 @@ public partial class AutoCompleteViewHandler : ViewHandler<AutoCompleteView, UIA
 
     protected override void ConnectHandler(UIAutoCompleteTextField platformView)
     {
-        PlatformView.ValueChanged += PlatformView_ValueChanged;
+        PlatformView.EditingChanged += PlatformView_ValueChanged;
+        
     }
 
     protected override void DisconnectHandler(UIAutoCompleteTextField platformView)
     {
-        PlatformView.ValueChanged -= PlatformView_ValueChanged;
+        PlatformView.EditingChanged += PlatformView_ValueChanged;
     }
 
     private void PlatformView_ValueChanged(object sender, EventArgs e)
@@ -86,7 +86,7 @@ public partial class AutoCompleteViewHandler : ViewHandler<AutoCompleteView, UIA
         var relativePosition = UIApplication.SharedApplication.KeyWindow;
         var relativeFrame = PlatformView.Superview.ConvertRectToView(PlatformView.Frame, relativePosition);
 
-        PlatformView.Draw(ctrl, PlatformView.Layer, scrollView, relativeFrame.Y);
+        PlatformView.Draw(ctrl, PlatformView.Layer, scrollView, relativeFrame.X, relativeFrame.Y);
     }
 
     private void AutoCompleteViewSourceOnSelected(object sender, SelectedItemChangedEventArgs args)
@@ -104,12 +104,12 @@ public partial class AutoCompleteViewHandler : ViewHandler<AutoCompleteView, UIA
 
 }
 
-public class UIAutoCompleteTextField : UITextField, IUITextFieldDelegate
+public class UIAutoCompleteTextField : MauiTextField, IUITextFieldDelegate
 {
     private AutoCompleteViewSource _autoCompleteViewSource;
     private UIView _background;
     private CGRect _drawnFrame;
-    private List<string> _items;
+    private List<string> _items = new();
     private UIViewController _parentViewController;
     private UIScrollView _scrollView;
 
@@ -138,9 +138,9 @@ public class UIAutoCompleteTextField : UITextField, IUITextFieldDelegate
     public int AutocompleteTableViewHeight { get; set; } = 150;
 
 #if NET6_0
-    public void Draw(UIViewController viewController, CALayer layer, UIScrollView scrollView, NFloat y)
+    public void Draw(UIViewController viewController, CALayer layer, UIScrollView scrollView, NFloat x, NFloat y)
 #else
-    public void Draw(UIViewController viewController, CALayer layer, UIScrollView scrollView, NFloat y)
+    public void Draw(UIViewController viewController, CALayer layer, UIScrollView scrollView, NFloat x, NFloat y)
 #endif
     {
         _scrollView = scrollView;
@@ -173,14 +173,14 @@ public class UIAutoCompleteTextField : UITextField, IUITextFieldDelegate
         if (scrollViewIsNull)
         {
             view = _parentViewController.View;
-            frame = new CGRect(_drawnFrame.X, y + _drawnFrame.Height, _drawnFrame.Width, AutocompleteTableViewHeight);
+            frame = new CGRect(x, y + _drawnFrame.Height, _drawnFrame.Width, AutocompleteTableViewHeight);
         }
         else
         {
             var e = (ScrollView)((ScrollViewRenderer)_scrollView).Element;
             var p = e.Padding;
             var m = e.Margin;
-            frame = new CGRect(_drawnFrame.X + p.Left + m.Left,
+            frame = new CGRect(x + p.Left + m.Left,
                 y + _drawnFrame.Height,
                 _drawnFrame.Width,
                 AutocompleteTableViewHeight);

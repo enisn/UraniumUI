@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="UraniumApp.Pages.AutoCompleteTextField.GoogleAutoCompletePage"
+             xmlns:local="clr-namespace:UraniumApp.Pages.AutoCompleteTextField"
+             xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             Title="GoogleAutoCompletePage">
+
+    <ContentPage.BindingContext>
+        <local:GoogleAutoCompleteViewModel />
+    </ContentPage.BindingContext>
+    <VerticalStackLayout Padding="20">
+        <material:AutoCompleteTextField Title="Search" Text="{Binding Searchtext}" ItemsSource="{Binding Suggestions}">
+        </material:AutoCompleteTextField>
+    </VerticalStackLayout>
+</ContentPage>

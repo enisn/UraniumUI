@@ -27,7 +27,6 @@ public partial class AutoCompleteViewHandler : ViewHandler<AutoCompleteView, App
         var autoComplete = new AppCompatAutoCompleteTextView(Context)
         {
             Text = VirtualView?.Text,
-            Hint = VirtualView?.Placeholder,
         };
 
         GradientDrawable gd = new GradientDrawable();
@@ -35,7 +34,6 @@ public partial class AutoCompleteViewHandler : ViewHandler<AutoCompleteView, App
         autoComplete.SetBackground(gd);
         if (VirtualView != null)
         {
-            autoComplete.SetHintTextColor(VirtualView.PlaceholderColor.ToAndroid());
             autoComplete.SetTextColor(VirtualView.TextColor.ToAndroid());
         }
 

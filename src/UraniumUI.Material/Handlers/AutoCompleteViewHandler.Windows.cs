@@ -1,5 +1,6 @@
 ﻿#if WINDOWS
 using Microsoft.Maui.Handlers;
+using Microsoft.Maui.Platform;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,10 @@ public partial class AutoCompleteViewHandler : ViewHandler<AutoCompleteView, Aut
 
         textBox.ItemsSource = VirtualView.ItemsSource;
         textBox.Text = VirtualView.Text;
+        
+        var transparentBrush = new Microsoft.UI.Xaml.Media.SolidColorBrush(Windows.UI.Color.FromArgb(0, 0, 0, 0));
+        textBox.BorderThickness = new Microsoft.UI.Xaml.Thickness(0);
+        textBox.Background = transparentBrush;
 
         return textBox;
     }
@@ -38,7 +43,10 @@ public partial class AutoCompleteViewHandler : ViewHandler<AutoCompleteView, Aut
             VirtualView.Text = sender.Text;
         }
 
-        PlatformView.ItemsSource = VirtualView.ItemsSource.Where(x => x.Contains(sender.Text));
+        if (VirtualView.ItemsSource != null)
+        {
+            PlatformView.ItemsSource = VirtualView.ItemsSource.Where(x => x.Contains(sender.Text));
+        }
     }
 
     public static void MapText(AutoCompleteViewHandler handler, AutoCompleteView view)

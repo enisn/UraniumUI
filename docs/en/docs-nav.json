@@ -80,6 +80,10 @@
               "path": "themes/material/components/TextField.md"
             },
             {
+              "text": "AutoCompleteTextField",
+              "path": "themes/material/components/AutoCompleteTextField.md"
+            },
+            {
               "text": "PickerField",
               "path": "themes/material/components/PickerField.md"
             },

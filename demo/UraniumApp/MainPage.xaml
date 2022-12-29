@@ -10,50 +10,36 @@
     <VerticalStackLayout
             Padding="30">
 
-        <material:AutoCompleteView HorizontalOptions="Fill" BackgroundColor="{AppThemeBinding Light={StaticResource Surface}, Dark={StaticResource SurfaceDark}}">
-            <material:AutoCompleteView.ItemsSource>
-                <x:String>Item 1</x:String>
-                <x:String>Item 2</x:String>
-                <x:String>Item 3</x:String>
-                <x:String>Item 4</x:String>
-                <x:String>Item 5</x:String>
-                <x:String>Item 6</x:String>
-                <x:String>Item 7</x:String>
-                <x:String>Item 8</x:String>
-                <x:String>Item 9</x:String>
-                <x:String>Item 10</x:String>
-                <x:String>Item 11</x:String>
-                <x:String>Item 12</x:String>
-                <x:String>Item 13</x:String>
-                <x:String>Item 14</x:String>
-                <x:String>Item 15</x:String>
-                <x:String>Item 16</x:String>
-                <x:String>Item 17</x:String>
-                <x:String>Item 18</x:String>
-                <x:String>Item 19</x:String>
-                <x:String>Item 20</x:String>
-                <x:String>Item 21</x:String>
-                <x:String>Item 22</x:String>
-                <x:String>Item 23</x:String>
-                <x:String>Item 24</x:String>
-                <x:String>Item 25</x:String>
-                <x:String>Item 26</x:String>
-                <x:String>Item 27</x:String>
-                <x:String>Item 28</x:String>
-                <x:String>Item 29</x:String>
-                <x:String>Item 30</x:String>
-                <x:String>Item 31</x:String>
-                <x:String>Item 32</x:String>
-                <x:String>Item 33</x:String>
-                <x:String>Item 34</x:String>
-                <x:String>Item 35</x:String>
-                <x:String>Item 36</x:String>
-                <x:String>Item 37</x:String>
-                <x:String>Item 38</x:String>
-                <x:String>Item 39</x:String>
-                <x:String>Item 40</x:String>
-            </material:AutoCompleteView.ItemsSource>
-        </material:AutoCompleteView>
+        <material:AutoCompleteTextField Title="Fruit" 
+                Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Forest}}">
+            <material:AutoCompleteTextField.ItemsSource>
+                <x:String>Apple</x:String>
+                <x:String>Orange</x:String>
+                <x:String>Banana</x:String>
+                <x:String>Strawberry</x:String>
+                <x:String>Watermelon</x:String>
+                <x:String>Cherry</x:String>
+                <x:String>Blueberry</x:String>
+                <x:String>Blackberry</x:String>
+                <x:String>Pineapple</x:String>
+                <x:String>Coconut</x:String>
+                <x:String>Apricot</x:String>
+                <x:String>Avocado</x:String>
+                <x:String>Plum</x:String>
+                <x:String>Fig</x:String>
+                <x:String>Grape</x:String>
+                <x:String>Guava</x:String>
+                <x:String>Lemon</x:String>
+                <x:String>Lime</x:String>
+                <x:String>Mango</x:String>
+                <x:String>Passion Fruit</x:String>
+                <x:String>Peach</x:String>
+                <x:String>Pear</x:String>
+                <x:String>Pomegranate</x:String>
+                <x:String>Raspberry</x:String>
+                <x:String>Tomato</x:String>
+            </material:AutoCompleteTextField.ItemsSource>
+        </material:AutoCompleteTextField>
 
     </VerticalStackLayout>
 </uranium:UraniumContentPage>

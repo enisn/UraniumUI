@@ -1,4 +1,5 @@
-﻿using UraniumUI.Resources;
+﻿using Plainer.Maui.Controls;
+using UraniumUI.Resources;
 
 namespace UraniumUI.Material.Controls;
 public class AutoCompleteTextField : InputField
@@ -12,6 +13,8 @@ public class AutoCompleteTextField : InputField
         VerticalOptions = LayoutOptions.Center
     };
 
+    public override bool HasValue => !string.IsNullOrEmpty(Text);
+
     public AutoCompleteTextField()
     {
         ItemsSource = new List<string>();
@@ -23,8 +26,6 @@ public class AutoCompleteTextField : InputField
     {
         return AutoCompleteView.Text;
     }
-
-    public override bool HasValue => !string.IsNullOrEmpty(Text);
 
     public string Text { get => (string)GetValue(TextProperty); set => SetValue(TextProperty, value); }
 

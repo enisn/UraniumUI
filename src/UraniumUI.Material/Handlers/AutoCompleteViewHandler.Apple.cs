@@ -40,6 +40,7 @@ public partial class AutoCompleteViewHandler : ViewHandler<AutoCompleteView, UIA
     protected override void ConnectHandler(UIAutoCompleteTextField platformView)
     {
         PlatformView.EditingChanged += PlatformView_ValueChanged;
+        
     }
 
     protected override void DisconnectHandler(UIAutoCompleteTextField platformView)
@@ -103,7 +104,7 @@ public partial class AutoCompleteViewHandler : ViewHandler<AutoCompleteView, UIA
 
 }
 
-public class UIAutoCompleteTextField : UITextField, IUITextFieldDelegate
+public class UIAutoCompleteTextField : MauiTextField, IUITextFieldDelegate
 {
     private AutoCompleteViewSource _autoCompleteViewSource;
     private UIView _background;

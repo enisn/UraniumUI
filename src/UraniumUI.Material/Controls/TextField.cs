@@ -72,7 +72,6 @@ public partial class TextField : InputField
         {
             EntryView.TextChanged -= EntryView_TextChanged;
         }
-
     }
 
     public void ClearValue()

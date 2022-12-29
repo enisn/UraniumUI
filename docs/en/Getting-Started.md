@@ -16,7 +16,7 @@ Uranium UI provides a project template to start a new project with Uranium UI. Y
 
 - Create a new project: 
   ```bash
-  dotnet new uraniumui -n MyProject
+  dotnet new uraniumui-app -n MyProject
   ```
 
 ### Visual Studio

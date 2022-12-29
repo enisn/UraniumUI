@@ -16,12 +16,14 @@ public class AutoCompleteView : View
         typeof(AutoCompleteView),
         string.Empty,
         BindingMode.TwoWay);
-
-    public string Placeholder { get; set; }
     
-    public Color TextColor { get; set; } = Colors.DarkGray;
+    public Color TextColor { get => (Color)GetValue(TextColorProperty); set => SetValue(TextColorProperty, value); }
 
-    public Color PlaceholderColor { get; set; } = Colors.Gray;
+    public static readonly BindableProperty TextColorProperty = BindableProperty.Create(
+        nameof(TextColor),
+        typeof(Color),
+        typeof(AutoCompleteView),
+        Colors.DarkGray);
 
     public IList<string> ItemsSource { get => (IList<string>)GetValue(ItemsSourceProperty); set => SetValue(ItemsSourceProperty, value); }
 

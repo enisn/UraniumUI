@@ -12,6 +12,9 @@
     },
     "preferNameDirectory": true,
     "sourceName": "MyCompany.MyProject",
+    "guids": [
+      "5e1ebd46-f2b5-4f0a-afc3-3fc1eb96b84a"
+    ],
     "symbols":{
       "Icons":{
         "type":"parameter",

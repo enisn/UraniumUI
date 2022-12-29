@@ -1,0 +1,47 @@
+{
+    "$schema": "http://json.schemastore.org/template",
+    "author": "enisn",
+    "classifications": [ "Mobile", "MAUI" ], 
+    "name": "Uranium UI MAUI Blank Template",
+    "identity": "UraniumUI.App.Blank",         
+    "groupIdentity":"UraniumUI.App",
+    "shortName": "uraniumui",
+    "tags": {
+      "language": "C#",
+      "type":"project"
+    },
+    "preferNameDirectory": true,
+    "sourceName": "MyCompany.MyProject",    
+    "guids": [
+      "56aa8f4e-a4aa-4ac1-927c-94cb99485ef2"
+    ],
+    "symbols":{
+      "Icons":{
+        "type":"parameter",
+        "datatype": "choice",
+        "defaultValue":"MaterialIcons",
+        "choices": [
+          {
+            "choice": "FontAwesome",
+            "description": "Configure font awesome icons by default."
+          },
+          {
+            "choice": "MaterialIcons",
+            "description":"Configure material icons by default."
+          },
+          {
+            "choice": "None",
+            "description":"Configure no icons by default."
+          }
+        ]
+      },
+      "FontAwesome":{
+        "type": "computed",
+        "value": "(Icons == \"FontAwesome\")"
+      },
+      "MaterialIcons":{
+        "type": "computed",
+        "value": "(Icons == \"MaterialIcons\")"
+      }
+    }
+  }

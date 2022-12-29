@@ -215,7 +215,7 @@ public partial class DataGrid : Frame
             var view = new ContentView
             {
                 Content = created,
-                BindingContext = !UseAutoColumns ? item : new
+                BindingContext = (CellItemTemplate is null) ? item : new
                 {
                     Value = Columns[columnNumber].PropertyInfo.GetValue(item)
                 }

@@ -85,7 +85,7 @@ public partial class AutoCompleteViewHandler : ViewHandler<AutoCompleteView, UIA
         var relativePosition = UIApplication.SharedApplication.KeyWindow;
         var relativeFrame = PlatformView.Superview.ConvertRectToView(PlatformView.Frame, relativePosition);
 
-        PlatformView.Draw(ctrl, PlatformView.Layer, scrollView, relativeFrame.Y);
+        PlatformView.Draw(ctrl, PlatformView.Layer, scrollView, relativeFrame.X, relativeFrame.Y);
     }
 
     private void AutoCompleteViewSourceOnSelected(object sender, SelectedItemChangedEventArgs args)
@@ -137,9 +137,9 @@ public class UIAutoCompleteTextField : UITextField, IUITextFieldDelegate
     public int AutocompleteTableViewHeight { get; set; } = 150;
 
 #if NET6_0
-    public void Draw(UIViewController viewController, CALayer layer, UIScrollView scrollView, NFloat y)
+    public void Draw(UIViewController viewController, CALayer layer, UIScrollView scrollView, NFloat x, NFloat y)
 #else
-    public void Draw(UIViewController viewController, CALayer layer, UIScrollView scrollView, NFloat y)
+    public void Draw(UIViewController viewController, CALayer layer, UIScrollView scrollView, NFloat x, NFloat y)
 #endif
     {
         _scrollView = scrollView;
@@ -172,14 +172,14 @@ public class UIAutoCompleteTextField : UITextField, IUITextFieldDelegate
         if (scrollViewIsNull)
         {
             view = _parentViewController.View;
-            frame = new CGRect(_drawnFrame.X, y + _drawnFrame.Height, _drawnFrame.Width, AutocompleteTableViewHeight);
+            frame = new CGRect(x, y + _drawnFrame.Height, _drawnFrame.Width, AutocompleteTableViewHeight);
         }
         else
         {
             var e = (ScrollView)((ScrollViewRenderer)_scrollView).Element;
             var p = e.Padding;
             var m = e.Margin;
-            frame = new CGRect(_drawnFrame.X + p.Left + m.Left,
+            frame = new CGRect(x + p.Left + m.Left,
                 y + _drawnFrame.Height,
                 _drawnFrame.Width,
                 AutocompleteTableViewHeight);

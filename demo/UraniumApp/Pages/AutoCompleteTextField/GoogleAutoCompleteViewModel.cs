@@ -28,7 +28,8 @@ public class GoogleAutoCompleteViewModel : UraniumBindableObject
             var response = await httpClient.GetAsync($"https://suggestqueries.google.com/complete/search?q={text}&hl={CultureInfo.CurrentUICulture.TwoLetterISOLanguageName}&client=firefox");
             if (!response.IsSuccessStatusCode)
                 return null;
-            var result = JsonConvert.DeserializeObject<JArray>(await response.Content.ReadAsStringAsync());
+            var bytes = await response.Content.ReadAsByteArrayAsync();
+            var result = JsonConvert.DeserializeObject<JArray>(System.Text.Encoding.UTF8.GetString(bytes));
 
             return result[1].Select(s => ((JValue)s)?.Value?.ToString());
         }

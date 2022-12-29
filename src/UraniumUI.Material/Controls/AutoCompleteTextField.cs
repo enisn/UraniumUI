@@ -1,9 +1,4 @@
-﻿using Plainer.Maui.Controls;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using UraniumUI.Resources;
 
 namespace UraniumUI.Material.Controls;
 public class AutoCompleteTextField : InputField
@@ -48,4 +43,16 @@ public class AutoCompleteTextField : InputField
             typeof(AutoCompleteView),
             null,
         propertyChanged: (bindable, oldValue, newValue)=> (bindable as AutoCompleteTextField).OnPropertyChanged(nameof(ItemsSource)));
+
+
+    public Color TextColor { get => (Color)GetValue(TextColorProperty); set => SetValue(TextColorProperty, value); }
+
+    public static readonly BindableProperty TextColorProperty = BindableProperty.Create(
+        nameof(TextColor),
+        typeof(Color),
+        typeof(AutoCompleteView),
+        ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.DarkGray),
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as AutoCompleteTextField).AutoCompleteView.TextColor = (Color)newValue);
+
+
 }

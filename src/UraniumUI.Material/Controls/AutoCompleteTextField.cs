@@ -19,6 +19,7 @@ public class AutoCompleteTextField : InputField
 
     public AutoCompleteTextField()
     {
+        ItemsSource = new List<string>();
         AutoCompleteView.SetBinding(AutoCompleteView.TextProperty, new Binding(nameof(Text), source: this));
         AutoCompleteView.SetBinding(AutoCompleteView.ItemsSourceProperty, new Binding(nameof(ItemsSource), source: this));
     }

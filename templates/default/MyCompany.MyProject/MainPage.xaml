@@ -44,7 +44,7 @@
     <uranium:UraniumContentPage.Attachments>
         <attachment:BackdropView
                 Title="Add" 
-                IconImageSource="{FontImageSource FFontFamily=FASolid, Glyph={x:Static fa:Solid.Plus}, Color={StaticResource OnPrimary}}"
+                IconImageSource="{FontImageSource FontFamily=FASolid, Glyph={x:Static fa:Solid.Plus}, Color={StaticResource OnPrimary}}"
                 BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Gray950}}">
             <VerticalStackLayout Spacing="10" Padding="25,30" HorizontalOptions="Center"  MaximumWidthRequest="400">
                 <material:TextField 

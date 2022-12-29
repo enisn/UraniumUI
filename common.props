@@ -1,6 +1,6 @@
 <Project>
     <PropertyGroup>
-        <Version>2.1.2</Version>
+        <Version>2.2.0</Version>
         <PackageIcon>logo_128.png</PackageIcon>
         <NeutralLanguage>en</NeutralLanguage>
         <RepositoryUrl>https://github.com/enisn/UraniumUI</RepositoryUrl>
@@ -8,6 +8,8 @@
         <Authors>enisn</Authors>
         <Description>Uranium is a Free &amp; Open-Source UI Kit for MAUI.</Description>
         <PackageReleaseNotes>Check GitHub releases for changelog.</PackageReleaseNotes>
+        
+        <PublishReadyToRun>false</PublishReadyToRun>
 
         <!--Source-Linking-->
         <PublishRepositoryUrl>true</PublishRepositoryUrl>

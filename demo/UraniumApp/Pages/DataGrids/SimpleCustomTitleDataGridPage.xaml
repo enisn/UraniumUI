@@ -13,19 +13,19 @@
             <StackLayout>
                 <material:DataGrid ItemsSource="{Binding Items}" HorizontalOptions="Center" Margin="30">
                     <material:DataGrid.Columns>
-                        <material:DataGridColumn PropertyName="Id">
+                        <material:DataGridColumn Binding="{Binding Id}">
                             <material:DataGridColumn.TitleView>
                                 <Image Source="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Fingerprint}, Color={AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}}" />
                             </material:DataGridColumn.TitleView>
                         </material:DataGridColumn>
 
-                        <material:DataGridColumn PropertyName="Name">
+                        <material:DataGridColumn Binding="{Binding Name}">
                             <material:DataGridColumn.TitleView>
                                 <Image Source="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Badge}, Color={AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}}" />
                             </material:DataGridColumn.TitleView>
                         </material:DataGridColumn>
 
-                        <material:DataGridColumn PropertyName="Age">
+                        <material:DataGridColumn Binding="{Binding Age}">
                             <material:DataGridColumn.TitleView>
                                 <Image Source="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Calendar_today}, Color={AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}}" />
                             </material:DataGridColumn.TitleView>

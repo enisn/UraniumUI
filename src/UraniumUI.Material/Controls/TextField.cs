@@ -32,13 +32,15 @@ public partial class TextField : InputField
 
     public override bool HasValue { get => !string.IsNullOrEmpty(Text); }
 
+    public event EventHandler<TextChangedEventArgs> TextChanged;
+
     public TextField()
     {
         iconClear.GestureRecognizers.Add(new TapGestureRecognizer
         {
             Command = new Command(Clear)
         });
-
+        
         UpdateClearIconState();
 
         EntryView.SetBinding(Entry.TextProperty, new Binding(nameof(Text), source: this));
@@ -47,7 +49,7 @@ public partial class TextField : InputField
         EntryView.SetBinding(Entry.SelectionLengthProperty, new Binding(nameof(SelectionLength), source: this));
         EntryView.SetBinding(Entry.CursorPositionProperty, new Binding(nameof(CursorPosition), source: this));
         EntryView.SetBinding(Entry.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
-        EntryView.TextChanged += EntryView_TextChanged;
+        EntryView.SetBinding(Entry.IsReadOnlyProperty, new Binding(nameof(IsReadOnly), source: this));
 
 #if WINDOWS
 		EntryView.HandlerChanged += (s, e) =>
@@ -62,9 +64,15 @@ public partial class TextField : InputField
 #endif
     }
 
-    ~TextField()
+    protected override void OnHandlerChanged()
     {
-        EntryView.TextChanged -= EntryView_TextChanged;
+        EntryView.TextChanged += EntryView_TextChanged;
+
+        if (Handler is null)
+        {
+            EntryView.TextChanged -= EntryView_TextChanged;
+        }
+
     }
 
     public void ClearValue()
@@ -91,6 +99,8 @@ public partial class TextField : InputField
         {
             iconClear.IsVisible = !string.IsNullOrEmpty(e.NewTextValue);
         }
+
+        TextChanged?.Invoke(this, e);
     }
 
     protected override object GetValueForValidator()

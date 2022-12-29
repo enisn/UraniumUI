@@ -4,14 +4,17 @@
     "classifications": [ "Mobile", "MAUI" ], 
     "name": "Uranium UI MAUI Blank Template",
     "identity": "UraniumUI.App.Blank",         
-    "groupIdentity":"UraniumUI.App",
-    "shortName": "uraniumui",
+    "groupIdentity":"UraniumUI.App.Blank",
+    "shortName": "uraniumui-blank-app",
     "tags": {
       "language": "C#",
       "type":"project"
     },
     "preferNameDirectory": true,
-    "sourceName": "MyCompany.MyProject",
+    "sourceName": "MyCompany.MyProject",    
+    "guids": [
+      "56aa8f4e-a4aa-4ac1-927c-94cb99485ef2"
+    ],
     "symbols":{
       "Icons":{
         "type":"parameter",

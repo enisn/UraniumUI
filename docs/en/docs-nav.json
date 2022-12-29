@@ -80,6 +80,10 @@
               "path": "themes/material/components/TextField.md"
             },
             {
+              "text": "AutoCompleteTextField",
+              "path": "themes/material/components/AutoCompleteTextField.md"
+            },
+            {
               "text": "PickerField",
               "path": "themes/material/components/PickerField.md"
             },
@@ -152,6 +156,10 @@
         },
         {
           "text": "Migration to v2.1",
+          "path": "migration-guides/Migrating-To-2.1.md"
+        },
+        {
+          "text": "Migration to v2.2",
           "path": "migration-guides/Migrating-To-2.1.md"
         }
       ]

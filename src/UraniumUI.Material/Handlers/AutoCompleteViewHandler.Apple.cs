@@ -43,6 +43,7 @@ public partial class AutoCompleteViewHandler : ViewHandler<IAutoCompleteView, UI
         PlatformView.EditingChanged += PlatformView_TextChanged;
         PlatformView.EditingDidBegin += PlatformView_EditingDidBegin;
         PlatformView.EditingDidEndOnExit += PlatformView_EditingDidEndOnExit;
+        PlatformView.EditingDidEnd += PlatformView_EditingDidEnd;
     }
 
     protected override void DisconnectHandler(UIAutoCompleteTextField platformView)
@@ -50,6 +51,7 @@ public partial class AutoCompleteViewHandler : ViewHandler<IAutoCompleteView, UI
         PlatformView.EditingChanged -= PlatformView_TextChanged;
         PlatformView.EditingDidBegin -= PlatformView_EditingDidBegin;
         PlatformView.EditingDidEndOnExit -= PlatformView_EditingDidEndOnExit;
+        PlatformView.EditingDidEnd -= PlatformView_EditingDidEnd;
     }
 
     private void PlatformView_TextChanged(object sender, EventArgs e)
@@ -66,8 +68,12 @@ public partial class AutoCompleteViewHandler : ViewHandler<IAutoCompleteView, UI
         VirtualView.IsFocused = true;
     }
 
-
     private void PlatformView_EditingDidEndOnExit(object sender, EventArgs e)
+    {
+        VirtualView.IsFocused = false;
+    }
+
+    private void PlatformView_EditingDidEnd(object sender, EventArgs e)
     {
         VirtualView.IsFocused = false;
     }

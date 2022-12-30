@@ -38,7 +38,7 @@ public partial class TextField : InputField
     {
         iconClear.GestureRecognizers.Add(new TapGestureRecognizer
         {
-            Command = new Command(Clear)
+            Command = new Command(OnClearTapped)
         });
         
         UpdateClearIconState();

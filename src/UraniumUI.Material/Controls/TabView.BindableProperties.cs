@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections;
+using System.Collections.ObjectModel;
 
 namespace UraniumUI.Material.Controls;
 public partial class TabView
@@ -18,15 +19,31 @@ public partial class TabView
 		BindableProperty.Create(nameof(TabHeaderItemTemplate), typeof(DataTemplate), typeof(TabView), defaultValue: TabView.DefaultTabHeaderItemTemplate,
 			propertyChanged: (bo, ov, nv) => (bo as TabView).RenderHeaders());
 
-	public TabItem CurrentItem { get => (TabItem)GetValue(CurrentItemProperty); set => SetValue(CurrentItemProperty, value); }
+	public object CurrentItem { get => GetValue(CurrentItemProperty); set => SetValue(CurrentItemProperty, value); }
 
 	public static readonly BindableProperty CurrentItemProperty =
-		BindableProperty.Create(nameof(Items), typeof(TabItem), typeof(TabView),
-			propertyChanged: (bo, ov, nv) => (bo as TabView).OnCurrentItemChanged((TabItem)nv));
+		BindableProperty.Create(nameof(Items), typeof(object), typeof(TabView),
+			propertyChanged: (bo, ov, nv) => (bo as TabView).OnCurrentItemChanged(nv));
 
 	public TabViewTabPlacement TabPlacement { get => (TabViewTabPlacement)GetValue(TabPlacementProperty); set => SetValue(TabPlacementProperty, value); }
 
 	public static readonly BindableProperty TabPlacementProperty =
 		BindableProperty.Create(nameof(TabPlacement), typeof(TabViewTabPlacement), typeof(TabView), defaultValue: TabViewTabPlacement.Top,
 			propertyChanged: (bo, ov, nv) => (bo as TabView).OnTabPlacementChanged());
+
+    public IList ItemsSource { get => (IList)GetValue(ItemsSourceProperty); set => SetValue(ItemsSourceProperty, value); }
+
+    public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(
+        nameof(ItemsSource),
+        typeof(IList),
+        typeof(TabView),
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as TabView).OnItemsSourceChanged((IList)oldValue, (IList)newValue));
+    
+    public DataTemplate ItemTemplate { get => (DataTemplate)GetValue(ItemTemplateProperty); set => SetValue(ItemTemplateProperty, value); }
+
+    public static readonly BindableProperty ItemTemplateProperty = BindableProperty.Create(
+        nameof(ItemTemplate),
+        typeof(DataTemplate),
+        typeof(TabView),
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as TabView).OnItemTemplateChanged());
 }

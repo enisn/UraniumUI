@@ -3,8 +3,10 @@
              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:UraniumApp.ViewModels.TabViews"
+             xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
-             xmlns:local="clr-namespace:UraniumApp.Pages.TabViews">
+             xmlns:local="clr-namespace:UraniumApp.Pages.TabViews"
+             x:Name="page">
 
     <ContentPage.BindingContext>
         <vm:WebTabViewModel />
@@ -23,8 +25,41 @@
 
                 <material:TabView 
                         Grid.Row="1" 
-                        Items="{Binding TabItems}" 
-                        CurrentItem="{Binding CurrentTab}"/>
+                        ItemsSource="{Binding TabItems}"
+                        CurrentItem="{Binding CurrentTab}">
+                    <material:TabView.TabHeaderItemTemplate>
+                        <DataTemplate>
+                            <uranium:StatefulContentView TappedCommand="{Binding Command}" WidthRequest="160">
+                                <Grid ColumnDefinitions="*,Auto" BackgroundColor="{AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}">
+
+                                    <Label Text="{Binding Data.Title}" VerticalOptions="Center" Margin="5,10"/>
+
+                                    <uranium:StatefulContentView Grid.Column="1"
+                                                                 Margin="5"
+                                                VerticalOptions="Center"
+                                                CommandParameter="{Binding Data}"
+                                                TappedCommand="{Binding Source={x:Reference page}, Path=BindingContext.RemoveTabCommand}">
+                                        <Path Data="{x:Static uranium:UraniumShapes.X}" Fill="{AppThemeBinding {StaticResource OnSurface},Dark={StaticResource OnSurfaceDark}}" />
+                                    </uranium:StatefulContentView>
+                                    
+                                    <Grid.Triggers>
+                                        <DataTrigger TargetType="Grid" Binding="{Binding IsSelected}" Value="True">
+                                            <Setter Property="uranium:DynamicTint.BackgroundColorOpacity" Value="0.6" />
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Grid" Binding="{Binding IsSelected}" Value="False">
+                                            <Setter Property="uranium:DynamicTint.BackgroundColorOpacity" Value="0.05" />
+                                        </DataTrigger>
+                                    </Grid.Triggers>
+                                </Grid>
+                            </uranium:StatefulContentView>
+                        </DataTemplate>
+                    </material:TabView.TabHeaderItemTemplate>
+                    <material:TabView.ItemTemplate>
+                        <DataTemplate>
+                            <WebView VerticalOptions="Fill" Source="{Binding Url, Mode=TwoWay}" />
+                        </DataTemplate>
+                    </material:TabView.ItemTemplate>
+                </material:TabView>
             </Grid>
         </Frame>
     </ContentPage.Content>

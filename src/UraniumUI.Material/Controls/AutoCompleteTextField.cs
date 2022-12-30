@@ -1,5 +1,7 @@
 ﻿using Plainer.Maui.Controls;
+using UraniumUI.Pages;
 using UraniumUI.Resources;
+using Path = Microsoft.Maui.Controls.Shapes.Path;
 
 namespace UraniumUI.Material.Controls;
 public class AutoCompleteTextField : InputField
@@ -13,19 +15,104 @@ public class AutoCompleteTextField : InputField
         VerticalOptions = LayoutOptions.Center
     };
 
-    public override bool HasValue => !string.IsNullOrEmpty(Text);
+    protected ContentView iconClear = new ContentView
+    {
+        VerticalOptions = LayoutOptions.Center,
+        HorizontalOptions = LayoutOptions.End,
+        IsVisible = false,
+        Padding = 10,
+        Content = new Path
+        {
+            Data = UraniumShapes.X,
+            Fill = ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.DarkGray).WithAlpha(.5f),
+        }
+    };
 
     public AutoCompleteTextField()
     {
         ItemsSource = new List<string>();
+
+        iconClear.GestureRecognizers.Add(new TapGestureRecognizer
+        {
+            Command = new Command(OnClearTapped)
+        });
+
         AutoCompleteView.SetBinding(AutoCompleteView.TextProperty, new Binding(nameof(Text), source: this));
         AutoCompleteView.SetBinding(AutoCompleteView.ItemsSourceProperty, new Binding(nameof(ItemsSource), source: this));
+
+        AutoCompleteView.Focused += AutoCompleteTextField_Focused;
+        this.Focused += AutoCompleteTextField_Focused;
     }
+
+    private void AutoCompleteTextField_Focused(object sender, FocusEventArgs e)
+    {
+        Console.WriteLine("Focused");
+    }
+
+    public override bool HasValue => !string.IsNullOrEmpty(Text);
 
     protected override object GetValueForValidator()
     {
         return AutoCompleteView.Text;
     }
+
+    protected override void OnHandlerChanged()
+    {
+        AutoCompleteView.TextChanged += AutoCompleteView_TextChanged;
+
+        if (Handler is null)
+        {
+            AutoCompleteView.TextChanged -= AutoCompleteView_TextChanged;
+        }
+    }
+
+    private void AutoCompleteView_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        if (string.IsNullOrEmpty(e.OldTextValue) || string.IsNullOrEmpty(e.NewTextValue))
+        {
+            UpdateState();
+        }
+
+        if (!string.IsNullOrEmpty(e.NewTextValue))
+        {
+            CheckAndShowValidations();
+        }
+
+        if (AllowClear)
+        {
+            iconClear.IsVisible = !string.IsNullOrEmpty(e.NewTextValue);
+        }
+
+        TextChanged?.Invoke(this, e);
+    }
+
+    public event EventHandler<TextChangedEventArgs> TextChanged;
+
+    protected virtual void OnAllowClearChanged()
+    {
+        UpdateClearIconState();
+    }
+
+    protected virtual void UpdateClearIconState()
+    {
+        if (AllowClear)
+        {
+            if (!endIconsContainer.Contains(iconClear))
+            {
+                endIconsContainer.Add(iconClear);
+            }
+        }
+        else
+        {
+            endIconsContainer.Remove(iconClear);
+        }
+    }
+
+    protected virtual void OnClearTapped()
+    {
+        AutoCompleteView.Text = string.Empty;
+    }
+
 
     public string Text { get => (string)GetValue(TextProperty); set => SetValue(TextProperty, value); }
 
@@ -55,5 +142,11 @@ public class AutoCompleteTextField : InputField
         ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.DarkGray),
         propertyChanged: (bindable, oldValue, newValue) => (bindable as AutoCompleteTextField).AutoCompleteView.TextColor = (Color)newValue);
 
+    public bool AllowClear { get => (bool)GetValue(AllowClearProperty); set => SetValue(AllowClearProperty, value); }
 
+    public static BindableProperty AllowClearProperty = BindableProperty.Create(
+        nameof(AllowClear),
+        typeof(bool), typeof(TextField),
+        false,
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as AutoCompleteTextField).OnAllowClearChanged());
 }

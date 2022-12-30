@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <PackageType>Template</PackageType>
-    <PackageVersion>2.1.3</PackageVersion>
+    <PackageVersion>2.1.4</PackageVersion>
     <Title>Uranium UI MAUI Templates</Title>
     <Authors>enisn</Authors>
     <Description>Templates for new MAUI Apps, Themes and Libraries</Description>

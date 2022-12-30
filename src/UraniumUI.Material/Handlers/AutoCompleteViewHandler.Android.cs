@@ -54,6 +54,7 @@ public partial class AutoCompleteViewHandler : ViewHandler<AutoCompleteView, App
     {
         if (VirtualView.Text != PlatformView.Text)
         {
+            VirtualView.InvokeTextChanged(new TextChangedEventArgs(VirtualView.Text, PlatformView.Text));
             VirtualView.Text = PlatformView.Text;
         }
     }

@@ -11,10 +11,11 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using UIKit;
+using UraniumUI.Extensions;
 using UraniumUI.Material.Controls;
 
 namespace UraniumUI.Material.Handlers;
-public partial class AutoCompleteViewHandler : ViewHandler<AutoCompleteView, UIAutoCompleteTextField>
+public partial class AutoCompleteViewHandler : ViewHandler<IAutoCompleteView, UIAutoCompleteTextField>
 {
 
     protected override UIAutoCompleteTextField CreatePlatformView()
@@ -39,21 +40,36 @@ public partial class AutoCompleteViewHandler : ViewHandler<AutoCompleteView, UIA
 
     protected override void ConnectHandler(UIAutoCompleteTextField platformView)
     {
-        PlatformView.EditingChanged += PlatformView_ValueChanged;
-        
+        PlatformView.EditingChanged += PlatformView_TextChanged;
+        PlatformView.EditingDidBegin += PlatformView_EditingDidBegin;
+        PlatformView.EditingDidEndOnExit += PlatformView_EditingDidEndOnExit;
     }
 
     protected override void DisconnectHandler(UIAutoCompleteTextField platformView)
     {
-        PlatformView.EditingChanged += PlatformView_ValueChanged;
+        PlatformView.EditingChanged -= PlatformView_TextChanged;
+        PlatformView.EditingDidBegin -= PlatformView_EditingDidBegin;
+        PlatformView.EditingDidEndOnExit -= PlatformView_EditingDidEndOnExit;
     }
 
-    private void PlatformView_ValueChanged(object sender, EventArgs e)
+    private void PlatformView_TextChanged(object sender, EventArgs e)
     {
         if (VirtualView.Text != PlatformView.Text)
         {
+            VirtualView.InvokeTextChanged(new TextChangedEventArgs(VirtualView.Text, PlatformView.Text));
             VirtualView.Text = PlatformView.Text;
         }
+    }
+
+    private void PlatformView_EditingDidBegin(object sender, EventArgs e)
+    {
+        VirtualView.IsFocused = true;
+    }
+
+
+    private void PlatformView_EditingDidEndOnExit(object sender, EventArgs e)
+    {
+        VirtualView.IsFocused = false;
     }
 
     public static void MapText(AutoCompleteViewHandler handler, AutoCompleteView view)
@@ -80,26 +96,17 @@ public partial class AutoCompleteViewHandler : ViewHandler<AutoCompleteView, UIA
 
     public void Draw(CGRect rect)
     {
-        var scrollView = GetParentScrollView(PlatformView);
         var ctrl = UIApplication.SharedApplication.GetTopViewController();
 
         var relativePosition = UIApplication.SharedApplication.KeyWindow;
         var relativeFrame = PlatformView.Superview.ConvertRectToView(PlatformView.Frame, relativePosition);
 
-        PlatformView.Draw(ctrl, PlatformView.Layer, scrollView, relativeFrame.X, relativeFrame.Y);
+        PlatformView.Draw(ctrl, PlatformView.Layer, VirtualView as AutoCompleteView, relativeFrame.X, relativeFrame.Y);
     }
 
     private void AutoCompleteViewSourceOnSelected(object sender, SelectedItemChangedEventArgs args)
     {
         //VirtualView.OnItemSelectedInternal(Element, args);
-    }
-
-
-    private static UIScrollView GetParentScrollView(UIView element)
-    {
-        if (element.Superview == null) return null;
-        var scrollView = element.Superview as UIScrollView;
-        return scrollView ?? GetParentScrollView(element.Superview);
     }
 
 }
@@ -138,12 +145,12 @@ public class UIAutoCompleteTextField : MauiTextField, IUITextFieldDelegate
     public int AutocompleteTableViewHeight { get; set; } = 150;
 
 #if NET6_0
-    public void Draw(UIViewController viewController, CALayer layer, UIScrollView scrollView, NFloat x, NFloat y)
+    public void Draw(UIViewController viewController, CALayer layer, AutoCompleteView virtualView, NFloat x, NFloat y)
 #else
-    public void Draw(UIViewController viewController, CALayer layer, UIScrollView scrollView, NFloat x, NFloat y)
+    public void Draw(UIViewController viewController, CALayer layer, AutoCompleteView virtualView, NFloat x, NFloat y)
 #endif
     {
-        _scrollView = scrollView;
+        var _scrollView = GetParentScrollView(this);
         _drawnFrame = layer.Frame;
         _parentViewController = viewController ?? throw new ArgumentNullException(nameof(viewController), "View cannot be null");
 
@@ -177,11 +184,12 @@ public class UIAutoCompleteTextField : MauiTextField, IUITextFieldDelegate
         }
         else
         {
-            var e = (ScrollView)((ScrollViewRenderer)_scrollView).Element;
+            var e = (virtualView.FindInParents<ScrollView>());
             var p = e.Padding;
             var m = e.Margin;
-            frame = new CGRect(x + p.Left + m.Left,
-                y + _drawnFrame.Height,
+            frame = new CGRect(_drawnFrame.X + p.Left + m.Left,
+                //this.Frame.Y,
+                y - this.Frame.Y - _drawnFrame.Y - layer.Frame.Y - _drawnFrame.Height,
                 _drawnFrame.Width,
                 AutocompleteTableViewHeight);
             view = _scrollView;
@@ -267,6 +275,14 @@ public class UIAutoCompleteTextField : MauiTextField, IUITextFieldDelegate
     {
         _items = items;
         AutoCompleteViewSource.UpdateSuggestions(items);
+    }
+
+
+    private static UIScrollView GetParentScrollView(UIView element)
+    {
+        if (element.Superview == null) return null;
+        var scrollView = element.Superview as UIScrollView;
+        return scrollView ?? GetParentScrollView(element.Superview);
     }
 }
 

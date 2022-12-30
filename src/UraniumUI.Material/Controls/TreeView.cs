@@ -14,6 +14,7 @@ public partial class TreeView : VerticalStackLayout
 
     public TreeView()
     {
+        Spacing = 10;
         BindableLayout.SetItemTemplate(this, new DataTemplate(() =>
         {
             var holder = new TreeViewNodeHolderView(ItemTemplate, this, ChildrenBinding);
@@ -23,6 +24,7 @@ public partial class TreeView : VerticalStackLayout
     }
 
     private BindingBase childrenBinding = new Binding("Children");
+
     public BindingBase ChildrenBinding
     {
         get => childrenBinding; set
@@ -36,6 +38,7 @@ public partial class TreeView : VerticalStackLayout
     }
 
     private string isExpandedPropertyName = "IsExpanded";
+    
     public string IsExpandedPropertyName
     {
         get => isExpandedPropertyName;
@@ -50,6 +53,7 @@ public partial class TreeView : VerticalStackLayout
     }
 
     private string isLeafPropertyName = "IsLeaf";
+    
     public string IsLeafPropertyName
     {
         get => isLeafPropertyName;
@@ -79,6 +83,13 @@ public partial class TreeView : VerticalStackLayout
 
         OnItemsSourceSet();
     }
+    
+    private void OnExpanderTemplateChanged()
+    {
+        // Same logic (for now)
+        OnItemTemplateChanged();
+    }
+
     protected virtual void OnArrowColorChanged()
     {
         foreach (var childHolder in Children.OfType<TreeViewNodeHolderView>())
@@ -100,6 +111,12 @@ public partial class TreeView : VerticalStackLayout
         nameof(ItemsSource), typeof(IList), typeof(TreeView), null,
         propertyChanged: (b, o, v) => (b as TreeView).OnItemsSourceSet());
 
+    public DataTemplate ExpanderTemplate { get => (DataTemplate)GetValue(ExpanderTemplateProperty); set => SetValue(ExpanderTemplateProperty, value); }
+
+    public static readonly BindableProperty ExpanderTemplateProperty = BindableProperty.Create(
+        nameof(ExpanderTemplate), typeof(DataTemplate), typeof(TreeView), null,
+        propertyChanged: (b, o, v) => (b as TreeView).OnExpanderTemplateChanged());
+
     public DataTemplate ItemTemplate { get => (DataTemplate)GetValue(ItemTemplateProperty); set => SetValue(ItemTemplateProperty, value); }
 
     public static readonly BindableProperty ItemTemplateProperty = BindableProperty.Create(
@@ -116,12 +133,4 @@ public partial class TreeView : VerticalStackLayout
     public static readonly BindableProperty ArrowColorProperty = BindableProperty.Create(
         nameof(ArrowColor), typeof(Color), typeof(TreeView), ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.DarkGray),
             propertyChanged: (bindable, oldValue, newValue)=> (bindable as TreeView).OnArrowColorChanged());
-
-    public static readonly BindableProperty IsExpandedProperty =
-        BindableProperty.CreateAttached("IsExpanded", typeof(bool), typeof(TreeViewNodeHolderView), false,
-            propertyChanged: (bindable, oldValue, newValue) => (bindable as TreeViewNodeHolderView).OnIsExpandedChanged());
-
-    public static bool GetIsExpanded(BindableObject view) => (bool)view.GetValue(IsExpandedProperty);
-
-    public static void SetIsExpanded(BindableObject view, bool value) => view.SetValue(IsExpandedProperty, value);
 }

@@ -4,7 +4,7 @@
   <Import Project="..\..\common.props" />
 
   <PropertyGroup>
-    <TargetFrameworks>net7.0</TargetFrameworks>
+    <TargetFrameworks>net7.0;net6.0</TargetFrameworks>
 
     <!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
     <!-- <TargetFrameworks>$(TargetFrameworks);net7.0-tizen</TargetFrameworks> -->
@@ -17,8 +17,12 @@
     <IsRidAgnostic Condition="'$(OutputType)' == 'Library'">true</IsRidAgnostic>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="InputKit.Maui" Version="4.2.0" />
+  <ItemGroup Condition="$(TargetFramework.Contains('net6'))">
+    <PackageReference Include="InputKit.Maui" Version="4.1.6" />
+  </ItemGroup>
+
+  <ItemGroup Condition="$(TargetFramework.Contains('net7'))">
+    <PackageReference Include="InputKit.Maui" Version="4.2.1" />
   </ItemGroup>
 
 </Project>

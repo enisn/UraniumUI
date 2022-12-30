@@ -1,6 +1,8 @@
 ﻿using Plainer.Maui.Controls;
+using System;
 using System.Collections;
 using System.ComponentModel;
+using System.Windows.Input;
 using UraniumUI.Pages;
 using UraniumUI.Resources;
 using Path = Microsoft.Maui.Controls.Shapes.Path;
@@ -47,7 +49,9 @@ public class PickerField : InputField
 
 	public override bool HasValue => SelectedItem != null;
 
-	public PickerField()
+	public event EventHandler<object> SelectedValueChanged;
+
+    public PickerField()
 	{
 		var clearGestureRecognizer = new TapGestureRecognizer();
 		clearGestureRecognizer.Tapped += OnClearTapped;
@@ -107,7 +111,10 @@ public class PickerField : InputField
 #endif
 
 		UpdateState();
-	}
+
+		SelectedValueChangedCommand?.Execute(SelectedItem);
+		SelectedValueChanged?.Invoke(this, SelectedItem);
+    }
 
 	protected virtual void OnAllowClearChanged()
 	{
@@ -194,11 +201,19 @@ public class PickerField : InputField
 	public static readonly BindableProperty CharacterSpacingProperty = BindableProperty.Create(
 		nameof(CharacterSpacing), typeof(double), typeof(PickerField), Picker.CharacterSpacingProperty.DefaultValue,
 		propertyChanged: (bindable, oldValue, newValue) => (bindable as PickerField).PickerView.CharacterSpacing = (double)newValue);
+
 	public bool AllowClear { get => (bool)GetValue(AllowClearProperty); set => SetValue(AllowClearProperty, value); }
 
-	public static BindableProperty AllowClearProperty = BindableProperty.Create(
+	public static readonly BindableProperty AllowClearProperty = BindableProperty.Create(
 		nameof(AllowClear),
 		typeof(bool), typeof(PickerField),
 		true,
 		propertyChanged: (bindable, oldValue, newValue) => (bindable as PickerField).OnAllowClearChanged());
+
+	public ICommand SelectedValueChangedCommand { get => (ICommand)GetValue(SelectedValueChangedCommandProperty); set => SetValue(SelectedValueChangedCommandProperty, value); }
+
+	public static readonly BindableProperty SelectedValueChangedCommandProperty = BindableProperty.Create(
+		nameof(SelectedValueChangedCommand),
+		typeof(ICommand), typeof(PickerField),
+		defaultValue: null);
 }

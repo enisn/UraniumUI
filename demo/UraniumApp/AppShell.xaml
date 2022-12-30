@@ -10,6 +10,7 @@
     xmlns:backdrop="clr-namespace:UraniumApp.Pages.Backdrops"
     xmlns:dataGrid="clr-namespace:UraniumApp.Pages.DataGrids"
     xmlns:tabs="clr-namespace:UraniumApp.Pages.TabViews"
+    xmlns:autocompletes="clr-namespace:UraniumApp.Pages.AutoCompleteTextField"
     Shell.FlyoutBehavior="{OnIdiom Desktop=Locked, Default=Flyout}">
 
     <Shell.FlyoutHeader>
@@ -98,15 +99,19 @@
             Icon="{FontImageSource FontFamily=MaterialOutlined, Glyph={x:Static m:MaterialOutlined.Short_text}, Color={StaticResource Primary}}"
             ContentTemplate="{DataTemplate pages:InputFieldsPage}"/>
     </FlyoutItem>
-    <FlyoutItem FlyoutDisplayOptions="AsSingleItem" Title="Validations">
+    <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
         <ShellContent 
-            Title="InputField" 
+            Title="Validations" 
             Icon="{FontImageSource FontFamily=MaterialOutlined, Glyph={x:Static m:MaterialOutlined.Warning}, Color={StaticResource Primary}}"
             ContentTemplate="{DataTemplate pages:ValidationsPage}"/>
+        <ShellContent 
+            Title="AutoComplete" 
+            Icon="{FontImageSource FontFamily=MaterialOutlined, Glyph={x:Static m:MaterialOutlined.Spellcheck}, Color={StaticResource Primary}}"
+            ContentTemplate="{DataTemplate autocompletes:GoogleAutoCompletePage}"/>
     </FlyoutItem>
 
     <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
-
+        
     </FlyoutItem>
 
     <!--

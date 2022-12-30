@@ -9,6 +9,7 @@ public static class UraniumUIMaterialMauiProgramExtensions
         builder.ConfigureMauiHandlers(handlers =>
         {
             handlers.AddHandler(typeof(ButtonView), typeof(ButtonViewHandler));
+            handlers.AddHandler(typeof(AutoCompleteView), typeof(AutoCompleteViewHandler));
         });
         
         return builder;

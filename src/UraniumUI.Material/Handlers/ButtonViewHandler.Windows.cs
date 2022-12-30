@@ -6,7 +6,7 @@ using Microsoft.UI.Xaml.Input;
 namespace UraniumUI.Material.Handlers;
 
 public partial class ButtonViewHandler
-{
+{    
     protected override ContentPanel CreatePlatformView()
     {
         var platformView = base.CreatePlatformView();
@@ -49,7 +49,11 @@ public partial class ButtonViewHandler
 
     private void PlatformView_PointerEntered(object sender, PointerRoutedEventArgs e)
     {
+#if NET6_0
+        VisualStateManager.GoToState(StatefulView, "PointerOver");
+#else
         VisualStateManager.GoToState(StatefulView, VisualStateManager.CommonStates.PointerOver);
+#endif
         ExecuteCommandIfCan(StatefulView.HoverCommand);
     }
 

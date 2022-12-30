@@ -26,9 +26,9 @@
                     </material:DataGrid.EmptyView>
                     <material:DataGrid.Columns>
                         <material:DataGridSelectionColumn />
-                        <material:DataGridColumn PropertyName="Id" Title="Identity" />
-                        <material:DataGridColumn PropertyName="Name" Title="Name" />
-                        <material:DataGridColumn PropertyName="Age" Title="Age" />
+                        <material:DataGridColumn Binding="{Binding Id}" Title="Identity" />
+                        <material:DataGridColumn Binding="{Binding Name}" Title="Name" />
+                        <material:DataGridColumn Binding="{Binding Age}" Title="Age" />
                     </material:DataGrid.Columns>
                 </material:DataGrid>
             </StackLayout>

@@ -188,3 +188,62 @@ Even you can define DataTemplate tab by tab separetely.
 | Light - Mobile | Dark - Desktop |
 | --- | --- |
 | ![MAUI TabView](images/tabview-custom-item-template-light-android.gif) | ![MAUI TabView](images/tabview-custom-item-template-dark-windows.gif)  |
+
+### Dynamic Tabs
+TabView supports dynamic tabs. You can add/remove tabs dynamically from a source. `ItemsSource` and `Itemtemplate` properties can be used for this purpose.
+
+```xml
+<material:TabView ItemsSource="{Binding TabItems}">
+    <material:TabView.ItemTemplate>
+        <DataTemplate>
+            <WebView Source="{Binding Url, Mode=TwoWay}" />
+        </DataTemplate>
+    </material:TabView.ItemTemplate>
+</material:TabView>
+```
+
+And view model should be like this.
+
+```csharp
+public class WebTabViewModel : UraniumBindableObject
+{
+    public ObservableCollection<WebTabItem> TabItems { get; set; } = new()
+    {
+        new WebTabItem("https://www.bing.com/"),
+        new WebTabItem("https://google.com/"),
+        new WebTabItem("https://microsoft.com/"),
+        new WebTabItem("https://github.com/"),
+    };
+}
+
+public class WebTabItem : UraniumBindableObject
+{
+    private string url;
+    private string title;
+
+    public WebTabItem(string url = null)
+    {
+        this.Url = url;
+    }
+
+    public string Url
+    {
+        get => url; set => SetProperty(ref url, value, doAfter: (_url) =>
+        {
+            if (Uri.TryCreate(_url, UriKind.RelativeOrAbsolute, out Uri uri))
+            {
+                Title = uri.Host;
+            }
+        });
+    }
+
+    public string Title { get => title; set => SetProperty(ref title, value); }
+
+    public override string ToString()
+    {
+        return Title;
+    }
+}
+```
+
+![](images/tabview-dynamictabs-simple-windows-dark.gif)

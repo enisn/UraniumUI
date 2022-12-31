@@ -6,46 +6,67 @@ using UraniumUI.Material.Controls;
 namespace UraniumApp.ViewModels.TabViews;
 public class WebTabViewModel : UraniumBindableObject
 {
+    public ObservableCollection<WebTabItem> TabItems { get; set; } = new()
+    {
+        new WebTabItem("https://www.bing.com/"),
+        new WebTabItem("https://google.com/"),
+        new WebTabItem("https://microsoft.com/"),
+        new WebTabItem("https://github.com/"),
+    };
 
-	public ObservableCollection<TabItem> TabItems { get; set; } = new()
-	{
-		new WebTabItem("https://www.bing.com/"),
-		new WebTabItem("https://google.com/"),
-		new WebTabItem("https://microsoft.com/"),
-		new WebTabItem("https://github.com/"),
-	};
+    private object currentTab;
+    public object CurrentTab { get => currentTab; set => SetProperty(ref currentTab, value); }
+    public WebTabViewModel()
+    {
+        CreateNewTabCommand = new Command(CreateNewTab);
+        RemoveTabCommand = new Command(RemoveTab);
+    }
 
-	private TabItem currentTab;
-	public TabItem CurrentTab { get => currentTab; set => SetProperty(ref currentTab, value); }
-	public WebTabViewModel()
-	{
-		CreateNewTabCommand = new Command(CreateNewTab);
-	}
+    public ICommand CreateNewTabCommand { get; set; }
 
-	public ICommand CreateNewTabCommand { get; set; }
+    public ICommand RemoveTabCommand { get; set; }
 
-	private void CreateNewTab()
-	{
-		var newTabItem = new WebTabItem("https://bing.com/");
-		TabItems.Add(newTabItem);
-		CurrentTab = newTabItem;
-	}
+    private void CreateNewTab()
+    {
+        var newTabItem = new WebTabItem("https://bing.com/");
+        TabItems.Add(newTabItem);
+        CurrentTab = newTabItem;
+    }
+
+    private void RemoveTab(object obj)
+    {
+        if (obj is WebTabItem tabItem)
+        {
+            TabItems.Remove(tabItem);
+        }
+    }
 }
 
-public class WebTabItem : TabItem
+public class WebTabItem : UraniumBindableObject
 {
-	public WebTabItem(string url = "https://www.bing.com/")
-	{
-		this.Title = new Uri(url).Host;
-		this.ContentTemplate = new DataTemplate(() =>
-		{
-			var webView = new WebView
-			{
-				Source = url,
-				VerticalOptions = LayoutOptions.Fill
-			};
+    private string url;
+    private string title;
 
-			return webView;
-		});
-	}
+    public WebTabItem(string url = null)
+    {
+        this.Url = url;
+    }
+
+    public string Url
+    {
+        get => url; set => SetProperty(ref url, value, doAfter: (_url) =>
+        {
+            if (Uri.TryCreate(_url, UriKind.RelativeOrAbsolute, out Uri uri))
+            {
+                Title = uri.Host;
+            }
+        });
+    }
+
+    public string Title { get => title; set => SetProperty(ref title, value); }
+
+    public override string ToString()
+    {
+        return Title;
+    }
 }

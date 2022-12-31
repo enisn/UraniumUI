@@ -13,7 +13,6 @@
     </ContentPage.BindingContext>
     <ContentPage.Content>
 
-
         <Frame Padding="0" Margin="25">
             <Grid RowDefinitions="Auto,*">
                 <Button
@@ -30,9 +29,9 @@
                     <material:TabView.TabHeaderItemTemplate>
                         <DataTemplate>
                             <uranium:StatefulContentView TappedCommand="{Binding Command}" WidthRequest="160">
-                                <Grid ColumnDefinitions="*,Auto" BackgroundColor="{AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}">
+                                <Grid ColumnDefinitions="*,Auto" Padding="5" BackgroundColor="{AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}">
 
-                                    <Label Text="{Binding Data.Title}" VerticalOptions="Center" Margin="5,10"/>
+                                    <Label Text="{Binding Data.Title}" VerticalOptions="Center" />
 
                                     <uranium:StatefulContentView Grid.Column="1"
                                                                  Margin="5"

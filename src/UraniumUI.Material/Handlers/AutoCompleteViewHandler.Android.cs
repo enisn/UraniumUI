@@ -4,6 +4,7 @@ using Android.Content;
 using Android.Content.Res;
 using Android.Graphics.Drawables;
 using Android.Views;
+using Android.Views.InputMethods;
 using Android.Widget;
 using AndroidX.AppCompat.Widget;
 using Google.Android.Material.TextField;
@@ -18,7 +19,7 @@ using System.Threading.Tasks;
 using UraniumUI.Material.Controls;
 
 namespace UraniumUI.Material.Handlers;
-public partial class AutoCompleteViewHandler : ViewHandler<AutoCompleteView, AppCompatAutoCompleteTextView>
+public partial class AutoCompleteViewHandler : ViewHandler<IAutoCompleteView, AppCompatAutoCompleteTextView>
 {
     private AppCompatAutoCompleteTextView NativeControl => PlatformView as AppCompatAutoCompleteTextView;
 
@@ -32,6 +33,8 @@ public partial class AutoCompleteViewHandler : ViewHandler<AutoCompleteView, App
         GradientDrawable gd = new GradientDrawable();
         gd.SetColor(global::Android.Graphics.Color.Transparent);
         autoComplete.SetBackground(gd);
+        autoComplete.SetSingleLine(true);
+        autoComplete.ImeOptions = ImeAction.Done;
         if (VirtualView != null)
         {
             autoComplete.SetTextColor(VirtualView.TextColor.ToAndroid());
@@ -39,23 +42,31 @@ public partial class AutoCompleteViewHandler : ViewHandler<AutoCompleteView, App
 
         return autoComplete;
     }
-
     protected override void ConnectHandler(AppCompatAutoCompleteTextView platformView)
     {
         PlatformView.TextChanged += PlatformView_TextChanged;
+        PlatformView.EditorAction += PlatformView_EditorAction;
     }
 
     protected override void DisconnectHandler(AppCompatAutoCompleteTextView platformView)
     {
         PlatformView.TextChanged -= PlatformView_TextChanged;
+        PlatformView.EditorAction -= PlatformView_EditorAction;
     }
 
     private void PlatformView_TextChanged(object sender, Android.Text.TextChangedEventArgs e)
     {
         if (VirtualView.Text != PlatformView.Text)
         {
-            VirtualView.InvokeTextChanged(new TextChangedEventArgs(VirtualView.Text, PlatformView.Text));
             VirtualView.Text = PlatformView.Text;
+        }
+    }
+
+    private void PlatformView_EditorAction(object sender, TextView.EditorActionEventArgs e)
+    {
+        if (e.ActionId == Android.Views.InputMethods.ImeAction.Done)
+        {
+            VirtualView.Completed();
         }
     }
 

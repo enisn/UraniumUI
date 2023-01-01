@@ -27,6 +27,9 @@ public partial class AutoCompleteViewHandler : ViewHandler<IAutoCompleteView, UI
         };
         view.Text = VirtualView.Text;
         view.TextColor = VirtualView.TextColor.ToPlatform();
+        view.ReturnKeyType = UIReturnKeyType.Done;
+        
+
 
         view.AutoCompleteViewSource.Selected += AutoCompleteViewSourceOnSelected;
         return view;
@@ -69,7 +72,7 @@ public partial class AutoCompleteViewHandler : ViewHandler<IAutoCompleteView, UI
 
     private void PlatformView_EditingDidEndOnExit(object sender, EventArgs e)
     {
-        VirtualView.IsFocused = false;
+        VirtualView.Completed();
     }
 
     private void PlatformView_EditingDidEnd(object sender, EventArgs e)

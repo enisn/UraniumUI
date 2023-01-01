@@ -305,6 +305,10 @@
                     <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}" />
                 </Style>
 
+                <Style TargetType="c:AutoCompleteTextField" BaseResourceKey="InputFieldBaseStyle">
+                    <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}" />
+                </Style>
+
                 <Style TargetType="views:StatefulContentView" ApplyToDerivedTypes="True">
                     <Setter Property="VisualStateManager.VisualStateGroups">
                         <VisualStateGroupList>

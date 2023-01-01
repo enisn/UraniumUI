@@ -32,3 +32,13 @@ Default value is still arrow icon but this change may occur some spacing issues.
 
 ```xml
 <TreeView Binding="{Binding Nodes}" Spacing="20" />
+```
+
+### Styles
+The following section has been added to styles. If you are using override styles, you should add this section to your styles.
+
+```xml
+<Style TargetType="c:AutoCompleteTextField" BaseResourceKey="InputFieldBaseStyle">
+    <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}" />
+</Style>
+```

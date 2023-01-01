@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using UraniumUI.Material.Controls;
 
 namespace UraniumUI.Material.Handlers;
-public partial class AutoCompleteViewHandler : ViewHandler<AutoCompleteView, AutoSuggestBox>
+public partial class AutoCompleteViewHandler : ViewHandler<IAutoCompleteView, AutoSuggestBox>
 {
     protected override AutoSuggestBox CreatePlatformView()
     {
@@ -29,24 +29,33 @@ public partial class AutoCompleteViewHandler : ViewHandler<AutoCompleteView, Aut
     protected override void ConnectHandler(AutoSuggestBox platformView)
     {
         PlatformView.TextChanged += PlatformView_TextChanged;
+        PlatformView.KeyDown += TextBox_KeyDown;
     }
 
     protected override void DisconnectHandler(AutoSuggestBox platformView)
     {
         PlatformView.TextChanged -= PlatformView_TextChanged;
+        PlatformView.KeyDown -= TextBox_KeyDown;
     }
 
     private void PlatformView_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
     {
         if (VirtualView.Text != sender.Text)
         {
-            VirtualView.InvokeTextChanged(new Microsoft.Maui.Controls.TextChangedEventArgs(VirtualView.Text, PlatformView.Text));
             VirtualView.Text = sender.Text;
         }
 
         if (VirtualView.ItemsSource != null)
         {
             PlatformView.ItemsSource = VirtualView.ItemsSource.Where(x => x.Contains(sender.Text));
+        }
+    }
+
+    private void TextBox_KeyDown(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
+    {
+        if (e.Key == Windows.System.VirtualKey.Enter)
+        {
+            VirtualView.Completed();
         }
     }
 

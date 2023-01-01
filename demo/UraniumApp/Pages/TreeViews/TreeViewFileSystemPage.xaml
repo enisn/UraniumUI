@@ -26,7 +26,7 @@
                                     </DataTrigger>
                                 </Image.Triggers>
                             </Image>
-                            <Label Text="{Binding Name}" FontAttributes="Bold" />
+                            <Label Text="{Binding Name}" FontAttributes="Bold" VerticalOptions="Center" />
                         </HorizontalStackLayout>
                     </DataTemplate>
                 </material:TreeView.ItemTemplate>

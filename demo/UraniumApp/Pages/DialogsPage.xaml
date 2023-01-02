@@ -13,50 +13,44 @@
         </Style>
     </ContentPage.Resources>
     <ContentPage.Content>
-        <StackLayout>
-            <material:TabView VerticalOptions="Fill">
-                <material:TabItem Title="Radio Button">
-                    <VerticalStackLayout Padding="20">
-                        <Label Text="Amount of RadioButton options" />
-                        <Slider x:Name="sliderForRadioButtons" Minimum="1" Maximum="12" Value="3" />
-                        <Button Text="Ask RadioButtons" Clicked="AskRadioButtons" StyleClass="FilledButton" HorizontalOptions="Center" />
-                        <HorizontalStackLayout Margin="20">
-                            <Label Text="Result: " FontAttributes="Bold" />
-                            <Label x:Name="labelSelected" />
-                        </HorizontalStackLayout>
-                    </VerticalStackLayout>
-                </material:TabItem>
+        <material:TabView VerticalOptions="Fill">
+            <material:TabItem Title="Radio Button">
+                <VerticalStackLayout Padding="20">
+                    <Label Text="Amount of RadioButton options" />
+                    <Slider x:Name="sliderForRadioButtons" Minimum="1" Maximum="12" Value="3" />
+                    <Button Text="Ask RadioButtons" Clicked="AskRadioButtons" StyleClass="FilledButton" HorizontalOptions="Center" />
+                    <HorizontalStackLayout Margin="20">
+                        <Label Text="Result: " FontAttributes="Bold" />
+                        <Label x:Name="labelSelected" />
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </material:TabItem>
 
-                <material:TabItem Title="Check Box">
-
-                    <VerticalStackLayout Padding="20" VerticalOptions="Fill">
-                        <VerticalStackLayout>
+            <material:TabItem Title="Check Box">
+                <ListView Margin="20" x:Name="checkBoxResultListView" VerticalOptions="FillAndExpand">
+                    <ListView.Header>
+                        <VerticalStackLayout Padding="20">
                             <Label Text="Amount of CheckBox options" />
                             <Slider x:Name="sliderForCheckBoxes" Minimum="1" Maximum="12" Value="3" />
                             <Button Text="Ask CheckBoxes" Clicked="AskCheckBoxes" StyleClass="FilledButton" HorizontalOptions="Center" />
+                            <Label Text="Selected Items:" FontAttributes="Bold" Margin="20" />
                         </VerticalStackLayout>
+                    </ListView.Header>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Label Text="{Binding .}" />
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </material:TabItem>
 
-                        <ListView Margin="20" x:Name="checkBoxResultListView" VerticalOptions="FillAndExpand">
-                            <ListView.Header>
-                                <Label Text="Selected Items:" FontAttributes="Bold" Margin="20" />
-                            </ListView.Header>
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <ViewCell>
-                                        <Label Text="{Binding .}" />
-                                    </ViewCell>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                    </VerticalStackLayout>
-                </material:TabItem>
-
-                <material:TabItem Title="Text Prompt">
-                    <VerticalStackLayout Padding="20">
-                        <Button Text="Ask Text Prompt" Clicked="AskTextPrompt" StyleClass="FilledButton" />
-                    </VerticalStackLayout>
-                </material:TabItem>
-            </material:TabView>
-        </StackLayout>
+            <material:TabItem Title="Text Prompt">
+                <VerticalStackLayout Padding="20">
+                    <Button Text="Ask Text Prompt" Clicked="AskTextPrompt" StyleClass="FilledButton" />
+                </VerticalStackLayout>
+            </material:TabItem>
+        </material:TabView>
     </ContentPage.Content>
 </ContentPage>

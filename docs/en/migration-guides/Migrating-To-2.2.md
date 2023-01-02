@@ -1,5 +1,5 @@
 # Migration Guide to v2.2
-Version 2.1 comes with some changes. You should follow this docuemnt to migrate your code to the new version properly.
+Version 2.2 comes with some changes. You should follow this docuemnt to migrate your code to the new version properly.
 
 ## Changes
 UraniumUI has a couple of changes in this version. Applying following changes to your code will make it compatible with UraniumUI v2.2.

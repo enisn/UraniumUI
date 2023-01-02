@@ -8,7 +8,7 @@ Following changes are applied to the following controls:
 
 ### DataGrid
 DataGrid binding logic has been changed. You should follow the following steps to migrate your code to the new version.
-- `PropertyNames` property has been removed. You should use `Binding` property instead.
+- `PropertyName` property has been removed. You should use `Binding` property instead.
 
 ```xml
 <material:DataGrid>

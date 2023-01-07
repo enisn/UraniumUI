@@ -50,7 +50,7 @@ We welcome contributions and suggestions. Please read our [contributing guide](C
 See [milestones](https://github.com/enisn/UraniumUI/milestones) section in the repository.
 
 ## License 📝
-
+This project is licensed under the Apache License License - see the [LICENSE](LICENSE) file for details.
 
 ## Support 🙏
 

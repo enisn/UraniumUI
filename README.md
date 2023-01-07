@@ -54,4 +54,7 @@ See [milestones](https://github.com/enisn/UraniumUI/milestones) section in the r
 
 <div align="center">
 If you like this project and want to support it, you can <a href="https://www.buymeacoffee.com/enisn">BuyMeACoffee</a>. Your coffee will keep me awake while developing this project. ☕
+
+<br />
 <a href="https://www.buymeacoffee.com/enisn"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=enisn&button_colour=40DCA5&font_colour=ffffff&font_family=Lato&outline_colour=000000&coffee_colour=FFDD00" /></a>
+</div>

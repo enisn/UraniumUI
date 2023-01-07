@@ -4,7 +4,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
              xmlns:local="clr-namespace:UraniumApp.Pages.DataGrids"
-             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material">
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             Title="DataGrid Selection">
     <ContentPage.BindingContext>
         <local:SelectableDataGridPageViewModel />
     </ContentPage.BindingContext>

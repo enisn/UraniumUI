@@ -48,7 +48,7 @@ public class TreeViewNodeHolderView : VerticalStackLayout
         {
             throw new ArgumentNullException(nameof(treeView));
         }
-        
+
         TreeView = treeView;
         DataTemplate = dataTemplate;
         nodeContainer.Content = DataTemplate.CreateContent() as View;
@@ -178,12 +178,12 @@ public class TreeViewNodeHolderView : VerticalStackLayout
     public virtual void ReFillArrowColor()
     {
         Layout expanderLayout = null;
-        
+
         if (expanderView is ContentView contentView && contentView.Content is Layout)
         {
             expanderLayout = contentView.Content as Layout;
         }
-        else if(expanderView is Layout layout)
+        else if (expanderView is Layout layout)
         {
             expanderLayout = layout;
         }
@@ -254,6 +254,14 @@ public class TreeViewNodeHolderView : VerticalStackLayout
         LoadChildrenIfNecessary();
     }
 
+    protected virtual void OnIsLeafChanged(bool? newValue)
+    {
+        if (newValue == true && IsExpanded)
+        {
+            IsExpanded = false;
+        }
+    }
+
     protected virtual void LoadChildrenIfNecessary()
     {
         if (!IsLeaf && !NodeChildren.Children.Any()) // TODO: And children is empty
@@ -269,7 +277,8 @@ public class TreeViewNodeHolderView : VerticalStackLayout
     }
 
     public static readonly BindableProperty IsLeafProperty = BindableProperty.Create(
-        nameof(IsLeaf), typeof(bool?), typeof(TreeViewNodeHolderView), null, BindingMode.TwoWay);
+        nameof(IsLeaf), typeof(bool?), typeof(TreeViewNodeHolderView), null, BindingMode.TwoWay,
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as TreeViewNodeHolderView).OnIsLeafChanged((bool?)newValue));
 
     public bool IsExpanded { get => (bool)GetValue(IsExpandedProperty); set => SetValue(IsExpandedProperty, value); }
 

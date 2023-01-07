@@ -44,6 +44,8 @@ Visit documentation for onboarding.
 ## Contributing 🧑‍💻
 We welcome contributions and suggestions. Please read our [contributing guide](CONTRIBUTING.md).
 
+> You may consider checking out the issues with [good first issue](https://github.com/enisn/UraniumUI/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22) label to make your first contribution.
+
 
 ## Roadmap 🛣️
 

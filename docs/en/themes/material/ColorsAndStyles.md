@@ -10,14 +10,14 @@ You can check the latest version and place it into yor project from GitHub repos
 - [StyleResource.xaml](https://github.com/enisn/UraniumUI/blob/master/src/UraniumUI.Material/Resources/StyleResource.xaml)
 - [ColorResource.xaml](https://github.com/enisn/UraniumUI/blob/master/src/UraniumUI.Material/Resources/ColorResource.xaml)
 
-Manual copying and placing into project it's not easiest way and it's not recommended. You can create those resource files in your project with **dotnet CLI**. [UraniumUI.Templates](https://www.nuget.org/packages/UraniumUI.Templates) already includes those files. So, you can create them with following command.
+Manual copying and placing into project isn't the easiest way and it's not recommended. You can create those resource files in your project with **dotnet CLI**. [UraniumUI.Templates](https://www.nuget.org/packages/UraniumUI.Templates) already includes those files. So, you can create them with following command.
 
 - Run following command under `/Resources/Styles` folder
 
 ```bash
 dotnet new uranium-material-resources -n MaterialOverride
 ```
-> _That command will create `MaterialOverrideColor.xaml` and `MaterialOverrideStyle.xaml` files in your project. You can edit it and override any resource._
+> _That command will create `MaterialOverrideColor.xaml` and `MaterialOverrideStyle.xaml` files in your project. You can edit them and override any resource._
 
 - Then, go to `App.xaml` file and add those newly created resources. Final state should be like this:
 

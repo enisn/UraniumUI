@@ -8,18 +8,21 @@ Uranium is a Free & Open-Source UI Kit for .NET MAUI. It provides a set of contr
 ## Source Code
 Uranium is available on [GitHub](https://github.com/enisn/UraniumUI)
 
-## Features
+## Features##
 
-- **Theming**: Allows you build themes and customize existing themes easily.
-  - [Material Theme](https://enisn-projects.io/docs/en/uranium/latest/themes/material/Index)
-
-- Font Icons
+- Startup [Templates](https://enisn-projects.io/docs/en/uranium/latest/Getting-Started#new-projects)
+- Pre-built layouts and flexible controls.
+- Dark/light mode support.
+- All MAUI Platforms are supported.
+- Infrastructure for building custom controls.
+- [Color System](https://enisn-projects.io/docs/en/uranium/latest/theming/ColorSystem) with easy to customize.
+- Extensible styling.
+- Font icon support.
   - [FontAwesome](https://enisn-projects.io/docs/en/uranium/latest/theming/Icons#fontawesome)
   - [Material](https://enisn-projects.io/docs/en/uranium/latest/theming/Icons#material-icons)
+- Theming
+  - [Material Theme](https://enisn-projects.io/docs/en/uranium/latest/themes/material/Index)
 
-- Pre-Built Components
-- Startup Templates
-	- [Getting Started](Getting-Started.md)  
 
 ## Contributing
 We welcome contributions and suggestions. Please read our [contributing guide](#).

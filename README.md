@@ -27,6 +27,9 @@ Visit documentation for onboarding.
 - Infrastructure for building custom controls.
 - Multiple Theme support.
 
+<img src="art/github-social-preview.png" width="100%">
+
+
 ## Contributing
 We welcome contributions and suggestions. Please read our [contributing guide](CONTRIBUTING.md).
 

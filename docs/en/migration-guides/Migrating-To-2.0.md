@@ -1,4 +1,4 @@
-# Migration Guide to v1.1
+# Migration Guide to v2.0
 Version 2.0 comes with some changes. You should follow this docuemnt to migrate your code to the new version properly.
 
 ## Changes

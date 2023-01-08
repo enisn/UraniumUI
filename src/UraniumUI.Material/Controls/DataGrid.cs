@@ -78,11 +78,11 @@ public partial class DataGrid : Frame
         {
             case NotifyCollectionChangedAction.Add:
                 {
-                    SlideRow(e.NewStartingIndex + 1, 2 * e.NewItems.Count);
+                    SlideRow(e.NewStartingIndex+1, 2 * e.NewItems.Count);
 
                     for (int i = 0; i < e.NewItems.Count; i++)
                     {
-                        AddRow(e.NewStartingIndex + 1 + i, e.NewItems[i], e.NewStartingIndex + i == ItemsSource.Count);
+                        AddRow(e.NewStartingIndex + 1 + i, e.NewItems[i], e.NewStartingIndex + i == ItemsSource.Count - 1);
                     }
                 }
                 break;
@@ -194,13 +194,13 @@ public partial class DataGrid : Frame
 
             _rootGrid.Add(titleView, column: i, row);
         }
-
-        AddSeparator(1);
     }
 
     protected virtual void AddRow(int row, object item, bool isLastRow)
     {
         var actualRow = row * 2;
+
+        AddSeparator(actualRow - 1);
 
         for (int columnNumber = 0; columnNumber < Columns.Count; columnNumber++)
         {
@@ -226,11 +226,6 @@ public partial class DataGrid : Frame
             _rootGrid.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
             _rootGrid.Add(view, columnNumber, row: actualRow);
         }
-
-        if (!isLastRow)
-        {
-            AddSeparator(actualRow + 1);
-        }
     }
 
     protected virtual void RemoveRow(int row)
@@ -246,21 +241,20 @@ public partial class DataGrid : Frame
                 i--;
             }
 
-            if (Grid.GetRow(child) == actualRow + 1 && child is BoxView)
+            if (Grid.GetRow(child) == actualRow - 1 && child is BoxView)
             {
                 _rootGrid.Children.RemoveAt(i);
-                _rootGrid.RowDefinitions.RemoveAt(0); // Doesn't matter which one is.
+                _rootGrid.RowDefinitions.RemoveAt(actualRow);
                 i--;
             }
         }
 
-        _rootGrid.RowDefinitions.RemoveAt(0);
+        _rootGrid.RowDefinitions.RemoveAt(actualRow);
 
         if (_rootGrid.Children.LastOrDefault() is BoxView box)
         {
             _rootGrid.Children.Remove(box);
             _rootGrid.RowDefinitions.RemoveAt(0);
-
         }
     }
 
@@ -298,7 +292,7 @@ public partial class DataGrid : Frame
     {
         var actualRow = row * 2;
 
-        foreach (View item in _rootGrid.Children.Where(x => x is View view && Grid.GetRow(view) >= actualRow))
+        foreach (View item in _rootGrid.Children.Where(x => x is View view && Grid.GetRow(view) >= actualRow - 1))
         {
             var newRow = Grid.GetRow(item) + amount;
             Grid.SetRow(item, newRow);

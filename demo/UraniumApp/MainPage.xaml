@@ -5,6 +5,7 @@
              xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
              xmlns:plain="clr-namespace:Plainer.Maui.Controls;assembly=Plainer.Maui"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="UraniumApp.MainPage">
 
     <VerticalStackLayout

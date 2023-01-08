@@ -57,6 +57,14 @@ See [milestones](https://github.com/enisn/UraniumUI/milestones) section in the r
 ## License 📝
 This project is licensed under the Apache License License - see the [LICENSE](LICENSE) file for details.
 
+## Backers 💚
+Special thanks to project supporters 🎉
+
+- [tjlangenkamp](https://github.com/tjlangenkamp) - ☕️☕️☕️☕️☕️
+- _Someone without name_ - ☕️☕️☕️
+- [kmaclagan-pcl](https://www.buymeacoffee.com/enisn) - ☕️
+- [@Geramy](https://github.com/Geramy) - ☕️
+
 ## Support 🙏
 
 If you like this project and want to support it, you can <a href="https://www.buymeacoffee.com/enisn">BuyMeACoffee</a>. Your coffee will keep me awake while developing this project. ☕

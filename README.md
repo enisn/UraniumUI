@@ -75,3 +75,11 @@ If you like this project and want to support it, you can <a href="https://www.bu
 <div align="center">
 <a href="https://www.buymeacoffee.com/enisn"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=enisn&button_colour=40DCA5&font_colour=ffffff&font_family=Lato&outline_colour=000000&coffee_colour=FFDD00" /></a>
 </div>
+
+***
+
+## Activity
+
+<div align="center">
+  <img src="https://repobeats.axiom.co/api/embed/6fc7aa49770ea08ec85ba5ff5b566df0e9b3ac46.svg" alt="Repobeats analytics image" />
+</div>

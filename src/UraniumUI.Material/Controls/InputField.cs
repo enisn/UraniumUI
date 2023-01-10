@@ -27,6 +27,7 @@ public partial class InputField : Grid
     {
         Text = "Title",
         HorizontalOptions = LayoutOptions.Start,
+        VerticalOptions = LayoutOptions.Start,
         InputTransparent = true,
         Margin = 15,
         TextColor = ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.Gray)
@@ -126,9 +127,9 @@ public partial class InputField : Grid
 
     private void InitializeBorder()
     {
-        var perimeter = (this.Width + this.Height) * 2;
-
-        var space = HasValue || Content.IsFocused ? (labelTitle.Width) * .9 : labelTitle.Width;
+        var perimeter = (this.Width + this.Height) * 2; 
+        var calculatedFirstDash = FirstDash + CornerRadius.Clamp(FirstDash, double.MaxValue);
+        var space = (labelTitle.Width + calculatedFirstDash) * .8;
 
 #if WINDOWS
         if (space <= 0 || perimeter <= 0)
@@ -153,7 +154,7 @@ public partial class InputField : Grid
         };
 #endif
 
-        border.StrokeDashArray = new DoubleCollection { FirstDash + CornerRadius.Clamp(FirstDash, double.MaxValue) * 0.9, space + FirstDash *.8, perimeter, 0 };
+        border.StrokeDashArray = new DoubleCollection { calculatedFirstDash * 0.9, space, perimeter, 0 };
 
 #if WINDOWS
         this.Add(border);

@@ -35,6 +35,19 @@ TextFields support setting an icon on the left side of the control. You can set 
 | --- | --- |
 | ![MAUI Material Input](images/textfield-icon-light-andoid.gif) | ![MAUI Material Input](images/textfield-icon-dark-windows.gif) |
 
+## AccentColor
+The color that is used to fill border and icon of control when it's focused. You can change it by setting `AccentColor` property of the control.
+
+```xml
+ <material:TextField
+    Title="Description"
+    Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Edit}}"
+    AccentColor="DeepSkyBlue"/>
+```
+
+
+![MAUI AccentColor InputField](images/editorfield-accentcolor-android-dark.gif)
+
 ## AllowClear
 TextFields support clearing the text by setting the `AllowClear` property to `true`. Default value is `false`.
 

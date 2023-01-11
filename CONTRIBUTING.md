@@ -1,4 +1,4 @@
- # Ccontributing Guideline
+ # Contributing Guideline
 Thank you for investing your time in contributing to this project!
 
 ## Contribution Flow

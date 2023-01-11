@@ -6,18 +6,24 @@
              xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
              xmlns:plain="clr-namespace:Plainer.Maui.Controls;assembly=Plainer.Maui"
-                xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="UraniumApp.MainPage">
 
-    <Grid Padding="30" x:Name="_grid" RowDefinitions="Auto,*" ColumnDefinitions="*,*">
+    <VerticalStackLayout Spacing="25">
 
-        <material:TextField Title="Fruit" x:Name="autoComplete"
-                Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Forest}}">
-        </material:TextField>
+        <StackLayout StyleClass="PrimaryContainer" Padding="20" HeightRequest="150">
+            <Label Text="Hello, Uranium! ☢️" FontSize="Large" />
+            <Label Text="Welcome to the demo app." />
+        </StackLayout>
 
-        <local:PropertyEditorView Grid.Row="1"
-            HorizontalOptions="Center"
-            Value="{Binding ., Source={x:Reference autoComplete}}" />
+        <Grid ColumnDefinitions="Auto,*">
+            <Image Rotation="-45" Margin="15">
+                <Image.Source>
+                    <FontImageSource Size="35" FontFamily="MaterialRegular" Glyph="{x:Static uranium:MaterialRegular.Pan_tool_alt}" Color="{AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}" />
+                </Image.Source>
+            </Image>
+            <Label Grid.Column="1" Text="Use the side navigation drawer to navigate to the other pages." VerticalOptions="Center"/>
+        </Grid>
 
-    </Grid>
+    </VerticalStackLayout>
 </uranium:UraniumContentPage>

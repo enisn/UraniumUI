@@ -13,10 +13,27 @@
 
     </uranium:UraniumContentPage.Resources>
 
-    <root:DemoContent />
+    <VerticalStackLayout Spacing="30" MaximumWidthRequest="400">
+
+        <Frame HorizontalOptions="Center">
+            <HorizontalStackLayout Spacing="10">
+                <Label Text="Click the filter icon above." VerticalOptions="Center"/>
+                <Image HorizontalOptions="Center" Rotation="45">
+                    <Image.Source>
+                        <FontImageSource Size="35" FontFamily="MaterialRegular" Glyph="{x:Static uranium:MaterialRegular.Arrow_upward}" Color="{AppThemeBinding {StaticResource OnSurface}, Dark={StaticResource OnSurfaceDark}}" />
+                    </Image.Source>
+                </Image>
+            </HorizontalStackLayout>
+        </Frame>
+        
+        <root:PropertyEditorView 
+            ShowMissingProperties="False"
+            Value="{Binding ., Source={x:Reference backdrop}}"
+            HorizontalOptions="Center"/>
+    </VerticalStackLayout>
 
     <uranium:UraniumContentPage.Attachments>
-        <material:BackdropView Title="Filter">
+        <material:BackdropView Title="Filter" x:Name="backdrop">
             <material:BackdropView.IconImageSource>
                 <FontImageSource FontFamily="MaterialRound" Glyph="{x:Static m:MaterialRound.Filter_alt}" Color="{DynamicResource OnPrimary}" />
             </material:BackdropView.IconImageSource>
@@ -26,8 +43,9 @@
                         <Setter Property="ThumbColor" Value="{AppThemeBinding Light={StaticResource OnPrimary},Dark= {StaticResource OnBackground}}" />
                     </Style>
                     <Style TargetType="material:CheckBox">
-                        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnPrimary}, Dark={StaticResource OnPrimaryDark}}" />
-                        <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource OnPrimary}, Dark={StaticResource OnPrimaryDark}}" />
+                        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnPrimary}, Dark={StaticResource OnBackgroundDark}}" />
+                        <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource OnPrimary}, Dark={StaticResource OnBackgroundDark}}" />
+                        <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource SurfaceDark}}" />
                     </Style>
                 </ResourceDictionary>
             </material:BackdropView.Resources>
@@ -35,14 +53,7 @@
                 <material:CheckBox Text="Include Disabled Items" Type="Filled" />
                 <material:CheckBox Text="Include Deleted Items" Type="Filled" />
                 <material:CheckBox Text="Show all categories" Type="Filled"/>
-                <input:AdvancedSlider Title="Maximum Value" MinValue="0" MaxValue="1200" StepValue="10" MaxValueSuffix="items" HorizontalOptions="FillAndExpand">
-                    <input:AdvancedSlider.Resources>
-                        <Style TargetType="Slider">
-                            <Setter Property="WidthRequest" Value="300" />
-                        </Style>
-
-                    </input:AdvancedSlider.Resources>
-                </input:AdvancedSlider>
+                <Slider />
             </VerticalStackLayout>
         </material:BackdropView>
     </uranium:UraniumContentPage.Attachments>

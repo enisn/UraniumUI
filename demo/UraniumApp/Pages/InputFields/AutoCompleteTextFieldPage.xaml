@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             xmlns:root="clr-namespace:UraniumApp"
+             x:Class="UraniumApp.Pages.InputFields.AutoCompleteTextFieldPage"
+             Title="AutoCompleteTextField">
+    <Grid Padding="30" RowDefinitions="Auto,*" RowSpacing="30" MaximumWidthRequest="400">
+
+        <material:AutoCompleteTextField x:Name="ref" Title="Fruit" Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static uranium:MaterialRegular.Forest}}">
+            <material:AutoCompleteTextField.ItemsSource>
+                <x:String>Apple</x:String>
+                <x:String>Orange</x:String>
+                <x:String>Banana</x:String>
+                <x:String>Strawberry</x:String>
+                <x:String>Watermelon</x:String>
+                <x:String>Cherry</x:String>
+                <x:String>Blueberry</x:String>
+                <x:String>Blackberry</x:String>
+                <x:String>Pineapple</x:String>
+                <x:String>Coconut</x:String>
+                <x:String>Apricot</x:String>
+                <x:String>Avocado</x:String>
+                <x:String>Plum</x:String>
+                <x:String>Fig</x:String>
+                <x:String>Grape</x:String>
+                <x:String>Guava</x:String>
+                <x:String>Lemon</x:String>
+                <x:String>Lime</x:String>
+                <x:String>Mango</x:String>
+                <x:String>Passion Fruit</x:String>
+                <x:String>Peach</x:String>
+                <x:String>Pear</x:String>
+                <x:String>Pomegranate</x:String>
+                <x:String>Raspberry</x:String>
+                <x:String>Tomato</x:String>
+            </material:AutoCompleteTextField.ItemsSource>
+        </material:AutoCompleteTextField>
+
+        <root:PropertyEditorView Grid.Row="1"
+            Hierarchical="True"
+            HierarchyLimitType="{x:Type material:InputField}"
+            Value="{Binding ., Source={x:Reference ref}}" />
+    </Grid>
+</ContentPage>

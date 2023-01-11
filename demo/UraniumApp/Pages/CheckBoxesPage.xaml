@@ -3,20 +3,38 @@
              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
+             xmlns:root="clr-namespace:UraniumApp"
              xmlns:local="clr-namespace:UraniumApp.Pages">
     <ContentPage.Content>
-        <StackLayout MaximumWidthRequest="400" Margin="20" Spacing="15">
-            <material:CheckBox Text="Option 1" />
-            <material:CheckBox Text="Option 2" IsChecked="True" />
-            <material:CheckBox Text="Option 3 (Disabled)" IsDisabled="True" />
-            <material:CheckBox Text="Option 4 (Disabled)" IsDisabled="True" IsChecked="True" />
 
-            <BoxView StyleClass="Divider" />
+        <material:TabView>
+            <material:TabItem Title="Demo">
+                <VerticalStackLayout MaximumWidthRequest="400" Margin="20" Spacing="15">
+                    <material:CheckBox Text="Option 1" />
+                    <material:CheckBox Text="Option 2" IsChecked="True" />
+                    <material:CheckBox Text="Option 3 (Disabled)" IsDisabled="True" />
+                    <material:CheckBox Text="Option 4 (Disabled)" IsDisabled="True" IsChecked="True" />
 
-            <material:CheckBox Text="Option 1" LabelPosition="Before" />
-            <material:CheckBox Text="Option 2" LabelPosition="Before" IsChecked="True" />
-            <material:CheckBox Text="Option 3 (Disabled)" IsDisabled="True" LabelPosition="Before" />
-            <material:CheckBox Text="Option 4 (Disabled)" IsDisabled="True" IsChecked="True" LabelPosition="Before" />
-        </StackLayout>
+                    <BoxView StyleClass="Divider" />
+
+                    <material:CheckBox Text="Option 1" LabelPosition="Before" />
+                    <material:CheckBox Text="Option 2" LabelPosition="Before" IsChecked="True" />
+                    <material:CheckBox Text="Option 3 (Disabled)" IsDisabled="True" LabelPosition="Before" />
+                    <material:CheckBox Text="Option 4 (Disabled)" IsDisabled="True" IsChecked="True" LabelPosition="Before" />
+                </VerticalStackLayout>
+            </material:TabItem>
+
+            <material:TabItem Title="Properties">
+                <Grid Padding="20" HorizontalOptions="Center" RowDefinitions="Auto,Auto,*">
+                    <material:CheckBox Text="Showcase CheckBox" x:Name="checkBox"/>
+                    <BoxView StyleClass="Divider" Grid.Row="1" />
+                    <root:PropertyEditorView Grid.Row="2" 
+                        Hierarchical="True"
+                        HierarchyLimitType="{x:Type input:CheckBox}"
+                        Value="{Binding ., Source={x:Reference checkBox}}" />
+                </Grid>
+            </material:TabItem>
+        </material:TabView>
     </ContentPage.Content>
 </ContentPage>

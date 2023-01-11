@@ -17,37 +17,8 @@
         <ScrollView>
             <StackLayout Padding="20" Spacing="15">
 
-                <material:PickerField Title="Tab Placement:" x:Name="tabPlacementSelection">
-                    <material:PickerField.ItemsSource>
-                        <x:Array Type="{x:Type material:TabViewTabPlacement}">
-                            <material:TabViewTabPlacement>Top</material:TabViewTabPlacement>
-                            <material:TabViewTabPlacement>Bottom</material:TabViewTabPlacement>
-                            <material:TabViewTabPlacement>Start</material:TabViewTabPlacement>
-                            <material:TabViewTabPlacement>End</material:TabViewTabPlacement>
-                        </x:Array>
-                    </material:PickerField.ItemsSource>
-                </material:PickerField>
-                
-                <!--<input:SelectionView
-                    Color="{StaticResource Primary}"
-                    SelectionType="RadioButton" 
-                    ColumnNumber="1" Padding="20"
-                    RowSpacing="5"
-                    x:Name="tabPlacementSelection">
-                    <input:SelectionView.ItemsSource>
-                        <x:Array Type="{x:Type material:TabViewTabPlacement}">
-                            <material:TabViewTabPlacement>Top</material:TabViewTabPlacement>
-                            <material:TabViewTabPlacement>Bottom</material:TabViewTabPlacement>
-                            <material:TabViewTabPlacement>Start</material:TabViewTabPlacement>
-                            <material:TabViewTabPlacement>End</material:TabViewTabPlacement>
-                        </x:Array>
-                    </input:SelectionView.ItemsSource>
-                </input:SelectionView>-->
-
-                <BoxView StyleClass="Divider"/>
-
                 <Frame StyleClass="Elevation1">
-                    <material:TabView TabPlacement="{Binding Source={x:Reference tabPlacementSelection}, Path=SelectedItem}">
+                    <material:TabView x:Name="tabView">
                         <material:TabItem Title="Tab One">
                             <material:TabItem.ContentTemplate>
                                 <DataTemplate>
@@ -73,6 +44,13 @@
                         </material:TabItem>
                     </material:TabView>
                 </Frame>
+
+                <BoxView StyleClass="Divider" />
+
+                <root:PropertyEditorView
+                    ShowMissingProperties="False"
+                    Value="{Binding ., Source={x:Reference tabView}}"
+                    HorizontalOptions="Center"/>
 
             </StackLayout>
         </ScrollView>

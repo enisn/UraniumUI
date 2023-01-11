@@ -8,6 +8,8 @@ public partial class MainPage : UraniumContentPage
     {
         InitializeComponent();
     }
+    
+    
 
     //private async void OnCounterClicked(object sender, EventArgs e)
     //{

@@ -6,9 +6,22 @@
              xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
              xmlns:local="clr-namespace:UraniumApp.Pages.BottomSheets">
-    <ScrollView>
-        <root:DemoContent/>
-    </ScrollView>
+
+    <VerticalStackLayout Spacing="20">
+        <Frame>
+            <VerticalStackLayout Spacing="10">
+                <Label Text="Info" FontSize="20" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+
+                <Label Text="You can swipe up/down the bottom sheet or just click the anchor." HorizontalTextAlignment="Center" />
+                <Image HorizontalOptions="Center" IsVisible="{OnPlatform WinUI=False, MacCatalyst=False}">
+                    <Image.Source>
+                        <FontImageSource Size="75" FontFamily="MaterialRegular" Glyph="{x:Static uranium:MaterialRegular.Swipe_up}" Color="{AppThemeBinding {StaticResource OnSurface}, Dark={StaticResource OnSurfaceDark}}" />
+                    </Image.Source>
+                </Image>
+            </VerticalStackLayout>
+        </Frame>
+        <root:PropertyEditorView Value="{Binding ., Source={x:Reference bottomPage}}" HorizontalOptions="Center" />
+    </VerticalStackLayout>
 
     <uranium:UraniumContentPage.Attachments>
         <material:BottomSheetView x:Name="bottomPage" BackgroundColor="{DynamicResource Primary}">

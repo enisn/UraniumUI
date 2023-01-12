@@ -1,4 +1,5 @@
-﻿using Microsoft.Maui.Controls;
+﻿using InputKit.Shared.Controls;
+using Microsoft.Maui.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using UraniumUI.Material.Controls;
+using UraniumUI.Resources;
 
 namespace UraniumApp
 {
@@ -151,11 +153,40 @@ namespace UraniumApp
         {
             var editor = new PickerField();
 
-            editor.ItemsSource = Enum.GetValues(bindableProperty.ReturnType);
+            var values = Enum.GetValues(bindableProperty.ReturnType);
+            if (values.Length <= 5)
+            {
+                return CreateRadioButtonsForValues(values, bindableProperty, source);
+            }
+
+            editor.ItemsSource = values;
             editor.SetBinding(PickerField.SelectedItemProperty, new Binding(bindableProperty.PropertyName, source: source));
             editor.Title = bindableProperty.PropertyName;
             editor.AllowClear = false;
             return editor;
+        }
+
+        private static View CreateRadioButtonsForValues(Array values, BindableProperty bindableProperty, object source)
+        {
+            var shouldUseSingleColumn = values.Length > 3;
+            var editor = new SelectionView
+            {
+                //Color = ColorResource.GetColor("Primary", "PrimaryDark"),
+                ColumnSpacing = -2,
+                RowSpacing = -2,
+                ColumnNumber = shouldUseSingleColumn ? 1 : values.Length,
+                ItemsSource = values,
+            };
+
+            editor.SetBinding(SelectionView.SelectedItemProperty, new Binding(bindableProperty.PropertyName, source: source));
+
+            return new VerticalStackLayout
+            {
+                Children = {
+                    new Label { Text = bindableProperty.PropertyName },
+                    editor
+                }
+            };
         }
 
         public static View EditorForColor(BindableProperty bindableProperty, object source)

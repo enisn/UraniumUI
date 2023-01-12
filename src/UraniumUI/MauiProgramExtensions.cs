@@ -1,5 +1,6 @@
 ﻿using InputKit.Handlers;
 using Plainer.Maui;
+using UraniumUI.Dialogs;
 using UraniumUI.Handlers;
 using UraniumUI.Views;
 
@@ -12,6 +13,8 @@ public static class MauiProgramExtensions
         {
             handlers.AddUraniumUIHandlers();
         });
+
+        builder.Services.AddTransient<IDialogService, DefaultDialogService>();
         return builder;
     }
 
@@ -20,7 +23,7 @@ public static class MauiProgramExtensions
         app.LoadThemeResources(app.RequestedTheme.ToString());
         app.RequestedThemeChanged += (s, e) =>
         {
-            app.LoadThemeResources(e.RequestedTheme.ToString());            
+            app.LoadThemeResources(e.RequestedTheme.ToString());
         };
 
         return app;

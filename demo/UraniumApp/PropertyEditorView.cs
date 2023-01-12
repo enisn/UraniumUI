@@ -156,7 +156,7 @@ namespace UraniumApp
             var values = Enum.GetValues(bindableProperty.ReturnType);
             if (values.Length <= 5)
             {
-                return CreateRadioButtonsForValues(values, bindableProperty, source);
+                return CreateSelectionViewForValues(values, bindableProperty, source);
             }
 
             editor.ItemsSource = values;
@@ -166,7 +166,7 @@ namespace UraniumApp
             return editor;
         }
 
-        private static View CreateRadioButtonsForValues(Array values, BindableProperty bindableProperty, object source)
+        private static View CreateSelectionViewForValues(Array values, BindableProperty bindableProperty, object source)
         {
             var shouldUseSingleColumn = values.Length > 3;
             var editor = new SelectionView

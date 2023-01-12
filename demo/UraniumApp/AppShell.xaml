@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+﻿<?xml version="1.0" encoding="UTF-8" ?>
 <Shell
     x:Class="UraniumApp.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
@@ -81,7 +81,7 @@
     </FlyoutItem>
 
     <FlyoutItem Title="Dialogs" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Auto_awesome_motion}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
-        <ShellContent Title="Dialogs" ContentTemplate="{DataTemplate pages:ElevationsPage}"/>
+        <ShellContent Title="Dialogs" ContentTemplate="{DataTemplate pages:DialogsPage}"/>
     </FlyoutItem>
 
     <FlyoutItem Title="Buttons" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.All_inbox}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">

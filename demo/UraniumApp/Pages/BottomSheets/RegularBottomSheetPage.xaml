@@ -5,9 +5,10 @@
              xmlns:root="clr-namespace:UraniumApp"
              xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
-             xmlns:local="clr-namespace:UraniumApp.Pages.BottomSheets">
+             xmlns:local="clr-namespace:UraniumApp.Pages.BottomSheets"
+                            Padding="20">
     <VerticalStackLayout Spacing="20">
-        <Frame>
+        <Frame Margin="0,20,0,0" HorizontalOptions="Center">
             <VerticalStackLayout Spacing="10">
                 <Label Text="Info" FontSize="20" FontAttributes="Bold" HorizontalTextAlignment="Center" />
 
@@ -19,7 +20,9 @@
                 </Image>
             </VerticalStackLayout>
         </Frame>
-        <root:PropertyEditorView Value="{Binding ., Source={x:Reference bottomSheet}}" HorizontalOptions="Center" />
+        <root:PropertyEditorView Value="{Binding ., Source={x:Reference bottomSheet}}"
+                                 HorizontalOptions="Center"
+                                 MinimumWidthRequest="300"/>
     </VerticalStackLayout>
 
     <uranium:UraniumContentPage.Attachments>

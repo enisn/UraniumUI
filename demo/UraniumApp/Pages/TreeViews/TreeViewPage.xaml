@@ -17,8 +17,7 @@
                 <material:TabItem Title="Simple">
                     <material:TabItem.ContentTemplate>
                         <DataTemplate>
-                            <material:TreeView LoadChildrenCommand="{Binding LoadChildrenCommand}" ItemsSource="{Binding Nodes}" IsExpandedPropertyName="IsExtended">
-                            </material:TreeView>
+                            <material:TreeView  LoadChildrenCommand="{Binding LoadChildrenCommand}" ItemsSource="{Binding Nodes}" IsExpandedPropertyName="IsExtended"/>
                         </DataTemplate>
                     </material:TabItem.ContentTemplate>
                 </material:TabItem>

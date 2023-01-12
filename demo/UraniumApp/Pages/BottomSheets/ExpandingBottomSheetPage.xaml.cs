@@ -8,9 +8,4 @@ public partial class ExpandingBottomSheetPage : UraniumContentPage
     {
         InitializeComponent();
     }
-
-    private void OnCounterClicked(object sender, EventArgs e)
-    {
-        bottomPage.IsPresented = !bottomPage.IsPresented;
-    }
 }

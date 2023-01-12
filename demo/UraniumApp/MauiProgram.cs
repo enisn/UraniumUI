@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Maui;
+using UraniumApp.Pages;
 using UraniumUI;
 
 namespace UraniumApp;
@@ -20,6 +21,7 @@ public static class MauiProgram
                 fonts.AddMaterialIconFonts();
             });
 
+        builder.Services.AddTransient<DialogsPage>();
         builder.Services.AddCommunityToolkitDialogs();
 
         return builder.Build();

@@ -1,13 +1,17 @@
 ﻿using System.Net.WebSockets;
+using UraniumUI.Dialogs;
 using UraniumUI.Extensions;
 
 namespace UraniumApp.Pages;
 
 public partial class DialogsPage : ContentPage
 {
-    public DialogsPage()
+    public IDialogService DialogService { get; }
+
+    public DialogsPage(IDialogService dialogService)
     {
         InitializeComponent();
+        DialogService = dialogService;
     }
 
     private async void AskRadioButtons(object sender, EventArgs e)
@@ -16,7 +20,7 @@ public partial class DialogsPage : ContentPage
 
         var options = GenerateOptions(count);
 
-        var result = await this.DisplayRadioButtonPromptAsync(
+        var result = await DialogService.DisplayRadioButtonPromptAsync(
             "Pick one of them below",
             options,
             labelSelected.Text ?? options.FirstOrDefault());
@@ -30,7 +34,7 @@ public partial class DialogsPage : ContentPage
 
         var options = GenerateOptions(count);
 
-        var result = await this.DisplayCheckBoxPromptAsync(
+        var result = await DialogService.DisplayCheckBoxPromptAsync(
             "Pick some of them below",
             options
             ,checkBoxResultListView.ItemsSource as IEnumerable<string>
@@ -41,7 +45,7 @@ public partial class DialogsPage : ContentPage
 
     private async void AskTextPrompt(object sender, EventArgs e)
     {
-        var result = await this.DisplayTextPromptAsync("Your Name", "What is your name?", placeholder: "Uvuvwevwevwe...Osas");
+        var result = await DialogService.DisplayTextPromptAsync("Your Name", "What is your name?", placeholder: "Uvuvwevwevwe...Osas");
 
         await DisplayAlert("Result:", result, "OK");
     }

@@ -19,9 +19,11 @@ public static class MopupsDialogExtensions
             CloseWhenBackgroundIsClicked = false,
             Content = new Frame
             {
+                CornerRadius = 20,
                 HorizontalOptions = LayoutOptions.Center,
                 VerticalOptions = LayoutOptions.Center,
-                WidthRequest = 400,
+                Padding = 0,
+                WidthRequest = DeviceInfo.Idiom == DeviceIdiom.Desktop ? 400 : page.Width * .8,
                 Content = new VerticalStackLayout
                 {
                     Children =

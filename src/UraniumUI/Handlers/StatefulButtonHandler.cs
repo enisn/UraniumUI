@@ -1,6 +1,7 @@
 ﻿using Microsoft.Maui.Controls;
 using Microsoft.Maui.Handlers;
 using System.Diagnostics;
+using static Microsoft.Maui.Controls.VisualStateManager;
 #if MACCATALYST || IOS
 using UIKit;
 using Foundation;
@@ -45,6 +46,8 @@ public class StatefulButtonHandler : ButtonHandler
     protected override void ConnectHandler(UIButton platformView)
     {
         // TODO: Find a better way to do this
+
+        PlatformView.AddGestureRecognizer(new UIHoverGestureRecognizer(OnHover));
         //PlatformView.AddGestureRecognizer(new UIContinousGestureRecognizer(Tapped));
         base.ConnectHandler(platformView);
     }
@@ -71,7 +74,21 @@ public class StatefulButtonHandler : ButtonHandler
                     }
                 }
 
+                break;
+        }
+    }
 
+    private void OnHover(UIHoverGestureRecognizer recognizer)
+    {
+        switch (recognizer.State)
+        {
+            case UIGestureRecognizerState.Began:
+                GoToState(VirtualView as View, "Hover");
+                break;
+            case UIGestureRecognizerState.Ended:
+            case UIGestureRecognizerState.Cancelled:
+            case UIGestureRecognizerState.Failed:
+                GoToState(VirtualView as View, CommonStates.Normal);
                 break;
         }
     }

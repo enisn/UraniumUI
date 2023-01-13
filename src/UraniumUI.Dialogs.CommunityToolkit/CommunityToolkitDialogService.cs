@@ -5,7 +5,7 @@ public class CommunityToolkitDialogService : IDialogService
 {
     public Task<bool> ConfirmAsync(string title, string message, string okText = "OK", string cancelText = "Cancel")
     {
-        throw new NotImplementedException();
+        return GetCurrentPage().ConfirmAsync(title, message, okText, cancelText);
     }
 
     public Task<IEnumerable<T>> DisplayCheckBoxPromptAsync<T>(string message, IEnumerable<T> selectionSource, IEnumerable<T> selectedItems = null, string accept = "OK", string cancel = "Cancel", string displayMember = null)

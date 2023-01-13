@@ -50,6 +50,13 @@ public partial class DialogsPage : ContentPage
         await DisplayAlert("Result:", result, "OK");
     }
 
+    private async void AskConfirmation(object sender, EventArgs e)
+    {
+        var result = await DialogService.ConfirmAsync("Confirmation", "Are you sure?", "Yes", "No");
+
+        await DisplayAlert("Result:", result.ToString(), "OK");
+    }
+
     private static IEnumerable<string> GenerateOptions(int count)
     {
         for (int i = 1; i <= count; i++)

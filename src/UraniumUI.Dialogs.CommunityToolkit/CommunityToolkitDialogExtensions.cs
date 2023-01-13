@@ -1,14 +1,96 @@
 ﻿using CommunityToolkit.Maui.Views;
 using InputKit.Shared.Controls;
-using Microsoft.Maui.Controls.Shapes;
+using Microsoft.Maui;
 using Plainer.Maui.Controls;
-using System.Text.RegularExpressions;
+using System.Threading.Channels;
 using UraniumUI.Resources;
 using CheckBox = InputKit.Shared.Controls.CheckBox;
 
 namespace UraniumUI.Extensions;
 public static class CommunityToolkitDialogExtensions
 {
+    public static Task<bool> ConfirmAsync(
+        this Page page,
+        string title,
+        string message,
+        string accept = "OK",
+        string cancel = "Cancel")
+    {
+        var tcs = new TaskCompletionSource<bool>();
+
+        var calculatedSize = CalculateSize(page);
+        var rootContainer = new VerticalStackLayout();
+
+#if IOS || MACCATALYST
+        var popup = new Popup
+        {
+            Size = new Size(calculatedSize.Width, 230),
+            Color = ColorResource.GetColor("Surface", "SurfaceDark", Colors.Transparent),
+            CanBeDismissedByTappingOutsideOfPopup = false,
+            Content = rootContainer,
+        };
+        rootContainer.VerticalOptions = LayoutOptions.Center;
+#else
+        var popup = new Popup()
+        {
+            Size = new Size(page.Width, page.Height),
+            Color = Colors.Transparent,
+            CanBeDismissedByTappingOutsideOfPopup = false,
+            Content = new ContentView
+            {
+                BackgroundColor = Colors.Transparent,
+                Content = new Frame
+                {
+                    Content = rootContainer,
+                    CornerRadius = 20,
+                    Padding = 0,
+                    VerticalOptions = LayoutOptions.Center,
+                    HorizontalOptions = LayoutOptions.Center,
+                    WidthRequest = calculatedSize.Width,
+                }
+            }
+        };
+#endif
+
+        var messageLabel = new Label
+        {
+            Text = message,
+            Margin = 20,
+        };
+
+        View footer = GetFooter(
+            accept,
+            new Command(() =>
+            {
+                tcs.SetResult(true);
+                popup.Close();
+            }),
+            cancel,
+            new Command(() =>
+            {
+                tcs.SetResult(false);
+                popup.Close();
+            }));
+
+        rootContainer.Add(GetHeader(title));
+        rootContainer.Add(new ScrollView
+        {
+            Content = messageLabel,
+            VerticalOptions = LayoutOptions.Start,
+#if IOS || MACCATALYST
+            //MaximumHeightRequest = calculatedSize.Height
+#else
+            MaximumHeightRequest = calculatedSize.Height
+#endif
+        });
+        rootContainer.Add(GetDivider());
+        rootContainer.Add(footer);
+
+        page.ShowPopup(popup);
+
+        return tcs.Task;
+    }
+
     public static Task<IEnumerable<T>> DisplayCheckBoxPromptAsync<T>(
         this Page page,
         string message,
@@ -42,7 +124,6 @@ public static class CommunityToolkitDialogExtensions
             Size = new Size(page.Width, page.Height),
             Color = Colors.Transparent,
             CanBeDismissedByTappingOutsideOfPopup = false,
-
 
             Content = new ContentView
             {
@@ -278,7 +359,11 @@ public static class CommunityToolkitDialogExtensions
             BackgroundColor = ColorResource.GetColor("OnSurface", "OnSurfaceDark").WithAlpha(.2f),
             HasShadow = false,
             CornerRadius = 4,
-            Padding = new Thickness(5,0),
+#if IOS
+            Padding = new Thickness(15, 0),
+#else
+            Padding = new Thickness(5, 0),
+#endif
             Content = entry
         };
 

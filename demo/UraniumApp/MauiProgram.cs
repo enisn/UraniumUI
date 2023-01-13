@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Maui;
+﻿//using CommunityToolkit.Maui;
+using Mopups.Hosting;
 using UraniumApp.Pages;
 using UraniumUI;
 
@@ -11,9 +12,10 @@ public static class MauiProgram
         var builder = MauiApp.CreateBuilder();
         builder
             .UseMauiApp<App>()
-            .UseMauiCommunityToolkit()
+            //.UseMauiCommunityToolkit()
             .UseUraniumUI()
             .UseUraniumUIMaterial()
+            .ConfigureMopups()
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -22,7 +24,8 @@ public static class MauiProgram
             });
 
         builder.Services.AddTransient<DialogsPage>();
-        builder.Services.AddCommunityToolkitDialogs();
+        //builder.Services.AddCommunityToolkitDialogs();
+        builder.Services.AddMopupsDialogs();
 
         return builder.Build();
     }

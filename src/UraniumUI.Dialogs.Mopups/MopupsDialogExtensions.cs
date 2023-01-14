@@ -172,7 +172,6 @@ public static class MopupsDialogExtensions
             })
         ), row: 3);
 
-
         await MopupService.Instance.PushAsync(new PopupPage
         {
             Content = GetFrame(page.Width, rootGrid)
@@ -269,7 +268,6 @@ public static class MopupsDialogExtensions
             Padding = 0,
             WidthRequest = DeviceInfo.Idiom == DeviceIdiom.Desktop ? 400 : width * .8,
             Content = content
-
         };
     }
 

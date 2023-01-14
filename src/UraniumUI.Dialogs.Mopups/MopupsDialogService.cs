@@ -6,31 +6,30 @@ using System.Threading.Tasks;
 using UraniumUI.Dialogs;
 
 namespace UraniumUI;
+
 public class MopupsDialogService : IDialogService
 {
-    public Task<bool> ConfirmAsync(string title, string message, string okText = "OK", string cancelText = "Cancel")
+    public virtual Task<bool> ConfirmAsync(string title, string message, string okText = "OK", string cancelText = "Cancel")
     {
         return GetCurrentPage().ConfirmAsync(title, message, okText, cancelText);
     }
 
-    public Task<IEnumerable<T>> DisplayCheckBoxPromptAsync<T>(string message, IEnumerable<T> selectionSource, IEnumerable<T> selectedItems = null, string accept = "OK", string cancel = "Cancel", string displayMember = null)
+    public virtual Task<IEnumerable<T>> DisplayCheckBoxPromptAsync<T>(string message, IEnumerable<T> selectionSource, IEnumerable<T> selectedItems = null, string accept = "OK", string cancel = "Cancel", string displayMember = null)
     {
-        throw new NotImplementedException();
+        return GetCurrentPage().DisplayCheckBoxPromptAsync(message, selectionSource, selectedItems, accept, cancel, displayMember);
     }
 
-    public Task<T> DisplayRadioButtonPromptAsync<T>(string message, IEnumerable<T> selectionSource, T selected = default, string accept = "Ok", string cancel = "Cancel", string displayMember = null)
+    public virtual Task<T> DisplayRadioButtonPromptAsync<T>(string message, IEnumerable<T> selectionSource, T selected = default, string accept = "Ok", string cancel = "Cancel", string displayMember = null)
     {
-        throw new NotImplementedException();
+        return GetCurrentPage().DisplayRadioButtonPromptAsync(message, selectionSource, selected, accept, cancel, displayMember);
     }
 
-    public Task<string> DisplayTextPromptAsync(string title, string message, string accept = "OK", string cancel = "Cancel", string placeholder = null, int maxLength = -1, Keyboard keyboard = null, string initialValue = "")
+    public virtual Task<string> DisplayTextPromptAsync(string title, string message, string accept = "OK", string cancel = "Cancel", string placeholder = null, int maxLength = -1, Keyboard keyboard = null, string initialValue = "")
     {
-        throw new NotImplementedException();
+        return GetCurrentPage().DisplayTextPromptAsync(title, message, accept, cancel, placeholder, maxLength, keyboard, initialValue);
     }
 
-
-
-    private Page GetCurrentPage()
+    protected virtual Page GetCurrentPage()
     {
         if (Application.Current.MainPage is Shell shell)
         {

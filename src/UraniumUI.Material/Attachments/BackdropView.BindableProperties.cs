@@ -26,4 +26,9 @@ public partial class BackdropView
     public static readonly BindableProperty IsPresentedProperty =
         BindableProperty.Create(nameof(IsPresented), typeof(bool), typeof(BackdropView), defaultValue: false,
             propertyChanged: (bo, ov, nv) => (bo as BackdropView).SlideToState((bool)nv));
+
+    public bool InsertAfterToolbarIcons { get => (bool)GetValue(InsertAfterToolbarIconsProperty); set => SetValue(InsertAfterToolbarIconsProperty, value); }
+
+    public static readonly BindableProperty InsertAfterToolbarIconsProperty =
+        BindableProperty.Create(nameof(InsertAfterToolbarIcons), typeof(bool), typeof(BackdropView), defaultValue: true);
 }

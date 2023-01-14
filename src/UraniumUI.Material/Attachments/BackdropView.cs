@@ -35,7 +35,14 @@ public partial class BackdropView : ContentView, IPageAttachment
         toolbarItem.SetBinding(ToolbarItem.TextProperty, new Binding(nameof(Title), source: this));
         toolbarItem.Clicked += (s, e) => IsPresented = !IsPresented;
 
-        AttachedPage.ToolbarItems.Add(toolbarItem);
+        if (InsertAfterToolbarIcons)
+        {
+            AttachedPage.ToolbarItems.Add(toolbarItem);
+        }
+        else
+        {
+            AttachedPage.ToolbarItems.Insert(0, toolbarItem);
+        }
     }
 
     protected virtual async void SlideToState(bool isPresented)

@@ -17,38 +17,30 @@ public static class MopupsDialogExtensions
         await MopupService.Instance.PushAsync(new PopupPage
         {
             CloseWhenBackgroundIsClicked = false,
-            Content = new Frame
+            Content = GetFrame(page.Width, new VerticalStackLayout
             {
-                CornerRadius = 20,
-                HorizontalOptions = LayoutOptions.Center,
-                VerticalOptions = LayoutOptions.Center,
-                Padding = 0,
-                WidthRequest = DeviceInfo.Idiom == DeviceIdiom.Desktop ? 400 : page.Width * .8,
-                Content = new VerticalStackLayout
+                Children =
                 {
-                    Children =
+                    GetHeader(title),
+                    new Label
                     {
-                        GetHeader(title),
-                        new Label
+                        Text = message,
+                        Margin = 20
+                    },
+                    GetDivider(),
+                    GetFooter(
+                        okText, new Command(()=>
                         {
-                            Text = message,
-                            Margin = 20
-                        },
-                        GetDivider(),
-                        GetFooter(
-                            okText, new Command(()=>
-                            {
-                                tcs.SetResult(true);
-                                MopupService.Instance.PopAsync();
-                            }),
-                            cancelText, new Command(()=>
-                            {
-                                tcs.SetResult(false);
-                                MopupService.Instance.PopAsync();
-                            }))
-                    }
+                            tcs.SetResult(true);
+                            MopupService.Instance.PopAsync();
+                        }),
+                        cancelText, new Command(()=>
+                        {
+                            tcs.SetResult(false);
+                            MopupService.Instance.PopAsync();
+                        }))
                 }
-            }
+            })
         });
 
         return await tcs.Task;
@@ -56,7 +48,9 @@ public static class MopupsDialogExtensions
 
     public static Task<IEnumerable<T>> DisplayCheckBoxPromptAsync<T>(string message, IEnumerable<T> selectionSource, IEnumerable<T> selectedItems = null, string accept = "OK", string cancel = "Cancel", string displayMember = null)
     {
-        throw new NotImplementedException();
+        var tcs = new TaskCompletionSource<IEnumerable<T>>();
+
+        return tcs.Task;
     }
 
     public static Task<T> DisplayRadioButtonPromptAsync<T>(string message, IEnumerable<T> selectionSource, T selected = default, string accept = "Ok", string cancel = "Cancel", string displayMember = null)
@@ -72,6 +66,19 @@ public static class MopupsDialogExtensions
     private static BoxView GetDivider()
     {
         return new BoxView { StyleClass = new[] { "Divider" }, Margin = 0, HeightRequest = 1 };
+    }
+
+    private static Frame GetFrame(double width, View content)
+    {
+        return new Frame
+        {
+            CornerRadius = 20,
+            HorizontalOptions = LayoutOptions.Center,
+            VerticalOptions = LayoutOptions.Center,
+            Padding = 0,
+            WidthRequest = DeviceInfo.Idiom == DeviceIdiom.Desktop ? 400 : width * .8,
+            Content = content
+        };
     }
 
     private static View GetHeader(string title)

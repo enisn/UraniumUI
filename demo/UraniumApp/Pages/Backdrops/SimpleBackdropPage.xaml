@@ -33,7 +33,7 @@
     </VerticalStackLayout>
 
     <uranium:UraniumContentPage.Attachments>
-        <material:BackdropView Title="Filter" x:Name="backdrop">
+        <material:BackdropView Title="Filter" x:Name="backdrop" InsertAfterToolbarIcons="false">
             <material:BackdropView.IconImageSource>
                 <FontImageSource FontFamily="MaterialRound" Glyph="{x:Static m:MaterialRound.Filter_alt}" Color="{DynamicResource OnPrimary}" />
             </material:BackdropView.IconImageSource>

@@ -1,6 +1,12 @@
 ﻿
+#if CommunityToolkit
 using CommunityToolkit.Maui;
+#endif
+#if Mopups
+
+#endif
 using InputKit.Shared.Controls;
+using Mopups.Hosting;
 using UraniumUI;
 
 namespace MyCompany.MyProject;
@@ -12,8 +18,13 @@ public static class MauiProgram
 		var builder = MauiApp.CreateBuilder();
 		builder
 			.UseMauiApp<App>()
+#if CommunityToolkit
 			.UseMauiCommunityToolkit()
-			.UseUraniumUI()
+#endif
+#if Mopups
+			.ConfigureMopups()
+#endif
+            .UseUraniumUI()
 			.UseUraniumUIMaterial()
 			.ConfigureFonts(fonts =>
 			{
@@ -27,6 +38,13 @@ public static class MauiProgram
 				fonts.AddMaterialIconFonts();
 #endif
             });
+
+#if CommunityToolkit
+		builder.Services.AddCommunityToolkitDialogs();
+#endif
+#if Mopups
+		builder.Services.AddMopupsDialogs();
+#endif
 
 		return builder.Build();
 	}

@@ -13,7 +13,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
     <PublishReadyToRun>false</PublishReadyToRun>
     <OutputType>Library</OutputType>
-    <RootNamespace>UraniumUI</RootNamespace>
+    <RootNamespace>UraniumUI.Dialogs.CommunityToolkit</RootNamespace>
 
     <IsRidAgnostic Condition="'$(OutputType)' == 'Library'">true</IsRidAgnostic>
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.2</SupportedOSPlatformVersion>

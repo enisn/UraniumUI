@@ -6,6 +6,8 @@ using Path = Microsoft.Maui.Controls.Shapes.Path;
 namespace UraniumUI.Material.Controls;
 public class AutoCompleteTextField : InputField
 {
+    private bool _clearTapped;
+
     public AutoCompleteView AutoCompleteView => Content as AutoCompleteView;
 
     public override View Content { get; set; } = new AutoCompleteView
@@ -38,6 +40,7 @@ public class AutoCompleteTextField : InputField
         });
 
         AutoCompleteView.SetBinding(AutoCompleteView.TextProperty, new Binding(nameof(Text), source: this));
+        AutoCompleteView.SetBinding(AutoCompleteView.SelectedTextProperty, new Binding(nameof(SelectedText), source: this));
         AutoCompleteView.SetBinding(AutoCompleteView.ItemsSourceProperty, new Binding(nameof(ItemsSource), source: this));
 
         AutoCompleteView.Focused += AutoCompleteTextField_Focused;
@@ -77,6 +80,17 @@ public class AutoCompleteTextField : InputField
         {
             CheckAndShowValidations();
         }
+        else
+        {
+            if (!_clearTapped)
+            {
+                SelectedText = string.Empty;
+            }
+            else
+            {
+                _clearTapped = false;
+            }
+        }
 
         if (AllowClear)
         {
@@ -110,9 +124,9 @@ public class AutoCompleteTextField : InputField
 
     protected virtual void OnClearTapped()
     {
+        _clearTapped = true;
         AutoCompleteView.Text = string.Empty;
     }
-
 
     public string Text { get => (string)GetValue(TextProperty); set => SetValue(TextProperty, value); }
 
@@ -122,7 +136,17 @@ public class AutoCompleteTextField : InputField
         typeof(AutoCompleteView),
         string.Empty,
         BindingMode.TwoWay,
-        propertyChanged: (bindable, oldValue, newValue)=> (bindable as AutoCompleteTextField).OnPropertyChanged(nameof(Text)));
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as AutoCompleteTextField).OnPropertyChanged(nameof(Text)));
+   
+    public string SelectedText { get => (string)GetValue(SelectedTextProperty); set => SetValue(SelectedTextProperty, value); }
+
+    public static readonly BindableProperty SelectedTextProperty = BindableProperty.Create(
+        nameof(SelectedText),
+        typeof(string),
+        typeof(AutoCompleteView),
+        string.Empty,
+        BindingMode.TwoWay,
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as AutoCompleteTextField).OnPropertyChanged(nameof(SelectedText)));
 
     public IList<string> ItemsSource { get => (IList<string>)GetValue(ItemsSourceProperty); set => SetValue(ItemsSourceProperty, value); }
 
@@ -130,7 +154,7 @@ public class AutoCompleteTextField : InputField
             typeof(IList<string>),
             typeof(AutoCompleteView),
             null,
-        propertyChanged: (bindable, oldValue, newValue)=> (bindable as AutoCompleteTextField).OnPropertyChanged(nameof(ItemsSource)));
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as AutoCompleteTextField).OnPropertyChanged(nameof(ItemsSource)));
 
 
     public Color TextColor { get => (Color)GetValue(TextColorProperty); set => SetValue(TextColorProperty, value); }

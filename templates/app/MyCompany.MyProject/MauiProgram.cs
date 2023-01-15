@@ -1,12 +1,10 @@
-﻿
-#if CommunityToolkit
+﻿#if CommunityToolkit
 using CommunityToolkit.Maui;
 #endif
 #if Mopups
-
+using Mopups.Hosting;
 #endif
 using InputKit.Shared.Controls;
-using Mopups.Hosting;
 using UraniumUI;
 
 namespace MyCompany.MyProject;
@@ -45,7 +43,6 @@ public static class MauiProgram
 #if Mopups
 		builder.Services.AddMopupsDialogs();
 #endif
-
 		return builder.Build();
 	}
 }

@@ -2,15 +2,10 @@
 using Mopups.Pages;
 using Mopups.Services;
 using Plainer.Maui.Controls;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UraniumUI.Resources;
 using CheckBox = InputKit.Shared.Controls.CheckBox;
 
-namespace UraniumUI;
+namespace UraniumUI.Dialogs.Mopups;
 public static class MopupsDialogExtensions
 {
     public static async Task<bool> ConfirmAsync(this Page page, string title, string message, string okText = "OK", string cancelText = "Cancel")
@@ -72,7 +67,7 @@ public static class MopupsDialogExtensions
 
         foreach (var item in selectionSource)
         {
-            checkBoxGroup.Add(new InputKit.Shared.Controls.CheckBox
+            checkBoxGroup.Add(new CheckBox
             {
                 Text = prop != null ? prop.GetValue(item)?.ToString() : item.ToString(),
                 CommandParameter = item,
@@ -167,7 +162,7 @@ public static class MopupsDialogExtensions
             }),
             cancel, new Command(() =>
             {
-                tcs.SetResult(default(T));
+                tcs.SetResult(default);
                 MopupService.Instance.PopAsync();
             })
         ), row: 3);

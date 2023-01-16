@@ -1,6 +1,5 @@
-﻿using UraniumUI.Extensions;
+﻿namespace UraniumUI.Dialogs.CommunityToolkit;
 
-namespace UraniumUI.Dialogs;
 public class CommunityToolkitDialogService : IDialogService
 {
     public Task<bool> ConfirmAsync(string title, string message, string okText = "OK", string cancelText = "Cancel")

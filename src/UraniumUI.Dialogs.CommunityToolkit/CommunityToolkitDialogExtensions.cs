@@ -3,10 +3,11 @@ using InputKit.Shared.Controls;
 using Microsoft.Maui;
 using Plainer.Maui.Controls;
 using System.Threading.Channels;
+using UraniumUI.Extensions;
 using UraniumUI.Resources;
 using CheckBox = InputKit.Shared.Controls.CheckBox;
 
-namespace UraniumUI.Extensions;
+namespace UraniumUI.Dialogs.CommunityToolkit;
 public static class CommunityToolkitDialogExtensions
 {
     public static Task<bool> ConfirmAsync(
@@ -58,7 +59,7 @@ public static class CommunityToolkitDialogExtensions
             Margin = 20,
         };
 
-        View footer = GetFooter(
+        var footer = GetFooter(
             accept,
             new Command(() =>
             {
@@ -153,7 +154,7 @@ public static class CommunityToolkitDialogExtensions
 
         foreach (var item in selectionSource)
         {
-            checkBoxGroup.Add(new InputKit.Shared.Controls.CheckBox
+            checkBoxGroup.Add(new CheckBox
             {
                 Text = prop != null ? prop.GetValue(item)?.ToString() : item.ToString(),
                 CommandParameter = item,
@@ -161,7 +162,7 @@ public static class CommunityToolkitDialogExtensions
             });
         }
 
-        View footer = GetFooter(
+        var footer = GetFooter(
           accept,
           new Command(() =>
           {
@@ -182,8 +183,8 @@ public static class CommunityToolkitDialogExtensions
         rootContainer.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
         rootContainer.Add(GetHeader(message));
         rootContainer.Add(new ScrollView { Content = checkBoxGroup }, row: 1);
-        rootContainer.Add(GetDivider(), row:2);
-        rootContainer.Add(footer, row:3);
+        rootContainer.Add(GetDivider(), row: 2);
+        rootContainer.Add(footer, row: 3);
 #else
         rootContainer.Add(GetHeader(message));
         rootContainer.Add(new ScrollView { Content = checkBoxGroup, VerticalOptions = LayoutOptions.Start, MaximumHeightRequest = calculatedSize.Height });
@@ -200,7 +201,7 @@ public static class CommunityToolkitDialogExtensions
         this Page page,
         string message,
         IEnumerable<T> selectionSource,
-        T selected = default(T),
+        T selected = default,
         string accept = "Ok",
         string cancel = "Cancel", string displayMember = null)
     {
@@ -262,7 +263,7 @@ public static class CommunityToolkitDialogExtensions
             });
         }
 
-        View footer = GetFooter(
+        var footer = GetFooter(
             accept,
             new Command(() =>
             {
@@ -272,7 +273,7 @@ public static class CommunityToolkitDialogExtensions
             cancel,
             new Command(() =>
             {
-                tcs.SetResult(default(T));
+                tcs.SetResult(default);
                 popup.Close();
             }));
 
@@ -343,7 +344,7 @@ public static class CommunityToolkitDialogExtensions
 #endif
         var entry = new EntryView
         {
-			HorizontalOptions = LayoutOptions.Fill,
+            HorizontalOptions = LayoutOptions.Fill,
             Placeholder = placeholder,
             MaxLength = maxLength != -1 ? maxLength : int.MaxValue,
             ClearButtonVisibility = ClearButtonVisibility.WhileEditing,
@@ -381,13 +382,13 @@ public static class CommunityToolkitDialogExtensions
             }
         };
 
-        View footer = GetFooter(
+        var footer = GetFooter(
             accept,
         new Command(() =>
         {
-                tcs.SetResult(entry.Text);
-                popup.Close();
-            }),
+            tcs.SetResult(entry.Text);
+            popup.Close();
+        }),
             cancel,
             new Command(() =>
             {
@@ -413,7 +414,7 @@ public static class CommunityToolkitDialogExtensions
 
         return tcs.Task;
     }
-    
+
     private static BoxView GetDivider()
     {
         return new BoxView { StyleClass = new[] { "Divider" }, Margin = 0 };

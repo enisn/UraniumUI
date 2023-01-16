@@ -36,9 +36,9 @@ public static class MauiProgram
 				fonts.AddMaterialIconFonts();
 #endif
             });
-			
+
 #if CommunityToolkit
-		builder.Services.AddCommunityToolkitDialogs();
+        builder.Services.AddCommunityToolkitDialogs();
 #endif
 #if Mopups
 		builder.Services.AddMopupsDialogs();

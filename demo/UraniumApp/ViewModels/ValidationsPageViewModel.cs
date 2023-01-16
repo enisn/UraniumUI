@@ -1,5 +1,5 @@
-﻿using CommunityToolkit.Maui.Alerts;
-using CommunityToolkit.Maui.Core;
+﻿//using CommunityToolkit.Maui.Alerts;
+//using CommunityToolkit.Maui.Core;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -25,15 +25,15 @@ public class ValidationsPageViewModel : UraniumBindableObject
     {
         SubmitCommand = new Command(() =>
         {
-            var snackbarOptions = new SnackbarOptions
-            {
-                BackgroundColor = ColorResource.GetColor("Surface", "SurfaceDark"),
-                TextColor = ColorResource.GetColor("OnSurface", "OnSurfaceDark"),
-                ActionButtonTextColor = ColorResource.GetColor("Primary", "PrimaryDark"),
-                CornerRadius = new CornerRadius(8),
-            };
-            Snackbar.Make($"Thank you {FullName}. You successfully registered!", duration: TimeSpan.FromSeconds(6), visualOptions: snackbarOptions)
-            .Show();
+            //var snackbarOptions = new SnackbarOptions
+            //{
+            //    BackgroundColor = ColorResource.GetColor("Surface", "SurfaceDark"),
+            //    TextColor = ColorResource.GetColor("OnSurface", "OnSurfaceDark"),
+            //    ActionButtonTextColor = ColorResource.GetColor("Primary", "PrimaryDark"),
+            //    CornerRadius = new CornerRadius(8),
+            //};
+            //Snackbar.Make($"Thank you {FullName}. You successfully registered!", duration: TimeSpan.FromSeconds(6), visualOptions: snackbarOptions)
+            //.Show();
             ClearCommand.Execute(null);
         });
 

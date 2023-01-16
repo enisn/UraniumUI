@@ -48,7 +48,13 @@
 
             <material:TabItem Title="Text Prompt">
                 <VerticalStackLayout Padding="20">
-                    <Button Text="Ask Text Prompt" Clicked="AskTextPrompt" StyleClass="FilledButton" />
+                    <Button Text="Ask Text Prompt" Clicked="AskTextPrompt" StyleClass="FilledButton" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </material:TabItem>
+
+            <material:TabItem Title="Confirmation">
+                <VerticalStackLayout Padding="20">
+                    <Button Text="Ask Confirmation Prompt" Clicked="AskConfirmation" StyleClass="FilledButton" HorizontalOptions="Center" />
                 </VerticalStackLayout>
             </material:TabItem>
         </material:TabView>

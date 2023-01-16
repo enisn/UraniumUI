@@ -1,16 +1,62 @@
 # Dialogs
-Dialogs are a great way to get the user to make a decision or enter some information. They are also a great way to display information to the user. Popup implementation is implemented in [Community ToolKit](https://github.com/CommunityToolkit/Maui) and dialogs feature uses it to show dialogs in MAUI Application. Also, dialogs are implemented in [UraniumUI](https://github.com/enisn/UraniumUI/tree/master/src/UraniumUI) package and Material theme only customizes it. You can use dialogs in your application by adding [UraniumUI](https://www.nuget.org/packages/UraniumUI) package to your project.
-
-_You may visit [Material Design Guideline](https://m3.material.io/components/dialogs/overview) to learn more about dialogs._
-
+Dialogs are a great way to get the user to make a decision or enter some information. They are also a great way to display information to the user. A set of pre-built dialogs are provided by UraniumUI such as asking multiple or single selection, confirmation and text input. UraniumUI provides an abstraction layer for dialogs with `IDialogService`. UraniumUI has 2 different popups implementations which are [Community Toolkit](https://github.com/CommunityToolkit/Maui) and [Mopups](https://github.com/LuckyDucko/Mopups).
 
 <center>
 <img src="https://lh3.googleusercontent.com/cD2FTVbrqtc_pZ7IwitArkWuRFGvQ_CHj-cuD76UiDUZZpjY2F0EmeUPmdLdf29NQKITPu540wiWTGIz4CbCZFzE_REolC9FEWXM6_pShckgW2Wg9Q=w856" height="480" />
 </center>
 
-## Types
-There are 3 types of dialogs in UraniumUI package. They are: `CheckBox Prompt`, `RadioButton Prompt` and `Text Prompt`. They are implemented in `UraniumUI.Extensions` namespace. You can use them by adding `using UraniumUI.Extensions;` to your code. All the methods can be called from a Page like built-in methods such as `DisplaAlert`
+You should pick one of them and add it to your project. UraniumUI will use the popup implementation that you added to your project. If you don't add any popup implementation, UraniumUI will use Modal pages instead of popups.
 
+Available packages
+- `UraniumUI.Dialogs.CommunityToolkit`
+- `UraniumUI.Dialogs.Mopups`
+
+## CommunityToolkit
+
+1. Install [UraniumUI.Dialogs.CommunityToolkit](https://www.nuget.org/packages/UraniumUI.Dialogs.CommunityToolkit)
+
+    ```bash
+    dotnet add package UraniumUI.Dialogs.CommunityToolkit
+    ```
+
+2. Add required services in `MauiProgram.cs`
+
+    ```csharp
+    builder.Services.AddCommunityToolkitDialogs();
+    ```
+
+## Mopups
+
+1. Install [UraniumUI.Dialogs.Mopups](https://www.nuget.org/packages/UraniumUI.Dialogs.Mopups)
+
+    ```bash
+    dotnet add package UraniumUI.Dialogs.Mopups
+    ```
+
+2. Configure Mopups in `MauiProgram.cs`
+
+    ```csharp
+    builder
+        .UseMauiApp<App>()
+        .UseUraniumUI()
+        .UseUraniumUIMaterial()
+        .ConfigureMopups() // 👈 Add this line
+        // ...
+    ```
+
+3. Add required services in `MauiProgram.cs`
+
+    ```csharp
+    builder.Services.AddMopupsDialogs();
+    ```
+
+
+
+## Types
+There are 4 types of dialogs in UraniumUI package. They are: `CheckBox Prompt`, `RadioButton Prompt`, `Confirmation` and `Text Prompt`. They are implemented as extension methods and `IDialogService` implementation. You can use them as extension method for any **Page** or you can use then view injecting `IDialogService` to your class.
+
+
+**Extension Method**
 ```csharp
 public partial class MainPage : ContentPage
 {
@@ -26,6 +72,26 @@ public partial class MainPage : ContentPage
 }
 ```
 
+**IDialogService**
+
+```csharp
+public partial class MainPage : ContentPage
+{
+    public IDialogService DialogService { get; }
+    public MainPage(IDialogService dialogService)
+    {
+        InitializeComponent();
+        DialogService = dialogService;
+    }
+
+    private async void Button_Clicked(object sender, EventArgs e)
+    {
+        var result = await DialogService.DisplayCheckBoxPromptAsync("Title", new []{ "Option 1", "Option 2", "Option 3"});
+    }
+}
+```
+
+> Injecting `IDialogService` is highly recommended. It'll make your code more testable and makes dialogs libray easily swappable.
 
 ### RadioButton Prompt
 RadioButton prompt can be used to get a single selection input from user. It returns the selected option. It can be used with strings or objects. If you use objects, you can use `DisplayMember` parameter to specify the property of the object to be displayed or your object should override `ToString()` method.
@@ -37,7 +103,7 @@ The easiest way to use RadioButton prompt is to pass a string array to it. It wi
 ```csharp
 private async void Button_Clicked(object sender, EventArgs e)
 {
-    var result = await this..DisplayRadioButtonPromptAsync(
+    var result = await this.DisplayRadioButtonPromptAsync(
             "Pick some of them below",
             new [] {"Option 1", "Option 2", "Option 3"});
 }

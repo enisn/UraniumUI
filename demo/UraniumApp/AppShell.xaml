@@ -76,6 +76,10 @@
     </FlyoutItem>
 
 
+    <FlyoutItem Title="FontImages" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Insert_emoticon}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
+        <ShellContent Title="Material Icons" ContentTemplate="{DataTemplate pages:FontIconsMaterialPage}"/>
+    </FlyoutItem>
+    
     <FlyoutItem Title="Elevation" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Vertical_shades}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
         <ShellContent Title="Elevation" ContentTemplate="{DataTemplate pages:ElevationsPage}"/>
     </FlyoutItem>

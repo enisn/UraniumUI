@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="UraniumApp.Pages.FontIconsMaterialPage"
+             xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             xmlns:vm="clr-namespace:UraniumApp.ViewModels"
+             Title="FontIconsMaterialPage"
+             x:DataType="vm:FontIconsMaterialViewModel">
+
+    <ContentPage.Resources>
+        <Style TargetType="Label">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="TextColor"
+                                        Value="{AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid ColumnDefinitions=".3*, .7*">
+
+        <Grid RowDefinitions="Auto,*">
+            <VerticalStackLayout Padding="10" Spacing="20" StyleClass="TertiaryContainer">
+                <material:PickerField Title="Type" ItemsSource="{Binding Types}" SelectedItem="{Binding SelectedType}" AllowClear="False" />
+                <material:TextField Title="Search" Text="{Binding SearchText}" AllowClear="True" />
+            </VerticalStackLayout>
+            <CollectionView Grid.Row="1" ItemsSource="{Binding Items}" SelectionMode="Single" SelectedItem="{Binding SelectedItem}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="vm:FontImageItemViewModel">
+                        <Label Text="{Binding Alias}" HorizontalOptions="Center" Margin="5" />
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+        <Frame HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="1">
+            <VerticalStackLayout>
+
+                <Image Margin="30" HeightRequest="60">
+                    <Image.Source>
+                        <FontImageSource Glyph="{Binding SelectedItem.Glyph}" FontFamily="{Binding SelectedType.Display}" Size="128" />
+                    </Image.Source>
+                </Image>
+                <Label Text="{Binding SelectedItem.Alias}" HorizontalTextAlignment="Center" />
+            </VerticalStackLayout>
+        </Frame>
+    </Grid>
+</ContentPage>

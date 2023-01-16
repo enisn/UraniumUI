@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UraniumUI.Dialogs;
 
-namespace UraniumUI;
+namespace UraniumUI.Dialogs.Mopups;
 
 public class MopupsDialogService : IDialogService
 {

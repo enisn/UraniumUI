@@ -1,4 +1,5 @@
 ﻿//using CommunityToolkit.Maui;
+using DotNurse.Injector;
 using Mopups.Hosting;
 using UraniumApp.Pages;
 using UraniumUI;
@@ -23,7 +24,14 @@ public static class MauiProgram
                 fonts.AddMaterialIconFonts();
             });
 
-        builder.Services.AddTransient<DialogsPage>();
+        var thisAssembly = typeof(MauiProgram).Assembly;
+
+        builder.Services.AddServicesFrom(
+            type => typeof(Page).IsAssignableFrom(type),
+            ServiceLifetime.Transient,
+            options => options.Assembly = thisAssembly)
+        .AddServicesByAttributes(assembly: thisAssembly);
+
         //builder.Services.AddCommunityToolkitDialogs();
         builder.Services.AddMopupsDialogs();
 

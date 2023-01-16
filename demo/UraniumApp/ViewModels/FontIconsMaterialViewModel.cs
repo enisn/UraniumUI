@@ -55,7 +55,7 @@ public class FontIconsMaterialViewModel : UraniumBindableObject
                 Glyph = s.GetValue(null) as string,
                 Alias = s.Name
             }).ToList();
-        SelectedItem = Items.First();
+        SelectedItem = Items.FirstOrDefault();
     }
 }
 

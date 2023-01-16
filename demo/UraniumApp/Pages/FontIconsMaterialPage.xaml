@@ -18,6 +18,7 @@
                             <VisualState.Setters>
                                 <Setter Property="TextColor"
                                         Value="{AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+                                <Setter Property="FontAttributes" Value="Bold" />
                             </VisualState.Setters>
                         </VisualState>
                     </VisualStateGroup>
@@ -26,31 +27,33 @@
         </Style>
     </ContentPage.Resources>
 
-    <Grid ColumnDefinitions=".3*, .7*">
+    <Grid ColumnDefinitions="{OnIdiom Default='Auto, *', Phone='*,*'}">
 
-        <Grid RowDefinitions="Auto,*">
-            <VerticalStackLayout Padding="10" Spacing="20" StyleClass="TertiaryContainer">
-                <material:PickerField Title="Type" ItemsSource="{Binding Types}" SelectedItem="{Binding SelectedType}" AllowClear="False" />
-                <material:TextField Title="Search" Text="{Binding SearchText}" AllowClear="True" />
-            </VerticalStackLayout>
-            <CollectionView Grid.Row="1" ItemsSource="{Binding Items}" SelectionMode="Single" SelectedItem="{Binding SelectedItem}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="vm:FontImageItemViewModel">
-                        <Label Text="{Binding Alias}" HorizontalOptions="Center" Margin="5" />
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-        </Grid>
-        <Frame HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="1">
+        <Frame Padding="0" Margin="{OnIdiom Default=20, Phone=5}">
+            <Grid RowDefinitions="Auto,*">
+                <VerticalStackLayout Padding="20" Spacing="20" StyleClass="PrimaryContainer,Elevation1">
+                    <material:PickerField Title="Type" ItemsSource="{Binding Types}" SelectedItem="{Binding SelectedType}" AllowClear="False" />
+                    <material:TextField Title="Search" Text="{Binding SearchText}" AllowClear="True" />
+                </VerticalStackLayout>
+                <CollectionView Grid.Row="1" ItemsSource="{Binding Items}" SelectionMode="Single" SelectedItem="{Binding SelectedItem}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="vm:FontImageItemViewModel">
+                            <Label Text="{Binding Alias}" HorizontalOptions="Center" Margin="5" />
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Grid>
+        </Frame>
+
+        <Border HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="1" Padding="20">
             <VerticalStackLayout>
-
                 <Image Margin="30" HeightRequest="60">
                     <Image.Source>
-                        <FontImageSource Glyph="{Binding SelectedItem.Glyph}" FontFamily="{Binding SelectedType.Display}" Size="128" />
+                        <FontImageSource Glyph="{Binding SelectedItem.Glyph}" FontFamily="{Binding SelectedType.Display}" Color="{AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}" Size="128" />
                     </Image.Source>
                 </Image>
                 <Label Text="{Binding SelectedItem.Alias}" HorizontalTextAlignment="Center" />
             </VerticalStackLayout>
-        </Frame>
+        </Border>
     </Grid>
 </ContentPage>

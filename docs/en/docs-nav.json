@@ -32,6 +32,20 @@
       ]
     },
     {
+      "text": "Dialogs",
+      "path": "dialogs/Dialogs.md",
+      "items": [
+        {
+          "text": "CommunityToolkit",
+          "path": "dialogs/Dialogs.md#communitytoolkit"
+        },
+        {
+          "text": "Mopups",
+          "path": "dialogs/Dialogs.md#mopups"
+        }
+      ]
+    },
+    {
       "text": "Theming",
       "items": [
         {
@@ -108,10 +122,6 @@
         {
           "text": "RadioButton",
           "path": "themes/material/RadioButton.md"
-        },
-        {
-          "text": "Dialogs",
-          "path": "themes/material/Dialogs.md"
         },
         {
           "text": "Divider",

@@ -33,15 +33,15 @@
     },
     {
       "text": "Dialogs",
-      "path": "dialogs/Dialogs.md",
+      "path": "dialogs/Index.md",
       "items": [
         {
           "text": "CommunityToolkit",
-          "path": "dialogs/Dialogs.md#communitytoolkit"
+          "path": "dialogs/Index#communitytoolkit"
         },
         {
           "text": "Mopups",
-          "path": "dialogs/Dialogs.md#mopups"
+          "path": "dialogs/Index#mopups"
         }
       ]
     },

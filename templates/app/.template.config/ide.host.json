@@ -7,6 +7,13 @@
           "text": "Icons library to use in application"
         },
         "isVisible": true
+      },
+      {
+        "id": "Dialogs",
+        "name": {
+          "text": "Popup implementation for dialogs"
+        },
+        "isVisible": true
       }
     ]
   }

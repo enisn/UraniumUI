@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection.Extensions;
 using UraniumUI.Dialogs;
+using UraniumUI.Dialogs.CommunityToolkit;
 
 namespace UraniumUI;
 public static class ServiceCollectionExtensions

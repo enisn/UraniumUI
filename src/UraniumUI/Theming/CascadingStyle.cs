@@ -29,6 +29,7 @@ public static class CascadingStyle
         {
             foreach (var item in newResources)
             {
+                view.Resources.Remove(item.Key);
                 view.Resources.Add(item.Key, item.Value);
             }
         }

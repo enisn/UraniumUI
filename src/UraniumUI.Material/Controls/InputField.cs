@@ -30,7 +30,6 @@ public partial class InputField : Grid
         VerticalOptions = LayoutOptions.Start,
         InputTransparent = true,
         Margin = 15,
-        TextColor = ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.Gray)
     };
 
     protected Border border = new Border
@@ -254,7 +253,10 @@ public partial class InputField : Grid
         if (Icon is FontImageSource font && font.Color.IsNullOrTransparent())
         {
             // TODO: Add IconColor bindable property.??? What if it's not FontImage?
-            font.Color = ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.Gray);
+            font.SetAppThemeColor(
+                FontImageSource.ColorProperty,
+                ColorResource.GetColor("OnBackground", Colors.Gray),
+                ColorResource.GetColor("OnBackgroundDark", Colors.Gray));
         }
 
         if (!rootGrid.Contains(imageIcon.Value))

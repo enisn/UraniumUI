@@ -46,12 +46,14 @@ public partial class AutoCompleteViewHandler : ViewHandler<IAutoCompleteView, Ap
     {
         PlatformView.TextChanged += PlatformView_TextChanged;
         PlatformView.EditorAction += PlatformView_EditorAction;
+        PlatformView.ItemClick += PlatformView_ItemClicked;
     }
 
     protected override void DisconnectHandler(AppCompatAutoCompleteTextView platformView)
     {
         PlatformView.TextChanged -= PlatformView_TextChanged;
         PlatformView.EditorAction -= PlatformView_EditorAction;
+        PlatformView.ItemClick -= PlatformView_ItemClicked;
     }
 
     private void PlatformView_TextChanged(object sender, Android.Text.TextChangedEventArgs e)
@@ -67,6 +69,14 @@ public partial class AutoCompleteViewHandler : ViewHandler<IAutoCompleteView, Ap
         if (e.ActionId == Android.Views.InputMethods.ImeAction.Done)
         {
             VirtualView.Completed();
+        }
+    }
+
+    private void PlatformView_ItemClicked(object sender, Android.Widget.AdapterView.ItemClickEventArgs e)
+    {
+        if (VirtualView.SelectedText != PlatformView.Text)
+        {
+            VirtualView.SelectedText = PlatformView.Text;
         }
     }
 

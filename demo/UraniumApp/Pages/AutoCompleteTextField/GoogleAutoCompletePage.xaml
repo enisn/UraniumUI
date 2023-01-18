@@ -11,7 +11,12 @@
         <local:GoogleAutoCompleteViewModel />
     </ContentPage.BindingContext>
     <VerticalStackLayout Padding="20">
-        <material:AutoCompleteTextField Title="Search" Text="{Binding Searchtext}" ItemsSource="{Binding Suggestions}">
-        </material:AutoCompleteTextField>
+        <material:AutoCompleteTextField
+            x:Name="actf"
+            Title="Search"
+            AllowClear="true"
+            ItemsSource="{Binding Suggestions}"
+            Text="{Binding Searchtext}" />
+        <Label HorizontalTextAlignment="Center" Text="{Binding Source={x:Reference actf}, Path=SelectedText, StringFormat='Selected Text: {0}'}" />
     </VerticalStackLayout>
 </ContentPage>

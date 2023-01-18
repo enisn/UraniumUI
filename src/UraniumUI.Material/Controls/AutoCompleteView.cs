@@ -44,6 +44,15 @@ public class AutoCompleteView : View, IAutoCompleteView
             }
         });
 
+    public string SelectedText { get => (string)GetValue(SelectedTextProperty); set => SetValue(SelectedTextProperty, value); }
+
+    public static readonly BindableProperty SelectedTextProperty = BindableProperty.Create(
+        nameof(SelectedText),
+        typeof(string),
+        typeof(AutoCompleteView),
+        string.Empty,
+        BindingMode.TwoWay);
+
     public Color TextColor { get => (Color)GetValue(TextColorProperty); set => SetValue(TextColorProperty, value); }
 
     public static readonly BindableProperty TextColorProperty = BindableProperty.Create(

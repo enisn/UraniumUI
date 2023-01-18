@@ -11,10 +11,11 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using UIKit;
+using UraniumUI.Controls;
 using UraniumUI.Extensions;
-using UraniumUI.Material.Controls;
+using UraniumUI.Controls;
 
-namespace UraniumUI.Material.Handlers;
+namespace UraniumUI.Handlers;
 public partial class AutoCompleteViewHandler : ViewHandler<IAutoCompleteView, UIAutoCompleteTextField>
 {
 

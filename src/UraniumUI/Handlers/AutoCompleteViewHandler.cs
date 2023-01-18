@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using UraniumUI.Material.Controls;
+using UraniumUI.Controls;
 
-namespace UraniumUI.Material.Handlers;
+namespace UraniumUI.Handlers;
 
 public partial class AutoCompleteViewHandler
 {

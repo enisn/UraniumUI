@@ -4,7 +4,7 @@ using System;
 using System.Diagnostics;
 using UIKit;
 
-namespace UraniumUI.Material.Handlers;
+namespace UraniumUI.Handlers;
 
 public static class Extensions
 {

@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace UraniumUI.Material.Controls;
+namespace UraniumUI.Controls;
 public class AutoCompleteView : View, IAutoCompleteView
 {
     public AutoCompleteView()

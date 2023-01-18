@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="UraniumApp.Pages.FontIconsMaterialPage"
@@ -29,7 +29,7 @@
 
     <Grid ColumnDefinitions="{OnIdiom Default='Auto, *', Phone='*,*'}">
 
-        <Frame Padding="0" Margin="{OnIdiom Default=20, Phone=5}">
+        <Frame Padding="0" Margin="{OnIdiom Default=20, Phone=5}" HasShadow="False" CornerRadius="20">
             <Grid RowDefinitions="Auto,*">
                 <VerticalStackLayout Padding="20" Spacing="20" StyleClass="PrimaryContainer,Elevation1">
                     <material:PickerField Title="Type" ItemsSource="{Binding Types}" SelectedItem="{Binding SelectedType}" AllowClear="False" />

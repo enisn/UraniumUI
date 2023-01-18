@@ -1,9 +1,9 @@
 ﻿#if WINDOWS
 using Microsoft.Maui.Handlers;
 using Microsoft.UI.Xaml.Controls;
-using UraniumUI.Material.Controls;
+using UraniumUI.Controls;
 
-namespace UraniumUI.Material.Handlers;
+namespace UraniumUI.Handlers;
 public partial class AutoCompleteViewHandler : ViewHandler<IAutoCompleteView, AutoSuggestBox>
 {
     protected override AutoSuggestBox CreatePlatformView()

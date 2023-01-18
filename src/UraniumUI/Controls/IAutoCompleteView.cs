@@ -1,4 +1,4 @@
-﻿namespace UraniumUI.Material.Controls;
+﻿namespace UraniumUI.Controls;
 
 public interface IAutoCompleteView : IView
 {

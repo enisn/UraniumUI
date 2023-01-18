@@ -114,9 +114,13 @@ public partial class AutoCompleteViewHandler : ViewHandler<IAutoCompleteView, UI
 
     private void AutoCompleteViewSourceOnSelected(object sender, SelectedItemChangedEventArgs args)
     {
-        //VirtualView.OnItemSelectedInternal(Element, args);
+        var selectedItemText = args.SelectedItem?.ToString();
+        
+        if (VirtualView.SelectedText != selectedItemText)
+        {
+            VirtualView.SelectedText = selectedItemText;
+        }
     }
-
 }
 
 public class UIAutoCompleteTextField : MauiTextField, IUITextFieldDelegate

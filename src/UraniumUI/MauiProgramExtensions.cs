@@ -18,23 +18,6 @@ public static class MauiProgramExtensions
         return builder;
     }
 
-    public static Application InitializeUraniumUIResources(this Application app)
-    {
-        app.LoadThemeResources(app.RequestedTheme.ToString());
-        app.RequestedThemeChanged += (s, e) =>
-        {
-            app.LoadThemeResources(e.RequestedTheme.ToString());
-        };
-
-        return app;
-    }
-
-    public static Application LoadThemeResources(this Application app, string themeName)
-    {
-        // TODO: Find a better way.
-        return app;
-    }
-
     public static IMauiHandlersCollection AddUraniumUIHandlers(this IMauiHandlersCollection collection)
     {
         return collection

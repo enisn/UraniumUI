@@ -13,9 +13,10 @@
         </Style>
     </ContentPage.Resources>
     <ContentPage.Content>
-        <material:TabView VerticalOptions="Fill">
+        <material:TabView VerticalOptions="Fill" HorizontalOptions="Fill" TabPlacement="Start">
+
             <material:TabItem Title="Radio Button">
-                <VerticalStackLayout Padding="20">
+                <VerticalStackLayout Padding="40">
                     <Label Text="Amount of RadioButton options" />
                     <Slider x:Name="sliderForRadioButtons" Minimum="1" Maximum="12" Value="3" />
                     <Button Text="Ask RadioButtons" Clicked="AskRadioButtons" StyleClass="FilledButton" HorizontalOptions="Center" />
@@ -27,7 +28,7 @@
             </material:TabItem>
 
             <material:TabItem Title="Check Box">
-                <ListView Margin="20" x:Name="checkBoxResultListView" VerticalOptions="FillAndExpand">
+                <ListView Margin="20" x:Name="checkBoxResultListView" VerticalOptions="FillAndExpand" BackgroundColor="Transparent">
                     <ListView.Header>
                         <VerticalStackLayout Padding="20">
                             <Label Text="Amount of CheckBox options" />
@@ -48,7 +49,15 @@
 
             <material:TabItem Title="Text Prompt">
                 <VerticalStackLayout Padding="20">
-                    <Button Text="Ask Text Prompt" Clicked="AskTextPrompt" StyleClass="FilledButton" />
+                    <Button Text="Ask Text Prompt" Clicked="AskTextPrompt" StyleClass="FilledButton" HorizontalOptions="Center" />
+                    <Label Text="Result: " x:Name="labelTextPrompt"/>
+                </VerticalStackLayout>
+            </material:TabItem>
+
+            <material:TabItem Title="Confirmation">
+                <VerticalStackLayout Padding="20">
+                    <Button Text="Ask Confirmation Prompt" Clicked="AskConfirmation" StyleClass="FilledButton" HorizontalOptions="Center" />
+                    <Label Text="Result: " x:Name="labelConfirmation"/>
                 </VerticalStackLayout>
             </material:TabItem>
         </material:TabView>

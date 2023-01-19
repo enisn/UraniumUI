@@ -14,14 +14,21 @@ public class TreeViewFileSystemViewModel : UraniumBindableObject
         InitializeNodes();
         LoadChildrenCommand = new Command<NodeItem>((node) =>
         {
-            foreach (var item in GetContent(node.Path))
+            try
             {
-                node.Children.Add(item);
-            }
+                foreach (var item in GetContent(node.Path))
+                {
+                    node.Children.Add(item);
+                }
 
-            if (node.Children.Count == 0)
+                if (node.Children.Count == 0)
+                {
+                    node.IsLeaf = true;
+                }
+            }
+            catch (Exception ex)
             {
-                node.IsLeaf = true;
+                App.Current.MainPage.DisplayAlert("Error", ex.Message, "OK");
             }
         });
     }

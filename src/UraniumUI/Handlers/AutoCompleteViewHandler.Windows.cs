@@ -1,15 +1,9 @@
 ﻿#if WINDOWS
 using Microsoft.Maui.Handlers;
-using Microsoft.Maui.Platform;
 using Microsoft.UI.Xaml.Controls;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UraniumUI.Material.Controls;
+using UraniumUI.Controls;
 
-namespace UraniumUI.Material.Handlers;
+namespace UraniumUI.Handlers;
 public partial class AutoCompleteViewHandler : ViewHandler<IAutoCompleteView, AutoSuggestBox>
 {
     protected override AutoSuggestBox CreatePlatformView()
@@ -22,7 +16,6 @@ public partial class AutoCompleteViewHandler : ViewHandler<IAutoCompleteView, Au
         var transparentBrush = new Microsoft.UI.Xaml.Media.SolidColorBrush(Windows.UI.Color.FromArgb(0, 0, 0, 0));
         textBox.BorderThickness = new Microsoft.UI.Xaml.Thickness(0);
         textBox.Background = transparentBrush;
-
         return textBox;
     }
 
@@ -30,12 +23,14 @@ public partial class AutoCompleteViewHandler : ViewHandler<IAutoCompleteView, Au
     {
         PlatformView.TextChanged += PlatformView_TextChanged;
         PlatformView.KeyDown += TextBox_KeyDown;
+        PlatformView.SuggestionChosen += PlatformView_SuggestionChosen;
     }
 
     protected override void DisconnectHandler(AutoSuggestBox platformView)
     {
         PlatformView.TextChanged -= PlatformView_TextChanged;
         PlatformView.KeyDown -= TextBox_KeyDown;
+        PlatformView.SuggestionChosen -= PlatformView_SuggestionChosen;
     }
 
     private void PlatformView_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
@@ -56,6 +51,14 @@ public partial class AutoCompleteViewHandler : ViewHandler<IAutoCompleteView, Au
         if (e.Key == Windows.System.VirtualKey.Enter)
         {
             VirtualView.Completed();
+        }
+    }
+    
+    private void PlatformView_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+    {
+        if (VirtualView.SelectedText != PlatformView.Text)
+        {
+            VirtualView.SelectedText = args.SelectedItem?.ToString();
         }
     }
 

@@ -42,6 +42,33 @@
       "MaterialIcons":{
         "type": "computed",
         "value": "(Icons == \"MaterialIcons\")"
+      },
+      "Dialogs":{
+        "type":"parameter",
+        "datatype": "choice",
+        "defaultValue":"Mopups",
+        "choices": [
+          {
+            "choice": "CommunityToolkit",
+            "description": "Configure font awesome icons by default."
+          },
+          {
+            "choice": "Mopups",
+            "description":"Configure material icons by default."
+          },
+          {
+            "choice": "None",
+            "description":"Configure no dialogs."
+          }
+        ]
+      },
+      "CommunityToolkit":{
+        "type": "computed",
+        "value": "(Dialogs == \"CommunityToolkit\")"
+      },
+      "Mopups":{
+        "type": "computed",
+        "value": "(Dialogs == \"Mopups\")"
       }
     }
   }

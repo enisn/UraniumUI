@@ -32,6 +32,20 @@
       ]
     },
     {
+      "text": "Dialogs",
+      "path": "dialogs/Index.md",
+      "items": [
+        {
+          "text": "CommunityToolkit",
+          "path": "dialogs/Index#communitytoolkit"
+        },
+        {
+          "text": "Mopups",
+          "path": "dialogs/Index#mopups"
+        }
+      ]
+    },
+    {
       "text": "Theming",
       "items": [
         {
@@ -110,10 +124,6 @@
           "path": "themes/material/RadioButton.md"
         },
         {
-          "text": "Dialogs",
-          "path": "themes/material/Dialogs.md"
-        },
-        {
           "text": "Divider",
           "path": "themes/material/Divider.md"
         },
@@ -161,6 +171,10 @@
         {
           "text": "Migration to v2.2",
           "path": "migration-guides/Migrating-To-2.2.md"
+        },
+        {
+          "text": "Migration to v2.3",
+          "path": "migration-guides/Migrating-To-2.3.md"
         }
       ]
     },

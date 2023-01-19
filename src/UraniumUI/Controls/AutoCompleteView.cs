@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace UraniumUI.Material.Controls;
+namespace UraniumUI.Controls;
 public class AutoCompleteView : View, IAutoCompleteView
 {
     public AutoCompleteView()
@@ -43,6 +43,15 @@ public class AutoCompleteView : View, IAutoCompleteView
                 view.TextChanged?.Invoke(view, new TextChangedEventArgs((string)oldValue, (string)newValue));
             }
         });
+
+    public string SelectedText { get => (string)GetValue(SelectedTextProperty); set => SetValue(SelectedTextProperty, value); }
+
+    public static readonly BindableProperty SelectedTextProperty = BindableProperty.Create(
+        nameof(SelectedText),
+        typeof(string),
+        typeof(AutoCompleteView),
+        string.Empty,
+        BindingMode.TwoWay);
 
     public Color TextColor { get => (Color)GetValue(TextColorProperty); set => SetValue(TextColorProperty, value); }
 

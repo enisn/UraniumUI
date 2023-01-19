@@ -13,7 +13,7 @@ public class UraniumContentPage : ContentPage
     public ObservableCollection<IPageAttachment> Attachments { get; set; } = new();
 
     public Frame ContentFrame { get; } = new Frame()
-    { HorizontalOptions = LayoutOptions.Fill, VerticalOptions = LayoutOptions.Fill, HasShadow = false };
+    { HorizontalOptions = LayoutOptions.Fill, VerticalOptions = LayoutOptions.Fill, HasShadow = false, Padding = 0 };
 
     public UraniumContentPage()
     {

@@ -11,10 +11,11 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using UIKit;
+using UraniumUI.Controls;
 using UraniumUI.Extensions;
-using UraniumUI.Material.Controls;
+using UraniumUI.Controls;
 
-namespace UraniumUI.Material.Handlers;
+namespace UraniumUI.Handlers;
 public partial class AutoCompleteViewHandler : ViewHandler<IAutoCompleteView, UIAutoCompleteTextField>
 {
 
@@ -114,9 +115,13 @@ public partial class AutoCompleteViewHandler : ViewHandler<IAutoCompleteView, UI
 
     private void AutoCompleteViewSourceOnSelected(object sender, SelectedItemChangedEventArgs args)
     {
-        //VirtualView.OnItemSelectedInternal(Element, args);
+        var selectedItemText = args.SelectedItem?.ToString();
+        
+        if (VirtualView.SelectedText != selectedItemText)
+        {
+            VirtualView.SelectedText = selectedItemText;
+        }
     }
-
 }
 
 public class UIAutoCompleteTextField : MauiTextField, IUITextFieldDelegate

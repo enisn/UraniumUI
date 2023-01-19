@@ -1,24 +1,16 @@
 ﻿#if ANDROID
 
 using Android.Content;
-using Android.Content.Res;
 using Android.Graphics.Drawables;
-using Android.Views;
 using Android.Views.InputMethods;
 using Android.Widget;
 using AndroidX.AppCompat.Widget;
-using Google.Android.Material.TextField;
 using Microsoft.Maui.Controls.Compatibility.Platform.Android;
 using Microsoft.Maui.Controls.Platform;
 using Microsoft.Maui.Handlers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UraniumUI.Material.Controls;
+using UraniumUI.Controls;
 
-namespace UraniumUI.Material.Handlers;
+namespace UraniumUI.Handlers;
 public partial class AutoCompleteViewHandler : ViewHandler<IAutoCompleteView, AppCompatAutoCompleteTextView>
 {
     private AppCompatAutoCompleteTextView NativeControl => PlatformView as AppCompatAutoCompleteTextView;
@@ -46,12 +38,14 @@ public partial class AutoCompleteViewHandler : ViewHandler<IAutoCompleteView, Ap
     {
         PlatformView.TextChanged += PlatformView_TextChanged;
         PlatformView.EditorAction += PlatformView_EditorAction;
+        PlatformView.ItemClick += PlatformView_ItemClicked;
     }
 
     protected override void DisconnectHandler(AppCompatAutoCompleteTextView platformView)
     {
         PlatformView.TextChanged -= PlatformView_TextChanged;
         PlatformView.EditorAction -= PlatformView_EditorAction;
+        PlatformView.ItemClick -= PlatformView_ItemClicked;
     }
 
     private void PlatformView_TextChanged(object sender, Android.Text.TextChangedEventArgs e)
@@ -67,6 +61,14 @@ public partial class AutoCompleteViewHandler : ViewHandler<IAutoCompleteView, Ap
         if (e.ActionId == Android.Views.InputMethods.ImeAction.Done)
         {
             VirtualView.Completed();
+        }
+    }
+
+    private void PlatformView_ItemClicked(object sender, Android.Widget.AdapterView.ItemClickEventArgs e)
+    {
+        if (VirtualView.SelectedText != PlatformView.Text)
+        {
+            VirtualView.SelectedText = PlatformView.Text;
         }
     }
 

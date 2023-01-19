@@ -52,10 +52,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <PackageReference Include="DotNurse.Injector" Version="2.5.2" />
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
 	</ItemGroup>
 
 	<ItemGroup>
+	  <!--<ProjectReference Include="..\..\src\UraniumUI.Dialogs.CommunityToolkit\UraniumUI.Dialogs.CommunityToolkit.csproj" />-->
+	  <ProjectReference Include="..\..\src\UraniumUI.Dialogs.Mopups\UraniumUI.Dialogs.Mopups.csproj" />
 	  <ProjectReference Include="..\..\src\UraniumUI.Icons.MaterialIcons\UraniumUI.Icons.MaterialIcons.csproj" />
 	  <ProjectReference Include="..\..\src\UraniumUI.Material\UraniumUI.Material.csproj" />
 	  <ProjectReference Include="..\..\src\UraniumUI.Validations.DataAnnotations\UraniumUI.Validations.DataAnnotations.csproj" />
@@ -68,6 +71,21 @@
 	  <MauiXaml Update="Pages\**\*.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	</ItemGroup>
+  
+	<ItemGroup>
+	  <Compile Update="Pages\InputFields\AutoCompleteTextFieldPage.xaml.cs">
+	    <DependentUpon>AutoCompleteTextFieldPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Pages\InputFields\TimePickerFieldPage.xaml.cs">
+	    <DependentUpon>TimePickerFieldPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Pages\InputFields\DatePickerFieldPage.xaml.cs">
+	    <DependentUpon>DatePickerFieldPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Pages\InputFields\PickerFieldPage.xaml.cs">
+	    <DependentUpon>PickerFieldPage.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 </Project>

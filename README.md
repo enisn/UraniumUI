@@ -47,11 +47,25 @@ Visit documentation for onboarding.
 ## Contributing 🧑‍💻
 We welcome contributions and suggestions. Please read our [contributing guide](CONTRIBUTING.md).
 
+> You may consider checking out the issues with [good first issue](https://github.com/enisn/UraniumUI/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22) label to make your first contribution.
+
 
 ## Roadmap 🛣️
 
 See [milestones](https://github.com/enisn/UraniumUI/milestones) section in the repository.
 
+## License 📝
+This project is licensed under the Apache License License - see the [LICENSE](LICENSE) file for details.
+
+## Backers 💚
+
+| Special thanks to project supporters 🎉 | - |
+| --- | :---: |
+| [gpproton](https://github.com/gpproton) | ☕/m |
+| [tjlangenkamp](https://github.com/tjlangenkamp) | ☕️☕️☕️☕️☕️ |
+| _Someone without name_ | ☕️☕️☕️ |
+| [kmaclagan-pcl](https://www.buymeacoffee.com/enisn) | ☕️ |
+| [@Geramy](https://github.com/Geramy) | ☕️ |
 
 ## Support 🙏
 
@@ -61,4 +75,12 @@ If you like this project and want to support it, you can <a href="https://www.bu
 
 <div align="center">
 <a href="https://www.buymeacoffee.com/enisn"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=enisn&button_colour=40DCA5&font_colour=ffffff&font_family=Lato&outline_colour=000000&coffee_colour=FFDD00" /></a>
+</div>
+
+***
+
+## Activity
+
+<div align="center">
+  <img src="https://repobeats.axiom.co/api/embed/6fc7aa49770ea08ec85ba5ff5b566df0e9b3ac46.svg" alt="Repobeats analytics image" />
 </div>

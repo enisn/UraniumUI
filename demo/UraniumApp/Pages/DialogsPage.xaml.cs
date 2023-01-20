@@ -47,14 +47,14 @@ public partial class DialogsPage : ContentPage
     {
         var result = await DialogService.DisplayTextPromptAsync("Your Name", "What is your name?", placeholder: "Uvuvwevwevwe...Osas");
 
-        await DisplayAlert("Result:", result, "OK");
+        labelTextPrompt.Text = "Result: " + result;
     }
 
     private async void AskConfirmation(object sender, EventArgs e)
     {
         var result = await DialogService.ConfirmAsync("Confirmation", "Are you sure?", "Yes", "No");
 
-        await DisplayAlert("Result:", result.ToString(), "OK");
+        labelConfirmation.Text = "Result: " + result;
     }
 
     private static IEnumerable<string> GenerateOptions(int count)

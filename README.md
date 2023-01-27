@@ -30,6 +30,9 @@ Visit documentation for onboarding.
 - Infrastructure for building custom controls.
 - [Color System](https://enisn-projects.io/docs/en/uranium/latest/theming/ColorSystem) with easy to customize.
 - Extensible styling.
+- Dialogs
+  - [Mopups](https://enisn-projects.io/docs/en/uranium/latest/dialogs/Index#mopups)
+  - [CommunityToolkit](https://enisn-projects.io/docs/en/uranium/latest/dialogs/Index#communitytoolkit) 
 - Validation Support.
   - [Data Annotations](https://enisn-projects.io/docs/en/uranium/latest/validations/DataAnnotations)
   - [InputKit](https://enisn-projects.io/docs/en/inputkit/latest/components/controls/FormView#validations)

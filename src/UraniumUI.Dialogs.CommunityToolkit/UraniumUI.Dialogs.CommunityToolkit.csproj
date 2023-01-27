@@ -30,7 +30,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="$(TargetFramework.Contains('net7'))">
-    <PackageReference Include="CommunityToolkit.Maui" Version="3.1.0" />
+    <PackageReference Include="CommunityToolkit.Maui" Version="4.0.0" />
   </ItemGroup>
 
   <ItemGroup>

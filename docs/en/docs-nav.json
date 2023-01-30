@@ -94,6 +94,10 @@
               "path": "themes/material/components/TextField.md"
             },
             {
+              "text": "EditorField",
+              "path": "themes/material/components/EditorField.md"
+            },
+            {
               "text": "AutoCompleteTextField",
               "path": "themes/material/components/AutoCompleteTextField.md"
             },

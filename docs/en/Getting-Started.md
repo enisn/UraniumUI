@@ -43,13 +43,9 @@ Also, templates has `ide.host.json` implementation that allows to create a new p
 - Go to `MauiProgram.cs` and add UraniumUI Handlers
 
     ```csharp
-    .ConfigureMauiHandlers(handlers =>
-    {
-        handlers.AddUraniumUIHandlers(); // 👈 This line should be added.
-    });
+    .UseUraniumUI()
+    .UseUraniumUIMaterial() // 👈 Don't forget these two lines.
     ```
-
-
 
 
 - Go to `App.xaml` and add `ColorResource` & `StyleResource` of **Material**

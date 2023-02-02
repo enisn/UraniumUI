@@ -45,14 +45,7 @@ Also, templates has `ide.host.json` implementation that allows to create a new p
     ```csharp
     .UseUraniumUI()
     .UseUraniumUIMaterial() // 👈 Don't forget these two lines.
-    
-    .ConfigureMauiHandlers(handlers =>
-    {
-        handlers.AddUraniumUIHandlers(); // 👈 This line should be added.
-    });
     ```
-
-
 
 
 - Go to `App.xaml` and add `ColorResource` & `StyleResource` of **Material**

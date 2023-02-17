@@ -66,7 +66,8 @@ This project is licensed under the Apache License License - see the [LICENSE](LI
 | --- | :---: |
 | [gpproton](https://github.com/gpproton) | ☕/m |
 | [tjlangenkamp](https://github.com/tjlangenkamp) | ☕️☕️☕️☕️☕️ |
-| _Someone without name_ | ☕️☕️☕️ |
+| [Hottemax](https://github.com/Hottemax) | ☕️☕️☕️ |
+| _Anonymous_ | ☕️☕️☕️ |
 | [kmaclagan-pcl](https://www.buymeacoffee.com/enisn) | ☕️ |
 | [@Geramy](https://github.com/Geramy) | ☕️ |
 

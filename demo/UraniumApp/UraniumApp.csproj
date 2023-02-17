@@ -72,20 +72,5 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
-  
-	<ItemGroup>
-	  <Compile Update="Pages\InputFields\AutoCompleteTextFieldPage.xaml.cs">
-	    <DependentUpon>AutoCompleteTextFieldPage.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Pages\InputFields\TimePickerFieldPage.xaml.cs">
-	    <DependentUpon>TimePickerFieldPage.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Pages\InputFields\DatePickerFieldPage.xaml.cs">
-	    <DependentUpon>DatePickerFieldPage.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Pages\InputFields\PickerFieldPage.xaml.cs">
-	    <DependentUpon>PickerFieldPage.xaml</DependentUpon>
-	  </Compile>
-	</ItemGroup>
 
 </Project>

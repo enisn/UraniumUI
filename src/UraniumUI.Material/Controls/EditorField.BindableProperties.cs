@@ -1,10 +1,5 @@
 ﻿using Microsoft.Maui.Converters;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UraniumUI.Resources;
 
 namespace UraniumUI.Material.Controls;
@@ -94,10 +89,10 @@ public partial class EditorField
         typeof(EditorField),
         propertyChanged: (bindable, oldValue, newValue) => (bindable as EditorField).EditorView.MaxLength = (int)newValue);
     
-    public bool IsReadonly { get => (bool)GetValue(IsReadonlyProperty); set => SetValue(IsReadonlyProperty, value); }
+    public bool IsReadOnly { get => (bool)GetValue(IsReadOnlyProperty); set => SetValue(IsReadOnlyProperty, value); }
 
-    public static readonly BindableProperty IsReadonlyProperty = BindableProperty.Create(
-        nameof(IsReadonly),
+    public static readonly BindableProperty IsReadOnlyProperty = BindableProperty.Create(
+        nameof(IsReadOnly),
         typeof(bool),
         typeof(EditorField),
         false,

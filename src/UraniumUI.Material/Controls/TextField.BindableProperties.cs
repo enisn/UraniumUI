@@ -147,10 +147,10 @@ public partial class TextField
         false,
         propertyChanged: (bindable, oldValue, newValue) => (bindable as TextField).OnAllowClearChanged());
 
-    public bool IsReadonly { get => (bool)GetValue(IsReadonlyProperty); set => SetValue(IsReadonlyProperty, value); }
+    public new bool IsReadOnly { get => (bool)GetValue(IsReadOnlyProperty); set => SetValue(IsReadOnlyProperty, value); }
 
-    public static readonly BindableProperty IsReadonlyProperty = BindableProperty.Create(
-        nameof(IsReadonly),
+    public static readonly BindableProperty IsReadOnlyProperty = BindableProperty.Create(
+        nameof(IsReadOnly),
         typeof(bool),
         typeof(TextField),
         false,

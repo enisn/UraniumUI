@@ -80,16 +80,14 @@ public partial class TextField
     public static readonly BindableProperty ReturnCommandParameterProperty = BindableProperty.Create(
         nameof(ReturnCommandParameter),
         typeof(object),
-        typeof(TextField),
-        propertyChanged: (bindable, oldValue, newValue) => (bindable as TextField).OnPropertyChanged(nameof(ReturnCommandParameter)));
+        typeof(TextField));
 
     public ICommand ReturnCommand { get => (ICommand)GetValue(ReturnCommandProperty); set => SetValue(ReturnCommandProperty, value); }
 
     public static readonly BindableProperty ReturnCommandProperty = BindableProperty.Create(
         nameof(ReturnCommand),
         typeof(ICommand),
-        typeof(TextField), defaultBindingMode: BindingMode.TwoWay,
-        propertyChanged: (bindable, oldValue, newValue) => (bindable as TextField).OnPropertyChanged(nameof(ReturnCommand)));
+        typeof(TextField), defaultBindingMode: BindingMode.TwoWay);
 
     public double CharacterSpacing { get => (double)GetValue(CharacterSpacingProperty); set => SetValue(CharacterSpacingProperty, value); }
 
@@ -112,16 +110,14 @@ public partial class TextField
     public static readonly BindableProperty SelectionLengthProperty = BindableProperty.Create(
         nameof(SelectionLength),
         typeof(int),
-        typeof(TextField),
-        propertyChanged: (bindable, oldValue, newValue) => (bindable as TextField).OnPropertyChanged(nameof(SelectionLength)));
+        typeof(TextField));
 
     public int CursorPosition { get => (int)GetValue(CursorPositionProperty); set => SetValue(CursorPositionProperty, value); }
 
     public static readonly BindableProperty CursorPositionProperty = BindableProperty.Create(
         nameof(CursorPosition),
         typeof(int),
-        typeof(TextField),
-        propertyChanged: (bindable, oldValue, newValue) => (bindable as TextField).OnPropertyChanged(nameof(CursorPosition)));
+        typeof(TextField));
 
     public bool IsTextPredictionEnabled { get => (bool)GetValue(IsTextPredictionEnabledProperty); set => SetValue(IsTextPredictionEnabledProperty, value); }
 
@@ -153,6 +149,5 @@ public partial class TextField
         nameof(IsReadOnly),
         typeof(bool),
         typeof(TextField),
-        false,
-        propertyChanged: (bindable, oldValue, newValue) => (bindable as TextField).OnPropertyChanged(nameof(IsReadOnly)));
+        false);
 }

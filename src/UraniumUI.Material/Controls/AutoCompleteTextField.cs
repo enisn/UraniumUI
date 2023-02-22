@@ -136,8 +136,7 @@ public class AutoCompleteTextField : InputField
         typeof(string),
         typeof(AutoCompleteView),
         string.Empty,
-        BindingMode.TwoWay,
-        propertyChanged: (bindable, oldValue, newValue) => (bindable as AutoCompleteTextField).OnPropertyChanged(nameof(Text)));
+        BindingMode.TwoWay);
    
     public string SelectedText { get => (string)GetValue(SelectedTextProperty); set => SetValue(SelectedTextProperty, value); }
 
@@ -146,16 +145,14 @@ public class AutoCompleteTextField : InputField
         typeof(string),
         typeof(AutoCompleteView),
         string.Empty,
-        BindingMode.TwoWay,
-        propertyChanged: (bindable, oldValue, newValue) => (bindable as AutoCompleteTextField).OnPropertyChanged(nameof(SelectedText)));
+        BindingMode.TwoWay);
 
     public IList<string> ItemsSource { get => (IList<string>)GetValue(ItemsSourceProperty); set => SetValue(ItemsSourceProperty, value); }
 
     public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(nameof(ItemsSource),
             typeof(IList<string>),
             typeof(AutoCompleteView),
-            null,
-        propertyChanged: (bindable, oldValue, newValue) => (bindable as AutoCompleteTextField).OnPropertyChanged(nameof(ItemsSource)));
+            null);
 
 
     public Color TextColor { get => (Color)GetValue(TextColorProperty); set => SetValue(TextColorProperty, value); }

@@ -7,9 +7,7 @@ public partial class BackdropView
         set => SetValue(TitleProperty, value);
     }
 
-    public static readonly BindableProperty TitleProperty =
-    BindableProperty.Create(nameof(Title), typeof(string), typeof(BackdropView),
-    propertyChanged: (bo, ov, nv) => (bo as BackdropView).OnPropertyChanged(nameof(Title)));
+    public static readonly BindableProperty TitleProperty = BindableProperty.Create(nameof(Title), typeof(string), typeof(BackdropView));
 
     public ImageSource IconImageSource
     {
@@ -17,9 +15,7 @@ public partial class BackdropView
         set => SetValue(IconImageSourceProperty, value);
     }
 
-    public static readonly BindableProperty IconImageSourceProperty =
-        BindableProperty.Create(nameof(IconImageSource), typeof(ImageSource), typeof(BackdropView),
-            propertyChanged: (bo, ov, nv) => (bo as BackdropView).OnPropertyChanged(nameof(IconImageSource)));
+    public static readonly BindableProperty IconImageSourceProperty = BindableProperty.Create(nameof(IconImageSource), typeof(ImageSource), typeof(BackdropView));
 
     public bool IsPresented { get => (bool)GetValue(IsPresentedProperty); set => SetValue(IsPresentedProperty, value); }
 

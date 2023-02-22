@@ -25,8 +25,7 @@ public partial class DataGrid
     public Color LineSeperatorColor { get => (Color)GetValue(LineSeperatorColorProperty); set => SetValue(LineSeperatorColorProperty, value); }
 
     public static readonly BindableProperty LineSeperatorColorProperty =
-        BindableProperty.Create(nameof(LineSeperatorColor), typeof(Color), typeof(DataGrid), defaultValue: Colors.Gray,
-            propertyChanged: (bo, ov, nv) => (bo as DataGrid).OnPropertyChanged(nameof(LineSeperatorColor)));
+        BindableProperty.Create(nameof(LineSeperatorColor), typeof(Color), typeof(DataGrid), defaultValue: Colors.Gray);
 
     public bool UseAutoColumns { get => (bool)GetValue(UseAutoColumnsProperty); set => SetValue(UseAutoColumnsProperty, value); }
 

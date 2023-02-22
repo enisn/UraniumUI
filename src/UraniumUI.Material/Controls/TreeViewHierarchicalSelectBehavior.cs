@@ -40,13 +40,8 @@ public class TreeViewHierarchicalSelectBehavior : Behavior<CheckBox>
 
     protected virtual void ApplyHierarchicalSelection(CheckBox checkBox)
     {
-        var holder = checkBox.FindInParents<TreeViewNodeHolderView>();
-        if (holder == null)
-        {
-            throw new InvalidOperationException("CheckBox isn't in a TreeView ItemTemplate");
-        }
-
-        foreach (TreeViewNodeHolderView child in holder.NodeChildren.Where(x => x is TreeViewNodeHolderView))
+        var holder = checkBox.FindInParents<TreeViewNodeHolderView>() ?? throw new InvalidOperationException("CheckBox isn't in a TreeView ItemTemplate");
+		foreach (TreeViewNodeHolderView child in holder.NodeChildren.Where(x => x is TreeViewNodeHolderView))
         {
             var childCheckBox = (child.NodeView as CheckBox);
             if (childCheckBox.IsChecked != checkBox.IsChecked)

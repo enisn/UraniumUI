@@ -11,7 +11,7 @@ public class DatePickerField_Test
     }
 
     [Fact]
-    public void Date_BindingForInitializtion_FromSource()
+    public void Date_BindingForInitialization_FromSource()
     {
         var control = AnimationReadyHandler.Prepare(new DatePickerField());
         var viewModel = new TestViewModel { Date = DateTime.Now.AddDays(2) };

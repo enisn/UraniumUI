@@ -101,7 +101,7 @@ public partial class TreeView : VerticalStackLayout
     public bool UseAnimation { get; set; } = true;
 
     /// <summary>
-    /// Only indicates if TreeView is busy or not. Doesn't affect anythig visually.
+    /// Only indicates if TreeView is busy or not. Doesn't affect anything visually.
     /// </summary>
     public bool IsBusy { get; set; }
 

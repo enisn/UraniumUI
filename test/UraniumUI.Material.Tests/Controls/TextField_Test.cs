@@ -14,7 +14,7 @@ public class TextField_Test
     }
 
     [Fact]
-    public void Text_BindingForInitializtion_FromSource()
+    public void Text_BindingForInitialization_FromSource()
     {
         var control = AnimationReadyHandler.Prepare(new TextField());
         var viewModel = new TestViewModel { Text = "Text Initial Value" };

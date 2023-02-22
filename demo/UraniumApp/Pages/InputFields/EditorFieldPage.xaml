@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             xmlns:root="clr-namespace:UraniumApp"
+             x:Class="UraniumApp.Pages.InputFields.EditorFieldPage"
+             Title="TextField">
+    <Grid Padding="30" RowDefinitions="Auto,*" RowSpacing="30" MaximumWidthRequest="400">
+
+        <material:EditorField x:Name="ref" Title="Name" Icon="{FontImageSource Glyph={x:Static uranium:MaterialTwoTone.Person_2}, FontFamily=MaterialTwoTone}"/>
+
+
+        <root:PropertyEditorView Grid.Row="1"
+            Hierarchical="True"
+            HierarchyLimitType="{x:Type material:InputField}"
+            Value="{Binding ., Source={x:Reference ref}}" />
+    </Grid>
+</ContentPage>

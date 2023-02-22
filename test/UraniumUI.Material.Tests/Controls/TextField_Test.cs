@@ -56,8 +56,6 @@ public class TextField_Test
 		monitoredSubject.Should().RaisePropertyChangeFor(x => x.Text).ShouldHaveSingleItem();
 	}
 
-	
-
 	[Fact]
     public void Text_Binding_ToSource()
     {

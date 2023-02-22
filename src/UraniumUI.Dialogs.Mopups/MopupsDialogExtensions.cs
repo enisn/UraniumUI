@@ -8,12 +8,14 @@ using CheckBox = InputKit.Shared.Controls.CheckBox;
 namespace UraniumUI.Dialogs.Mopups;
 public static class MopupsDialogExtensions
 {
+    static readonly Color backdropColor = Colors.Black.WithAlpha(.6f);
     public static async Task<bool> ConfirmAsync(this Page page, string title, string message, string okText = "OK", string cancelText = "Cancel")
     {
         var tcs = new TaskCompletionSource<bool>();
 
         await MopupService.Instance.PushAsync(new PopupPage
         {
+            BackgroundColor = backdropColor,
             CloseWhenBackgroundIsClicked = false,
             Content = GetFrame(page.Width, new VerticalStackLayout
             {
@@ -103,6 +105,7 @@ public static class MopupsDialogExtensions
 
         await MopupService.Instance.PushAsync(new PopupPage
         {
+            BackgroundColor = backdropColor,
             CloseWhenBackgroundIsClicked = false,
             Content = GetFrame(page.Width, rootGrid)
         });
@@ -169,6 +172,8 @@ public static class MopupsDialogExtensions
 
         await MopupService.Instance.PushAsync(new PopupPage
         {
+            BackgroundColor = backdropColor,
+            CloseWhenBackgroundIsClicked = false,
             Content = GetFrame(page.Width, rootGrid)
         });
 
@@ -217,6 +222,7 @@ public static class MopupsDialogExtensions
 
         await MopupService.Instance.PushAsync(new PopupPage
         {
+            BackgroundColor = backdropColor,
             CloseWhenBackgroundIsClicked = false,
             Content = GetFrame(page.Width, new VerticalStackLayout
             {

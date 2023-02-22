@@ -43,11 +43,16 @@ public partial class DialogsPage : ContentPage
         checkBoxResultListView.ItemsSource = result;
     }
 
+    private string lastTextInput = string.Empty;
     private async void AskTextPrompt(object sender, EventArgs e)
     {
-        var result = await DialogService.DisplayTextPromptAsync("Your Name", "What is your name?", placeholder: "Uvuvwevwevwe...Osas");
+        lastTextInput = await DialogService.DisplayTextPromptAsync(
+            "Your Name",
+            "What is your name?",
+            placeholder: "Uvuvwevwevwe...Osas",
+            initialValue: lastTextInput);
 
-        labelTextPrompt.Text = "Result: " + result;
+        labelTextPrompt.Text = "Result: " + lastTextInput;
     }
 
     private async void AskConfirmation(object sender, EventArgs e)

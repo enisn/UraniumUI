@@ -31,12 +31,12 @@ public static class MopupsDialogExtensions
                     GetFooter(
                         okText, new Command(()=>
                         {
-                            tcs.SetResult(true);
+                            tcs.TrySetResult(true);
                             MopupService.Instance.PopAsync();
                         }),
                         cancelText, new Command(()=>
                         {
-                            tcs.SetResult(false);
+                            tcs.TrySetResult(false);
                             MopupService.Instance.PopAsync();
                         }))
                 }
@@ -93,12 +93,12 @@ public static class MopupsDialogExtensions
         rootGrid.Add(GetFooter(
             accept, new Command(() =>
             {
-                tcs.SetResult(checkBoxGroup.Children.Where(x => x is CheckBox checkbox && checkbox.IsChecked).Select(s => (T)(s as CheckBox).CommandParameter));
+                tcs.TrySetResult(checkBoxGroup.Children.Where(x => x is CheckBox checkbox && checkbox.IsChecked).Select(s => (T)(s as CheckBox).CommandParameter));
                 MopupService.Instance.PopAsync();
             }),
             cancel, new Command(() =>
             {
-                tcs.SetResult(null);
+                tcs.TrySetResult(null);
                 MopupService.Instance.PopAsync();
             })
         ), row: 3);
@@ -160,12 +160,12 @@ public static class MopupsDialogExtensions
         rootGrid.Add(GetFooter(
             accept, new Command(() =>
             {
-                tcs.SetResult((T)rbGroup.SelectedItem);
+                tcs.TrySetResult((T)rbGroup.SelectedItem);
                 MopupService.Instance.PopAsync();
             }),
             cancel, new Command(() =>
             {
-                tcs.SetResult(default);
+                tcs.TrySetResult(default);
                 MopupService.Instance.PopAsync();
             })
         ), row: 3);
@@ -239,12 +239,12 @@ public static class MopupsDialogExtensions
                     GetFooter(
                         accept, new Command(()=>
                         {
-                            tcs.SetResult(entry.Text);
+                            tcs.TrySetResult(entry.Text);
                             MopupService.Instance.PopAsync();
                         }),
                         cancel, new Command(()=>
                         {
-                            tcs.SetResult(null);
+                            tcs.TrySetResult(initialValue);
                             MopupService.Instance.PopAsync();
                         }))
                 }

@@ -384,15 +384,15 @@ public static class CommunityToolkitDialogExtensions
 
         var footer = GetFooter(
             accept,
-        new Command(() =>
-        {
-            tcs.SetResult(entry.Text);
-            popup.Close();
-        }),
+            new Command(() =>
+            {
+                tcs.SetResult(entry.Text);
+                popup.Close();
+            }),
             cancel,
             new Command(() =>
             {
-                tcs.SetResult(null);
+                tcs.SetResult(initialValue);
                 popup.Close();
             }));
 

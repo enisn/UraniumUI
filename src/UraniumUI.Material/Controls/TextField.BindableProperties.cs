@@ -22,7 +22,7 @@ public partial class TextField
         {
             var textField = (TextField)bindable;
             textField.UpdateClearIconState();
-        }, propertyChanged: (bindable, oldValue, newValue) => (bindable as TextField).OnPropertyChanged(nameof(Text)));
+        });
 
     public Color TextColor { get => (Color)GetValue(TextColorProperty); set => SetValue(TextColorProperty, value); }
 

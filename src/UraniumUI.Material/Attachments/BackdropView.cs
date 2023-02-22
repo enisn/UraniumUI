@@ -1,8 +1,7 @@
-﻿using Microsoft.Maui.Controls;
-using Microsoft.Maui.Controls.Shapes;
-using UraniumUI.Pages;
+﻿using UraniumUI.Pages;
 
 namespace UraniumUI.Material.Attachments;
+
 public partial class BackdropView : ContentView, IPageAttachment
 {
     public UraniumContentPage AttachedPage { get; protected set; }
@@ -49,17 +48,17 @@ public partial class BackdropView : ContentView, IPageAttachment
     {
         if (!isPresented)
         {
-            await AttachedPage.ContentFrame.TranslateTo(0, isPresented ? this.Content.Height : 0);
+            await AttachedPage.ContentFrame.TranslateTo(0, 0);
         }
 
-        foreach (BackdropView backdrop in AttachedPage.Attachments.Where(x => x is BackdropView))
+        foreach (BackdropView backdrop in AttachedPage.Attachments.Where(x => x is BackdropView).Cast<BackdropView>())
         {
             backdrop.IsVisible = isPresented && backdrop == this;
         }
 
         if (isPresented)
         {
-            await AttachedPage.ContentFrame.TranslateTo(0, isPresented ? this.Content.Height : 0);
+            await AttachedPage.ContentFrame.TranslateTo(0, Content.Height);
         }
     }
 }

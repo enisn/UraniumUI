@@ -11,7 +11,7 @@ public class TimePickerField_Test
     }
 
     [Fact]
-    public void Time_BindingForInitializtion_FromSource()
+    public void Time_BindingForInitialization_FromSource()
     {
         var control = AnimationReadyHandler.Prepare(new TimePickerField());
         var viewModel = new TestViewModel { Time = TimeSpan.FromHours(2) };

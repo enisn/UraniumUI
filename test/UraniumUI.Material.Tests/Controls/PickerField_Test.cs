@@ -15,7 +15,7 @@ public class PickerField_Test
     private string[] GetItemsSource() => new string[] { "Option 1", "Option 2", "Option 3", "Option 4", };
 
     [Fact]
-    public void SelectedItem_BindingForInitializtion_FromSource()
+    public void SelectedItem_BindingForInitialization_FromSource()
     {
         var control = AnimationReadyHandler.Prepare(new PickerField());
         var viewModel = new TestViewModel { SelectedItem = "Option 3" };

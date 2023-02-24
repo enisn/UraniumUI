@@ -12,8 +12,7 @@ public partial class EditorField
         typeof(string),
         typeof(EditorField),
         string.Empty,
-        BindingMode.TwoWay, 
-        propertyChanged: (bindable, oldValue, newValue) => (bindable as EditorField).OnPropertyChanged(nameof(Text)));
+        BindingMode.TwoWay);
 
     public Color TextColor { get => (Color)GetValue(TextColorProperty); set => SetValue(TextColorProperty, value); }
 
@@ -61,16 +60,14 @@ public partial class EditorField
     public static readonly BindableProperty SelectionLengthProperty = BindableProperty.Create(
         nameof(SelectionLength),
         typeof(int),
-        typeof(EditorField),
-        propertyChanged: (bindable, oldValue, newValue) => (bindable as EditorField).OnPropertyChanged(nameof(SelectionLength)));
+        typeof(EditorField));
 
     public int CursorPosition { get => (int)GetValue(CursorPositionProperty); set => SetValue(CursorPositionProperty, value); }
 
     public static readonly BindableProperty CursorPositionProperty = BindableProperty.Create(
         nameof(CursorPosition),
         typeof(int),
-        typeof(EditorField),
-        propertyChanged: (bindable, oldValue, newValue) => (bindable as EditorField).OnPropertyChanged(nameof(CursorPosition)));
+        typeof(EditorField));
 
     public bool IsTextPredictionEnabled { get => (bool)GetValue(IsTextPredictionEnabledProperty); set => SetValue(IsTextPredictionEnabledProperty, value); }
 

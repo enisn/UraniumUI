@@ -35,7 +35,7 @@ public partial class DataGrid
             Opacity = .4
         };
 
-        boxView.SetBinding(BoxView.ColorProperty, new Binding(nameof(LineSeperatorColor), source: this));
+        boxView.SetBinding(BoxView.ColorProperty, new Binding(nameof(LineSeparatorColor), source: this));
 
         return boxView;
     }

@@ -22,11 +22,10 @@ public partial class DataGrid
         BindableProperty.Create(nameof(TitleTemplate), typeof(DataTemplate), typeof(DataGrid), defaultValue: null,
             propertyChanged: (bo, ov, nv) => (bo as DataGrid).OnTitleTemplateChanged());
 
-    public Color LineSeperatorColor { get => (Color)GetValue(LineSeperatorColorProperty); set => SetValue(LineSeperatorColorProperty, value); }
+    public Color LineSeparatorColor { get => (Color)GetValue(LineSeparatorColorProperty); set => SetValue(LineSeparatorColorProperty, value); }
 
-    public static readonly BindableProperty LineSeperatorColorProperty =
-        BindableProperty.Create(nameof(LineSeperatorColor), typeof(Color), typeof(DataGrid), defaultValue: Colors.Gray,
-            propertyChanged: (bo, ov, nv) => (bo as DataGrid).OnPropertyChanged(nameof(LineSeperatorColor)));
+    public static readonly BindableProperty LineSeparatorColorProperty =
+        BindableProperty.Create(nameof(LineSeparatorColor), typeof(Color), typeof(DataGrid), defaultValue: Colors.Gray);
 
     public bool UseAutoColumns { get => (bool)GetValue(UseAutoColumnsProperty); set => SetValue(UseAutoColumnsProperty, value); }
 

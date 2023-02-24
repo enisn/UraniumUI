@@ -297,8 +297,7 @@ public partial class InputField : Grid
         nameof(AccentColor),
         typeof(Color),
         typeof(InputField),
-        ColorResource.GetColor("Primary", "PrimaryDark", Colors.Purple),
-        propertyChanged: (bindable, oldValue, newValue) => (bindable as InputField).OnPropertyChanged(nameof(AccentColor)));
+        ColorResource.GetColor("Primary", "PrimaryDark", Colors.Purple));
 
     public Color TitleColor { get => (Color)GetValue(TitleColorProperty); set => SetValue(TitleColorProperty, value); }
 

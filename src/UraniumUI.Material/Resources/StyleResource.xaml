@@ -275,7 +275,7 @@
 
                 <Style TargetType="c:DataGrid">
                     <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource  Surface},Dark={StaticResource  SurfaceDark}}" />
-                    <Setter Property="LineSeperatorColor" Value="{StaticResource Gray300}"/>
+                    <Setter Property="LineSeparatorColor" Value="{StaticResource Gray300}"/>
                     <Setter Property="SelectionColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
                 </Style>
 

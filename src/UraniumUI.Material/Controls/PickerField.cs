@@ -151,8 +151,7 @@ public class PickerField : InputField
 	public static readonly BindableProperty SelectedIndexProperty = BindableProperty.Create(
 		nameof(SelectedIndex), typeof(int), typeof(PickerField),
 		defaultValue: Picker.SelectedIndexProperty.DefaultValue,
-		defaultBindingMode: BindingMode.TwoWay,
-		propertyChanged: (bindable, oldValue, newValue) => (bindable as PickerField).OnPropertyChanged(nameof(SelectedIndex)));
+		defaultBindingMode: BindingMode.TwoWay);
 
 	public IList ItemsSource { get => (IList)GetValue(ItemsSourceProperty); set => SetValue(ItemsSourceProperty, value); }
 

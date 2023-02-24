@@ -15,7 +15,7 @@ namespace UraniumApp
     {
         public object Value { get => GetValue(ValueProperty); set => SetValue(ValueProperty, value); }
         public static readonly BindableProperty ValueProperty = BindableProperty.Create(
-            "Value",
+            nameof(Value),
             typeof(object),
             typeof(PropertyEditorView),
             propertyChanged: (bindable, oldValue, newValue)=> (bindable as PropertyEditorView).Render());

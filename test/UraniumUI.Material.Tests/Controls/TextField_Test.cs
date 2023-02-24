@@ -1,4 +1,6 @@
-﻿using Shouldly;
+﻿using FluentAssertions;
+using NSubstitute;
+using Shouldly;
 using System.Windows.Input;
 using UraniumUI.Material.Controls;
 using UraniumUI.Tests.Core;
@@ -12,7 +14,7 @@ public class TextField_Test
     }
 
     [Fact]
-    public void Text_BindingForInitializtion_FromSource()
+    public void Text_BindingForInitialization_FromSource()
     {
         var control = AnimationReadyHandler.Prepare(new TextField());
         var viewModel = new TestViewModel { Text = "Text Initial Value" };
@@ -38,7 +40,23 @@ public class TextField_Test
         control.Text.ShouldBe(viewModel.Text);
     }
 
-    [Fact]
+	[Fact]
+	public void Text_Binding_RaisesPropertyChangedEvent_ExactlyOnce()
+	{
+		var control = AnimationReadyHandler.Prepare(new TextField());
+		var viewModel = new TestViewModel { Text = "Text Initial Value" };
+		control.BindingContext = viewModel;
+		control.SetBinding(TextField.TextProperty, new Binding(nameof(TestViewModel.Text)));
+
+		var monitoredSubject = control.Monitor();
+		// Act
+		viewModel.Text = "Changed Value";
+
+		// Assert
+		monitoredSubject.Should().RaisePropertyChangeFor(x => x.Text).ShouldHaveSingleItem();
+	}
+
+	[Fact]
     public void Text_Binding_ToSource()
     {
         var control = AnimationReadyHandler.Prepare(new TextField());

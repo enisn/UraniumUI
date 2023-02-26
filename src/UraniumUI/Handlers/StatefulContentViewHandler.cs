@@ -35,7 +35,9 @@ public class StatefulContentViewHandler : ContentViewHandler
 
         platformView.Touch += OnTouch;
         platformView.Hover += NativeView_Hover;
+        platformView.Click += PlatformView_Click;
         platformView.LongClick += PlatformView_LongClick;
+
         return platformView;
     }
 
@@ -73,12 +75,19 @@ public class StatefulContentViewHandler : ContentViewHandler
         {
             GoToState(StatefulView, "Pressed");
             ExecuteCommandIfCan(StatefulView.PressedCommand);
+            e.Handled = false;
         }
         else if (e.Event.Action == MotionEventActions.Up || e.Event.Action == MotionEventActions.Cancel)
         {
             GoToState(StatefulView, CommonStates.Normal);
-            ExecuteCommandIfCan(StatefulView.TappedCommand);
+            e.Handled = false;
         }
+    }
+
+    private void PlatformView_Click(object sender, EventArgs e)
+    {
+        GoToState(StatefulView, CommonStates.Normal);
+        ExecuteCommandIfCan(StatefulView.TappedCommand);
     }
 
     private void PlatformView_LongClick(object sender, Android.Views.View.LongClickEventArgs e)

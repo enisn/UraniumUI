@@ -14,12 +14,5 @@ public partial class App : Application
         SelectionView.GlobalSetting.Color = ColorResource.GetColor("Secondary", "SecondaryDark");
 
         MainPage = new AppShell();
-
-
-        var res = Application.Current.Resources.MergedDictionaries.SelectMany(sm => sm).ToList();
-
-        var styles = res.Where(x => x.Value is Style);
-
-        Console.WriteLine(styles);
     }
 }

@@ -6,13 +6,20 @@ namespace UraniumApp;
 
 public partial class App : Application
 {
-	public App()
-	{
-		InitializeComponent();
+    public App()
+    {
+        InitializeComponent();
 
         SelectionView.GlobalSetting.CornerRadius = 0;
         SelectionView.GlobalSetting.Color = ColorResource.GetColor("Secondary", "SecondaryDark");
 
-        MainPage = new AppShell();		
-	}
+        MainPage = new AppShell();
+
+
+        var res = Application.Current.Resources.MergedDictionaries.SelectMany(sm => sm).ToList();
+
+        var styles = res.Where(x => x.Value is Style);
+
+        Console.WriteLine(styles);
+    }
 }

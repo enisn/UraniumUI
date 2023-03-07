@@ -13,12 +13,12 @@
 
                 <input:FormView Spacing="20">
 
-                    <material:TextField Title="E-mail" Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Email}}">
+                    <material:TextField Title="E-mail *" Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Email}}">
                         <validation:RequiredValidation />
                         <validation:RegexValidation Pattern="{x:Static input:AdvancedEntry.REGEX_EMAIL}" Message="Invalid email address" />
                     </material:TextField>
 
-                    <material:TextField Title="Name" AllowClear="True" Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Person}}">
+                    <material:TextField Title="Name *" AllowClear="True" Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Person}}">
                         <validation:LettersOnlyValidation AllowSpaces="True" />
                         <validation:RequiredValidation />
                         <validation:MinLengthValidation MinLength="5" />
@@ -67,7 +67,7 @@
                         </material:TextField.Validations>
                     </material:TextField>
 
-                    <material:DatePickerField Title="What is your birth date?"  Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Calendar_month}}">
+                    <material:DatePickerField Title="What is your birth date? *"  Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Calendar_month}}">
                         <validation:MinValueValidation MinValue="9/18/2022" />
                         <validation:RequiredValidation />
                     </material:DatePickerField>

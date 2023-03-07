@@ -1,6 +1,8 @@
 ﻿using Microsoft.Maui.Controls.Shapes;
 using UraniumUI.Resources;
 using UraniumUI.Extensions;
+using System.ComponentModel;
+using InputKit.Shared.Validations;
 
 namespace UraniumUI.Material.Controls;
 
@@ -99,6 +101,16 @@ public partial class InputField : Grid
         labelTitle.SetBinding(Label.TextProperty, new Binding(nameof(Title), source: this));
 
         InitializeValidation();
+        // TODO: Not sure if this is the right place/way to listen to the validation changes.
+        Content.PropertyChanged += OnValidationsChanged;
+    }
+
+    private void OnValidationsChanged(object s, PropertyChangedEventArgs e)
+    {
+        if (Validations.Any(v => v is RequiredValidation) && !Title.EndsWith("*"))
+        {
+            Title += "*";
+        }
     }
 
     ~InputField()

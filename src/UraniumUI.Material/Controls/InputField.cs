@@ -76,6 +76,7 @@ public partial class InputField : Grid
 
     public InputField()
     {
+        this.Padding = new Thickness(0, 5, 0, 0);
         border.StrokeShape = new RoundRectangle
         {
             CornerRadius = this.CornerRadius,
@@ -126,7 +127,7 @@ public partial class InputField : Grid
 
     private void InitializeBorder()
     {
-        var perimeter = (this.Width + this.Height) * 2; 
+        var perimeter = (this.Width + this.Height) * 2;
         var calculatedFirstDash = FirstDash + CornerRadius.Clamp(FirstDash, double.MaxValue);
         var space = (labelTitle.Width + calculatedFirstDash) * .8;
 

@@ -25,7 +25,14 @@ public class TreeViewNodeHolderView : VerticalStackLayout
         IsVisible = false
     };
 
-    protected HorizontalStackLayout rowStack;
+    protected Grid rowStack = new Grid
+    {
+        ColumnDefinitions =
+        {
+            new ColumnDefinition(GridLength.Auto),
+            new ColumnDefinition(GridLength.Star),
+        }
+    };
 
     public DataTemplate DataTemplate { get; }
 
@@ -58,14 +65,9 @@ public class TreeViewNodeHolderView : VerticalStackLayout
         this.SetBinding(SpacingProperty, new Binding(nameof(TreeView.Spacing), source: treeView));
         nodeChildren.SetBinding(VerticalStackLayout.SpacingProperty, new Binding(nameof(TreeView.Spacing), source: treeView));
 
-        this.Add(rowStack = new HorizontalStackLayout
-        {
-            Children =
-            {
-                expanderView,
-                nodeContainer
-            }
-        });
+        rowStack.Add(expanderView);
+        rowStack.Add(nodeContainer, column: 1);
+        this.Add(rowStack);
         this.Add(nodeChildren);
 
         if (!string.IsNullOrEmpty(TreeView.IsExpandedPropertyName))

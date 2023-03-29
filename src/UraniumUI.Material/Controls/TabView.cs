@@ -37,7 +37,11 @@ public partial class TabView : Grid
             {
                 new GenericTriggerAction<Grid>((sender) =>
                 {
-                    sender.BackgroundColor = ColorResource.GetColor("Primary", "PrimaryDark").WithAlpha(.2f);
+                    sender.SetAppThemeColor(
+                        Grid.BackgroundColorProperty,
+                        ColorResource.GetColor("Primary").WithAlpha(.2f),
+                        ColorResource.GetColor("PrimaryDark").WithAlpha(.2f)
+                    );
 
                     var box = (sender.Children.FirstOrDefault(x => x is BoxView) as BoxView);
 

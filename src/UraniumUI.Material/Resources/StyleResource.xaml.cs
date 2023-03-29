@@ -1,69 +1,96 @@
-﻿namespace UraniumUI.Material.Resources;
+﻿using UraniumUI.Extensions;
+
+namespace UraniumUI.Material.Resources;
 
 public partial class StyleResource : ResourceDictionary
 {
     private ResourceDictionary basedOn;
+    private ResourceDictionary overriddenBy;
+    private ResourceDictionary colorsOverride;
 
     public StyleResource()
     {
         InitializeComponent();
     }
 
-    public ResourceDictionary MergeWith
+    public ResourceDictionary BasedOn
     {
         get => basedOn;
         set
         {
-            basedOn = value; ApplyMerge();
+            basedOn = value;
+            if (value != null)
+            {
+                ApplyBasedOn();
+            }
         }
     }
 
-    public MergeType MergeType { get; set; }
+    public ResourceDictionary OverriddenBy
+    {
+        get => overriddenBy;
+        set
+        {
+            overriddenBy = value;
+            if (value != null)
+            {
+                ApplyOverriddenBy();
+            }
+        }
+    }
+    public ResourceDictionary ColorsOverride
+    {
+        get => colorsOverride;
+        set
+        {
+            colorsOverride = value;
+            ApplyColorOverride();
+        }
+    }
 
-    protected virtual void ApplyMerge()
+    protected virtual void ApplyOverriddenBy()
+    {
+        var thisStyleDict = this.MergedDictionaries.Skip(1).First();
+
+        foreach (var key in thisStyleDict.Keys)
+        {
+            if (OverriddenBy.TryGetValue(key, out object value) && value is Style overriderStyle)
+            {
+                if (thisStyleDict[key] is Style thisStyle)
+                {
+                    thisStyle.OverrideBy(overriderStyle);
+                }
+            }
+        }
+    }
+
+    protected virtual void ApplyColorOverride()
+    {
+        var thisColorDict = this.MergedDictionaries.First();
+
+        foreach (var overrideKey in ColorsOverride.Keys)
+        {
+            if (thisColorDict.TryGetValue(overrideKey, out object value) && value is Color thisColor)
+            {
+                thisColorDict[overrideKey] = ColorsOverride[overrideKey];
+            }
+        }
+
+    }
+
+    protected virtual void ApplyBasedOn()
     {
         var styleDict = this.MergedDictionaries.Skip(1).First();
 
         foreach (var key in styleDict.Keys)
         {
-            if (MergeWith.TryGetValue(key, out object value) && value is Style baseStyle)
+            if (BasedOn.TryGetValue(key, out object value) && value is Style baseStyle)
             {
                 if (styleDict[key] is Style thisStyle)
                 {
-                    MapStyle(baseStyle, thisStyle);
+                    thisStyle.BaseOn(baseStyle);
                 }
             }
         }
     }
-
-    protected virtual void MapStyle(Style source, Style destination)
-    {
-        if (MergeType == MergeType.DestionationPrefferred)
-        {
-            foreach (var setter in source.Setters)
-            {
-                if (destination.Setters.Any(x => x.Property.PropertyName == setter.Property.PropertyName))
-                {
-                    continue;
-                }
-
-                destination.Setters.Add(setter);
-            }
-        }
-        else
-        {
-            foreach (var setter in source.Setters)
-            {
-                destination.Setters.Remove(
-                    destination.Setters.FirstOrDefault(x => x.Property.PropertyName == setter.Property.PropertyName));
-                destination.Setters.Add(setter);
-            }
-        }
-    }
-}
-
-public enum MergeType
-{
-    DestionationPrefferred,
-    SourcePrefferred,
 }

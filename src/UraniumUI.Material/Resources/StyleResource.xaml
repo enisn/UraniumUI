@@ -18,8 +18,7 @@
             </Style>
 
             <Style TargetType="Label" ApplyToDerivedTypes="True">
-                <!--<Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnBackground},Dark={StaticResource OnBackgroundDark}}" />-->
-                <Setter Property="TextColor" Value="Red" />
+                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnBackground},Dark={StaticResource OnBackgroundDark}}" />
             </Style>
 
             <Style TargetType="Frame" ApplyToDerivedTypes="True">

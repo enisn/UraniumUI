@@ -1,19 +1,37 @@
-﻿using UraniumUI.Extensions;
+﻿using Microsoft.Maui.Controls;
+using System.Collections.ObjectModel;
+using UraniumUI.Extensions;
 
 namespace UraniumUI.Material.Resources;
 
-public partial class StyleResource : ResourceDictionary
+public partial class StyleResource : ResourceDictionary, Microsoft.Maui.Controls.Internals.IResourceDictionary
 {
     private ResourceDictionary basedOn;
-    private ResourceDictionary overriddenBy;
     private ResourceDictionary colorsOverride;
 
     public StyleResource()
     {
         InitializeComponent();
+        Overrides.CollectionChanged += (s, e) =>
+        {
+            if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
+            {
+                foreach (var item in e.NewItems)
+                {
+                    ApplyOverriddenBy(item as ResourceDictionary);
+				}
+			}
+		};
+
+		(this as Microsoft.Maui.Controls.Internals.IResourceDictionary).ValuesChanged += StyleResource_ValuesChanged;
     }
 
-    public ResourceDictionary BasedOn
+	private void StyleResource_ValuesChanged(object sender, Microsoft.Maui.Controls.Internals.ResourcesChangedEventArgs e)
+	{
+        Console.WriteLine(  ".....");
+    }
+
+	public ResourceDictionary BasedOn
     {
         get => basedOn;
         set
@@ -26,18 +44,8 @@ public partial class StyleResource : ResourceDictionary
         }
     }
 
-    public ResourceDictionary OverriddenBy
-    {
-        get => overriddenBy;
-        set
-        {
-            overriddenBy = value;
-            if (value != null)
-            {
-                ApplyOverriddenBy();
-            }
-        }
-    }
+    public ObservableCollection<ResourceDictionary> Overrides { get; set; } = new();
+
     public ResourceDictionary ColorsOverride
     {
         get => colorsOverride;
@@ -48,13 +56,13 @@ public partial class StyleResource : ResourceDictionary
         }
     }
 
-    protected virtual void ApplyOverriddenBy()
+    protected virtual void ApplyOverriddenBy(ResourceDictionary overriddenBy)
     {
         var thisStyleDict = this.MergedDictionaries.Skip(1).First();
 
         foreach (var key in thisStyleDict.Keys)
         {
-            if (OverriddenBy.TryGetValue(key, out object value) && value is Style overriderStyle)
+            if (overriddenBy.TryGetValue(key, out object value) && value is Style overriderStyle)
             {
                 if (thisStyleDict[key] is Style thisStyle)
                 {
@@ -75,7 +83,6 @@ public partial class StyleResource : ResourceDictionary
                 thisColorDict[overrideKey] = ColorsOverride[overrideKey];
             }
         }
-
     }
 
     protected virtual void ApplyBasedOn()

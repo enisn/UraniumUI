@@ -4,14 +4,28 @@ using UraniumUI.Extensions;
 
 namespace UraniumUI.Material.Resources;
 
-public partial class StyleResource : ResourceDictionary, Microsoft.Maui.Controls.Internals.IResourceDictionary
+public partial class StyleResource : ResourceDictionary
 {
     private ResourceDictionary basedOn;
     private ResourceDictionary colorsOverride;
 
-    public StyleResource()
+    public StyleResource() : this(null)
     {
+    }
+
+    public StyleResource(ResourceDictionary colorResource)
+    {
+        var defaultColorResource = new ColorResource();
+
+        this.MergedDictionaries.Add(defaultColorResource);
+
+        if (colorResource != null)
+        {
+            this.ColorsOverride = colorResource;
+        }
+
         InitializeComponent();
+
         Overrides.CollectionChanged += (s, e) =>
         {
             if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
@@ -19,19 +33,13 @@ public partial class StyleResource : ResourceDictionary, Microsoft.Maui.Controls
                 foreach (var item in e.NewItems)
                 {
                     ApplyOverriddenBy(item as ResourceDictionary);
-				}
-			}
-		};
+                }
+            }
+        };
 
-		(this as Microsoft.Maui.Controls.Internals.IResourceDictionary).ValuesChanged += StyleResource_ValuesChanged;
     }
 
-	private void StyleResource_ValuesChanged(object sender, Microsoft.Maui.Controls.Internals.ResourcesChangedEventArgs e)
-	{
-        Console.WriteLine(  ".....");
-    }
-
-	public ResourceDictionary BasedOn
+    public ResourceDictionary BasedOn
     {
         get => basedOn;
         set
@@ -58,7 +66,7 @@ public partial class StyleResource : ResourceDictionary, Microsoft.Maui.Controls
 
     protected virtual void ApplyOverriddenBy(ResourceDictionary overriddenBy)
     {
-        var thisStyleDict = this.MergedDictionaries.Skip(1).First();
+        var thisStyleDict = this.MergedDictionaries.Last();
 
         foreach (var key in thisStyleDict.Keys)
         {
@@ -72,7 +80,7 @@ public partial class StyleResource : ResourceDictionary, Microsoft.Maui.Controls
         }
     }
 
-    protected virtual void ApplyColorOverride()
+    internal virtual void ApplyColorOverride()
     {
         var thisColorDict = this.MergedDictionaries.First();
 
@@ -83,6 +91,9 @@ public partial class StyleResource : ResourceDictionary, Microsoft.Maui.Controls
                 thisColorDict[overrideKey] = ColorsOverride[overrideKey];
             }
         }
+
+        MergedDictionaries.Remove(MergedDictionaries.Last());
+        InitializeComponent();
     }
 
     protected virtual void ApplyBasedOn()

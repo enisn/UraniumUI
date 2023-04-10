@@ -14,12 +14,9 @@ public partial class InputField : Grid
         get => content;
         set
         {
-
             rootGrid.Remove(content);
             content = value;
             rootGrid.Add(content, column: 1);
-            
-
             content = value;
 
             if (value != null)

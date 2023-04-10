@@ -10,7 +10,10 @@ namespace UraniumUI.Material.Controls
     public class Chip : Border
     {
         public event EventHandler DestroyClicked;
-        protected Label label = new Label();
+        protected Label label = new Label
+        {
+            VerticalOptions = LayoutOptions.Center,
+        };
         protected StatefulContentView closeButton = new StatefulContentView
         {
             Content = new Path
@@ -69,7 +72,7 @@ namespace UraniumUI.Material.Controls
                 typeof(ICommand),
                 typeof(Chip));
 
-        public string Text { get => (string) GetValue(TextProperty); set => SetValue(TextProperty, value); }
+        public string Text { get => (string)GetValue(TextProperty); set => SetValue(TextProperty, value); }
 
         public static readonly BindableProperty TextProperty = BindableProperty.Create(
             nameof(Text),
@@ -82,5 +85,19 @@ namespace UraniumUI.Material.Controls
                     chip.label.Text = (string)newValue;
                 }
             });
+
+        public Color TextColor { get => (Color)GetValue(TextColorProperty); set => SetValue(TextColorProperty, value); }
+
+        public static readonly BindableProperty TextColorProperty = BindableProperty.Create(
+                nameof(TextColor),
+                typeof(Color),
+                typeof(Chip),
+                propertyChanged: (bindable, oldValue, newValue) =>
+                {
+                    if (bindable is Chip chip)
+                    {
+                        chip.label.TextColor = (Color)newValue;
+                    }
+                });
     }
 }

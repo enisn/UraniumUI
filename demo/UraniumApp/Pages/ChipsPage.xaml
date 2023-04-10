@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+             x:Class="UraniumApp.Pages.ChipsPage"
+             Title="ChipsPage">
+    <VerticalStackLayout Padding="20">
+
+
+        <ScrollView Orientation="Horizontal">
+            <HorizontalStackLayout VerticalOptions="Center" x:Name="chipsHolder">
+                <material:Chip Text="Chip A" DestroyClicked="Chip_Destroyed" />
+                <material:Chip Text="Chip B" DestroyClicked="Chip_Destroyed" />
+                <material:Chip Text="Chip C" DestroyClicked="Chip_Destroyed" />
+                <material:Chip Text="Chip D" DestroyClicked="Chip_Destroyed" />
+                <material:Chip Text="Chip E" DestroyClicked="Chip_Destroyed" />
+                <material:Chip Text="Chip F" DestroyClicked="Chip_Destroyed" />
+                <material:Chip Text="Chip G" DestroyClicked="Chip_Destroyed" />
+            </HorizontalStackLayout>
+        </ScrollView>
+
+        <material:Chip Text="Chip A" DestroyClicked="Chip_Destroyed" BackgroundColor="Red" TextColor="White" />
+    </VerticalStackLayout>
+</ContentPage>

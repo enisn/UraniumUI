@@ -6,9 +6,13 @@
              xmlns:root="clr-namespace:UraniumApp"
              x:Class="UraniumApp.Pages.InputFields.PickerFieldPage"
              Title="Pickerfield">
-    <Grid Padding="30" RowDefinitions="Auto,*" RowSpacing="30" MaximumWidthRequest="400">
+    <StackLayout Padding="30" Orientation="{OnIdiom Vertical, Desktop=Horizontal}" Spacing="10">
 
-        <material:PickerField x:Name="ref" Title="Pick an Option" Icon="{FontImageSource Glyph={x:Static uranium:MaterialTwoTone.Arrow_drop_down}, FontFamily=MaterialTwoTone}">
+        <material:PickerField
+            x:Name="ref"
+            Title="Pick an Option"
+            Icon="{FontImageSource Glyph={x:Static uranium:MaterialTwoTone.Arrow_drop_down}, FontFamily=MaterialTwoTone}"
+            MinimumWidthRequest="400">
             <material:PickerField.Items>
                 <x:String>Option 1</x:String>
                 <x:String>Option 2</x:String>
@@ -17,10 +21,10 @@
             </material:PickerField.Items>
         </material:PickerField>
 
-
-        <root:PropertyEditorView Grid.Row="1"
+        <root:PropertyEditorView
+            VerticalOptions="FillAndExpand"
             Hierarchical="True"
             HierarchyLimitType="{x:Type material:InputField}"
             Value="{Binding ., Source={x:Reference ref}}" />
-    </Grid>
+    </StackLayout>
 </ContentPage>

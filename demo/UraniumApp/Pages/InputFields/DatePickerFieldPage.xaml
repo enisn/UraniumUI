@@ -6,13 +6,18 @@
              xmlns:root="clr-namespace:UraniumApp"
              x:Class="UraniumApp.Pages.InputFields.DatePickerFieldPage"
              Title="DatePickerField">
-    <Grid Padding="30" RowDefinitions="Auto,*" RowSpacing="30" MaximumWidthRequest="400">
+    <StackLayout Padding="30"  Orientation="{OnIdiom Vertical, Desktop=Horizontal}" Spacing="10">
 
-        <material:DatePickerField x:Name="ref" Title="Pick a date" Icon="{FontImageSource Glyph={x:Static uranium:MaterialTwoTone.Calendar_month}, FontFamily=MaterialTwoTone}"/>
+        <material:DatePickerField 
+            x:Name="ref"
+            Title="Pick a date"
+            Icon="{FontImageSource Glyph={x:Static uranium:MaterialTwoTone.Calendar_month}, FontFamily=MaterialTwoTone}"
+            MinimumWidthRequest="400"/>
 
-        <root:PropertyEditorView Grid.Row="1"
+        <root:PropertyEditorView
+            VerticalOptions="FillAndExpand"
             Hierarchical="True"
             HierarchyLimitType="{x:Type material:InputField}"
             Value="{Binding ., Source={x:Reference ref}}" />
-    </Grid>
+    </StackLayout>
 </ContentPage>

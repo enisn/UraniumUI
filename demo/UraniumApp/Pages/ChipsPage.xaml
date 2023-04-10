@@ -5,25 +5,34 @@
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
              x:Class="UraniumApp.Pages.ChipsPage"
              Title="ChipsPage">
-    <VerticalStackLayout>
+    <VerticalStackLayout Padding="20">
 
-        <material:InputField Title="Selection" HasValue="True" Margin="20">
-            <ContentView x:Name="contentView">
-                <ScrollView Orientation="Horizontal">
-                    <HorizontalStackLayout VerticalOptions="Center" x:Name="chipsHolder">
-                        <material:Chip Text="Chip A" DestroyClicked="Chip_Destroyed" />
-                        <material:Chip Text="Chip B" DestroyClicked="Chip_Destroyed" />
-                        <material:Chip Text="Chip C" DestroyClicked="Chip_Destroyed" />
-                        <material:Chip Text="Chip D" DestroyClicked="Chip_Destroyed" />
-                        <material:Chip Text="Chip E" DestroyClicked="Chip_Destroyed" />
-                        <material:Chip Text="Chip F" DestroyClicked="Chip_Destroyed" />
-                        <material:Chip Text="Chip G" DestroyClicked="Chip_Destroyed" />
-                    </HorizontalStackLayout>
-                </ScrollView>
-            </ContentView>
-        </material:InputField>
 
-        <material:Chip Text="Chip A" DestroyClicked="Chip_Destroyed" />
+        <!--<ScrollView Orientation="Horizontal">
+            <HorizontalStackLayout VerticalOptions="Center" x:Name="chipsHolder">
+                <material:Chip Text="Chip A" DestroyClicked="Chip_Destroyed" />
+                <material:Chip Text="Chip B" DestroyClicked="Chip_Destroyed" />
+                <material:Chip Text="Chip C" DestroyClicked="Chip_Destroyed" />
+                <material:Chip Text="Chip D" DestroyClicked="Chip_Destroyed" />
+                <material:Chip Text="Chip E" DestroyClicked="Chip_Destroyed" />
+                <material:Chip Text="Chip F" DestroyClicked="Chip_Destroyed" />
+                <material:Chip Text="Chip G" DestroyClicked="Chip_Destroyed" />
+            </HorizontalStackLayout>
+        </ScrollView>
 
+        <material:Chip Text="Chip A" DestroyClicked="Chip_Destroyed" BackgroundColor="Red" TextColor="White" />-->
+
+        <material:MultiplePickerField Title="Pick an option" Margin="20">
+            <material:MultiplePickerField.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>Option 1</x:String>
+                    <x:String>Option 2</x:String>
+                    <x:String>Option 3</x:String>
+                    <x:String>Option 4</x:String>
+                    <x:String>Option 5</x:String>
+                    <x:String>Option 6</x:String>
+                </x:Array>
+            </material:MultiplePickerField.ItemsSource>
+        </material:MultiplePickerField>
     </VerticalStackLayout>
 </ContentPage>

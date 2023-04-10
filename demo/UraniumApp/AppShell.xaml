@@ -32,6 +32,10 @@
     <FlyoutItem Title="MainPage" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Home}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
         <ShellContent  ContentTemplate="{DataTemplate local:MainPage}"/>
     </FlyoutItem>
+    
+    <FlyoutItem Title="Chips" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Home}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
+        <ShellContent  ContentTemplate="{DataTemplate pages:ChipsPage}"/>
+    </FlyoutItem>
 
     <!--<Tab Title="Bottom Sheets">
             <Tab.Icon>

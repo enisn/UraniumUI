@@ -10,8 +10,6 @@
                     xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui">
     <ResourceDictionary.MergedDictionaries>
 
-        <local:ColorResource />
-
         <ResourceDictionary>
             <Style TargetType="Page" ApplyToDerivedTypes="True">
                 <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Background}, Dark={StaticResource BackgroundDark}}"/>

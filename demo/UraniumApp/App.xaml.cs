@@ -6,13 +6,13 @@ namespace UraniumApp;
 
 public partial class App : Application
 {
-	public App()
-	{
-		InitializeComponent();
+    public App()
+    {
+        InitializeComponent();
 
         SelectionView.GlobalSetting.CornerRadius = 0;
         SelectionView.GlobalSetting.Color = ColorResource.GetColor("Secondary", "SecondaryDark");
 
-        MainPage = new AppShell();		
-	}
+        MainPage = new AppShell();
+    }
 }

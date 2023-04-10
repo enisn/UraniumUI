@@ -14,7 +14,11 @@ public partial class InputField : Grid
         get => content;
         set
         {
+            rootGrid.Remove(content);
             content = value;
+            rootGrid.Add(content, column: 1);
+            content = value;
+
             if (value != null)
             {
                 border.Content = value;
@@ -92,7 +96,11 @@ public partial class InputField : Grid
 
         rootGrid.AddColumnDefinition(new ColumnDefinition(GridLength.Auto));
         rootGrid.AddColumnDefinition(new ColumnDefinition(GridLength.Star));
-        rootGrid.Add(Content, column: 1);
+
+        if (Content != null)
+        {
+            rootGrid.Add(Content, column: 1);
+        }
 
         rootGrid.Add(endIconsContainer, column: 2);
 

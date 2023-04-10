@@ -6,9 +6,13 @@
              xmlns:root="clr-namespace:UraniumApp"
              x:Class="UraniumApp.Pages.InputFields.AutoCompleteTextFieldPage"
              Title="AutoCompleteTextField">
-    <Grid Padding="30" RowDefinitions="Auto,*" RowSpacing="30" MaximumWidthRequest="400">
+    <StackLayout Padding="30" Orientation="{OnIdiom Vertical, Desktop=Horizontal}" Spacing="10">
 
-        <material:AutoCompleteTextField x:Name="ref" Title="Fruit" Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static uranium:MaterialRegular.Forest}}">
+        <material:AutoCompleteTextField
+            x:Name="ref" 
+            Title="Fruit"
+            Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static uranium:MaterialRegular.Forest}}"
+            MinimumWidthRequest="400">
             <material:AutoCompleteTextField.ItemsSource>
                 <x:String>Apple</x:String>
                 <x:String>Orange</x:String>
@@ -38,9 +42,10 @@
             </material:AutoCompleteTextField.ItemsSource>
         </material:AutoCompleteTextField>
 
-        <root:PropertyEditorView Grid.Row="1"
+        <root:PropertyEditorView
+            VerticalOptions="FillAndExpand"
             Hierarchical="True"
             HierarchyLimitType="{x:Type material:InputField}"
             Value="{Binding ., Source={x:Reference ref}}" />
-    </Grid>
+    </StackLayout>
 </ContentPage>

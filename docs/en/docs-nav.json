@@ -106,6 +106,10 @@
               "path": "themes/material/components/PickerField.md"
             },
             {
+              "text": "MultiplePickerField",
+              "path": "themes/material/components/MultiplePickerField.md"
+            },
+            {
               "text": "TimePickerField",
               "path": "themes/material/components/TimePickerField.md"
             },

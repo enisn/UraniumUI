@@ -9,20 +9,9 @@ public partial class StyleResource : ResourceDictionary
     private ResourceDictionary basedOn;
     private ResourceDictionary colorsOverride;
 
-    public StyleResource() : this(null)
+    public StyleResource()
     {
-    }
-
-    public StyleResource(ResourceDictionary colorResource)
-    {
-        var defaultColorResource = new ColorResource();
-
-        this.MergedDictionaries.Add(defaultColorResource);
-
-        if (colorResource != null)
-        {
-            this.ColorsOverride = colorResource;
-        }
+        this.MergedDictionaries.Add(new ColorResource());
 
         InitializeComponent();
 
@@ -36,7 +25,6 @@ public partial class StyleResource : ResourceDictionary
                 }
             }
         };
-
     }
 
     public ResourceDictionary BasedOn

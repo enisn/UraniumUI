@@ -3,12 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
              x:Class="UraniumApp.Pages.ChipsPage"
              Title="ChipsPage">
     <VerticalStackLayout Padding="20">
 
 
-        <!--<ScrollView Orientation="Horizontal">
+        <ScrollView Orientation="Horizontal">
             <HorizontalStackLayout VerticalOptions="Center" x:Name="chipsHolder">
                 <material:Chip Text="Chip A" DestroyClicked="Chip_Destroyed" />
                 <material:Chip Text="Chip B" DestroyClicked="Chip_Destroyed" />
@@ -20,19 +21,6 @@
             </HorizontalStackLayout>
         </ScrollView>
 
-        <material:Chip Text="Chip A" DestroyClicked="Chip_Destroyed" BackgroundColor="Red" TextColor="White" />-->
-
-        <material:MultiplePickerField Title="Pick an option" Margin="20">
-            <material:MultiplePickerField.ItemsSource>
-                <x:Array Type="{x:Type x:String}">
-                    <x:String>Option 1</x:String>
-                    <x:String>Option 2</x:String>
-                    <x:String>Option 3</x:String>
-                    <x:String>Option 4</x:String>
-                    <x:String>Option 5</x:String>
-                    <x:String>Option 6</x:String>
-                </x:Array>
-            </material:MultiplePickerField.ItemsSource>
-        </material:MultiplePickerField>
+        <material:Chip Text="Chip A" DestroyClicked="Chip_Destroyed" BackgroundColor="Red" TextColor="White" />
     </VerticalStackLayout>
 </ContentPage>

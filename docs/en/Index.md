@@ -28,7 +28,7 @@ Uranium is available on [GitHub](https://github.com/enisn/UraniumUI)
   - [Material Theme](https://enisn-projects.io/docs/en/uranium/latest/themes/material/Index)
 
 
-<img src="https://github.com/enisn/UraniumUI/blob/develop/art/github-social-preview.png" alt="MAUI UraniumUI" />
+<img src="https://raw.githubusercontent.com/enisn/UraniumUI/develop/art/github-social-preview.png" alt="MAUI UraniumUI" />
 
 ## Contributing
 We welcome contributions and suggestions. Please read our [contributing guide](#).

@@ -6,6 +6,20 @@ param (
     [string]$source = "nuget.org"
  )
 
+ # ##############################################
+ # ##### URANIUMUI PACKING AND PUBLISHING #######
+ # ##############################################
+ # Usage:
+ # 1. Run this script in a powershell terminal: 
+ #
+ # .\pack.ps1 <version> -push <nuget-api-key>
+ #
+ # Example:
+ #
+ # .\pack.ps1 2.3.3 -push abcdefeysomeapikeyherefromnugetabcdef
+ #
+ # ##############################################
+
  if (!$skipbuild) {
     Write-Host "UraniumUI packages packing started."
 
@@ -33,9 +47,9 @@ if ($push) {
     Invoke-Expression "dotnet nuget push '*.$version.nupkg' --api-key $apikey --skip-duplicate --source $source"
     Write-Host "UraniumUI templates has been pushed successfully." -ForegroundColor Green
     Write-Host "Removing nupkg files..."
+    Invoke-Expression "Remove-Item -Path '*.nupkg' -Force -Recurse"
     Invoke-Expression "Remove-Item -Path '**\*.nupkg' -Force -Recurse"
     Write-Host "Nupkg files has been removed successfully." -ForegroundColor Green
-    
 }
 
 Set-Location ../ # back to root

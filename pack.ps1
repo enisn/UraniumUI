@@ -32,6 +32,10 @@ if ($push) {
     Write-Host "UraniumUI templates pushing started."
     Invoke-Expression "dotnet nuget push '*.$version.nupkg' --api-key $apikey --skip-duplicate --source $source"
     Write-Host "UraniumUI templates has been pushed successfully." -ForegroundColor Green
+    Write-Host "Removing nupkg files..."
+    Invoke-Expression "Remove-Item -Path '**\*.nupkg' -Force -Recurse"
+    Write-Host "Nupkg files has been removed successfully." -ForegroundColor Green
+    
 }
 
 Set-Location ../ # back to root

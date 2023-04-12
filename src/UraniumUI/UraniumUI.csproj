@@ -29,7 +29,7 @@
 	</ItemGroup>
 
 	<ItemGroup Condition="$(TargetFramework.Contains('net7'))">
-	  <PackageReference Include="InputKit.Maui" Version="4.2.7" />
+	  <PackageReference Include="InputKit.Maui" Version="4.2.9" />
 	  <PackageReference Include="Plainer.Maui" Version="1.6.2" />
 	</ItemGroup>
   

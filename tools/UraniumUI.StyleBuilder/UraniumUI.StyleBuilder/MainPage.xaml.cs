@@ -4,8 +4,9 @@ using UraniumUI.Pages;
 namespace UraniumUI.StyleBuilder;
 public partial class MainPage
 {
-    public MainPage()
+    public MainPage(MainPageViewModel viewModel)
     {
         InitializeComponent();
+        BindingContext = viewModel;
     }
 }

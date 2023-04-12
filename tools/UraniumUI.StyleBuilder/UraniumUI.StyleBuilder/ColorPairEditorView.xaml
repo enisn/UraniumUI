@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="UraniumUI.StyleBuilder.ColorPairEditorView"
+             xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material">
+
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <Style TargetType="uranium:StatefulContentView" Class="Square">
+                <Setter Property="HeightRequest" Value="200" />
+                <Setter Property="WidthRequest" Value="200" />
+            </Style>
+
+            <Style TargetType="uranium:StatefulContentView" Class="OnSquare">
+                <Setter Property="HeightRequest" Value="50" />
+                <Setter Property="WidthRequest" Value="200" />
+            </Style>
+
+            <Style TargetType="Label" Class="OnLabels">
+                <Setter Property="VerticalOptions" Value="End" />
+                <Setter Property="Margin" Value="10" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="FontSize" Value="Subtitle" />
+            </Style>
+        </ResourceDictionary>
+    </ContentView.Resources>
+    <VerticalStackLayout>
+        <uranium:StatefulContentView x:Name="primarySquare" StyleClass="Square">
+            <Label x:Name="primaryLabel" />
+        </uranium:StatefulContentView>
+        <uranium:StatefulContentView x:Name="onSquare" StyleClass="OnSquare">
+            <Label x:Name="onLabel" StyleClass="OnLabels" />
+        </uranium:StatefulContentView>
+    </VerticalStackLayout>
+</ContentView>

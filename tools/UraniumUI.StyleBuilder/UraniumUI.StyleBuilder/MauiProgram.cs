@@ -1,6 +1,6 @@
-﻿using InputKit.Shared.Controls;
+﻿using CommunityToolkit.Maui;
+using DotNurse.Injector;
 using Mopups.Hosting;
-using UraniumUI;
 
 namespace UraniumUI.StyleBuilder;
 public static class MauiProgram
@@ -13,6 +13,7 @@ public static class MauiProgram
             .ConfigureMopups()
             .UseUraniumUI()
             .UseUraniumUIMaterial()
+            .UseMauiCommunityToolkit()
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -22,6 +23,15 @@ public static class MauiProgram
             });
 
         builder.Services.AddMopupsDialogs();
+
+        var thisAssembly = typeof(MauiProgram).Assembly;
+
+        builder.Services.AddServicesFrom(
+            type => typeof(Page).IsAssignableFrom(type) || type.Name.EndsWith("ViewModel"),
+            ServiceLifetime.Transient,
+            options => options.Assembly = thisAssembly)
+        .AddServicesByAttributes();
+
         return builder.Build();
     }
 }

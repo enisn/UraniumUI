@@ -1,0 +1,16 @@
+﻿<?xml version = "1.0" encoding = "UTF-8" ?>
+<Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:UraniumUI.StyleBuilder"
+             xmlns:material="clr-namespace:UraniumUI.Material.Resources;assembly=UraniumUI.Material"
+             x:Class="UraniumUI.StyleBuilder.App">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary x:Name="appColors" Source="Resources/Styles/Colors.xaml" />
+                <ResourceDictionary x:Name="appStyles" Source="Resources/Styles/Styles.xaml" />
+                <material:StyleResource ColorsOverride="{x:Reference appColors}" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

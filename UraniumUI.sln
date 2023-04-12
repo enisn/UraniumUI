@@ -31,7 +31,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UraniumUI.Validations.DataA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UraniumUI.Dialogs.CommunityToolkit", "src\UraniumUI.Dialogs.CommunityToolkit\UraniumUI.Dialogs.CommunityToolkit.csproj", "{C7CC898A-8047-4D39-A8DE-44A80E99445F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UraniumUI.Dialogs.Mopups", "src\UraniumUI.Dialogs.Mopups\UraniumUI.Dialogs.Mopups.csproj", "{3AD9C27A-3227-463A-81F4-8AA5FF4DB542}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UraniumUI.Dialogs.Mopups", "src\UraniumUI.Dialogs.Mopups\UraniumUI.Dialogs.Mopups.csproj", "{3AD9C27A-3227-463A-81F4-8AA5FF4DB542}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{6BE23582-8CCA-4D14-ADDD-5AC46E9EE2C7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UraniumUI.StyleBuilder", "tools\UraniumUI.StyleBuilder\UraniumUI.StyleBuilder\UraniumUI.StyleBuilder.csproj", "{E145C258-2D96-49ED-88DB-191DF1B32899}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -89,6 +93,12 @@ Global
 		{3AD9C27A-3227-463A-81F4-8AA5FF4DB542}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3AD9C27A-3227-463A-81F4-8AA5FF4DB542}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3AD9C27A-3227-463A-81F4-8AA5FF4DB542}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E145C258-2D96-49ED-88DB-191DF1B32899}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E145C258-2D96-49ED-88DB-191DF1B32899}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E145C258-2D96-49ED-88DB-191DF1B32899}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{E145C258-2D96-49ED-88DB-191DF1B32899}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E145C258-2D96-49ED-88DB-191DF1B32899}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E145C258-2D96-49ED-88DB-191DF1B32899}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -105,6 +115,7 @@ Global
 		{67A0CB34-D871-47BB-A9E0-80CA328BA144} = {32493E5D-A757-4289-A168-DA0E8DDE9B29}
 		{C7CC898A-8047-4D39-A8DE-44A80E99445F} = {32493E5D-A757-4289-A168-DA0E8DDE9B29}
 		{3AD9C27A-3227-463A-81F4-8AA5FF4DB542} = {32493E5D-A757-4289-A168-DA0E8DDE9B29}
+		{E145C258-2D96-49ED-88DB-191DF1B32899} = {6BE23582-8CCA-4D14-ADDD-5AC46E9EE2C7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {31946918-5DA1-40D1-8BD7-6834BB21D0FF}

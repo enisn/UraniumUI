@@ -50,9 +50,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="UraniumUI.Material" Version="2.4.0-pre.2" />
-		<PackageReference Include="UraniumUI.Icons.MaterialIcons" Version="2.4.0-pre.2" />
-		<PackageReference Include="UraniumUI.Dialogs.Mopups" Version="2.4.0-pre.2" />
+		<ProjectReference Include="..\..\..\src\UraniumUI.Material\UraniumUI.Material.csproj" />
+		<ProjectReference Include="..\..\..\src\UraniumUI.Icons.MaterialIcons\UraniumUI.Icons.MaterialIcons.csproj" />
+		<ProjectReference Include="..\..\..\src\UraniumUI.Dialogs.Mopups\UraniumUI.Dialogs.Mopups.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+		<PackageReference Include="ReactiveUI.Fody" Version="18.4.26" />
+	</ItemGroup>
 </Project>

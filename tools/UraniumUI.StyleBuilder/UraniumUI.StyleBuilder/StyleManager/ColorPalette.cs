@@ -39,6 +39,7 @@ public class ColorPalette : ReactiveObject
     [Reactive] public Color Secondary { get; set; }
     [Reactive] public Color OnSecondary { get; set; }
     [Reactive] public Color SecondaryContainer { get; set; }
+    [Reactive] public Color OnSecondaryContainer { get; set; }
     [Reactive] public Color Tertiary { get; set; }
     [Reactive] public Color OnTertiary { get; set; }
     [Reactive] public Color TertiaryContainer { get; set; }
@@ -64,6 +65,7 @@ public class ColorPalette : ReactiveObject
     [Reactive] public Color SecondaryDark { get; set; }
     [Reactive] public Color OnSecondaryDark { get; set; }
     [Reactive] public Color SecondaryContainerDark { get; set; }
+    [Reactive] public Color OnSecondaryContainerDark { get; set; }
     [Reactive] public Color TertiaryDark { get; set; }
     [Reactive] public Color OnTertiaryDark { get; set; }
     [Reactive] public Color TertiaryContainerDark { get; set; }

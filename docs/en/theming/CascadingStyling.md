@@ -7,6 +7,12 @@ To define sub styles in a view scope, you can use the `CascadingStyle` attached 
 
 ### Simple Usage
 
+Firstly, the namespace should be added to file:
+
+```xml
+xmlns:t="clr-namespace:UraniumUI.Theming;assembly=UraniumUI"
+```
+
 It can be used in a style XAML like that:
 
 ```xml

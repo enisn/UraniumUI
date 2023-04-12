@@ -26,6 +26,10 @@ public partial class MultiplePickerField : InputField
 
     protected HorizontalStackLayout chipsHolderStackLayout = new HorizontalStackLayout
     {
+        HorizontalOptions = LayoutOptions.Start,
+#if IOS || MACCATALYST
+        VerticalOptions = LayoutOptions.Center,
+#endif
     };
 
     private Command _destroyChipCommand;
@@ -36,8 +40,12 @@ public partial class MultiplePickerField : InputField
         MaincontentView.Content = new ScrollView
         {
             Orientation = ScrollOrientation.Horizontal,
-            VerticalOptions = LayoutOptions.Center,
+#if ANDROID
             HorizontalOptions = LayoutOptions.Start,
+#endif
+#if !IOS && !MACCATALYST
+            VerticalOptions = LayoutOptions.Center,
+#endif
             Content = chipsHolderStackLayout,
         };
 

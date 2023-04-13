@@ -78,7 +78,7 @@
 
     <material:TabView
                 ItemsSource="{Binding Items}"
-                CurrentItem="{Binding CurrentItem}">
+                CurrentItem="{Binding CurrentItem, Mode=TwoWay}">
         <material:TabView.TabHeaderItemTemplate>
             <DataTemplate x:DataType="material:TabItem">
                 <uranium:StatefulContentView TappedCommand="{Binding Command}" MinimumWidthRequest="160">

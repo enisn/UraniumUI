@@ -8,7 +8,7 @@ using System.Xml.Serialization;
 
 namespace UraniumUI.StyleBuilder.StyleManager;
 
-[RegisterAs(typeof(ColorStyleManager), ServiceLifetime.Singleton)]
+[RegisterAs(typeof(ColorStyleManager))]
 public partial class ColorStyleManager : ReactiveObject
 {
     protected Xml.ResourceDictionary XmlNode { get; set; }

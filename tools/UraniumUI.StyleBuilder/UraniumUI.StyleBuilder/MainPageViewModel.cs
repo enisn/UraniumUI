@@ -1,70 +1,77 @@
-﻿using CommunityToolkit.Maui.Storage;
-using DotNurse.Injector.Attributes;
+﻿using DynamicData;
 using DynamicData.Binding;
-using Mopups.Services;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reactive;
-using System.Text;
-using System.Threading.Tasks;
+using System.Collections.ObjectModel;
+using System.Reactive.Linq;
 using System.Windows.Input;
-using System.Xml.Serialization;
 using UraniumUI.Dialogs;
-using UraniumUI.StyleBuilder.Controls;
 using UraniumUI.StyleBuilder.StyleManager;
+using UraniumUI.StyleBuilder.ViewModels;
 
 namespace UraniumUI.StyleBuilder;
 
 public class MainPageViewModel : ReactiveObject
 {
-    public ColorStyleManager ColorStyleManager { get; }
+    private readonly IServiceProvider serviceProvider;
 
     protected IDialogService Dialog { get; }
 
-    public ColorPalette Colors => ColorStyleManager?.Palette;
+    public ObservableCollection<ISavable> Items { get; } = new ObservableCollection<ISavable>();
 
-    public MainPageViewModel(ColorStyleManager colorStyleManager, IDialogService dialog)
+    [Reactive] public ISavable CurrentItem { get; set; }
+
+    [ObservableAsProperty] public bool CanSave { get; }
+
+    public MainPageViewModel(IDialogService dialog, IServiceProvider serviceProvider)
     {
         NewCommand = new Command(NewAsync);
         OpenCommand = new Command(OpenAsync);
-        NotifyContextChanged();
-        EditColorCommand = new Command(EditColorAsync);
-        ColorStyleManager = colorStyleManager;
+        CloseCommand = ReactiveCommand.CreateFromTask<object>(CloseAsync);
+        
         Dialog = dialog;
+        this.serviceProvider = serviceProvider;
+
+        this.WhenAnyValue(x => x.CurrentItem)
+            .Select(x => x != null)
+            .ToPropertyEx(this, x => x.CanSave);
+
+        this.WhenAnyValue(x => x.CanSave)
+            .Subscribe((_) => NotifyContextChanged());
     }
 
     private void NotifyContextChanged()
     {
-        if (ColorStyleManager != null)
-        {
-            this.RaisePropertyChanged(nameof(Colors));
-        }
-        SaveCommand = new Command(SaveAsync, () => Colors != null);
-        SaveAsCommand = new Command(SaveAsAsync, () => Colors != null);
+        SaveCommand = new Command(SaveAsync, () => CurrentItem != null);
+        SaveAsCommand = new Command(SaveAsAsync, () => CurrentItem != null);
     }
 
     public ICommand NewCommand { get; }
     public ICommand OpenCommand { get; }
+    public ICommand CloseCommand { get; }
     [Reactive] public ICommand SaveCommand { get; private set; }
     [Reactive] public ICommand SaveAsCommand { get; private set; }
-    public ICommand EditColorCommand { get; private set; }
 
     protected virtual async void NewAsync()
     {
-        if (ColorStyleManager.IsLoaded)
+        var result = await Dialog.DisplayRadioButtonPromptAsync(
+            "Create New",
+            new[] { "Colors", "Styles" });
+
+        if (result == null)
         {
-            if (!await Dialog.ConfirmAsync("Creating new!", "Unsaved Data will be lost if you continue", "Continue"))
-            {
-                return;
-            }
+            return;
         }
 
-        await ColorStyleManager.CreateNewAsync();
+        if (result == "Colors")
+        {
+            var colorsEditorViewModel = serviceProvider.GetRequiredService<ColorsEditorViewModel>();
 
-        NotifyContextChanged();
+            await colorsEditorViewModel.NewAsync();
+
+            Items.Add(colorsEditorViewModel);
+            CurrentItem = colorsEditorViewModel;
+        }
     }
 
     protected virtual async void OpenAsync()
@@ -80,30 +87,33 @@ public class MainPageViewModel : ReactiveObject
             return;
         }
 
-        await ColorStyleManager.LoadAsync(fileResult.FullPath);
+        var colorsEditorViewModel = serviceProvider.GetRequiredService<ColorsEditorViewModel>();
+
+        await colorsEditorViewModel.LoadAsync(fileResult.FullPath);
+        Items.Add(colorsEditorViewModel);
+        CurrentItem = colorsEditorViewModel;
 
         NotifyContextChanged();
     }
 
     protected virtual async void SaveAsync()
     {
-        if (string.IsNullOrEmpty(ColorStyleManager.Path))
-        {
-            SaveAsAsync();
-            return;
-        }
-
-        await ColorStyleManager.SaveAsync(ColorStyleManager.Path);
+        CurrentItem?.SaveAsync();
     }
 
     protected virtual async void SaveAsAsync()
     {
-        await ColorStyleManager.SaveAsAsync();
+        CurrentItem?.SaveAsAsync();
     }
 
-    protected virtual async void EditColorAsync(object parameter)
+    protected virtual Task CloseAsync(object data)
     {
-        await MopupService.Instance.PushAsync(new ColorEditPopupPage(this, parameter?.ToString()));
+        if (data is ISavable item)
+        {
+            Items.Remove(item);
+        }
+
+        return Task.CompletedTask;
     }
 
     public class StyleResourceFileType : FilePickerFileType

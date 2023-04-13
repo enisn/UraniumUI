@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ScrollView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:vm="clr-namespace:UraniumUI.StyleBuilder.ViewModels"
+            xmlns:local="clr-namespace:UraniumUI.StyleBuilder"
+            x:DataType="vm:ColorsEditorViewModel"
+            x:Class="UraniumUI.StyleBuilder.Views.ColorsEditorView">
+
+    <VerticalStackLayout>
+        <Frame BackgroundColor="{Binding Colors.Background}">
+            <VerticalStackLayout>
+                <Label Text="Light" FontSize="Header" TextColor="{Binding Colors.OnBackground}" />
+                <BoxView StyleClass="Divider" Color="{Binding Colors.OnBackground}" />
+
+                <FlexLayout AlignItems="Center" AlignContent="SpaceEvenly" Wrap="Wrap" >
+
+                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors.Primary" />
+                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors.PrimaryContainer" />
+                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors.Secondary" />
+                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors.SecondaryContainer" />
+                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors.Tertiary" />
+                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors.TertiaryContainer" />
+                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors.Background" />
+                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors.Surface" />
+                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors.SurfaceVariant" />
+                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors.Error" />
+                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors.ErrorContainer" />
+
+                </FlexLayout>
+            </VerticalStackLayout>
+        </Frame>
+
+        <Frame BackgroundColor="{Binding Colors.BackgroundDark}">
+            <VerticalStackLayout>
+                <Label Text="Dark" FontSize="Header" TextColor="{Binding Colors.OnBackgroundDark}" />
+                <BoxView StyleClass="Divider" Color="{Binding Colors.OnBackgroundDark}" />
+
+                <FlexLayout AlignItems="Center" AlignContent="SpaceEvenly" Wrap="Wrap" >
+
+                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors.PrimaryDark" />
+                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors.PrimaryContainerDark" />
+                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors.SecondaryDark" />
+                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors.SecondaryContainerDark" />
+                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors.TertiaryDark" />
+                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors.TertiaryContainerDark" />
+                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors.BackgroundDark" />
+                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors.SurfaceDark" />
+                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors.SurfaceVariantDark" />
+                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors.ErrorDark" />
+                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors.ErrorContainerDark" />
+
+                </FlexLayout>
+            </VerticalStackLayout>
+        </Frame>
+    </VerticalStackLayout>
+</ScrollView>

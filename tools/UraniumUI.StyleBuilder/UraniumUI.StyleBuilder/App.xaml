@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:UraniumUI.StyleBuilder"
              xmlns:converters="clr-namespace:UraniumUI.StyleBuilder.Converters"
              xmlns:material="clr-namespace:UraniumUI.Material.Resources;assembly=UraniumUI.Material"
+             xmlns:templating="clr-namespace:UraniumUI.StyleBuilder.Templating"
              x:Class="UraniumUI.StyleBuilder.App">
     <Application.Resources>
         <ResourceDictionary>
@@ -15,6 +16,8 @@
             </ResourceDictionary.MergedDictionaries>
             <converters:ToSurfaceColorConverter x:Key="ToSurfaceColor" />
             <converters:ColorHexConverter x:Key="ColorHexConverter" />
+            
+            <templating:GenericDataTemplateSelector x:Key="GenericDataTemplateSelector" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

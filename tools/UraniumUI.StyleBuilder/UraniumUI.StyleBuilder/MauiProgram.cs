@@ -1,6 +1,9 @@
 ﻿using CommunityToolkit.Maui;
 using DotNurse.Injector;
 using Mopups.Hosting;
+using UraniumUI.StyleBuilder.Templating;
+using UraniumUI.StyleBuilder.ViewModels;
+using UraniumUI.StyleBuilder.Views;
 
 namespace UraniumUI.StyleBuilder;
 public static class MauiProgram
@@ -31,6 +34,11 @@ public static class MauiProgram
             ServiceLifetime.Transient,
             options => options.Assembly = thisAssembly)
         .AddServicesByAttributes();
+
+        builder.Services.Configure<DataTemplateOptions>(options =>
+        {
+            options.Register<ColorsEditorViewModel, ColorsEditorView>();
+        });
 
         return builder.Build();
     }

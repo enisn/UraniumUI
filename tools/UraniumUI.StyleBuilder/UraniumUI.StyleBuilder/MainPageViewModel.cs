@@ -98,12 +98,12 @@ public class MainPageViewModel : ReactiveObject
 
     protected virtual async void SaveAsync()
     {
-        CurrentItem?.SaveAsync();
+        await CurrentItem?.SaveAsync();
     }
 
     protected virtual async void SaveAsAsync()
     {
-        CurrentItem?.SaveAsAsync();
+        await CurrentItem?.SaveAsAsync();
     }
 
     protected virtual Task CloseAsync(object data)

@@ -49,7 +49,7 @@ public class ColorsEditorViewModel : ReactiveObject, ISavable
     {
         if (string.IsNullOrEmpty(ColorStyleManager.Path))
         {
-            SaveAsAsync();
+            await SaveAsAsync();
             return;
         }
 

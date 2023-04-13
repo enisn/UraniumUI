@@ -323,7 +323,10 @@ public partial class TabView : Grid
 
         if (CurrentItem == tabItem)
         {
-            ResetSelectedItem();
+            CurrentItem =
+                Items.Any(x => x != tabItem)
+                ? Items.FirstOrDefault()
+                : null;
         }
 
         _headerContainer.Children.Remove(existing);
@@ -331,7 +334,18 @@ public partial class TabView : Grid
 
     protected virtual async void OnCurrentItemChanged(object newItem)
     {
+        if (newItem == null)
+        {
+            _contentContainer.Content = null;
+            return;
+        }
+
         TabItem newCurrentTabItem = newItem is TabItem tabItem ? tabItem : Items.FirstOrDefault(x => x.Data == newItem);
+
+        if (CurrentItem == newCurrentTabItem.Data)
+        {
+            return;
+        }
 
         var content = newCurrentTabItem.Content ??=
             ((View)newCurrentTabItem.ContentTemplate?.CreateContent()

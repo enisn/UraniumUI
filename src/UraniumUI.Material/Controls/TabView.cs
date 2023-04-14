@@ -238,7 +238,7 @@ public partial class TabView : Grid
                             tabItem = Items.FirstOrDefault(x => x.Data == item);
                             if (tabItem != null)
                             {
-                                RemoveHeaderFor(tabItem);
+                                Items.Remove(tabItem);
                             }
                         }
                     }
@@ -317,13 +317,7 @@ public partial class TabView : Grid
     {
         var existing = _headerContainer.Children.FirstOrDefault(x => x is View view && view.BindingContext == tabItem);
 
-        if (CurrentItem == tabItem)
-        {
-            CurrentItem =
-                Items.Any(x => x != tabItem)
-                ? Items.FirstOrDefault()
-                : null;
-        }
+        CurrentItem = Items.FirstOrDefault();
 
         _headerContainer.Children.Remove(existing);
     }

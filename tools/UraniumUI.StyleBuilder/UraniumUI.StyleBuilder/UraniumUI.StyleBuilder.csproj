@@ -58,8 +58,7 @@
 	<ItemGroup>
 		<PackageReference Include="DotNurse.Injector" Version="2.5.2" />
 		<PackageReference Include="ReactiveUI.Fody" Version="18.4.26" />
-    <PackageReference Include="CommunityToolkit.Maui" Version="5.0.0" />
-    <PackageReference Include="nor0x.Maui.ColorPicker" Version="1.0.1" />
+		<PackageReference Include="CommunityToolkit.Maui" Version="5.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>

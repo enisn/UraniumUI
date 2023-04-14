@@ -4,6 +4,7 @@ using ReactiveUI.Fody.Helpers;
 using System.Reflection;
 using System.Text;
 using System.Xml;
+using System.Xml.Linq;
 using System.Xml.Serialization;
 
 namespace UraniumUI.StyleBuilder.StyleManager;
@@ -11,35 +12,45 @@ namespace UraniumUI.StyleBuilder.StyleManager;
 [RegisterAs(typeof(ColorStyleManager))]
 public partial class ColorStyleManager : ReactiveObject, IDisposable
 {
-    protected Xml.ResourceDictionary XmlNode { get; set; }
+    //protected Xml.ResourceDictionary XmlNode { get; set; }
 
     [Reactive] public ColorPalette Palette { get; protected set; }
 
     [Reactive] public string Path { get; set; }
 
-    public bool IsLoaded => XmlNode != null;
+    public XDocument XmlDoc { get; private set; }
 
     public async Task LoadAsync(string path)
     {
-        var serializer = new XmlSerializer(typeof(Xml.ResourceDictionary));
-        using (StringReader reader = new StringReader(await File.ReadAllTextAsync(path)))
-        {
-            XmlNode = (Xml.ResourceDictionary)serializer.Deserialize(reader);
-        }
+        XmlDoc = XDocument.Load(path);
+        var ns = XmlDoc.Root.GetDefaultNamespace();
+        var xns = XmlDoc.Root.GetNamespaceOfPrefix("x");
+        var dict = XmlDoc.Descendants(ns + "Color")
+            .ToDictionary(x => x.Attribute(xns + "Key").Value, x => x.Value);
 
         Path = path;
 
-        Palette = new ColorPalette(XmlNode);
+        Palette = new ColorPalette(dict);
     }
 
     public async Task SaveAsync(string path)
     {
+        var ns = XmlDoc.Root.GetDefaultNamespace();
+        var xns = XmlDoc.Root.GetNamespaceOfPrefix("x");
+
+        var colorDictionary = this.Palette.ToDictionary();
+
+        foreach (var colorElement in XmlDoc.Descendants(ns + "Color"))
+        {
+            if (colorDictionary.TryGetValue(colorElement.Attribute(xns + "Key").Value, out var value))
+            {
+                colorElement.Value = value;
+            }
+        }
+
         using (TextWriter sw = new StreamWriter(path ?? Path, false, Encoding.UTF8)) //Set encoding
         {
-            var serializer = new XmlSerializer(typeof(Xml.ResourceDictionary));
-            serializer.Serialize(sw, XmlNode);
-
-            await sw.WriteAsync(XamlCompileDecleration);
+            await XmlDoc.SaveAsync(sw, SaveOptions.OmitDuplicateNamespaces, CancellationToken.None);
         }
     }
 
@@ -47,8 +58,7 @@ public partial class ColorStyleManager : ReactiveObject, IDisposable
     {
         using (var stream = new MemoryStream())
         {
-            var serializer = new XmlSerializer(typeof(Xml.ResourceDictionary));
-            serializer.Serialize(stream, XmlNode);
+            XmlDoc.Save(stream);
 
             var result = await CommunityToolkit.Maui.Storage.FileSaver.Default.SaveAsync(
                 initialPath: System.IO.Path.GetDirectoryName(Path),
@@ -65,29 +75,14 @@ public partial class ColorStyleManager : ReactiveObject, IDisposable
     {
         Path = null;
         Palette = new ColorPalette(withDefaultValues: true);
-        XmlNode = new Xml.ResourceDictionary()
-        {
-            Colors = Palette.GetType()
-            .GetProperties(BindingFlags.Public | BindingFlags.Instance)
-            .Where(x => x.PropertyType == typeof(Color))
-            .Select(x => new Xml.Color
-            {
-                Key = x.Name,
-                Text = (x.GetValue(Palette) as Color).ToHex(),
-            }).ToList()
-        };
+        XmlDoc = new XDocument();
     }
 
     public void Dispose()
     {
-        XmlNode.Colors?.Clear();
-        XmlNode.Colors = null;
-        XmlNode.SolidColorBrushes?.Clear();
-        XmlNode.SolidColorBrushes = null;
-        XmlNode = null;
+        XmlDoc.RemoveNodes();
+        XmlDoc = null;
         Palette = null;
         Path = null;
     }
-
-    const string XamlCompileDecleration = "\n<?xaml-comp compile=\"true\" ?>";
 }

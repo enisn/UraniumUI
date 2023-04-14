@@ -20,16 +20,32 @@ public class ColorPalette : ReactiveObject
         }
     }
 
-    public ColorPalette(Xml.ResourceDictionary dict)
+    public ColorPalette(Dictionary<string, string> dict)
     {
         foreach (var property in GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public))
         {
-            var colorNode = dict.Colors.FirstOrDefault(x => x.Key == property.Name);
-            if (colorNode != null)
+            if (dict.TryGetValue(property.Name, out var colorText))
             {
-                property.SetValue(this, Color.FromArgb(colorNode.Text));
+                property.SetValue(this, Color.FromArgb(colorText));
             }
         }
+    }
+
+    public Dictionary<string, string> ToDictionary()
+    {
+        var dict = new Dictionary<string, string>();
+
+        foreach (var property in GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public))
+        {
+            var value = property.GetValue(this);
+
+            if (value is Color colorValue)
+            {
+                dict.Add(property.Name, colorValue.ToHex());
+            }
+        }
+
+        return dict;
     }
 
     [Reactive] public Color Primary { get; set; }

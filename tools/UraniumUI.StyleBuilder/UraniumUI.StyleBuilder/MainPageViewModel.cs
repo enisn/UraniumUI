@@ -28,7 +28,7 @@ public class MainPageViewModel : ReactiveObject
         NewCommand = new Command(NewAsync);
         OpenCommand = new Command(OpenAsync);
         CloseCommand = ReactiveCommand.CreateFromTask<object>(CloseAsync);
-        
+
         Dialog = dialog;
         this.serviceProvider = serviceProvider;
 
@@ -76,34 +76,53 @@ public class MainPageViewModel : ReactiveObject
 
     protected virtual async void OpenAsync()
     {
-        var fileResult = await FilePicker.Default.PickAsync(new PickOptions
+        try
         {
-            FileTypes = new StyleResourceFileType(),
-            PickerTitle = "Pick an xml file"
-        });
+            var fileResult = await FilePicker.Default.PickAsync(new PickOptions
+            {
+                FileTypes = new StyleResourceFileType(),
+                PickerTitle = "Pick an xml file"
+            });
 
-        if (fileResult == null)
-        {
-            return;
+            if (fileResult == null)
+            {
+                return;
+            }
+
+            var colorsEditorViewModel = serviceProvider.GetRequiredService<ColorsEditorViewModel>();
+
+            await colorsEditorViewModel.LoadAsync(fileResult.FullPath);
+            Items.Add(colorsEditorViewModel);
+            CurrentItem = colorsEditorViewModel;
         }
-
-        var colorsEditorViewModel = serviceProvider.GetRequiredService<ColorsEditorViewModel>();
-
-        await colorsEditorViewModel.LoadAsync(fileResult.FullPath);
-        Items.Add(colorsEditorViewModel);
-        CurrentItem = colorsEditorViewModel;
-
-        NotifyContextChanged();
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert("Error", ex.Message, "OK");
+        }
     }
 
     protected virtual async void SaveAsync()
     {
-        await CurrentItem?.SaveAsync();
+        try
+        {
+            await CurrentItem?.SaveAsync();
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert("Error", ex.Message, "OK");
+        }
     }
 
     protected virtual async void SaveAsAsync()
     {
-        await CurrentItem?.SaveAsAsync();
+        try
+        {
+            await CurrentItem?.SaveAsAsync();
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert("Error", ex.Message, "OK");
+        }
     }
 
     protected virtual Task CloseAsync(object data)

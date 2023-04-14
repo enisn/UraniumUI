@@ -4,7 +4,7 @@
              xmlns:local="clr-namespace:UraniumUI.StyleBuilder"
              xmlns:converters="clr-namespace:UraniumUI.StyleBuilder.Converters"
              xmlns:material="clr-namespace:UraniumUI.Material.Resources;assembly=UraniumUI.Material"
-             xmlns:templating="clr-namespace:UraniumUI.StyleBuilder.Templating"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="UraniumUI.StyleBuilder.App">
     <Application.Resources>
         <ResourceDictionary>
@@ -14,10 +14,10 @@
                 <material:StyleResource ColorsOverride="{x:Reference appColors}" />
 
             </ResourceDictionary.MergedDictionaries>
+            
             <converters:ToSurfaceColorConverter x:Key="ToSurfaceColor" />
             <converters:ColorHexConverter x:Key="ColorHexConverter" />
-            
-            <templating:GenericDataTemplateSelector x:Key="GenericDataTemplateSelector" />
+            <toolkit:IsNullConverter x:Key="IsNullConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

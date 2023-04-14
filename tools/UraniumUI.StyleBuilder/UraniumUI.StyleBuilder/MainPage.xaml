@@ -16,6 +16,11 @@
     <ContentPage.MenuBarItems>
         <MenuBarItem Text="File" IsEnabled="False">
             <MenuFlyoutItem Text="New" Command="{Binding NewCommand}" />
+
+            <MenuFlyoutSubItem Text="Open">
+                <MenuFlyoutItem Text="Open Colors" Command="{Binding OpenCommand}" />
+                <MenuFlyoutItem Text="Open Styles" Command="{Binding OpenCommand}" />
+            </MenuFlyoutSubItem>
             <MenuFlyoutItem Text="Open" Command="{Binding OpenCommand}" />
             <MenuFlyoutItem Text="Save" Command="{Binding SaveCommand}" />
             <MenuFlyoutItem Text="Save As..." Command="{Binding SaveAsCommand}"/>
@@ -75,42 +80,48 @@
         </DataTemplate>
     </ContentPage.Resources>
 
+    <Grid>
+        <HorizontalStackLayout IsVisible="{Binding CurrentItem, Converter={StaticResource IsNullConverter}}" HorizontalOptions="Center" VerticalOptions="Center" Spacing="6">
+            <Button Text="New" StyleClass="FilledButton" Command="{Binding NewCommand}" />
+            <Button Text="Open..." StyleClass="OutlinedButton" Command="{Binding OpenCommand}" />
+        </HorizontalStackLayout>
 
-    <material:TabView
+        <material:TabView
                 ItemsSource="{Binding Items}"
                 CurrentItem="{Binding CurrentItem, Mode=TwoWay}">
-        <material:TabView.TabHeaderItemTemplate>
-            <DataTemplate x:DataType="material:TabItem">
-                <uranium:StatefulContentView TappedCommand="{Binding Command}" MinimumWidthRequest="160">
-                    <Grid ColumnDefinitions="*,Auto" Padding="5,10" BackgroundColor="{AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}">
+            <material:TabView.TabHeaderItemTemplate>
+                <DataTemplate x:DataType="material:TabItem">
+                    <uranium:StatefulContentView TappedCommand="{Binding Command}" MinimumWidthRequest="160">
+                        <Grid ColumnDefinitions="*,Auto" Padding="5,10" BackgroundColor="{AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}">
 
-                        <Label Text="{Binding Title}" VerticalOptions="Center" LineBreakMode="CharacterWrap"/>
+                            <Label Text="{Binding Title}" VerticalOptions="Center" LineBreakMode="CharacterWrap"/>
 
-                        <uranium:StatefulContentView Grid.Column="1"
+                            <uranium:StatefulContentView Grid.Column="1"
                                                                  Margin="5"
                                                 VerticalOptions="Center"
                                                 CommandParameter="{Binding Data}"
                                                 TappedCommand="{Binding Source={x:Reference page}, Path=BindingContext.CloseCommand}">
-                            <Path Data="{x:Static uranium:UraniumShapes.X}" Fill="{AppThemeBinding {StaticResource OnSurface},Dark={StaticResource OnSurfaceDark}}" />
-                        </uranium:StatefulContentView>
+                                <Path Data="{x:Static uranium:UraniumShapes.X}" Fill="{AppThemeBinding {StaticResource OnSurface},Dark={StaticResource OnSurfaceDark}}" />
+                            </uranium:StatefulContentView>
 
-                        <Grid.Triggers>
-                            <DataTrigger TargetType="Grid" Binding="{Binding IsSelected}" Value="True">
-                                <Setter Property="uranium:DynamicTint.BackgroundColorOpacity" Value="0.6" />
-                            </DataTrigger>
-                            <DataTrigger TargetType="Grid" Binding="{Binding IsSelected}" Value="False">
-                                <Setter Property="uranium:DynamicTint.BackgroundColorOpacity" Value="0.05" />
-                            </DataTrigger>
-                        </Grid.Triggers>
-                    </Grid>
-                </uranium:StatefulContentView>
-            </DataTemplate>
-        </material:TabView.TabHeaderItemTemplate>
-        <material:TabView.ItemTemplate>
-            <DataTemplate>
-                <views:EditorTabItem />
-            </DataTemplate>
-        </material:TabView.ItemTemplate>
-    </material:TabView>
+                            <Grid.Triggers>
+                                <DataTrigger TargetType="Grid" Binding="{Binding IsSelected}" Value="True">
+                                    <Setter Property="uranium:DynamicTint.BackgroundColorOpacity" Value="0.6" />
+                                </DataTrigger>
+                                <DataTrigger TargetType="Grid" Binding="{Binding IsSelected}" Value="False">
+                                    <Setter Property="uranium:DynamicTint.BackgroundColorOpacity" Value="0.05" />
+                                </DataTrigger>
+                            </Grid.Triggers>
+                        </Grid>
+                    </uranium:StatefulContentView>
+                </DataTemplate>
+            </material:TabView.TabHeaderItemTemplate>
+            <material:TabView.ItemTemplate>
+                <DataTemplate>
+                    <views:EditorTabItem />
+                </DataTemplate>
+            </material:TabView.ItemTemplate>
+        </material:TabView>
+    </Grid>
 
 </ContentPage>

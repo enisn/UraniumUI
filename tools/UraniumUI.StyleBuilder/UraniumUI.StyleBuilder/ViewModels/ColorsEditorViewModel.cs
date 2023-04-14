@@ -12,9 +12,10 @@ using UraniumUI.StyleBuilder.Controls;
 using UraniumUI.StyleBuilder.StyleManager;
 
 namespace UraniumUI.StyleBuilder.ViewModels;
-public class ColorsEditorViewModel : ReactiveObject, ISavable
+public class ColorsEditorViewModel : ReactiveObject, ISavable, IDisposable
 {
-    public ColorStyleManager ColorStyleManager { get; }
+    public ColorStyleManager ColorStyleManager { get; private set; }
+
     protected IDialogService Dialog { get; }
 
     public ColorPalette Colors => ColorStyleManager?.Palette;
@@ -32,7 +33,7 @@ public class ColorsEditorViewModel : ReactiveObject, ISavable
     protected virtual async void EditColorAsync(object parameter)
     {
         await MopupService.Instance.PushAsync(new ColorEditPopupPage(this, parameter?.ToString()));
-    }
+    } 
 
     public async Task NewAsync()
     {
@@ -62,4 +63,10 @@ public class ColorsEditorViewModel : ReactiveObject, ISavable
     }
 
     public override string ToString() => Title ?? "New Colors.xaml";
+
+    public void Dispose()
+    {
+        ColorStyleManager?.Dispose();
+        ColorStyleManager = null;
+    }
 }

@@ -9,7 +9,7 @@ using System.Xml.Serialization;
 namespace UraniumUI.StyleBuilder.StyleManager;
 
 [RegisterAs(typeof(ColorStyleManager))]
-public partial class ColorStyleManager : ReactiveObject
+public partial class ColorStyleManager : ReactiveObject, IDisposable
 {
     protected Xml.ResourceDictionary XmlNode { get; set; }
 
@@ -50,9 +50,14 @@ public partial class ColorStyleManager : ReactiveObject
             var serializer = new XmlSerializer(typeof(Xml.ResourceDictionary));
             serializer.Serialize(stream, XmlNode);
 
-            await CommunityToolkit.Maui.Storage.FileSaver.Default.SaveAsync(
+            var result = await CommunityToolkit.Maui.Storage.FileSaver.Default.SaveAsync(
                 initialPath: System.IO.Path.GetDirectoryName(Path),
                 "Colors.xaml", stream, CancellationToken.None);
+
+            if (result.IsSuccessful)
+            {
+                this.Path = result.FilePath;
+            }
         }
     }
 
@@ -71,6 +76,17 @@ public partial class ColorStyleManager : ReactiveObject
                 Text = (x.GetValue(Palette) as Color).ToHex(),
             }).ToList()
         };
+    }
+
+    public void Dispose()
+    {
+        XmlNode.Colors?.Clear();
+        XmlNode.Colors = null;
+        XmlNode.SolidColorBrushes?.Clear();
+        XmlNode.SolidColorBrushes = null;
+        XmlNode = null;
+        Palette = null;
+        Path = null;
     }
 
     const string XamlCompileDecleration = "\n<?xaml-comp compile=\"true\" ?>";

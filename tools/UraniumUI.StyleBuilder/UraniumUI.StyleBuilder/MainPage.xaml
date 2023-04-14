@@ -19,9 +19,8 @@
 
             <MenuFlyoutSubItem Text="Open">
                 <MenuFlyoutItem Text="Open Colors" Command="{Binding OpenCommand}" />
-                <MenuFlyoutItem Text="Open Styles" Command="{Binding OpenCommand}" />
+                <MenuFlyoutItem Text="Open Styles" />
             </MenuFlyoutSubItem>
-            <MenuFlyoutItem Text="Open" Command="{Binding OpenCommand}" />
             <MenuFlyoutItem Text="Save" Command="{Binding SaveCommand}" />
             <MenuFlyoutItem Text="Save As..." Command="{Binding SaveAsCommand}"/>
         </MenuBarItem>

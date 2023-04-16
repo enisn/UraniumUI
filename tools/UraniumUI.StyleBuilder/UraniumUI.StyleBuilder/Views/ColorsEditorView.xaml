@@ -1,56 +1,91 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ScrollView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             xmlns:vm="clr-namespace:UraniumUI.StyleBuilder.ViewModels"
             xmlns:local="clr-namespace:UraniumUI.StyleBuilder"
+            xmlns:views="clr-namespace:UraniumUI.StyleBuilder.Views"
+            xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
+            xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+            x:Name="contentView"
             x:DataType="vm:ColorsEditorViewModel"
             x:Class="UraniumUI.StyleBuilder.Views.ColorsEditorView">
 
-    <VerticalStackLayout>
-        <Frame BackgroundColor="{Binding Colors.Background}">
-            <VerticalStackLayout>
-                <Label Text="Light" FontSize="Header" TextColor="{Binding Colors.OnBackground}" />
-                <BoxView StyleClass="Divider" Color="{Binding Colors.OnBackground}" />
+    <material:TabView TabPlacement="Bottom">
+        <material:TabView.Items>
+            <material:TabItem Title="Color Preview">
+                <material:TabItem.Content>
+                    <ScrollView>
+                        <VerticalStackLayout Padding="10">
+                            <Frame BackgroundColor="{Binding Colors[Background].Color}">
+                                <VerticalStackLayout>
+                                    <Label Text="Light" FontSize="Header" TextColor="{Binding Colors[OnBackground].Color}" />
+                                    <BoxView StyleClass="Divider" Color="{Binding Colors[OnBackground].Color}" />
 
-                <FlexLayout AlignItems="Center" AlignContent="SpaceEvenly" Wrap="Wrap" >
+                                    <Label Text="Test" />
 
-                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors.Primary" />
-                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors.PrimaryContainer" />
-                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors.Secondary" />
-                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors.SecondaryContainer" />
-                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors.Tertiary" />
-                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors.TertiaryContainer" />
-                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors.Background" />
-                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors.Surface" />
-                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors.SurfaceVariant" />
-                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors.Error" />
-                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors.ErrorContainer" />
+                                    <BoxView WidthRequest="50" HeightRequest="50" Color="{Binding Colors[Primary].Color}" />
 
-                </FlexLayout>
-            </VerticalStackLayout>
-        </Frame>
+                                    <FlexLayout AlignItems="Center" AlignContent="SpaceEvenly" Wrap="Wrap" >
 
-        <Frame BackgroundColor="{Binding Colors.BackgroundDark}">
-            <VerticalStackLayout>
-                <Label Text="Dark" FontSize="Header" TextColor="{Binding Colors.OnBackgroundDark}" />
-                <BoxView StyleClass="Divider" Color="{Binding Colors.OnBackgroundDark}" />
+                                        <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[Primary].Color" />
+                                        <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[PrimaryContainer].Color" />
+                                        <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[Secondary].Color" />
+                                        <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[SecondaryContainer].Color" />
+                                        <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[Tertiary].Color" />
+                                        <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[TertiaryContainer].Color" />
+                                        <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[Background].Color" />
+                                        <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[Surface].Color" />
+                                        <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[SurfaceVariant].Color" />
+                                        <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[Error].Color" />
+                                        <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[ErrorContainer].Color" />
 
-                <FlexLayout AlignItems="Center" AlignContent="SpaceEvenly" Wrap="Wrap" >
+                                    </FlexLayout>
+                                </VerticalStackLayout>
+                            </Frame>
 
-                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors.PrimaryDark" />
-                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors.PrimaryContainerDark" />
-                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors.SecondaryDark" />
-                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors.SecondaryContainerDark" />
-                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors.TertiaryDark" />
-                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors.TertiaryContainerDark" />
-                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors.BackgroundDark" />
-                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors.SurfaceDark" />
-                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors.SurfaceVariantDark" />
-                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors.ErrorDark" />
-                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors.ErrorContainerDark" />
+                            <Frame BackgroundColor="{Binding Colors[BackgroundDark].Color}">
+                                <VerticalStackLayout>
+                                    <Label Text="Dark" FontSize="Header" TextColor="{Binding Colors[OnBackgroundDark].Color}" />
+                                    <BoxView StyleClass="Divider" Color="{Binding Colors[OnBackgroundDark].Color}" />
 
-                </FlexLayout>
-            </VerticalStackLayout>
-        </Frame>
-    </VerticalStackLayout>
-</ScrollView>
+                                    <FlexLayout AlignItems="Center" AlignContent="SpaceEvenly" Wrap="Wrap" >
+
+                                        <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[PrimaryDark].Color" />
+                                        <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[PrimaryContainerDark].Color" />
+                                        <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[SecondaryDark].Color" />
+                                        <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[SecondaryContainerDark].Color" />
+                                        <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[TertiaryDark].Color" />
+                                        <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[TertiaryContainerDark].Color" />
+                                        <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[BackgroundDark].Color" />
+                                        <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[SurfaceDark].Color" />
+                                        <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[SurfaceVariantDark].Color" />
+                                        <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[ErrorDark].Color" />
+                                        <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[ErrorContainerDark].Color" />
+
+                                    </FlexLayout>
+                                </VerticalStackLayout>
+                            </Frame>
+                        </VerticalStackLayout>
+                    </ScrollView>
+                </material:TabItem.Content>
+            </material:TabItem>
+
+            <material:TabItem Title="All Keys">
+                <ScrollView>
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Colors}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <uranium:StatefulContentView CommandParameter="{Binding Key, StringFormat='Colors[{0}].Color'}" TappedCommand="{Binding Source={x:Reference contentView}, Path=BindingContext.EditColorCommand}">
+                                    <Grid ColumnDefinitions="Auto, *">
+                                        <BoxView WidthRequest="15" HeightRequest="15" Margin="5" Color="{Binding Value.Color}" />
+                                        <Label Text="{Binding Key}" Grid.Column="1" VerticalOptions="Center" />
+                                    </Grid>
+                                </uranium:StatefulContentView>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                </ScrollView>
+            </material:TabItem>
+        </material:TabView.Items>
+    </material:TabView>
+</ContentView>

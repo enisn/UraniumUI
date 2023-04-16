@@ -1,7 +1,6 @@
 ﻿using Mopups.Services;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
-using System.Reactive.Linq;
 using System.Windows.Input;
 using UraniumUI.Dialogs;
 using UraniumUI.StyleBuilder.Controls;
@@ -14,10 +13,11 @@ public class ColorsEditorViewModel : ReactiveObject, ISavable
 
     protected IDialogService Dialog { get; }
 
-    public ColorPalette Colors => ColorStyleManager?.Palette;
-
     [Reactive] public string Title { get; protected set; }
+
     [ObservableAsProperty] public string Path { get; }
+
+    public IDictionary<string, ReactiveColor> Colors => ColorStyleManager?.Colors;
 
     public ColorsEditorViewModel(ColorStyleManager colorStyleManager, IDialogService dialog)
     {
@@ -28,7 +28,7 @@ public class ColorsEditorViewModel : ReactiveObject, ISavable
             .WhenAnyValue(x => x.Path)
             .ToPropertyEx(this, x => x.Path);
     }
-    public ICommand EditColorCommand { get; private set; }
+    public ICommand EditColorCommand { get; }
 
     protected virtual async void EditColorAsync(object parameter)
     {

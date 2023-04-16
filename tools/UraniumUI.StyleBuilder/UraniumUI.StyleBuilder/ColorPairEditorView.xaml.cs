@@ -21,13 +21,13 @@ public partial class ColorPairEditorView : ContentView
         {
             if (bindable is ColorPairEditorView editor && newValue is string bindingPath)
             {
-                var propertyName = bindingPath.Split('.').Last();
+                var propertyName = bindingPath.Split('[', ']')[1];
                 editor.primarySquare.SetBinding(ContentView.BackgroundColorProperty, bindingPath);
                 editor.primarySquare.CommandParameter = bindingPath;
                 editor.primaryLabel.SetBinding(Label.TextColorProperty, bindingPath, converter: new ToSurfaceColorConverter());
                 editor.primaryLabel.Text = propertyName;
 
-                var onPropertyName = "On" + propertyName.Split('.').Last();
+                var onPropertyName = "On" + propertyName;
                 var onBindingPath = bindingPath.Replace(propertyName, onPropertyName);
 
                 editor.onSquare.SetBinding(ContentView.BackgroundColorProperty, bindingPath);

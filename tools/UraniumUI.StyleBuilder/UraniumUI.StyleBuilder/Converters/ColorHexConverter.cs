@@ -10,14 +10,15 @@ public class ColorHexConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (targetType != typeof(string))
+
+        if (targetType != typeof(Color))
         {
-            throw new InvalidOperationException("targetType must be string");
+            throw new InvalidOperationException("targetType must be Color");
         }
 
-        if (value is Color color)
+        if (value is string hex)
         {
-            return color.ToHex();
+            return Color.FromArgb(hex);
         }
         else
         {
@@ -27,18 +28,14 @@ public class ColorHexConverter : IValueConverter
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (targetType != typeof(Color))
+        if (targetType != typeof(string))
         {
-            throw new InvalidOperationException("targetType must be Color");
+            throw new InvalidOperationException("targetType must be string");
         }
 
-        if (value is string hex)
+        if (value is Color color)
         {
-            //if (Color.TryParse(hex, out ))
-            //{
-
-            //}
-            return Color.FromArgb(hex);
+            return color.ToHex();
         }
         else
         {

@@ -80,10 +80,6 @@
     </ContentPage.Resources>
 
     <Grid>
-        <HorizontalStackLayout IsVisible="{Binding CurrentItem, Converter={StaticResource IsNullConverter}}" HorizontalOptions="Center" VerticalOptions="Center" Spacing="6">
-            <Button Text="New" StyleClass="FilledButton" Command="{Binding NewCommand}" />
-            <Button Text="Open..." StyleClass="OutlinedButton" Command="{Binding OpenCommand}" />
-        </HorizontalStackLayout>
 
         <material:TabView
                 ItemsSource="{Binding Items}"
@@ -121,6 +117,11 @@
                 </DataTemplate>
             </material:TabView.ItemTemplate>
         </material:TabView>
+
+        <HorizontalStackLayout IsVisible="{Binding CurrentItem, Converter={StaticResource IsNullConverter}}" HorizontalOptions="Center" VerticalOptions="Center" Spacing="6">
+            <Button Text="New" StyleClass="FilledButton" Command="{Binding NewCommand}" />
+            <Button Text="Open..." StyleClass="OutlinedButton" Command="{Binding OpenCommand}" />
+        </HorizontalStackLayout>
     </Grid>
 
 </ContentPage>

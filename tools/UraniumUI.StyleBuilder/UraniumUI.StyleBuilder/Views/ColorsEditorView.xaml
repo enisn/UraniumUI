@@ -21,10 +21,6 @@
                                     <Label Text="Light" FontSize="Header" TextColor="{Binding Colors[OnBackground].Color}" />
                                     <BoxView StyleClass="Divider" Color="{Binding Colors[OnBackground].Color}" />
 
-                                    <Label Text="Test" />
-
-                                    <BoxView WidthRequest="50" HeightRequest="50" Color="{Binding Colors[Primary].Color}" />
-
                                     <FlexLayout AlignItems="Center" AlignContent="SpaceEvenly" Wrap="Wrap" >
 
                                         <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[Primary].Color" />

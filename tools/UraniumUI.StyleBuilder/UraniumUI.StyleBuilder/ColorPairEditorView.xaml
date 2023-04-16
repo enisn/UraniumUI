@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="UraniumUI.StyleBuilder.ColorPairEditorView"
@@ -22,6 +22,7 @@
                 <Setter Property="Margin" Value="10" />
                 <Setter Property="FontAttributes" Value="Bold" />
                 <Setter Property="FontSize" Value="Subtitle" />
+                <Setter Property="FontSize" Value="{OnPlatform MacCatalyst=17}" />
             </Style>
         </ResourceDictionary>
     </ContentView.Resources>
@@ -30,7 +31,7 @@
             <Label x:Name="primaryLabel" />
         </uranium:StatefulContentView>
         <uranium:StatefulContentView x:Name="onSquare" StyleClass="OnSquare">
-            <Label x:Name="onLabel" StyleClass="OnLabels" />
+            <Label x:Name="onLabel" StyleClass="OnLabels" LineBreakMode="TailTruncation" />
         </uranium:StatefulContentView>
     </VerticalStackLayout>
 </ContentView>

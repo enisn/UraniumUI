@@ -1,18 +1,14 @@
 ﻿using Mopups.Services;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Reactive.Linq;
 using System.Windows.Input;
 using UraniumUI.Dialogs;
 using UraniumUI.StyleBuilder.Controls;
 using UraniumUI.StyleBuilder.StyleManager;
 
 namespace UraniumUI.StyleBuilder.ViewModels;
-public class ColorsEditorViewModel : ReactiveObject, ISavable, IDisposable
+public class ColorsEditorViewModel : ReactiveObject, ISavable
 {
     public ColorStyleManager ColorStyleManager { get; private set; }
 
@@ -21,12 +17,16 @@ public class ColorsEditorViewModel : ReactiveObject, ISavable, IDisposable
     public ColorPalette Colors => ColorStyleManager?.Palette;
 
     [Reactive] public string Title { get; protected set; }
+    [ObservableAsProperty] public string Path { get; }
 
     public ColorsEditorViewModel(ColorStyleManager colorStyleManager, IDialogService dialog)
     {
         ColorStyleManager = colorStyleManager;
         Dialog = dialog;
         EditColorCommand = new Command(EditColorAsync);
+        this.ColorStyleManager
+            .WhenAnyValue(x => x.Path)
+            .ToPropertyEx(this, x => x.Path);
     }
     public ICommand EditColorCommand { get; private set; }
 
@@ -42,8 +42,8 @@ public class ColorsEditorViewModel : ReactiveObject, ISavable, IDisposable
 
     public async Task LoadAsync(string path)
     {
-        await ColorStyleManager.LoadAsync(path);
         Title = path;
+        await ColorStyleManager.LoadAsync(path);
     }
 
     public async Task SaveAsync()

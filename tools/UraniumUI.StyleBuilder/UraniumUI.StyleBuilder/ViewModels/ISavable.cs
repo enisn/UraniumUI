@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace UraniumUI.StyleBuilder.ViewModels;
+﻿namespace UraniumUI.StyleBuilder.ViewModels;
 public interface ISavable : IDisposable
 {
     Task SaveAsync();
@@ -12,4 +6,6 @@ public interface ISavable : IDisposable
     Task SaveAsAsync();
 
     string Title { get; }
+
+    string Path { get; }
 }

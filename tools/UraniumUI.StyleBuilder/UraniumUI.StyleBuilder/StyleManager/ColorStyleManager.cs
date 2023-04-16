@@ -12,8 +12,6 @@ namespace UraniumUI.StyleBuilder.StyleManager;
 [RegisterAs(typeof(ColorStyleManager))]
 public partial class ColorStyleManager : ReactiveObject, IDisposable
 {
-    //protected Xml.ResourceDictionary XmlNode { get; set; }
-
     [Reactive] public ColorPalette Palette { get; protected set; }
 
     [Reactive] public string Path { get; set; }
@@ -22,6 +20,7 @@ public partial class ColorStyleManager : ReactiveObject, IDisposable
 
     public async Task LoadAsync(string path)
     {
+        await Task.Yield();
         XmlDoc = XDocument.Load(path);
         var ns = XmlDoc.Root.GetDefaultNamespace();
         var xns = XmlDoc.Root.GetNamespaceOfPrefix("x");

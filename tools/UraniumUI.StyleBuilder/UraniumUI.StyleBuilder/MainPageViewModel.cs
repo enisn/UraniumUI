@@ -89,6 +89,13 @@ public class MainPageViewModel : ReactiveObject
                 return;
             }
 
+            var existing = Items.FirstOrDefault(x => x.Path == fileResult.FullPath);
+            if (existing != null)
+            {
+                CurrentItem = existing;
+                return;
+            }
+
             var colorsEditorViewModel = serviceProvider.GetRequiredService<ColorsEditorViewModel>();
 
             await colorsEditorViewModel.LoadAsync(fileResult.FullPath);

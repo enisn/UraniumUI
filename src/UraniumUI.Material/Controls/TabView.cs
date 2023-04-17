@@ -323,7 +323,10 @@ public partial class TabView : Grid
     {
         var existing = _headerContainer.Children.FirstOrDefault(x => x is View view && view.BindingContext == tabItem);
 
-        SelectedTab = Items.FirstOrDefault();
+        if (tabItem == SelectedTab)
+        {
+            ResetSelectedTab();
+        }
 
         _headerContainer.Children.Remove(existing);
     }
@@ -348,6 +351,7 @@ public partial class TabView : Grid
         if (newValue == null)
         {
             _contentContainer.Content = null;
+            CurrentItem = null;
             return;
         }
 
@@ -408,7 +412,7 @@ public partial class TabView : Grid
             }
         }
 
-        if (SelectedTab.Data != null)
+        if (SelectedTab?.Data != null)
         {
             CurrentItem = SelectedTab.Data;
         }

@@ -5,11 +5,6 @@ using UraniumUI.StyleBuilder.Templating;
 namespace UraniumUI.StyleBuilder.Views;
 public class EditorTabItem : ContentView
 {
-    public EditorTabItem()
-    {
-
-    }
-
     protected override void OnBindingContextChanged()
     {
         base.OnBindingContextChanged();

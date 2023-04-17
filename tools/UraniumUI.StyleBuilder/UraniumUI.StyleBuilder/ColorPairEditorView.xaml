@@ -21,8 +21,8 @@
                 <Setter Property="VerticalOptions" Value="End" />
                 <Setter Property="Margin" Value="10" />
                 <Setter Property="FontAttributes" Value="Bold" />
-                <Setter Property="FontSize" Value="Subtitle" />
-                <Setter Property="FontSize" Value="{OnPlatform MacCatalyst=17}" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="LineBreakMode" Value="TailTruncation" />
             </Style>
         </ResourceDictionary>
     </ContentView.Resources>
@@ -31,7 +31,7 @@
             <Label x:Name="primaryLabel" />
         </uranium:StatefulContentView>
         <uranium:StatefulContentView x:Name="onSquare" StyleClass="OnSquare">
-            <Label x:Name="onLabel" StyleClass="OnLabels" LineBreakMode="TailTruncation" />
+            <Label x:Name="onLabel" StyleClass="OnLabels" />
         </uranium:StatefulContentView>
     </VerticalStackLayout>
 </ContentView>

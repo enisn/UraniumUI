@@ -33,11 +33,31 @@ public class ColorsEditorViewModel : ReactiveObject, ISavable
     protected virtual async void EditColorAsync(object parameter)
     {
         await MopupService.Instance.PushAsync(new ColorEditPopupPage(this, parameter?.ToString()));
-    } 
+    }
 
-    public async Task NewAsync()
+    public async Task<bool> NewAsync()
     {
+        var result = await Dialog.DisplayRadioButtonPromptAsync(
+                "Choose a color palette to based on...",
+                new[] { "Uranium Colors", "Material Colors" },
+                "Uranium Colors");
+
+        if (result == null)
+        {
+            return false;
+        }
+
+        if (result == "Material Colors")
+        {
+            using var stream = await FileSystem.OpenAppPackageFileAsync("MaterialColors.xml");
+            await ColorStyleManager.CreateNewAsync(stream);
+
+            return true;
+        }
+
         await ColorStyleManager.CreateNewAsync();
+
+        return true;
     }
 
     public async Task LoadAsync(string path)

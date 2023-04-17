@@ -11,11 +11,14 @@
              x:DataType="local:MainPageViewModel">
     <ContentPage.MenuBarItems>
         <MenuBarItem Text="File" IsEnabled="False">
-            <MenuFlyoutItem Text="New" Command="{Binding NewCommand}" />
+            <MenuFlyoutSubItem Text="New">
+                <MenuFlyoutItem Text="Colors" Command="{Binding NewColorsCommand}" />
+                <MenuFlyoutItem Text="Styles" Command="{Binding NewStylesCommand}" />
+            </MenuFlyoutSubItem>
 
             <MenuFlyoutSubItem Text="Open">
-                <MenuFlyoutItem Text="Open Colors" Command="{Binding OpenCommand}" />
-                <MenuFlyoutItem Text="Open Styles" />
+                <MenuFlyoutItem Text="Open Colors" Command="{Binding OpenColorsCommand}" />
+                <MenuFlyoutItem Text="Open Styles" Command="{Binding OpenStylesCommand}" />
             </MenuFlyoutSubItem>
             <MenuFlyoutItem Text="Save" Command="{Binding SaveCommand}" />
             <MenuFlyoutItem Text="Save As..." Command="{Binding SaveAsCommand}"/>
@@ -24,7 +27,7 @@
 
     <Grid>
         <material:TabView
-            BackgroundColor="#60909090"
+            BackgroundColor="#30909090"
                 ItemsSource="{Binding Items}"
                 CurrentItem="{Binding CurrentItem, Mode=TwoWay}">
             <material:TabView.TabHeaderItemTemplate>
@@ -63,8 +66,8 @@
             </material:TabView.ItemTemplate>
         </material:TabView>
         <HorizontalStackLayout IsVisible="{Binding CurrentItem, Converter={StaticResource IsNullConverter}}" HorizontalOptions="Center" VerticalOptions="Center" Spacing="6">
-            <Button Text="New" StyleClass="FilledButton" Command="{Binding NewCommand}" />
-            <Button Text="Open..." StyleClass="OutlinedButton" Command="{Binding OpenCommand}" />
+            <Button Text="New" StyleClass="FilledButton" Command="{Binding NewColorsCommand}" />
+            <Button Text="Open..." StyleClass="OutlinedButton" Command="{Binding OpenColorsCommand}" />
         </HorizontalStackLayout>
     </Grid>
 

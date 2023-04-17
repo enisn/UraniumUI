@@ -55,12 +55,15 @@ public partial class ColorStyleManager : ReactiveObject, IDisposable
         }
     }
 
-    public async Task CreateNewAsync()
+    public async Task CreateNewAsync(Stream source = null)
     {
         await Task.Yield();
         Path = null;
 
-        XmlDoc = XDocument.Load(GetType().Assembly.GetManifestResourceStream("UraniumUI.StyleBuilder.Resources.Styles.Colors.xaml"));
+        XmlDoc = XDocument.Load(source ??
+            GetType()
+            .Assembly
+            .GetManifestResourceStream("UraniumUI.StyleBuilder.Resources.Styles.Colors.xaml"));
 
         InitializeFromXmlDoc();
     }

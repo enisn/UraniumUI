@@ -25,8 +25,10 @@ public class MainPageViewModel : ReactiveObject
 
     public MainPageViewModel(IDialogService dialog, IServiceProvider serviceProvider)
     {
-        NewCommand = new Command(NewAsync);
-        OpenCommand = new Command(OpenAsync);
+        NewColorsCommand = new Command(NewColorsAsync);
+        OpenColorsCommand = new Command(OpenColorsAsync);
+        OpenStylesCommand = new Command(() => { }, () => false); // Not reaady yet!
+        NewStylesCommand = new Command(() => { }, () => false); // Not reaady yet!
         CloseCommand = ReactiveCommand.CreateFromTask<object>(CloseAsync);
 
         Dialog = dialog;
@@ -46,31 +48,22 @@ public class MainPageViewModel : ReactiveObject
         SaveAsCommand = new Command(SaveAsAsync, () => CurrentItem != null);
     }
 
-    public ICommand NewCommand { get; }
-    public ICommand OpenCommand { get; }
+    public ICommand NewColorsCommand { get; }
+    public ICommand NewStylesCommand { get; }
+    public ICommand OpenColorsCommand { get; }
+    public ICommand OpenStylesCommand { get; }
     public ICommand CloseCommand { get; }
     [Reactive] public ICommand SaveCommand { get; private set; }
     [Reactive] public ICommand SaveAsCommand { get; private set; }
 
-    protected virtual async void NewAsync()
+    protected virtual async void NewColorsAsync()
     {
         try
         {
-            var result = await Dialog.DisplayRadioButtonPromptAsync(
-                 "Create New",
-                 new[] { "Colors", "Styles" });
+            var colorsEditorViewModel = serviceProvider.GetRequiredService<ColorsEditorViewModel>();
 
-            if (result == null)
+            if (await colorsEditorViewModel.NewAsync())
             {
-                return;
-            }
-
-            if (result == "Colors")
-            {
-                var colorsEditorViewModel = serviceProvider.GetRequiredService<ColorsEditorViewModel>();
-
-                await colorsEditorViewModel.NewAsync();
-
                 Items.Add(colorsEditorViewModel);
                 CurrentItem = colorsEditorViewModel;
             }
@@ -81,7 +74,7 @@ public class MainPageViewModel : ReactiveObject
         }
     }
 
-    protected virtual async void OpenAsync()
+    protected virtual async void OpenColorsAsync()
     {
         try
         {

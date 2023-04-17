@@ -70,6 +70,7 @@ This project is licensed under the Apache License License - see the [LICENSE](LI
 | _Anonymous_ | ☕️☕️☕️ |
 | [kmaclagan-pcl](https://www.buymeacoffee.com/enisn) | ☕️ |
 | [@Geramy](https://github.com/Geramy) | ☕️ |
+| Malko_Josue | ☕ |
 
 > Donations are spent to infrastructural costs such as documentation website etc.
 

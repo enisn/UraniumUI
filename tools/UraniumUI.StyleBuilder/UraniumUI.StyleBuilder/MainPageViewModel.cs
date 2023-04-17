@@ -166,7 +166,6 @@ public class MainPageViewModel : ReactiveObject
         if (data is ISavable item)
         {
             Items.Remove(item);
-            CurrentItem = null;
             item.Dispose();
         }
 

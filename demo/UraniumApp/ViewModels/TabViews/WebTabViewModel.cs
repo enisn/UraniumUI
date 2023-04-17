@@ -1,7 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using UraniumUI;
-using UraniumUI.Material.Controls;
 
 namespace UraniumApp.ViewModels.TabViews;
 public class WebTabViewModel : UraniumBindableObject
@@ -18,6 +17,7 @@ public class WebTabViewModel : UraniumBindableObject
     public object CurrentTab { get => currentTab; set => SetProperty(ref currentTab, value); }
     public WebTabViewModel()
     {
+        CurrentTab = TabItems.First();
         CreateNewTabCommand = new Command(CreateNewTab);
         RemoveTabCommand = new Command(RemoveTab);
     }

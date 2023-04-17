@@ -23,7 +23,6 @@
     </ContentPage.MenuBarItems>
 
     <Grid>
-        <Label x:Name="labelTest" />
         <material:TabView
             BackgroundColor="#10002000"
                 ItemsSource="{Binding Items}"
@@ -65,6 +64,7 @@
         </material:TabView>
         <HorizontalStackLayout IsVisible="{Binding CurrentItem, Converter={StaticResource IsNullConverter}}" HorizontalOptions="Center" VerticalOptions="Center" Spacing="6">
             <Button Text="New" StyleClass="FilledButton" Command="{Binding NewCommand}" />
+            <Button Text="New(debug)" StyleClass="FilledButton" Clicked="Button_Clicked"/>
             <Button Text="Open..." StyleClass="OutlinedButton" Command="{Binding OpenCommand}" />
         </HorizontalStackLayout>
     </Grid>

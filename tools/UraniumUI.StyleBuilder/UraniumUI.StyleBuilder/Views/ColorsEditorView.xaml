@@ -10,7 +10,7 @@
             x:DataType="vm:ColorsEditorViewModel"
             x:Class="UraniumUI.StyleBuilder.Views.ColorsEditorView">
 
-    <material:TabView TabPlacement="Bottom">
+    <material:TabView TabPlacement="Bottom" PresentationStrategy="CacheOnLayout">
         <material:TabView.Items>
             <material:TabItem Title="Material Palette">
                 <ScrollView>

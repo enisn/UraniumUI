@@ -139,9 +139,10 @@ public static class MopupsDialogExtensions
             {
                 Text = prop != null ? prop.GetValue(item)?.ToString() : item.ToString(),
                 Value = item,
-                IsChecked = item.Equals(selected),
             });
         }
+
+        rbGroup.SelectedItem = selected;
 
         var rootGrid = new Grid
         {

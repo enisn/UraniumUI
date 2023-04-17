@@ -83,6 +83,8 @@ public class DefaultDialogService : IDialogService
             ItemsSource = selectionSource.ToList(),
         };
 
+        selectionView.SelectedItem = selected;
+
         Application.Current.MainPage.Navigation.PushModalAsync(new ContentPage
         {
             Content = new ScrollView

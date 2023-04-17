@@ -10,7 +10,7 @@ namespace UraniumUI.Material.Controls;
 [ContentProperty(nameof(Items))]
 public partial class TabView : Grid
 {
-    public TabViewPresentationStrategy PresentationStrategy { get; set; }
+    public TabViewCachingStrategy CachingStrategy { get; set; }
 
     public static DataTemplate DefaultTabHeaderItemTemplate => new DataTemplate(() =>
     {
@@ -355,7 +355,7 @@ public partial class TabView : Grid
             item.NotifyIsSelectedChanged();
         }
 
-        if (PresentationStrategy == TabViewPresentationStrategy.CacheOnCodeBehing)
+        if (CachingStrategy == TabViewCachingStrategy.CacheOnCodeBehing)
         {
             if (_contentContainer.Content != null)
             {
@@ -394,7 +394,7 @@ public partial class TabView : Grid
     }
 }
 
-public enum TabViewPresentationStrategy
+public enum TabViewCachingStrategy
 {
     CacheOnCodeBehing,
     CacheOnLayout,

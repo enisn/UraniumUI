@@ -25,7 +25,7 @@
                 <material:TabView 
                         Grid.Row="1" 
                         ItemsSource="{Binding TabItems}"
-                        CurrentItem="{Binding CurrentTab}"
+                        CurrentItem="{Binding CurrentTab, Mode=TwoWay}"
                         CachingStrategy="CacheOnLayout">
                     <material:TabView.TabHeaderItemTemplate>
                         <DataTemplate>

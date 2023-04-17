@@ -12,6 +12,8 @@ public partial class TabView : Grid
 {
     public TabViewCachingStrategy CachingStrategy { get; set; }
 
+    public bool UseAnimation { get; set; } = true;
+
     public static DataTemplate DefaultTabHeaderItemTemplate => new DataTemplate(() =>
     {
         var grid = new Grid();
@@ -262,9 +264,9 @@ public partial class TabView : Grid
             _headerContainer.Children.Clear();
             RenderHeaders();
 
-            if (CurrentItem is null)
+            if (SelectedTab is null)
             {
-                ResetSelectedItem();
+                ResetSelectedTab();
             }
         }
     }
@@ -286,9 +288,9 @@ public partial class TabView : Grid
         }
     }
 
-    protected void ResetSelectedItem()
+    protected void ResetSelectedTab()
     {
-        CurrentItem = Items.FirstOrDefault();
+        SelectedTab = Items.FirstOrDefault();
     }
 
     protected virtual void AddHeaderFor(TabItem tabItem)
@@ -300,11 +302,11 @@ public partial class TabView : Grid
             ?? throw new InvalidOperationException("TabView requires a HeaderTemplate or TabHeaderItemTemplate to be set.");
 
         view.BindingContext = tabItem;
-        view.GestureRecognizers.Add(new TapGestureRecognizer { Command = new Command(() => CurrentItem = tabItem) });
+        view.GestureRecognizers.Add(new TapGestureRecognizer { Command = new Command(() => SelectedTab = tabItem) });
 
         if (!_headerContainer.Children.Any())
         {
-            CurrentItem = tabItem;
+            SelectedTab = tabItem;
         }
 
         _headerContainer.Add(view);
@@ -321,33 +323,46 @@ public partial class TabView : Grid
     {
         var existing = _headerContainer.Children.FirstOrDefault(x => x is View view && view.BindingContext == tabItem);
 
-        CurrentItem = Items.FirstOrDefault();
+        SelectedTab = Items.FirstOrDefault();
 
         _headerContainer.Children.Remove(existing);
     }
 
-    protected virtual async void OnCurrentItemChanged(object newItem)
+    protected virtual void OnCurrentItemChanged(object newItem)
     {
         if (newItem == null)
+        {
+            SelectedTab = null;
+        }
+
+        if (SelectedTab?.Data == newItem)
+        {
+            return;
+        }
+
+        SelectedTab = Items.FirstOrDefault(x => x.Data == newItem);
+    }
+
+    protected virtual async void OnSelectedTabChanged(TabItem oldValue, TabItem newValue)
+    {
+        if (newValue == null)
         {
             _contentContainer.Content = null;
             return;
         }
 
-        TabItem newCurrentTabItem = newItem is TabItem tabItem ? tabItem : Items.FirstOrDefault(x => x.Data == newItem);
-
-        if (CurrentItem == newCurrentTabItem.Data)
+        if (oldValue == newValue)
         {
             return;
         }
 
-        var content = newCurrentTabItem.Content ??=
-            ((View)newCurrentTabItem.ContentTemplate?.CreateContent()
+        var content = newValue.Content ??=
+            ((View)newValue.ContentTemplate?.CreateContent()
                 ?? (View)ItemTemplate?.CreateContent());
 
-        if (content.BindingContext is null && newCurrentTabItem.Data is not null && content.BindingContext != newCurrentTabItem.Data)
+        if (content.BindingContext is null && newValue.Data is not null && content.BindingContext != newValue.Data)
         {
-            content.BindingContext = newCurrentTabItem.Data;
+            content.BindingContext = newValue.Data;
         }
 
         foreach (var item in Items)
@@ -359,14 +374,19 @@ public partial class TabView : Grid
         {
             if (_contentContainer.Content != null)
             {
-                await _contentContainer.Content?.FadeTo(0, 60);
+                if (UseAnimation)
+                {
+                    await _contentContainer.Content?.FadeTo(0, 60);
+                }
             }
 
             content.Opacity = 0;
 
             _contentContainer.Content = content;
-
-            await content.FadeTo(1, 60);
+            if (UseAnimation)
+            {
+                await content.FadeTo(1, 60);
+            }
         }
         else
         {
@@ -387,7 +407,13 @@ public partial class TabView : Grid
                 (child as View).IsVisible = content == child;
             }
         }
+
+        if (SelectedTab.Data != null)
+        {
+            CurrentItem = SelectedTab.Data;
+        }
     }
+
     protected virtual void OnTabPlacementChanged()
     {
         InitializeLayout();
@@ -409,7 +435,7 @@ public class TabItem : UraniumBindableObject
     public DataTemplate HeaderTemplate { get; set; }
     public View Content { get; set; }
     public TabView TabView { get; internal set; }
-    public bool IsSelected => TabView.CurrentItem == this || TabView.CurrentItem == Data;
+    public bool IsSelected => TabView.SelectedTab == this || (TabView.CurrentItem != null && TabView.CurrentItem == Data);
     public ICommand Command { get; private set; }
 
     public TabItem()
@@ -419,7 +445,14 @@ public class TabItem : UraniumBindableObject
 
     private void ChangedCommand(object obj)
     {
-        TabView.CurrentItem = this.Data ?? this;
+        if (this.Data != null)
+        {
+            TabView.CurrentItem = this.Data;
+        }
+        else
+        {
+            TabView.SelectedTab = this;
+        }
     }
 
     protected internal void NotifyIsSelectedChanged()

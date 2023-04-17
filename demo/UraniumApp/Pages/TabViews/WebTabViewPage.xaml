@@ -25,7 +25,8 @@
                 <material:TabView 
                         Grid.Row="1" 
                         ItemsSource="{Binding TabItems}"
-                        CurrentItem="{Binding CurrentTab}">
+                        CurrentItem="{Binding CurrentTab}"
+                        CachingStrategy="CacheOnLayout">
                     <material:TabView.TabHeaderItemTemplate>
                         <DataTemplate>
                             <uranium:StatefulContentView TappedCommand="{Binding Command}" WidthRequest="160">

@@ -54,23 +54,30 @@ public class MainPageViewModel : ReactiveObject
 
     protected virtual async void NewAsync()
     {
-        var result = await Dialog.DisplayRadioButtonPromptAsync(
-            "Create New",
-            new[] { "Colors", "Styles" });
-
-        if (result == null)
+        try
         {
-            return;
+            var result = await Dialog.DisplayRadioButtonPromptAsync(
+                 "Create New",
+                 new[] { "Colors", "Styles" });
+
+            if (result == null)
+            {
+                return;
+            }
+
+            if (result == "Colors")
+            {
+                var colorsEditorViewModel = serviceProvider.GetRequiredService<ColorsEditorViewModel>();
+
+                await colorsEditorViewModel.NewAsync();
+
+                Items.Add(colorsEditorViewModel);
+                CurrentItem = colorsEditorViewModel;
+            }
         }
-
-        if (result == "Colors")
+        catch (Exception ex)
         {
-            var colorsEditorViewModel = serviceProvider.GetRequiredService<ColorsEditorViewModel>();
-
-            await colorsEditorViewModel.NewAsync();
-
-            Items.Add(colorsEditorViewModel);
-            CurrentItem = colorsEditorViewModel;
+            await App.Current.MainPage.DisplayAlert("Error", ex.ToString(), "OK");
         }
     }
 

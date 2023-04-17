@@ -3,10 +3,10 @@
 namespace UraniumUI.StyleBuilder;
 public partial class App : Application
 {
-    public App(IServiceProvider serviceProvider)
+    public App(AppShell mainPage)
     {
         InitializeComponent();
 
-        MainPage = serviceProvider.GetRequiredService<MainPage>();
+        MainPage = mainPage;
     }
 }

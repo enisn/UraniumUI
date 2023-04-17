@@ -50,6 +50,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <EmbeddedResource Include="default_material_colors.xml" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<ProjectReference Include="..\..\..\src\UraniumUI.Material\UraniumUI.Material.csproj" />
 		<ProjectReference Include="..\..\..\src\UraniumUI.Icons.MaterialIcons\UraniumUI.Icons.MaterialIcons.csproj" />
 		<ProjectReference Include="..\..\..\src\UraniumUI.Dialogs.Mopups\UraniumUI.Dialogs.Mopups.csproj" />
@@ -57,7 +61,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="DotNurse.Injector" Version="2.5.2" />
-		<PackageReference Include="ReactiveUI.Fody" Version="18.4.26" />
+		<PackageReference Include="ReactiveUI.Fody" Version="18.4.1" />
 		<PackageReference Include="CommunityToolkit.Maui" Version="5.0.0" />
 	</ItemGroup>
 

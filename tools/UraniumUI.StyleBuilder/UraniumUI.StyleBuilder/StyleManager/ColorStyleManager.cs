@@ -20,15 +20,8 @@ public partial class ColorStyleManager : ReactiveObject, IDisposable
     {
         await Task.Yield();
         XmlDoc = XDocument.Load(path);
-        var ns = XmlDoc.Root.GetDefaultNamespace();
-        var xns = XmlDoc.Root.GetNamespaceOfPrefix("x");
-        Colors = new ObservableDictionary<string, ReactiveColor>(
-                XmlDoc
-                    .Descendants(ns + "Color")
-                    .ToDictionary(
-                        x => x.Attribute(xns + "Key").Value,
-                        x => (ReactiveColor) Color.FromRgba(x.Value))
-            );
+
+        InitializeFromXmlDoc();
 
         Path = path;
     }
@@ -65,17 +58,23 @@ public partial class ColorStyleManager : ReactiveObject, IDisposable
     public async Task CreateNewAsync()
     {
         Path = null;
-        XmlDoc = new XDocument();
-        var _dict = new Dictionary<string, ReactiveColor>();
-        foreach (var key in MaterialPalette)
-        {
-            if(App.Current.Resources.TryGetValue(key, out object valueObj) && valueObj is Color color)
-            {
-                _dict[key] = color;
-            }
-        }
 
-        Colors = new ObservableDictionary<string, ReactiveColor>(_dict);
+        XmlDoc = XDocument.Load(GetType().Assembly.GetManifestResourceStream("UraniumUI.StyleBuilder.default_material_colors.xml"));
+
+        InitializeFromXmlDoc();
+    }
+
+    protected virtual void InitializeFromXmlDoc()
+    {
+        var ns = XmlDoc.Root.GetDefaultNamespace();
+        var xns = XmlDoc.Root.GetNamespaceOfPrefix("x");
+        Colors = new ObservableDictionary<string, ReactiveColor>(
+                XmlDoc
+                    .Descendants(ns + "Color")
+                    .ToDictionary(
+                        x => x.Attribute(xns + "Key").Value,
+                        x => (ReactiveColor)Color.FromRgba(x.Value))
+            );
     }
 
     protected virtual void ApplyChangesFromPalette()

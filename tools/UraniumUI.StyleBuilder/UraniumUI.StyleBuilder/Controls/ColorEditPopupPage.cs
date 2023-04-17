@@ -62,7 +62,7 @@ public class ColorEditPopupPage : PopupPage
             {
                 new Label
                 {
-                    Text = bindingPath.Split('.').Last(),
+                    Text = bindingPath.Split('[', ']')[1],
                     HorizontalOptions = LayoutOptions.Center,
                 },
                 new BoxView

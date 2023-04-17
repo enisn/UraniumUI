@@ -183,6 +183,10 @@
         {
           "text": "Migration to v2.3",
           "path": "migration-guides/Migrating-To-2.3.md"
+        },
+        {
+          "text": "Migration to v2.4",
+          "path": "migration-guides/Migrating-To-2.4.md"
         }
       ]
     },

@@ -57,9 +57,10 @@ public partial class ColorStyleManager : ReactiveObject, IDisposable
 
     public async Task CreateNewAsync()
     {
+        await Task.Yield();
         Path = null;
 
-        XmlDoc = XDocument.Load(GetType().Assembly.GetManifestResourceStream("UraniumUI.StyleBuilder.default_material_colors.xml"));
+        XmlDoc = XDocument.Load(GetType().Assembly.GetManifestResourceStream("UraniumUI.StyleBuilder.Resources.Styles.Colors.xaml"));
 
         InitializeFromXmlDoc();
     }
@@ -68,13 +69,14 @@ public partial class ColorStyleManager : ReactiveObject, IDisposable
     {
         var ns = XmlDoc.Root.GetDefaultNamespace();
         var xns = XmlDoc.Root.GetNamespaceOfPrefix("x");
-        Colors = new ObservableDictionary<string, ReactiveColor>(
-                XmlDoc
+
+        var _dict = XmlDoc
                     .Descendants(ns + "Color")
                     .ToDictionary(
                         x => x.Attribute(xns + "Key").Value,
-                        x => (ReactiveColor)Color.FromRgba(x.Value))
-            );
+                        x => new ReactiveColor(Color.FromRgba(x.Value)));
+
+        Colors = new ObservableDictionary<string, ReactiveColor>(_dict);
     }
 
     protected virtual void ApplyChangesFromPalette()

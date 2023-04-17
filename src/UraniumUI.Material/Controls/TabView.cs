@@ -1,17 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.Reflection;
 using System.Windows.Input;
 using UraniumUI.Resources;
 using UraniumUI.Triggers;
-using UraniumUI.Views;
 
 namespace UraniumUI.Material.Controls;
 
 [ContentProperty(nameof(Items))]
 public partial class TabView : Grid
 {
+    public TabViewPresentationStrategy PresentationStrategy { get; set; }
+
     public static DataTemplate DefaultTabHeaderItemTemplate => new DataTemplate(() =>
     {
         var grid = new Grid();
@@ -355,21 +355,49 @@ public partial class TabView : Grid
             item.NotifyIsSelectedChanged();
         }
 
-        if (_contentContainer.Content != null)
+        if (PresentationStrategy == TabViewPresentationStrategy.CacheOnCodeBehing)
         {
-            await _contentContainer.Content?.FadeTo(0, 125);
+            if (_contentContainer.Content != null)
+            {
+                await _contentContainer.Content?.FadeTo(0, 60);
+            }
+
+            content.Opacity = 0;
+
+            _contentContainer.Content = content;
+
+            await content.FadeTo(1, 60);
         }
+        else
+        {
+            if (_contentContainer.Content is not Layout layout)
+            {
+                layout = new Grid();
+                _contentContainer.Content = layout;
+            }
 
-        content.Opacity = 0;
+            var existing = layout.Children.FirstOrDefault(x => x == content);
+            if (existing == null)
+            {
+                layout.Children.Add(content);
+            }
 
-        _contentContainer.Content = content;
-
-        await content.FadeTo(1, 125);
+            foreach (var child in layout.Children)
+            {
+                (child as View).IsVisible = content == child;
+            }
+        }
     }
     protected virtual void OnTabPlacementChanged()
     {
         InitializeLayout();
     }
+}
+
+public enum TabViewPresentationStrategy
+{
+    CacheOnCodeBehing,
+    CacheOnLayout,
 }
 
 [ContentProperty(nameof(Content))]

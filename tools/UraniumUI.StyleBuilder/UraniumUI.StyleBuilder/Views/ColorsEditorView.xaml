@@ -12,58 +12,56 @@
 
     <material:TabView TabPlacement="Bottom">
         <material:TabView.Items>
-            <material:TabItem Title="Color Preview">
-                <material:TabItem.Content>
-                    <ScrollView>
-                        <VerticalStackLayout Padding="10">
-                            <Frame BackgroundColor="{Binding Colors[Background].Color}">
-                                <VerticalStackLayout>
-                                    <Label Text="Light" FontSize="Header" TextColor="{Binding Colors[OnBackground].Color}" />
-                                    <BoxView StyleClass="Divider" Color="{Binding Colors[OnBackground].Color}" />
+            <material:TabItem Title="Material Palette">
+                <ScrollView>
+                    <VerticalStackLayout Padding="10">
+                        <Frame BackgroundColor="{Binding Colors[Background].Color}">
+                            <VerticalStackLayout>
+                                <Label Text="Light" FontSize="Header" TextColor="{Binding Colors[OnBackground].Color}" />
+                                <BoxView StyleClass="Divider" Color="{Binding Colors[OnBackground].Color}" />
 
-                                    <FlexLayout AlignItems="Center" AlignContent="SpaceEvenly" Wrap="Wrap" >
+                                <FlexLayout AlignItems="Center" AlignContent="SpaceEvenly" Wrap="Wrap" >
 
-                                        <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[Primary].Color" />
-                                        <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[PrimaryContainer].Color" />
-                                        <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[Secondary].Color" />
-                                        <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[SecondaryContainer].Color" />
-                                        <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[Tertiary].Color" />
-                                        <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[TertiaryContainer].Color" />
-                                        <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[Background].Color" />
-                                        <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[Surface].Color" />
-                                        <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[SurfaceVariant].Color" />
-                                        <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[Error].Color" />
-                                        <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[ErrorContainer].Color" />
+                                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[Primary].Color" />
+                                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[PrimaryContainer].Color" />
+                                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[Secondary].Color" />
+                                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[SecondaryContainer].Color" />
+                                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[Tertiary].Color" />
+                                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[TertiaryContainer].Color" />
+                                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[Background].Color" />
+                                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[Surface].Color" />
+                                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[SurfaceVariant].Color" />
+                                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[Error].Color" />
+                                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[ErrorContainer].Color" />
 
-                                    </FlexLayout>
-                                </VerticalStackLayout>
-                            </Frame>
+                                </FlexLayout>
+                            </VerticalStackLayout>
+                        </Frame>
 
-                            <Frame BackgroundColor="{Binding Colors[BackgroundDark].Color}">
-                                <VerticalStackLayout>
-                                    <Label Text="Dark" FontSize="Header" TextColor="{Binding Colors[OnBackgroundDark].Color}" />
-                                    <BoxView StyleClass="Divider" Color="{Binding Colors[OnBackgroundDark].Color}" />
+                        <Frame BackgroundColor="{Binding Colors[BackgroundDark].Color}">
+                            <VerticalStackLayout>
+                                <Label Text="Dark" FontSize="Header" TextColor="{Binding Colors[OnBackgroundDark].Color}" />
+                                <BoxView StyleClass="Divider" Color="{Binding Colors[OnBackgroundDark].Color}" />
 
-                                    <FlexLayout AlignItems="Center" AlignContent="SpaceEvenly" Wrap="Wrap" >
+                                <FlexLayout AlignItems="Center" AlignContent="SpaceEvenly" Wrap="Wrap" >
 
-                                        <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[PrimaryDark].Color" />
-                                        <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[PrimaryContainerDark].Color" />
-                                        <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[SecondaryDark].Color" />
-                                        <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[SecondaryContainerDark].Color" />
-                                        <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[TertiaryDark].Color" />
-                                        <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[TertiaryContainerDark].Color" />
-                                        <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[BackgroundDark].Color" />
-                                        <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[SurfaceDark].Color" />
-                                        <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[SurfaceVariantDark].Color" />
-                                        <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[ErrorDark].Color" />
-                                        <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[ErrorContainerDark].Color" />
+                                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[PrimaryDark].Color" />
+                                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[PrimaryContainerDark].Color" />
+                                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[SecondaryDark].Color" />
+                                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[SecondaryContainerDark].Color" />
+                                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[TertiaryDark].Color" />
+                                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[TertiaryContainerDark].Color" />
+                                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[BackgroundDark].Color" />
+                                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[SurfaceDark].Color" />
+                                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[SurfaceVariantDark].Color" />
+                                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[ErrorDark].Color" />
+                                    <local:ColorPairEditorView EditCommand="{Binding EditColorCommand}" EditingColorBinding="Colors[ErrorContainerDark].Color" />
 
-                                    </FlexLayout>
-                                </VerticalStackLayout>
-                            </Frame>
-                        </VerticalStackLayout>
-                    </ScrollView>
-                </material:TabItem.Content>
+                                </FlexLayout>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </VerticalStackLayout>
+                </ScrollView>
             </material:TabItem>
 
             <material:TabItem Title="All Keys">

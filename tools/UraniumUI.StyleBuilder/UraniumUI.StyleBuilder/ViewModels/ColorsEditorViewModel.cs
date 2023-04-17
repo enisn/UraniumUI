@@ -7,7 +7,7 @@ using UraniumUI.StyleBuilder.Controls;
 using UraniumUI.StyleBuilder.StyleManager;
 
 namespace UraniumUI.StyleBuilder.ViewModels;
-public class ColorsEditorViewModel : ReactiveObject, ISavable
+public class ColorsEditorViewModel : ReactiveObject, ISavable, ILoadable
 {
     public ColorStyleManager ColorStyleManager { get; private set; }
 

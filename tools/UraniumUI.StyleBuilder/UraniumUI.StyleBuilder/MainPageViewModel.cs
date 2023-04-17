@@ -1,12 +1,9 @@
-﻿using DynamicData;
-using DynamicData.Binding;
-using ReactiveUI;
+﻿using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using System.Collections.ObjectModel;
 using System.Reactive.Linq;
 using System.Windows.Input;
 using UraniumUI.Dialogs;
-using UraniumUI.StyleBuilder.StyleManager;
 using UraniumUI.StyleBuilder.ViewModels;
 
 namespace UraniumUI.StyleBuilder;
@@ -27,7 +24,7 @@ public class MainPageViewModel : ReactiveObject
     {
         NewColorsCommand = new Command(NewColorsAsync);
         OpenColorsCommand = new Command(OpenColorsAsync);
-        OpenStylesCommand = new Command(() => { }, () => false); // Not reaady yet!
+        OpenStylesCommand = new Command(OpenStylesAsync);
         NewStylesCommand = new Command(() => { }, () => false); // Not reaady yet!
         CloseCommand = ReactiveCommand.CreateFromTask<object>(CloseAsync);
 
@@ -70,7 +67,7 @@ public class MainPageViewModel : ReactiveObject
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Error", ex.ToString(), "OK");
+            HandleException(ex);
         }
     }
 
@@ -104,10 +101,42 @@ public class MainPageViewModel : ReactiveObject
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Error", ex.Message, "OK");
+            HandleException(ex);
         }
     }
+    protected virtual async void OpenStylesAsync()
+    {
+        try
+        {
+            var fileResult = await FilePicker.Default.PickAsync(new PickOptions
+            {
+                FileTypes = new StyleResourceFileType(),
+                PickerTitle = "Pick an xml file"
+            }); 
+            
+            if (fileResult == null)
+            {
+                return;
+            }
 
+            var existing = Items.FirstOrDefault(x => x.Path == fileResult.FullPath);
+            if (existing != null)
+            {
+                CurrentItem = existing;
+                return;
+            }
+
+            var styleEditorViewModel = serviceProvider.GetRequiredService<StyleEditorViewModel>();
+
+            await styleEditorViewModel.LoadAsync(fileResult.FullPath);
+            Items.Add(styleEditorViewModel);
+            CurrentItem = styleEditorViewModel;
+        }
+        catch (Exception ex)
+        {
+            HandleException(ex);
+        }
+    }
     protected virtual async void SaveAsync()
     {
         try
@@ -116,7 +145,7 @@ public class MainPageViewModel : ReactiveObject
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Error", ex.Message, "OK");
+            HandleException(ex);
         }
     }
 
@@ -128,7 +157,7 @@ public class MainPageViewModel : ReactiveObject
         }
         catch (Exception ex)
         {
-            await App.Current.MainPage.DisplayAlert("Error", ex.Message, "OK");
+            HandleException(ex);
         }
     }
 
@@ -137,10 +166,16 @@ public class MainPageViewModel : ReactiveObject
         if (data is ISavable item)
         {
             Items.Remove(item);
+            CurrentItem = null;
             item.Dispose();
         }
 
         return Task.CompletedTask;
+    }
+
+    protected async void HandleException(Exception exception)
+    {
+        await App.Current.MainPage.DisplayAlert("Error", exception.Message, "OK");
     }
 
     public class StyleResourceFileType : FilePickerFileType

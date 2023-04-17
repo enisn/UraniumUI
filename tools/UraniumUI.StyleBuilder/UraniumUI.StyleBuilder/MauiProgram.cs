@@ -38,6 +38,7 @@ public static class MauiProgram
         builder.Services.Configure<DataTemplateOptions>(options =>
         {
             options.Register<ColorsEditorViewModel, ColorsEditorView>();
+            options.Register<StyleEditorViewModel, StyleEditorView>();
         });
 
         return builder.Build();

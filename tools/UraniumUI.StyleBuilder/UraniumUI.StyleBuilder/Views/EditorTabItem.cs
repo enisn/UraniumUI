@@ -5,19 +5,29 @@ using UraniumUI.StyleBuilder.Templating;
 namespace UraniumUI.StyleBuilder.Views;
 public class EditorTabItem : ContentView
 {
-    protected readonly DataTemplateOptions dataTemplateOptions;
     public EditorTabItem()
     {
-        dataTemplateOptions = UraniumServiceProvider.Current
-            .GetRequiredService<IOptions<DataTemplateOptions>>().Value;
+
     }
 
     protected override void OnBindingContextChanged()
     {
         base.OnBindingContextChanged();
+
+        var dataTemplateOptions = UraniumServiceProvider.Current
+            .GetRequiredService<IOptions<DataTemplateOptions>>().Value;
+
         if (dataTemplateOptions.DataTemplates.TryGetValue(BindingContext.GetType(), out var dataTemplate))
         {
-            this.Content = dataTemplate.CreateContent() as View;
+            try
+            {
+                var content = dataTemplate.CreateContent() as View;
+                this.Content = content;
+            }
+            catch (Exception ex)
+            {
+                App.Current.MainPage.DisplayAlert("Error", ex.ToString(), "OK");
+            }
         }
     }
 }

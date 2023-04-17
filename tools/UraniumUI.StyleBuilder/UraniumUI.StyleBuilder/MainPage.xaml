@@ -25,14 +25,14 @@
     <Grid>
         <Label x:Name="labelTest" />
         <material:TabView
-            BackgroundColor="#10002000"
+            BackgroundColor="#60909090"
                 ItemsSource="{Binding Items}"
                 CurrentItem="{Binding CurrentItem, Mode=TwoWay}">
             <material:TabView.TabHeaderItemTemplate>
                 <DataTemplate x:DataType="material:TabItem">
                     <uranium:StatefulContentView TappedCommand="{Binding Command}" MinimumWidthRequest="160">
                         <Border StrokeShape="RoundRectangle 5,5,0,0" StrokeThickness="0">
-                            <Grid ColumnDefinitions="*,Auto" Padding="5,10" BackgroundColor="{AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}">
+                            <Grid ColumnDefinitions="*,Auto" Padding="5,10" BackgroundColor="{AppThemeBinding {StaticResource Background}, Dark={StaticResource BackgroundDark}}">
 
                                 <Label Text="{Binding Title}" VerticalOptions="Center" LineBreakMode="CharacterWrap"/>
 
@@ -46,10 +46,10 @@
 
                                 <Grid.Triggers>
                                     <DataTrigger TargetType="Grid" Binding="{Binding IsSelected}" Value="True">
-                                        <Setter Property="uranium:DynamicTint.BackgroundColorOpacity" Value="0.6" />
+                                        <Setter Property="uranium:DynamicTint.BackgroundColorOpacity" Value="0.9" />
                                     </DataTrigger>
                                     <DataTrigger TargetType="Grid" Binding="{Binding IsSelected}" Value="False">
-                                        <Setter Property="uranium:DynamicTint.BackgroundColorOpacity" Value="0.05" />
+                                        <Setter Property="uranium:DynamicTint.BackgroundColorOpacity" Value="0.1" />
                                     </DataTrigger>
                                 </Grid.Triggers>
                             </Grid>

@@ -1,4 +1,5 @@
 ﻿using Plainer.Maui.Controls;
+using Plainer.Maui.Handlers;
 using UraniumUI.Pages;
 using UraniumUI.Resources;
 using Path = Microsoft.Maui.Controls.Shapes.Path;
@@ -12,9 +13,13 @@ public partial class TextField : InputField
 
     public override View Content { get; set; } = new EntryView
     {
-        Margin = new Thickness(10, 0),
+        Margin = new Thickness(10,0),
         BackgroundColor = Colors.Transparent,
-        VerticalOptions = LayoutOptions.Center
+#if ANDROID
+        TranslationY = 5,
+#endif
+        //VerticalOptions = LayoutOptions.Center,
+        //HeightRequest = 30
     };
 
     protected ContentView iconClear = new ContentView
@@ -40,7 +45,7 @@ public partial class TextField : InputField
         {
             Command = new Command(OnClearTapped)
         });
-        
+
         UpdateClearIconState();
 
         EntryView.SetBinding(Entry.TextProperty, new Binding(nameof(Text), source: this));
@@ -67,6 +72,9 @@ public partial class TextField : InputField
     protected override void OnHandlerChanged()
     {
         EntryView.TextChanged += EntryView_TextChanged;
+//#if ANDROID
+//        (this.EntryView.Handler as EntryViewHandler).PlatformView.Bottom = 0;
+//#endif
 
         if (Handler is null)
         {

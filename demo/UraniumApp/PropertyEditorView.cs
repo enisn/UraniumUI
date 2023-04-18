@@ -46,6 +46,7 @@ namespace UraniumApp
 
         public PropertyEditorView()
         {
+            this.WidthRequest = 400;
             var _titleContainer = new Label()
             {
                 Text = "Properties",

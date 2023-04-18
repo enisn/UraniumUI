@@ -3,6 +3,8 @@ using System.Collections.ObjectModel;
 using UraniumUI.Dialogs;
 
 namespace UraniumUI.Material.Controls;
+
+[ContentProperty(nameof(Validations))]
 public partial class MultiplePickerField : InputField
 {
     public ContentView MaincontentView => Content as ContentView;
@@ -89,6 +91,16 @@ public partial class MultiplePickerField : InputField
             chip.DestroyCommand = _destroyChipCommand;
             return chip;
         }));
+    }
+
+    protected override object GetValueForValidator()
+    {
+        if (SelectedItems.Count == 0)
+        {
+            return null;
+        }
+
+        return SelectedItems;
     }
 
     protected virtual void OnItemsSourceSet()

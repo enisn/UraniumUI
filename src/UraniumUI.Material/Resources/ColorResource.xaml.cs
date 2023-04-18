@@ -2,7 +2,6 @@
 
 public partial class ColorResource : ResourceDictionary
 {
-    private ResourceDictionary basedOn;
     private ResourceDictionary overriddenBy;
 
     public ColorResource()

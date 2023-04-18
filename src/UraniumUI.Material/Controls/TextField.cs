@@ -18,8 +18,6 @@ public partial class TextField : InputField
 #if ANDROID
         TranslationY = 5,
 #endif
-        //VerticalOptions = LayoutOptions.Center,
-        //HeightRequest = 30
     };
 
     protected ContentView iconClear = new ContentView
@@ -72,9 +70,6 @@ public partial class TextField : InputField
     protected override void OnHandlerChanged()
     {
         EntryView.TextChanged += EntryView_TextChanged;
-//#if ANDROID
-//        (this.EntryView.Handler as EntryViewHandler).PlatformView.Bottom = 0;
-//#endif
 
         if (Handler is null)
         {

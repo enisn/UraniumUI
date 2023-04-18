@@ -1,4 +1,7 @@
-﻿namespace UraniumUI;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System;
+
+namespace UraniumUI;
 public static class UraniumServiceProvider
 {
     public static TService GetService<TService>()

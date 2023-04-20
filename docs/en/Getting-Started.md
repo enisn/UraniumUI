@@ -61,14 +61,10 @@ Also, templates has `ide.host.json` implementation that allows to create a new p
             <Application.Resources>
                 <ResourceDictionary>
                     <ResourceDictionary.MergedDictionaries>
-                        <ResourceDictionary Source="Resources/Styles/Colors.xaml" /> 
-                        <!-- 👇 Define right after your local Colors.xaml. -->
+                        <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                         <material:ColorResource />
-
-                        <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
-                        <!-- 👇 Define right after your local Styles.xaml -->
-                        <material:StyleResource />
-                        
+                        <ResourceDictionary x:Name="appStyles" Source="Resources/Styles/Styles.xaml" />
+                        <material:StyleResource BasedOn="{x:Reference appStyles}" />
                     </ResourceDictionary.MergedDictionaries>
                 </ResourceDictionary>
             </Application.Resources>

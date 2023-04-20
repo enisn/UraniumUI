@@ -26,7 +26,7 @@
 
 
                     <material:TextField Title="Fullname"
-                                        Text="{v:ValidationBinding FullName}" 
+                                        Text="{v:ValidationBinding FullName}" AllowClear="True"
                                         Icon="{FontImage FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Person}}"/>
 
                     <material:PickerField Title="Gender"

@@ -78,7 +78,9 @@ public class PickerField : InputField
 		};
 #endif
 #if WINDOWS
-		rootGrid.Add(labelSelectedItem, column: 1);
+		//rootGrid.Add(labelSelectedItem, column: 1);
+		labelSelectedItem.HorizontalOptions = LayoutOptions.FillAndExpand;
+		rootGrid.Add(labelSelectedItem);
 #endif
 	}
 

@@ -9,7 +9,9 @@ public partial class EditorField : InputField
     {
         Margin = new Thickness(10, 0),
         BackgroundColor = Colors.Transparent,
-        VerticalOptions = LayoutOptions.Center,
+#if ANDROID
+        TranslationY = 5,
+#endif
         AutoSize = EditorAutoSizeOption.TextChanges,
     };
 

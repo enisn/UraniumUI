@@ -26,8 +26,9 @@ public partial class MultiplePickerField : InputField
 
     protected IDialogService DialogService { get; }
 
-    protected HorizontalStackLayout chipsHolderStackLayout = new HorizontalStackLayout
+    protected StackLayout chipsHolderStackLayout = new StackLayout
     {
+        Orientation = StackOrientation.Horizontal,
         HorizontalOptions = LayoutOptions.Start,
 #if IOS || MACCATALYST
         VerticalOptions = LayoutOptions.Center,
@@ -41,12 +42,16 @@ public partial class MultiplePickerField : InputField
     {
         MaincontentView.Content = new ScrollView
         {
+            BackgroundColor = Colors.Blue.WithAlpha(.7f),
             Orientation = ScrollOrientation.Horizontal,
 #if ANDROID
             HorizontalOptions = LayoutOptions.Start,
+            TranslationY = 5,
 #endif
-#if !IOS && !MACCATALYST
+#if !IOS && !MACCATALYST && !ANDROID
             VerticalOptions = LayoutOptions.Center,
+#else
+            VerticalOptions = LayoutOptions.FillAndExpand,
 #endif
             Content = chipsHolderStackLayout,
         };
@@ -83,10 +88,17 @@ public partial class MultiplePickerField : InputField
                 UpdateState();
             }
         });
-
+        chipsHolderStackLayout.BackgroundColor = Colors.Pink.WithAlpha(.5f);
+        chipsHolderStackLayout.HeightRequest = 100;
+        chipsHolderStackLayout.VerticalOptions = LayoutOptions.Fill;
         BindableLayout.SetItemTemplate(chipsHolderStackLayout, new DataTemplate(() =>
         {
-            var chip = new Chip();
+            var chip = new Chip
+            {
+#if ANDROID
+                VerticalOptions = LayoutOptions.Center,
+#endif
+            };
             chip.SetBinding(Chip.TextProperty, new Binding("."));
             chip.DestroyCommand = _destroyChipCommand;
             return chip;

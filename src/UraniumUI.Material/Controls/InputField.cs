@@ -87,24 +87,24 @@ public partial class InputField : Grid
             Stroke = this.BorderColor,
         };
 
+        RegisterForEvents();
+
         this.Add(border);
         this.Add(labelTitle);
 
         border.Content = rootGrid;
 
-        //rootGrid.VerticalOptions = LayoutOptions.Fill;
-        //rootGrid.BackgroundColor = Colors.Pink.WithAlpha(.4f);
         rootGrid.AddColumnDefinition(new ColumnDefinition(GridLength.Auto));
-        rootGrid.AddColumnDefinition(new ColumnDefinition(GridLength.Star));
+        //rootGrid.AddColumnDefinition(new ColumnDefinition(GridLength.Star));
         rootGrid.AddColumnDefinition(new ColumnDefinition(GridLength.Auto));
 
         if (Content != null)
         {
             rootGrid.Add(Content, column: 1);
-            RegisterForEvents();
         }
 
-        rootGrid.Add(endIconsContainer, column: 2);
+        endIconsContainer.HorizontalOptions = LayoutOptions.End;
+        rootGrid.Add(endIconsContainer, column: 1);
 
         labelTitle.Scale = 1;
         labelTitle.SetBinding(Label.TextProperty, new Binding(nameof(Title), source: this));
@@ -122,6 +122,23 @@ public partial class InputField : Grid
         base.OnSizeAllocated(width, height);
         await Task.Delay(100);
         InitializeBorder();
+        
+        CalculateContentSizeWorkAround();
+    }
+
+    private async void CalculateContentSizeWorkAround()
+    {
+        await Task.Yield();
+        if (Content is not null)
+        {
+            var width = rootGrid.Width - imageIcon.Value.Width - rootGrid.Padding.HorizontalThickness - Content.Margin.HorizontalThickness - 15;
+            if (Content.Width == width)
+            {
+                return;
+            }
+
+            Content.WidthRequest = width;
+        }
     }
 
     // TODO: Remove this member hiding after android unfocus fixed.

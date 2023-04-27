@@ -56,7 +56,7 @@ public partial class InputField : IValidatable
         }
         else
         {
-            var message = string.Join(",\n", results.Where(x => !x.isValid).Select(s => s.message));
+            var message = string.Join('\n', results.Where(x => !x.isValid).Select(s => s.message));
             labelValidation.Value.Text = message;
 
             if (isStateChanged)

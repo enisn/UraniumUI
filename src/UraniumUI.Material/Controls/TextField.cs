@@ -89,7 +89,7 @@ public partial class TextField : InputField
             UpdateState();
         }
 
-        if (!string.IsNullOrEmpty(e.NewTextValue))
+        if (e.NewTextValue != null)
         {
             CheckAndShowValidations();
         }

@@ -29,7 +29,7 @@
 
     <Grid ColumnDefinitions="{OnIdiom Default='Auto, *', Phone='*,*'}">
 
-        <Frame Padding="0" Margin="{OnIdiom Default=20, Phone=5}" HasShadow="False" CornerRadius="20">
+        <Frame Padding="0" Margin="{OnIdiom Default=20, Phone=5}" HasShadow="False" CornerRadius="20" MaximumWidthRequest="400" >
             <Grid RowDefinitions="Auto,*">
                 <VerticalStackLayout Padding="20" Spacing="20" StyleClass="PrimaryContainer,Elevation1">
                     <material:PickerField Title="Type" ItemsSource="{Binding Types}" SelectedItem="{Binding SelectedType}" AllowClear="False" />

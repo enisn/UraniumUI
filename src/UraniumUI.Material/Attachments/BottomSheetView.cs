@@ -21,7 +21,10 @@ public partial class BottomSheetView : Frame, IPageAttachment
         Init();
 
         AttachedPage = page;
-        page.SizeChanged += (s, e) => { AlignBottomSheet(false); };
+        if (Body != null)
+        {
+            Body.SizeChanged += (s, e) => AlignBottomSheet(false);
+        }
     }
 
     protected virtual void Init()
@@ -51,7 +54,6 @@ public partial class BottomSheetView : Frame, IPageAttachment
         tapGestureRecognizer.Tapped += (s, e) => IsPresented = !IsPresented;
         Header.GestureRecognizers.Add(tapGestureRecognizer);
         Header.BackgroundColor = this.BackgroundColor;
-        AlignBottomSheet(false);
 
         closeGestureRecognizer.Tapped += (s, e) => IsPresented = false;
     }

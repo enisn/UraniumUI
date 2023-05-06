@@ -40,7 +40,7 @@ public class BlurPlatformEffect : PlatformEffect
             return new AcrylicBrush
             {
                 TintColor = VirtualEffect.AccentColor.ToWindowsColor(),
-                TintOpacity = .20,
+                TintOpacity =  VirtualEffect.AccentOpacity,
                 TintLuminosityOpacity = .4
             };
         }
@@ -48,7 +48,7 @@ public class BlurPlatformEffect : PlatformEffect
         return new AcrylicBrush
         {
             TintColor = VirtualEffect?.Mode == BlurMode.Dark ? Colors.Black.ToWindowsColor() : Colors.DimGray.ToWindowsColor(),
-            TintOpacity = .20,
+            TintOpacity = VirtualEffect.AccentOpacity,
             TintLuminosityOpacity = .4
         };
     }

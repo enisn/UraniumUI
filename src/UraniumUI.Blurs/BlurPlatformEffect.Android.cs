@@ -35,13 +35,7 @@ public class BlurPlatformEffect : PlatformEffect
         if (Element is Microsoft.Maui.Controls.View view)
         {
             view.SizeChanged += BlurPlatformEffect_SizeChanged;
-            view.ParentChanged += View_ParentChanged;
         }
-    }
-
-    private void View_ParentChanged(object sender, EventArgs e)
-    {
-        AlignBlurView();
     }
 
     protected override void OnDetached()

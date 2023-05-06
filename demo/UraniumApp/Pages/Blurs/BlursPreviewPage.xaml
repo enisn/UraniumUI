@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="UraniumApp.Pages.Blurs.BlursPreviewPage"
+             xmlns:root="clr-namespace:UraniumApp"
+             xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             Title="BlursPreviewPage">
+    <Grid>
+        <Image x:Name="img" />
+
+        <VerticalStackLayout Margin="10" VerticalOptions="Center">
+            <VerticalStackLayout.Effects>
+                <uranium:BlurEffect x:Name="blur1" />
+            </VerticalStackLayout.Effects>
+
+            <material:RadioButtonGroupView Margin="50" HorizontalOptions="Center" x:Name="rb1" SelectedItemChanged="rb1_SelectedItemChanged" >
+                <material:RadioButton Text="Light" IsChecked="True" />
+                <material:RadioButton Text="Dark" />
+            </material:RadioButtonGroupView>
+
+        </VerticalStackLayout>
+
+    </Grid>
+</ContentPage>

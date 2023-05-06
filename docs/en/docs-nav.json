@@ -78,6 +78,15 @@
       ]
     },
     {
+      "text": "Effects",
+      "items":[
+        {
+          "text": "Blur",
+          "path": "Blurs.md"
+        }
+      ]
+    },
+    {
       "text": "Material Theme",
       "items": [
         {

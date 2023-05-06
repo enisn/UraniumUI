@@ -1,7 +1,6 @@
 # Blurs
 UraniumUI supports blur effects on MAUI. You can use it on any control by using `BlurEffect`.
 
-
 ## Showcase
 
 ![Blurs](images/blurs-demo-dark-light.gif)

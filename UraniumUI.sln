@@ -31,7 +31,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UraniumUI.Validations.DataA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UraniumUI.Dialogs.CommunityToolkit", "src\UraniumUI.Dialogs.CommunityToolkit\UraniumUI.Dialogs.CommunityToolkit.csproj", "{C7CC898A-8047-4D39-A8DE-44A80E99445F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UraniumUI.Dialogs.Mopups", "src\UraniumUI.Dialogs.Mopups\UraniumUI.Dialogs.Mopups.csproj", "{3AD9C27A-3227-463A-81F4-8AA5FF4DB542}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UraniumUI.Dialogs.Mopups", "src\UraniumUI.Dialogs.Mopups\UraniumUI.Dialogs.Mopups.csproj", "{3AD9C27A-3227-463A-81F4-8AA5FF4DB542}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UraniumUI.Blurs", "src\UraniumUI.Blurs\UraniumUI.Blurs.csproj", "{D44173B6-CA42-4F97-BB3C-9F8CC62C4340}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -89,6 +91,10 @@ Global
 		{3AD9C27A-3227-463A-81F4-8AA5FF4DB542}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3AD9C27A-3227-463A-81F4-8AA5FF4DB542}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3AD9C27A-3227-463A-81F4-8AA5FF4DB542}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D44173B6-CA42-4F97-BB3C-9F8CC62C4340}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D44173B6-CA42-4F97-BB3C-9F8CC62C4340}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D44173B6-CA42-4F97-BB3C-9F8CC62C4340}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D44173B6-CA42-4F97-BB3C-9F8CC62C4340}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -105,6 +111,7 @@ Global
 		{67A0CB34-D871-47BB-A9E0-80CA328BA144} = {32493E5D-A757-4289-A168-DA0E8DDE9B29}
 		{C7CC898A-8047-4D39-A8DE-44A80E99445F} = {32493E5D-A757-4289-A168-DA0E8DDE9B29}
 		{3AD9C27A-3227-463A-81F4-8AA5FF4DB542} = {32493E5D-A757-4289-A168-DA0E8DDE9B29}
+		{D44173B6-CA42-4F97-BB3C-9F8CC62C4340} = {32493E5D-A757-4289-A168-DA0E8DDE9B29}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {31946918-5DA1-40D1-8BD7-6834BB21D0FF}

@@ -1,6 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             ios:Page.UseSafeArea="False"
              xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
              xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
@@ -13,25 +15,20 @@
         <vm:BlursDemoViewModel />
     </ContentPage.BindingContext>
     
-    <Grid RowDefinitions="*">
+    <Grid RowDefinitions="*" IgnoreSafeArea="True">
         <!--content-->
-        <CollectionView ItemsSource="{Binding Items}" Margin="0,0,0,0">
-            <CollectionView.Header>
-                <!--Placeholder--> 
-                <BoxView HeightRequest="100" WidthRequest="100" Color="Transparent"/>
-            </CollectionView.Header>
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <StackLayout HorizontalOptions="Center" Margin="0,20">
-                        <Image Source="{Binding .}" />
-                        <Label Text="Downloaded from unsplash randomly." />
-                    </StackLayout>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+        <ScrollView>
+            <VerticalStackLayout BindableLayout.ItemsSource="{Binding Items}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <Image Aspect="Center" VerticalOptions="Center" Margin="0,20" Source="{Binding .}"/>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+        </ScrollView>
 
         <!--HEADER-->
-        <Grid ColumnDefinitions="Auto,*" Padding="10,30,10,10" VerticalOptions="Start" WidthRequest="{Binding Width, Source={x:Reference page}}">
+        <Grid ColumnDefinitions="Auto,*" Padding="10" HeightRequest="{OnPlatform iOS=150}" VerticalOptions="Start" WidthRequest="{Binding Width, Source={x:Reference page}}">
             <Grid.Effects>
                 <uranium:BlurEffect Mode="Dark" />
             </Grid.Effects>

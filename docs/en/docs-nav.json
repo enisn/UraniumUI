@@ -46,15 +46,26 @@
       ]
     },
     {
+      "text": "Icons",
+      "path": "theming/Icons.md",
+      "items":[
+        {
+          "text": "Material Icons",
+          "path": "theming/Icons.md#material-icons"
+        },
+        {
+          "text": "Font Awesome",
+          "path": "theming/Icons.md#fontawesome"
+        }
+      ]
+      ]
+    },
+    {
       "text": "Styling",
       "items": [
         {
           "text": "Color System",
           "path": "theming/ColorSystem.md"
-        },
-        {
-          "text": "Icons",
-          "path": "theming/Icons.md"
         },
         {
         "text": "Cascading Styling",

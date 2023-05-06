@@ -125,6 +125,10 @@
     <FlyoutItem Title="InputFields" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Short_text}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
         <ShellContent Title="InputField" ContentTemplate="{DataTemplate pages:InputFieldsPage}"/>
     </FlyoutItem>
+    
+    <FlyoutItem Title="Blurs" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Filter_center_focus}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
+        <ShellContent Title="Blurs" ContentTemplate="{DataTemplate pages:BlurIndexPage}"/>
+    </FlyoutItem>
 
     <!--
         Shell has implicit conversion operators that enable the Shell visual hierarchy to be simplified.

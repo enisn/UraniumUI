@@ -58,6 +58,7 @@
 
 	<ItemGroup>
 	  <!--<ProjectReference Include="..\..\src\UraniumUI.Dialogs.CommunityToolkit\UraniumUI.Dialogs.CommunityToolkit.csproj" />-->
+	  <ProjectReference Include="..\..\src\UraniumUI.Blurs\UraniumUI.Blurs.csproj" />
 	  <ProjectReference Include="..\..\src\UraniumUI.Dialogs.Mopups\UraniumUI.Dialogs.Mopups.csproj" />
 	  <ProjectReference Include="..\..\src\UraniumUI.Icons.MaterialIcons\UraniumUI.Icons.MaterialIcons.csproj" />
 	  <ProjectReference Include="..\..\src\UraniumUI.Material\UraniumUI.Material.csproj" />

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+             xmlns:vm="clr-namespace:UraniumApp.ViewModels.Blurs"
+             x:Class="UraniumApp.Pages.Blurs.BlursDemoPage"
+             x:Name="page"
+             Title="BlursDemoPage">
+
+    <ContentPage.BindingContext>
+        <vm:BlursDemoViewModel />
+    </ContentPage.BindingContext>
+    
+    <Grid RowDefinitions="*">
+        <!--content-->
+        <CollectionView ItemsSource="{Binding Items}" Margin="0,0,0,0">
+            <CollectionView.Header>
+                <!--Placeholder--> 
+                <BoxView HeightRequest="100" WidthRequest="100" Color="Transparent"/>
+            </CollectionView.Header>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout HorizontalOptions="Center" Margin="0,20">
+                        <Image Source="{Binding .}" />
+                        <Label Text="Downloaded from unsplash randomly." />
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!--HEADER-->
+        <Grid ColumnDefinitions="Auto,*" Padding="10,30,10,10" VerticalOptions="Start" WidthRequest="{Binding Width, Source={x:Reference page}}">
+            <Grid.Effects>
+                <uranium:BlurEffect Mode="Dark" />
+            </Grid.Effects>
+
+            <uranium:StatefulContentView TappedCommand="{Binding BackCommand}" VerticalOptions="Center">
+                <Image HeightRequest="25" Margin="0,10,0,0">
+                    <Image.Source>
+                        <FontImageSource FontFamily="MaterialRegular" Glyph="{x:Static m:MaterialRegular.Arrow_back}"  Color="{StaticResource Surface}" />
+                    </Image.Source>
+                </Image>
+            </uranium:StatefulContentView>
+
+            <material:TextField
+                Grid.Column="1"
+                Margin="20,0"
+                Title="Search"
+                CornerRadius="20"
+                VerticalOptions="Center"
+                BorderColor="{StaticResource Surface}"
+                TitleColor="{StaticResource Surface}"
+                Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Search}, Color={StaticResource Surface}}"/>
+        </Grid>
+
+        <!--Bottom Menu-->
+        <Grid Padding="20" VerticalOptions="End" ColumnDefinitions="*,*,*,*" WidthRequest="{Binding Width, Source={x:Reference page}}">
+            <Grid.Effects>
+                <uranium:BlurEffect Mode="Dark" AccentOpacity=".3" />
+            </Grid.Effects>
+
+            <Image HeightRequest="25" Margin="0,10,0,0">
+                <Image.Source>
+                    <FontImageSource FontFamily="MaterialRegular" Glyph="{x:Static m:MaterialRegular.Home}"  Color="{StaticResource Primary}" />
+                </Image.Source>
+            </Image>
+            <Image Grid.Column="1" HeightRequest="25" Margin="0,10,0,0">
+                <Image.Source>
+                    <FontImageSource FontFamily="MaterialRegular" Glyph="{x:Static m:MaterialRegular.Search}"  Color="{StaticResource Surface}" />
+                </Image.Source>
+            </Image>
+            <Image Grid.Column="2" HeightRequest="25" Margin="0,10,0,0">
+                <Image.Source>
+                    <FontImageSource FontFamily="MaterialRegular" Glyph="{x:Static m:MaterialRegular.Camera}"  Color="{StaticResource Surface}" />
+                </Image.Source>
+            </Image>
+            <Image Grid.Column="3" HeightRequest="25" Margin="0,10,0,0">
+                <Image.Source>
+                    <FontImageSource FontFamily="MaterialRegular" Glyph="{x:Static m:MaterialRegular.Person}"  Color="{StaticResource Surface}" />
+                </Image.Source>
+            </Image>
+        </Grid>
+    </Grid>
+</ContentPage>

@@ -63,8 +63,8 @@ BlurEffect is a `Effect` which means you can use it on any control. It's recomme
     ```xml
     <StackLayout>
         <StackLayout.Effects>
-            <uranium:BlurEffect />
-        </StackLayout.Effects Mode="Dark">
+            <uranium:BlurEffect Mode="Dark" />
+        </StackLayout.Effects>
         <!-- Your content goes here -->
     </StackLayout>
     ```
@@ -77,8 +77,8 @@ BlurEffect is a `Effect` which means you can use it on any control. It's recomme
     ```xml
     <StackLayout>
         <StackLayout.Effects>
-            <uranium:BlurEffect />
-        </StackLayout.Effects AccentColor="Purple">
+            <uranium:BlurEffect AccentColor="Purple"/>
+        </StackLayout.Effects>
         <!-- Your content goes here -->
     </StackLayout>
     ```
@@ -90,8 +90,8 @@ BlurEffect is a `Effect` which means you can use it on any control. It's recomme
     ```xml
     <StackLayout>
         <StackLayout.Effects>
-            <uranium:BlurEffect />
-        </StackLayout.Effects Mode="Dark" AccentOpacity="0.8">
+            <uranium:BlurEffect Mode="Dark" AccentOpacity="0.8" />
+        </StackLayout.Effects>
         <!-- Your content goes here -->
     </StackLayout>
     ```

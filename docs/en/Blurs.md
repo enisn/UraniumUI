@@ -14,7 +14,7 @@ UraniumUI supports blur effects on MAUI. You can use it on any control by using 
 ### Setting-up
 Blur effect isn't part of UraniumUI by default. It's included in a separated assembly which is `UraniumUI.Blurs`. You have to add that package to your application first.
 
-- Install [UraniumUI.Blurs](https://www.nuget.org/packages/UraniumUI) package to your project.
+- Install [UraniumUI.Blurs](https://www.nuget.org/packages/UraniumUI.Blurs) package to your project.
     ```bash
     dotnet add package UraniumUI.Blurs
     ```

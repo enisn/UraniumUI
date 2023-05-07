@@ -22,6 +22,9 @@ public static class MauiProgram
 #if Mopups
 			.ConfigureMopups()
 #endif
+#if Blurs
+			.UseUraniumUIBlurs()
+#endif
             .UseUraniumUI()
 			.UseUraniumUIMaterial()
 			.ConfigureFonts(fonts =>

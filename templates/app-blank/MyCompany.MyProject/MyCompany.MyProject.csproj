@@ -63,6 +63,9 @@
 		<!--#if (Mopups)-->
 		<PackageReference Include="UraniumUI.Dialogs.Mopups" Version="2.5.0-pre.1" />
 		<!--#endif-->
+		<!--#if (Blurs)-->
+		<PackageReference Include="UraniumUI.Blurs" Version="2.5.0-pre.1" />
+		<!--#endif-->
 	</ItemGroup>
 
 </Project>

@@ -30,6 +30,7 @@
                     <material:CheckBox Text="Showcase CheckBox" x:Name="checkBox"/>
                     <BoxView StyleClass="Divider" Grid.Row="1" />
                     <root:PropertyEditorView Grid.Row="2" 
+                        WidthRequest="300"
                         Hierarchical="True"
                         HierarchyLimitType="{x:Type input:CheckBox}"
                         Value="{Binding ., Source={x:Reference checkBox}}" />

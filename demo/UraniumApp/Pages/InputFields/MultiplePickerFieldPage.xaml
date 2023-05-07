@@ -27,6 +27,7 @@
         <root:PropertyEditorView
             VerticalOptions="FillAndExpand"
             Hierarchical="True"
+            MinimumWidthRequest="300"
             HierarchyLimitType="{x:Type material:InputField}"
             Value="{Binding ., Source={x:Reference ref}}" />
     </StackLayout>

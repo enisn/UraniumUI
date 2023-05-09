@@ -6,7 +6,7 @@ using Microsoft.UI.Xaml.Input;
 namespace UraniumUI.Material.Handlers;
 
 public partial class ButtonViewHandler
-{    
+{
     protected override ContentPanel CreatePlatformView()
     {
         var platformView = base.CreatePlatformView();
@@ -45,6 +45,7 @@ public partial class ButtonViewHandler
     {
         VisualStateManager.GoToState(StatefulView, VisualStateManager.CommonStates.Normal);
         ExecuteCommandIfCan(StatefulView.HoverExitCommand);
+        StatefulView.InvokeHoverExited();
     }
 
     private void PlatformView_PointerEntered(object sender, PointerRoutedEventArgs e)
@@ -55,6 +56,7 @@ public partial class ButtonViewHandler
         VisualStateManager.GoToState(StatefulView, VisualStateManager.CommonStates.PointerOver);
 #endif
         ExecuteCommandIfCan(StatefulView.HoverCommand);
+        StatefulView.InvokeHovered();
     }
 
     long lastPressed;
@@ -65,6 +67,7 @@ public partial class ButtonViewHandler
 
         VisualStateManager.GoToState(StatefulView, "Pressed");
         ExecuteCommandIfCan(StatefulView.PressedCommand);
+        StatefulView.InvokePressed();
     }
 
     private void PlatformView_PointerReleased(object sender, PointerRoutedEventArgs e)
@@ -73,10 +76,12 @@ public partial class ButtonViewHandler
         if (DateTime.Now.Ticks - lastPressed >= TimeSpan.TicksPerMillisecond * 500)
         {
             ExecuteCommandIfCan(StatefulView.LongPressCommand);
+            StatefulView.InvokeLongPressed();
         }
 
         VisualStateManager.GoToState(StatefulView, VisualStateManager.CommonStates.Normal);
         ExecuteCommandIfCan(StatefulView.TappedCommand);
+        StatefulView.InvokeTapped();
     }
 }
 

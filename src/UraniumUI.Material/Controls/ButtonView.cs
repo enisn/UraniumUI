@@ -19,9 +19,13 @@ public class ButtonView : Border, IStatefulView
     public event EventHandler<EventArgs> Tapped;
     
     internal void InvokePressed() => Pressed?.Invoke(this, EventArgs.Empty);
+
     internal void InvokeLongPressed() => LongPressed?.Invoke(this, EventArgs.Empty);
+
     internal void InvokeHovered() => Hovered?.Invoke(this, EventArgs.Empty);
+
     internal void InvokeHoverExited() => HoverExited?.Invoke(this, EventArgs.Empty);
+
     internal void InvokeTapped() => Tapped?.Invoke(this, EventArgs.Empty);
 
     public ICommand PressedCommand { get => (ICommand)GetValue(PressedCommandProperty); set => SetValue(PressedCommandProperty, value); }

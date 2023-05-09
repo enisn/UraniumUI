@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Windows.Input;
 using UraniumUI.Pages;
 using UraniumUI.Resources;
+using UraniumUI.Views;
 using Path = Microsoft.Maui.Controls.Shapes.Path;
 
 namespace UraniumUI.Material.Controls;
@@ -35,7 +36,7 @@ public class PickerField : InputField
     };
 #endif
 
-    protected ContentView iconClear = new ContentView
+    protected StatefulContentView iconClear = new StatefulContentView
     {
         VerticalOptions = LayoutOptions.Center,
         HorizontalOptions = LayoutOptions.End,
@@ -54,9 +55,7 @@ public class PickerField : InputField
 
     public PickerField()
     {
-        var clearGestureRecognizer = new TapGestureRecognizer();
-        clearGestureRecognizer.Tapped += OnClearTapped;
-        iconClear.GestureRecognizers.Add(clearGestureRecognizer);
+        iconClear.TappedCommand = new Command(OnClearTapped);
 
         UpdateClearIconState();
 
@@ -97,7 +96,7 @@ public class PickerField : InputField
         return SelectedItem;
     }
 
-    protected void OnClearTapped(object sender, EventArgs e)
+    protected virtual void OnClearTapped(object parameter)
     {
         if (IsEnabled)
         {

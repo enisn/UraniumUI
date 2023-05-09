@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using UraniumUI.Pages;
 using UraniumUI.Resources;
+using UraniumUI.Views;
 using Path = Microsoft.Maui.Controls.Shapes.Path;
 
 namespace UraniumUI.Material.Controls;
@@ -21,7 +22,7 @@ public class DatePickerField : InputField
 #endif
 	};
 
-	protected ContentView iconClear = new ContentView
+	protected StatefulContentView iconClear = new StatefulContentView
 	{
 		VerticalOptions = LayoutOptions.Center,
 		HorizontalOptions = LayoutOptions.End,
@@ -38,9 +39,7 @@ public class DatePickerField : InputField
 
 	public DatePickerField()
 	{
-		var clearGestureRecognizer = new TapGestureRecognizer();
-		clearGestureRecognizer.Tapped += OnClearTapped;
-		iconClear.GestureRecognizers.Add(clearGestureRecognizer);
+		iconClear.TappedCommand = new Command(OnClearTapped);
 
 		UpdateClearIconState();
 
@@ -67,7 +66,7 @@ public class DatePickerField : InputField
 		return Date;
 	}
 
-	protected void OnClearTapped(object sender, EventArgs e)
+	protected virtual void OnClearTapped(object parameter)
 	{
 		if (IsEnabled)
 		{

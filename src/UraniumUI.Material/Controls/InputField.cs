@@ -62,12 +62,9 @@ public partial class InputField : Grid
         };
     });
 
-    public IList<IView> Attachments => endIconsContainer.Children;
+    protected HorizontalStackLayout endIconsContainer = new HorizontalStackLayout();
 
-    protected HorizontalStackLayout endIconsContainer = new HorizontalStackLayout
-    {
-        HorizontalOptions = LayoutOptions.End,
-    };
+    public IList<IView> Attachments => endIconsContainer.Children;
 
     private Color LastFontimageColor;
 

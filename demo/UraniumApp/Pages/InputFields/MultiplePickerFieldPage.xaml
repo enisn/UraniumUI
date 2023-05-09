@@ -6,12 +6,13 @@
              xmlns:root="clr-namespace:UraniumApp"
              x:Class="UraniumApp.Pages.InputFields.MultiplePickerFieldPage"
              Title="MultiplePickerFieldPage">
-    <StackLayout Padding="30" Orientation="{OnIdiom Vertical, Desktop=Horizontal}" Spacing="10">
+    <Grid StyleClass="InputFieldDemoGrid">
         <material:MultiplePickerField 
             x:Name="ref"
+            Grid.Row="0"
+            Grid.Column="{OnIdiom 0, Desktop=1}"
             Title="Pick an option"
-            Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Keyboard_option}}"
-            MinimumWidthRequest="400">
+            Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Keyboard_option}}">
             <material:MultiplePickerField.ItemsSource>
                 <x:Array Type="{x:Type x:String}">
                     <x:String>Option 1</x:String>
@@ -25,10 +26,10 @@
         </material:MultiplePickerField>
 
         <root:PropertyEditorView
-            VerticalOptions="FillAndExpand"
+            Grid.Column="0"
+            Grid.Row="{OnIdiom 1, Desktop=0}"
             Hierarchical="True"
-            MinimumWidthRequest="300"
             HierarchyLimitType="{x:Type material:InputField}"
             Value="{Binding ., Source={x:Reference ref}}" />
-    </StackLayout>
+    </Grid>
 </ContentPage>

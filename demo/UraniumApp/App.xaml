@@ -14,6 +14,14 @@
                 <ResourceDictionary x:Name="appStyles" Source="Resources/Styles/Styles.xaml" />
                 <m:StyleResource BasedOn="{x:Reference appStyles}" />
             </ResourceDictionary.MergedDictionaries>
+
+            <Style TargetType="Grid" Class="InputFieldDemoGrid">
+                <Setter Property="RowDefinitions" Value="{OnIdiom 'Auto,*', Desktop='*'}" />
+                <Setter Property="ColumnDefinitions" Value="{OnIdiom '*', Desktop='*,*'}"/>
+                <Setter Property="ColumnSpacing" Value="10" />
+                <Setter Property="RowSpacing" Value="10" />
+                <Setter Property="Padding" Value="30" />
+            </Style>
         </ResourceDictionary>
 
     </Application.Resources>

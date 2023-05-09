@@ -1,6 +1,7 @@
 ﻿using Plainer.Maui.Controls;
 using UraniumUI.Pages;
 using UraniumUI.Resources;
+using UraniumUI.Views;
 using Path = Microsoft.Maui.Controls.Shapes.Path;
 
 namespace UraniumUI.Material.Controls;
@@ -17,7 +18,7 @@ public partial class TextField : InputField
         VerticalOptions = LayoutOptions.Center
     };
 
-    protected ContentView iconClear = new ContentView
+    protected StatefulContentView iconClear = new StatefulContentView
     {
         VerticalOptions = LayoutOptions.Center,
         HorizontalOptions = LayoutOptions.End,
@@ -37,10 +38,7 @@ public partial class TextField : InputField
 
     public TextField()
     {
-        iconClear.GestureRecognizers.Add(new TapGestureRecognizer
-        {
-            Command = new Command(OnClearTapped)
-        });
+        iconClear.TappedCommand = new Command(OnClearTapped);
 
         UpdateClearIconState();
 

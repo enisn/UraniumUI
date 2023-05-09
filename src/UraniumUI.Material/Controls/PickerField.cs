@@ -83,6 +83,14 @@ public class PickerField : InputField
 #endif
     }
 
+#if WINDOWS
+    protected override void OnSizeAllocated(double width, double height)
+    {
+        base.OnSizeAllocated(width, height);
+        PickerView.WidthRequest = width - endIconsContainer.Width - (imageIcon.IsValueCreated ? imageIcon.Value.Width : 0) - 30;
+    }
+#endif
+
     protected override object GetValueForValidator()
     {
         return SelectedItem;

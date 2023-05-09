@@ -12,58 +12,59 @@ namespace UraniumUI.Material.Controls;
 [ContentProperty(nameof(Validations))]
 public class PickerField : InputField
 {
-	public PickerView PickerView => Content as PickerView;
+    public PickerView PickerView => Content as PickerView;
 
-	public override View Content { get; set; } = new PickerView
-	{
-		VerticalOptions = LayoutOptions.Center,
-		Margin = new Thickness(15,0),
+    public override View Content { get; set; } = new PickerView
+    {
+        VerticalOptions = LayoutOptions.Center,
+        HorizontalOptions = LayoutOptions.Fill,
+        Margin = new Thickness(15, 0),
 #if WINDOWS
-		Opacity = 0,
+        Opacity = 0,
 #endif
-	};
+    };
 
 #if WINDOWS
-	Label labelSelectedItem = new Label
-	{
-		InputTransparent = true,
-		HorizontalOptions = LayoutOptions.Start,
-		VerticalOptions = LayoutOptions.Center,
-        Margin = new Thickness(15,0),
-		TextColor = ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.Gray)
-	};
+    Label labelSelectedItem = new Label
+    {
+        InputTransparent = true,
+        HorizontalOptions = LayoutOptions.Start,
+        VerticalOptions = LayoutOptions.Center,
+        Margin = new Thickness(15, 0),
+        TextColor = ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.Gray)
+    };
 #endif
 
-	protected ContentView iconClear = new ContentView
-	{
-		VerticalOptions = LayoutOptions.Center,
-		HorizontalOptions = LayoutOptions.End,
-		IsVisible = false,
-		Padding = 10,
-		Content = new Path
-		{
-			Data = UraniumShapes.X,
-			Fill = ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.DarkGray).WithAlpha(.5f),
-		}
-	};
+    protected ContentView iconClear = new ContentView
+    {
+        VerticalOptions = LayoutOptions.Center,
+        HorizontalOptions = LayoutOptions.End,
+        IsVisible = false,
+        Padding = 10,
+        Content = new Path
+        {
+            Data = UraniumShapes.X,
+            Fill = ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.DarkGray).WithAlpha(.5f),
+        }
+    };
 
-	public override bool HasValue => SelectedItem != null;
+    public override bool HasValue => SelectedItem != null;
 
-	public event EventHandler<object> SelectedValueChanged;
+    public event EventHandler<object> SelectedValueChanged;
 
     public PickerField()
-	{
-		var clearGestureRecognizer = new TapGestureRecognizer();
-		clearGestureRecognizer.Tapped += OnClearTapped;
-		iconClear.GestureRecognizers.Add(clearGestureRecognizer);
+    {
+        var clearGestureRecognizer = new TapGestureRecognizer();
+        clearGestureRecognizer.Tapped += OnClearTapped;
+        iconClear.GestureRecognizers.Add(clearGestureRecognizer);
 
-		UpdateClearIconState();
+        UpdateClearIconState();
 
-		PickerView.SetBinding(PickerView.SelectedItemProperty, new Binding(nameof(SelectedItem), source: this));
-		PickerView.SetBinding(PickerView.SelectedIndexProperty, new Binding(nameof(SelectedIndex), source: this));
-		PickerView.SetBinding(PickerView.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
+        PickerView.SetBinding(PickerView.SelectedItemProperty, new Binding(nameof(SelectedItem), source: this));
+        PickerView.SetBinding(PickerView.SelectedIndexProperty, new Binding(nameof(SelectedIndex), source: this));
+        PickerView.SetBinding(PickerView.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
 
-		// TODO: Move platform specific codes into separate files.
+        // TODO: Move platform specific codes into separate files.
 #if ANDROID
 		PickerView.HandlerChanged += (s, e) =>
 		{
@@ -78,141 +79,149 @@ public class PickerField : InputField
 		};
 #endif
 #if WINDOWS
-		rootGrid.Add(labelSelectedItem, column: 1);
+        rootGrid.Add(labelSelectedItem, column: 1);
 #endif
-	}
-
-	protected override object GetValueForValidator()
-	{
-		return SelectedItem;
-	}
-
-	protected void OnClearTapped(object sender, EventArgs e)
-	{
-		if (IsEnabled)
-		{
-			SelectedItem = null;
-			PickerView.Unfocus();
-		}
-	}
-
-	protected virtual void OnSelectedItemChanged()
-	{
-		OnPropertyChanged(nameof(SelectedItem));
-		CheckAndShowValidations();
-
-		if (AllowClear)
-		{
-			iconClear.IsVisible = SelectedItem != null;
-		}
-
-#if WINDOWS
-		labelSelectedItem.Text = SelectedItem?.ToString();
-#endif
-
-		UpdateState();
-
-		SelectedValueChangedCommand?.Execute(SelectedItem);
-		SelectedValueChanged?.Invoke(this, SelectedItem);
     }
 
-	protected virtual void OnAllowClearChanged()
-	{
-		UpdateClearIconState();
-	}
+    protected override object GetValueForValidator()
+    {
+        return SelectedItem;
+    }
 
-	protected virtual void UpdateClearIconState()
-	{
-		if (AllowClear)
-		{
-			if (!endIconsContainer.Contains(iconClear))
-			{
-				endIconsContainer.Add(iconClear);
-			}
-		}
-		else
-		{
-			endIconsContainer.Remove(iconClear);
-		}
-	}
+    protected void OnClearTapped(object sender, EventArgs e)
+    {
+        if (IsEnabled)
+        {
+            SelectedItem = null;
+            PickerView.Unfocus();
+        }
+    }
 
-	public IList<string> Items => PickerView.Items;
+    protected virtual void OnSelectedItemChanged()
+    {
+        OnPropertyChanged(nameof(SelectedItem));
+        CheckAndShowValidations();
 
-	public object SelectedItem { get => GetValue(SelectedItemProperty); set => SetValue(SelectedItemProperty, value); }
+        if (AllowClear)
+        {
+            iconClear.IsVisible = SelectedItem != null;
+        }
 
-	public static readonly BindableProperty SelectedItemProperty = BindableProperty.Create(
-		nameof(SelectedItem), typeof(object), typeof(PickerField),
-		defaultValue: Picker.SelectedItemProperty.DefaultValue,
-		defaultBindingMode: BindingMode.TwoWay,
-		propertyChanged: (bindable, oldValue, newValue) => (bindable as PickerField).OnSelectedItemChanged());
+#if WINDOWS
+        labelSelectedItem.Text = SelectedItem?.ToString();
+#endif
 
-	public int SelectedIndex { get => (int)GetValue(SelectedIndexProperty); set => SetValue(SelectedIndexProperty, value); }
+        UpdateState();
 
-	public static readonly BindableProperty SelectedIndexProperty = BindableProperty.Create(
-		nameof(SelectedIndex), typeof(int), typeof(PickerField),
-		defaultValue: Picker.SelectedIndexProperty.DefaultValue,
-		defaultBindingMode: BindingMode.TwoWay);
+        SelectedValueChangedCommand?.Execute(SelectedItem);
+        SelectedValueChanged?.Invoke(this, SelectedItem);
+    }
 
-	public IList ItemsSource { get => (IList)GetValue(ItemsSourceProperty); set => SetValue(ItemsSourceProperty, value); }
+    protected virtual void OnAllowClearChanged()
+    {
+        UpdateClearIconState();
+    }
 
-	public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(
-	   nameof(ItemsSource), typeof(IList), typeof(PickerField),
-	   defaultValue: Picker.ItemsSourceProperty.DefaultValue,
-	   propertyChanged: (bindable, oldValue, newValue) => (bindable as PickerField).PickerView.ItemsSource = (IList)newValue);
+    protected virtual void UpdateClearIconState()
+    {
+        if (AllowClear)
+        {
+            if (!endIconsContainer.Contains(iconClear))
+            {
+                endIconsContainer.Add(iconClear);
+            }
+        }
+        else
+        {
+            endIconsContainer.Remove(iconClear);
+        }
+    }
 
-	public BindingBase ItemDisplayBinding { get => PickerView.ItemDisplayBinding; set => PickerView.ItemDisplayBinding = value; }
+    public IList<string> Items => PickerView.Items;
 
-	public FontAttributes FontAttributes { get => (FontAttributes)GetValue(FontAttributesProperty); set => SetValue(FontAttributesProperty, value); }
+    public object SelectedItem { get => GetValue(SelectedItemProperty); set => SetValue(SelectedItemProperty, value); }
 
-	public static readonly BindableProperty FontAttributesProperty = BindableProperty.Create(
-	   nameof(FontAttributes), typeof(FontAttributes), typeof(PickerField),
-	   defaultValue: Picker.FontAttributesProperty.DefaultValue,
-	   propertyChanged: (bindable, oldValue, newValue) => (bindable as PickerField).PickerView.FontAttributes = (FontAttributes)newValue);
+    public static readonly BindableProperty SelectedItemProperty = BindableProperty.Create(
+        nameof(SelectedItem), typeof(object), typeof(PickerField),
+        defaultValue: Picker.SelectedItemProperty.DefaultValue,
+        defaultBindingMode: BindingMode.TwoWay,
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as PickerField).OnSelectedItemChanged());
 
-	public string FontFamily { get => (string)GetValue(FontFamilyProperty); set => SetValue(FontFamilyProperty, value); }
+    public int SelectedIndex { get => (int)GetValue(SelectedIndexProperty); set => SetValue(SelectedIndexProperty, value); }
 
-	public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(
-		 nameof(FontFamily), typeof(string), typeof(PickerField),
-		 defaultValue: Picker.FontFamilyProperty.DefaultValue,
-		 propertyChanged: (bindable, oldValue, newValue) => (bindable as PickerField).PickerView.FontFamily = (string)newValue);
+    public static readonly BindableProperty SelectedIndexProperty = BindableProperty.Create(
+        nameof(SelectedIndex), typeof(int), typeof(PickerField),
+        defaultValue: Picker.SelectedIndexProperty.DefaultValue,
+        defaultBindingMode: BindingMode.TwoWay);
 
-	[TypeConverter(typeof(FontSizeConverter))]
-	public double FontSize { get => (double)GetValue(FontSizeProperty); set => SetValue(FontSizeProperty, value); }
+    public IList ItemsSource { get => (IList)GetValue(ItemsSourceProperty); set => SetValue(ItemsSourceProperty, value); }
 
-	public static readonly BindableProperty FontSizeProperty = BindableProperty.Create(
-		nameof(FontSize), typeof(double), typeof(PickerField), Picker.FontSizeProperty.DefaultValue,
-		propertyChanged: (bindable, oldValue, newValue) => (bindable as PickerField).PickerView.FontSize = (double)newValue);
+    public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(
+       nameof(ItemsSource), typeof(IList), typeof(PickerField),
+       defaultValue: Picker.ItemsSourceProperty.DefaultValue,
+       propertyChanged: (bindable, oldValue, newValue) => (bindable as PickerField).PickerView.ItemsSource = (IList)newValue);
 
-	public bool FontAutoScalingEnabled { get => (bool)GetValue(FontAutoScalingEnabledProperty); set => SetValue(FontAutoScalingEnabledProperty, value); }
+    public BindingBase ItemDisplayBinding { get => PickerView.ItemDisplayBinding; set => PickerView.ItemDisplayBinding = value; }
 
-	public static readonly BindableProperty FontAutoScalingEnabledProperty = BindableProperty.Create(
-		nameof(FontAutoScalingEnabled), typeof(bool), typeof(PickerField), Picker.FontAutoScalingEnabledProperty.DefaultValue,
-		propertyChanged: (bindable, oldValue, newValue) => (bindable as PickerField).PickerView.FontAutoScalingEnabled = (bool)newValue);
+    public FontAttributes FontAttributes { get => (FontAttributes)GetValue(FontAttributesProperty); set => SetValue(FontAttributesProperty, value); }
 
-	public Color TextColor { get => (Color)GetValue(TextColorProperty); set => SetValue(TextColorProperty, value); }
+    public static readonly BindableProperty FontAttributesProperty = BindableProperty.Create(
+       nameof(FontAttributes), typeof(FontAttributes), typeof(PickerField),
+       defaultValue: Picker.FontAttributesProperty.DefaultValue,
+       propertyChanged: (bindable, oldValue, newValue) =>
+       {
+           var pickerField = (bindable as PickerField);
+           pickerField.PickerView.FontAttributes = (FontAttributes)newValue;
+           pickerField.labelTitle.FontAttributes = (FontAttributes)newValue;
+#if WINDOWS
+           pickerField.labelSelectedItem.FontAttributes = (FontAttributes)newValue;
+#endif
+       });
 
-	public static readonly BindableProperty TextColorProperty = BindableProperty.Create(
-		nameof(TextColor), typeof(Color), typeof(PickerField), Picker.TextColorProperty.DefaultValue,
-		propertyChanged: (bindable, oldValue, newValue) => (bindable as PickerField).PickerView.TextColor = (Color)newValue);
+    public string FontFamily { get => (string)GetValue(FontFamilyProperty); set => SetValue(FontFamilyProperty, value); }
 
-	public double CharacterSpacing { get => (double)GetValue(CharacterSpacingProperty); set => SetValue(CharacterSpacingProperty, value); }
+    public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(
+         nameof(FontFamily), typeof(string), typeof(PickerField),
+         defaultValue: Picker.FontFamilyProperty.DefaultValue,
+         propertyChanged: (bindable, oldValue, newValue) => (bindable as PickerField).PickerView.FontFamily = (string)newValue);
 
-	public static readonly BindableProperty CharacterSpacingProperty = BindableProperty.Create(
-		nameof(CharacterSpacing), typeof(double), typeof(PickerField), Picker.CharacterSpacingProperty.DefaultValue,
-		propertyChanged: (bindable, oldValue, newValue) => (bindable as PickerField).PickerView.CharacterSpacing = (double)newValue);
+    [TypeConverter(typeof(FontSizeConverter))]
+    public double FontSize { get => (double)GetValue(FontSizeProperty); set => SetValue(FontSizeProperty, value); }
 
-	public bool AllowClear { get => (bool)GetValue(AllowClearProperty); set => SetValue(AllowClearProperty, value); }
+    public static readonly BindableProperty FontSizeProperty = BindableProperty.Create(
+        nameof(FontSize), typeof(double), typeof(PickerField), Picker.FontSizeProperty.DefaultValue,
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as PickerField).PickerView.FontSize = (double)newValue);
 
-	public static readonly BindableProperty AllowClearProperty = BindableProperty.Create(
-		nameof(AllowClear),
-		typeof(bool), typeof(PickerField),
-		true,
-		propertyChanged: (bindable, oldValue, newValue) => (bindable as PickerField).OnAllowClearChanged());
+    public bool FontAutoScalingEnabled { get => (bool)GetValue(FontAutoScalingEnabledProperty); set => SetValue(FontAutoScalingEnabledProperty, value); }
 
-	public ICommand SelectedValueChangedCommand { get => (ICommand)GetValue(SelectedValueChangedCommandProperty); set => SetValue(SelectedValueChangedCommandProperty, value); }
+    public static readonly BindableProperty FontAutoScalingEnabledProperty = BindableProperty.Create(
+        nameof(FontAutoScalingEnabled), typeof(bool), typeof(PickerField), Picker.FontAutoScalingEnabledProperty.DefaultValue,
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as PickerField).PickerView.FontAutoScalingEnabled = (bool)newValue);
 
-	public static readonly BindableProperty SelectedValueChangedCommandProperty = BindableProperty.Create(
-		nameof(SelectedValueChangedCommand),
-		typeof(ICommand), typeof(PickerField),
-		defaultValue: null);
+    public Color TextColor { get => (Color)GetValue(TextColorProperty); set => SetValue(TextColorProperty, value); }
+
+    public static readonly BindableProperty TextColorProperty = BindableProperty.Create(
+        nameof(TextColor), typeof(Color), typeof(PickerField), Picker.TextColorProperty.DefaultValue,
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as PickerField).PickerView.TextColor = (Color)newValue);
+
+    public double CharacterSpacing { get => (double)GetValue(CharacterSpacingProperty); set => SetValue(CharacterSpacingProperty, value); }
+
+    public static readonly BindableProperty CharacterSpacingProperty = BindableProperty.Create(
+        nameof(CharacterSpacing), typeof(double), typeof(PickerField), Picker.CharacterSpacingProperty.DefaultValue,
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as PickerField).PickerView.CharacterSpacing = (double)newValue);
+
+    public bool AllowClear { get => (bool)GetValue(AllowClearProperty); set => SetValue(AllowClearProperty, value); }
+
+    public static readonly BindableProperty AllowClearProperty = BindableProperty.Create(
+        nameof(AllowClear),
+        typeof(bool), typeof(PickerField),
+        true,
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as PickerField).OnAllowClearChanged());
+
+    public ICommand SelectedValueChangedCommand { get => (ICommand)GetValue(SelectedValueChangedCommandProperty); set => SetValue(SelectedValueChangedCommandProperty, value); }
+
+    public static readonly BindableProperty SelectedValueChangedCommandProperty = BindableProperty.Create(
+        nameof(SelectedValueChangedCommand),
+        typeof(ICommand), typeof(PickerField),
+        defaultValue: null);
 }

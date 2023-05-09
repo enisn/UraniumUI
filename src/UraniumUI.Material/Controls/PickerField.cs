@@ -80,6 +80,7 @@ public class PickerField : InputField
 #endif
 #if WINDOWS
         rootGrid.Add(labelSelectedItem, column: 1);
+        PickerView.HorizontalOptions = LayoutOptions.Start;
 #endif
     }
 
@@ -87,7 +88,7 @@ public class PickerField : InputField
     protected override void OnSizeAllocated(double width, double height)
     {
         base.OnSizeAllocated(width, height);
-        PickerView.WidthRequest = width - endIconsContainer.Width - (imageIcon.IsValueCreated ? imageIcon.Value.Width : 0) - 30;
+        PickerView.WidthRequest = width * .5; // TODO:Make this value dynamic later.
     }
 #endif
 

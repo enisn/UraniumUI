@@ -9,6 +9,10 @@ InputField is an abstraction on MAUI Level for material inputs such as Entry, Ed
 - [DatePickerField](DatePickerField.md)
 - [TimePickerField](TimePickerField.md)
 
+
+
+
+
 ## Creating a Custom Control
 There are two ways to use InputField for custom controls. You can inherit from InputField or you can use it as a wrapper around your control.
 
@@ -16,9 +20,9 @@ There are two ways to use InputField for custom controls. You can inherit from I
 InputField can be used in XAML like any other control. You can pass an existing control to the InputField and it will wrap it. The control will be placed inside the InputField and the InputField will be styled according to the material design guidelines. When that control is focused, the InputField will be focused as well. This is useful for custom controls that are not part of the UraniumUI MAUI library.
 
 ```xml
-<controls:InputField Title="Pick a Time" HasValue="True">
+<material:InputField Title="Pick a Time" HasValue="True">
     <TimePicker BackgroundColor="Transparent"/>
-</controls:InputField>
+</material:InputField>
 ```
 
 ![MAUI Material Design Picker](images/inputfield-demo-timepicker.png)

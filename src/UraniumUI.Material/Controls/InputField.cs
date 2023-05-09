@@ -1,6 +1,7 @@
 ﻿using Microsoft.Maui.Controls.Shapes;
 using UraniumUI.Resources;
 using UraniumUI.Extensions;
+using System.Collections;
 
 namespace UraniumUI.Material.Controls;
 
@@ -61,10 +62,11 @@ public partial class InputField : Grid
         };
     });
 
+    public IList<IView> Attachments => endIconsContainer.Children;
+
     protected HorizontalStackLayout endIconsContainer = new HorizontalStackLayout
     {
         HorizontalOptions = LayoutOptions.End,
-        Margin = 5,
     };
 
     private Color LastFontimageColor;
@@ -99,6 +101,8 @@ public partial class InputField : Grid
 
         rootGrid.AddColumnDefinition(new ColumnDefinition(GridLength.Auto));
         rootGrid.AddColumnDefinition(new ColumnDefinition(GridLength.Star));
+        rootGrid.AddColumnDefinition(new ColumnDefinition(GridLength.Auto));
+        rootGrid.AddRowDefinition(new RowDefinition(GridLength.Star));
 
         if (Content != null)
         {

@@ -11,15 +11,15 @@
     <ResourceDictionary.MergedDictionaries>
 
         <ResourceDictionary>
-            <Style TargetType="Page" ApplyToDerivedTypes="True">
+            <Style TargetType="Page" ApplyToDerivedTypes="True" CanCascade="True">
                 <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Background}, Dark={StaticResource BackgroundDark}}"/>
             </Style>
 
-            <Style TargetType="Label" ApplyToDerivedTypes="True">
+            <Style TargetType="Label" ApplyToDerivedTypes="True" CanCascade="True">
                 <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnBackground},Dark={StaticResource OnBackgroundDark}}" />
             </Style>
 
-            <Style TargetType="Frame" ApplyToDerivedTypes="True">
+            <Style TargetType="Frame" ApplyToDerivedTypes="True" CanCascade="True">
                 <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Surface}, Dark={StaticResource SurfaceDark}}" />
             </Style>
 
@@ -55,9 +55,9 @@
                 <Setter Property="Padding" Value="24,0" />
             </Style>
 
-            <Style TargetType="Button" BaseResourceKey="BaseButtonStyle" />
+            <Style TargetType="Button" BaseResourceKey="BaseButtonStyle" CanCascade="True"/>
 
-            <Style TargetType="Button" Class="ElevatedButton" BaseResourceKey="BaseButtonStyle">
+            <Style TargetType="Button" Class="ElevatedButton" BaseResourceKey="BaseButtonStyle" CanCascade="True">
                 <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Surface}, Dark={StaticResource SurfaceDark}}" />
                 <Setter Property="Shadow" Value="{StaticResource ShadowElevation1}"/>
                 <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
@@ -87,7 +87,7 @@
                 </Setter>
             </Style>
 
-            <Style TargetType="Button" Class="FilledButton" BaseResourceKey="BaseButtonStyle">
+            <Style TargetType="Button" Class="FilledButton" BaseResourceKey="BaseButtonStyle" CanCascade="True">
                 <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
                 <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnPrimary}, Dark={StaticResource OnPrimaryDark}}" />
                 <Setter Property="Shadow" Value="{StaticResource ShadowElevation0}" />
@@ -111,7 +111,7 @@
                 </Setter>
             </Style>
 
-            <Style TargetType="Button" Class="FilledTonalButton" BaseResourceKey="BaseButtonStyle">
+            <Style TargetType="Button" Class="FilledTonalButton" BaseResourceKey="BaseButtonStyle" CanCascade="True">
                 <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource SecondaryContainer}, Dark={StaticResource SecondaryContainerDark}}" />
                 <Setter Property="t:DynamicTint.BackgroundColorOpacity" Value="1" />
                 <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnSecondaryContainer}, Dark={StaticResource OnSecondaryContainerDark}}" />
@@ -142,7 +142,7 @@
                 </Setter>
             </Style>
 
-            <Style TargetType="Button" Class="OutlinedButton" BaseResourceKey="BaseButtonStyle">
+            <Style TargetType="Button" Class="OutlinedButton" BaseResourceKey="BaseButtonStyle" CanCascade="True">
                 <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource  Primary}, Dark={StaticResource  PrimaryDark}}" />
                 <Setter Property="t:DynamicTint.BackgroundColorOpacity" Value="0" />
                 <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource Outline}, Dark={StaticResource OutlineDark}}" />
@@ -174,7 +174,7 @@
                 </Setter>
             </Style>
 
-            <Style TargetType="Button" Class="TextButton" BaseResourceKey="BaseButtonStyle">
+            <Style TargetType="Button" Class="TextButton" BaseResourceKey="BaseButtonStyle" CanCascade="True">
                 <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
                 <Setter Property="t:DynamicTint.BackgroundColorOpacity" Value="0" />
                 <Setter Property="BorderWidth" Value="0" />
@@ -205,13 +205,13 @@
                 </Setter>
             </Style>
 
-            <Style TargetType="BoxView" Class="Divider">
+            <Style TargetType="BoxView" Class="Divider" CanCascade="True">
                 <Setter Property="HeightRequest" Value="1" />
                 <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource OutlineVariant}, Dark={StaticResource OutlineVariantDark}}" />
                 <Setter Property="Margin" Value="16,8"/>
             </Style>
 
-            <Style TargetType="input:CheckBox" ApplyToDerivedTypes="True">
+            <Style TargetType="input:CheckBox" ApplyToDerivedTypes="True" CanCascade="True">
                 <Setter Property="Type" Value="Material" />
                 <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource Outline}, Dark={StaticResource  OutlineDark}}" />
                 <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
@@ -235,7 +235,7 @@
                 </Setter>
             </Style>
 
-            <Style TargetType="input:RadioButton" ApplyToDerivedTypes="True">
+            <Style TargetType="input:RadioButton" ApplyToDerivedTypes="True" CanCascade="True">
                 <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
                 <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}" />
                 <Setter Property="CircleColor" Value="{AppThemeBinding Light={StaticResource  Outline}, Dark={StaticResource  OutlineDark}}" />
@@ -257,25 +257,25 @@
                 </Setter>
             </Style>
 
-            <Style TargetType="c:RadioButton" Class="CheckRadioButton">
+            <Style TargetType="c:RadioButton" Class="CheckRadioButton" CanCascade="True">
                 <Setter Property="SelectedIconGeomerty" Value="{x:Static input:PredefinedShapes.CheckCircle}" />
             </Style>
 
-            <Style TargetType="a:BottomSheetView">
+            <Style TargetType="a:BottomSheetView" CanCascade="True">
                 <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Surface},Dark={StaticResource SurfaceDark}}"/>
             </Style>
 
-            <Style TargetType="a:BackdropView">
+            <Style TargetType="a:BackdropView" CanCascade="True">
                 <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Gray950}}"/>
             </Style>
 
-            <Style TargetType="c:DataGrid">
+            <Style TargetType="c:DataGrid" CanCascade="True">
                 <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource  Surface},Dark={StaticResource  SurfaceDark}}" />
                 <Setter Property="LineSeparatorColor" Value="{StaticResource Gray300}"/>
                 <Setter Property="SelectionColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
             </Style>
 
-            <Style TargetType="c:InputField" ApplyToDerivedTypes="True" x:Key="InputFieldBaseStyle">
+            <Style TargetType="c:InputField" ApplyToDerivedTypes="True" x:Key="InputFieldBaseStyle" CanCascade="True">
                 <Setter Property="Opacity" Value="1"/>
                 <Setter Property="AccentColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
                 <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}" />
@@ -295,17 +295,17 @@
                 </Setter>
             </Style>
 
-            <Style TargetType="c:InputField" ApplyToDerivedTypes="True" BaseResourceKey="InputFieldBaseStyle" />
+            <Style TargetType="c:InputField" ApplyToDerivedTypes="True" BaseResourceKey="InputFieldBaseStyle" CanCascade="True"/>
 
-            <Style TargetType="c:TextField" BaseResourceKey="InputFieldBaseStyle" >
+            <Style TargetType="c:TextField" BaseResourceKey="InputFieldBaseStyle"  CanCascade="True">
                 <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}" />
             </Style>
 
-            <Style TargetType="c:AutoCompleteTextField" BaseResourceKey="InputFieldBaseStyle">
+            <Style TargetType="c:AutoCompleteTextField" BaseResourceKey="InputFieldBaseStyle" CanCascade="True">
                 <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}" />
             </Style>
 
-            <Style TargetType="views:StatefulContentView" ApplyToDerivedTypes="True">
+            <Style TargetType="views:StatefulContentView" ApplyToDerivedTypes="True" CanCascade="True">
                 <Setter Property="VisualStateManager.VisualStateGroups">
                     <VisualStateGroupList>
                         <VisualStateGroup x:Name="CommonStates">
@@ -329,7 +329,7 @@
                 </Setter>
             </Style>
 
-            <Style TargetType="c:ButtonView" ApplyToDerivedTypes="True">
+            <Style TargetType="c:ButtonView" ApplyToDerivedTypes="True" CanCascade="True">
                 <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
                 <Setter Property="StrokeShape" Value="{RoundRectangle CornerRadius=20}"/>
                 <Setter Property="t:CascadingStyle.Resources">
@@ -360,7 +360,7 @@
                 </Setter>
             </Style>
 
-            <Style TargetType="c:ButtonView" Class="TreeViewExpandButton" >
+            <Style TargetType="c:ButtonView" Class="TreeViewExpandButton"  CanCascade="True">
                 <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
                 <Setter Property="t:DynamicTint.BackgroundColorOpacity" Value="0" />
                 <Setter Property="VisualStateManager.VisualStateGroups">
@@ -382,7 +382,7 @@
                 </Setter>
             </Style>
 
-            <Style TargetType="View" Class="PrimaryContainer" ApplyToDerivedTypes="True">
+            <Style TargetType="View" Class="PrimaryContainer" ApplyToDerivedTypes="True" CanCascade="True">
                 <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource PrimaryContainer}, Dark={StaticResource PrimaryContainerDark}}" />
                 <Setter Property="t:CascadingStyle.Resources">
                     <ResourceDictionary>
@@ -393,7 +393,7 @@
                 </Setter>
             </Style>
 
-            <Style TargetType="View" Class="SecondaryContainer" ApplyToDerivedTypes="True">
+            <Style TargetType="View" Class="SecondaryContainer" ApplyToDerivedTypes="True" CanCascade="True">
                 <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource SecondaryContainer}, Dark={StaticResource SecondaryContainerDark}}" />
                 <Setter Property="t:CascadingStyle.Resources">
                     <ResourceDictionary>
@@ -404,7 +404,7 @@
                 </Setter>
             </Style>
 
-            <Style TargetType="View" Class="TertiaryContainer" ApplyToDerivedTypes="True">
+            <Style TargetType="View" Class="TertiaryContainer" ApplyToDerivedTypes="True" CanCascade="True">
                 <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource TertiaryContainer}, Dark={StaticResource TertiaryContainerDark}}" />
                 <Setter Property="t:CascadingStyle.Resources">
                     <ResourceDictionary>
@@ -415,7 +415,7 @@
                 </Setter>
             </Style>
 
-            <Style TargetType="View" Class="ErrorContainer" ApplyToDerivedTypes="True">
+            <Style TargetType="View" Class="ErrorContainer" ApplyToDerivedTypes="True" CanCascade="True">
                 <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource ErrorContainer}, Dark={StaticResource ErrorContainerDark}}" />
                 <Setter Property="t:CascadingStyle.Resources">
                     <ResourceDictionary>

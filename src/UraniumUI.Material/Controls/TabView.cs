@@ -433,7 +433,10 @@ public enum TabViewCachingStrategy
 [ContentProperty(nameof(Content))]
 public class TabItem : UraniumBindableObject
 {
-    public string Title { get; set; }
+    public string Title { get => (string)GetValue(TitleProperty); set => SetValue(TitleProperty, value); }
+
+    public static readonly BindableProperty TitleProperty = BindableProperty.Create(nameof(Title), typeof(string), typeof(TabItem));
+
     public object Data { get; set; }
     public DataTemplate ContentTemplate { get; set; }
     public DataTemplate HeaderTemplate { get; set; }

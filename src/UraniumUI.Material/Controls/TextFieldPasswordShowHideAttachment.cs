@@ -1,4 +1,5 @@
-﻿using UraniumUI.Extensions;
+﻿using Microsoft.Maui.Controls.Shapes;
+using UraniumUI.Extensions;
 using UraniumUI.Pages;
 using UraniumUI.Resources;
 using UraniumUI.Views;
@@ -10,17 +11,12 @@ public class TextFieldPasswordShowHideAttachment : StatefulContentView
 {
     public TextField TextField { get; protected set; }
 
-    protected Path iconPath = new Path
-    {
-        Fill = ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.DarkGray).WithAlpha(.5f),
-    };
-
     public TextFieldPasswordShowHideAttachment()
     {
         VerticalOptions = LayoutOptions.Center;
-        this.Content = iconPath;
-        this.Padding = 10;
-        this.PressedCommand = new Command(SwitchPassword);
+        Padding = new Thickness(5, 0);
+        Margin = new Thickness(0, 0, 5, 0);
+        TappedCommand = new Command(SwitchPassword);
     }
 
     protected override void OnParentSet()
@@ -50,11 +46,21 @@ public class TextFieldPasswordShowHideAttachment : StatefulContentView
     {
         if (TextField is null)
         {
-            iconPath.Data = null;
+            Content = null;
 
             return;
         }
 
-        iconPath.Data = TextField.IsPassword ? UraniumShapes.Eye : UraniumShapes.EyeSlash;
+        Content = TextField.IsPassword ? GetPathFromData(UraniumShapes.Eye) : GetPathFromData(UraniumShapes.EyeSlash);
+    }
+
+    private Path GetPathFromData(Geometry data)
+    {
+        return new Path
+        {
+            Fill = ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.DarkGray).WithAlpha(.5f),
+            VerticalOptions = LayoutOptions.Center,
+            Data = data,
+        };
     }
 }

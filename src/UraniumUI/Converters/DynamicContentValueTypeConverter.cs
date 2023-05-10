@@ -14,14 +14,19 @@ public class DynamicContentValueTypeConverter : TypeConverter
     {
         if (value is string s)
         {
+            if (bool.TryParse(s, out bool boolean))
+            {
+                return boolean;
+            }
+
             if (int.TryParse(s, out int number))
             {
                 return number;
             }
 
-            if (double.TryParse(s, out double number2))
+            if (double.TryParse(s, out double doubleNumber))
             {
-                return number2;
+                return doubleNumber;
             }
 
             return s;

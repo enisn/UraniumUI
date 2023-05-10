@@ -1,15 +1,25 @@
-﻿namespace UraniumUI.Views;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
+using UraniumUI.Converters;
+
+namespace UraniumUI.Views;
 public class DynamicContentView : ContentView
 {
     public static readonly BindableProperty ValueProperty = BindableProperty.Create("Value", typeof(object), typeof(object), propertyChanged: (bo,ov,nv)=>(bo as DynamicContentView).OnValueChanged());
 
+    [TypeConverter(typeof(DynamicContentValueTypeConverter))]
     public object Value
     {
         get => GetValue(ValueProperty);
         set => SetValue(ValueProperty, value);
     }
 
-    public List<ValueCondition> Conditions { get; set; } = new();
+    public ObservableCollection<ValueCondition> Conditions { get; set; } = new();
+
+    public DynamicContentView()
+    {
+        Conditions.CollectionChanged += (o, e) => OnValueChanged();
+    }
 
     protected virtual void OnValueChanged()
     {
@@ -34,12 +44,16 @@ public class DynamicContentView : ContentView
 [ContentProperty(nameof(ContentTemplate))]
 public class ValueCondition : BindableObject
 {
+    [TypeConverter(typeof(DynamicContentValueTypeConverter))]
     public object Equal { get; set; }
 
+    [TypeConverter(typeof(DynamicContentValueTypeConverter))]
     public object GreaterThan { get; set; }
 
-    public object LesserThan { get; set; }
+    [TypeConverter(typeof(DynamicContentValueTypeConverter))]
+    public object LessThan { get; set; }
 
+    [TypeConverter(typeof(DynamicContentValueTypeConverter))]
     public object Not { get; set; }
 
     public DataTemplate ContentTemplate { get; set; }
@@ -58,7 +72,7 @@ public class ValueCondition : BindableObject
             return true;
         }
 
-        if (LesserThan != null && value is IComparable comparable2 && comparable2.CompareTo(LesserThan) < 0)
+        if (LessThan != null && value is IComparable comparable2 && comparable2.CompareTo(LessThan) < 0)
         {
             return true;
         }

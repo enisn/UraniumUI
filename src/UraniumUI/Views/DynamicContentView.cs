@@ -5,7 +5,7 @@ using UraniumUI.Converters;
 namespace UraniumUI.Views;
 public class DynamicContentView : ContentView
 {
-    public static readonly BindableProperty ValueProperty = BindableProperty.Create("Value", typeof(object), typeof(object), propertyChanged: (bo,ov,nv)=>(bo as DynamicContentView).OnValueChanged());
+    public static readonly BindableProperty ValueProperty = BindableProperty.Create("Value", typeof(object), typeof(object), propertyChanged: (bo, ov, nv) => (bo as DynamicContentView).OnValueChanged());
 
     [TypeConverter(typeof(DynamicContentValueTypeConverter))]
     public object Value
@@ -23,7 +23,7 @@ public class DynamicContentView : ContentView
 
     protected virtual void OnValueChanged()
     {
-        if (Conditions ==  null || !Conditions.Any())
+        if (Conditions == null || !Conditions.Any())
         {
             Content = null;
             return;
@@ -33,7 +33,11 @@ public class DynamicContentView : ContentView
         {
             if (condition.HasMet(Value))
             {
-                Content = condition.GetContent();
+                var newContent = condition.GetContent();
+                if (Content != newContent)
+                {
+                    Content = newContent;
+                }
 
                 break;
             }

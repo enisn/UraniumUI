@@ -50,22 +50,22 @@ public partial class TextField : InputField
         EntryView.SetBinding(Entry.CursorPositionProperty, new Binding(nameof(CursorPosition), source: this));
         EntryView.SetBinding(Entry.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
         EntryView.SetBinding(Entry.IsReadOnlyProperty, new Binding(nameof(IsReadOnly), source: this));
-
-#if WINDOWS
-		EntryView.HandlerChanged += (s, e) =>
-		{
-			var textBox = EntryView.Handler.PlatformView as Microsoft.UI.Xaml.Controls.TextBox;
-
-			textBox.FocusVisualPrimaryThickness = new Microsoft.UI.Xaml.Thickness(0);
-			textBox.FocusVisualSecondaryThickness = new Microsoft.UI.Xaml.Thickness(0);
-			textBox.SelectionHighlightColor = new Microsoft.UI.Xaml.Media.SolidColorBrush(Windows.UI.Color.FromArgb(0, 0, 0, 0));
-			textBox.BorderThickness = new Microsoft.UI.Xaml.Thickness(0);
-		};
-#endif
     }
 
     protected override void OnHandlerChanged()
     {
+#if WINDOWS
+        if (EntryView.Handler.PlatformView is Microsoft.UI.Xaml.Controls.TextBox textBox)
+        {
+            textBox.FocusVisualPrimaryThickness = new Microsoft.UI.Xaml.Thickness(0);
+            textBox.FocusVisualSecondaryThickness = new Microsoft.UI.Xaml.Thickness(0);
+            textBox.SelectionHighlightColor = new Microsoft.UI.Xaml.Media.SolidColorBrush(Windows.UI.Color.FromArgb(0, 0, 0, 0));
+            textBox.BorderThickness = new Microsoft.UI.Xaml.Thickness(0);
+
+            textBox.Style = null;
+        }
+#endif
+
         EntryView.TextChanged += EntryView_TextChanged;
 
         if (Handler is null)

@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows.Input;
 using UraniumUI.Views;
 
 namespace UraniumUI.Material.Controls;
@@ -10,7 +11,23 @@ public class ButtonView : Border, IStatefulView
 	{
         Padding = 10;
 	}
+
+    public event EventHandler<EventArgs> Pressed;
+    public event EventHandler<EventArgs> LongPressed;
+    public event EventHandler<EventArgs> Hovered;
+    public event EventHandler<EventArgs> HoverExited;
+    public event EventHandler<EventArgs> Tapped;
     
+    internal void InvokePressed() => Pressed?.Invoke(this, EventArgs.Empty);
+
+    internal void InvokeLongPressed() => LongPressed?.Invoke(this, EventArgs.Empty);
+
+    internal void InvokeHovered() => Hovered?.Invoke(this, EventArgs.Empty);
+
+    internal void InvokeHoverExited() => HoverExited?.Invoke(this, EventArgs.Empty);
+
+    internal void InvokeTapped() => Tapped?.Invoke(this, EventArgs.Empty);
+
     public ICommand PressedCommand { get => (ICommand)GetValue(PressedCommandProperty); set => SetValue(PressedCommandProperty, value); }
 
     public static BindableProperty PressedCommandProperty = BindableProperty.Create(nameof(PressedCommand), typeof(ICommand), typeof(StatefulContentView));

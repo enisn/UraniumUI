@@ -61,6 +61,32 @@ TextFields support clearing the text by setting the `AllowClear` property to `tr
 | --- | --- |
 | ![MAUI Material Input](images/textfield-allowclear-dark-android.gif) | ![MAUI Material Input](images/textfield-allowclear-light-android.gif) |
 
+## Attachments
+Attachments are additional controls that can be placed inside the control. They are placed on the end of the control (right-side on LTR). You can add attachments by using `Attachments` property. It is a collection of `View` objects.
+
+```xml
+<material:TextField Title="Message">
+    <material:TextField.Attachments>
+        <Button Text="Submit" />
+    </material:TextField.Attachments>
+</material:TextField>
+```
+
+![maui-uraniumui-textfield-attachments](images/textfield-attachments-button.png)
+
+### Password Show/Hide
+You can use pre-defined `TextFieldPasswordShowHideAttachment` to create a password show/hide button. It is a button that toggles the `IsPassword` property of the control.
+
+```xml
+<material:TextField Title="Password" IsPassword="True">
+    <material:TextField.Attachments>
+        <material:TextFieldPasswordShowHideAttachment />
+    </material:TextField.Attachments>
+</material:TextField>
+```
+
+![maui-uraniumui-textfield-attachments](images/textfield-attachments-passwordshowhide.gif)
+
 ## Validation
 
 Validation logic is exactly same with [InputKit Validations](https://enisn-projects.io/docs/en/inputkit/latest/components/controls/FormView#validations).

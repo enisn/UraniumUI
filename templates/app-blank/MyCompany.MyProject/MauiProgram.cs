@@ -24,6 +24,9 @@ public static class MauiProgram
 #endif
 			.UseUraniumUI()
 			.UseUraniumUIMaterial()
+#if Blurs
+			.UseUraniumUIBlurs()
+#endif
 			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

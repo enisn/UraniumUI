@@ -61,16 +61,10 @@
 		<!--#endif-->
 		<!--#if (Mopups)-->
 		<PackageReference Include="UraniumUI.Dialogs.Mopups" Version="2.5.0-pre.1" />
+		<!--#endif-->		
+		<!--#if (Blurs)-->
+		<PackageReference Include="UraniumUI.Blurs" Version="2.5.0-pre.1" />
 		<!--#endif-->
-	</ItemGroup>
-
-	<ItemGroup>
-	  <MauiXaml Update="Resources\Styles\MaterialColorOverride.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Resources\Styles\MaterialStyleOverride.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
 	</ItemGroup>
 
 </Project>

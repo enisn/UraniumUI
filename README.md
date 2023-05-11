@@ -64,10 +64,11 @@ This project is licensed under the Apache License License - see the [LICENSE](LI
 
 | Special thanks to project supporters 🎉 | - |
 | --- | :---: |
-| [gpproton](https://github.com/gpproton) | ☕/m |
 | [tjlangenkamp](https://github.com/tjlangenkamp) | ☕️☕️☕️☕️☕️ |
 | [Hottemax](https://github.com/Hottemax) | ☕️☕️☕️ |
+| [C00lzer0](https://github.com/C00lzer0) | ☕️☕️☕️|
 | _Anonymous_ | ☕️☕️☕️ |
+| [gpproton](https://github.com/gpproton) | ☕ |
 | [kmaclagan-pcl](https://www.buymeacoffee.com/enisn) | ☕️ |
 | [@Geramy](https://github.com/Geramy) | ☕️ |
 | [Malko_Josue](https://twitter.com/Malko_Josue) | ☕ |

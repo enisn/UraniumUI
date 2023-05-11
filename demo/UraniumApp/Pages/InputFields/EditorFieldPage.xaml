@@ -6,18 +6,21 @@
              xmlns:root="clr-namespace:UraniumApp"
              x:Class="UraniumApp.Pages.InputFields.EditorFieldPage"
              Title="TextField">
-    <StackLayout Padding="30" Orientation="{OnIdiom Vertical, Desktop=Horizontal}" Spacing="10">
+    <Grid StyleClass="InputFieldDemoGrid">
 
         <material:EditorField
             x:Name="ref"
+            Grid.Row="0"
+            Grid.Column="{OnIdiom 0, Desktop=1}"
             Title="Name"
             Icon="{FontImageSource Glyph={x:Static uranium:MaterialTwoTone.Person_2}, FontFamily=MaterialTwoTone}"
-            MinimumWidthRequest="400"/>
+            />
 
         <root:PropertyEditorView
-            VerticalOptions="FillAndExpand"
+            Grid.Column="0"
+            Grid.Row="{OnIdiom 1, Desktop=0}"
             Hierarchical="True"
             HierarchyLimitType="{x:Type material:InputField}"
             Value="{Binding ., Source={x:Reference ref}}" />
-    </StackLayout>
+    </Grid>
 </ContentPage>

@@ -1,9 +1,6 @@
 ﻿#if ANDROID
-
-using Android.Text.Method;
 using Android.Views;
 using Microsoft.Maui.Platform;
-using Microsoft.Maui.Controls;
 
 namespace UraniumUI.Material.Handlers;
 public partial class ButtonViewHandler
@@ -34,6 +31,7 @@ public partial class ButtonViewHandler
             VisualStateManager.GoToState(StatefulView, VisualStateManager.CommonStates.PointerOver);
 #endif
             ExecuteCommandIfCan(StatefulView.HoverCommand);
+            StatefulView.InvokeHovered();
             return;
         }
 
@@ -41,6 +39,7 @@ public partial class ButtonViewHandler
         {
             VisualStateManager.GoToState(StatefulView, VisualStateManager.CommonStates.Normal);
             ExecuteCommandIfCan(StatefulView.HoverExitCommand);
+            StatefulView.InvokeHoverExited();
         }
     }
 
@@ -50,16 +49,20 @@ public partial class ButtonViewHandler
         {
             VisualStateManager.GoToState(StatefulView, "Pressed");
             ExecuteCommandIfCan(StatefulView.PressedCommand);
+            StatefulView.InvokePressed();
         }
         else if (e.Event.Action == MotionEventActions.Up || e.Event.Action == MotionEventActions.Cancel)
         {
             VisualStateManager.GoToState(StatefulView, VisualStateManager.CommonStates.Normal);
             ExecuteCommandIfCan(StatefulView.TappedCommand);
+            StatefulView.InvokeTapped();
         }
     }
+
     private void PlatformView_LongClick(object sender, Android.Views.View.LongClickEventArgs e)
     {
         ExecuteCommandIfCan(StatefulView.LongPressCommand);
+        StatefulView.InvokeLongPressed();
     }
 }
 #endif

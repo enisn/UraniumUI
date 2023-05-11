@@ -59,6 +59,7 @@ public class StatefulContentViewHandler : ContentViewHandler
             GoToState(StatefulView, CommonStates.PointerOver);
 #endif
             ExecuteCommandIfCan(StatefulView.HoverCommand);
+            StatefulView.InvokeHovered();
             return;
         }
 
@@ -66,6 +67,7 @@ public class StatefulContentViewHandler : ContentViewHandler
         {
             GoToState(StatefulView, CommonStates.Normal);
             ExecuteCommandIfCan(StatefulView.HoverExitCommand);
+            StatefulView.InvokeHoverExited();
         }
     }
 
@@ -75,6 +77,7 @@ public class StatefulContentViewHandler : ContentViewHandler
         {
             GoToState(StatefulView, "Pressed");
             ExecuteCommandIfCan(StatefulView.PressedCommand);
+            StatefulView.InvokePressed();
             e.Handled = false;
         }
         else if (e.Event.Action == MotionEventActions.Up || e.Event.Action == MotionEventActions.Cancel)
@@ -88,11 +91,13 @@ public class StatefulContentViewHandler : ContentViewHandler
     {
         GoToState(StatefulView, CommonStates.Normal);
         ExecuteCommandIfCan(StatefulView.TappedCommand);
+        StatefulView.InvokeTapped();
     }
 
     private void PlatformView_LongClick(object sender, Android.Views.View.LongClickEventArgs e)
     {
         ExecuteCommandIfCan(StatefulView.LongPressCommand);
+        StatefulView.InvokeLongPressed();
     }
 #endif
 
@@ -126,6 +131,7 @@ public class StatefulContentViewHandler : ContentViewHandler
     {
         GoToState(StatefulView, CommonStates.Normal);
         ExecuteCommandIfCan(StatefulView.HoverExitCommand);
+        StatefulView.InvokeHoverExited();
     }
 
     private void PlatformView_PointerEntered(object sender, PointerRoutedEventArgs e)
@@ -136,6 +142,7 @@ public class StatefulContentViewHandler : ContentViewHandler
         GoToState(StatefulView, CommonStates.PointerOver);
 #endif
         ExecuteCommandIfCan(StatefulView.HoverCommand);
+        StatefulView.InvokeHovered();
     }
 
     long lastPressed;
@@ -146,6 +153,7 @@ public class StatefulContentViewHandler : ContentViewHandler
 
         GoToState(StatefulView, "Pressed");
         ExecuteCommandIfCan(StatefulView.PressedCommand);
+        StatefulView.InvokePressed();
     }
 
     private void PlatformView_PointerReleased(object sender, PointerRoutedEventArgs e)
@@ -158,6 +166,7 @@ public class StatefulContentViewHandler : ContentViewHandler
 
         GoToState(StatefulView, CommonStates.Normal);
         ExecuteCommandIfCan(StatefulView.TappedCommand);
+        StatefulView.InvokeTapped();
     }
 #endif
 
@@ -173,6 +182,7 @@ public class StatefulContentViewHandler : ContentViewHandler
     private void OnLongPress(UILongPressGestureRecognizer recognizer)
     {
         ExecuteCommandIfCan(StatefulView.LongPressCommand);
+        StatefulView.InvokeLongPressed();
     }
 
     private void OnHover(UIHoverGestureRecognizer recognizer)
@@ -187,12 +197,14 @@ public class StatefulContentViewHandler : ContentViewHandler
                 GoToState(StatefulView, CommonStates.PointerOver);
 #endif
                 ExecuteCommandIfCan(StatefulView.HoverCommand);
+                StatefulView.InvokeHovered();
                 break;
             case UIGestureRecognizerState.Ended:
             case UIGestureRecognizerState.Cancelled:
             case UIGestureRecognizerState.Failed:
                 GoToState(StatefulView, CommonStates.Normal);
                 ExecuteCommandIfCan(StatefulView.HoverExitCommand);
+                StatefulView.InvokeHoverExited();
                 break;
         }
     }
@@ -204,11 +216,13 @@ public class StatefulContentViewHandler : ContentViewHandler
             case UIGestureRecognizerState.Began:
                 GoToState(StatefulView, "Pressed");
                 ExecuteCommandIfCan(StatefulView.PressedCommand);
+                StatefulView.InvokePressed();
 
                 break;
             case UIGestureRecognizerState.Ended:
                 GoToState(StatefulView, CommonStates.Normal);
                 ExecuteCommandIfCan(StatefulView.TappedCommand);
+                StatefulView.InvokeTapped();
 
                 //// TODO: Fix working of native gesture recognizers of MAUI
                 foreach (var item in StatefulView.GestureRecognizers)

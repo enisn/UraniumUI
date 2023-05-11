@@ -1,4 +1,5 @@
 ﻿//using CommunityToolkit.Maui;
+using CommunityToolkit.Maui;
 using DotNurse.Injector;
 using Mopups.Hosting;
 using UraniumApp.Pages;
@@ -13,7 +14,7 @@ public static class MauiProgram
         var builder = MauiApp.CreateBuilder();
         builder
             .UseMauiApp<App>()
-            //.UseMauiCommunityToolkit()
+            .UseMauiCommunityToolkit()
             .UseUraniumUI()
             .UseUraniumUIMaterial()
             .ConfigureMopups()

@@ -62,6 +62,17 @@ public partial class TextField : InputField
 			textBox.BorderThickness = new Microsoft.UI.Xaml.Thickness(0);
 		};
 #endif
+
+#if ANDROID
+        EntryView.Focused += (s, e) =>
+        {
+            (this as IView).IsFocused = e.IsFocused;
+        };
+        EntryView.Unfocused += (s, e) =>
+        {
+            (this as IView).IsFocused = e.IsFocused;
+        };
+#endif
     }
 
     protected override void OnHandlerChanged()

@@ -8,8 +8,11 @@
              xmlns:plain="clr-namespace:Plainer.Maui.Controls;assembly=Plainer.Maui"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="UraniumApp.MainPage">
+    <uranium:UraniumContentPage.BindingContext>
+        <local:MainViewModel />
+    </uranium:UraniumContentPage.BindingContext>
 
-    <VerticalStackLayout Spacing="25">
+<VerticalStackLayout Spacing="25">
 
         <StackLayout StyleClass="PrimaryContainer" Padding="20" HeightRequest="150">
             <Label Text="Hello, Uranium! ☢️" FontSize="Large" />
@@ -24,6 +27,19 @@
             </Image>
             <Label Grid.Column="1" Text="Use the side navigation drawer to navigate to the other pages." VerticalOptions="Center"/>
         </Grid>
+
+        <Label Text="{Binding Status}" />
+
+        <material:TextField Title="ServerURL" ReturnCommand="{Binding CompletedCommand}">
+            <material:TextField.Behaviors>
+                <toolkit:EventToCommandBehavior Command="{Binding FocusedCommand}" EventName="Focused" />
+                <toolkit:EventToCommandBehavior Command="{Binding UnFocusedCommand}" EventName="Unfocused" />
+                <!--<toolkit:EventToCommandBehavior Command="{Binding CompletedCommand}" EventName="Completed" />-->
+            </material:TextField.Behaviors>
+        </material:TextField>
+
+        <material:TextField Title="Yet Another" />
+
 
     </VerticalStackLayout>
 </uranium:UraniumContentPage>

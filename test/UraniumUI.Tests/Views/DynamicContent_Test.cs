@@ -119,4 +119,25 @@ public class DynamicContent_Test
         var label2 = control.Content.ShouldBeOfType<Label>();
         label2.Text.ShouldBe("second");
     }
+
+
+    [Fact]
+    public void RemoveMatchinCondirion_ShouldRenderEmpty()
+    {
+        var control = AnimationReadyHandler.Prepare(new DynamicContentView());
+
+        var testValue = "1";
+
+        control.Conditions.Add(new ValueCondition
+        {
+            Equal = testValue,
+            ContentTemplate = new DataTemplate(() => new Label { Text = testValue })
+        });
+
+        control.Value = testValue;
+        var label = control.Content.ShouldBeOfType<Label>();
+
+        control.Conditions.Clear();
+        control.Content.ShouldBeNull();
+    }
 }

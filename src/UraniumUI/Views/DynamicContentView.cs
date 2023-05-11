@@ -66,7 +66,7 @@ public class ValueCondition : BindableObject
 
     public bool HasMet(object value)
     {
-        if (Equal != null && value.Equals(Equal))
+        if (Equal != null && value != null && value.Equals(Equal))
         {
             return true;
         }

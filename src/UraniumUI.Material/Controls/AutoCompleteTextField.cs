@@ -62,6 +62,8 @@ public class AutoCompleteTextField : InputField
 
     protected override void OnHandlerChanged()
     {
+        base.OnHandlerChanged();
+
         AutoCompleteView.TextChanged += AutoCompleteView_TextChanged;
 
         if (Handler is null)

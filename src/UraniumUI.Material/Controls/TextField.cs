@@ -62,34 +62,17 @@ public partial class TextField : InputField
 			textBox.BorderThickness = new Microsoft.UI.Xaml.Thickness(0);
 		};
 #endif
-
-#if ANDROID
-        EntryView.Focused += (s, e) =>
-        {
-            (this as IView).IsFocused = e.IsFocused;
-        };
-        EntryView.Unfocused += (s, e) =>
-        {
-            (this as IView).IsFocused = e.IsFocused;
-        };
-#endif
     }
 
     protected override void OnHandlerChanged()
     {
+        base.OnHandlerChanged();
+
         EntryView.TextChanged += EntryView_TextChanged;
 
         if (Handler is null)
         {
             EntryView.TextChanged -= EntryView_TextChanged;
-        }
-    }
-
-    public void ClearValue()
-    {
-        if (IsEnabled)
-        {
-            Text = string.Empty;
         }
     }
 
@@ -111,6 +94,13 @@ public partial class TextField : InputField
         }
 
         TextChanged?.Invoke(this, e);
+    }
+    public void ClearValue()
+    {
+        if (IsEnabled)
+        {
+            Text = string.Empty;
+        }
     }
 
     protected override object GetValueForValidator()

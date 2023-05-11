@@ -49,18 +49,18 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="UraniumUI.Material" Version="2.4.4" />
+		<PackageReference Include="UraniumUI.Material" Version="2.4.5" />
 		<!--#if (FontAwesome)-->
-		<PackageReference Include="UraniumUI.Icons.FontAwesome" Version="2.4.4" />
+		<PackageReference Include="UraniumUI.Icons.FontAwesome" Version="2.4.5" />
 		<!--#endif-->
 		<!--#if (MaterialIcons)-->
-		<PackageReference Include="UraniumUI.Icons.MaterialIcons" Version="2.4.4" />
+		<PackageReference Include="UraniumUI.Icons.MaterialIcons" Version="2.4.5" />
 		<!--#endif-->
 		<!--#if (CommunityToolkit)-->
-		<PackageReference Include="UraniumUI.Dialogs.CommunityToolkit" Version="2.4.4" />
+		<PackageReference Include="UraniumUI.Dialogs.CommunityToolkit" Version="2.4.5" />
 		<!--#endif-->
 		<!--#if (Mopups)-->
-		<PackageReference Include="UraniumUI.Dialogs.Mopups" Version="2.4.4" />
+		<PackageReference Include="UraniumUI.Dialogs.Mopups" Version="2.4.5" />
 		<!--#endif-->
 	</ItemGroup>
 

@@ -20,6 +20,25 @@ public partial class EditorField : InputField
         EditorView.SetBinding(EditorView.CursorPositionProperty, new Binding(nameof(CursorPosition), source: this));
     }
 
+    protected override void OnHandlerChanged()
+    {
+
+#if WINDOWS
+        if (EditorView.Handler.PlatformView is Microsoft.UI.Xaml.Controls.TextBox textBox)
+        {
+            textBox.AcceptsReturn = true;
+            textBox.TextWrapping = Microsoft.UI.Xaml.TextWrapping.Wrap;
+
+            textBox.FocusVisualPrimaryThickness = new Microsoft.UI.Xaml.Thickness(0);
+            textBox.FocusVisualSecondaryThickness = new Microsoft.UI.Xaml.Thickness(0);
+            textBox.SelectionHighlightColor = new Microsoft.UI.Xaml.Media.SolidColorBrush(Windows.UI.Color.FromArgb(0, 0, 0, 0));
+            textBox.BorderThickness = new Microsoft.UI.Xaml.Thickness(0);
+
+            textBox.Style = null;
+        }
+#endif
+    }
+
     public override bool HasValue { get => !string.IsNullOrEmpty(EditorView?.Text); }
 
     protected override object GetValueForValidator()

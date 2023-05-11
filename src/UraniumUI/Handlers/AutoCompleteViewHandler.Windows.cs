@@ -12,15 +12,18 @@ public partial class AutoCompleteViewHandler : ViewHandler<IAutoCompleteView, Au
 
         textBox.ItemsSource = VirtualView.ItemsSource;
         textBox.Text = VirtualView.Text;
-        
-        var transparentBrush = new Microsoft.UI.Xaml.Media.SolidColorBrush(Windows.UI.Color.FromArgb(0, 0, 0, 0));
-        textBox.BorderThickness = new Microsoft.UI.Xaml.Thickness(0);
-        textBox.Background = transparentBrush;
+
         return textBox;
     }
 
     protected override void ConnectHandler(AutoSuggestBox platformView)
     {
+        PlatformView.BorderThickness = new Microsoft.UI.Xaml.Thickness(0);
+        PlatformView.FocusVisualPrimaryThickness = new Microsoft.UI.Xaml.Thickness(0);
+        PlatformView.FocusVisualSecondaryThickness = new Microsoft.UI.Xaml.Thickness(0);
+
+        PlatformView.TextBoxStyle = null;
+
         PlatformView.TextChanged += PlatformView_TextChanged;
         PlatformView.KeyDown += TextBox_KeyDown;
         PlatformView.SuggestionChosen += PlatformView_SuggestionChosen;

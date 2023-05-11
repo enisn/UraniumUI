@@ -66,19 +66,13 @@ public partial class TextField : InputField
 
     protected override void OnHandlerChanged()
     {
+        base.OnHandlerChanged();
+
         EntryView.TextChanged += EntryView_TextChanged;
 
         if (Handler is null)
         {
             EntryView.TextChanged -= EntryView_TextChanged;
-        }
-    }
-
-    public void ClearValue()
-    {
-        if (IsEnabled)
-        {
-            Text = string.Empty;
         }
     }
 
@@ -100,6 +94,13 @@ public partial class TextField : InputField
         }
 
         TextChanged?.Invoke(this, e);
+    }
+    public void ClearValue()
+    {
+        if (IsEnabled)
+        {
+            Text = string.Empty;
+        }
     }
 
     protected override object GetValueForValidator()

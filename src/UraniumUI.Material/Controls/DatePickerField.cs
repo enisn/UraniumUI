@@ -126,7 +126,13 @@ public class DatePickerField : InputField
 		}
 	}
 
-	public DateTime? Date { get => (DateTime?)GetValue(DateProperty); set => SetValue(DateProperty, value); }
+    public override void ResetValidation()
+    {
+		Date = null;
+        base.ResetValidation();
+    }
+
+    public DateTime? Date { get => (DateTime?)GetValue(DateProperty); set => SetValue(DateProperty, value); }
 
 	public static readonly BindableProperty DateProperty = BindableProperty.Create(
 		nameof(Date), typeof(DateTime?), typeof(DatePickerField), defaultValue: null, defaultBindingMode: BindingMode.TwoWay,

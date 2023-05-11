@@ -145,6 +145,12 @@ public class PickerField : InputField
         }
     }
 
+    public override void ResetValidation()
+    {
+        PickerView.SelectedItem = null;
+        base.ResetValidation();
+    }
+
     public IList<string> Items => PickerView.Items;
 
     public object SelectedItem { get => GetValue(SelectedItemProperty); set => SetValue(SelectedItemProperty, value); }

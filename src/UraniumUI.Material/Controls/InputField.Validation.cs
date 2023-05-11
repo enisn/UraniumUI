@@ -95,8 +95,15 @@ public partial class InputField : IValidatable
         return new object();
     }
 
-    public void DisplayValidation()
+    public virtual void DisplayValidation()
     {
         CheckAndShowValidations();
+    }
+
+    public virtual void ResetValidation()
+    {
+        endIconsContainer.Remove(iconValidation.Value);
+        this.Remove(labelValidation.Value);
+        lastValidationState = true;
     }
 }

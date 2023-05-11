@@ -124,7 +124,13 @@ public class TimePickerField : InputField
 		}
 	}
 
-	public TimeSpan? Time { get => (TimeSpan?)GetValue(TimeProperty); set => SetValue(TimeProperty, value); }
+    public override void ResetValidation()
+    {
+		Time = null;
+        base.ResetValidation();
+    }
+
+    public TimeSpan? Time { get => (TimeSpan?)GetValue(TimeProperty); set => SetValue(TimeProperty, value); }
 
 	public static readonly BindableProperty TimeProperty =
 		BindableProperty.Create(nameof(Time), typeof(TimeSpan?), typeof(TimePickerField), null, defaultBindingMode: BindingMode.TwoWay,

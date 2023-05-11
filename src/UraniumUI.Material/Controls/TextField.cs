@@ -130,4 +130,10 @@ public partial class TextField : InputField
             endIconsContainer.Remove(iconClear);
         }
     }
+
+    public override void ResetValidation()
+    {
+        EntryView.Text = string.Empty;
+        base.ResetValidation();
+    }
 }

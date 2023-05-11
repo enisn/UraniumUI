@@ -73,8 +73,8 @@
                             input:FormView.IsSubmitButton="True"
                             StyleClass="FilledButton"/>
 
-                    <Button Text="Clear"
-                            Command="{Binding ClearCommand}"
+                    <Button Text="Reset"
+                            input:FormView.IsResetButton="True"
                             StyleClass="OutlinedButton"/>
 
                     <Button Text="Fill" 

@@ -45,4 +45,10 @@ public partial class EditorField : InputField
     {
         return EditorView.Text;
     }
+
+    public override void ResetValidation()
+    {
+        EditorView.Text = string.Empty;
+        base.ResetValidation();
+    }
 }

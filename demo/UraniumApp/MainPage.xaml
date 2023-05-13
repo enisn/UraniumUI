@@ -19,10 +19,10 @@
         <Grid ColumnDefinitions="Auto,*">
             <Image Rotation="-45" Margin="15">
                 <Image.Source>
-                    <FontImageSource Size="35" FontFamily="MaterialRegular" Glyph="{x:Static uranium:MaterialRegular.Pan_tool_alt}" Color="{AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}" />
+                    <FontImageSource Size="55" FontFamily="MaterialRegular" Glyph="{x:Static uranium:MaterialRegular.Pan_tool_alt}" Color="{AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}" />
                 </Image.Source>
             </Image>
-            <Label Grid.Column="1" Text="Use the side navigation drawer to navigate to the other pages." VerticalOptions="Center"/>
+            <Label FontSize="Large" Grid.Column="1" Text="Use the side navigation drawer to navigate to the other pages." VerticalOptions="Center"/>
         </Grid>
 
     </VerticalStackLayout>

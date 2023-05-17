@@ -46,6 +46,6 @@ public class MyClass
             </uranium:CodeView.SourceCode>
         </uranium:CodeView>
 
-        
+        <WebView Source="ace.html" Grid.Column="1"/>
     </Grid>
 </uranium:UraniumContentPage>

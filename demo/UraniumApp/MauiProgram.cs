@@ -4,6 +4,7 @@ using DotNurse.Injector;
 using Mopups.Hosting;
 using UraniumApp.Pages;
 using UraniumUI;
+using UraniumUI.Dialogs;
 
 namespace UraniumApp;
 
@@ -26,6 +27,11 @@ public static class MauiProgram
                 fonts.AddMaterialIconFonts();
             });
 
+        builder.Services.Configure<DialogOptions>(options =>
+        {
+            options.Effects.Add(() => new UraniumUI.Blurs.BlurEffect());
+        });
+
         var thisAssembly = typeof(MauiProgram).Assembly;
 
         builder.Services.AddServicesFrom(
@@ -34,8 +40,8 @@ public static class MauiProgram
             options => options.Assembly = thisAssembly)
         .AddServicesByAttributes(assembly: thisAssembly);
 
-        //builder.Services.AddCommunityToolkitDialogs();
-        builder.Services.AddMopupsDialogs();
+        builder.Services.AddCommunityToolkitDialogs();
+        //builder.Services.AddMopupsDialogs();
 
         return builder.Build();
     }

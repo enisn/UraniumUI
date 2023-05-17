@@ -1,4 +1,5 @@
-﻿namespace UraniumUI.Dialogs.CommunityToolkit;
+﻿
+namespace UraniumUI.Dialogs.CommunityToolkit;
 
 public class CommunityToolkitDialogService : IDialogService
 {

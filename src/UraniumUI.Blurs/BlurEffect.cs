@@ -14,6 +14,11 @@ public class BlurEffect : RoutingEffect
     public float AccentOpacity { get => accentOpacity; set { accentOpacity = value; UpdateEffectCommand?.Execute(this); } }
 
     internal ICommand UpdateEffectCommand { get; set; }
+
+    public BlurEffect()
+    {
+        mode = Application.Current?.RequestedTheme == AppTheme.Dark ? BlurMode.Dark : BlurMode.Light;
+    }
 }
 
 public enum BlurMode

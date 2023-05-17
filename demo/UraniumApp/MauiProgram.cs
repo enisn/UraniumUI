@@ -35,8 +35,8 @@ public static class MauiProgram
             options => options.Assembly = thisAssembly)
         .AddServicesByAttributes(assembly: thisAssembly);
 
-        builder.Services.AddCommunityToolkitDialogs();
-        //builder.Services.AddMopupsDialogs();
+        //builder.Services.AddCommunityToolkitDialogs();
+        builder.Services.AddMopupsDialogs();
 
         return builder.Build();
     }

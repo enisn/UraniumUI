@@ -31,6 +31,11 @@ public class BlurPlatformEffect : PlatformEffect
         {
             panel.Background = GetBrush();
         }
+
+        if (Control is Microsoft.UI.Xaml.Controls.Border border)
+        {
+            border.Background = GetBrush();
+        }
     }
 
     protected AcrylicBrush GetBrush()

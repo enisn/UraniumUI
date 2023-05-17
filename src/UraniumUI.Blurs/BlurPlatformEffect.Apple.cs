@@ -21,6 +21,8 @@ public class BlurPlatformEffect : PlatformEffect
             _effect.UpdateEffectCommand = new Command(UpdateEffect);
         }
 
+        Control.BackgroundColor = UIColor.Clear;
+
         blurView = new UIVisualEffectView();
         blurView.TranslatesAutoresizingMaskIntoConstraints = false;
 

@@ -4,6 +4,7 @@ using DotNurse.Injector;
 using Mopups.Hosting;
 using UraniumApp.Pages;
 using UraniumUI;
+using UraniumUI.Dialogs;
 
 namespace UraniumApp;
 

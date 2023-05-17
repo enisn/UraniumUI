@@ -19,6 +19,7 @@ public static class MauiProgram
             .UseUraniumUI()
             .UseUraniumUIMaterial()
             .UseUraniumUIBlurs()
+            .UseUraniumUIWebComponents()
             .ConfigureMopups()
             .ConfigureFonts(fonts =>
             {

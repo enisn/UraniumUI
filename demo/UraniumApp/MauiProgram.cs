@@ -27,11 +27,6 @@ public static class MauiProgram
                 fonts.AddMaterialIconFonts();
             });
 
-        builder.Services.Configure<DialogOptions>(options =>
-        {
-            options.Effects.Add(() => new UraniumUI.Blurs.BlurEffect());
-        });
-
         var thisAssembly = typeof(MauiProgram).Assembly;
 
         builder.Services.AddServicesFrom(

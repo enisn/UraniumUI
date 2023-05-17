@@ -1,6 +1,7 @@
 ﻿using InputKit.Shared.Controls;
 
 namespace UraniumUI.Dialogs;
+
 public class DefaultDialogService : IDialogService
 {
     public Task<bool> ConfirmAsync(string title, string message, string okText = "OK", string cancelText = "Cancel")

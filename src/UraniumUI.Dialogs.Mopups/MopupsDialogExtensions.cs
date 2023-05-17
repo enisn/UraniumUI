@@ -1,4 +1,5 @@
 ﻿using InputKit.Shared.Controls;
+using Microsoft.Extensions.Options;
 using Mopups.Pages;
 using Mopups.Services;
 using Plainer.Maui.Controls;
@@ -262,7 +263,9 @@ public static class MopupsDialogExtensions
 
     private static View GetFrame(double width, View content)
     {
-        return new Frame
+        var options = UraniumServiceProvider.Current.GetRequiredService<IOptions<DialogOptions>>()?.Value;
+
+        var frame = new Frame
         {
             CornerRadius = 20,
             HorizontalOptions = LayoutOptions.Center,
@@ -271,6 +274,13 @@ public static class MopupsDialogExtensions
             WidthRequest = DeviceInfo.Idiom == DeviceIdiom.Desktop ? 400 : width * .8,
             Content = content
         };
+
+        foreach (var effectFactory in options.Effects)
+        {
+            frame.Effects.Add(effectFactory());
+        }
+
+        return frame;
     }
 
     private static View GetHeader(string title)

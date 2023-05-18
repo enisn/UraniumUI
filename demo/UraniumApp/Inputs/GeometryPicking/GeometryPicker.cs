@@ -20,6 +20,8 @@ public class GeometryPicker : IGeometryPicker
 
         var collectionView = new CollectionView
         {
+            VerticalOptions = LayoutOptions.Start,
+            HeightRequest = 240,
             ItemsSource = 
                 GetGeometriesFromType(typeof(UraniumShapes.Paths))
                     .Union(GetGeometriesFromType(typeof(PredefinedShapes.Paths))),

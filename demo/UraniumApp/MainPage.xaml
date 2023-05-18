@@ -27,9 +27,20 @@
 
     <Grid ColumnDefinitions="*,*" RowDefinitions="*">
 
-        <uranium:CodeView Language="csharp">
-            <uranium:CodeView.SourceCode>
-                <![CDATA[
+        <Frame>
+            <toolkit:Expander>
+                <toolkit:Expander.Header>
+                    <uranium:StatefulContentView>
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="Source Code" Margin="20" />
+                            <Image Grid.Column="1" Margin="20" Source="{FontImageSource Glyph={x:Static m:MaterialRegular.Arrow_drop_down}, FontFamily=MaterialRegular, Color={AppThemeBinding Light={StaticResource OnBackground},Dark={StaticResource OnBackgroundDark}}}"/>
+                        </Grid>
+                    </uranium:StatefulContentView>
+                </toolkit:Expander.Header>
+                <Grid RowDefinitions="*">
+                    <uranium:CodeView Language="csharp" BackgroundColor="Transparent" MinimumHeightRequest="200">
+                        <uranium:CodeView.SourceCode>
+                            <![CDATA[
 public class MyClass
 {
     public DateTime MyProperty { get; set; }
@@ -43,9 +54,68 @@ public class MyClass
     }
 }
                 ]]>
-            </uranium:CodeView.SourceCode>
-        </uranium:CodeView>
+                        </uranium:CodeView.SourceCode>
+                    </uranium:CodeView>
+                </Grid>
+            </toolkit:Expander>
+        </Frame>
 
-        <WebView Source="ace.html" Grid.Column="1"/>
+        <VerticalStackLayout Grid.Column="1">
+
+            <uranium:ExpanderView Margin="20">
+                <uranium:ExpanderView.Effects>
+                    <uranium:BlurEffect />
+                </uranium:ExpanderView.Effects>
+                <uranium:ExpanderView.Header>
+                    <Label Text="Click to Expand" />
+                </uranium:ExpanderView.Header>
+
+                <uranium:CodeView Language="csharp" BackgroundColor="Transparent" MinimumHeightRequest="200">
+                    <uranium:CodeView.SourceCode>
+                        <![CDATA[
+public class MyClass
+{
+    public DateTime MyProperty { get; set; }
+    public MyClass()
+    {
+    }
+                
+    public void MyMethod(string parameter, string name)
+    {
+        Console.WriteLine(parameter);
+    }
+}
+                ]]>
+                    </uranium:CodeView.SourceCode>
+                </uranium:CodeView>
+            </uranium:ExpanderView>
+
+
+            <uranium:ExpanderView Margin="20">
+                <uranium:ExpanderView.Header>
+                    <Label Text="Click to Expand" />
+                </uranium:ExpanderView.Header>
+
+                <uranium:CodeView Language="csharp" BackgroundColor="Transparent" MinimumHeightRequest="200">
+                    <uranium:CodeView.SourceCode>
+                        <![CDATA[
+public class MyClass
+{
+    public DateTime MyProperty { get; set; }
+    public MyClass()
+    {
+    }
+                
+    public void MyMethod(string parameter, string name)
+    {
+        Console.WriteLine(parameter);
+    }
+}
+                ]]>
+                    </uranium:CodeView.SourceCode>
+                </uranium:CodeView>
+            </uranium:ExpanderView>
+        </VerticalStackLayout>
+
     </Grid>
 </uranium:UraniumContentPage>

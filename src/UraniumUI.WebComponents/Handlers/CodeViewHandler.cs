@@ -6,6 +6,9 @@ using Microsoft.UI.Xaml.Controls;
 #endif
 using System.Xml;
 using UraniumUI.WebComponents.Controls;
+#if IOS || MACCATALYST
+using WebKit;
+#endif
 
 namespace UraniumUI.WebComponents.Handlers;
 public class CodeViewHandler : WebViewHandler
@@ -50,6 +53,24 @@ public class CodeViewHandler : WebViewHandler
     {
         return base.CreatePlatformView();
     }
+    protected override void ConnectHandler(WKWebView platformView)
+    {
+        base.ConnectHandler(platformView);
+
+        if (this.VirtualView is WebView webView)
+        {
+            webView.Navigated += async (s, e) =>
+            {
+                isInitialized = true;
+                await ExecuteScriptAsync($"setLanguage('{CodeView.Language}')");
+                await ExecuteScriptAsync($"setContent('{XmlEscape(CodeView.SourceCode)}')");
+                await ExecuteScriptAsync($"highlight()");
+            };
+        };
+        
+    }
+    protected bool isInitialized;
+
 #elif WINDOWS
     protected override WebView2 CreatePlatformView()
     {
@@ -61,7 +82,6 @@ public class CodeViewHandler : WebViewHandler
         return platformView;
     }
 
-    protected bool isInitialized;
     private async void PlatformView_NavigationCompleted(WebView2 sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs args)
     {
         if (args.IsSuccess)

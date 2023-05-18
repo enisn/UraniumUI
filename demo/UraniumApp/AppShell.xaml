@@ -32,7 +32,11 @@
     <FlyoutItem Title="MainPage" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Home}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
         <ShellContent  ContentTemplate="{DataTemplate local:MainPage}"/>
     </FlyoutItem>
-    
+
+    <FlyoutItem Title="Buttons" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.All_inbox}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
+        <ShellContent Title="Buttons" ContentTemplate="{DataTemplate pages:ButtonsPage}"/>
+    </FlyoutItem>
+
     <FlyoutItem Title="Chips" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Do_not_disturb_on_total_silence}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
         <ShellContent  ContentTemplate="{DataTemplate pages:ChipsPage}"/>
     </FlyoutItem>
@@ -92,9 +96,6 @@
         <ShellContent Title="Dialogs" ContentTemplate="{DataTemplate pages:DialogsPage}"/>
     </FlyoutItem>
 
-    <FlyoutItem Title="Buttons" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.All_inbox}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
-        <ShellContent Title="Buttons" ContentTemplate="{DataTemplate pages:ButtonsPage}"/>
-    </FlyoutItem>
 
     <FlyoutItem Title="CheckBox" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Check_box}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
         <ShellContent Title="CheckBox" ContentTemplate="{DataTemplate pages:CheckBoxesPage}"/>

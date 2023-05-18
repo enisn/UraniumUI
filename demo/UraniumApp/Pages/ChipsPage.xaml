@@ -4,23 +4,62 @@
              xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
              xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+             xmlns:vm="clr-namespace:UraniumApp.ViewModels"
+             xmlns:local="clr-namespace:UraniumApp"
              x:Class="UraniumApp.Pages.ChipsPage"
+             x:DataType="vm:ChipsViewModel"
              Title="ChipsPage">
-    <VerticalStackLayout Padding="20">
 
 
-        <ScrollView Orientation="Horizontal">
-            <HorizontalStackLayout VerticalOptions="Center" x:Name="chipsHolder">
-                <material:Chip Text="Chip A" DestroyClicked="Chip_Destroyed" />
-                <material:Chip Text="Chip B" DestroyClicked="Chip_Destroyed" />
-                <material:Chip Text="Chip C" DestroyClicked="Chip_Destroyed" />
-                <material:Chip Text="Chip D" DestroyClicked="Chip_Destroyed" />
-                <material:Chip Text="Chip E" DestroyClicked="Chip_Destroyed" />
-                <material:Chip Text="Chip F" DestroyClicked="Chip_Destroyed" />
-                <material:Chip Text="Chip G" DestroyClicked="Chip_Destroyed" />
+    <ScrollView>
+        <VerticalStackLayout Padding="20">
+            <Label Text="Chip" FontSize="Title" />
+            <Label Text="UraniumUI.Material.Controls" FontSize="Micro" Opacity=".6" />
+
+            <HorizontalStackLayout Padding="0,20">
+                <Button Text="Documentation" StyleClass="OutlinedButton" IsEnabled="False" ImageSource="{FontImageSource Glyph={x:Static m:MaterialRegular.Insert_drive_file}, FontFamily=MaterialRegular, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
+                <Button Text="Source" StyleClass="OutlinedButton" IsEnabled="False" ImageSource="{FontImageSource Glyph={x:Static m:MaterialRegular.Code}, FontFamily=MaterialRegular, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
             </HorizontalStackLayout>
-        </ScrollView>
 
-        <material:Chip Text="Chip A" DestroyClicked="Chip_Destroyed" BackgroundColor="Red" TextColor="White" />
-    </VerticalStackLayout>
+            <Label Text="Chips are simple components with close option. They're also used in MultipleTextField as selection items." />
+
+            <VerticalStackLayout Spacing="12" Margin="{OnIdiom 10, Phone=0}">
+                <local:ViewShowcaseView>
+
+                    <material:Chip
+                        VerticalOptions="Start"
+                        BackgroundColor="{Binding BackgroundColor}"
+                        Text="{Binding Text}"
+                        TextColor="{Binding TextColor}"/>
+
+                <local:ViewShowcaseView.SidePanel>
+                    <VerticalStackLayout Padding="20" Spacing="12">
+                        <material:TextField Title="Text" Text="{Binding Text}" />
+
+                        <uranium:StatefulContentView BackgroundColor="{Binding BackgroundColor}" TappedCommand="{Binding PickBackgroundColorCommand}">
+                            <Label Text="BackgroundColor" Margin="10"/>
+                        </uranium:StatefulContentView>
+                        
+                        <uranium:StatefulContentView BackgroundColor="{Binding TextColor}" TappedCommand="{Binding PickTextColorCommand}">
+                            <Label Text="TextColor" Margin="10"/>
+                        </uranium:StatefulContentView>
+                        
+                    </VerticalStackLayout>
+                </local:ViewShowcaseView.SidePanel>
+
+                <local:ViewShowcaseView.BottomView>
+                    <uranium:ExpanderView>
+                        <uranium:ExpanderView.Header>
+                            <Label Margin="10" Text="Source Code" />
+                        </uranium:ExpanderView.Header>
+                        <Grid>
+                            <uranium:CodeView Language="xml" SourceCode="{Binding XamlSourceCode}" HeightRequest="80"/>
+                            <local:CopyButton TextToCopy="{Binding XamlSourceCode}" />
+                        </Grid>
+                    </uranium:ExpanderView>
+                </local:ViewShowcaseView.BottomView>
+            </local:ViewShowcaseView>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

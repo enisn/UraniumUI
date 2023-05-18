@@ -20,7 +20,7 @@
 
     <ScrollView>
         <VerticalStackLayout Padding="20" >
-            <Label Text="Buttons" FontSize="Title" />
+            <Label Text="Button" FontSize="Title" />
             <Label Text="UraniumUI.Material.Controls" FontSize="Micro" Opacity=".6" />
 
             <HorizontalStackLayout>

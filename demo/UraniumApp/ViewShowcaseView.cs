@@ -22,10 +22,20 @@ public class ViewShowcaseView : Border
             CornerRadius = 8
         };
 
-        rootGrid.ColumnDefinitions = (ColumnDefinitionCollection)new ColumnDefinitionCollectionTypeConverter().ConvertFrom("7*,3*");
+        if (DeviceInfo.Idiom == DeviceIdiom.Phone)
+        {
+            rootGrid.RowDefinitions = (RowDefinitionCollection)new RowDefinitionCollectionTypeConverter().ConvertFrom("Auto,Auto");
+            rootGrid.Add(contentView);
+            rootGrid.Add(sidePanelContentView, row: 1);
+        }
+        else
+        {
+            rootGrid.ColumnDefinitions = (ColumnDefinitionCollection)new ColumnDefinitionCollectionTypeConverter().ConvertFrom("7*,3*");
 
-        rootGrid.Add(contentView);
-        rootGrid.Add(sidePanelContentView, column: 1);
+            rootGrid.Add(contentView);
+            rootGrid.Add(sidePanelContentView, column: 1);
+        }
+
         Content = new VerticalStackLayout
         {
             Children =

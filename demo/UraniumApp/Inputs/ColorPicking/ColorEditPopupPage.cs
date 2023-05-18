@@ -20,10 +20,12 @@ public class ColorEditPopupPage : PopupPage
             },
         };
 
+        var boxSize = DeviceInfo.Idiom == DeviceIdiom.Phone ? 100 : 200;
+
         var colorPreviewBox = new BoxView
         {
-            HeightRequest = 200,
-            WidthRequest = 200,
+            HeightRequest = boxSize,
+            WidthRequest = boxSize,
             HorizontalOptions = LayoutOptions.Center,
             StyleClass = new[] { "Elevation1" }
         };
@@ -85,7 +87,7 @@ public class ColorEditPopupPage : PopupPage
 
         rootStackLayout.HorizontalOptions = LayoutOptions.Center;
         rootStackLayout.VerticalOptions = LayoutOptions.Center;
-        rootStackLayout.WidthRequest = 560;
+        rootStackLayout.WidthRequest = DeviceInfo.Idiom == DeviceIdiom.Phone ? App.Current.MainPage.Width : 560;
         rootStackLayout.SetAppThemeColor(
             StackLayout.BackgroundColorProperty,
             ColorResource.GetColor("Surface"),

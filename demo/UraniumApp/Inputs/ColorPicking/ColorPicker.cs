@@ -1,7 +1,7 @@
 ﻿using DotNurse.Injector.Attributes;
 using Mopups.Services;
 
-namespace UraniumApp.ColorPicking;
+namespace UraniumApp.Inputs.ColorPicking;
 
 [RegisterAs(typeof(IColorPicker))]
 class ColorPicker : IColorPicker

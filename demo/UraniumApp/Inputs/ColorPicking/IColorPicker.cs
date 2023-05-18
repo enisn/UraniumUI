@@ -1,4 +1,4 @@
-﻿namespace UraniumApp.ColorPicking;
+﻿namespace UraniumApp.Inputs.ColorPicking;
 
 public interface IColorPicker
 {

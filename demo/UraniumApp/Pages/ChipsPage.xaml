@@ -10,7 +10,6 @@
              x:DataType="vm:ChipsViewModel"
              Title="ChipsPage">
 
-
     <ScrollView>
         <VerticalStackLayout Padding="20">
             <Label Text="Chip" FontSize="Title" />

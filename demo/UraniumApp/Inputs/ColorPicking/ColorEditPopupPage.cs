@@ -2,7 +2,7 @@
 using Mopups.Services;
 using UraniumUI.Resources;
 
-namespace UraniumApp.ColorPicking;
+namespace UraniumApp.Inputs.ColorPicking;
 
 public class ColorEditPopupPage : PopupPage
 {

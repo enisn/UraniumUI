@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UraniumApp.ColorPicking;
+namespace UraniumApp.Inputs.ColorPicking;
 
 public class ColorEditor : Plainer.Maui.Controls.EntryView
 {

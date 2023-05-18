@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Xml.Linq;
-using UraniumApp.ColorPicking;
+using UraniumApp.Inputs.ColorPicking;
 using UraniumUI.Resources;
 
 namespace UraniumApp.ViewModels;
@@ -46,6 +46,12 @@ public class ChipsViewModel : ReactiveObject
         SourceCode = XDocument.Parse($"""<ContentPage xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material">  <material:Chip Text="{Text}"/> </ContentPage>""");
 
         this.WhenAnyValue(x => x.Text)
+            .Subscribe(_ => GenerateSourceCode());
+        
+        this.WhenAnyValue(x => x.BackgroundColor)
+            .Subscribe(_ => GenerateSourceCode());
+
+        this.WhenAnyValue(x => x.TextColor)
             .Subscribe(_ => GenerateSourceCode());
     }
 

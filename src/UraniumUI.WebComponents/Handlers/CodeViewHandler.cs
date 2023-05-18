@@ -1,6 +1,4 @@
-﻿using Microsoft.Maui.Controls;
-using Microsoft.Maui.Handlers;
-using Microsoft.Maui.Platform;
+﻿using Microsoft.Maui.Handlers;
 #if WINDOWS
 using Microsoft.UI.Xaml.Controls;
 #endif
@@ -47,74 +45,78 @@ public class CodeViewHandler : WebViewHandler
             await codeViewHandler.ExecuteScriptAsync($"setTheme('{codeView.Theme}')");
         }
     }
-
-#if IOS || MACCATALYST
-    protected override WebKit.WKWebView CreatePlatformView()
+#if WINDOWS
+    protected override void ConnectHandler(WebView2 platformView)
     {
-        return base.CreatePlatformView();
+        base.ConnectHandler(platformView);
+        RegisterEvents();
     }
+    protected override void DisconnectHandler(WebView2 platformView)
+    {
+        base.DisconnectHandler(platformView);
+        UnregisterEvents();
+    }
+#elif ANDROID
+    protected override void ConnectHandler(Android.Webkit.WebView platformView)
+    {
+        base.ConnectHandler(platformView);
+        RegisterEvents();
+    }
+    protected override void DisconnectHandler(Android.Webkit.WebView platformView)
+    {
+        base.DisconnectHandler(platformView);
+        UnregisterEvents();
+    }
+#elif IOS || MACCATALYST
     protected override void ConnectHandler(WKWebView platformView)
     {
         base.ConnectHandler(platformView);
+        RegisterEvents();
+    }
+    protected override void DisconnectHandler(WKWebView platformView)
+    {
+        base.DisconnectHandler(platformView);
+        UnregisterEvents();
+    }
+#endif
 
+    protected virtual void RegisterEvents()
+    {
         if (this.VirtualView is WebView webView)
         {
-            webView.Navigated += async (s, e) =>
-            {
-                isInitialized = true;
-                await ExecuteScriptAsync($"setLanguage('{CodeView.Language}')");
-                await ExecuteScriptAsync($"setContent('{XmlEscape(CodeView.SourceCode)}')");
-                await ExecuteScriptAsync($"highlight()");
-            };
+            webView.Navigated += WebView_Navigated;
         };
-        
-    }
-    protected bool isInitialized;
-
-#elif WINDOWS
-    protected override WebView2 CreatePlatformView()
-    {
-        var platformView = base.CreatePlatformView();
-        platformView.DefaultBackgroundColor = Colors.Transparent.ToWindowsColor();
-        
-        platformView.NavigationCompleted += PlatformView_NavigationCompleted;
-
-        return platformView;
     }
 
-    private async void PlatformView_NavigationCompleted(WebView2 sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs args)
+    protected virtual void UnregisterEvents()
     {
-        if (args.IsSuccess)
+        if (this.VirtualView is WebView webView)
         {
-            isInitialized = true;
-            await ExecuteScriptAsync($"setLanguage('{CodeView.Language}')");
-            await ExecuteScriptAsync($"setContent('{XmlEscape(CodeView.SourceCode)}')");
-            await ExecuteScriptAsync($"highlight()");
-        }
+            webView.Navigated -= WebView_Navigated;
+        };
     }
 
-#elif ANDROID
-    protected override Android.Webkit.WebView CreatePlatformView()
+    private async void WebView_Navigated(object sender, WebNavigatedEventArgs e)
     {
-        return base.CreatePlatformView();
+        isInitialized = true;
+        await ExecuteScriptAsync($"setLanguage('{CodeView.Language}')");
+        await ExecuteScriptAsync($"setContent('{XmlEscape(CodeView.SourceCode)}')");
+        await ExecuteScriptAsync($"highlight()");
     }
-#endif
 
+    protected bool isInitialized;
     protected async Task ExecuteScriptAsync(string javascriptCode)
     {
-#if WINDOWS
         if (isInitialized)
         {
+#if WINDOWS
             await PlatformView.ExecuteScriptAsync(javascriptCode);
+#elif ANDROID
+            PlatformView.EvaluateJavascript(javascriptCode, null);
+#elif IOS || MACCATALYST
+            await PlatformView.EvaluateJavaScriptAsync(javascriptCode);
+#endif
         }
-#endif
-#if ANDROID
-        PlatformView.EvaluateJavascript(javascriptCode, null);
-#endif
-
-#if IOS || MACCATALYST
-        await PlatformView.EvaluateJavaScriptAsync(javascriptCode);
-#endif
     }
 
     public static string XmlEscape(string unescaped)

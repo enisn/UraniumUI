@@ -17,8 +17,9 @@
             <Label Text="UraniumUI.Material.Controls" FontSize="Micro" Opacity=".6" />
 
             <HorizontalStackLayout Padding="0,20">
-                <Button Text="Documentation" StyleClass="OutlinedButton" ImageSource="{FontImageSource Glyph={x:Static m:MaterialRegular.Insert_drive_file}, FontFamily=MaterialRegular, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
+                <Button Text="Documentation" Command="{Binding OpenDocumentationCommand}" StyleClass="OutlinedButton" ImageSource="{FontImageSource Glyph={x:Static m:MaterialRegular.Insert_drive_file}, FontFamily=MaterialRegular, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
                 <Button Text="Source" StyleClass="OutlinedButton" IsEnabled="False" ImageSource="{FontImageSource Glyph={x:Static m:MaterialRegular.Code}, FontFamily=MaterialRegular, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
+                <Button Text="Reset" Clicked="Button_Clicked" StyleClass="OutlinedButton" ImageSource="{FontImageSource Glyph={x:Static m:MaterialRegular.Refresh}, FontFamily=MaterialRegular, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
             </HorizontalStackLayout>
 
             <Label Text="CheckBox is a control that allows the user to choose a boolean value. UraniumU UI uses InputKit CheckBox instead of MAUI one. It is because InputKit CheckBox is more customizable and already has a Material theme." />

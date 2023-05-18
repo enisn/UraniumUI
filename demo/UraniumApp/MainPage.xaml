@@ -25,7 +25,7 @@
         </Grid>
     </VerticalStackLayout>-->
 
-    <Grid>
+    <Grid ColumnDefinitions="*,*" RowDefinitions="*">
 
         <uranium:CodeView Language="csharp">
             <uranium:CodeView.SourceCode>

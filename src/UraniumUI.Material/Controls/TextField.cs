@@ -1,4 +1,7 @@
-﻿using Plainer.Maui.Controls;
+﻿#if WINDOWS
+using Microsoft.Maui.Platform;
+#endif
+using Plainer.Maui.Controls;
 using UraniumUI.Pages;
 using UraniumUI.Resources;
 using UraniumUI.Views;
@@ -57,9 +60,7 @@ public partial class TextField : InputField
 #if WINDOWS
         if (EntryView.Handler.PlatformView is Microsoft.UI.Xaml.Controls.TextBox textBox)
         {
-            textBox.FocusVisualPrimaryThickness = new Microsoft.UI.Xaml.Thickness(0);
-            textBox.FocusVisualSecondaryThickness = new Microsoft.UI.Xaml.Thickness(0);
-            textBox.SelectionHighlightColor = new Microsoft.UI.Xaml.Media.SolidColorBrush(Windows.UI.Color.FromArgb(0, 0, 0, 0));
+            textBox.SelectionHighlightColor = new Microsoft.UI.Xaml.Media.SolidColorBrush(ColorResource.GetColor("Primary", "PrimaryDark", Colors.Purple).ToWindowsColor());
             textBox.BorderThickness = new Microsoft.UI.Xaml.Thickness(0);
 
             textBox.Style = null;

@@ -44,10 +44,7 @@ public partial class InputField : Grid
         BackgroundColor = Colors.Transparent,
     };
 
-    protected Grid rootGrid = new Grid
-    {
-        HeightRequest = 45 // TODO: Remove this after .NET 8. This is a workaround for https://github.com/dotnet/maui/issues/14645
-    };
+    protected Grid rootGrid = new Grid();
 
     protected Lazy<Image> imageIcon = new Lazy<Image>(() =>
     {

@@ -59,7 +59,7 @@
                                                 <material:TextField Title="Text" Text="{Binding Text}" />
 
                                                 <material:CheckBox IsChecked="{Binding IsChecked}" Text="IsChecked"/>
-                                                
+
                                                 <material:CheckBox IsChecked="{Binding IsDisabled}" Text="IsDisabled"/>
 
                                                 <VerticalStackLayout>
@@ -82,7 +82,7 @@
                                                         <Label Text="SelectedIconGeometry" VerticalOptions="Center" />
                                                     </HorizontalStackLayout>
                                                 </uranium:StatefulContentView>
-                                                
+
                                                 <Button Command="{Binding Parent.RemoveRadioButtonItemCommand}" CommandParameter="{Binding .}" StyleClass="TextButton" Text="Remove" ImageSource="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Close}, Size=16}" />
 
                                             </VerticalStackLayout>
@@ -111,32 +111,76 @@
             <BoxView StyleClass="Divider" />
 
             <Border Margin="10" StyleClass="SurfaceContainer, Rounded" StrokeThickness="0">
-                <StackLayout MaximumWidthRequest="400" Margin="20">
-                    <material:RadioButtonGroupView>
-                        <material:RadioButton Text="Option 1" />
-                        <material:RadioButton Text="Option 2" />
-                        <material:RadioButton Text="Option 3 (Disabled)" IsDisabled="True" />
-                        <material:RadioButton Text="Option 4 (Disabled)" IsDisabled="True" IsChecked="True" />
-                    </material:RadioButtonGroupView>
+                <VerticalStackLayout>
 
-                    <BoxView StyleClass="Divider" />
+                    <VerticalStackLayout MaximumWidthRequest="400" Margin="20">
+                        <material:RadioButtonGroupView>
+                            <material:RadioButton Text="Option 1" />
+                            <material:RadioButton Text="Option 2" />
+                            <material:RadioButton Text="Option 3 (Disabled)" IsDisabled="True" />
+                            <material:RadioButton Text="Option 4 (Disabled)" IsDisabled="True" IsChecked="True" />
+                        </material:RadioButtonGroupView>
 
-                    <material:RadioButtonGroupView>
-                        <material:RadioButton Text="Option 1" LabelPosition="Before" />
-                        <material:RadioButton Text="Option 2" LabelPosition="Before" />
-                        <material:RadioButton Text="Option 3 (Disabled)" IsDisabled="True" LabelPosition="Before" />
-                        <material:RadioButton Text="Option 4 (Disabled)" IsDisabled="True" IsChecked="True" LabelPosition="Before" />
-                    </material:RadioButtonGroupView>
+                        <BoxView StyleClass="Divider" />
 
-                    <BoxView StyleClass="Divider" />
+                        <material:RadioButtonGroupView>
+                            <material:RadioButton Text="Option 1" LabelPosition="Before" />
+                            <material:RadioButton Text="Option 2" LabelPosition="Before" />
+                            <material:RadioButton Text="Option 3 (Disabled)" IsDisabled="True" LabelPosition="Before" />
+                            <material:RadioButton Text="Option 4 (Disabled)" IsDisabled="True" IsChecked="True" LabelPosition="Before" />
+                        </material:RadioButtonGroupView>
 
-                    <material:RadioButtonGroupView>
-                        <material:RadioButton Text="Check Radio Button 1" StyleClass="CheckRadioButton" IsChecked="True"/>
-                        <material:RadioButton Text="Check Radio Button 1" StyleClass="CheckRadioButton" />
-                    </material:RadioButtonGroupView>
-                </StackLayout>
+                        <BoxView StyleClass="Divider" />
+
+                        <material:RadioButtonGroupView>
+                            <material:RadioButton Text="Check Radio Button 1" StyleClass="CheckRadioButton" IsChecked="True"/>
+                            <material:RadioButton Text="Check Radio Button 1" StyleClass="CheckRadioButton" />
+                        </material:RadioButtonGroupView>
+                    </VerticalStackLayout>
+
+                    <uranium:ExpanderView>
+                        <uranium:ExpanderView.Header>
+                            <Label Margin="10" Text="Source Code (XAML)" />
+                        </uranium:ExpanderView.Header>
+                        <Grid>
+                            <uranium:CodeView Language="xml" SourceCode="{StaticResource SourceCode}" HeightRequest="240"/>
+                            <local:CopyButton TextToCopy="{StaticResource SourceCode}" />
+                        </Grid>
+                    </uranium:ExpanderView>
+                </VerticalStackLayout>
             </Border>
 
         </VerticalStackLayout>
     </ScrollView>
+
+    <ContentPage.Resources>
+        <x:String x:Key="SourceCode">
+            <![CDATA[
+<VerticalStackLayout>
+    <material:RadioButtonGroupView>
+      <material:RadioButton Text="Option 1" />
+      <material:RadioButton Text="Option 2" />
+      <material:RadioButton Text="Option 3 (Disabled)" IsDisabled="True" />
+      <material:RadioButton Text="Option 4 (Disabled)" IsDisabled="True" IsChecked="True" />
+    </material:RadioButtonGroupView>
+    
+    <BoxView StyleClass="Divider" />
+    
+    <material:RadioButtonGroupView>
+        <material:RadioButton Text="Option 1" LabelPosition="Before" />
+        <material:RadioButton Text="Option 2" LabelPosition="Before" />
+        <material:RadioButton Text="Option 3 (Disabled)" IsDisabled="True" LabelPosition="Before" />
+        <material:RadioButton Text="Option 4 (Disabled)" IsDisabled="True" IsChecked="True" LabelPosition="Before" />
+    </material:RadioButtonGroupView>
+    
+    <BoxView StyleClass="Divider" />
+    
+    <material:RadioButtonGroupView>
+        <material:RadioButton Text="Check Radio Button 1" StyleClass="CheckRadioButton" IsChecked="True"/>
+        <material:RadioButton Text="Check Radio Button 1" StyleClass="CheckRadioButton" />
+    </material:RadioButtonGroupView>
+</VerticalStackLayout>
+            ]]>
+        </x:String>
+    </ContentPage.Resources>
 </ContentPage>

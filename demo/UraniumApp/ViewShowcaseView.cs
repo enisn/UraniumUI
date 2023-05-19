@@ -7,15 +7,17 @@ namespace UraniumApp;
 public class ViewShowcaseView : Border
 {
     protected Grid rootGrid = new Grid();
-    protected ContentView contentView = new ContentView { HorizontalOptions = LayoutOptions.Start , Padding = 10 };
-    protected ContentView sidePanelContentView = new ContentView { BackgroundColor = Color.FromArgb("#25000000") };
-    protected ContentView bottomContentView = new ContentView { BackgroundColor = Color.FromArgb("#29000000") };
+    protected ContentView contentView = new ContentView { HorizontalOptions = LayoutOptions.Start, Padding = 10 };
+    protected ContentView sidePanelContentView = new ContentView();
+    protected ContentView bottomContentView = new ContentView();
     public ViewShowcaseView()
     {
         this.SetAppThemeColor(
             BackgroundColorProperty,
             ColorResource.GetColor("Surface", Colors.Gray),
             ColorResource.GetColor("SurfaceDark", Colors.DarkGray));
+
+        sidePanelContentView.SetAppThemeColor(ContentView.BackgroundProperty, Color.FromArgb("#25ffffff"), Color.FromArgb("#25000000"));
 
         StrokeShape = new RoundRectangle
         {

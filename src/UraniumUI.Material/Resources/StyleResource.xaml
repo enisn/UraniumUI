@@ -426,6 +426,14 @@
                 </Setter>
             </Style>
 
+            <Style TargetType="View" Class="SurfaceContainer" ApplyToDerivedTypes="True" CanCascade="True">
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Surface}, Dark={StaticResource SurfaceDark}}" />
+            </Style>
+
+            <Style TargetType="Border" Class="Rounded" ApplyToDerivedTypes="True" CanCascade="True">
+                <Setter Property="StrokeShape" Value="RoundRectangle 8" />
+            </Style>
+
         </ResourceDictionary>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

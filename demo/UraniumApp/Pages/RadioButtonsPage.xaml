@@ -2,33 +2,141 @@
 <ContentPage x:Class="UraniumApp.Pages.RadioButtonsPage"
              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
-             xmlns:local="clr-namespace:UraniumApp.Pages">
-    <ContentPage.Content>
-        <StackLayout MaximumWidthRequest="400" Margin="20">
+             xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+             xmlns:vm="clr-namespace:UraniumApp.ViewModels"
+             xmlns:local="clr-namespace:UraniumApp"
+             x:DataType="vm:RadioButtonsViewModel">
+    <ScrollView>
+        <VerticalStackLayout Padding="20">
+            <Label Text="CheckBox" FontSize="Title" />
+            <Label Text="UraniumUI.Material.Controls" FontSize="Micro" Opacity=".6" />
 
-            <material:RadioButtonGroupView>
-                <material:RadioButton Text="Option 1" />
-                <material:RadioButton Text="Option 2" />
-                <material:RadioButton Text="Option 3 (Disabled)" IsDisabled="True" />
-                <material:RadioButton Text="Option 4 (Disabled)" IsDisabled="True" IsChecked="True" />
-            </material:RadioButtonGroupView>
+            <HorizontalStackLayout Padding="0,20">
+                <Button Text="Documentation" StyleClass="OutlinedButton" Command="{x:Static uranium:Commands.OpenLinkCommand}" CommandParameter="https://enisn-projects.io/docs/en/uranium/latest/themes/material/RadioButton" ImageSource="{FontImageSource Glyph={x:Static m:MaterialRegular.Insert_drive_file}, FontFamily=MaterialRegular, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
+                <Button Text="Source" StyleClass="OutlinedButton" IsEnabled="False" ImageSource="{FontImageSource Glyph={x:Static m:MaterialRegular.Code}, FontFamily=MaterialRegular, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
+                <Button Text="Reset" Clicked="Reset_Clicked" StyleClass="OutlinedButton" ImageSource="{FontImageSource Glyph={x:Static m:MaterialRegular.Refresh}, FontFamily=MaterialRegular, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
+            </HorizontalStackLayout>
+
+            <VerticalStackLayout Spacing="12" Margin="{OnIdiom 10, Phone=0}" StyleClass="Elevation1">
+                <local:ViewShowcaseView>
+                    <material:RadioButtonGroupView 
+                        BindableLayout.ItemsSource="{Binding RadioButtonItems}"
+                        SelectedIndex="{Binding SelectedIndex}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="vm:SingleRadioButtonViewModel">
+                                <material:RadioButton
+                                    Text="{Binding Text}"
+                                    Color="{Binding Color}"
+                                    IsChecked="{Binding IsChecked}"
+                                    LabelPosition="{Binding LabelPosition}"
+                                    IsDisabled="{Binding IsDisabled}"
+                                    SelectedIconGeomerty="{Binding SelectedIconGeometry}"/>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </material:RadioButtonGroupView>
+
+                    <local:ViewShowcaseView.SidePanel>
+                        <VerticalStackLayout Padding="20" Spacing="20">
+
+                            <VerticalStackLayout>
+                                <Label Text="SelectedIndex" />
+                                <input:SelectionView ItemsSource="{Binding SelectedIndexList}" SelectedItem="{Binding SelectedIndex}" ColumnNumber="5"/>
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout Spacing="2" BindableLayout.ItemsSource="{Binding RadioButtonItems}">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate x:DataType="vm:SingleRadioButtonViewModel">
+                                        <uranium:ExpanderView>
+                                            <uranium:ExpanderView.Header>
+                                                <Label Margin="10" Text="{Binding Text}" VerticalOptions="Center" />
+                                            </uranium:ExpanderView.Header>
+
+                                            <VerticalStackLayout Spacing="20" Padding="20">
+
+                                                <material:TextField Title="Text" Text="{Binding Text}" />
+
+                                                <material:CheckBox IsChecked="{Binding IsChecked}" Text="IsChecked"/>
+                                                
+                                                <material:CheckBox IsChecked="{Binding IsDisabled}" Text="IsDisabled"/>
+
+                                                <VerticalStackLayout>
+                                                    <Label Text="LabelPosition"/>
+                                                    <input:SelectionView ItemsSource="{Binding LabelPositionList}" SelectedItem="{Binding LabelPosition}" ColumnNumber="2" />
+                                                </VerticalStackLayout>
+
+                                                <uranium:StatefulContentView TappedCommand="{Binding PickColorCommand}">
+                                                    <HorizontalStackLayout Spacing="8">
+                                                        <BoxView Color="{Binding Color}" WidthRequest="25" HeightRequest="25"/>
+                                                        <Label Text="Color" VerticalOptions="Center" />
+                                                    </HorizontalStackLayout>
+                                                </uranium:StatefulContentView>
+
+                                                <uranium:StatefulContentView TappedCommand="{Binding PickSelectedIconGeometryCommand}">
+                                                    <HorizontalStackLayout Spacing="8">
+                                                        <ContentView WidthRequest="25" HeightRequest="25">
+                                                            <Path Data="{Binding SelectedIconGeometry}" VerticalOptions="Center" HorizontalOptions="Center" Fill="{AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}"/>
+                                                        </ContentView>
+                                                        <Label Text="SelectedIconGeometry" VerticalOptions="Center" />
+                                                    </HorizontalStackLayout>
+                                                </uranium:StatefulContentView>
+                                                
+                                                <Button Command="{Binding Parent.RemoveRadioButtonItemCommand}" CommandParameter="{Binding .}" StyleClass="TextButton" Text="Remove" ImageSource="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Close}, Size=16}" />
+
+                                            </VerticalStackLayout>
+                                        </uranium:ExpanderView>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </VerticalStackLayout>
+
+                            <Button StyleClass="OutlinedButton" Text="New Option" Command="{Binding AddNewRadioButtonItemCommand}" />
+                        </VerticalStackLayout>
+                    </local:ViewShowcaseView.SidePanel>
+                    <local:ViewShowcaseView.BottomView>
+                        <uranium:ExpanderView>
+                            <uranium:ExpanderView.Header>
+                                <Label Margin="10" Text="Source Code (XAML)" />
+                            </uranium:ExpanderView.Header>
+                            <Grid>
+                                <uranium:CodeView Language="xml" SourceCode="{Binding XamlSourceCode}" HeightRequest="200"/>
+                                <local:CopyButton TextToCopy="{Binding XamlSourceCode}" />
+                            </Grid>
+                        </uranium:ExpanderView>
+                    </local:ViewShowcaseView.BottomView>
+                </local:ViewShowcaseView>
+            </VerticalStackLayout>
 
             <BoxView StyleClass="Divider" />
 
-            <material:RadioButtonGroupView>
-                <material:RadioButton Text="Option 1" LabelPosition="Before" />
-                <material:RadioButton Text="Option 2" LabelPosition="Before" />
-                <material:RadioButton Text="Option 3 (Disabled)" IsDisabled="True" LabelPosition="Before" />
-                <material:RadioButton Text="Option 4 (Disabled)" IsDisabled="True" IsChecked="True" LabelPosition="Before" />
-            </material:RadioButtonGroupView>
+            <Border Margin="10" StyleClass="SurfaceContainer, Rounded" StrokeThickness="0">
+                <StackLayout MaximumWidthRequest="400" Margin="20">
+                    <material:RadioButtonGroupView>
+                        <material:RadioButton Text="Option 1" />
+                        <material:RadioButton Text="Option 2" />
+                        <material:RadioButton Text="Option 3 (Disabled)" IsDisabled="True" />
+                        <material:RadioButton Text="Option 4 (Disabled)" IsDisabled="True" IsChecked="True" />
+                    </material:RadioButtonGroupView>
 
-            <BoxView StyleClass="Divider" />
+                    <BoxView StyleClass="Divider" />
 
-            <material:RadioButtonGroupView>
-                <material:RadioButton Text="Check Radio Button 1" StyleClass="CheckRadioButton" IsChecked="True"/>
-                <material:RadioButton Text="Check Radio Button 1" StyleClass="CheckRadioButton" />
-            </material:RadioButtonGroupView>
-        </StackLayout>
-    </ContentPage.Content>
+                    <material:RadioButtonGroupView>
+                        <material:RadioButton Text="Option 1" LabelPosition="Before" />
+                        <material:RadioButton Text="Option 2" LabelPosition="Before" />
+                        <material:RadioButton Text="Option 3 (Disabled)" IsDisabled="True" LabelPosition="Before" />
+                        <material:RadioButton Text="Option 4 (Disabled)" IsDisabled="True" IsChecked="True" LabelPosition="Before" />
+                    </material:RadioButtonGroupView>
+
+                    <BoxView StyleClass="Divider" />
+
+                    <material:RadioButtonGroupView>
+                        <material:RadioButton Text="Check Radio Button 1" StyleClass="CheckRadioButton" IsChecked="True"/>
+                        <material:RadioButton Text="Check Radio Button 1" StyleClass="CheckRadioButton" />
+                    </material:RadioButtonGroupView>
+                </StackLayout>
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

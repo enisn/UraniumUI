@@ -128,6 +128,8 @@
 
             </VerticalStackLayout>
 
+            <BoxView StyleClass="Divider" />
+
             <Border Margin="10" StyleClass="SurfaceContainer, Rounded" StrokeThickness="0">
                 <VerticalStackLayout>
                     <VerticalStackLayout Padding="20" MaximumWidthRequest="400" Spacing="15" HorizontalOptions="Center">

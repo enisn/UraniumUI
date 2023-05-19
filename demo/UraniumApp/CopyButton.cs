@@ -10,7 +10,7 @@ namespace UraniumApp
         {
             HorizontalOptions = LayoutOptions.End;
             VerticalOptions = LayoutOptions.End;
-            Margin = 10;
+            Margin = 20;
             var copyImageSource = new FontImageSource
             {
                 Glyph = MaterialRegular.Content_copy,

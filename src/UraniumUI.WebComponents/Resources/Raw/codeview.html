@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Code Preview</title>
+    <link id="theme" rel="stylesheet" href="highlightjs/styles/github-dark-dimmed.min.css">
+    <style>
+        body{
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+        pre{
+            margin: 0 !important;
+            padding: 0 !important;
+            display: inline-grid;
+            width: 100%;
+
+        }
+    </style>
+</head>
+<body class="hljs">
+    <pre>
+        <code class="language-xml" id="content"></code>
+    </pre>
+    <script src="highlightjs/highlight.min.js"></script>
+    <script>
+        function setContent(content) {
+            document.getElementById("content").innerHTML = content;
+        }
+
+        function setLanguage(lang) {
+            document.getElementById("content").className = "language-" + lang;
+        }
+
+        function setTheme(theme) {
+            document.getElementById("theme").href = "highlightjs/styles/" + theme + ".min.css";
+        }
+
+        function highlight() {
+            hljs.highlightAll();
+        }
+
+    </script>
+</body>
+</html>

@@ -29,6 +29,7 @@
 </VerticalStackLayout>
             ]]>
             </x:String>
+        <x:String x:Key="DocLink">https://enisn-projects.io/docs/en/uranium/latest/themes/material/CheckBox</x:String>
     </ContentPage.Resources>
     <ScrollView>
         <VerticalStackLayout Padding="20">
@@ -36,7 +37,7 @@
             <Label Text="UraniumUI.Material.Controls" FontSize="Micro" Opacity=".6" />
 
             <HorizontalStackLayout Padding="0,20">
-                <Button Text="Documentation" Command="{Binding OpenDocumentationCommand}" StyleClass="OutlinedButton" ImageSource="{FontImageSource Glyph={x:Static m:MaterialRegular.Insert_drive_file}, FontFamily=MaterialRegular, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
+                <Button Text="Documentation" Command="{x:Static uranium:Commands.OpenLinkCommand}" CommandParameter="{StaticResource DocLink}" StyleClass="OutlinedButton" ImageSource="{FontImageSource Glyph={x:Static m:MaterialRegular.Insert_drive_file}, FontFamily=MaterialRegular, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
                 <Button Text="Source" StyleClass="OutlinedButton" IsEnabled="False" ImageSource="{FontImageSource Glyph={x:Static m:MaterialRegular.Code}, FontFamily=MaterialRegular, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
                 <Button Text="Reset" Clicked="Button_Clicked" StyleClass="OutlinedButton" ImageSource="{FontImageSource Glyph={x:Static m:MaterialRegular.Refresh}, FontFamily=MaterialRegular, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
             </HorizontalStackLayout>
@@ -116,7 +117,7 @@
                     <local:ViewShowcaseView.BottomView>
                         <uranium:ExpanderView>
                             <uranium:ExpanderView.Header>
-                                <Label Margin="10" Text="Source Code (XAML)" />
+                                <Label Text="Source Code (XAML)" Padding="10"/>
                             </uranium:ExpanderView.Header>
                             <Grid>
                                 <uranium:CodeView Language="xml" SourceCode="{Binding XamlSourceCode}" HeightRequest="120"/>

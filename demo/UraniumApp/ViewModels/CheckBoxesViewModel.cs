@@ -61,7 +61,6 @@ public class CheckBoxesViewModel : ReactiveObject
         CheckType.Regular
     };
 
-    public ICommand OpenDocumentationCommand { get; }
     public ICommand PickColorCommand { get; }
     public ICommand PickBorderColorCommand { get; }
     public ICommand PickTextColorCommand { get; }
@@ -73,9 +72,6 @@ public class CheckBoxesViewModel : ReactiveObject
         ColorPicker = colorPicker;
 
         SourceCode = XDocument.Parse($"""<ContentPage xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material">  <material:CheckBox Text="{Text}"/> </ContentPage>""");
-
-        OpenDocumentationCommand = new Command(
-            async () => await Browser.Default.OpenAsync("https://enisn-projects.io/docs/en/uranium/latest/themes/material/CheckBox"));
 
         PickColorCommand = new Command(async () =>
             await ColorPicker.PickCollorForAsync(this, nameof(Color)));

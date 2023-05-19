@@ -97,7 +97,7 @@
                     <local:ViewShowcaseView.BottomView>
                         <uranium:ExpanderView>
                             <uranium:ExpanderView.Header>
-                                <Label Margin="10" Text="Source Code (XAML)" />
+                                <Label Padding="10" Text="Source Code (XAML)" />
                             </uranium:ExpanderView.Header>
                             <Grid>
                                 <uranium:CodeView Language="xml" SourceCode="{Binding XamlSourceCode}" HeightRequest="200"/>

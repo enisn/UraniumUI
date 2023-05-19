@@ -1,4 +1,6 @@
-﻿using Plainer.Maui.Controls;
+﻿using Microsoft.Maui.Platform;
+using Plainer.Maui.Controls;
+using UraniumUI.Resources;
 
 namespace UraniumUI.Material.Controls;
 public partial class EditorField : InputField
@@ -28,10 +30,8 @@ public partial class EditorField : InputField
         {
             textBox.AcceptsReturn = true;
             textBox.TextWrapping = Microsoft.UI.Xaml.TextWrapping.Wrap;
+            textBox.SelectionHighlightColor = new Microsoft.UI.Xaml.Media.SolidColorBrush(ColorResource.GetColor("Primary", "PrimaryDark", Colors.Purple).ToWindowsColor());
 
-            textBox.FocusVisualPrimaryThickness = new Microsoft.UI.Xaml.Thickness(0);
-            textBox.FocusVisualSecondaryThickness = new Microsoft.UI.Xaml.Thickness(0);
-            textBox.SelectionHighlightColor = new Microsoft.UI.Xaml.Media.SolidColorBrush(Windows.UI.Color.FromArgb(0, 0, 0, 0));
             textBox.BorderThickness = new Microsoft.UI.Xaml.Thickness(0);
 
             textBox.Style = null;

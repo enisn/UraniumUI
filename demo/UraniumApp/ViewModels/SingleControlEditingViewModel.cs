@@ -13,6 +13,7 @@ namespace UraniumApp.ViewModels;
 public class SingleControlEditingViewModel<T> : ReactiveObject
     where T : View, new()
 {
+    [Reactive] public string Title { get; set; }
     [Reactive] public T Control { get; set; }
     [Reactive] public List<BindableProperty> EditingProperties { get; set; }
     public string XamlSourceCode => SourceCode.ToString();
@@ -21,13 +22,14 @@ public class SingleControlEditingViewModel<T> : ReactiveObject
     public SingleControlEditingViewModel()
     {
         Control = InitializeControl();
+        Title = typeof(T).Name;
         SourceCode = XDocument.Parse(InitialXDocumentCode);
 
         InitializeDefaultValues(defaultValues);
         this.WhenAnyValue(x => x.EditingProperties)
             .Subscribe(InitializeProperties);
     }
-    protected virtual string InitialXDocumentCode => "<View/>";
+    protected virtual string InitialXDocumentCode => $"""<ContentPage xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"><material:{typeof(T).Name}/></ContentPage>""";
     protected readonly Dictionary<string, object> defaultValues = new Dictionary<string, object>();
     protected virtual T InitializeControl()
     {

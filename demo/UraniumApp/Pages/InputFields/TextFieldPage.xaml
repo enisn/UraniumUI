@@ -8,7 +8,7 @@
              xmlns:local="clr-namespace:UraniumApp"
              x:DataType="vm:TextFieldViewModel"
              x:Class="UraniumApp.Pages.InputFields.TextFieldPage"
-             Title="TextField">
+             Title="{Binding Title}">
 
     <ContentPage.Resources>
         <x:String x:Key="SourceCode">
@@ -30,6 +30,7 @@
         <x:String x:Key="SourceCode3">
             <![CDATA[
 <VerticalStackLayout Spacing="12">
+
     <material:TextField Title="E-mail" AllowClear="True"
         Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Email}}"/>
 
@@ -49,7 +50,7 @@
 
     <ScrollView>
         <VerticalStackLayout Padding="20">
-            <Label Text="TextField" FontSize="Title" />
+            <Label Text="{Binding Title}" FontSize="Title" />
             <Label Text="UraniumUI.Material.Controls" FontSize="Micro" Opacity=".6" />
 
             <HorizontalStackLayout Padding="0,20">
@@ -135,7 +136,7 @@
                             <Label Text="Source Code (XAML)" Padding="10" />
                         </uranium:ExpanderView.Header>
                         <Grid>
-                            <uranium:CodeView Language="xml" SourceCode="{StaticResource SourceCode3}" HeightRequest="80"/>
+                            <uranium:CodeView Language="xml" SourceCode="{StaticResource SourceCode3}" HeightRequest="240"/>
                             <local:CopyButton TextToCopy="{StaticResource SourceCode3}" />
                         </Grid>
                     </uranium:ExpanderView>
@@ -144,7 +145,7 @@
 
             <BoxView StyleClass="Divider" />
 
-            <VerticalStackLayout Spacing="12" Margin="{OnIdiom 10, Phone=0}" StyleClass="Elevation1">
+            <VerticalStackLayout Spacing="12" Margin="{OnIdiom 10, Phone=0}">
                 <local:ViewShowcaseView>
 
                     <ContentView Content="{Binding Control}" StyleClass="ControlPreview" />

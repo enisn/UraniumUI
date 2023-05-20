@@ -28,7 +28,7 @@
                 <Setter Property="BackgroundColor" Value="{AppThemeBinding Default=#29ffffff, Dark=#29000000}" />
             </Style>
 
-            <Style TargetType="View" Class="ControlPreview">
+            <Style TargetType="View" Class="ControlPreview" ApplyToDerivedTypes="True">
                 <Setter Property="HorizontalOptions" Value="Start" />
                 <Setter Property="VerticalOptions" Value="Center" />
                 <Setter Property="WidthRequest" Value="300" />

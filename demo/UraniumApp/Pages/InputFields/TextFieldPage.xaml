@@ -27,6 +27,22 @@
     Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Email}}"/>
             ]]>
         </x:String>
+        <x:String x:Key="SourceCode3">
+            <![CDATA[
+<VerticalStackLayout Spacing="12">
+    <material:TextField Title="E-mail" AllowClear="True"
+        Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Email}}"/>
+
+    <material:TextField Title="Password" AllowClear="True" IsPassword="True" IsTextPredictionEnabled="False"
+            Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Password}}">
+        <material:TextField.Attachments>
+            <material:TextFieldPasswordShowHideAttachment />
+        </material:TextField.Attachments>
+    </material:TextField>
+
+</VerticalStackLayout>
+            ]]>
+        </x:String>
 
         <x:String x:Key="DocLink">https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/TextField</x:String>
     </ContentPage.Resources>
@@ -85,6 +101,42 @@
                         <Grid>
                             <uranium:CodeView Language="xml" SourceCode="{StaticResource SourceCode2}" HeightRequest="80"/>
                             <local:CopyButton TextToCopy="{StaticResource SourceCode2}" />
+                        </Grid>
+                    </uranium:ExpanderView>
+                </VerticalStackLayout>
+            </Border>
+            
+            <BoxView StyleClass="Divider" />
+            
+            <Border Margin="{OnIdiom 10, Phone=0}" StyleClass="SurfaceContainer, Rounded" StrokeThickness="0">
+                <VerticalStackLayout>
+                    <Label Text="Password show/hide Button" FontSize="Subtitle" Margin="20"/>
+                    <VerticalStackLayout StyleClass="ControlPreview" Spacing="12">
+                        <material:TextField
+                            Title="E-mail"
+                            AllowClear="True"
+                            Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Email}}"/>
+
+                        <material:TextField
+                            Title="Password"
+                            AllowClear="True"
+                            IsPassword="True"
+                            IsTextPredictionEnabled="False"
+                            Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Password}}">
+                            <material:TextField.Attachments>
+                                <material:TextFieldPasswordShowHideAttachment />
+                            </material:TextField.Attachments>
+                        </material:TextField>
+
+                    </VerticalStackLayout>
+
+                    <uranium:ExpanderView>
+                        <uranium:ExpanderView.Header>
+                            <Label Text="Source Code (XAML)" Padding="10" />
+                        </uranium:ExpanderView.Header>
+                        <Grid>
+                            <uranium:CodeView Language="xml" SourceCode="{StaticResource SourceCode3}" HeightRequest="80"/>
+                            <local:CopyButton TextToCopy="{StaticResource SourceCode3}" />
                         </Grid>
                     </uranium:ExpanderView>
                 </VerticalStackLayout>

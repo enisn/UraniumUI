@@ -61,7 +61,7 @@ public class SingleControlEditingViewModel<T> : ReactiveObject
 
         var material = contentPage.GetNamespaceOfPrefix("material");
 
-        var textField = contentPage.Descendants(material + Control.GetType().Name).First();
+        var control = contentPage.Descendants(material + Control.GetType().Name).First();
 
         foreach (var property in EditingProperties)
         {
@@ -69,7 +69,7 @@ public class SingleControlEditingViewModel<T> : ReactiveObject
 
             if (value is null)
             {
-                textField.SetAttributeValue(property.PropertyName, null);
+                control.SetAttributeValue(property.PropertyName, null);
                 continue;
             }
 
@@ -87,10 +87,16 @@ public class SingleControlEditingViewModel<T> : ReactiveObject
                 value = null;
             }
 
-            textField.SetAttributeValue(property.PropertyName, FormatValue(value));
+            control.SetAttributeValue(property.PropertyName, FormatValue(value));
         }
 
+        PostGenerateSourceCode(control);
+
         this.RaisePropertyChanged(nameof(XamlSourceCode));
+    }
+
+    protected virtual void PostGenerateSourceCode(XElement control)
+    {
     }
 
     protected virtual string FormatValue(object value)

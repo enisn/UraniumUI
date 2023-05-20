@@ -31,30 +31,33 @@
 
             <Label Text="Text fields let users enter and edit text. It is an abstraction on MAUI Level for material inputs." />
 
-            <Border Margin="{OnIdiom 10, Phone=0}" StyleClass="SurfaceContainer, Rounded" StrokeThickness="0">
-                <VerticalStackLayout>
-                    <Label Text="Simple EditorField" FontSize="Subtitle" Margin="20"/>
+            <VerticalStackLayout Padding="{OnIdiom 10, Phone=0}" Spacing="10">
 
-                    <VerticalStackLayout StyleClass="ControlPreview" Spacing="12">
-                        <material:EditorField Title="Description" />
+                <Border StyleClass="SurfaceContainer, Rounded" StrokeThickness="0">
+                    <VerticalStackLayout>
+                        <Label Text="Simple EditorField" FontSize="Subtitle" Margin="20"/>
+
+                        <VerticalStackLayout StyleClass="ControlPreview" Spacing="12">
+                            <material:EditorField Title="Description" />
+                        </VerticalStackLayout>
+
+                        <uranium:ExpanderView>
+                            <uranium:ExpanderView.Header>
+                                <Label Text="Source Code (XAML)" Padding="10" />
+                            </uranium:ExpanderView.Header>
+                            <Grid>
+                                <uranium:CodeView Language="xml" SourceCode="{StaticResource SourceCode}" HeightRequest="80"/>
+                                <root:CopyButton TextToCopy="{StaticResource SourceCode}" />
+                            </Grid>
+                        </uranium:ExpanderView>
                     </VerticalStackLayout>
+                </Border>
 
-                    <uranium:ExpanderView>
-                        <uranium:ExpanderView.Header>
-                            <Label Text="Source Code (XAML)" Padding="10" />
-                        </uranium:ExpanderView.Header>
-                        <Grid>
-                            <uranium:CodeView Language="xml" SourceCode="{StaticResource SourceCode}" HeightRequest="80"/>
-                            <root:CopyButton TextToCopy="{StaticResource SourceCode}" />
-                        </Grid>
-                    </uranium:ExpanderView>
-                </VerticalStackLayout>
-            </Border>
+                <BoxView StyleClass="Divider" />
 
-            <VerticalStackLayout Spacing="12" Margin="{OnIdiom 10, Phone=0}">
                 <root:ViewShowcaseView>
                     <ContentView StyleClass="ControlPreview" Content="{Binding Control}" />
-                    
+
                     <root:ViewShowcaseView.SidePanel>
                         <VerticalStackLayout Padding="20,20,20,0" Spacing="20">
                             <root:PropertyEditorView MaximumHeightRequest="600"

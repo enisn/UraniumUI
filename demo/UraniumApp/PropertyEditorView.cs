@@ -49,6 +49,9 @@ namespace UraniumApp
             Padding = 10,
         };
 
+        private ContentView _footerView = new ContentView();
+        public View Footer { get => _footerView.Content; set => _footerView.Content = value; }
+
         public PropertyEditorView()
         {
             var _titleContainer = new Label()
@@ -137,6 +140,8 @@ namespace UraniumApp
                     });
                 }
             }
+
+            _propertiesContainer.Add(_footerView);
         }
 
         public static View EditorForString(BindableProperty bindableProperty, object source)

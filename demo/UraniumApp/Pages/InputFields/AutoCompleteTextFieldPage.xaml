@@ -68,7 +68,7 @@
                 <Border StyleClass="SurfaceContainer, Rounded" StrokeThickness="0">
                     <VerticalStackLayout>
                         <Label Text="AutoCompleteTextField with static ItemsSource" FontSize="Subtitle" Margin="20,20,20,0"/>
-                        <Label Text="Start typing 'Blueberry' into the input:" FontSize="Micro" Opacity=".6" Margin="20,0,20,20"/>
+                        <Label Text="Start typing 'Blueberry' into the input:" FontSize="Body" Opacity=".6" Margin="20,0,20,20"/>
 
                         <VerticalStackLayout StyleClass="ControlPreview" Spacing="12">
                             <material:AutoCompleteTextField Title="Fruit">
@@ -135,7 +135,7 @@
                                         </uranium:ExpanderView.Header>
                                         <VerticalStackLayout>
 
-                                            <VerticalStackLayout BindableLayout.ItemsSource="{Binding Control.ItemsSource}">
+                                            <VerticalStackLayout BindableLayout.ItemsSource="{Binding Control.ItemsSource}" Padding="10">
                                                 <BindableLayout.ItemTemplate>
                                                     <DataTemplate>
                                                         <Grid ColumnDefinitions="Auto,*">

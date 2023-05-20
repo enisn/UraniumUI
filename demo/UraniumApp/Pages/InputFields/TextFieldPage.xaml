@@ -48,7 +48,7 @@
                 <VerticalStackLayout>
                     <Label Text="Simple set of TextFields." FontSize="Subtitle" Margin="20"/>
 
-                    <VerticalStackLayout Spacing="12" Margin="20" WidthRequest="300" HorizontalOptions="Start">
+                    <VerticalStackLayout StyleClass="ControlPreview" Spacing="12">
                         <material:TextField Title="Name" />
                         <material:TextField Title="Surname" />
                         <material:TextField Title="Age" Keyboard="Numeric" />
@@ -71,7 +71,7 @@
             <Border Margin="{OnIdiom 10, Phone=0}" StyleClass="SurfaceContainer, Rounded" StrokeThickness="0">
                 <VerticalStackLayout>
                     <Label Text="TextField with Icon" FontSize="Subtitle" Margin="20"/>
-                    <VerticalStackLayout Margin="20" WidthRequest="300" HorizontalOptions="Start">
+                    <VerticalStackLayout StyleClass="ControlPreview">
                         <material:TextField
                             Title="E-mail"
                             Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Email}}"/>
@@ -95,40 +95,15 @@
             <VerticalStackLayout Spacing="12" Margin="{OnIdiom 10, Phone=0}" StyleClass="Elevation1">
                 <local:ViewShowcaseView>
 
-                    <material:TextField 
-                        Title="{Binding Title}"
-                        Text="{Binding Text}"
-                        TextColor="{Binding TextColor}"
-                        AccentColor="{Binding AccentColor}"
-                        BorderColor="{Binding BorderColor}"
-                        />
+                    <ContentView Content="{Binding Control}" StyleClass="ControlPreview" />
 
                     <local:ViewShowcaseView.SidePanel>
-                        <VerticalStackLayout Padding="20" Spacing="20">
-                            <material:TextField Title="Title" Text="{Binding Title}" />
-                            <material:TextField Title="Text" Text="{Binding Text}" />
-
-                            <uranium:StatefulContentView TappedCommand="{Binding PickTextColorCommand}">
-                                <HorizontalStackLayout Spacing="8">
-                                    <BoxView Color="{Binding TextColor}" WidthRequest="25" HeightRequest="25"/>
-                                    <Label Text="TextColor" VerticalOptions="Center" />
-                                </HorizontalStackLayout>
-                            </uranium:StatefulContentView>
-
-                            <uranium:StatefulContentView TappedCommand="{Binding PickAccentColorCommand}">
-                                <HorizontalStackLayout Spacing="8">
-                                    <BoxView Color="{Binding AccentColor}" WidthRequest="25" HeightRequest="25"/>
-                                    <Label Text="AccentColor" VerticalOptions="Center" />
-                                </HorizontalStackLayout>
-                            </uranium:StatefulContentView>
-                            
-                            <uranium:StatefulContentView TappedCommand="{Binding PickBorderColorCommand}">
-                                <HorizontalStackLayout Spacing="8">
-                                    <BoxView Color="{Binding BorderColor}" WidthRequest="25" HeightRequest="25"/>
-                                    <Label Text="BorderColor" VerticalOptions="Center" />
-                                </HorizontalStackLayout>
-                            </uranium:StatefulContentView>
-                            
+                        <VerticalStackLayout Padding="20,20,20,0" Spacing="20">
+                            <local:PropertyEditorView MaximumHeightRequest="600"
+                                HierarchyLimitType="{Type material:InputField}"
+                                Hierarchical="True"
+                                Value="{Binding Control}"
+                                EditingProperties="{Binding EditingProperties}"/>
                         </VerticalStackLayout>
                     </local:ViewShowcaseView.SidePanel>
                     <local:ViewShowcaseView.BottomView>

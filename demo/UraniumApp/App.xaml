@@ -27,6 +27,13 @@
             <Style TargetType="uranium:ExpanderView" CanCascade="True">
                 <Setter Property="BackgroundColor" Value="{AppThemeBinding Default=#29ffffff, Dark=#29000000}" />
             </Style>
+
+            <Style TargetType="View" Class="ControlPreview">
+                <Setter Property="HorizontalOptions" Value="Start" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="WidthRequest" Value="300" />
+                <Setter Property="Margin" Value="20" />
+            </Style>
         </ResourceDictionary>
 
     </Application.Resources>

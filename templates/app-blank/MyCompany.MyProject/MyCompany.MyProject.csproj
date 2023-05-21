@@ -57,6 +57,9 @@
 		<!--#if (MaterialIcons)-->
 		<PackageReference Include="UraniumUI.Icons.MaterialIcons" Version="2.5.0-pre.2" />
 		<!--#endif-->
+		<!--#if (FluentIcons)-->
+		<PackageReference Include="UraniumUI.Icons.SegoeFluent" Version="2.5.0-pre.2" />
+		<!--#endif-->
 		<!--#if (CommunityToolkit)-->
 		<PackageReference Include="UraniumUI.Dialogs.CommunityToolkit" Version="2.5.0-pre.2" />
 		<!--#endif-->

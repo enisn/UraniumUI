@@ -65,6 +65,14 @@
         <ShellContent ContentTemplate="{DataTemplate inputFields:MultiplePickerFieldPage}" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Grid_view}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}"/>
     </FlyoutItem>
 
+    <FlyoutItem Title="TimePickerField" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Access_alarm}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
+        <ShellContent ContentTemplate="{DataTemplate inputFields:TimePickerFieldPage}" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Access_alarm}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}"/>
+    </FlyoutItem>
+
+    <FlyoutItem Title="MultiplePickerField" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Calendar_month}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
+        <ShellContent Title="DatePickerField" ContentTemplate="{DataTemplate inputFields:DatePickerFieldPage}" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Calendar_month}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}"/>
+    </FlyoutItem>
+
     <MenuFlyoutSeparator Text="-------------------"/>
 
 

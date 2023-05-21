@@ -30,7 +30,7 @@ public ObservableCollection<string> Items { get; } = new ObservableCollection<st
 };
             ]]>
         </x:String>
-        <x:String x:Key="DocLink">https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/PickerField</x:String>
+        <x:String x:Key="DocLink">https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/MultiplePickerField</x:String>
     </ContentPage.Resources>
 
     <ScrollView>
@@ -87,34 +87,34 @@ public ObservableCollection<string> Items { get; } = new ObservableCollection<st
 
                 <BoxView StyleClass="Divider" />
 
-            <root:ViewShowcaseView>
-                <ContentView StyleClass="ControlPreview" Content="{Binding Control}" />
+                <root:ViewShowcaseView>
+                    <ContentView StyleClass="ControlPreview" Content="{Binding Control}" />
 
-                <root:ViewShowcaseView.SidePanel>
-                    <VerticalStackLayout Padding="20,20,20,0" Spacing="20">
+                    <root:ViewShowcaseView.SidePanel>
+                        <VerticalStackLayout Padding="20,20,20,0" Spacing="20">
 
-                        <root:PropertyEditorView MaximumHeightRequest="600"
-                                HierarchyLimitType="{Type material:InputField}"
-                                Hierarchical="True"
-                                Value="{Binding Control}"
-                                EditingProperties="{Binding EditingProperties}">
-                        </root:PropertyEditorView>
+                            <root:PropertyEditorView MaximumHeightRequest="600"
+                                    HierarchyLimitType="{Type material:InputField}"
+                                    Hierarchical="True"
+                                    Value="{Binding Control}"
+                                    EditingProperties="{Binding EditingProperties}">
+                            </root:PropertyEditorView>
 
-                    </VerticalStackLayout>
-                </root:ViewShowcaseView.SidePanel>
+                        </VerticalStackLayout>
+                    </root:ViewShowcaseView.SidePanel>
 
-                <root:ViewShowcaseView.BottomView>
-                    <uranium:ExpanderView>
-                        <uranium:ExpanderView.Header>
-                            <Label Margin="10" Text="Source Code (XAML)" />
-                        </uranium:ExpanderView.Header>
-                        <Grid>
-                            <uranium:CodeView Language="xml" SourceCode="{Binding XamlSourceCode}" HeightRequest="220"/>
-                            <root:CopyButton TextToCopy="{Binding XamlSourceCode}" />
-                        </Grid>
-                    </uranium:ExpanderView>
-                </root:ViewShowcaseView.BottomView>
-            </root:ViewShowcaseView>
+                    <root:ViewShowcaseView.BottomView>
+                        <uranium:ExpanderView>
+                            <uranium:ExpanderView.Header>
+                                <Label Margin="10" Text="Source Code (XAML)" />
+                            </uranium:ExpanderView.Header>
+                            <Grid>
+                                <uranium:CodeView Language="xml" SourceCode="{Binding XamlSourceCode}" HeightRequest="220"/>
+                                <root:CopyButton TextToCopy="{Binding XamlSourceCode}" />
+                            </Grid>
+                        </uranium:ExpanderView>
+                    </root:ViewShowcaseView.BottomView>
+                </root:ViewShowcaseView>
             </VerticalStackLayout>
         </VerticalStackLayout>
     </ScrollView>

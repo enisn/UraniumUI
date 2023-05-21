@@ -1,6 +1,4 @@
 ﻿using DotNurse.Injector.Attributes;
-using DynamicData;
-using ReactiveUI;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.Windows.Input;

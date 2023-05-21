@@ -53,9 +53,12 @@
         <ShellContent ContentTemplate="{DataTemplate inputFields:EditorFieldPage}" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Wrap_text}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}"/>
     </FlyoutItem>
 
-
     <FlyoutItem Title="AutoCompleteTextField" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.List_alt}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
         <ShellContent ContentTemplate="{DataTemplate inputFields:AutoCompleteTextFieldPage}" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.List_alt}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}"/>
+    </FlyoutItem>
+
+    <FlyoutItem Title="PickerField" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Arrow_circle_down}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
+        <ShellContent ContentTemplate="{DataTemplate inputFields:PickerFieldPage}" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Arrow_circle_down}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}"/>
     </FlyoutItem>
 
     <MenuFlyoutSeparator Text="-------------------"/>

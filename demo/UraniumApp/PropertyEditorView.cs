@@ -50,7 +50,15 @@ namespace UraniumApp
         };
 
         private ContentView _footerView = new ContentView();
-        public View Footer { get => _footerView.Content; set => _footerView.Content = value; }
+        public View Footer { get => _footerView.Content; set
+            {
+                _footerView.Content = value;
+                if (!_propertiesContainer.Contains(_footerView))
+                {
+                    _propertiesContainer.Children.Add(_footerView);
+                }
+            }
+        }
 
         public PropertyEditorView()
         {
@@ -141,7 +149,10 @@ namespace UraniumApp
                 }
             }
 
-            _propertiesContainer.Add(_footerView);
+            if (_footerView.Content != null)
+            {
+                _propertiesContainer.Children.Add(_footerView);
+            }
         }
 
         public static View EditorForString(BindableProperty bindableProperty, object source)

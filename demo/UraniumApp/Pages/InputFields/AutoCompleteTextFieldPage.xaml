@@ -47,8 +47,6 @@
         <x:String x:Key="DocLink">https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/AutoCompleteTextField</x:String>
     </ContentPage.Resources>
 
-
-
     <ScrollView>
         <VerticalStackLayout Padding="20">
             <Label Text="{Binding Title}" FontSize="Title" />
@@ -63,7 +61,6 @@
             <Label Text="AutoCompleteTextField is a text field that provides suggestions as you type. " />
 
             <VerticalStackLayout Padding="{OnIdiom 10, Phone=0}" Spacing="10">
-
 
                 <Border StyleClass="SurfaceContainer, Rounded" StrokeThickness="0">
                     <VerticalStackLayout>

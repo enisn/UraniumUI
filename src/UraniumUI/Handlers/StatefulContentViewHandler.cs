@@ -230,7 +230,7 @@ public class StatefulContentViewHandler : ContentViewHandler
                     Debug.WriteLine(item.GetType().Name);
                     if (item is TapGestureRecognizer tgr)
                     {
-                        tgr.Command.Execute(StatefulView);
+                        tgr.Command?.Execute(StatefulView);
                     }
                 }
 

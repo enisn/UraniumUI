@@ -5,8 +5,10 @@
              xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
              xmlns:vm="clr-namespace:UraniumApp.ViewModels"
-             Title="FontIconsMaterialPage"
-             x:DataType="vm:FontIconsMaterialViewModel">
+             xmlns:root="clr-namespace:UraniumApp"
+             x:Name="page"
+             x:DataType="vm:FontIconsMaterialViewModel"
+             BindingContext="{root:Inject {Type vm:FontIconsMaterialViewModel}}">
 
     <ContentPage.Resources>
         <Style TargetType="Label">
@@ -38,7 +40,14 @@
                 <CollectionView Grid.Row="1" ItemsSource="{Binding Items}" SelectionMode="Single" SelectedItem="{Binding SelectedItem}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="vm:FontImageItemViewModel">
-                            <Label Text="{Binding Alias}" HorizontalOptions="Center" Margin="5" />
+                            <Grid ColumnDefinitions="Auto,*">
+                                <Image Margin="5">
+                                    <Image.Source>
+                                        <FontImageSource Glyph="{Binding Glyph}" FontFamily="{Binding BindingContext.SelectedType, Source={x:Reference page}}" Color="{AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}" />
+                                    </Image.Source>
+                                </Image>
+                                <Label Grid.Column="1" Text="{Binding Alias}" VerticalOptions="Center" Margin="5" />
+                            </Grid>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>

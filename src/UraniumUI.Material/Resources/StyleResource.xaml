@@ -426,6 +426,21 @@
                 </Setter>
             </Style>
 
+            <Style TargetType="View" Class="SurfaceContainer" ApplyToDerivedTypes="True" CanCascade="True">
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Surface}, Dark={StaticResource SurfaceDark}}" />
+            </Style>
+
+            <Style TargetType="Border" Class="Rounded" ApplyToDerivedTypes="True" CanCascade="True">
+                <Setter Property="StrokeShape" Value="RoundRectangle 8" />
+            </Style>
+
+            <Style TargetType="Path" CanCascade="True">
+                <Setter Property="Fill" Value="{AppThemeBinding {StaticResource OnSurface}, Dark={StaticResource OnSurfaceDark}}"></Setter>
+            </Style>
+            
+            <Style TargetType="FontImageSource" CanCascade="True">
+                <Setter Property="Color" Value="{AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}"></Setter>
+            </Style>
         </ResourceDictionary>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

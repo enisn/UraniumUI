@@ -1,35 +1,121 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
              xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+             xmlns:vm="clr-namespace:UraniumApp.ViewModels.InputFields"
              xmlns:root="clr-namespace:UraniumApp"
-             x:Class="UraniumApp.Pages.InputFields.MultiplePickerFieldPage"
-             Title="MultiplePickerFieldPage">
-    <Grid StyleClass="InputFieldDemoGrid">
-        <material:MultiplePickerField 
-            x:Name="ref"
-            Grid.Row="0"
-            Grid.Column="{OnIdiom 0, Desktop=1}"
-            Title="Pick an option"
-            Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Keyboard_option}}">
-            <material:MultiplePickerField.ItemsSource>
-                <x:Array Type="{x:Type x:String}">
-                    <x:String>Option 1</x:String>
-                    <x:String>Option 2</x:String>
-                    <x:String>Option 3</x:String>
-                    <x:String>Option 4</x:String>
-                    <x:String>Option 5</x:String>
-                    <x:String>Option 6</x:String>
-                </x:Array>
-            </material:MultiplePickerField.ItemsSource>
-        </material:MultiplePickerField>
+             x:DataType="vm:MultiplePickerFieldVideModel"
+             BindingContext="{root:Inject {Type vm:MultiplePickerFieldVideModel}}"
+             x:Class="UraniumApp.Pages.InputFields.MultiplePickerFieldPage">
 
-        <root:PropertyEditorView
-            Grid.Column="0"
-            Grid.Row="{OnIdiom 1, Desktop=0}"
-            Hierarchical="True"
-            HierarchyLimitType="{x:Type material:InputField}"
-            Value="{Binding ., Source={x:Reference ref}}" />
-    </Grid>
+    <ContentPage.Resources>
+        <x:String x:Key="SourceCode">
+            <![CDATA[
+<material:MultiplePickerField 
+    Title="Pick options"
+    ItemsSource="{Binding Items}"
+    Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Expand_circle_down}}"
+    />
+            ]]>
+        </x:String>
+        <x:String x:Key="SourceCodeCsharp">
+            <![CDATA[
+public ObservableCollection<string> Items { get; } = new ObservableCollection<string>
+{
+    "Item 1",
+    "Item 2",
+    "Item 3",
+};
+            ]]>
+        </x:String>
+        <x:String x:Key="DocLink">https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/MultiplePickerField</x:String>
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20">
+            <Label Text="{Binding Title}" FontSize="Title" />
+            <Label Text="UraniumUI.Material.Controls" FontSize="Micro" Opacity=".6" />
+
+            <HorizontalStackLayout Padding="0,20">
+                <Button Text="Documentation" Command="{x:Static uranium:Commands.OpenLinkCommand}" CommandParameter="{StaticResource DocLink}" StyleClass="OutlinedButton" ImageSource="{FontImageSource Glyph={x:Static m:MaterialRegular.Insert_drive_file}, FontFamily=MaterialRegular, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
+                <Button Text="Source" StyleClass="OutlinedButton" IsEnabled="False" ImageSource="{FontImageSource Glyph={x:Static m:MaterialRegular.Code}, FontFamily=MaterialRegular, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
+                <Button Text="Reset" Clicked="Reset" StyleClass="OutlinedButton" ImageSource="{FontImageSource Glyph={x:Static m:MaterialRegular.Refresh}, FontFamily=MaterialRegular, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
+            </HorizontalStackLayout>
+
+            <Label Text="Text fields let users enter and edit text. It is an abstraction on MAUI Level for material inputs." />
+
+            <VerticalStackLayout Padding="{OnIdiom 10, Phone=0}" Spacing="10">
+
+                <Border StyleClass="SurfaceContainer, Rounded" StrokeThickness="0">
+                    <VerticalStackLayout>
+                        <Label Text="Simple EditorField" FontSize="Subtitle" Margin="20"/>
+
+                        <VerticalStackLayout StyleClass="ControlPreview" Spacing="12">
+                            <material:MultiplePickerField Title="Pick options" Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Expand_circle_down}}">
+                                <material:MultiplePickerField.ItemsSource>
+                                    <x:Array Type="{x:Type x:String}">
+                                        <x:String>Item 1</x:String>
+                                        <x:String>Item 2</x:String>
+                                        <x:String>Item 3</x:String>
+                                    </x:Array>
+                                </material:MultiplePickerField.ItemsSource>
+                            </material:MultiplePickerField>
+                        </VerticalStackLayout>
+
+                        <uranium:ExpanderView>
+                            <uranium:ExpanderView.Header>
+                                <Label Text="Source Code" Padding="10" />
+                            </uranium:ExpanderView.Header>
+                            <VerticalStackLayout>
+                                <Label Text="XAML" FontAttributes="Italic" Margin="15,0" Opacity=".6"/>
+                                <Grid>
+                                    <uranium:CodeView Language="xml" SourceCode="{StaticResource SourceCode}" HeightRequest="120"/>
+                                    <root:CopyButton TextToCopy="{StaticResource SourceCode}" />
+                                </Grid>
+                                <BoxView StyleClass="Divider" />
+                                <Label Text="ViewModel (C#)"  FontAttributes="Italic" Margin="15,0" Opacity=".6"/>
+                                <Grid>
+                                    <uranium:CodeView Language="csharp" SourceCode="{StaticResource SourceCodeCsharp}" HeightRequest="120"/>
+                                    <root:CopyButton TextToCopy="{StaticResource SourceCodeCsharp}" />
+                                </Grid>
+                            </VerticalStackLayout>
+                        </uranium:ExpanderView>
+                    </VerticalStackLayout>
+                </Border>
+
+                <BoxView StyleClass="Divider" />
+
+                <root:ViewShowcaseView>
+                    <ContentView StyleClass="ControlPreview" Content="{Binding Control}" />
+
+                    <root:ViewShowcaseView.SidePanel>
+                        <VerticalStackLayout Padding="20,20,20,0" Spacing="20">
+
+                            <root:PropertyEditorView MaximumHeightRequest="600"
+                                    HierarchyLimitType="{Type material:InputField}"
+                                    Hierarchical="True"
+                                    Value="{Binding Control}"
+                                    EditingProperties="{Binding EditingProperties}">
+                            </root:PropertyEditorView>
+
+                        </VerticalStackLayout>
+                    </root:ViewShowcaseView.SidePanel>
+
+                    <root:ViewShowcaseView.BottomView>
+                        <uranium:ExpanderView>
+                            <uranium:ExpanderView.Header>
+                                <Label Margin="10" Text="Source Code (XAML)" />
+                            </uranium:ExpanderView.Header>
+                            <Grid>
+                                <uranium:CodeView Language="xml" SourceCode="{Binding XamlSourceCode}" HeightRequest="220"/>
+                                <root:CopyButton TextToCopy="{Binding XamlSourceCode}" />
+                            </Grid>
+                        </uranium:ExpanderView>
+                    </root:ViewShowcaseView.BottomView>
+                </root:ViewShowcaseView>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

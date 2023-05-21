@@ -62,6 +62,12 @@
                     </Image.Source>
                 </Image>
                 <Label Text="{Binding SelectedItem.Alias}" HorizontalTextAlignment="Center" />
+
+                <Image HeightRequest="90" >
+                    <!--<Image.Source>
+                        <FontImageSource Glyph="{x:Static uranium:FluentIcons.XboxOneConsole}" FontFamily="Fluent" Color="Red" Size="32" />
+                    </Image.Source>-->
+                </Image>
             </VerticalStackLayout>
         </Border>
     </Grid>

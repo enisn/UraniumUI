@@ -26,7 +26,6 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 fonts.AddMaterialIconFonts();
-                fonts.AddFluentIconFonts();
             });
 
         var thisAssembly = typeof(MauiProgram).Assembly;

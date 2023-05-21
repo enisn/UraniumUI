@@ -1,34 +1,37 @@
 ﻿using DotNurse.Injector.Attributes;
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Xml.Linq;
 using UraniumUI.Material.Controls;
 using UraniumUI.Resources;
 
 namespace UraniumApp.ViewModels.InputFields;
 
-[RegisterAs(typeof(PickerFieldViewModel))]
-public class PickerFieldViewModel : SingleControlEditingViewModel<PickerField>
+[RegisterAs(typeof(MultiplePickerFieldVideModel))]
+public class MultiplePickerFieldVideModel : SingleControlEditingViewModel<MultiplePickerField>
 {
-    protected override string InitialXDocumentCode => """<ContentPage xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"><material:PickerField /></ContentPage>""";
-
-    protected override PickerField InitializeControl()
+    protected override MultiplePickerField InitializeControl()
     {
-        return new PickerField
+        return new MultiplePickerField
         {
-            Title = "Pick an option",
+            Title = "Pick options",
             ItemsSource = new[]
             {
                 "Option 1",
                 "Option 2",
                 "Option 3",
+                "Option 4",
             }
         };
     }
-
     protected override void PostGenerateSourceCode(XElement control)
     {
         control.SetAttributeValue("ItemsSource", "{Binding Items}");
+        control.SetAttributeValue("SelectedItems", "{Binding SelectedItems}");
     }
 
     protected override void InitializeDefaultValues(Dictionary<string, object> values)

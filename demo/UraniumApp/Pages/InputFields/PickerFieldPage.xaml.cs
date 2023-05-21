@@ -8,7 +8,6 @@ public partial class PickerFieldPage : ContentPage
 	public PickerFieldPage()
 	{
 		InitializeComponent();
-        App.Current.RequestedThemeChanged += (_, _) => Reset();
     }
 
     private void Reset()

@@ -60,6 +60,7 @@
 	<ItemGroup>
 	  <!--<ProjectReference Include="..\..\src\UraniumUI.Dialogs.CommunityToolkit\UraniumUI.Dialogs.CommunityToolkit.csproj" />-->
 	  <ProjectReference Include="..\..\src\UraniumUI.Blurs\UraniumUI.Blurs.csproj" />
+	  <ProjectReference Include="..\..\src\UraniumUI.Icons.SegoeFluent\UraniumUI.Icons.SegoeFluent.csproj" />
 	  <ProjectReference Include="..\..\src\UraniumUI.WebComponents\UraniumUI.WebComponents.csproj" />
 	  <ProjectReference Include="..\..\src\UraniumUI.Dialogs.Mopups\UraniumUI.Dialogs.Mopups.csproj" />
 	  <ProjectReference Include="..\..\src\UraniumUI.Dialogs.CommunityToolkit\UraniumUI.Dialogs.CommunityToolkit.csproj" />

@@ -1,4 +1,8 @@
-﻿namespace UraniumUI;
+﻿#if WINDOWS
+using Microsoft.UI.Xaml.Controls;
+#endif
+
+namespace UraniumUI;
 
 public static class MaterialIconsConfigurationExtensions
 {
@@ -11,6 +15,10 @@ public static class MaterialIconsConfigurationExtensions
         fonts.AddEmbeddedResourceFont(thisAssembly, "MaterialIconsRound-Regular.otf", "MaterialRound");
         fonts.AddEmbeddedResourceFont(thisAssembly, "MaterialIconsSharp-Regular.otf", "MaterialSharp");
         fonts.AddEmbeddedResourceFont(thisAssembly, "MaterialIconsTwoTone-Regular.otf", "MaterialTwoTone");
+
+#if WINDOWS
+        //Symbol.Audio
+#endif
 
         return fonts;
     }

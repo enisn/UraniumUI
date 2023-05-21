@@ -14,7 +14,7 @@
             <Label Text="Hello, Uranium! ☢️" FontSize="Large" />
             <Label Text="Welcome to the demo app." />
         </StackLayout>
-
+      
         <Grid ColumnDefinitions="Auto,*">
             <Image Rotation="-45" Margin="15">
                 <Image.Source>

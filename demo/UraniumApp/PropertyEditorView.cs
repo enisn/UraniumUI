@@ -53,7 +53,7 @@ namespace UraniumApp
         public View Footer { get => _footerView.Content; set
             {
                 _footerView.Content = value;
-                if (!_propertiesContainer.Contains(_footerView))
+                if (_propertiesContainer.Children.Count > 0 && !_propertiesContainer.Contains(_footerView))
                 {
                     _propertiesContainer.Children.Add(_footerView);
                 }

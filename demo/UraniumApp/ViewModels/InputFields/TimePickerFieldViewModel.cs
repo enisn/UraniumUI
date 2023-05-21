@@ -1,16 +1,11 @@
 ﻿using DotNurse.Injector.Attributes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UraniumUI.Material.Controls;
 using UraniumUI.Resources;
 
 namespace UraniumApp.ViewModels.InputFields;
 
-[RegisterAs(typeof(TimePikerFieldViewModel))]
-public class TimePikerFieldViewModel : SingleControlEditingViewModel<TimePickerField>
+[RegisterAs(typeof(TimePickerFieldViewModel))]
+public class TimePickerFieldViewModel : SingleControlEditingViewModel<TimePickerField>
 {
     protected override TimePickerField InitializeControl()
     {

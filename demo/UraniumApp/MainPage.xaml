@@ -9,7 +9,7 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="UraniumApp.MainPage">
 
-    <!--<VerticalStackLayout Spacing="25">
+    <VerticalStackLayout Spacing="25">
         <StackLayout StyleClass="PrimaryContainer" Padding="20" HeightRequest="150">
             <Label Text="Hello, Uranium! ☢️" FontSize="Large" />
             <Label Text="Welcome to the demo app." />
@@ -23,29 +23,5 @@
             </Image>
             <Label FontSize="Large" Grid.Column="1" Text="Use the side navigation drawer to navigate to the other pages." VerticalOptions="Center"/>
         </Grid>
-    </VerticalStackLayout>-->
-
-    <Grid ColumnDefinitions="*,*" RowDefinitions="*">
-
-        <uranium:CodeView Language="csharp">
-            <uranium:CodeView.SourceCode>
-                <![CDATA[
-public class MyClass
-{
-    public DateTime MyProperty { get; set; }
-    public MyClass()
-    {
-    }
-                
-    public void MyMethod(string parameter, string name)
-    {
-        Console.WriteLine(parameter);
-    }
-}
-                ]]>
-            </uranium:CodeView.SourceCode>
-        </uranium:CodeView>
-
-        <WebView Source="ace.html" Grid.Column="1"/>
-    </Grid>
+    </VerticalStackLayout>
 </uranium:UraniumContentPage>

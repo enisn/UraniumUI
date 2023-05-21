@@ -24,6 +24,7 @@ public class ExpanderView : ContentView
     {
         Data = UraniumShapes.ArrowDown,
         VerticalOptions = LayoutOptions.Center,
+        HorizontalOptions = LayoutOptions.Center,
     };
 
     protected ContentView actualContentContainer = new ContentView
@@ -36,9 +37,11 @@ public class ExpanderView : ContentView
     public ExpanderView()
     {
         headerContainer.Content = headerGrid;
-        headerContainer.StyleClass = new[] { "Elevation1" };
-        Grid.SetColumn(arrowIcon, 1);
-        headerGrid.Children.Add(arrowIcon);
+        headerGrid.Add(new ContentView
+        {
+            Padding = new Thickness(10, 0),
+            Content = arrowIcon
+        }, column: 1) ;
 
         arrowIcon.SetAppThemeColor(Path.FillProperty,
             ColorResource.GetColor("OnBackground", Colors.Gray),

@@ -54,6 +54,7 @@
 	<ItemGroup>
 	  <PackageReference Include="DotNurse.Injector" Version="2.5.2" />
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+    <PackageReference Include="ReactiveUI.Fody" Version="18.4.1" />
 	</ItemGroup>
 
 	<ItemGroup>

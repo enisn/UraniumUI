@@ -124,6 +124,6 @@ public class CodeViewHandler : WebViewHandler
         XmlDocument doc = new XmlDocument();
         XmlNode node = doc.CreateElement("root");
         node.InnerText = unescaped;
-        return node.InnerXml.Replace("\n", "\\n").Replace("    ", "\\t");
+        return node.InnerXml.Replace("\n", "\\n").Replace("\r", string.Empty);
     }
 }

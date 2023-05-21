@@ -1,24 +1,29 @@
 ﻿using InputKit.Shared.Controls;
+using InputKit.Shared.Layouts;
 using Microsoft.Maui.Controls;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using UraniumApp.Inputs.ColorPicking;
+using UraniumUI;
 using UraniumUI.Material.Controls;
 using UraniumUI.Resources;
+using UraniumUI.Views;
 
 namespace UraniumApp
 {
-    public class PropertyEditorView : Frame
+    public class PropertyEditorView : ContentView
     {
         public object Value { get => GetValue(ValueProperty); set => SetValue(ValueProperty, value); }
         public static readonly BindableProperty ValueProperty = BindableProperty.Create(
             nameof(Value),
             typeof(object),
             typeof(PropertyEditorView),
-            propertyChanged: (bindable, oldValue, newValue)=> (bindable as PropertyEditorView).Render());
+            propertyChanged: (bindable, oldValue, newValue) => (bindable as PropertyEditorView).Render());
 
         public bool ShowMissingProperties { get; set; } = true;
 
@@ -43,6 +48,17 @@ namespace UraniumApp
             Spacing = 20,
             Padding = 10,
         };
+
+        private ContentView _footerView = new ContentView();
+        public View Footer { get => _footerView.Content; set
+            {
+                _footerView.Content = value;
+                if (_propertiesContainer.Children.Count > 0 && !_propertiesContainer.Contains(_footerView))
+                {
+                    _propertiesContainer.Children.Add(_footerView);
+                }
+            }
+        }
 
         public PropertyEditorView()
         {
@@ -82,6 +98,21 @@ namespace UraniumApp
             Content = _grid;
         }
 
+        public List<BindableProperty> EditingProperties { get => (List<BindableProperty>)GetValue(EditingPropertiesProperty); set => SetValue(EditingPropertiesProperty, value); }
+
+        public static readonly BindableProperty EditingPropertiesProperty = BindableProperty.Create(
+            nameof(EditingProperties),
+            typeof(List<BindableProperty>),
+            typeof(PropertyEditorView),
+            defaultBindingMode: BindingMode.OneWayToSource,
+            propertyChanged: (bindable, oldValue, newValue) =>
+            {
+                if (bindable is PropertyEditorView propertyEditor && propertyEditor.EditingProperties != (List<BindableProperty>)newValue)
+                {
+                    (bindable as PropertyEditorView).Render();
+                }
+            });
+
         public void Render()
         {
             if (Value is null)
@@ -95,20 +126,20 @@ namespace UraniumApp
                 flags |= BindingFlags.FlattenHierarchy;
             }
 
-            var bindableProperties = Value.GetType().
+            EditingProperties = Value.GetType().
                 GetFields(flags)
                 .Where(x => x.FieldType == typeof(BindableProperty) && HierarchyLimitType.IsAssignableFrom(x.DeclaringType))
                 .Select(x => x.GetValue(null) as BindableProperty)
                 .ToList();
 
-            foreach (var bindableProperty in bindableProperties)
+            foreach (var bindableProperty in EditingProperties)
             {
                 var createEditor = EditorMapping.FirstOrDefault(x => x.Key.IsAssignableFrom(bindableProperty.ReturnType)).Value;
                 if (createEditor != null)
                 {
                     _propertiesContainer.Children.Add(createEditor(bindableProperty, Value));
                 }
-                else if(ShowMissingProperties)
+                else if (ShowMissingProperties)
                 {
                     _propertiesContainer.Children.Add(new Label
                     {
@@ -116,6 +147,11 @@ namespace UraniumApp
                         FontAttributes = FontAttributes.Italic
                     });
                 }
+            }
+
+            if (_footerView.Content != null)
+            {
+                _propertiesContainer.Children.Add(_footerView);
             }
         }
 
@@ -191,16 +227,28 @@ namespace UraniumApp
 
         public static View EditorForColor(BindableProperty bindableProperty, object source)
         {
-            var editor = new PickerField();
+            var boxPreview = new BoxView { HeightRequest = 25, WidthRequest = 25 };
+            boxPreview.SetBinding(BoxView.ColorProperty, new Binding(bindableProperty.PropertyName, source: source));
+            var labelPropertyName = new Label { Text = bindableProperty.PropertyName, VerticalOptions = LayoutOptions.Center };
 
-            editor.ItemsSource = typeof(Colors)
-                .GetFields(BindingFlags.Public | BindingFlags.Static)
-                .Select(x => x.GetValue(null))
-                .ToArray();
+            var editor = new StatefulContentView
+            {
+                Content = new HorizontalStackLayout
+                {
+                    Spacing = 12,
+                    Children =
+                    {
+                        boxPreview,
+                        labelPropertyName
+                    }
+                },
+                TappedCommand = new Command(async () =>
+                {
+                    await UraniumServiceProvider.Current.GetRequiredService<IColorPicker>()
+                    .PickCollorForAsync(source, bindableProperty.PropertyName);
+                })
+            };
 
-            editor.SetBinding(PickerField.SelectedItemProperty, new Binding(bindableProperty.PropertyName, source: source));
-            editor.Title = bindableProperty.PropertyName;
-            editor.AllowClear = false;
             return editor;
         }
 

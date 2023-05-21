@@ -5,6 +5,7 @@
              xmlns:c="clr-namespace:Microsoft.Maui.Controls;assembly=Microsoft.Maui.Controls"
              xmlns:u="clr-namespace:UraniumUI.Resources;assembly=UraniumUI"
              xmlns:m="clr-namespace:UraniumUI.Material.Resources;assembly=UraniumUI.Material"
+             xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
              x:Class="UraniumApp.App">
     <Application.Resources>
        
@@ -21,6 +22,17 @@
                 <Setter Property="ColumnSpacing" Value="10" />
                 <Setter Property="RowSpacing" Value="10" />
                 <Setter Property="Padding" Value="30" />
+            </Style>
+
+            <Style TargetType="uranium:ExpanderView" CanCascade="True">
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Default=#29ffffff, Dark=#29000000}" />
+            </Style>
+
+            <Style TargetType="View" Class="ControlPreview" ApplyToDerivedTypes="True">
+                <Setter Property="HorizontalOptions" Value="Start" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="WidthRequest" Value="300" />
+                <Setter Property="Margin" Value="20" />
             </Style>
         </ResourceDictionary>
 

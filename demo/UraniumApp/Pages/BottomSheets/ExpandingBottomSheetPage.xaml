@@ -20,9 +20,12 @@
                 </Image>
             </VerticalStackLayout>
         </Frame>
-        <root:PropertyEditorView Value="{Binding ., Source={x:Reference bottomPage}}"
-                                 HorizontalOptions="Center"
-                                 MinimumWidthRequest="300"/>
+
+      <Frame MaximumWidthRequest="400">        
+          <root:PropertyEditorView Value="{Binding ., Source={x:Reference bottomPage}}"
+                                   HorizontalOptions="Center"/>
+      </Frame>
+
     </VerticalStackLayout>
 
     <uranium:UraniumContentPage.Attachments>

@@ -90,3 +90,48 @@ MAUI support font icons by using `FontImageSource` class. You can use it in `Ima
     </Image.Source>
 </Image>
 ```
+
+---
+
+### Segoe Fluent Icons
+Segoe Fluent Icons are included in [UraniumUI.Icons.SegoeFluentIcons](https://www.nuget.org/packages/UraniumUI.Icons.SegoeFluentIcons) package. After adding the package, you have to configure fonts in `MauiProgram.cs` file.
+
+```csharp
+builder
+	.UseMauiApp<App>()
+	.ConfigureFonts(fonts =>
+	{
+		fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+		fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+		fonts.AddFluentIconFonts(); // 👈 Add this line
+	})
+```
+
+#### Font Names
+Single font name is provided by the package. It can be used as `FontFamily` parameter in `FontImageSource`.
+
+- `Fluent`
+
+#### Glyphs
+Glyphs are provided with `FluentIcons` class. They can be accessed like `FluentIcons.Accept`. This class icluded in `UraniumUI.Icons.SegoeFluent` namespace. This namespace is exported to the default UraniumUI namespace.
+
+```xml
+xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
+```
+
+### Usage
+MAUI support font icons by using `FontImageSource` class. You can use it in `Image`, `Button` and any control that has a `ImageSource` typed property.
+
+```xml
+<Image>
+	<Image.Source>
+		<FontImageSource FontFamily="Fluent" Glyph="{x:Static uranium:FluentIcons.Accept}" Color="Green" />
+	</Image.Source>
+</Image>
+```
+
+Or you can use the `FontImageSource` markup extension.
+
+```xml
+<Image Source="{FontImageSource Glyph={x:Static uranium:FluentIcons.Accept}, FontFamily=Fluent, Color=Blue}" />
+```

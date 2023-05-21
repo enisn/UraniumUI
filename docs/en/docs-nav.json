@@ -56,6 +56,10 @@
         {
           "text": "Font Awesome",
           "path": "theming/Icons.md#fontawesome"
+        },
+        {
+          "text": "Segoe Fluent Icons",
+          "path": "theming/Icons.md#segoe-fluent-icons"
         }
       ]
     },

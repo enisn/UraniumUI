@@ -2,7 +2,6 @@
 using CommunityToolkit.Maui;
 using DotNurse.Injector;
 using Mopups.Hosting;
-using UraniumApp.Pages;
 using UraniumUI;
 using UraniumUI.Dialogs;
 
@@ -25,7 +24,9 @@ public static class MauiProgram
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                fonts.AddFontAwesomeIconFonts();
                 fonts.AddMaterialIconFonts();
+                fonts.AddFluentIconFonts();
             });
 
         var thisAssembly = typeof(MauiProgram).Assembly;

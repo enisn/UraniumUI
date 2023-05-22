@@ -34,7 +34,11 @@ public partial class SelectableLabelHandler : ViewHandler<ILabel, UITextView>
 
     protected override UITextView CreatePlatformView()
     {
-        return new UITextView();
+        return new UITextView()
+        {
+            BackgroundColor = UIColor.Clear,
+            Editable = false,
+        };
     }
 
     public static void MapFont(SelectableLabelHandler handler, ILabel label)

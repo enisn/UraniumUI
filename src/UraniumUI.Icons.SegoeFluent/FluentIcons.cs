@@ -1,6 +1,7 @@
 namespace UraniumUI.Icons.SegoeFluent;
 
-public static class FluentIcons
+public static class Fluent
+
 {
     public const string Previous = "\uE100";
     public const string Next = "\uE101";

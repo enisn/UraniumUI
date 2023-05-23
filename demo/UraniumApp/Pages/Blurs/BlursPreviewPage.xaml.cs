@@ -6,11 +6,4 @@ public partial class BlursPreviewPage : ContentPage
 	{
 		InitializeComponent();
     }
-
-    protected override void OnAppearing()
-    {
-        base.OnAppearing();
-
-        collectionView.SelectedItem = collectionView.ItemsSource.Cast<object>().LastOrDefault();
-    }
 }

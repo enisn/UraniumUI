@@ -2194,43 +2194,6 @@ public static class MaterialOutlined
 //  you should also change the fields from 'const' to 'public static readonly'
 public static class MaterialRegular
 {
-    public const string Icon1 = "\u0030";
-    public const string Icon2 = "\u0031";
-    public const string Icon3 = "\u0032";
-    public const string Icon4 = "\u0033";
-    public const string Icon5 = "\u0034";
-    public const string Icon6 = "\u0035";
-    public const string Icon7 = "\u0036";
-    public const string Icon8 = "\u0037";
-    public const string Icon9 = "\u0038";
-    public const string Icon10 = "\u0039";
-    public const string Icon11 = "\u005f";
-    public const string Icon12 = "\u0061";
-    public const string Icon13 = "\u0062";
-    public const string Icon14 = "\u0063";
-    public const string Icon15 = "\u0064";
-    public const string Icon16 = "\u0065";
-    public const string Icon17 = "\u0066";
-    public const string Icon18 = "\u0067";
-    public const string Icon19 = "\u0068";
-    public const string Icon20 = "\u0069";
-    public const string Icon21 = "\u006a";
-    public const string Icon22 = "\u006b";
-    public const string Icon23 = "\u006c";
-    public const string Icon24 = "\u006d";
-    public const string Icon25 = "\u006e";
-    public const string Icon26 = "\u006f";
-    public const string Icon27 = "\u0070";
-    public const string Icon28 = "\u0071";
-    public const string Icon29 = "\u0072";
-    public const string Icon30 = "\u0073";
-    public const string Icon31 = "\u0074";
-    public const string Icon32 = "\u0075";
-    public const string Icon33 = "\u0076";
-    public const string Icon34 = "\u0077";
-    public const string Icon35 = "\u0078";
-    public const string Icon36 = "\u0079";
-    public const string Icon37 = "\u007a";
     public const string Error = "\ue000";
     public const string Error_outline = "\ue001";
     public const string Warning = "\ue002";

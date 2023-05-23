@@ -42,6 +42,7 @@ public partial class InputField : Grid
         Padding = 0,
         StrokeThickness = 1,
         StrokeDashOffset = 0,
+        StyleClass = new[] { "InputFieldBorder" },
         BackgroundColor = Colors.Transparent,
     };
 
@@ -172,7 +173,7 @@ public partial class InputField : Grid
         border = new Border
         {
             Padding = 0,
-            Stroke = BorderColor,
+            Stroke = ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.Gray),
             StrokeThickness = 2,
             StrokeDashOffset = 0,
             BackgroundColor = Colors.Transparent,
@@ -304,9 +305,6 @@ public partial class InputField : Grid
         if (border.StrokeShape is RoundRectangle roundRectangle)
         {
             roundRectangle.CornerRadius = CornerRadius;
-#if WINDOWS
-            InitializeBorder();
-#endif
         }
     }
 

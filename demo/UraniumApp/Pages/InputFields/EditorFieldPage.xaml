@@ -7,7 +7,7 @@
              xmlns:vm="clr-namespace:UraniumApp.ViewModels.InputFields"
              xmlns:root="clr-namespace:UraniumApp"
              x:DataType="vm:EditorFieldViewModel"
-             BindingContext="{root:Inject {x:Type vm:EditorFieldViewModel}}"
+             BindingContext="{uranium:Inject {x:Type vm:EditorFieldViewModel}}"
              x:Class="UraniumApp.Pages.InputFields.EditorFieldPage">
     <ContentPage.Resources>
         <x:String x:Key="SourceCode">

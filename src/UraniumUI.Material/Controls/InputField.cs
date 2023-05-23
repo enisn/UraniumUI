@@ -42,6 +42,7 @@ public partial class InputField : Grid
         Padding = 0,
         StrokeThickness = 1,
         StrokeDashOffset = 0,
+        StyleClass = new[] { "InputFieldBorder" },
         BackgroundColor = Colors.Transparent,
     };
 

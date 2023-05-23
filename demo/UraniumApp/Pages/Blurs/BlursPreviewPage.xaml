@@ -8,7 +8,7 @@
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
              xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
              x:DataType="vm:BlursPreviewViewModel"
-             BindingContext="{root:Inject {Type vm:BlursPreviewViewModel}}">
+             BindingContext="{uranium:Inject {Type vm:BlursPreviewViewModel}}">
     <ScrollView>
         <VerticalStackLayout>
 

@@ -8,7 +8,7 @@
              xmlns:root="clr-namespace:UraniumApp"
              x:Class="UraniumApp.Pages.InputFields.PickerFieldPage"
              x:DataType="vm:PickerFieldViewModel"
-             BindingContext="{root:Inject {Type vm:PickerFieldViewModel}}">
+             BindingContext="{uranium:Inject {Type vm:PickerFieldViewModel}}">
 
     <ContentPage.Resources>
         <x:String x:Key="SourceCode">

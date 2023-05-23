@@ -6,7 +6,7 @@
              xmlns:root="clr-namespace:UraniumApp"
              x:Class="UraniumApp.Pages.FontImagesPage"
              x:DataType="vm:FontImagesViewModel"
-             BindingContext="{root:Inject {Type vm:FontImagesViewModel}}">
+             BindingContext="{uranium:Inject {Type vm:FontImagesViewModel}}">
     <Grid>
         <material:TabView ItemsSource="{Binding Items}">
             <material:TabView.ItemTemplate>

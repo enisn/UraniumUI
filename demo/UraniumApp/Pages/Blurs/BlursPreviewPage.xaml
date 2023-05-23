@@ -14,15 +14,15 @@
 
             <root:ViewShowcaseView Margin="20">
                 <Grid>
-                    <Image Source="{Binding BackgroundImageSource}" MinimumHeightRequest="400" />
+                    <Image Source="{Binding BackgroundImageSource}" MinimumHeightRequest="800" />
 
-                    <VerticalStackLayout Margin="10" VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="400" HeightRequest="200">
+                    <VerticalStackLayout Margin="10" VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="{OnIdiom Default=400, Phone=200}" HeightRequest="50">
                         <VerticalStackLayout.Effects>
                             <uranium:BlurEffect Mode="{root:XBind BlurMode}" AccentColor="{root:XBind AccentColor}" AccentOpacity="{root:XBind AccentOpacity}" />
                         </VerticalStackLayout.Effects>
                     </VerticalStackLayout>
 
-                    <StackLayout VerticalOptions="End" HorizontalOptions="Fill" Padding="20">
+                    <StackLayout VerticalOptions="End" HorizontalOptions="Fill" Padding="{OnIdiom Default=20, Phone=0}">
                         <StackLayout.Effects>
                             <uranium:BlurEffect Mode="{root:XBind BlurMode}" AccentColor="{root:XBind AccentColor}" AccentOpacity="{root:XBind AccentOpacity}" />
                         </StackLayout.Effects>
@@ -44,7 +44,7 @@
                                  SelectedItem="{Binding BlurMode}"
                                  ColumnNumber="2"
                                  ColumnSpacing="-3"
-                                 SelectionType="Button"
+                                 SelectionType="RadioButton"
                                  HorizontalOptions="Center"
                                  Margin="40"/>
                         </VerticalStackLayout>

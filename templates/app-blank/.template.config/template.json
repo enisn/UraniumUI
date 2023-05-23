@@ -30,6 +30,10 @@
             "description":"Configure material icons by default."
           },
           {
+            "choice": "FluentIcons",
+            "description":"Configure Segoe Fluent Icons by default."
+          },
+          {
             "choice": "None",
             "description":"Configure no icons by default."
           }

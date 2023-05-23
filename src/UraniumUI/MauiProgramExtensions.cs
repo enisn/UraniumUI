@@ -26,6 +26,7 @@ public static class MauiProgramExtensions
             .AddHandler(typeof(Button), typeof(StatefulButtonHandler))
             .AddHandler(typeof(StatefulContentView), typeof(StatefulContentViewHandler))
             .AddHandler(typeof(AutoCompleteView), typeof(AutoCompleteViewHandler))
+            .AddHandler(typeof(SelectableLabel), typeof(SelectableLabelHandler))
             .AddPlainer();
     }
 }

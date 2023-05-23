@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<uranium:UraniumContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:UraniumApp"
              xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
@@ -23,5 +23,9 @@
             </Image>
             <Label FontSize="Large" Grid.Column="1" Text="Use the side navigation drawer to navigate to the other pages." VerticalOptions="Center"/>
         </Grid>
+
+
+      <uranium:SelectableLabel Text="Hello, World! This text should be selectable!" />
+      
     </VerticalStackLayout>
-</uranium:UraniumContentPage>
+</ContentPage>

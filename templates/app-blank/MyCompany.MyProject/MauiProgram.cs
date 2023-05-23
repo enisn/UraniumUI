@@ -38,10 +38,13 @@ public static class MauiProgram
 #if MaterialIcons
 				fonts.AddMaterialIconFonts();
 #endif
+#if FluentIcons
+				fonts.AddFluentIconFonts();
+#endif
             });
 
 #if CommunityToolkit
-        builder.Services.AddCommunityToolkitDialogs();
+		builder.Services.AddCommunityToolkitDialogs();
 #endif
 #if Mopups
 		builder.Services.AddMopupsDialogs();

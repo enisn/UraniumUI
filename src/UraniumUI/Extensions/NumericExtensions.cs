@@ -1,14 +1,14 @@
 ﻿namespace UraniumUI.Extensions;
 public static class NumericExtensions
 {
-    public static double Clamp(this double value, double min, double max)
+    public static T Clamp<T>(this T value, T min, T max) where T : struct
     {
-        if (value > max)
+          if (Comparer<T>.Default.Compare(value, max) > 0)
         {
             return max;
         }
 
-        if (value < min)
+        if (Comparer<T>.Default.Compare(value, min) < 0)
         {
             return min;
         }

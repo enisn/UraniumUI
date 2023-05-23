@@ -38,6 +38,7 @@ public partial class TextField : InputField
     public override bool HasValue { get => !string.IsNullOrEmpty(Text); }
 
     public event EventHandler<TextChangedEventArgs> TextChanged;
+    public event EventHandler Completed;
 
     public TextField()
     {
@@ -67,11 +68,15 @@ public partial class TextField : InputField
         }
 #endif
 
-        EntryView.TextChanged += EntryView_TextChanged;
-
         if (Handler is null)
         {
             EntryView.TextChanged -= EntryView_TextChanged;
+            EntryView.Completed -= EntryView_Completed;
+        }
+        else
+        {
+            EntryView.TextChanged += EntryView_TextChanged;
+            EntryView.Completed += EntryView_Completed;
         }
     }
 
@@ -94,6 +99,12 @@ public partial class TextField : InputField
 
         TextChanged?.Invoke(this, e);
     }
+
+    private void EntryView_Completed(object sender, EventArgs e)
+    {
+        Completed?.Invoke(this, e);
+    }
+
     public void ClearValue()
     {
         if (IsEnabled)

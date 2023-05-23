@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
              xmlns:vm="clr-namespace:UraniumApp.ViewModels"
              xmlns:root="clr-namespace:UraniumApp"
              x:Class="UraniumApp.Pages.FontImagesPage"
              x:DataType="vm:FontImagesViewModel"
-             BindingContext="{root:Inject {Type vm:FontImagesViewModel}}">
+             BindingContext="{uranium:Inject {Type vm:FontImagesViewModel}}">
     <Grid>
         <material:TabView ItemsSource="{Binding Items}">
             <material:TabView.ItemTemplate>

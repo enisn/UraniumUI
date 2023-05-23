@@ -6,7 +6,7 @@
              xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
              xmlns:vm="clr-namespace:UraniumApp.ViewModels.InputFields"
              x:DataType="vm:TimePickerFieldViewModel"
-             BindingContext="{root:Inject {Type vm:TimePickerFieldViewModel}}"
+             BindingContext="{uranium:Inject {Type vm:TimePickerFieldViewModel}}"
              xmlns:root="clr-namespace:UraniumApp"
              x:Class="UraniumApp.Pages.InputFields.TimePickerFieldPage"
              >

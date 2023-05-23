@@ -7,7 +7,7 @@
              xmlns:vm="clr-namespace:UraniumApp.ViewModels.InputFields"
              xmlns:root="clr-namespace:UraniumApp"
              x:DataType="vm:MultiplePickerFieldVideModel"
-             BindingContext="{root:Inject {Type vm:MultiplePickerFieldVideModel}}"
+             BindingContext="{uranium:Inject {Type vm:MultiplePickerFieldVideModel}}"
              x:Class="UraniumApp.Pages.InputFields.MultiplePickerFieldPage">
 
     <ContentPage.Resources>

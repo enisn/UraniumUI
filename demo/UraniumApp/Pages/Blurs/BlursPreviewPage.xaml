@@ -2,24 +2,86 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="UraniumApp.Pages.Blurs.BlursPreviewPage"
+             xmlns:vm="clr-namespace:UraniumApp.ViewModels.Blurs"
              xmlns:root="clr-namespace:UraniumApp"
              xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
-             Title="BlursPreviewPage">
-    <Grid>
-        <Image x:Name="img" />
+             xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
+             x:DataType="vm:BlursPreviewViewModel"
+             BindingContext="{root:Inject {Type vm:BlursPreviewViewModel}}">
+    <ScrollView>
+        <VerticalStackLayout>
 
-        <VerticalStackLayout Margin="10" VerticalOptions="Center">
-            <VerticalStackLayout.Effects>
-                <uranium:BlurEffect x:Name="blur1" />
-            </VerticalStackLayout.Effects>
+            <root:ViewShowcaseView Margin="20">
+                <Grid>
+                    <Image Source="{Binding BackgroundImageSource}" MinimumHeightRequest="400" />
 
-            <material:RadioButtonGroupView Margin="50" HorizontalOptions="Center" x:Name="rb1" SelectedItemChanged="rb1_SelectedItemChanged" >
-                <material:RadioButton Text="Light" IsChecked="True" />
-                <material:RadioButton Text="Dark" />
-            </material:RadioButtonGroupView>
+                    <VerticalStackLayout Margin="10" VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="400" HeightRequest="200">
+                        <VerticalStackLayout.Effects>
+                            <uranium:BlurEffect Mode="{root:XBind BlurMode}" AccentColor="{root:XBind AccentColor}" AccentOpacity="{root:XBind AccentOpacity}" />
+                        </VerticalStackLayout.Effects>
+                    </VerticalStackLayout>
 
+                    <StackLayout VerticalOptions="End" HorizontalOptions="Fill" Padding="20">
+                        <StackLayout.Effects>
+                            <uranium:BlurEffect Mode="{root:XBind BlurMode}" AccentColor="{root:XBind AccentColor}" AccentOpacity="{root:XBind AccentOpacity}" />
+                        </StackLayout.Effects>
+                        <CollectionView x:Name="collectionView" SelectionMode="Single" ItemsSource="{Binding BackgroundImageSourceList}" SelectedItem="{Binding BackgroundImageSource}" ItemsLayout="HorizontalList">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="x:String">
+                                    <Image Margin="10" Source="{Binding .}" WidthRequest="100" HeightRequest="60" Aspect="AspectFit" />
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </StackLayout>
+                </Grid>
+
+                <root:ViewShowcaseView.SidePanel>
+                    <VerticalStackLayout Padding="20" Spacing="20">
+                        <VerticalStackLayout>
+                            <Label Text="Mode" />
+                            <input:SelectionView ItemsSource="{Binding BlurModeList}"
+                                 SelectedItem="{Binding BlurMode}"
+                                 ColumnNumber="2"
+                                 ColumnSpacing="-3"
+                                 SelectionType="Button"
+                                 HorizontalOptions="Center"
+                                 Margin="40"/>
+                        </VerticalStackLayout>
+
+                        <uranium:StatefulContentView TappedCommand="{Binding PickAccentColorCommand}">
+                            <HorizontalStackLayout Spacing="10">
+                                <BoxView Color="{Binding AccentColor}" HeightRequest="25" WidthRequest="25" />
+                                <Label Text="AccentColor" Grid.Column="1" />
+                            </HorizontalStackLayout>
+                        </uranium:StatefulContentView>
+
+                        <VerticalStackLayout>
+                            <Label Text="AccentOpacity" />
+                            <input:AdvancedSlider Value="{Binding AccentOpacity}" MaxValue="1" MinValue="0" StepValue="0.1">
+                                <input:AdvancedSlider.Resources>
+                                    <Style TargetType="Slider">
+                                        <Setter Property="WidthRequest" Value="300" />
+                                        <Setter Property="ThumbColor" Value="{AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+                                    </Style>
+                                </input:AdvancedSlider.Resources>
+                            </input:AdvancedSlider>
+                        </VerticalStackLayout>
+                        
+                    </VerticalStackLayout>
+                </root:ViewShowcaseView.SidePanel>
+
+                <root:ViewShowcaseView.BottomView>
+                    <uranium:ExpanderView>
+                        <uranium:ExpanderView.Header>
+                            <Label Text="Source Code (XAML)" Padding="10" />
+                        </uranium:ExpanderView.Header>
+
+                        <uranium:CodeView SourceCode="{Binding XamlSourceCode}" Language="xml" HeightRequest="160" />
+                    </uranium:ExpanderView>
+                </root:ViewShowcaseView.BottomView>
+
+            </root:ViewShowcaseView>
         </VerticalStackLayout>
-
-    </Grid>
+    </ScrollView>
 </ContentPage>

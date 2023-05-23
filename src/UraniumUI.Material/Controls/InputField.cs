@@ -9,6 +9,7 @@ namespace UraniumUI.Material.Controls;
 public partial class InputField : Grid
 {
     internal const double FirstDash = 6;
+    internal const double MaxCornerRadius = 24;
     private View content;
     public virtual View Content
     {
@@ -204,7 +205,7 @@ public partial class InputField : Grid
         if (HasValue || Content.IsFocused)
         {
             UpdateOffset(0.01, animate);
-            labelTitle.TranslateTo(0, -25, 90, Easing.BounceOut);
+            labelTitle.TranslateTo(CornerRadius.Clamp(10, MaxCornerRadius) - 10, -25, 90, Easing.BounceOut);
             labelTitle.AnchorX = 0;
             labelTitle.ScaleTo(.8, 90);
         }
@@ -301,6 +302,12 @@ public partial class InputField : Grid
     }
     protected virtual void OnCornerRadiusChanged()
     {
+        if (CornerRadius > MaxCornerRadius)
+        {
+            CornerRadius = MaxCornerRadius;
+            return;
+        }
+
         if (border.StrokeShape is RoundRectangle roundRectangle)
         {
             roundRectangle.CornerRadius = CornerRadius;

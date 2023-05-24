@@ -38,15 +38,31 @@
                             </Grid>
                         </Frame>
 
-                        <Border HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="1" Padding="20">
-                            <VerticalStackLayout>
-                                <Image Margin="30" HeightRequest="60">
-                                    <Image.Source>
-                                        <FontImageSource Glyph="{Binding SelectedIcon.Glyph}" FontFamily="{Binding SelectedIcon.FontFamily}" Color="{AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}" Size="128" />
-                                    </Image.Source>
-                                </Image>
-                                <Label Text="{Binding SelectedIcon.Alias}" HorizontalTextAlignment="Center" />
+                        <Border HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="1" StyleClass="SurfaceContainer,Rounded">
 
+                            <VerticalStackLayout Spacing="10">
+                                <Border Padding="20" Margin="20">
+                                    <VerticalStackLayout>
+                                        <Image Margin="30" HeightRequest="60">
+                                            <Image.Source>
+                                                <FontImageSource Glyph="{Binding SelectedIcon.Glyph}" FontFamily="{Binding SelectedIcon.FontFamily}" Color="{AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}" Size="128" />
+                                            </Image.Source>
+                                        </Image>
+                                        <uranium:SelectableLabel Text="{Binding SelectedIcon.Alias}" HorizontalTextAlignment="Center" />
+
+                                    </VerticalStackLayout>
+                                </Border>
+
+                                <uranium:ExpanderView>
+                                    <uranium:ExpanderView.Header>
+                                        <Label Padding="10" Text="Source Code (XAML)" />
+                                    </uranium:ExpanderView.Header>
+
+                                    <Grid>
+                                        <uranium:CodeView SourceCode="{Binding XamlSourceCode}" Language="xml" HeightRequest="90" WidthRequest="500" />
+                                        <root:CopyButton TextToCopy="{Binding XamlSourceCode}" />
+                                    </Grid>
+                                </uranium:ExpanderView>
                             </VerticalStackLayout>
                         </Border>
                     </Grid>

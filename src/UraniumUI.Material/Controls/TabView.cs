@@ -95,10 +95,7 @@ public partial class TabView : Grid
         return grid;
     });
 
-    protected readonly StackLayout _headerContainer = new StackLayout
-    {
-        HorizontalOptions = LayoutOptions.Fill
-    };
+    protected readonly Grid _headerContainer = new Grid();
 
     protected readonly ContentView _contentContainer = new ContentView
     {
@@ -157,7 +154,8 @@ public partial class TabView : Grid
                 {
                     this.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
                     this.RowDefinitions.Add(new RowDefinition(GridLength.Star));
-                    _headerContainer.Orientation = StackOrientation.Horizontal;
+
+                    AlignGridHorizontal(_headerContainer);
 
                     this.Add(_headerScrollView, row: 0);
                     this.Add(_contentContainer, row: 1);
@@ -167,7 +165,8 @@ public partial class TabView : Grid
                 {
                     this.RowDefinitions.Add(new RowDefinition(GridLength.Star));
                     this.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
-                    _headerContainer.Orientation = StackOrientation.Horizontal;
+
+                    AlignGridHorizontal(_headerContainer);
 
                     this.Add(_headerScrollView, row: 1);
                     this.Add(_contentContainer, row: 0);
@@ -177,7 +176,8 @@ public partial class TabView : Grid
                 {
                     this.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Auto));
                     this.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Star));
-                    _headerContainer.Orientation = StackOrientation.Vertical;
+
+                    AlignGridVertical(_headerContainer);
 
                     this.Add(_headerScrollView, column: 0);
                     this.Add(_contentContainer, column: 1);
@@ -187,12 +187,59 @@ public partial class TabView : Grid
                 {
                     this.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Star));
                     this.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Auto));
-                    _headerContainer.Orientation = StackOrientation.Vertical;
+
+                    AlignGridVertical(_headerContainer);
 
                     this.Add(_headerScrollView, column: 1);
                     this.Add(_contentContainer, column: 0);
                 }
                 break;
+        }
+    }
+
+    protected virtual void AlignGridHorizontal(Grid grid)
+    {
+        grid.ColumnDefinitions.Clear();
+        grid.RowDefinitions.Clear();
+        foreach (var item in grid.Children)
+        {
+            grid.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Star));
+        }
+
+        for (int i = 0; i < grid.Children.Count; i++)
+        {
+            Grid.SetRow(grid.Children[i] as View, 0);
+            Grid.SetColumn(grid.Children[i] as View, i);
+        }
+    }
+
+    protected virtual void AlignGridVertical(Grid grid)
+    {
+        grid.ColumnDefinitions.Clear();
+        grid.RowDefinitions.Clear();
+        foreach (var item in grid.Children)
+        {
+            grid.RowDefinitions.Add(new RowDefinition(GridLength.Star));
+        }
+
+        for (int i = 0; i < grid.Children.Count; i++)
+        {
+            Grid.SetRow(grid.Children[i] as View, i);
+            Grid.SetColumn(grid.Children[i] as View, 0);
+        }
+    }
+
+    protected virtual void AddHeader(View headerView)
+    {
+        if (TabPlacement == TabViewTabPlacement.Top || TabPlacement == TabViewTabPlacement.Bottom)
+        {
+            _headerContainer.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Star));
+            _headerContainer.Add(headerView,_headerContainer.Children.Count);
+        }
+        else
+        {
+            _headerContainer.RowDefinitions.Add(new RowDefinition(GridLength.Star));
+            _headerContainer.Add(headerView,0, _headerContainer.Children.Count);
         }
     }
 
@@ -309,7 +356,7 @@ public partial class TabView : Grid
             SelectedTab = tabItem;
         }
 
-        _headerContainer.Add(view);
+        AddHeader(view);
     }
 
     protected virtual void AddHeaderForItem(object item)

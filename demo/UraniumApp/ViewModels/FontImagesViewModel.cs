@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using UraniumUI.Icons.MaterialIcons;
 using UraniumUI.Icons.SegoeFluent;
 using System.Reactive.Linq;
+using System.Xml.Linq;
+using DynamicData.Binding;
 
 namespace UraniumApp.ViewModels;
 
@@ -64,30 +66,13 @@ public class FontImageViewModel : ReactiveObject
         this.Name = name;
         this.WhenAnyValue(x => x.SelectedType)
             .Subscribe(LoadIconsForSelectedType);
+        SourceCode = XDocument.Parse("""<ContentPage xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"><Image /></ContentPage>""");
+
+        this.WhenAnyPropertyChanged(nameof(SelectedType), nameof(SelectedIcon))
+            .Subscribe(GenerateSourceCode);
     }
-
-    private void LoadIconsForSelectedType(Type type)
-    {
-        if (type == null)
-        {
-            Icons = null;
-            return;
-        }
-
-        Icons = type.GetFields(System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public)
-            .Select(s => new FontImageItemViewModel
-            {
-                Glyph = s.GetValue(null) as string,
-                Alias = s.Name,
-                FontFamily = FontFamilyPrefix + type.Name
-            });
-
-        SelectedIcon = Icons.FirstOrDefault();
-
-        this.WhenAnyValue(x => x.SearchText)
-            .Throttle(TimeSpan.FromMilliseconds(250))
-            .Subscribe(_ => this.RaisePropertyChanged(nameof(Icons)));
-    }
+    public string XamlSourceCode => SourceCode.ToString();
+    protected XDocument SourceCode { get; }
 
     public Type[] Types { get; set; }
 
@@ -116,6 +101,43 @@ public class FontImageViewModel : ReactiveObject
     [Reactive] public Type SelectedType { get; set; }
 
     public string FontFamilyPrefix { get; set; }
+
+    private void LoadIconsForSelectedType(Type type)
+    {
+        if (type == null)
+        {
+            Icons = null;
+            return;
+        }
+
+        Icons = type.GetFields(System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public)
+            .Select(s => new FontImageItemViewModel
+            {
+                Glyph = s.GetValue(null) as string,
+                Alias = s.Name,
+                FontFamily = FontFamilyPrefix + type.Name
+            });
+
+        SelectedIcon = Icons.FirstOrDefault();
+
+        this.WhenAnyValue(x => x.SearchText)
+            .Throttle(TimeSpan.FromMilliseconds(250))
+            .Subscribe(_ => this.RaisePropertyChanged(nameof(Icons)));
+    }
+
+    protected virtual void GenerateSourceCode(object parameter = null)
+    { 
+        var contentPage = SourceCode.Descendants().First();
+        var uranium = contentPage.GetNamespaceOfPrefix("uranium");
+        var image = contentPage.Descendants("Image").First();
+
+        var sourceValue = SelectedIcon is null ? null :
+            $"{{FontImageSource Glyph={{x:Static uranium:{SelectedType.Name}.{SelectedIcon.Alias}}}, FontFamily={SelectedIcon.FontFamily}}}";
+
+        image.SetAttributeValue("Source", sourceValue);
+
+        this.RaisePropertyChanged(nameof(XamlSourceCode));
+    }
 
     public override string ToString() => Name;
 }

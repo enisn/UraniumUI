@@ -51,7 +51,7 @@ public partial class ButtonViewHandler
             VisualStateManager.GoToState(StatefulView, "Pressed");
             ExecuteCommandIfCan(StatefulView.PressedCommand);
         }
-        else if (e.Event.Action == MotionEventActions.Up || e.Event.Action == MotionEventActions.Cancel)
+        else if (e.Event.Action == MotionEventActions.Up)
         {
             VisualStateManager.GoToState(StatefulView, VisualStateManager.CommonStates.Normal);
             ExecuteCommandIfCan(StatefulView.TappedCommand);

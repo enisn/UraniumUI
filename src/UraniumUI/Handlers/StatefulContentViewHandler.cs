@@ -80,7 +80,7 @@ public class StatefulContentViewHandler : ContentViewHandler
             StatefulView.InvokePressed();
             e.Handled = false;
         }
-        else if (e.Event.Action == MotionEventActions.Up || e.Event.Action == MotionEventActions.Cancel)
+        else if (e.Event.Action == MotionEventActions.Up)
         {
             GoToState(StatefulView, CommonStates.Normal);
             e.Handled = false;
@@ -116,7 +116,7 @@ public class StatefulContentViewHandler : ContentViewHandler
 
         platformView.PointerEntered += PlatformView_PointerEntered;
         platformView.PointerExited += PlatformView_PointerExited;
-
+        platformView.IsTabStop = true;
         return platformView;
     }
 

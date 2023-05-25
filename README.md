@@ -64,8 +64,8 @@ This project is licensed under the Apache License License - see the [LICENSE](LI
 
 | Special thanks to project supporters 🎉 | - |
 | --- | :---: |
+| [Hottemax](https://github.com/Hottemax) | ☕️☕️☕️☕️☕️☕️ |
 | [tjlangenkamp](https://github.com/tjlangenkamp) | ☕️☕️☕️☕️☕️ |
-| [Hottemax](https://github.com/Hottemax) | ☕️☕️☕️ |
 | [C00lzer0](https://github.com/C00lzer0) | ☕️☕️☕️|
 | _Anonymous_ | ☕️☕️☕️ |
 | [gpproton](https://github.com/gpproton) | ☕ |

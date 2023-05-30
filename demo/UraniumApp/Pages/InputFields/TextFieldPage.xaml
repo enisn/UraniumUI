@@ -66,7 +66,13 @@
                     <Label Text="Simple set of TextFields." FontSize="Subtitle" Margin="20"/>
 
                     <VerticalStackLayout StyleClass="ControlPreview" Spacing="12">
-                        <material:TextField Title="Name" />
+                        <material:TextField Title="Name">
+                            <material:TextField.Resources>
+                                <Style TargetType="Entry" ApplyToDerivedTypes="True">
+                                    <Setter Property="HorizontalTextAlignment" Value="End" />
+                                </Style>
+                            </material:TextField.Resources>
+                        </material:TextField>
                         <material:TextField Title="Surname" />
                         <material:TextField Title="Age" Keyboard="Numeric" />
                     </VerticalStackLayout>

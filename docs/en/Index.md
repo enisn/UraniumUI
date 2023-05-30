@@ -31,7 +31,7 @@ Uranium is available on [GitHub](https://github.com/enisn/UraniumUI)
 <img src="https://raw.githubusercontent.com/enisn/UraniumUI/develop/art/github-social-preview.png" alt="MAUI UraniumUI" />
 
 ## Contributing
-We welcome contributions and suggestions. Please read our [contributing guide](#).
+We welcome contributions and suggestions. Please read our [contributing guide](https://github.com/enisn/UraniumUI/blob/develop/CONTRIBUTING.md).
 
 
 ## Roadmap

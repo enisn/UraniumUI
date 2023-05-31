@@ -19,6 +19,7 @@ using UIKit;
 using UraniumUI.Views;
 using static Microsoft.Maui.Controls.VisualStateManager;
 using System.Windows.Input;
+using UraniumUI.Resources;
 
 namespace UraniumUI.Handlers;
 
@@ -116,7 +117,12 @@ public class StatefulContentViewHandler : ContentViewHandler
 
         platformView.PointerEntered += PlatformView_PointerEntered;
         platformView.PointerExited += PlatformView_PointerExited;
+
         platformView.IsTabStop = true;
+        platformView.UseSystemFocusVisuals = true;
+        platformView.KeyDown += PlatformView_KeyDown;
+        platformView.KeyUp += PlatformView_KeyUp;
+
         return platformView;
     }
 
@@ -124,6 +130,8 @@ public class StatefulContentViewHandler : ContentViewHandler
     {
         platformView.PointerEntered -= PlatformView_PointerEntered;
         platformView.PointerExited -= PlatformView_PointerExited;
+        platformView.KeyDown -= PlatformView_KeyDown;
+        platformView.KeyUp -= PlatformView_KeyUp;
         base.DisconnectHandler(platformView);
     }
 
@@ -167,6 +175,31 @@ public class StatefulContentViewHandler : ContentViewHandler
         GoToState(StatefulView, CommonStates.Normal);
         ExecuteCommandIfCan(StatefulView.TappedCommand);
         StatefulView.InvokeTapped();
+    }
+
+    private void PlatformView_KeyDown(object sender, KeyRoutedEventArgs e)
+    {
+        if (IsActionKey(e.Key))
+        {
+            GoToState(StatefulView, "Pressed");
+            ExecuteCommandIfCan(StatefulView.PressedCommand);
+            StatefulView.InvokePressed();
+        }
+    }
+
+    private void PlatformView_KeyUp(object sender, KeyRoutedEventArgs e)
+    {
+        if (IsActionKey(e.Key))
+        {
+            ExecuteCommandIfCan(StatefulView.TappedCommand);
+            StatefulView.InvokeTapped();
+            GoToState(StatefulView, CommonStates.Normal);
+        }
+    }
+
+    private bool IsActionKey(Windows.System.VirtualKey key)
+    {
+        return key == Windows.System.VirtualKey.Enter || key == Windows.System.VirtualKey.Space;
     }
 #endif
 

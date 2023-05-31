@@ -51,15 +51,15 @@
       "items":[
         {
           "text": "Material Icons",
-          "path": "theming/Icons.md#material-icons"
+          "path": "theming/Icons#material-icons"
         },
         {
           "text": "Font Awesome",
-          "path": "theming/Icons.md#fontawesome"
+          "path": "theming/Icons#fontawesome"
         },
         {
           "text": "Segoe Fluent Icons",
-          "path": "theming/Icons.md#segoe-fluent-icons"
+          "path": "theming/Icons#segoe-fluent-icons"
         }
       ]
     },

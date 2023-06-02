@@ -116,7 +116,6 @@ public class PickerField : InputField
         }
 
 #if WINDOWS
-        //labelSelectedItem.Text = SelectedItem?.ToString();
         if (ItemDisplayBinding != null)
         {
             Binding itemDisplayBinding = (Binding)ItemDisplayBinding;

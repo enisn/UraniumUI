@@ -83,11 +83,6 @@ public class PickerField : InputField
 #endif
     }
 
-    private void PickerView_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        throw new NotImplementedException();
-    }
-
 #if WINDOWS
     protected override void OnSizeAllocated(double width, double height)
     {
@@ -119,8 +114,6 @@ public class PickerField : InputField
         {
             iconClear.IsVisible = SelectedItem != null;
         }
-
-        string selectedItem = SelectedItem?.ToString();
 
 #if WINDOWS
         //labelSelectedItem.Text = SelectedItem?.ToString();

@@ -1,6 +1,7 @@
 ﻿using DotNurse.Injector.Attributes;
 using System;
 using System.Collections;
+using System.Collections.ObjectModel;
 using System.Xml.Linq;
 using UraniumUI.Material.Controls;
 using UraniumUI.Resources;
@@ -10,6 +11,19 @@ namespace UraniumApp.ViewModels.InputFields;
 [RegisterAs(typeof(PickerFieldViewModel))]
 public class PickerFieldViewModel : SingleControlEditingViewModel<PickerField>
 {
+
+    //Test props
+    private ObservableCollection<TestModel> testModels;
+    public ObservableCollection<TestModel> TestModels { get { return testModels; } }
+
+    public PickerFieldViewModel()
+    {
+        testModels = new ObservableCollection<TestModel>()
+        {
+            new TestModel() {Value = "option1"},
+            new TestModel() {Value = "option2"}
+        };
+    }
     protected override string InitialXDocumentCode => """<ContentPage xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"><material:PickerField /></ContentPage>""";
 
     protected override PickerField InitializeControl()
@@ -47,5 +61,11 @@ public class PickerFieldViewModel : SingleControlEditingViewModel<PickerField>
         }
 
         return base.FormatValue(value);
+    }
+
+    //Test for picker field using object as bindable property
+    public class TestModel
+    {
+        public string Value { get; set; }
     }
 }

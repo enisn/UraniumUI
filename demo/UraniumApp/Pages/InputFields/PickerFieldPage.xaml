@@ -53,13 +53,7 @@ public ObservableCollection<string> Items { get; } = new ObservableCollection<st
                         <Label Text="Simple EditorField" FontSize="Subtitle" Margin="20"/>
 
                         <VerticalStackLayout StyleClass="ControlPreview" Spacing="12">
-                            <material:PickerField Title="Pick an option" Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Expand_circle_down}}">
-                                <material:PickerField.Items>
-                                    <x:String>Item 1</x:String>
-                                    <x:String>Item 2</x:String>
-                                    <x:String>Item 3</x:String>
-                                </material:PickerField.Items>
-                            </material:PickerField>
+                            <material:PickerField ItemsSource="{Binding TestModels}" ItemDisplayBinding="{Binding Value}" Title="Pick an option" Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Expand_circle_down}}"/>
                         </VerticalStackLayout>
 
                         <uranium:ExpanderView>

@@ -83,6 +83,11 @@ public class PickerField : InputField
 #endif
     }
 
+    private void PickerView_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        throw new NotImplementedException();
+    }
+
 #if WINDOWS
     protected override void OnSizeAllocated(double width, double height)
     {
@@ -115,8 +120,20 @@ public class PickerField : InputField
             iconClear.IsVisible = SelectedItem != null;
         }
 
+        string selectedItem = SelectedItem?.ToString();
+
 #if WINDOWS
-        labelSelectedItem.Text = SelectedItem?.ToString();
+        //labelSelectedItem.Text = SelectedItem?.ToString();
+        if (ItemDisplayBinding != null)
+        {
+            Binding itemDisplayBinding = (Binding)ItemDisplayBinding;
+            string nameOfDisplayProperty = itemDisplayBinding.Path;
+            labelSelectedItem.SetBinding(Label.TextProperty, new Binding(nameof(SelectedItem) + '.' + nameOfDisplayProperty, source: this));
+        }
+        else
+        {
+            labelSelectedItem.Text = SelectedItem?.ToString();
+        }
 #endif
 
         UpdateState();
@@ -152,6 +169,8 @@ public class PickerField : InputField
     }
 
     public IList<string> Items => PickerView.Items;
+
+    #region BindableProperties
 
     public object SelectedItem { get => GetValue(SelectedItemProperty); set => SetValue(SelectedItemProperty, value); }
 
@@ -238,4 +257,6 @@ public class PickerField : InputField
         nameof(SelectedValueChangedCommand),
         typeof(ICommand), typeof(PickerField),
         defaultValue: null);
+
+    #endregion
 }

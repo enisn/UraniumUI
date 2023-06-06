@@ -41,7 +41,7 @@ A simple example of a node object:
 Initialize your ViewModel with some data:
 
 ```csharp
-public class MyViewModel : BindableObject
+public class TreeViewPageViewModel : BindableObject
 {
 
     public ObservableCollection<MyItem> Nodes { get; set; } = new();

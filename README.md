@@ -62,17 +62,17 @@ This project is licensed under the Apache License License - see the [LICENSE](LI
 
 ## Backers 💚
 
-| Special thanks to project supporters 🎉 | - |
-| --- | :---: |
-| [YvanBrunel](https://twitter.com/YvanBrunel) | ☕️☕️☕️☕️☕️☕️☕️☕️|
-| [Hottemax](https://github.com/Hottemax) | ☕️☕️☕️☕️☕️☕️ |
-| [tjlangenkamp](https://github.com/tjlangenkamp) | ☕️☕️☕️☕️☕️ |
-| [C00lzer0](https://github.com/C00lzer0) | ☕️☕️☕️|
-| _Anonymous_ | ☕️☕️☕️ |
-| [gpproton](https://github.com/gpproton) | ☕ |
-| [kmaclagan-pcl](https://www.buymeacoffee.com/enisn) | ☕️ |
-| [@Geramy](https://github.com/Geramy) | ☕️ |
-| [Malko_Josue](https://twitter.com/Malko_Josue) | ☕ |
+| Special thanks to project supporters 🎉 |
+| --- |
+| [YvanBrunel](https://twitter.com/YvanBrunel) | <!-- 8☕️ --> 
+| [Hottemax](https://github.com/Hottemax) |  <!-- 6☕️ -->
+| [tjlangenkamp](https://github.com/tjlangenkamp) | <!-- 5☕️ -->
+| [C00lzer0](https://github.com/C00lzer0) |  <!-- 3☕️ -->
+| _Anonymous_ |  <!-- 3☕️ -->
+| [gpproton](https://github.com/gpproton) |  <!-- 1☕️ -->
+| [kmaclagan-pcl](https://www.buymeacoffee.com/enisn) |  <!-- 1☕️ -->
+| [@Geramy](https://github.com/Geramy) |  <!-- 1☕️ -->
+| [Malko_Josue](https://twitter.com/Malko_Josue) |  <!-- 1☕️ -->
 
 > Donations are spent to infrastructural costs such as documentation website etc.
 

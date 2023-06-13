@@ -86,7 +86,7 @@ MAUI support font icons by using `FontImageSource` class. You can use it in `Ima
 ```xml
 <Image>
     <Image.Source>
-        <FontImageSource FontFamily="MaterialRegular" Glyph="{x:Static m:Regular.Warning}" Color="Red" />
+        <FontImageSource FontFamily="MaterialRegular" Glyph="{x:Static m:MaterialRegular.Warning}" Color="Red" />
     </Image.Source>
 </Image>
 ```

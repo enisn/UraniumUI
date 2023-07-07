@@ -5,7 +5,7 @@ using System.Windows.Input;
 using UraniumUI.Material.Controls;
 
 namespace UraniumUI.Material.Handlers;
-public partial class ButtonViewHandler : BorderHandler
+public partial class ButtonViewHandler  : BorderHandler
 {
     public ButtonView StatefulView => VirtualView as ButtonView;
     private void ExecuteCommandIfCan(ICommand command)

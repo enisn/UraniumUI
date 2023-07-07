@@ -116,7 +116,16 @@ public class PickerField : InputField
         }
 
 #if WINDOWS
-        labelSelectedItem.Text = SelectedItem?.ToString();
+        if (ItemDisplayBinding != null)
+        {
+            Binding itemDisplayBinding = (Binding)ItemDisplayBinding;
+            string nameOfDisplayProperty = itemDisplayBinding.Path;
+            labelSelectedItem.SetBinding(Label.TextProperty, new Binding(nameof(SelectedItem) + '.' + nameOfDisplayProperty, source: this));
+        }
+        else
+        {
+            labelSelectedItem.Text = SelectedItem?.ToString();
+        }
 #endif
 
         UpdateState();
@@ -152,6 +161,8 @@ public class PickerField : InputField
     }
 
     public IList<string> Items => PickerView.Items;
+
+    #region BindableProperties
 
     public object SelectedItem { get => GetValue(SelectedItemProperty); set => SetValue(SelectedItemProperty, value); }
 
@@ -238,4 +249,6 @@ public class PickerField : InputField
         nameof(SelectedValueChangedCommand),
         typeof(ICommand), typeof(PickerField),
         defaultValue: null);
+
+    #endregion
 }

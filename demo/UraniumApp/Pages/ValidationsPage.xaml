@@ -20,9 +20,12 @@
             <StackLayout Padding="25" MaximumWidthRequest="400">
                 <input:FormView SubmitCommand="{Binding SubmitCommand}" Spacing="20">
 
-                    <material:TextField Title="Email"
+                    <Frame Padding="0">
+
+                        <material:TextField Title="Email" BorderColor="Transparent" BorderThickness="0"
                                         Text="{v:ValidationBinding Email}" 
                                         Icon="{FontImage FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Email}}"/>
+                    </Frame>
 
 
                     <material:TextField Title="Fullname"

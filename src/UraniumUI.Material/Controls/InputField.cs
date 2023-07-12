@@ -68,16 +68,6 @@ public partial class InputField : Grid
 
     private bool hasValue;
 
-    public virtual bool HasValue
-    {
-        get => hasValue;
-        set
-        {
-            hasValue = value;
-            UpdateState();
-        }
-    }
-
     public InputField()
     {
         this.Padding = new Thickness(0, 5, 0, 0);
@@ -85,9 +75,15 @@ public partial class InputField : Grid
         {
             CornerRadius = this.CornerRadius,
             Stroke = this.BorderColor,
+            StrokeThickness = this.BorderThickness,
+            Background = this.InputBackground,
+            BackgroundColor = this.InputBackgroundColor,
         };
 
         RegisterForEvents();
+
+        border.ZIndex = 0;
+        labelTitle.ZIndex = 1000;
 
         this.Add(border);
         this.Add(labelTitle);
@@ -112,9 +108,24 @@ public partial class InputField : Grid
         InitializeValidation();
     }
 
-    ~InputField()
+    public virtual bool HasValue
     {
-        ReleaseEvents();
+        get => hasValue;
+        set
+        {
+            hasValue = value;
+            UpdateState();
+        }
+    }
+
+    protected override void OnHandlerChanging(HandlerChangingEventArgs args)
+    {
+        base.OnHandlerChanging(args);
+
+        if (args.NewHandler is null)
+        {
+            ReleaseEvents();
+        }
     }
 
     protected override async void OnSizeAllocated(double width, double height)
@@ -174,9 +185,10 @@ public partial class InputField : Grid
         {
             Padding = 0,
             Stroke = BorderColor,
-            StrokeThickness = 2,
+            StrokeThickness = BorderThickness,
+            Background = InputBackground,
+            BackgroundColor = InputBackgroundColor,
             StrokeDashOffset = 0,
-            BackgroundColor = Colors.Transparent,
             StrokeShape = new RoundRectangle
             {
                 CornerRadius = CornerRadius
@@ -192,7 +204,7 @@ public partial class InputField : Grid
 #endif
 
         UpdateState(animate: false);
-        border.StrokeThickness = 1;
+        border.StrokeThickness = BorderThickness;
     }
 
     protected virtual void UpdateState(bool animate = true)
@@ -358,6 +370,33 @@ public partial class InputField : Grid
         typeof(InputField),
         ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.Gray),
         propertyChanged: (bindable, oldValue, newValue) => (bindable as InputField).border.Stroke = (Color)newValue);
+
+    public double BorderThickness { get => (double)GetValue(BorderThicknessProperty); set => SetValue(BorderThicknessProperty, value); }
+
+    public static readonly BindableProperty BorderThicknessProperty = BindableProperty.Create(
+        nameof(BorderColor),
+        typeof(double),
+        typeof(InputField),
+        1.0,
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as InputField).border.StrokeThickness = (double)newValue);
+
+    public Color InputBackgroundColor { get => (Color)GetValue(InputBackgroundColorProperty); set => SetValue(InputBackgroundColorProperty, value); }
+
+    public static readonly BindableProperty InputBackgroundColorProperty = BindableProperty.Create(
+        nameof(BorderColor),
+        typeof(Color),
+        typeof(InputField),
+        Colors.Transparent,
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as InputField).border.BackgroundColor = (Color)newValue);
+
+    public Brush InputBackground { get => (Brush)GetValue(InputBackgroundProperty); set => SetValue(InputBackgroundProperty, value); }
+
+    public static readonly BindableProperty InputBackgroundProperty = BindableProperty.Create(
+        nameof(BorderColor),
+        typeof(Brush),
+        typeof(InputField),
+        Brush.Transparent,
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as InputField).border.Background = (Brush)newValue);
 
     public ImageSource Icon { get => (ImageSource)GetValue(IconProperty); set => SetValue(IconProperty, value); }
 

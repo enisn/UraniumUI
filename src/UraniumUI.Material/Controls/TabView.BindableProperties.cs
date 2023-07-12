@@ -24,7 +24,7 @@ public partial class TabView
     public GridLength TabHeaderItemColumnWidth { get => (GridLength) GetValue(TabHeaderItemColumnWidthProperty); set => SetValue(TabHeaderItemColumnWidthProperty, value); }
 
     public static readonly BindableProperty TabHeaderItemColumnWidthProperty =
-        BindableProperty.Create(nameof(TabHeaderItemColumnWidth), typeof(GridLength), typeof(TabView), defaultValue: GridLength.Star,
+        BindableProperty.Create(nameof(TabHeaderItemColumnWidth), typeof(GridLength), typeof(TabView), defaultValue: GridLength.Auto,
             propertyChanged: (bo, ov, nv) => (bo as TabView).AlignHeaderGridItems());
 
     public object CurrentItem { get => GetValue(CurrentItemProperty); set => SetValue(CurrentItemProperty, value); }

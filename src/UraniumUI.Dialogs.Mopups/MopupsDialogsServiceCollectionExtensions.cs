@@ -8,6 +8,7 @@ public static class MopupsDialogsServiceCollectionExtensions
     public static IServiceCollection AddMopupsDialogs(this IServiceCollection services, ServiceLifetime lifetime = ServiceLifetime.Transient)
     {
         services.Replace(new ServiceDescriptor(typeof(IDialogService), typeof(MopupsDialogService), lifetime));
+        services.Add(new ServiceDescriptor(typeof(MopupsDialogService), typeof(MopupsDialogService), lifetime));
         return services;
     }
 }

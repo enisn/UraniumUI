@@ -73,10 +73,6 @@
         <ShellContent ContentTemplate="{DataTemplate inputFields:DatePickerFieldPage}" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Calendar_month}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}"/>
     </FlyoutItem>
 
-    <MenuFlyoutSeparator Text="-------------------"/>
-
-
-
     <FlyoutItem Title="Chips" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Do_not_disturb_on_total_silence}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
         <ShellContent  ContentTemplate="{DataTemplate pages:ChipsPage}"/>
     </FlyoutItem>

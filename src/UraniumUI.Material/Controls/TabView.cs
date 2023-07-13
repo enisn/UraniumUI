@@ -95,7 +95,7 @@ public partial class TabView : Grid
         return grid;
     });
 
-    protected readonly StackLayout _headerContainer = new StackLayout
+    protected readonly Grid _headerContainer = new Grid
     {
         HorizontalOptions = LayoutOptions.Fill
     };
@@ -157,7 +157,6 @@ public partial class TabView : Grid
                 {
                     this.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
                     this.RowDefinitions.Add(new RowDefinition(GridLength.Star));
-                    _headerContainer.Orientation = StackOrientation.Horizontal;
 
                     this.Add(_headerScrollView, row: 0);
                     this.Add(_contentContainer, row: 1);
@@ -167,7 +166,6 @@ public partial class TabView : Grid
                 {
                     this.RowDefinitions.Add(new RowDefinition(GridLength.Star));
                     this.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
-                    _headerContainer.Orientation = StackOrientation.Horizontal;
 
                     this.Add(_headerScrollView, row: 1);
                     this.Add(_contentContainer, row: 0);
@@ -177,7 +175,6 @@ public partial class TabView : Grid
                 {
                     this.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Auto));
                     this.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Star));
-                    _headerContainer.Orientation = StackOrientation.Vertical;
 
                     this.Add(_headerScrollView, column: 0);
                     this.Add(_contentContainer, column: 1);
@@ -187,14 +184,45 @@ public partial class TabView : Grid
                 {
                     this.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Star));
                     this.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Auto));
-                    _headerContainer.Orientation = StackOrientation.Vertical;
 
                     this.Add(_headerScrollView, column: 1);
                     this.Add(_contentContainer, column: 0);
                 }
                 break;
         }
+
+        AlignHeaderGridItems();
     }
+
+    protected virtual void AlignHeaderGridItems()
+    {
+        if (AreTabsVertical)
+        {
+            _headerContainer.RowDefinitions.Clear();
+            _headerContainer.ColumnDefinitions.Clear();
+
+            for (int i = 0; i < _headerContainer.Children.Count; i++)
+            {
+                _headerContainer.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
+
+                Grid.SetRow(_headerContainer.Children[i] as View, i);
+            }
+        }
+        else // Horizontal
+        {
+            _headerContainer.RowDefinitions.Clear();
+            _headerContainer.ColumnDefinitions.Clear();
+
+            for (int i = 0; i < _headerContainer.Children.Count; i++)
+            {
+                _headerContainer.ColumnDefinitions.Add(new ColumnDefinition(TabHeaderItemColumnWidth));
+
+                Grid.SetColumn(_headerContainer.Children[i] as View, i);
+            }
+        }
+    }
+
+    public bool AreTabsVertical => TabPlacement == TabViewTabPlacement.Start || TabPlacement == TabViewTabPlacement.End;
 
     protected virtual void OnItemsChanged(IList<TabItem> oldValue, IList<TabItem> newValue) // TODO: Test it and prevent multiple initializations.
     {
@@ -309,6 +337,16 @@ public partial class TabView : Grid
             SelectedTab = tabItem;
         }
 
+        if (AreTabsVertical)
+        {
+            _headerContainer.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
+            Grid.SetRow(view, _headerContainer.Children.Count);
+        }
+        else
+        {
+            _headerContainer.ColumnDefinitions.Add(new ColumnDefinition(TabHeaderItemColumnWidth));
+            Grid.SetColumn(view, _headerContainer.Children.Count);
+        }
         _headerContainer.Add(view);
     }
 
@@ -326,6 +364,15 @@ public partial class TabView : Grid
         if (tabItem == SelectedTab)
         {
             ResetSelectedTab();
+        }
+
+        if (AreTabsVertical)
+        {
+            _headerContainer.RowDefinitions.RemoveAt(0);
+        }
+        else
+        {
+            _headerContainer.ColumnDefinitions.RemoveAt(0);
         }
 
         _headerContainer.Children.Remove(existing);

@@ -24,7 +24,7 @@ public class ValidationBinding : IMarkupExtension
 
         var source = Source ?? root.BindingContext;
 
-        var attributes = source.GetType().GetProperty(Path).GetCustomAttributes<ValidationAttribute>(true);
+        var attributes = GetProperty(source.GetType(), Path).GetCustomAttributes<ValidationAttribute>(true);
 
         if (targetObject is IValidatable validatable)
         {
@@ -35,6 +35,26 @@ public class ValidationBinding : IMarkupExtension
         }
 
         targetObject.SetBinding(targetProperty, new Binding(Path, source: source));
+
         return null;
+    }
+
+    protected virtual PropertyInfo GetProperty(Type type, string propertyName)
+    {
+        if (!IsNestedProperty(propertyName))
+        {
+            return type.GetProperty(propertyName);
+        }
+
+        var splitted = propertyName.Split('.');
+
+        var property = type.GetProperty(splitted[0]);
+
+        return GetProperty(property.PropertyType, string.Join('.', splitted.Skip(1)));
+    }
+
+    protected bool IsNestedProperty(string propertyName)
+    {
+        return propertyName.Contains('.');
     }
 }

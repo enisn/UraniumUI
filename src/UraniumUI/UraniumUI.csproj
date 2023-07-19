@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<Import Project="..\..\maui.common.props" />
 	<Import Project="..\..\common.props" />
@@ -25,12 +25,12 @@
 
 	<ItemGroup Condition="$(TargetFramework.Contains('net6'))">
 	  <PackageReference Include="InputKit.Maui" Version="4.1.6" />
-	  <PackageReference Include="Plainer.Maui" Version="1.5.0" />
+	  <PackageReference Include="Plainer.Maui" Version="1.6.4" />
 	</ItemGroup>
 
 	<ItemGroup Condition="$(TargetFramework.Contains('net7'))">
 	  <PackageReference Include="InputKit.Maui" Version="4.3.2" />
-	  <PackageReference Include="Plainer.Maui" Version="1.6.3" />
+	  <PackageReference Include="Plainer.Maui" Version="1.6.4" />
 	</ItemGroup>
   
 	<ItemGroup>

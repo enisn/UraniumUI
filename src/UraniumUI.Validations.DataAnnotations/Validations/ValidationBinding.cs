@@ -24,13 +24,17 @@ public class ValidationBinding : IMarkupExtension
 
         var source = Source ?? root.BindingContext;
 
-        var attributes = GetProperty(source.GetType(), Path).GetCustomAttributes<ValidationAttribute>(true);
+        var propertyInfo = GetProperty(source.GetType(), Path);
+
+        var attributes = propertyInfo .GetCustomAttributes<ValidationAttribute>(true);
+
+        var displayAttribute = propertyInfo.GetCustomAttribute<DisplayAttribute>(true);
 
         if (targetObject is IValidatable validatable)
         {
             foreach (var attribute in attributes)
             {
-                validatable.Validations.Add(new DataAnnotationValidation(attribute, Path));
+                validatable.Validations.Add(new DataAnnotationValidation(attribute, displayAttribute?.GetName() ?? propertyInfo.Name));
             }
         }
 

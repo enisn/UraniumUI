@@ -27,11 +27,11 @@
 
 
   <ItemGroup Condition="$(TargetFramework.Contains('net6'))">
-    <PackageReference Include="Mopups" Version="1.0.4" />
+    <PackageReference Include="Mopups" Version="1.1.1" />
   </ItemGroup>
 
   <ItemGroup Condition="$(TargetFramework.Contains('net7'))">
-    <PackageReference Include="Mopups" Version="1.1.0" />
+    <PackageReference Include="Mopups" Version="1.1.1" />
   </ItemGroup>
 
   <ItemGroup>

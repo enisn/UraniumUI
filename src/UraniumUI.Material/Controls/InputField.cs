@@ -256,6 +256,7 @@ public partial class InputField : Grid
             Content.Focused += Content_Focused;
             Content.Unfocused -= Content_Unfocused;
             Content.Unfocused += Content_Unfocused;
+            SizeChanged -= InputField_SizeChanged;
             SizeChanged += InputField_SizeChanged;
         }
     }

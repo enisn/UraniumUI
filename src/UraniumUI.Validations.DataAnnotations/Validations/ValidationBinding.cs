@@ -13,6 +13,8 @@ public class ValidationBinding : IMarkupExtension<BindingBase>, IMarkupExtension
 
     public object Source { get; set; }
 
+    public string FieldName { get; set; }
+
     [EditorBrowsable(EditorBrowsableState.Never)] public TypedBindingBase TypedBinding { get; set; }
 
     BindingBase IMarkupExtension<BindingBase>.ProvideValue(IServiceProvider serviceProvider)
@@ -38,7 +40,7 @@ public class ValidationBinding : IMarkupExtension<BindingBase>, IMarkupExtension
         {
             foreach (var attribute in attributes)
             {
-                validatable.Validations.Add(new DataAnnotationValidation(attribute, displayAttribute?.GetName() ?? propertyInfo.Name));
+                validatable.Validations.Add(new DataAnnotationValidation(attribute, FieldName ?? displayAttribute?.GetName() ?? propertyInfo.Name));
             }
         }
 

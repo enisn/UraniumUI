@@ -1,20 +1,24 @@
 ﻿using InputKit.Shared.Abstraction;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
+using Microsoft.Maui.Controls.Internals;
 
 namespace UraniumUI.Validations;
 
 [ContentProperty(nameof(Path))]
-public class ValidationBinding : IMarkupExtension
+public class ValidationBinding : IMarkupExtension<BindingBase>, IMarkupExtension
 {
     public string Path { get; set; }
 
     public object Source { get; set; }
 
-    public object ProvideValue(IServiceProvider serviceProvider)
+    [EditorBrowsable(EditorBrowsableState.Never)] public TypedBindingBase TypedBinding { get; set; }
+
+    BindingBase IMarkupExtension<BindingBase>.ProvideValue(IServiceProvider serviceProvider)
     {
         var root = serviceProvider.GetRequiredService<IRootObjectProvider>()
-            .RootObject as BindableObject;
+                  .RootObject as BindableObject;
 
         var targetObject = serviceProvider.GetRequiredService<IProvideValueTarget>()
             .TargetObject as BindableObject;
@@ -26,7 +30,7 @@ public class ValidationBinding : IMarkupExtension
 
         var propertyInfo = GetProperty(source.GetType(), Path);
 
-        var attributes = propertyInfo .GetCustomAttributes<ValidationAttribute>(true);
+        var attributes = propertyInfo.GetCustomAttributes<ValidationAttribute>(true);
 
         var displayAttribute = propertyInfo.GetCustomAttribute<DisplayAttribute>(true);
 
@@ -38,9 +42,21 @@ public class ValidationBinding : IMarkupExtension
             }
         }
 
-        targetObject.SetBinding(targetProperty, new Binding(Path, source: source));
+        //targetObject.SetBinding(targetProperty, new Binding(Path, source: source));
 
-        return null;
+        if (TypedBinding is null)
+        {
+            return new Binding(Path, source: source);
+        }
+
+        TypedBinding.Source = source;
+
+        return TypedBinding;
+    }
+
+    public object ProvideValue(IServiceProvider serviceProvider)
+    {
+        return (this as IMarkupExtension<BindingBase>).ProvideValue(serviceProvider);
     }
 
     protected virtual PropertyInfo GetProperty(Type type, string propertyName)
@@ -61,4 +77,5 @@ public class ValidationBinding : IMarkupExtension
     {
         return propertyName.Contains('.');
     }
+
 }

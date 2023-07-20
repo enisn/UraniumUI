@@ -141,7 +141,7 @@ public partial class InputField : Grid
         base.OnHandlerChanged();
 
         Content.Focused += OnFocusChanged;
-        Content.Unfocused+= OnFocusChanged;
+        Content.Unfocused += OnFocusChanged;
 
         if (Handler is null)
         {
@@ -256,6 +256,7 @@ public partial class InputField : Grid
             Content.Focused += Content_Focused;
             Content.Unfocused -= Content_Unfocused;
             Content.Unfocused += Content_Unfocused;
+            SizeChanged += InputField_SizeChanged;
         }
     }
 
@@ -263,6 +264,7 @@ public partial class InputField : Grid
     {
         Content.Focused -= Content_Focused;
         Content.Unfocused -= Content_Unfocused;
+        SizeChanged -= InputField_SizeChanged;
     }
 
     private void Content_Unfocused(object sender, FocusEventArgs e)
@@ -288,6 +290,11 @@ public partial class InputField : Grid
             LastFontimageColor = fontImageSource.Color?.WithAlpha(1); // To createnew instance.
             fontImageSource.Color = AccentColor;
         }
+    }
+
+    private void InputField_SizeChanged(object sender, EventArgs e)
+    {
+        InitializeBorder();
     }
 
     protected virtual void OnIconChanged()

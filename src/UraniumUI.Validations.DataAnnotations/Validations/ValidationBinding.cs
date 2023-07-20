@@ -15,6 +15,8 @@ public class ValidationBinding : IMarkupExtension<BindingBase>, IMarkupExtension
 
     public string FieldName { get; set; }
 
+    public BindingMode Mode { get; set; } = BindingMode.Default;
+
     [EditorBrowsable(EditorBrowsableState.Never)] public TypedBindingBase TypedBinding { get; set; }
 
     BindingBase IMarkupExtension<BindingBase>.ProvideValue(IServiceProvider serviceProvider)
@@ -48,10 +50,11 @@ public class ValidationBinding : IMarkupExtension<BindingBase>, IMarkupExtension
 
         if (TypedBinding is null)
         {
-            return new Binding(Path, source: source);
+            return new Binding(Path, Mode, source: source);
         }
 
         TypedBinding.Source = source;
+        TypedBinding.Mode = Mode;
 
         return TypedBinding;
     }

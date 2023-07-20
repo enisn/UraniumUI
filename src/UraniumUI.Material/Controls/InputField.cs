@@ -141,7 +141,7 @@ public partial class InputField : Grid
         base.OnHandlerChanged();
 
         Content.Focused += OnFocusChanged;
-        Content.Unfocused+= OnFocusChanged;
+        Content.Unfocused += OnFocusChanged;
 
         if (Handler is null)
         {
@@ -203,11 +203,11 @@ public partial class InputField : Grid
         this.Add(border);
 #endif
 
-        UpdateState(animate: false);
+        UpdateState();
         border.StrokeThickness = BorderThickness;
     }
 
-    protected virtual void UpdateState(bool animate = true)
+    protected virtual void UpdateState()
     {
         if (border.StrokeDashArray == null || border.StrokeDashArray.Count == 0 || labelTitle.Width <= 0)
         {
@@ -216,7 +216,7 @@ public partial class InputField : Grid
 
         if (HasValue || Content.IsFocused)
         {
-            UpdateOffset(0.01, animate);
+            UpdateOffset(0.01);
             labelTitle.TranslateTo(CornerRadius.Clamp(10, MaxCornerRadius) - 10, -25, 90, Easing.BounceOut);
             labelTitle.AnchorX = 0;
             labelTitle.ScaleTo(.8, 90);
@@ -224,7 +224,7 @@ public partial class InputField : Grid
         else
         {
             var offsetToGo = border.StrokeDashArray[0] + border.StrokeDashArray[1] + FirstDash;
-            UpdateOffset(offsetToGo, animate);
+            UpdateOffset(offsetToGo);
 
             labelTitle.CancelAnimations();
             labelTitle.TranslateTo(imageIcon.IsValueCreated ? imageIcon.Value.Width : 0, 0, 90, Easing.BounceOut);
@@ -233,19 +233,9 @@ public partial class InputField : Grid
         }
     }
 
-    protected virtual void UpdateOffset(double value, bool animate = true)
+    protected virtual void UpdateOffset(double value)
     {
-        if (!animate)
-        {
-            border.StrokeDashOffset = value;
-        }
-        else
-        {
-            border.Animate("borderOffset", new Animation((d) =>
-            {
-                border.StrokeDashOffset = d;
-            }, border.StrokeDashOffset, value, Easing.BounceIn), 2, 90);
-        }
+        border.StrokeDashOffset = value;
     }
 
     protected virtual void RegisterForEvents()
@@ -256,6 +246,8 @@ public partial class InputField : Grid
             Content.Focused += Content_Focused;
             Content.Unfocused -= Content_Unfocused;
             Content.Unfocused += Content_Unfocused;
+            SizeChanged -= InputField_SizeChanged;
+            SizeChanged += InputField_SizeChanged;
         }
     }
 
@@ -263,6 +255,7 @@ public partial class InputField : Grid
     {
         Content.Focused -= Content_Focused;
         Content.Unfocused -= Content_Unfocused;
+        SizeChanged -= InputField_SizeChanged;
     }
 
     private void Content_Unfocused(object sender, FocusEventArgs e)
@@ -288,6 +281,11 @@ public partial class InputField : Grid
             LastFontimageColor = fontImageSource.Color?.WithAlpha(1); // To createnew instance.
             fontImageSource.Color = AccentColor;
         }
+    }
+
+    private void InputField_SizeChanged(object sender, EventArgs e)
+    {
+        InitializeBorder();
     }
 
     protected virtual void OnIconChanged()

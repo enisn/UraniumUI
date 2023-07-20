@@ -3,6 +3,8 @@ using System.ComponentModel;
 using UraniumUI.Converters;
 
 namespace UraniumUI.Views;
+
+[ContentProperty(nameof(Conditions))]
 public class DynamicContentView : ContentView
 {
     public static readonly BindableProperty ValueProperty = BindableProperty.Create("Value", typeof(object), typeof(object), propertyChanged: (bo, ov, nv) => (bo as DynamicContentView).OnValueChanged());
@@ -39,9 +41,12 @@ public class DynamicContentView : ContentView
                     Content = newContent;
                 }
 
-                break;
+                return;
             }
         }
+
+        // None of conditions met
+        Content = null;
     }
 }
 
@@ -93,7 +98,7 @@ public class ValueCondition : BindableObject
     {
         if (Content == null)
         {
-            Content = ContentTemplate.CreateContent() as View;
+            Content = ContentTemplate?.CreateContent() as View;
         }
 
         return Content;

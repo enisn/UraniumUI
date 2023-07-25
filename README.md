@@ -24,6 +24,9 @@ Visit documentation for onboarding.
 ## Features ✨
 
 - Startup [Templates](https://enisn-projects.io/docs/en/uranium/latest/Getting-Started#new-projects)
+- Multiple Target Frameworks
+  - `.NET6` _(LTS)_
+  - `.NET7` _(Current)_
 - Pre-built layouts and flexible controls.
 - Dark/light mode support.
 - All MAUI Platforms are supported.

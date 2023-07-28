@@ -6,7 +6,9 @@ namespace UraniumUI.Material.Controls;
 public partial class EditorField : InputField
 {
     public EditorView EditorView => Content as EditorView;
-    
+    public event EventHandler<TextChangedEventArgs> TextChanged;
+    public event EventHandler Completed;
+
     public override View Content { get; set; } = new EditorView
     {
         Margin = new Thickness(10, 0),
@@ -18,8 +20,8 @@ public partial class EditorField : InputField
     public EditorField()
     {
         EditorView.SetBinding(Editor.TextProperty, new Binding(nameof(Text), source: this));
-        EditorView.SetBinding(EditorView.SelectionLengthProperty, new Binding(nameof(SelectionLength), source: this));
-        EditorView.SetBinding(EditorView.CursorPositionProperty, new Binding(nameof(CursorPosition), source: this));
+        EditorView.SetBinding(Editor.SelectionLengthProperty, new Binding(nameof(SelectionLength), source: this));
+        EditorView.SetBinding(Editor.CursorPositionProperty, new Binding(nameof(CursorPosition), source: this));
     }
 
     protected override void OnHandlerChanged()
@@ -37,6 +39,38 @@ public partial class EditorField : InputField
             textBox.Style = null;
         }
 #endif
+        if (Handler is null)
+        {
+            EditorView.TextChanged -= EditorView_TextChanged;
+            EditorView.Completed -= EditorView_Completed;
+        }
+        else
+        {
+            EditorView.TextChanged += EditorView_TextChanged;
+            EditorView.Completed += EditorView_Completed;
+        }
+    }
+
+    private void EditorView_Completed(object sender, EventArgs e)
+    {
+        // adding implementaion, but does not work due to bug #5730:
+        // https://github.com/dotnet/maui/issues/5730
+        Completed?.Invoke(this, e);
+    }
+
+    private void EditorView_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        if (string.IsNullOrEmpty(e.OldTextValue) || string.IsNullOrEmpty(e.NewTextValue))
+        {
+            UpdateState();
+        }
+
+        if (e.NewTextValue != null)
+        {
+            CheckAndShowValidations();
+        }
+
+        TextChanged?.Invoke(this, e);
     }
 
     public override bool HasValue { get => !string.IsNullOrEmpty(EditorView?.Text); }

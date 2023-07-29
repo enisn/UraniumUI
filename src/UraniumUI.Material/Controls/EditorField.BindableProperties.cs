@@ -46,7 +46,7 @@ public partial class EditorField
         typeof(EditorField),
         Keyboard.Default,
         propertyChanged: (bindable, oldValue, newValue) => (bindable as EditorField).EditorView.Keyboard = (Keyboard)newValue);
-    
+
     public double CharacterSpacing { get => (double)GetValue(CharacterSpacingProperty); set => SetValue(CharacterSpacingProperty, value); }
 
     public static readonly BindableProperty CharacterSpacingProperty = BindableProperty.Create(
@@ -85,7 +85,7 @@ public partial class EditorField
         typeof(int),
         typeof(EditorField),
         propertyChanged: (bindable, oldValue, newValue) => (bindable as EditorField).EditorView.MaxLength = (int)newValue);
-    
+
     public bool IsReadOnly { get => (bool)GetValue(IsReadOnlyProperty); set => SetValue(IsReadOnlyProperty, value); }
 
     public static readonly BindableProperty IsReadOnlyProperty = BindableProperty.Create(
@@ -94,4 +94,13 @@ public partial class EditorField
         typeof(EditorField),
         false,
         propertyChanged: (bindable, oldValue, newValue) => (bindable as EditorField).EditorView.IsReadOnly = (bool)newValue);
+
+    public bool IsSpellCheckEnabled { get => (bool)GetValue(IsSpellCheckEnabledProperty); set => SetValue(IsSpellCheckEnabledProperty, value); }
+
+    public static readonly BindableProperty IsSpellCheckEnabledProperty = BindableProperty.Create(
+        nameof(IsSpellCheckEnabled),
+        typeof(bool),
+        typeof(EditorField),
+        false,
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as EditorField).EditorView.IsSpellCheckEnabled = (bool)newValue);
 }

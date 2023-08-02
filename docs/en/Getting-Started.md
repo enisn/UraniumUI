@@ -52,23 +52,12 @@ Also, templates has `ide.host.json` implementation that allows to create a new p
     - Define following xml namespace: `xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material`
     - Then define `ColorResource` and `StyleResource` into **MergedDictionaries**
         ```xml
-        <?xml version = "1.0" encoding = "UTF-8" ?>
-        <Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                    xmlns:local="clr-namespace:App1"
-                    xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
-                    x:Class="App1.App">
-            <Application.Resources>
-                <ResourceDictionary>
-                    <ResourceDictionary.MergedDictionaries>
-                        <ResourceDictionary x:Name="appColors" Source="Resources/Styles/Colors.xaml" />
-                        <ResourceDictionary x:Name="appStyles" Source="Resources/Styles/Styles.xaml" />
-        
-                        <material:StyleResource ColorsOverride="{x:Reference appColors}" BasedOn="{x:Reference appStyles}" />
-                    </ResourceDictionary.MergedDictionaries>
-                </ResourceDictionary>
-            </Application.Resources>
-        </Application>
+        <ResourceDictionary.MergedDictionaries>
+            <ResourceDictionary x:Name="appColors" Source="Resources/Styles/Colors.xaml" />
+            <ResourceDictionary x:Name="appStyles" Source="Resources/Styles/Styles.xaml" />
+
+            <material:StyleResource ColorsOverride="{x:Reference appColors}" BasedOn="{x:Reference appStyles}" />
+        </ResourceDictionary.MergedDictionaries>
         ```
         > You can use your styles to override UraniumUI Material styles with following snippet. Check [Colors & Styles Docuementation](themes/material/ColorsAndStyles.md) for more detailed customization.
         > ```xml

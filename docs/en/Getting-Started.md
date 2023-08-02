@@ -74,7 +74,7 @@ Also, templates has `ide.host.json` implementation that allows to create a new p
 - (Optional) Installing a font icon library is recommended. Choose one of the icons and install it.
   -  [FontAwesome](theming/Icons.md#fontawesome)
   -  [Material](theming/Icons.md#material-icons)
-  -  [Material](theming/Icons.md#segoe-fluent-icons)
+  -  [Segoe](theming/Icons.md#segoe-fluent-icons)
 
 ## Themes available
  - [Material Theme](themes/material/Index.md)

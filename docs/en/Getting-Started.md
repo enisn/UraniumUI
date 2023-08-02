@@ -61,19 +61,31 @@ Also, templates has `ide.host.json` implementation that allows to create a new p
             <Application.Resources>
                 <ResourceDictionary>
                     <ResourceDictionary.MergedDictionaries>
-                        <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
-                        <material:ColorResource />
+                        <ResourceDictionary x:Name="appColors" Source="Resources/Styles/Colors.xaml" />
                         <ResourceDictionary x:Name="appStyles" Source="Resources/Styles/Styles.xaml" />
-                        <material:StyleResource BasedOn="{x:Reference appStyles}" />
+        
+                        <material:StyleResource ColorsOverride="{x:Reference appColors}" BasedOn="{x:Reference appStyles}" />
                     </ResourceDictionary.MergedDictionaries>
                 </ResourceDictionary>
             </Application.Resources>
         </Application>
         ```
+        > You can use your styles to override UraniumUI Material styles with following snippet. Check [Colors & Styles Docuementation](themes/material/ColorsAndStyles.md) for more detailed customization.
+        > ```xml
+        > <ResourceDictionary x:Name="appColors" Source="Resources/Styles/Colors.xaml" />
+        >
+        > <material:StyleResource ColorsOverride="{x:Reference appColors}">
+        >     <material:StyleResource.Overrides>
+        >        <ResourceDictionary x:Name="appStyles" Source="Resources/Styles/Styles.xaml" />
+        >    </material:StyleResource.Overrides>
+        > </material:StyleResource>
+        > ```
+
 
 - (Optional) Installing a font icon library is recommended. Choose one of the icons and install it.
   -  [FontAwesome](theming/Icons.md#fontawesome)
   -  [Material](theming/Icons.md#material-icons)
+  -  [Material](theming/Icons.md#segoe-fluent-icons)
 
 ## Themes available
  - [Material Theme](themes/material/Index.md)

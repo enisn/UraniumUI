@@ -14,20 +14,20 @@
         {
           "text": "Stateful Content View",
           "path": "infrastructure/StatefulContentView.md"
-        }
-      ]
-    },
-    {
-      "text" : "Validations",
-      "path": "validations/Index.md",
-      "items": [
-        {
-          "text": "InputKit Validations",
-          "path": "validations/InputKitValidations.md"
         },
         {
-          "text": "Data Annotations",
-          "path": "validations/DataAnnotations.md"
+          "text" : "Validations",
+          "path": "validations/Index.md",
+          "items": [
+            {
+              "text": "InputKit Validations",
+              "path": "validations/InputKitValidations.md"
+            },
+            {
+              "text": "Data Annotations",
+              "path": "validations/DataAnnotations.md"
+            }
+          ]
         }
       ]
     },
@@ -65,7 +65,7 @@
     },
     {
       "text": "Web Components",
-      "ıtems":[
+      "items":[
         
       ]
     },

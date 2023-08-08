@@ -2,10 +2,12 @@
 DataGrid displays sets of data across rows and columns.
 
 ## Getting Started
-DataGrid is included in the `UraniumUI.Material.Controls` namespace. You can add it to your XAML like this:
+DataGrid is included in the `UraniumUI.Material.Controls` namespace. 
+
+You can use the material namespace of UraniumUI in XAML files like the following:
 
 ```
-xmlns:controls="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
+xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
 ```
 
 DataGrid can't be used standalone without csharp code. You need to bind some data to `ItemsSource` property.

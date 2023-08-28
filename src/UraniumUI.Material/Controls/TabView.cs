@@ -33,7 +33,7 @@ public partial class TabView : Grid
         grid.Add(tabButton, 0, 0);
         grid.Triggers.Add(new DataTrigger(typeof(Grid))
         {
-            Binding = new Binding(nameof(TabItem.IsSelected), BindingMode.TwoWay),
+            Binding = new Binding(nameof(TabItem.IsSelected), BindingMode.OneWay),
             Value = true,
             EnterActions =
             {
@@ -58,7 +58,7 @@ public partial class TabView : Grid
 
         grid.Triggers.Add(new DataTrigger(typeof(Grid))
         {
-            Binding = new Binding(nameof(TabItem.IsSelected), BindingMode.TwoWay),
+            Binding = new Binding(nameof(TabItem.IsSelected), BindingMode.OneWay),
             Value = false,
             EnterActions =
             {
@@ -489,7 +489,7 @@ public class TabItem : UraniumBindableObject
     public DataTemplate HeaderTemplate { get; set; }
     public View Content { get; set; }
     public TabView TabView { get; internal set; }
-    public bool IsSelected => TabView.SelectedTab == this || (TabView.CurrentItem != null && TabView.CurrentItem == Data);
+    public bool IsSelected { get => TabView.SelectedTab == this || (TabView.CurrentItem != null && TabView.CurrentItem == Data); }
     public ICommand Command { get; private set; }
 
     public TabItem()

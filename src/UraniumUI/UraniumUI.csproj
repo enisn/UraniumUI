@@ -4,8 +4,8 @@
 	<Import Project="..\..\common.props" />
 
 	<PropertyGroup>
-		<TargetFrameworks>net7.0;net7.0-android;net7.0-ios;net7.0-maccatalyst;net6.0;net6.0-android;net6.0-ios;net6.0-maccatalyst</TargetFrameworks>
-		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net7.0-windows10.0.19041.0;net6.0-windows10.0.19041.0</TargetFrameworks>
+        <TargetFrameworks>net8.0;net8.0-android;net8.0-ios;net8.0-maccatalyst</TargetFrameworks>
+        <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
 		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
 		<!-- <TargetFrameworks>$(TargetFrameworks);net7.0-tizen</TargetFrameworks> -->
 		<UseMaui>true</UseMaui>
@@ -23,13 +23,8 @@
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
   </PropertyGroup>
 
-	<ItemGroup Condition="$(TargetFramework.Contains('net6'))">
-	  <PackageReference Include="InputKit.Maui" Version="4.1.6" />
-	  <PackageReference Include="Plainer.Maui" Version="1.5.0" />
-	</ItemGroup>
-
-	<ItemGroup Condition="$(TargetFramework.Contains('net7'))">
-	  <PackageReference Include="InputKit.Maui" Version="4.3.4" />
+	<ItemGroup>
+	  <PackageReference Include="InputKit.Maui" Version="4.3.5" />
 	  <PackageReference Include="Plainer.Maui" Version="1.6.4" />
 	</ItemGroup>
   

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Maui.Controls.Shapes;
 using System.Windows.Input;
+using UraniumUI.Extensions;
 using UraniumUI.Pages;
 using UraniumUI.Resources;
 using UraniumUI.Views;
@@ -37,10 +38,10 @@ namespace UraniumUI.Material.Controls
                 ColorResource.GetColor("Primary", defaultAccent),
                 ColorResource.GetColor("PrimaryDark", defaultAccent));
 
-            (closeButton.Content as Path).SetAppThemeColor(
+            (closeButton.Content as Path).SetAppTheme(
                 Path.FillProperty,
-                Colors.White.WithAlpha(.5f),
-                Colors.Black.WithAlpha(.5f)
+                Colors.White.WithAlpha(.5f).ToSolidColorBrush(),
+                Colors.Black.WithAlpha(.5f).ToSolidColorBrush()
                 );
 
             label.SetAppThemeColor(

@@ -1,4 +1,5 @@
-﻿using UraniumUI.Pages;
+﻿using UraniumUI.Extensions;
+using UraniumUI.Pages;
 using UraniumUI.Resources;
 using UraniumUI.Views;
 using Path = Microsoft.Maui.Controls.Shapes.Path;
@@ -42,10 +43,10 @@ public class ExpanderView : ContentView
             Padding = new Thickness(10, 0),
             Content = arrowIcon
         }, column: 1) ;
-
-        arrowIcon.SetAppThemeColor(Path.FillProperty,
-            ColorResource.GetColor("OnBackground", Colors.Gray),
-            ColorResource.GetColor("OnBackgroundDark", Colors.Gray));
+        
+        arrowIcon.SetAppTheme(Path.FillProperty,
+            ColorResource.GetColor("OnBackground", Colors.Gray).ToSolidColorBrush(),
+            ColorResource.GetColor("OnBackgroundDark", Colors.Gray).ToSolidColorBrush());
 
         actualContentContainer.IsVisible = false;
         Content = new VerticalStackLayout

@@ -54,11 +54,7 @@ public class StatefulContentViewHandler : ContentViewHandler
     {
         if (e.Event.Action == MotionEventActions.HoverEnter)
         {
-#if NET6_0
-            GoToState(StatefulView, "PointerOver");
-#else
             GoToState(StatefulView, CommonStates.PointerOver);
-#endif
             ExecuteCommandIfCan(StatefulView.HoverCommand);
             StatefulView.InvokeHovered();
             return;
@@ -144,11 +140,7 @@ public class StatefulContentViewHandler : ContentViewHandler
 
     private void PlatformView_PointerEntered(object sender, PointerRoutedEventArgs e)
     {
-#if NET6_0
-        GoToState(StatefulView, "PointerOver");
-#else
         GoToState(StatefulView, CommonStates.PointerOver);
-#endif
         ExecuteCommandIfCan(StatefulView.HoverCommand);
         StatefulView.InvokeHovered();
     }
@@ -224,11 +216,7 @@ public class StatefulContentViewHandler : ContentViewHandler
         {
             case UIGestureRecognizerState.Began:
 
-#if NET6_0
-                GoToState(StatefulView, "PointerOver");
-#else
                 GoToState(StatefulView, CommonStates.PointerOver);
-#endif
                 ExecuteCommandIfCan(StatefulView.HoverCommand);
                 StatefulView.InvokeHovered();
                 break;

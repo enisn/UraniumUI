@@ -1,19 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-	<Import Project="..\..\maui.common.props" />
-	<Import Project="..\..\common.props" />
+  <Import Project="..\..\maui.common.props" />
+  <Import Project="..\..\common.props" />
 
-	<PropertyGroup>
-        <TargetFrameworks>net8.0;net8.0-android;net8.0-ios;net8.0-maccatalyst</TargetFrameworks>
-        <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
-		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
-		<!-- <TargetFrameworks>$(TargetFrameworks);net7.0-tizen</TargetFrameworks> -->
-		<UseMaui>true</UseMaui>
-		<SingleProject>true</SingleProject>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<PublishReadyToRun>false</PublishReadyToRun>
-		<OutputType>Library</OutputType>
-    
+  <PropertyGroup>
+    <TargetFrameworks>net8.0;net8.0-android;net8.0-ios;net8.0-maccatalyst</TargetFrameworks>
+    <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
+    <!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
+    <!-- <TargetFrameworks>$(TargetFrameworks);net7.0-tizen</TargetFrameworks> -->
+    <UseMaui>true</UseMaui>
+    <SingleProject>true</SingleProject>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <PublishReadyToRun>false</PublishReadyToRun>
+    <OutputType>Library</OutputType>
+
     <IsRidAgnostic Condition="'$(OutputType)' == 'Library'">true</IsRidAgnostic>
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.2</SupportedOSPlatformVersion>
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">14.0</SupportedOSPlatformVersion>
@@ -23,20 +23,21 @@
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
   </PropertyGroup>
 
-	<ItemGroup>
-	  <PackageReference Include="InputKit.Maui" Version="4.3.5" />
-	  <PackageReference Include="Plainer.Maui" Version="1.6.4" />
-	</ItemGroup>
-  
-	<ItemGroup>
-	  <Compile Update="Resources\StyleResource.xaml.cs">
-	    <DependentUpon>StyleResource.xaml</DependentUpon>
-	  </Compile>
-	</ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.*-*" />
+    <PackageReference Include="InputKit.Maui" Version="4.4.0-pre.1" />
+    <PackageReference Include="Plainer.Maui" Version="1.7.0" />
+  </ItemGroup>
 
-	<ItemGroup>
-	  <MauiXaml Update="Resources\StyleResource.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	</ItemGroup>
+  <ItemGroup>
+    <Compile Update="Resources\StyleResource.xaml.cs">
+      <DependentUpon>StyleResource.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <MauiXaml Update="Resources\StyleResource.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+  </ItemGroup>
 </Project>

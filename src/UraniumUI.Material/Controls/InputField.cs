@@ -130,9 +130,16 @@ public partial class InputField : Grid
 
     protected override async void OnSizeAllocated(double width, double height)
     {
-        base.OnSizeAllocated(width, height);
-        await Task.Delay(100);
-        InitializeBorder();
+        try
+        {
+            base.OnSizeAllocated(width, height);
+            await Task.Delay(100);
+            InitializeBorder();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error in {nameof(InputField)} - OnSizeAllocated: {ex}");
+        }
     }
 
 #if !WINDOWS

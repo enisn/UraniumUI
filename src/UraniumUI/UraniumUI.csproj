@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<Import Project="..\..\maui.common.props" />
 	<Import Project="..\..\common.props" />
@@ -25,7 +25,7 @@
 
 	<ItemGroup>
 	  <PackageReference Include="InputKit.Maui" Version="4.3.5" />
-	  <PackageReference Include="Plainer.Maui" Version="1.6.4" />
+	  <PackageReference Include="Plainer.Maui" Version="1.7.0" />
 	</ItemGroup>
   
 	<ItemGroup>

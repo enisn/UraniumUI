@@ -39,7 +39,6 @@ public partial class TabView : Grid
             {
                 new GenericTriggerAction<Grid>((sender) =>
                 {
-
                     //sender.SetAppThemeColor(
                     //            Grid.BackgroundColorProperty,
                     //            ColorResource.GetColor("Primary").WithAlpha(.2f),

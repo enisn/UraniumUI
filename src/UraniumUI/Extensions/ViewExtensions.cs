@@ -1,4 +1,6 @@
-﻿namespace UraniumUI.Extensions;
+﻿using System.Globalization;
+
+namespace UraniumUI.Extensions;
 public static class ViewExtensions
 {
     public static T FindInParents<T>(this View view)
@@ -53,5 +55,21 @@ public static class ViewExtensions
                 }
             }
         }
+    }
+
+    public static bool IsRtl(this VisualElement element)
+    {
+        if (element.FlowDirection != FlowDirection.MatchParent)
+        {
+            return element.FlowDirection == FlowDirection.RightToLeft;
+        }
+
+        if (element.Parent is VisualElement parentElement)
+        {
+            return IsRtl(parentElement);
+        }
+
+        // Fallback to culture:
+        return CultureInfo.CurrentCulture.TextInfo.IsRightToLeft;
     }
 }

@@ -171,7 +171,15 @@ public partial class InputField : Grid
     {
         var perimeter = (this.Width + this.Height) * 2;
         var calculatedFirstDash = FirstDash + CornerRadius.Clamp(FirstDash, double.MaxValue);
+
         var space = (labelTitle.Width + calculatedFirstDash) * .8;
+
+#if ANDROID
+        if (this.IsRtl())
+        {
+            calculatedFirstDash += this.Width - labelTitle.Width;
+        }
+#endif
 
 #if WINDOWS
         if (space <= 0 || perimeter <= 0)

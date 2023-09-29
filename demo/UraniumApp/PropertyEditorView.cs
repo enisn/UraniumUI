@@ -209,7 +209,8 @@ namespace UraniumApp
             {
                 //Color = ColorResource.GetColor("Primary", "PrimaryDark"),
                 ColumnSpacing = -2,
-                RowSpacing = -2,
+                RowSpacing = shouldUseSingleColumn ? 5 : -2,
+                SelectionType = shouldUseSingleColumn ? InputKit.Shared.SelectionType.RadioButton : InputKit.Shared.SelectionType.Button,
                 ColumnNumber = shouldUseSingleColumn ? 1 : values.Length,
                 ItemsSource = values,
             };

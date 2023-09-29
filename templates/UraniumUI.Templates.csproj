@@ -8,7 +8,7 @@
     <Description>Templates for new MAUI Apps, Themes and Libraries</Description>
     <PackageTags>dotnet-new;templates;maui,uikit</PackageTags>
 
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
 
     <IncludeContentInPack>true</IncludeContentInPack>
     <IncludeBuildOutput>false</IncludeBuildOutput>

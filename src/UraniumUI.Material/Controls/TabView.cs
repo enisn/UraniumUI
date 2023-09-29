@@ -226,6 +226,30 @@ public partial class TabView : Grid
 
                 Grid.SetColumn(_headerContainer.Children[i] as View, i);
             }
+
+            ArrangeHeaderScrollView();
+        }
+    }
+
+    protected virtual void ArrangeHeaderScrollView()
+    {
+        if (TabHeaderItemColumnWidth != GridLength.Auto && this.Children.Contains(_headerScrollView))
+        {
+            var row = Grid.GetRow(_headerScrollView);
+            var column = Grid.GetColumn(_headerScrollView);
+
+            this.Remove(_headerScrollView);
+
+            this.Add(_headerContainer, column, row);
+        }
+        else if (TabHeaderItemColumnWidth == GridLength.Auto && this.Children.Contains(_headerContainer))
+        {
+            var row = Grid.GetRow(_headerContainer);
+            var column = Grid.GetColumn(_headerContainer);
+
+            this.Remove(_headerContainer);
+
+            this.Add(_headerScrollView, column, row);
         }
     }
 

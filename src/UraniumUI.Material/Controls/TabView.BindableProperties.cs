@@ -21,7 +21,7 @@ public partial class TabView
             propertyChanged: (bo, ov, nv) => (bo as TabView).RenderHeaders());
 
     [TypeConverter(typeof(GridLengthTypeConverter))]
-    public GridLength TabHeaderItemColumnWidth { get => (GridLength) GetValue(TabHeaderItemColumnWidthProperty); set => SetValue(TabHeaderItemColumnWidthProperty, value); }
+    public GridLength TabHeaderItemColumnWidth { get => (GridLength)GetValue(TabHeaderItemColumnWidthProperty); set => SetValue(TabHeaderItemColumnWidthProperty, value); }
 
     public static readonly BindableProperty TabHeaderItemColumnWidthProperty =
         BindableProperty.Create(nameof(TabHeaderItemColumnWidth), typeof(GridLength), typeof(TabView), defaultValue: GridLength.Auto,
@@ -61,6 +61,6 @@ public partial class TabView
         nameof(SelectedTab),
         typeof(TabItem),
         typeof(TabView),
-        propertyChanged: (bindable, oldValue, newValue) 
+        propertyChanged: (bindable, oldValue, newValue)
             => (bindable as TabView).OnSelectedTabChanged((TabItem)oldValue, (TabItem)newValue));
 }

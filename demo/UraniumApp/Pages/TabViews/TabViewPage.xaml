@@ -18,7 +18,7 @@
             <StackLayout Padding="20" Spacing="15">
 
                 <Frame StyleClass="Elevation1">
-                    <material:TabView x:Name="tabView">
+                    <material:TabView x:Name="tabView" TabHeaderItemColumnWidth="*">
                         <material:TabItem Title="Tab One">
                             <material:TabItem.ContentTemplate>
                                 <DataTemplate>

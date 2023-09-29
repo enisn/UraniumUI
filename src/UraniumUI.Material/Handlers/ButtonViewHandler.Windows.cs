@@ -59,11 +59,7 @@ public partial class ButtonViewHandler
 
     private void PlatformView_PointerEntered(object sender, PointerRoutedEventArgs e)
     {
-#if NET6_0
-        VisualStateManager.GoToState(StatefulView, "PointerOver");
-#else
         VisualStateManager.GoToState(StatefulView, VisualStateManager.CommonStates.PointerOver);
-#endif
         ExecuteCommandIfCan(StatefulView.HoverCommand);
         StatefulView.InvokeHovered();
     }

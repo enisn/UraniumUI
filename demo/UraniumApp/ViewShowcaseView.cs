@@ -17,7 +17,7 @@ public class ViewShowcaseView : Border
             ColorResource.GetColor("Surface", Colors.Gray),
             ColorResource.GetColor("SurfaceDark", Colors.DarkGray));
 
-        sidePanelContentView.SetAppThemeColor(ContentView.BackgroundProperty, Color.FromArgb("#25ffffff"), Color.FromArgb("#25000000"));
+        sidePanelContentView.SetAppThemeColor(ContentView.BackgroundColorProperty, Color.FromArgb("#25ffffff"), Color.FromArgb("#25000000"));
 
         StrokeShape = new RoundRectangle
         {

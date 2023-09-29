@@ -5,4 +5,9 @@ public static class ColorExtensions
     {
         return color == null || color == Colors.Transparent;
     }
+
+    public static Brush ToSolidColorBrush(this Color color)
+    {
+        return new SolidColorBrush(color);
+    }
 }

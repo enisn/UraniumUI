@@ -1,8 +1,8 @@
 <Project>
-    <PropertyGroup Condition="$(TargetFramework.Contains('net7'))">
+    <!-- <PropertyGroup Condition="$(TargetFramework.Contains('net7'))">
         <MauiVersion>7.0.92</MauiVersion>
     </PropertyGroup>
     <PropertyGroup Condition="$(TargetFramework.Contains('net6'))">
         <MauiVersion>6.0.552</MauiVersion>
-    </PropertyGroup>
+    </PropertyGroup> -->
 </Project>

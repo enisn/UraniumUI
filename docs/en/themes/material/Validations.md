@@ -3,7 +3,7 @@ Validations are a way to validate the input of a field. They are defined in the 
 
 > _You may visit [Validations](https://enisn-projects.io/docs/en/inputkit/latest/components/controls/FormView#validations) section of [FormView](https://enisn-projects.io/docs/en/inputkit/latest/components/controls/FormView) documentation of InputKit to see existing validations._
 
-> _If you're looking for **DataAnnotations** validation, you should check out the [DataAnnotations](../../validations/DataAnnotations.md) documentation.
+> _If you're looking for **DataAnnotations** validation, you should check out the [DataAnnotations](../../validations/DataAnnotations.md) documentation._
 
 Validations are working compatible together FormView. So, you can use a FormView to create a form and validate the inputs.
 

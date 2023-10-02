@@ -1,7 +1,7 @@
 ﻿using UraniumUI.Extensions;
 
 namespace UraniumUI.Material.Controls;
-public class CustomTreeViewHierarchicalSelectBehavior : Behavior<CheckBox>
+public class TreeViewHierarchicalSelectBehavior : Behavior<CheckBox>
 {
     protected override void OnAttachedTo(CheckBox bindable)
     {

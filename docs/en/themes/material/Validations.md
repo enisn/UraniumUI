@@ -64,7 +64,7 @@ xmlns:validation="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Ma
 </material:TextField>
 ```
 
-* Using a FormView is the easiest way to validate multiple inputs at the same time.
+* Using a [FormView](https://enisn-projects.io/docs/en/inputkit/latest/components/controls/FormView) is the easiest way to validate multiple inputs at the same time.
 
 ```xml
 <input:FormView SubmitCommand="{Binding SubmitCommand}" Spacing="20">

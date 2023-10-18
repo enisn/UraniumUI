@@ -31,7 +31,7 @@ builder
 #### Glyphs
 Glyphs are provided with `FontAwesomeRegular` and `FontAwesomeSolid` classes. They can be accessed like `FontAwesomeRegular.Filter`. This class icluded in `UraniumUI` namespace. You should include following xml namespace to use it.
 
-```
+```xml
 xmlns:fa="clr-namespace:UraniumUI.Icons.FontAwesome;assembly=UraniumUI.Icons.FontAwesome"
 ```
 
@@ -76,7 +76,7 @@ builder
 #### Glyphs
 Glyphs are provided with `MaterialOutlined`, `MaterialRegular`, `MaterialRoundRegular`, `MaterialSharpRegular` and `MaterialTwoTone`  classes. They can be accessed like `MaterialTwoTone.Account_circle`. This class icluded in `UraniumUI` namespace. You should include following xml namespace to use it.
 
-```
+```xml
 xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
 ```
 

@@ -419,5 +419,16 @@ public partial class InputField : Grid
         typeof(InputField),
         defaultValue: 8.0,
         propertyChanged: (bindable, oldValue, newValue) => (bindable as InputField).OnCornerRadiusChanged());
+
+    [System.ComponentModel.TypeConverter(typeof(FontSizeConverter))]
+    public double TitleFontSize { get => (double)GetValue(TitleFontSizeProperty); set => SetValue(TitleFontSizeProperty, value); }
+
+    public static readonly BindableProperty TitleFontSizeProperty = BindableProperty.Create(
+        nameof(TitleFontSize),
+        typeof(double),
+        typeof(InputField),
+        defaultValue: Label.FontSizeProperty.DefaultValue,
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as InputField).labelTitle.FontSize = (double)newValue
+        );
     #endregion
 }

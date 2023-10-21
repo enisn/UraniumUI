@@ -47,7 +47,6 @@ public partial class TextField : InputField
         iconClear.TappedCommand = new Command(OnClearTapped);
         
         UpdateClearIconState();
-
         EntryView.SetBinding(Entry.TextProperty, new Binding(nameof(Text), source: this));
         EntryView.SetBinding(Entry.ReturnCommandParameterProperty, new Binding(nameof(ReturnCommandParameter), source: this));
         EntryView.SetBinding(Entry.ReturnCommandProperty, new Binding(nameof(ReturnCommand), source: this));

@@ -1,9 +1,5 @@
-﻿using InputKit.Shared.Abstraction;
-using InputKit.Shared.Validations;
-using Microsoft.Maui.Converters;
+﻿using Microsoft.Maui.Converters;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Reflection;
 using System.Windows.Input;
 using UraniumUI.Resources;
 
@@ -150,4 +146,15 @@ public partial class TextField
         typeof(bool),
         typeof(TextField),
         false);
+
+    [System.ComponentModel.TypeConverter(typeof(FontSizeConverter))]
+    public double FontSize { get => (double)GetValue(FontSizeProperty); set => SetValue(FontSizeProperty, value); }
+
+    public static readonly BindableProperty FontSizeProperty = BindableProperty.Create(
+        nameof(FontSize),
+        typeof(double),
+        typeof(InputField),
+        defaultValue: Label.FontSizeProperty.DefaultValue,
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as TextField).EntryView.FontSize = (double)newValue
+        );
 }

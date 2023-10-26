@@ -37,15 +37,16 @@ public partial class TextField : InputField
 
     public override bool HasValue { get => !string.IsNullOrEmpty(Text); }
 
+    public IList<Behavior> EntryBehaviors => EntryView?.Behaviors;
+
     public event EventHandler<TextChangedEventArgs> TextChanged;
     public event EventHandler Completed;
 
     public TextField()
     {
         iconClear.TappedCommand = new Command(OnClearTapped);
-
+        
         UpdateClearIconState();
-
         EntryView.SetBinding(Entry.TextProperty, new Binding(nameof(Text), source: this));
         EntryView.SetBinding(Entry.ReturnCommandParameterProperty, new Binding(nameof(ReturnCommandParameter), source: this));
         EntryView.SetBinding(Entry.ReturnCommandProperty, new Binding(nameof(ReturnCommand), source: this));

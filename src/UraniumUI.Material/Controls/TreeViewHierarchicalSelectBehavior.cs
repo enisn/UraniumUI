@@ -41,9 +41,9 @@ public class TreeViewHierarchicalSelectBehavior : Behavior<CheckBox>
     protected virtual void ApplyHierarchicalSelection(CheckBox checkBox)
     {
         var holder = checkBox.FindInParents<TreeViewNodeHolderView>() ?? throw new InvalidOperationException("CheckBox isn't in a TreeView ItemTemplate");
-		foreach (TreeViewNodeHolderView child in holder.NodeChildren.Where(x => x is TreeViewNodeHolderView))
+        foreach (TreeViewNodeHolderView child in holder.NodeChildren.Where(x => x is TreeViewNodeHolderView))
         {
-            var childCheckBox = (child.NodeView as CheckBox);
+            var childCheckBox = FindCheckBox(child);
             if (childCheckBox.IsChecked != checkBox.IsChecked)
             {
                 childCheckBox.IsChecked = checkBox.IsChecked;
@@ -59,7 +59,7 @@ public class TreeViewHierarchicalSelectBehavior : Behavior<CheckBox>
             return;
         }
 
-        var mainCheckBox = holder.NodeView as CheckBox;
+        var mainCheckBox = FindCheckBox(holder);
 
         if (forcedSemiSelected)
         {
@@ -79,10 +79,10 @@ public class TreeViewHierarchicalSelectBehavior : Behavior<CheckBox>
         {
             var children = holder.NodeChildren.OfType<TreeViewNodeHolderView>();
 
-            var lastItemToCheck = (children.FirstOrDefault().NodeView as CheckBox)?.IsChecked ?? throw new InvalidOperationException("CheckBox isn't in a TreeView ItemTemplate");
+            var lastItemToCheck = FindCheckBox(children.FirstOrDefault())?.IsChecked ?? throw new InvalidOperationException("CheckBox isn't in a TreeView ItemTemplate");
             foreach (TreeViewNodeHolderView child in holder.NodeChildren.Where(x => x is TreeViewNodeHolderView))
             {
-                var checkBox = (child.NodeView as CheckBox);
+                var checkBox = FindCheckBox(child);
                 if (lastItemToCheck != checkBox.IsChecked)
                 {
                     mainCheckBox.IconGeometry = InputKit.Shared.Controls.PredefinedShapes.Line;
@@ -100,6 +100,16 @@ public class TreeViewHierarchicalSelectBehavior : Behavior<CheckBox>
             }
         }
         CheckStateItself(holder.ParentHolderView);
+    }
+
+    private static CheckBox FindCheckBox(TreeViewNodeHolderView child)
+    {
+        if (child.NodeView is Layout layout)
+        {
+            return layout.FindInChildrenHierarchy<CheckBox>();
+        }
+
+        return (child.NodeView as CheckBox);
     }
 }
 

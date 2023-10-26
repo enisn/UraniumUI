@@ -379,7 +379,7 @@ public partial class InputField : Grid
     public double BorderThickness { get => (double)GetValue(BorderThicknessProperty); set => SetValue(BorderThicknessProperty, value); }
 
     public static readonly BindableProperty BorderThicknessProperty = BindableProperty.Create(
-        nameof(BorderColor),
+        nameof(BorderThickness),
         typeof(double),
         typeof(InputField),
         1.0,
@@ -388,7 +388,7 @@ public partial class InputField : Grid
     public Color InputBackgroundColor { get => (Color)GetValue(InputBackgroundColorProperty); set => SetValue(InputBackgroundColorProperty, value); }
 
     public static readonly BindableProperty InputBackgroundColorProperty = BindableProperty.Create(
-        nameof(BorderColor),
+        nameof(InputBackgroundColor),
         typeof(Color),
         typeof(InputField),
         Colors.Transparent,
@@ -397,7 +397,7 @@ public partial class InputField : Grid
     public Brush InputBackground { get => (Brush)GetValue(InputBackgroundProperty); set => SetValue(InputBackgroundProperty, value); }
 
     public static readonly BindableProperty InputBackgroundProperty = BindableProperty.Create(
-        nameof(BorderColor),
+        nameof(InputBackground),
         typeof(Brush),
         typeof(InputField),
         Brush.Transparent,
@@ -419,5 +419,16 @@ public partial class InputField : Grid
         typeof(InputField),
         defaultValue: 8.0,
         propertyChanged: (bindable, oldValue, newValue) => (bindable as InputField).OnCornerRadiusChanged());
+
+    [System.ComponentModel.TypeConverter(typeof(FontSizeConverter))]
+    public double TitleFontSize { get => (double)GetValue(TitleFontSizeProperty); set => SetValue(TitleFontSizeProperty, value); }
+
+    public static readonly BindableProperty TitleFontSizeProperty = BindableProperty.Create(
+        nameof(TitleFontSize),
+        typeof(double),
+        typeof(InputField),
+        defaultValue: Label.FontSizeProperty.DefaultValue,
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as InputField).labelTitle.FontSize = (double)newValue
+        );
     #endregion
 }

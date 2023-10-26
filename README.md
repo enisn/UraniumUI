@@ -76,6 +76,7 @@ This project is licensed under the Apache License License - see the [LICENSE](LI
 | [kmaclagan-pcl](https://www.buymeacoffee.com/enisn) |  <!-- 1☕️ -->
 | [@Geramy](https://github.com/Geramy) |  <!-- 1☕️ -->
 | [Malko_Josue](https://twitter.com/Malko_Josue) |  <!-- 1☕️ -->
+| Simon Brettschneider |    <!-- 1☕️ -->
 
 > Donations are spent to infrastructural costs such as documentation website etc.
 

@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link id="theme" rel="stylesheet" href="simplemde/simplemde.min.css">
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+        }
+
+        .dark {
+            background-color: #444;
+        }
+    </style>
+    <script src="simplemde/simplemde.min.js"></script>
+</head>
+<body>
+<textarea id="markdowneditor"></textarea>
+    <script>
+        var simplemde = new SimpleMDE({
+            element: document.getElementById("markdowneditor"),
+            status: false
+        });
+
+        function setTheme(theme) {
+
+            if (theme == "dark") {
+                document.body.className = "dark";
+                document.getElementById("theme").setAttribute('href', 'simplemde/simplemde-theme-dark.min.css')
+
+            } else {
+                document.body.className = "";
+                document.getElementById("theme").setAttribute('href', 'simplemde/simplemde.min.css')
+            }
+        }
+    </script>
+</body>
+</html>

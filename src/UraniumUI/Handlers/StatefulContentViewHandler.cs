@@ -199,7 +199,10 @@ public class StatefulContentViewHandler : ContentViewHandler
     protected override void ConnectHandler(Microsoft.Maui.Platform.ContentView platformView)
     {
         platformView.AddGestureRecognizer(new UIContinousGestureRecognizer(Tapped));
-        platformView.AddGestureRecognizer(new UIHoverGestureRecognizer(OnHover));
+        if (OperatingSystem.IsIOSVersionAtLeast(13))
+        {
+            platformView.AddGestureRecognizer(new UIHoverGestureRecognizer(OnHover));
+        }
         platformView.AddGestureRecognizer(new UILongPressGestureRecognizer(OnLongPress));
         base.ConnectHandler(platformView);
     }

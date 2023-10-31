@@ -179,6 +179,8 @@ public partial class InputField : Grid
         var perimeter = (this.Width + this.Height) * 2;
         var calculatedFirstDash = FirstDash + CornerRadius.Clamp(FirstDash, double.MaxValue);
         var space = (labelTitle.Width + calculatedFirstDash) * .8;
+        if (labelTitle.Width <= 0)
+            space = 0;
 
 #if WINDOWS
         if (space <= 0 || perimeter <= 0)
@@ -204,7 +206,7 @@ public partial class InputField : Grid
         };
 #endif
 
-        border.StrokeDashArray = new DoubleCollection { calculatedFirstDash * 0.9, space, perimeter, 0 };
+            border.StrokeDashArray = new DoubleCollection { calculatedFirstDash * 0.9, space, perimeter, 0 };
 
 #if WINDOWS
         this.Add(border);

@@ -11,41 +11,6 @@ Validations are working compatible together FormView. So, you can use a FormView
 |--- | --- |
 | ![MAUI Validation](images/validations-all-demo-light-android.gif) | ![MAUI Validation](images/validations-all-demo-dark-windows.gif) |
 
-## Prebuilt Validations
-UraniumUI Material doesn't provide any prebuilt validations. You can use validations from [InputKit](https://enisn-projects.io/docs/en/inputkit/latest/components/controls/FormView#validations) or create your own.
-
-There are some built-in validations that can be used in your application. They are:
-
-  * `RequiredValidation` - Checks if the value is not null or empty.
-  * `RegexValidation` - Checks if the value matches the given regex pattern.
-  * `MinLengthValidation` - Checks if the string length is greater than or equal to the given length.
-  * `MaxLengthValidation` - Checks if the string length is less than or equal to the given length.
-  * `MaxValueValidation` - Checks if the value is less than or equal to the given value.
-  * `MinValueValidation` - Checks if the value is greater than or equal to the given value.
-  * `NumericValidation` - Checks if the value is a number.
-  * `DigitsOnlyValidation` - Checks if the value contains only digits.
-  * `LettersOnlyValidation` - Checks if the value contains only letters.
-
-## Creating Custom Validation
-
-You can create your own validation by implementing `IValidation` interface. It has a `Validate` method that takes a `object` as parameter and returns `bool` as result. The parameter is the value of the control that the validation is applied to. The result is the validation result. If the result is `false`, the validation message will be shown.
-
-```csharp
-
-public class MyEmailValidation : IValidation
-{
-    public string Message { get; set; } = "Please enter a valid email address.";
-
-    public bool Validate(object value)
-    {
-        if (value is string text)
-        {
-            return text.Count(x => x == '@') == 1 && text.Split('@').Last().Length >= 2;
-        }
-        return false;
-    }
-}
-```
 
 ## Usage
 
@@ -89,6 +54,42 @@ xmlns:validation="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Ma
 | --- | --- |
 | ![MAUI Validations](images/validations-demo-light-android.gif) | ![MAUI Validations](images/validations-demo-dark-windows.gif) |
 
+
+## Prebuilt Validations
+UraniumUI Material doesn't provide any prebuilt validations. You can use validations from [InputKit](https://enisn-projects.io/docs/en/inputkit/latest/components/controls/FormView#validations) or create your own.
+
+There are some built-in validations that can be used in your application. They are:
+
+  * `RequiredValidation` - Checks if the value is not null or empty.
+  * `RegexValidation` - Checks if the value matches the given regex pattern.
+  * `MinLengthValidation` - Checks if the string length is greater than or equal to the given length.
+  * `MaxLengthValidation` - Checks if the string length is less than or equal to the given length.
+  * `MaxValueValidation` - Checks if the value is less than or equal to the given value.
+  * `MinValueValidation` - Checks if the value is greater than or equal to the given value.
+  * `NumericValidation` - Checks if the value is a number.
+  * `DigitsOnlyValidation` - Checks if the value contains only digits.
+  * `LettersOnlyValidation` - Checks if the value contains only letters.
+
+## Creating Custom Validation
+
+You can create your own validation by implementing `IValidation` interface. It has a `Validate` method that takes a `object` as parameter and returns `bool` as result. The parameter is the value of the control that the validation is applied to. The result is the validation result. If the result is `false`, the validation message will be shown.
+
+```csharp
+
+public class MyEmailValidation : IValidation
+{
+    public string Message { get; set; } = "Please enter a valid email address.";
+
+    public bool Validate(object value)
+    {
+        if (value is string text)
+        {
+            return text.Count(x => x == '@') == 1 && text.Split('@').Last().Length >= 2;
+        }
+        return false;
+    }
+}
+```
 
 ## Validation Supported Controls
 

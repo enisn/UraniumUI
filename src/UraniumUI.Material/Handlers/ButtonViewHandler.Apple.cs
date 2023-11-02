@@ -10,7 +10,10 @@ public partial class ButtonViewHandler
     {
         base.ConnectHandler(platformView);
         platformView.AddGestureRecognizer(new UIContinousGestureRecognizer(Tapped));
-        platformView.AddGestureRecognizer(new UIHoverGestureRecognizer(OnHover));
+        if (OperatingSystem.IsIOSVersionAtLeast(13))
+        {
+            platformView.AddGestureRecognizer(new UIHoverGestureRecognizer(OnHover));
+        }
         platformView.AddGestureRecognizer(new UILongPressGestureRecognizer(OnLongPress));
     }
 

@@ -13,6 +13,7 @@
     xmlns:treeViews="clr-namespace:UraniumApp.Pages.TreeViews"
     xmlns:inputFields="clr-namespace:UraniumApp.Pages.InputFields"
     xmlns:autocompletes="clr-namespace:UraniumApp.Pages.AutoCompleteTextField"
+    FlyoutBackgroundColor="{AppThemeBinding Light={StaticResource Surface}, Dark={StaticResource SurfaceDark}}"
     Shell.FlyoutBehavior="{OnIdiom Desktop=Locked, Default=Flyout}">
 
     <Shell.FlyoutHeader>

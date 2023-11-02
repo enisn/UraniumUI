@@ -207,18 +207,19 @@ namespace UraniumApp
             var shouldUseSingleColumn = values.Length > 3;
             var editor = new SelectionView
             {
-                //Color = ColorResource.GetColor("Primary", "PrimaryDark"),
+                Color = ColorResource.GetColor("Primary", "PrimaryDark"),
                 ColumnSpacing = -2,
                 RowSpacing = shouldUseSingleColumn ? 5 : -2,
                 SelectionType = shouldUseSingleColumn ? InputKit.Shared.SelectionType.RadioButton : InputKit.Shared.SelectionType.Button,
                 ColumnNumber = shouldUseSingleColumn ? 1 : values.Length,
-                ItemsSource = values,
+                ItemsSource = values
             };
 
             editor.SetBinding(SelectionView.SelectedItemProperty, new Binding(bindableProperty.PropertyName, source: source));
 
             return new VerticalStackLayout
             {
+                Spacing = 6,
                 Children = {
                     new Label { Text = bindableProperty.PropertyName },
                     editor

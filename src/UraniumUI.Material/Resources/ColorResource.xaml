@@ -25,7 +25,7 @@
     <Color x:Key="SurfaceVariant">#E7E0EC</Color>
     <Color x:Key="OnSurfaceVariant">#49454E</Color>
 
-    <Color x:Key="Background">#FFFBFE</Color>
+    <Color x:Key="Background">#f1f1f2</Color>
     <Color x:Key="OnBackground">#1C1B1F</Color>
 
     <Color x:Key="Error">#B3261E</Color>

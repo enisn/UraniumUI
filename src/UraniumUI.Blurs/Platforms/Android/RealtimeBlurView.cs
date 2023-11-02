@@ -21,10 +21,6 @@ public class RealtimeBlurView : View
     const int BlurAutoUpdateDelayMilliseconds = 200;
     const bool ThrowStopExceptionOnDraw = false;
 
-    private static int RealtimeBlurViewInstanceCount;
-
-    private int _subscriptionCount;
-
     private float mDownsampleFactor; // default 4
 
     private int mOverlayColor; // default #aaffffff
@@ -106,7 +102,7 @@ public class RealtimeBlurView : View
             bmp.Recycle();
             BLUR_IMPL = 3;
         }
-        catch (Exception e)
+        catch
         {
         }
 

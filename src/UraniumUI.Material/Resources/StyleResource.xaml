@@ -257,6 +257,10 @@
                 </Setter>
             </Style>
 
+            <Style TargetType="input:SelectionView" ApplyToDerivedTypes="True" CanCascade="True">
+                <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource Secondary}, Dark={StaticResource SecondaryDark}}" />
+            </Style>
+
             <Style TargetType="c:RadioButton" Class="CheckRadioButton" CanCascade="True">
                 <Setter Property="SelectedIconGeomerty" Value="{x:Static input:PredefinedShapes.CheckCircle}" />
             </Style>

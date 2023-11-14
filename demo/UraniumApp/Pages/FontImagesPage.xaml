@@ -9,7 +9,7 @@
              x:DataType="vm:FontImagesViewModel"
              BindingContext="{uranium:Inject {Type vm:FontImagesViewModel}}">
     <Grid>
-        <material:TabView ItemsSource="{Binding Items}">
+        <material:TabView ItemsSource="{Binding Items}" CachingStrategy="CacheOnLayout">
             <material:TabView.ItemTemplate>
                 <DataTemplate x:DataType="vm:FontImageViewModel">
 

@@ -1,6 +1,10 @@
 ﻿using UraniumUI.Extensions;
+using UraniumUI.Handlers;
 using UraniumUI.Pages;
+using UraniumUI.Resources;
 using UraniumUI.Triggers;
+using UraniumUI.Views;
+using static Microsoft.Maui.Controls.VisualStateManager;
 using Path = Microsoft.Maui.Controls.Shapes.Path;
 
 namespace UraniumUI.Material.Controls;
@@ -12,6 +16,8 @@ public class TreeViewNodeHolderView : VerticalStackLayout
 
     public TreeView TreeView { get; internal set; }
 
+    public int Indent { get; set; } = 0;
+
     protected ContentView nodeContainer = new ContentView
     {
         HorizontalOptions = LayoutOptions.Fill,
@@ -21,7 +27,6 @@ public class TreeViewNodeHolderView : VerticalStackLayout
 
     internal protected VerticalStackLayout nodeChildren = new VerticalStackLayout
     {
-        Margin = new Thickness(10, 0, 0, 0),
         IsVisible = false
     };
 
@@ -58,7 +63,9 @@ public class TreeViewNodeHolderView : VerticalStackLayout
 
         TreeView = treeView;
         DataTemplate = dataTemplate;
+
         nodeContainer.Content = DataTemplate.CreateContent() as View;
+
         expanderView = TreeView.ExpanderTemplate?.CreateContent() as View ?? InitializeArrowExpander();
         expanderView.BindingContext = this;
 
@@ -67,7 +74,14 @@ public class TreeViewNodeHolderView : VerticalStackLayout
 
         rowStack.Add(expanderView);
         rowStack.Add(nodeContainer, column: 1);
-        this.Add(rowStack);
+
+        var button = new StatefulContentView
+        {
+            Content = rowStack,
+            TappedCommand = new Command(ItemClicked),
+        };
+
+        this.Add(button);
         this.Add(nodeChildren);
 
         if (!string.IsNullOrEmpty(TreeView.IsExpandedPropertyName))
@@ -92,6 +106,17 @@ public class TreeViewNodeHolderView : VerticalStackLayout
 
         nodeChildren.ChildAdded += (s, e) => OnPropertyChanged(nameof(IsLeaf));
         nodeChildren.ChildRemoved += (s, e) => OnPropertyChanged(nameof(IsLeaf));
+    }
+
+    protected override void OnParentSet()
+    {
+        base.OnParentSet();
+        var parent = this.FindInParents<TreeViewNodeHolderView>();
+        if (parent is not null)
+        {
+            Indent = parent.Indent + 16;
+            this.FindInChildrenHierarchy<StatefulContentView>().Padding = new Thickness(Indent, 0, 0, 0);
+        }
     }
 
     protected virtual View InitializeArrowExpander()
@@ -204,6 +229,57 @@ public class TreeViewNodeHolderView : VerticalStackLayout
         }
     }
 
+    protected virtual void ItemClicked()
+    {
+        if (TreeView.SelectionMode == SelectionMode.Single)
+        {
+            if (TreeView.SelectedItem == BindingContext)
+            {
+                TreeView.SelectedItem = null;
+            }
+            else
+            {
+                TreeView.SelectedItem = BindingContext;
+            }
+        }
+    }
+
+    internal virtual void OnSelectedItemChanged()
+    {
+        if (TreeView.SelectionMode == SelectionMode.Single)
+        {
+            if (BindingContext == TreeView.SelectedItem)
+            {
+                IsSelected = !IsSelected;
+            }
+            else
+            {
+                IsSelected = false;
+            }
+        }
+
+        foreach (var childHolder in nodeChildren.Children.OfType<TreeViewNodeHolderView>())
+        {
+            childHolder.OnSelectedItemChanged();
+        }
+    }
+
+    protected virtual void IsSelectedChanged()
+    {
+        var button = this.FindInChildrenHierarchy<StatefulContentView>();
+
+        if (IsSelected)
+        {
+            VisualStateManager.GoToState(this, CommonStates.Selected);
+            button.BackgroundColor = ColorResource.GetColor("Secondary", "Secondary", Colors.Pink);
+        }
+        else
+        {
+            VisualStateManager.GoToState(this, CommonStates.Normal);
+            button.BackgroundColor = Colors.Transparent;
+        }
+    }
+
     public virtual void ApplyIsExpandedPropertyBindings()
     {
         this.SetBinding(IsExpandedProperty, new Binding(TreeView.IsExpandedPropertyName, BindingMode.TwoWay));
@@ -294,4 +370,10 @@ public class TreeViewNodeHolderView : VerticalStackLayout
                     holderView.OnIsExpandedChanged((bool)newValue);
                 }
             });
+
+    public bool IsSelected { get => (bool)GetValue(IsSelectedProperty); set => SetValue(IsSelectedProperty, value); }
+
+    public static readonly BindableProperty IsSelectedProperty = BindableProperty.Create(
+        nameof(IsSelected), typeof(bool), typeof(TreeViewNodeHolderView), false,
+            propertyChanged: (bindable, oldValue, newValue) => (bindable as TreeViewNodeHolderView).IsSelectedChanged());
 }

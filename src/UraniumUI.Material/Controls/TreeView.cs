@@ -98,6 +98,21 @@ public partial class TreeView : VerticalStackLayout
         }
     }
 
+    protected virtual void SelectedItemChanged()
+    {
+        if (SelectionMode == SelectionMode.None)
+        {
+            return;
+        }
+
+        foreach (var childHolder in Children.OfType<TreeViewNodeHolderView>())
+        {
+            childHolder.OnSelectedItemChanged();
+        }
+    }
+
+    public SelectionMode SelectionMode { get; set; }
+
     public bool UseAnimation { get; set; } = true;
 
     /// <summary>
@@ -110,6 +125,11 @@ public partial class TreeView : VerticalStackLayout
     public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(
         nameof(ItemsSource), typeof(IList), typeof(TreeView), null,
         propertyChanged: (b, o, v) => (b as TreeView).OnItemsSourceSet());
+
+    public object SelectedItem { get => GetValue(SelectedItemProperty); set => SetValue(SelectedItemProperty, value); }
+
+    public static readonly BindableProperty SelectedItemProperty = BindableProperty.Create(
+        nameof(SelectedItem), typeof(object), typeof(TreeView), default, propertyChanged: (bo, ov, nv)=> (bo as TreeView).SelectedItemChanged());
 
     public DataTemplate ExpanderTemplate { get => (DataTemplate)GetValue(ExpanderTemplateProperty); set => SetValue(ExpanderTemplateProperty, value); }
 

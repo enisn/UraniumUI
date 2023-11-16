@@ -66,6 +66,9 @@ public class FontImageViewModel : ReactiveObject
 
             IconsSourceList.AddRange(icons);
         }
+        var pageRequest = this
+            .WhenAnyValue(vm => vm.PageNumber)
+            .Select(number => new PageRequest(1, number * 10));
 
         IconsSourceList.Connect()
             .Filter(this.WhenAnyValue(vm => vm.SelectedType)
@@ -74,6 +77,7 @@ public class FontImageViewModel : ReactiveObject
                 this.WhenAnyValue(vm => vm.SearchText)
                 .Throttle(TimeSpan.FromMilliseconds(500))
                 .Select(MakeSearchFilter))
+            .Page(pageRequest)
             .ObserveOn(RxApp.MainThreadScheduler)
             .Bind(out icons)
             .Subscribe();
@@ -102,6 +106,8 @@ public class FontImageViewModel : ReactiveObject
     [Reactive] public FontImageItemViewModel SelectedIcon { get; set; }
 
     [Reactive] public Type SelectedType { get; set; }
+
+    [Reactive] public int PageNumber { get; set; } = 1;
 
     public string FontFamilyPrefix { get; set; }
 

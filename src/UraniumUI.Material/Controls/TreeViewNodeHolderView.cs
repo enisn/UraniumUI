@@ -126,8 +126,8 @@ public class TreeViewNodeHolderView : VerticalStackLayout
             Margin = new Thickness(0, 0, 5, 0),
             Content = new Path
             {
+                StyleClass = new[] { "TreeView.Arrow" },
                 Data = UraniumShapes.ArrowRight,
-                Fill = TreeView.ArrowColor,
                 HorizontalOptions = LayoutOptions.Center,
                 VerticalOptions = LayoutOptions.Center,
             }
@@ -192,33 +192,6 @@ public class TreeViewNodeHolderView : VerticalStackLayout
         return iconArrow;
     }
 
-    public virtual void ReFillArrowColor()
-    {
-        Layout expanderLayout = null;
-
-        if (expanderView is ContentView contentView && contentView.Content is Layout)
-        {
-            expanderLayout = contentView.Content as Layout;
-        }
-        else if (expanderView is Layout layout)
-        {
-            expanderLayout = layout;
-        }
-
-        if (expanderLayout is not null)
-        {
-            foreach (var path in expanderLayout.FindManyInChildrenHierarchy<Path>())
-            {
-                path.Fill = TreeView.ArrowColor;
-            }
-        }
-
-        foreach (var childHolder in nodeChildren.Children.OfType<TreeViewNodeHolderView>())
-        {
-            childHolder.ReFillArrowColor();
-        }
-    }
-
     protected virtual void ItemClicked()
     {
         if (TreeView.SelectionMode == SelectionMode.Single)
@@ -262,16 +235,31 @@ public class TreeViewNodeHolderView : VerticalStackLayout
         {
             VisualStateManager.GoToState(this, CommonStates.Selected);
             button.BackgroundColor = TreeView.SelectionColor;
-            AddSelectedResources(button);
+            foreach (var item in button.FindManyInChildrenHierarchy<Path>())
+            {
+                item.StyleClass = new[] { "TreeView.Arrow.Selected" };
+            }
+
+            foreach (var item in button.FindManyInChildrenHierarchy<Label>())
+            {
+                item.StyleClass = new[] { "TreeView.Label.Selected" };
+            }
         }
         else
         {
             VisualStateManager.GoToState(button, CommonStates.Normal);
             button.BackgroundColor = Colors.Transparent;
-            button.Resources.Clear();
 
-            button.Resources.Add(new Style(typeof(Label)));
-            button.Resources.Add(new Style(typeof(Path)));
+
+            foreach (var item in button.FindManyInChildrenHierarchy<Path>())
+            {
+                item.StyleClass = new[] { "TreeView.Arrow" };
+            }
+
+            foreach (var item in button.FindManyInChildrenHierarchy<Label>())
+            {
+                item.StyleClass = new[] { "TreeView.Label" };
+            }
         }
     }
 

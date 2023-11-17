@@ -16,8 +16,6 @@ public class TreeViewNodeHolderView : VerticalStackLayout
 
     public TreeView TreeView { get; internal set; }
 
-    public int Indent { get; set; } = 0;
-
     protected ContentView nodeContainer = new ContentView
     {
         HorizontalOptions = LayoutOptions.Fill,
@@ -54,7 +52,7 @@ public class TreeViewNodeHolderView : VerticalStackLayout
 
     private View expanderView;
 
-    public TreeViewNodeHolderView(DataTemplate dataTemplate, TreeView treeView, BindingBase childrenBinding)
+    public TreeViewNodeHolderView(DataTemplate dataTemplate, TreeView treeView, BindingBase childrenBinding, int indentLevel = 0)
     {
         if (treeView is null)
         {
@@ -79,6 +77,7 @@ public class TreeViewNodeHolderView : VerticalStackLayout
         {
             Content = rowStack,
             TappedCommand = new Command(ItemClicked),
+            Padding = new Thickness(indentLevel * 16, 0, 0, 0)
         };
 
         this.Add(button);
@@ -96,7 +95,7 @@ public class TreeViewNodeHolderView : VerticalStackLayout
 
         BindableLayout.SetItemTemplate(nodeChildren, new DataTemplate(() =>
         {
-            var node = new TreeViewNodeHolderView(DataTemplate, TreeView, childrenBinding);
+            var node = new TreeViewNodeHolderView(DataTemplate, TreeView, childrenBinding, indentLevel + 1);
             node.ParentHolderView = this;
             node.TreeView = TreeView;
             return node;
@@ -106,17 +105,6 @@ public class TreeViewNodeHolderView : VerticalStackLayout
 
         nodeChildren.ChildAdded += (s, e) => OnPropertyChanged(nameof(IsLeaf));
         nodeChildren.ChildRemoved += (s, e) => OnPropertyChanged(nameof(IsLeaf));
-    }
-
-    protected override void OnParentSet()
-    {
-        base.OnParentSet();
-        var parent = this.FindInParents<TreeViewNodeHolderView>();
-        if (parent is not null)
-        {
-            Indent = parent.Indent + 16;
-            this.FindInChildrenHierarchy<StatefulContentView>().Padding = new Thickness(Indent, 0, 0, 0);
-        }
     }
 
     protected virtual View InitializeArrowExpander()
@@ -270,12 +258,12 @@ public class TreeViewNodeHolderView : VerticalStackLayout
 
         if (IsSelected)
         {
-            VisualStateManager.GoToState(this, CommonStates.Selected);
+            //VisualStateManager.GoToState(this, CommonStates.Selected);
             button.BackgroundColor = ColorResource.GetColor("Secondary", "Secondary", Colors.Pink);
         }
         else
         {
-            VisualStateManager.GoToState(this, CommonStates.Normal);
+            //VisualStateManager.GoToState(this, CommonStates.Normal);
             button.BackgroundColor = Colors.Transparent;
         }
     }

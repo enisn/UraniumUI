@@ -16,7 +16,7 @@ public class TreeViewNodeHolderView : VerticalStackLayout
 
     public TreeView TreeView { get; internal set; }
 
-    protected ContentView nodeContainer = new ContentView
+    protected TreeViewNodeItemContentView nodeContainer = new TreeViewNodeItemContentView
     {
         HorizontalOptions = LayoutOptions.Fill,
     };
@@ -61,9 +61,10 @@ public class TreeViewNodeHolderView : VerticalStackLayout
 
         TreeView = treeView;
         DataTemplate = dataTemplate;
-
-        nodeContainer.Content = DataTemplate.CreateContent() as View;
-
+        
+        nodeContainer.ItemTemplate = DataTemplate;
+        nodeContainer.SetBinding(TreeViewNodeItemContentView.ItemProperty, ".");
+        
         expanderView = TreeView.ExpanderTemplate?.CreateContent() as View ?? InitializeArrowExpander();
         expanderView.BindingContext = this;
 

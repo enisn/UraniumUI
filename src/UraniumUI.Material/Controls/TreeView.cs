@@ -90,14 +90,6 @@ public partial class TreeView : VerticalStackLayout
         OnItemTemplateChanged();
     }
 
-    protected virtual void OnArrowColorChanged()
-    {
-        foreach (var childHolder in Children.OfType<TreeViewNodeHolderView>())
-        {
-            childHolder.ReFillArrowColor();
-        }
-    }
-
     protected virtual void SelectedItemChanged()
     {
         if (SelectionMode == SelectionMode.None)
@@ -148,16 +140,9 @@ public partial class TreeView : VerticalStackLayout
     public static readonly BindableProperty LoadChildrenCommandProperty = BindableProperty.Create(
         nameof(LoadChildrenCommand), typeof(ICommand), typeof(TreeView), null);
 
-    public Color ArrowColor { get => (Color)GetValue(ArrowColorProperty); set => SetValue(ArrowColorProperty, value); }
-
-    public static readonly BindableProperty ArrowColorProperty = BindableProperty.Create(
-        nameof(ArrowColor), typeof(Color), typeof(TreeView), ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.DarkGray),
-            propertyChanged: (bindable, oldValue, newValue)=> (bindable as TreeView).OnArrowColorChanged());
-
     public Color SelectionColor { get => (Color)GetValue(SelectionColorProperty); set => SetValue(SelectionColorProperty, value); }
 
     public static readonly BindableProperty SelectionColorProperty = BindableProperty.Create(
-        nameof(ArrowColor), typeof(Color), typeof(TreeView), ColorResource.GetColor("Secondary", "SecondaryDark", Colors.Pink),
-            propertyChanged: (bindable, oldValue, newValue)=> (bindable as TreeView).OnArrowColorChanged());
+        nameof(SelectionColor), typeof(Color), typeof(TreeView), ColorResource.GetColor("Secondary", "SecondaryDark", Colors.Pink));
 
 }

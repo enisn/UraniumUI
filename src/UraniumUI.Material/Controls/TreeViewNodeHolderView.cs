@@ -1,13 +1,14 @@
-﻿using UraniumUI.Extensions;
-using UraniumUI.Handlers;
+﻿using InputKit.Shared.Helpers;
+using UraniumUI.Extensions;
 using UraniumUI.Pages;
-using UraniumUI.Resources;
 using UraniumUI.Triggers;
 using UraniumUI.Views;
 using static Microsoft.Maui.Controls.VisualStateManager;
 using Path = Microsoft.Maui.Controls.Shapes.Path;
 
 namespace UraniumUI.Material.Controls;
+
+[ContentProperty(nameof(NodeView))]
 public class TreeViewNodeHolderView : VerticalStackLayout
 {
     public View NodeView { get => nodeContainer.Content; set => nodeContainer.Content = value; }
@@ -61,10 +62,10 @@ public class TreeViewNodeHolderView : VerticalStackLayout
 
         TreeView = treeView;
         DataTemplate = dataTemplate;
-        
+
         nodeContainer.ItemTemplate = DataTemplate;
         nodeContainer.SetBinding(TreeViewNodeItemContentView.ItemProperty, ".");
-        
+
         expanderView = TreeView.ExpanderTemplate?.CreateContent() as View ?? InitializeArrowExpander();
         expanderView.BindingContext = this;
 
@@ -259,14 +260,49 @@ public class TreeViewNodeHolderView : VerticalStackLayout
 
         if (IsSelected)
         {
-            //VisualStateManager.GoToState(this, CommonStates.Selected);
-            button.BackgroundColor = ColorResource.GetColor("Secondary", "Secondary", Colors.Pink);
+            VisualStateManager.GoToState(this, CommonStates.Selected);
+            button.BackgroundColor = TreeView.SelectionColor;
+            AddSelectedResources(button);
         }
         else
         {
-            //VisualStateManager.GoToState(this, CommonStates.Normal);
+            VisualStateManager.GoToState(button, CommonStates.Normal);
             button.BackgroundColor = Colors.Transparent;
+            button.Resources.Clear();
+
+            button.Resources.Add(new Style(typeof(Label)));
+            button.Resources.Add(new Style(typeof(Path)));
         }
+    }
+
+    protected virtual void AddSelectedResources(StatefulContentView button)
+    {
+        var surfaceColor = TreeView.SelectionColor.ToSurfaceColor();
+
+        button.Resources.Clear();
+        button.Resources.Add(new Style(typeof(Label))
+        {
+            CanCascade = true,
+            Setters =
+                {
+                    new Setter
+                    {
+                        Property = Label.TextColorProperty, Value = surfaceColor
+                    }
+                }
+        });
+
+        button.Resources.Add(new Style(typeof(Path))
+        {
+            CanCascade = true,
+            Setters =
+            {
+                new Setter
+                {
+                    Property = Path.FillProperty, Value = surfaceColor
+                }
+            }
+        });
     }
 
     public virtual void ApplyIsExpandedPropertyBindings()

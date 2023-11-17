@@ -153,4 +153,11 @@ public partial class TreeView : VerticalStackLayout
     public static readonly BindableProperty ArrowColorProperty = BindableProperty.Create(
         nameof(ArrowColor), typeof(Color), typeof(TreeView), ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.DarkGray),
             propertyChanged: (bindable, oldValue, newValue)=> (bindable as TreeView).OnArrowColorChanged());
+
+    public Color SelectionColor { get => (Color)GetValue(SelectionColorProperty); set => SetValue(SelectionColorProperty, value); }
+
+    public static readonly BindableProperty SelectionColorProperty = BindableProperty.Create(
+        nameof(ArrowColor), typeof(Color), typeof(TreeView), ColorResource.GetColor("Secondary", "SecondaryDark", Colors.Pink),
+            propertyChanged: (bindable, oldValue, newValue)=> (bindable as TreeView).OnArrowColorChanged());
+
 }

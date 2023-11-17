@@ -40,6 +40,59 @@
                     </material:TabItem.ContentTemplate>
                 </material:TabItem>
 
+                <material:TabItem Title="Template selector">
+                    <material:TabItem.ContentTemplate>
+                        <DataTemplate>
+                            <material:TreeView ItemsSource="{Binding Nodes}">
+                                <material:TreeView.ItemTemplate>
+                                    <vm:MyTemplateSelector>
+                                        <vm:MyTemplateSelector.TemplateDefault>
+                                            <DataTemplate>
+                                                <HorizontalStackLayout Margin="0,25" Spacing="5" VerticalOptions="Center">
+                                                    <Image Source="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Folder}, Color={AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}}" />
+                                                    <Label Text="{Binding Name}" FontAttributes="Bold" />
+                                                    <Label Text="{Binding Children.Count, StringFormat='({0})'}" />
+                                                    <Label Text="Default Template" />
+                                                </HorizontalStackLayout>
+                                            </DataTemplate>
+                                        </vm:MyTemplateSelector.TemplateDefault>
+                                        <vm:MyTemplateSelector.TemplateA>
+                                            <DataTemplate>
+                                                <HorizontalStackLayout Margin="0,25" Spacing="5" VerticalOptions="Center">
+                                                    <Image Source="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Folder}, Color={AppThemeBinding Light={StaticResource Tertiary}, Dark={StaticResource TertiaryDark}}}" />
+                                                    <Label Text="{Binding Name}" FontAttributes="Bold" />
+                                                    <Label Text="{Binding Children.Count, StringFormat='({0})'}" />
+                                                    <Label Text="Template for A" />
+                                                </HorizontalStackLayout>
+                                            </DataTemplate>
+                                        </vm:MyTemplateSelector.TemplateA>
+                                        <vm:MyTemplateSelector.TemplateB>
+                                            <DataTemplate>
+                                                <HorizontalStackLayout Margin="0,25" Spacing="5" VerticalOptions="Center">
+                                                    <Image Source="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Folder}, Color={AppThemeBinding Light={StaticResource Secondary}, Dark={StaticResource SecondaryDark}}}" />
+                                                    <Label Text="{Binding Name}" FontAttributes="Bold" />
+                                                    <Label Text="{Binding Children.Count, StringFormat='({0})'}" />
+                                                    <Label Text="Template for B" />
+                                                </HorizontalStackLayout>
+                                            </DataTemplate>
+                                        </vm:MyTemplateSelector.TemplateB>
+                                        <vm:MyTemplateSelector.TemplateC>
+                                            <DataTemplate>
+                                                <HorizontalStackLayout Margin="0,25" Spacing="5" VerticalOptions="Center">
+                                                    <Image Source="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Folder}, Color={AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}}" />
+                                                    <Label Text="{Binding Name}" FontAttributes="Bold" />
+                                                    <Label Text="{Binding Children.Count, StringFormat='({0})'}" />
+                                                    <Label Text="Template for C" />
+                                                </HorizontalStackLayout>
+                                            </DataTemplate>
+                                        </vm:MyTemplateSelector.TemplateC>
+                                    </vm:MyTemplateSelector>
+                                </material:TreeView.ItemTemplate>
+                            </material:TreeView>
+                        </DataTemplate>
+                    </material:TabItem.ContentTemplate>
+                </material:TabItem>
+
                 <material:TabItem Title="Expander">
                     <material:TabItem.ContentTemplate>
                         <DataTemplate>

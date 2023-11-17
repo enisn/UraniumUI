@@ -49,6 +49,11 @@ public static class ViewExtensions
     public static IEnumerable<T> FindManyInChildrenHierarchy<T>(this View view)
         where T : View
     {
+        if (view is T itself)
+        {
+            yield return itself;
+        }
+
         if (view is Layout layout)
         {
             foreach (var item in layout.Children)
@@ -57,9 +62,9 @@ public static class ViewExtensions
                 {
                     yield return found;
                 }
-                else if (item is Layout anotherLayout)
+                else if (item is View childView)
                 {
-                    foreach (var child in anotherLayout.FindManyInChildrenHierarchy<T>())
+                    foreach (var child in childView.FindManyInChildrenHierarchy<T>())
                     {
                         yield return child;
                     }
@@ -67,9 +72,9 @@ public static class ViewExtensions
             }
         }
 
-        if (view is ContentView contentView)
+        if (view is IContentView contentView && contentView.Content is View contentViewContent)
         {
-            foreach (var child in contentView.Content.FindManyInChildrenHierarchy<T>())
+            foreach (var child in contentViewContent.FindManyInChildrenHierarchy<T>())
             {
                 yield return child;
             }

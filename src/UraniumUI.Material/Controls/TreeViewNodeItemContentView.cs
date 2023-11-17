@@ -2,7 +2,6 @@
 
 public class TreeViewNodeItemContentView : ContentView
 {
-
     private static void ItemTemplateChanged(BindableObject bindable, object oldValue, object newValue)
     {
         var control = bindable as TreeViewNodeItemContentView;
@@ -41,7 +40,6 @@ public class TreeViewNodeItemContentView : ContentView
         }
     }
 
-
     public DataTemplate ItemTemplate
     {
         get => (DataTemplate)GetValue(ItemTemplateProperty);
@@ -62,7 +60,6 @@ public class TreeViewNodeItemContentView : ContentView
         nameof(Item), typeof(object), typeof(TreeViewNodeItemContentView), null,
         propertyChanged: SourceChanged);
 
-
     public static View CreateTemplateForItem(object item, DataTemplate itemTemplate, bool createDefaultIfNoTemplate = true)
     {
         var templateToUse = itemTemplate is DataTemplateSelector templateSelector ? 
@@ -75,7 +72,7 @@ public class TreeViewNodeItemContentView : ContentView
 
         //Create the content
         //If a view wasn't created, we can't use it, exit
-        if (!(templateToUse.CreateContent() is View view)) return new Label() { Text = item.ToString() }; ;
+        if (!(templateToUse.CreateContent() is View view)) return new Label() { Text = item.ToString() };
 
         //Set the binding
         view.BindingContext = item;

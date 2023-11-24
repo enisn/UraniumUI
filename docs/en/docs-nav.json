@@ -14,20 +14,20 @@
         {
           "text": "Stateful Content View",
           "path": "infrastructure/StatefulContentView.md"
-        }
-      ]
-    },
-    {
-      "text" : "Validations",
-      "path": "validations/Index.md",
-      "items": [
-        {
-          "text": "InputKit Validations",
-          "path": "validations/InputKitValidations.md"
         },
         {
-          "text": "Data Annotations",
-          "path": "validations/DataAnnotations.md"
+          "text" : "Validations",
+          "path": "validations/Index.md",
+          "items": [
+            {
+              "text": "InputKit Validations",
+              "path": "validations/InputKitValidations.md"
+            },
+            {
+              "text": "Data Annotations",
+              "path": "validations/DataAnnotations.md"
+            }
+          ]
         }
       ]
     },
@@ -46,15 +46,35 @@
       ]
     },
     {
+      "text": "Icons",
+      "path": "theming/Icons.md",
+      "items":[
+        {
+          "text": "Material Icons",
+          "path": "theming/Icons#material-icons"
+        },
+        {
+          "text": "Font Awesome",
+          "path": "theming/Icons#fontawesome"
+        },
+        {
+          "text": "Segoe Fluent Icons",
+          "path": "theming/Icons#segoe-fluent-icons"
+        }
+      ]
+    },
+    {
+      "text": "Web Components",
+      "items":[
+        
+      ]
+    },
+    {
       "text": "Styling",
       "items": [
         {
           "text": "Color System",
           "path": "theming/ColorSystem.md"
-        },
-        {
-          "text": "Icons",
-          "path": "theming/Icons.md"
         },
         {
         "text": "Cascading Styling",
@@ -63,6 +83,15 @@
         {
           "text": "Creating a Theme",
           "path": "theming/CreatingTheme.md"
+        }
+      ]
+    },
+    {
+      "text": "Effects",
+      "items":[
+        {
+          "text": "Blur",
+          "path": "Blurs.md"
         }
       ]
     },
@@ -183,6 +212,10 @@
         {
           "text": "Migration to v2.3",
           "path": "migration-guides/Migrating-To-2.3.md"
+        },
+        {
+          "text": "Migration to v2.4",
+          "path": "migration-guides/Migrating-To-2.4.md"
         }
       ]
     },

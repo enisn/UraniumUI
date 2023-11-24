@@ -157,11 +157,7 @@ public class UIAutoCompleteTextField : MauiTextField, IUITextFieldDelegate
 
     public int AutocompleteTableViewHeight { get; set; } = 150;
 
-#if NET6_0
     public void Draw(UIViewController viewController, CALayer layer, AutoCompleteView virtualView, NFloat x, NFloat y)
-#else
-    public void Draw(UIViewController viewController, CALayer layer, AutoCompleteView virtualView, NFloat x, NFloat y)
-#endif
     {
         var _scrollView = GetParentScrollView(this);
         _drawnFrame = layer.Frame;

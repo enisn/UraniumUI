@@ -1,4 +1,3 @@
-﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.32804.182
@@ -36,6 +35,11 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{6BE23582-8CCA-4D14-ADDD-5AC46E9EE2C7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UraniumUI.StyleBuilder", "tools\UraniumUI.StyleBuilder\UraniumUI.StyleBuilder\UraniumUI.StyleBuilder.csproj", "{E145C258-2D96-49ED-88DB-191DF1B32899}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UraniumUI.Blurs", "src\UraniumUI.Blurs\UraniumUI.Blurs.csproj", "{D44173B6-CA42-4F97-BB3C-9F8CC62C4340}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UraniumUI.WebComponents", "src\UraniumUI.WebComponents\UraniumUI.WebComponents.csproj", "{78F7207D-B804-499B-97F5-8EA1D0EA9DA2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UraniumUI.Icons.SegoeFluent", "src\UraniumUI.Icons.SegoeFluent\UraniumUI.Icons.SegoeFluent.csproj", "{D146428B-5B37-4614-A6F4-2E9716E0CC08}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -99,7 +103,19 @@ Global
 		{E145C258-2D96-49ED-88DB-191DF1B32899}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E145C258-2D96-49ED-88DB-191DF1B32899}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E145C258-2D96-49ED-88DB-191DF1B32899}.Release|Any CPU.Deploy.0 = Release|Any CPU
-	EndGlobalSection
+		{D44173B6-CA42-4F97-BB3C-9F8CC62C4340}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D44173B6-CA42-4F97-BB3C-9F8CC62C4340}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D44173B6-CA42-4F97-BB3C-9F8CC62C4340}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D44173B6-CA42-4F97-BB3C-9F8CC62C4340}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78F7207D-B804-499B-97F5-8EA1D0EA9DA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78F7207D-B804-499B-97F5-8EA1D0EA9DA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78F7207D-B804-499B-97F5-8EA1D0EA9DA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78F7207D-B804-499B-97F5-8EA1D0EA9DA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D146428B-5B37-4614-A6F4-2E9716E0CC08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D146428B-5B37-4614-A6F4-2E9716E0CC08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D146428B-5B37-4614-A6F4-2E9716E0CC08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D146428B-5B37-4614-A6F4-2E9716E0CC08}.Release|Any CPU.Build.0 = Release|Any CPU
+EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
@@ -116,6 +132,9 @@ Global
 		{C7CC898A-8047-4D39-A8DE-44A80E99445F} = {32493E5D-A757-4289-A168-DA0E8DDE9B29}
 		{3AD9C27A-3227-463A-81F4-8AA5FF4DB542} = {32493E5D-A757-4289-A168-DA0E8DDE9B29}
 		{E145C258-2D96-49ED-88DB-191DF1B32899} = {6BE23582-8CCA-4D14-ADDD-5AC46E9EE2C7}
+		{D44173B6-CA42-4F97-BB3C-9F8CC62C4340} = {32493E5D-A757-4289-A168-DA0E8DDE9B29}
+		{78F7207D-B804-499B-97F5-8EA1D0EA9DA2} = {32493E5D-A757-4289-A168-DA0E8DDE9B29}
+		{D146428B-5B37-4614-A6F4-2E9716E0CC08} = {32493E5D-A757-4289-A168-DA0E8DDE9B29}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {31946918-5DA1-40D1-8BD7-6834BB21D0FF}

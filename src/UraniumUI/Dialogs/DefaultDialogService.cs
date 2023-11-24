@@ -1,6 +1,7 @@
 ﻿using InputKit.Shared.Controls;
 
 namespace UraniumUI.Dialogs;
+
 public class DefaultDialogService : IDialogService
 {
     public Task<bool> ConfirmAsync(string title, string message, string okText = "OK", string cancelText = "Cancel")
@@ -21,6 +22,7 @@ public class DefaultDialogService : IDialogService
         var selectionView = new SelectionView
         {
             ColumnNumber = 1,
+            RowSpacing = 10,
             SelectionType = InputKit.Shared.SelectionType.CheckBox,
             ItemsSource = selectionSource.ToList(),
         };
@@ -31,6 +33,8 @@ public class DefaultDialogService : IDialogService
             {
                 Content = new VerticalStackLayout
                 {
+                    Padding = 20,
+                    Spacing = 20,
                     HorizontalOptions = LayoutOptions.Center,
                     Children = {
                         new Label{ Text = message },
@@ -42,6 +46,7 @@ public class DefaultDialogService : IDialogService
                                 new Button
                                 {
                                     Text = accept,
+                                    StyleClass = new []{ "FilledButton" },
                                     Command = new Command(() =>
                                     {
                                         tcs.SetResult(selectionView.SelectedItems.Cast<T>());
@@ -51,6 +56,8 @@ public class DefaultDialogService : IDialogService
                                 new Button
                                 {
                                     Text = cancel,
+
+                                    StyleClass = new []{ "OutlinedButton" },
                                     Command = new Command(() =>
                                     {
                                         tcs.SetResult(null);
@@ -79,6 +86,7 @@ public class DefaultDialogService : IDialogService
         var selectionView = new SelectionView
         {
             ColumnNumber = 1,
+            RowSpacing = 10,
             SelectionType = InputKit.Shared.SelectionType.RadioButton,
             ItemsSource = selectionSource.ToList(),
         };
@@ -91,17 +99,21 @@ public class DefaultDialogService : IDialogService
             {
                 Content = new VerticalStackLayout
                 {
+                    Padding = 20,
+                    Spacing = 20,
                     HorizontalOptions = LayoutOptions.Center,
                     Children = {
                         new Label{ Text = message },
                         selectionView,
                         new HorizontalStackLayout
                         {
+                            Spacing = 4,
                             Children =
                             {
                                 new Button
                                 {
                                     Text = accept,
+                                    StyleClass = new []{ "FilledButton" },
                                     Command = new Command(() =>
                                     {
                                         tcs.SetResult((T)(selectionView.SelectedItem ?? default(T)));
@@ -111,6 +123,7 @@ public class DefaultDialogService : IDialogService
                                 new Button
                                 {
                                     Text = cancel,
+                                    StyleClass = new []{ "OutlinedButton" },
                                     Command = new Command(() =>
                                     {
                                         tcs.SetResult(default(T));

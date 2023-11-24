@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace UraniumUI.Material.Controls;
 public partial class TabView
@@ -18,6 +19,13 @@ public partial class TabView
     public static readonly BindableProperty TabHeaderItemTemplateProperty =
         BindableProperty.Create(nameof(TabHeaderItemTemplate), typeof(DataTemplate), typeof(TabView), defaultValue: TabView.DefaultTabHeaderItemTemplate,
             propertyChanged: (bo, ov, nv) => (bo as TabView).RenderHeaders());
+
+    [TypeConverter(typeof(GridLengthTypeConverter))]
+    public GridLength TabHeaderItemColumnWidth { get => (GridLength)GetValue(TabHeaderItemColumnWidthProperty); set => SetValue(TabHeaderItemColumnWidthProperty, value); }
+
+    public static readonly BindableProperty TabHeaderItemColumnWidthProperty =
+        BindableProperty.Create(nameof(TabHeaderItemColumnWidth), typeof(GridLength), typeof(TabView), defaultValue: GridLength.Star,
+            propertyChanged: (bo, ov, nv) => (bo as TabView).AlignHeaderGridItems());
 
     public object CurrentItem { get => GetValue(CurrentItemProperty); set => SetValue(CurrentItemProperty, value); }
 
@@ -53,6 +61,6 @@ public partial class TabView
         nameof(SelectedTab),
         typeof(TabItem),
         typeof(TabView),
-        propertyChanged: (bindable, oldValue, newValue) 
+        propertyChanged: (bindable, oldValue, newValue)
             => (bindable as TabView).OnSelectedTabChanged((TabItem)oldValue, (TabItem)newValue));
 }

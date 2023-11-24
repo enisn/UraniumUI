@@ -13,6 +13,6 @@ public partial class App : Application
         SelectionView.GlobalSetting.CornerRadius = 0;
         SelectionView.GlobalSetting.Color = ColorResource.GetColor("Secondary", "SecondaryDark");
 
-        MainPage = new AppShell();
+        MainPage = UraniumServiceProvider.Current.GetRequiredService<AppShell>();
     }
 }

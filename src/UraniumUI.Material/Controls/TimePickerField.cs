@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using UraniumUI.Pages;
 using UraniumUI.Resources;
+using UraniumUI.Views;
 using Path = Microsoft.Maui.Controls.Shapes.Path;
 
 namespace UraniumUI.Material.Controls;
@@ -21,7 +22,7 @@ public class TimePickerField : InputField
 #endif
 	};
 
-	protected ContentView iconClear = new ContentView
+	protected StatefulContentView iconClear = new StatefulContentView
 	{
 		VerticalOptions = LayoutOptions.Center,
 		HorizontalOptions = LayoutOptions.End,
@@ -38,9 +39,7 @@ public class TimePickerField : InputField
 
 	public TimePickerField()
 	{
-		var clearGestureRecognizer = new TapGestureRecognizer();
-		clearGestureRecognizer.Tapped += OnClearTapped;
-		iconClear.GestureRecognizers.Add(clearGestureRecognizer);
+		iconClear.TappedCommand = new Command(OnClearTapped);
 
 		UpdateClearIconState();
 
@@ -66,7 +65,7 @@ public class TimePickerField : InputField
 		return Time;
 	}
 
-	protected void OnClearTapped(object sender, EventArgs e)
+	protected virtual void OnClearTapped(object parameter)
 	{
 		if (IsEnabled)
 		{
@@ -125,7 +124,13 @@ public class TimePickerField : InputField
 		}
 	}
 
-	public TimeSpan? Time { get => (TimeSpan?)GetValue(TimeProperty); set => SetValue(TimeProperty, value); }
+    public override void ResetValidation()
+    {
+		Time = null;
+        base.ResetValidation();
+    }
+
+    public TimeSpan? Time { get => (TimeSpan?)GetValue(TimeProperty); set => SetValue(TimeProperty, value); }
 
 	public static readonly BindableProperty TimeProperty =
 		BindableProperty.Create(nameof(Time), typeof(TimeSpan?), typeof(TimePickerField), null, defaultBindingMode: BindingMode.TwoWay,

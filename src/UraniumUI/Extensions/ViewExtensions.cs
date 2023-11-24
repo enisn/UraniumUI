@@ -2,7 +2,7 @@
 public static class ViewExtensions
 {
     public static T FindInParents<T>(this View view)
-        where T : View
+        where T : VisualElement
     {
         var itemToCheck = view.Parent;
         while (itemToCheck != null)
@@ -15,11 +15,11 @@ public static class ViewExtensions
             itemToCheck = itemToCheck.Parent;
         }
 
-        return null;
+        return default;
     }
 
     public static T FindInChildrenHierarchy<T>(this Layout layout)
-        where T : View
+        where T : VisualElement
     {
         foreach (var item in layout.Children)
         {

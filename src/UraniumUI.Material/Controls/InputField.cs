@@ -1,6 +1,7 @@
 ﻿using Microsoft.Maui.Controls.Shapes;
 using UraniumUI.Resources;
 using UraniumUI.Extensions;
+using System.Collections;
 
 namespace UraniumUI.Material.Controls;
 
@@ -8,6 +9,7 @@ namespace UraniumUI.Material.Controls;
 public partial class InputField : Grid
 {
     internal const double FirstDash = 6;
+    internal const double MaxCornerRadius = 24;
     private View content;
     public virtual View Content
     {
@@ -58,25 +60,13 @@ public partial class InputField : Grid
         };
     });
 
-    protected HorizontalStackLayout endIconsContainer = new HorizontalStackLayout
-    {
-        HorizontalOptions = LayoutOptions.End,
-        Margin = 5,
-    };
+    protected HorizontalStackLayout endIconsContainer = new HorizontalStackLayout();
+
+    public IList<IView> Attachments => endIconsContainer.Children;
 
     private Color LastFontimageColor;
 
     private bool hasValue;
-
-    public virtual bool HasValue
-    {
-        get => hasValue;
-        set
-        {
-            hasValue = value;
-            UpdateState();
-        }
-    }
 
     public InputField()
     {
@@ -85,9 +75,15 @@ public partial class InputField : Grid
         {
             CornerRadius = this.CornerRadius,
             Stroke = this.BorderColor,
+            StrokeThickness = this.BorderThickness,
+            Background = this.InputBackground,
+            BackgroundColor = this.InputBackgroundColor,
         };
 
         RegisterForEvents();
+
+        border.ZIndex = 0;
+        labelTitle.ZIndex = 1000;
 
         this.Add(border);
         this.Add(labelTitle);
@@ -96,6 +92,8 @@ public partial class InputField : Grid
 
         rootGrid.AddColumnDefinition(new ColumnDefinition(GridLength.Auto));
         rootGrid.AddColumnDefinition(new ColumnDefinition(GridLength.Star));
+        rootGrid.AddColumnDefinition(new ColumnDefinition(GridLength.Auto));
+        rootGrid.AddRowDefinition(new RowDefinition(GridLength.Star));
 
         if (Content != null)
         {
@@ -110,17 +108,60 @@ public partial class InputField : Grid
         InitializeValidation();
     }
 
-    ~InputField()
+    public virtual bool HasValue
     {
-        ReleaseEvents();
+        get => hasValue;
+        set
+        {
+            hasValue = value;
+            UpdateState();
+        }
+    }
+
+    protected override void OnHandlerChanging(HandlerChangingEventArgs args)
+    {
+        base.OnHandlerChanging(args);
+
+        if (args.NewHandler is null)
+        {
+            ReleaseEvents();
+        }
     }
 
     protected override async void OnSizeAllocated(double width, double height)
     {
-        base.OnSizeAllocated(width, height);
-        await Task.Delay(100);
-        InitializeBorder();
+        try
+        {
+            base.OnSizeAllocated(width, height);
+            await Task.Delay(100);
+            InitializeBorder();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error in {nameof(InputField)} - OnSizeAllocated: {ex}");
+        }
     }
+
+#if !WINDOWS
+    protected override void OnHandlerChanged()
+    {
+        base.OnHandlerChanged();
+
+        Content.Focused += OnFocusChanged;
+        Content.Unfocused += OnFocusChanged;
+
+        if (Handler is null)
+        {
+            Content.Focused -= OnFocusChanged;
+            Content.Unfocused -= OnFocusChanged;
+        }
+    }
+
+    protected virtual void OnFocusChanged(object sender, FocusEventArgs args)
+    {
+        (this as IGridLayout).IsFocused = args.IsFocused;
+    }
+#endif
 
     // TODO: Remove this member hiding after android unfocus fixed.
     public new void Unfocus()
@@ -138,6 +179,8 @@ public partial class InputField : Grid
         var perimeter = (this.Width + this.Height) * 2;
         var calculatedFirstDash = FirstDash + CornerRadius.Clamp(FirstDash, double.MaxValue);
         var space = (labelTitle.Width + calculatedFirstDash) * .8;
+        if (labelTitle.Width <= 0)
+            space = 0;
 
 #if WINDOWS
         if (space <= 0 || perimeter <= 0)
@@ -150,10 +193,11 @@ public partial class InputField : Grid
         border = new Border
         {
             Padding = 0,
-            Stroke = ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.Gray),
-            StrokeThickness = 2,
+            Stroke = BorderColor,
+            StrokeThickness = BorderThickness,
+            Background = InputBackground,
+            BackgroundColor = InputBackgroundColor,
             StrokeDashOffset = 0,
-            BackgroundColor = Colors.Transparent,
             StrokeShape = new RoundRectangle
             {
                 CornerRadius = CornerRadius
@@ -162,17 +206,17 @@ public partial class InputField : Grid
         };
 #endif
 
-        border.StrokeDashArray = new DoubleCollection { calculatedFirstDash * 0.9, space, perimeter, 0 };
+            border.StrokeDashArray = new DoubleCollection { calculatedFirstDash * 0.9, space, perimeter, 0 };
 
 #if WINDOWS
         this.Add(border);
 #endif
 
-        UpdateState(animate: false);
-        border.StrokeThickness = 1;
+        UpdateState();
+        border.StrokeThickness = BorderThickness;
     }
 
-    protected virtual void UpdateState(bool animate = true)
+    protected virtual void UpdateState()
     {
         if (border.StrokeDashArray == null || border.StrokeDashArray.Count == 0 || labelTitle.Width <= 0)
         {
@@ -181,15 +225,15 @@ public partial class InputField : Grid
 
         if (HasValue || Content.IsFocused)
         {
-            UpdateOffset(0.01, animate);
-            labelTitle.TranslateTo(0, -25, 90, Easing.BounceOut);
+            UpdateOffset(0.01);
+            labelTitle.TranslateTo(CornerRadius.Clamp(10, MaxCornerRadius) - 10, -25, 90, Easing.BounceOut);
             labelTitle.AnchorX = 0;
             labelTitle.ScaleTo(.8, 90);
         }
         else
         {
             var offsetToGo = border.StrokeDashArray[0] + border.StrokeDashArray[1] + FirstDash;
-            UpdateOffset(offsetToGo, animate);
+            UpdateOffset(offsetToGo);
 
             labelTitle.CancelAnimations();
             labelTitle.TranslateTo(imageIcon.IsValueCreated ? imageIcon.Value.Width : 0, 0, 90, Easing.BounceOut);
@@ -198,19 +242,9 @@ public partial class InputField : Grid
         }
     }
 
-    protected virtual void UpdateOffset(double value, bool animate = true)
+    protected virtual void UpdateOffset(double value)
     {
-        if (!animate)
-        {
-            border.StrokeDashOffset = value;
-        }
-        else
-        {
-            border.Animate("borderOffset", new Animation((d) =>
-            {
-                border.StrokeDashOffset = d;
-            }, border.StrokeDashOffset, value, Easing.BounceIn), 2, 90);
-        }
+        border.StrokeDashOffset = value;
     }
 
     protected virtual void RegisterForEvents()
@@ -221,6 +255,8 @@ public partial class InputField : Grid
             Content.Focused += Content_Focused;
             Content.Unfocused -= Content_Unfocused;
             Content.Unfocused += Content_Unfocused;
+            SizeChanged -= InputField_SizeChanged;
+            SizeChanged += InputField_SizeChanged;
         }
     }
 
@@ -228,6 +264,7 @@ public partial class InputField : Grid
     {
         Content.Focused -= Content_Focused;
         Content.Unfocused -= Content_Unfocused;
+        SizeChanged -= InputField_SizeChanged;
     }
 
     private void Content_Unfocused(object sender, FocusEventArgs e)
@@ -255,6 +292,11 @@ public partial class InputField : Grid
         }
     }
 
+    private void InputField_SizeChanged(object sender, EventArgs e)
+    {
+        InitializeBorder();
+    }
+
     protected virtual void OnIconChanged()
     {
         imageIcon.Value.Source = Icon;
@@ -279,9 +321,18 @@ public partial class InputField : Grid
     }
     protected virtual void OnCornerRadiusChanged()
     {
+        if (CornerRadius > MaxCornerRadius)
+        {
+            CornerRadius = MaxCornerRadius;
+            return;
+        }
+
         if (border.StrokeShape is RoundRectangle roundRectangle)
         {
             roundRectangle.CornerRadius = CornerRadius;
+#if WINDOWS
+            InitializeBorder();
+#endif
         }
     }
 
@@ -327,6 +378,33 @@ public partial class InputField : Grid
         ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.Gray),
         propertyChanged: (bindable, oldValue, newValue) => (bindable as InputField).border.Stroke = (Color)newValue);
 
+    public double BorderThickness { get => (double)GetValue(BorderThicknessProperty); set => SetValue(BorderThicknessProperty, value); }
+
+    public static readonly BindableProperty BorderThicknessProperty = BindableProperty.Create(
+        nameof(BorderThickness),
+        typeof(double),
+        typeof(InputField),
+        1.0,
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as InputField).border.StrokeThickness = (double)newValue);
+
+    public Color InputBackgroundColor { get => (Color)GetValue(InputBackgroundColorProperty); set => SetValue(InputBackgroundColorProperty, value); }
+
+    public static readonly BindableProperty InputBackgroundColorProperty = BindableProperty.Create(
+        nameof(InputBackgroundColor),
+        typeof(Color),
+        typeof(InputField),
+        Colors.Transparent,
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as InputField).border.BackgroundColor = (Color)newValue);
+
+    public Brush InputBackground { get => (Brush)GetValue(InputBackgroundProperty); set => SetValue(InputBackgroundProperty, value); }
+
+    public static readonly BindableProperty InputBackgroundProperty = BindableProperty.Create(
+        nameof(InputBackground),
+        typeof(Brush),
+        typeof(InputField),
+        Brush.Transparent,
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as InputField).border.Background = (Brush)newValue);
+
     public ImageSource Icon { get => (ImageSource)GetValue(IconProperty); set => SetValue(IconProperty, value); }
 
     public static readonly BindableProperty IconProperty = BindableProperty.Create(
@@ -343,5 +421,16 @@ public partial class InputField : Grid
         typeof(InputField),
         defaultValue: 8.0,
         propertyChanged: (bindable, oldValue, newValue) => (bindable as InputField).OnCornerRadiusChanged());
+
+    [System.ComponentModel.TypeConverter(typeof(FontSizeConverter))]
+    public double TitleFontSize { get => (double)GetValue(TitleFontSizeProperty); set => SetValue(TitleFontSizeProperty, value); }
+
+    public static readonly BindableProperty TitleFontSizeProperty = BindableProperty.Create(
+        nameof(TitleFontSize),
+        typeof(double),
+        typeof(InputField),
+        defaultValue: Label.FontSizeProperty.DefaultValue,
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as InputField).labelTitle.FontSize = (double)newValue
+        );
     #endregion
 }

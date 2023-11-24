@@ -19,6 +19,7 @@ using UIKit;
 using UraniumUI.Views;
 using static Microsoft.Maui.Controls.VisualStateManager;
 using System.Windows.Input;
+using UraniumUI.Resources;
 
 namespace UraniumUI.Handlers;
 
@@ -53,12 +54,9 @@ public class StatefulContentViewHandler : ContentViewHandler
     {
         if (e.Event.Action == MotionEventActions.HoverEnter)
         {
-#if NET6_0
-            GoToState(StatefulView, "PointerOver");
-#else
             GoToState(StatefulView, CommonStates.PointerOver);
-#endif
             ExecuteCommandIfCan(StatefulView.HoverCommand);
+            StatefulView.InvokeHovered();
             return;
         }
 
@@ -66,6 +64,7 @@ public class StatefulContentViewHandler : ContentViewHandler
         {
             GoToState(StatefulView, CommonStates.Normal);
             ExecuteCommandIfCan(StatefulView.HoverExitCommand);
+            StatefulView.InvokeHoverExited();
         }
     }
 
@@ -75,9 +74,10 @@ public class StatefulContentViewHandler : ContentViewHandler
         {
             GoToState(StatefulView, "Pressed");
             ExecuteCommandIfCan(StatefulView.PressedCommand);
+            StatefulView.InvokePressed();
             e.Handled = false;
         }
-        else if (e.Event.Action == MotionEventActions.Up || e.Event.Action == MotionEventActions.Cancel)
+        else if (e.Event.Action == MotionEventActions.Up)
         {
             GoToState(StatefulView, CommonStates.Normal);
             e.Handled = false;
@@ -88,11 +88,13 @@ public class StatefulContentViewHandler : ContentViewHandler
     {
         GoToState(StatefulView, CommonStates.Normal);
         ExecuteCommandIfCan(StatefulView.TappedCommand);
+        StatefulView.InvokeTapped();
     }
 
     private void PlatformView_LongClick(object sender, Android.Views.View.LongClickEventArgs e)
     {
         ExecuteCommandIfCan(StatefulView.LongPressCommand);
+        StatefulView.InvokeLongPressed();
     }
 #endif
 
@@ -112,6 +114,11 @@ public class StatefulContentViewHandler : ContentViewHandler
         platformView.PointerEntered += PlatformView_PointerEntered;
         platformView.PointerExited += PlatformView_PointerExited;
 
+        platformView.IsTabStop = true;
+        platformView.UseSystemFocusVisuals = true;
+        platformView.KeyDown += PlatformView_KeyDown;
+        platformView.KeyUp += PlatformView_KeyUp;
+
         return platformView;
     }
 
@@ -119,6 +126,8 @@ public class StatefulContentViewHandler : ContentViewHandler
     {
         platformView.PointerEntered -= PlatformView_PointerEntered;
         platformView.PointerExited -= PlatformView_PointerExited;
+        platformView.KeyDown -= PlatformView_KeyDown;
+        platformView.KeyUp -= PlatformView_KeyUp;
         base.DisconnectHandler(platformView);
     }
 
@@ -126,16 +135,14 @@ public class StatefulContentViewHandler : ContentViewHandler
     {
         GoToState(StatefulView, CommonStates.Normal);
         ExecuteCommandIfCan(StatefulView.HoverExitCommand);
+        StatefulView.InvokeHoverExited();
     }
 
     private void PlatformView_PointerEntered(object sender, PointerRoutedEventArgs e)
     {
-#if NET6_0
-        GoToState(StatefulView, "PointerOver");
-#else
         GoToState(StatefulView, CommonStates.PointerOver);
-#endif
         ExecuteCommandIfCan(StatefulView.HoverCommand);
+        StatefulView.InvokeHovered();
     }
 
     long lastPressed;
@@ -146,6 +153,7 @@ public class StatefulContentViewHandler : ContentViewHandler
 
         GoToState(StatefulView, "Pressed");
         ExecuteCommandIfCan(StatefulView.PressedCommand);
+        StatefulView.InvokePressed();
     }
 
     private void PlatformView_PointerReleased(object sender, PointerRoutedEventArgs e)
@@ -158,6 +166,32 @@ public class StatefulContentViewHandler : ContentViewHandler
 
         GoToState(StatefulView, CommonStates.Normal);
         ExecuteCommandIfCan(StatefulView.TappedCommand);
+        StatefulView.InvokeTapped();
+    }
+
+    private void PlatformView_KeyDown(object sender, KeyRoutedEventArgs e)
+    {
+        if (IsActionKey(e.Key))
+        {
+            GoToState(StatefulView, "Pressed");
+            ExecuteCommandIfCan(StatefulView.PressedCommand);
+            StatefulView.InvokePressed();
+        }
+    }
+
+    private void PlatformView_KeyUp(object sender, KeyRoutedEventArgs e)
+    {
+        if (IsActionKey(e.Key))
+        {
+            ExecuteCommandIfCan(StatefulView.TappedCommand);
+            StatefulView.InvokeTapped();
+            GoToState(StatefulView, CommonStates.Normal);
+        }
+    }
+
+    private bool IsActionKey(Windows.System.VirtualKey key)
+    {
+        return key == Windows.System.VirtualKey.Enter || key == Windows.System.VirtualKey.Space;
     }
 #endif
 
@@ -165,7 +199,10 @@ public class StatefulContentViewHandler : ContentViewHandler
     protected override void ConnectHandler(Microsoft.Maui.Platform.ContentView platformView)
     {
         platformView.AddGestureRecognizer(new UIContinousGestureRecognizer(Tapped));
-        platformView.AddGestureRecognizer(new UIHoverGestureRecognizer(OnHover));
+        if (OperatingSystem.IsIOSVersionAtLeast(13))
+        {
+            platformView.AddGestureRecognizer(new UIHoverGestureRecognizer(OnHover));
+        }
         platformView.AddGestureRecognizer(new UILongPressGestureRecognizer(OnLongPress));
         base.ConnectHandler(platformView);
     }
@@ -173,6 +210,7 @@ public class StatefulContentViewHandler : ContentViewHandler
     private void OnLongPress(UILongPressGestureRecognizer recognizer)
     {
         ExecuteCommandIfCan(StatefulView.LongPressCommand);
+        StatefulView.InvokeLongPressed();
     }
 
     private void OnHover(UIHoverGestureRecognizer recognizer)
@@ -181,18 +219,16 @@ public class StatefulContentViewHandler : ContentViewHandler
         {
             case UIGestureRecognizerState.Began:
 
-#if NET6_0
-                GoToState(StatefulView, "PointerOver");
-#else
                 GoToState(StatefulView, CommonStates.PointerOver);
-#endif
                 ExecuteCommandIfCan(StatefulView.HoverCommand);
+                StatefulView.InvokeHovered();
                 break;
             case UIGestureRecognizerState.Ended:
             case UIGestureRecognizerState.Cancelled:
             case UIGestureRecognizerState.Failed:
                 GoToState(StatefulView, CommonStates.Normal);
                 ExecuteCommandIfCan(StatefulView.HoverExitCommand);
+                StatefulView.InvokeHoverExited();
                 break;
         }
     }
@@ -204,11 +240,13 @@ public class StatefulContentViewHandler : ContentViewHandler
             case UIGestureRecognizerState.Began:
                 GoToState(StatefulView, "Pressed");
                 ExecuteCommandIfCan(StatefulView.PressedCommand);
+                StatefulView.InvokePressed();
 
                 break;
             case UIGestureRecognizerState.Ended:
                 GoToState(StatefulView, CommonStates.Normal);
                 ExecuteCommandIfCan(StatefulView.TappedCommand);
+                StatefulView.InvokeTapped();
 
                 //// TODO: Fix working of native gesture recognizers of MAUI
                 foreach (var item in StatefulView.GestureRecognizers)
@@ -216,7 +254,7 @@ public class StatefulContentViewHandler : ContentViewHandler
                     Debug.WriteLine(item.GetType().Name);
                     if (item is TapGestureRecognizer tgr)
                     {
-                        tgr.Command.Execute(StatefulView);
+                        tgr.Command?.Execute(StatefulView);
                     }
                 }
 

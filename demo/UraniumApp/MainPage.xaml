@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<uranium:UraniumContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:UraniumApp"
              xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
@@ -10,20 +10,22 @@
              x:Class="UraniumApp.MainPage">
 
     <VerticalStackLayout Spacing="25">
-
         <StackLayout StyleClass="PrimaryContainer" Padding="20" HeightRequest="150">
             <Label Text="Hello, Uranium! ☢️" FontSize="Large" />
             <Label Text="Welcome to the demo app." />
         </StackLayout>
-
+      
         <Grid ColumnDefinitions="Auto,*">
             <Image Rotation="-45" Margin="15">
                 <Image.Source>
-                    <FontImageSource Size="35" FontFamily="MaterialRegular" Glyph="{x:Static uranium:MaterialRegular.Pan_tool_alt}" Color="{AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}" />
+                    <FontImageSource Size="55" FontFamily="MaterialRegular" Glyph="{x:Static uranium:MaterialRegular.Pan_tool_alt}" Color="{AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}" />
                 </Image.Source>
             </Image>
-            <Label Grid.Column="1" Text="Use the side navigation drawer to navigate to the other pages." VerticalOptions="Center"/>
+            <Label FontSize="Large" Grid.Column="1" Text="Use the side navigation drawer to navigate to the other pages." VerticalOptions="Center"/>
         </Grid>
 
+
+      <uranium:SelectableLabel Text="Hello, World! This text should be selectable!" />
+      
     </VerticalStackLayout>
-</uranium:UraniumContentPage>
+</ContentPage>

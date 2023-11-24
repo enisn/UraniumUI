@@ -2,7 +2,7 @@
 
 namespace UraniumApp;
 
-public partial class MainPage : UraniumContentPage
+public partial class MainPage : ContentPage
 {
     public MainPage()
     {

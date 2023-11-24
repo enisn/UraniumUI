@@ -3,49 +3,175 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+             xmlns:vm="clr-namespace:UraniumApp.ViewModels.InputFields"
              xmlns:root="clr-namespace:UraniumApp"
-             x:Class="UraniumApp.Pages.InputFields.AutoCompleteTextFieldPage"
-             Title="AutoCompleteTextField">
-    <StackLayout Padding="30" Orientation="{OnIdiom Vertical, Desktop=Horizontal}" Spacing="10">
+             x:DataType="vm:AutoCompleteViewModel"
+             BindingContext="{uranium:Inject {Type vm:AutoCompleteViewModel}}"
+             x:Name="page"
+             x:Class="UraniumApp.Pages.InputFields.AutoCompleteTextFieldPage">
+    <ContentPage.Resources>
+        <x:String x:Key="SourceCode">
+            <![CDATA[
+<material:AutoCompleteTextField Title="Fruit">
+    <material:AutoCompleteTextField.ItemsSource>
+        <x:String>Apple</x:String>
+        <x:String>Orange</x:String>
+        <x:String>Banana</x:String>
+        <x:String>Strawberry</x:String>
+        <x:String>Watermelon</x:String>
+        <x:String>Cherry</x:String>
+        <x:String>Blueberry</x:String>
+        <x:String>Blackberry</x:String>
+        <x:String>Pineapple</x:String>
+        <x:String>Coconut</x:String>
+        <x:String>Apricot</x:String>
+        <x:String>Avocado</x:String>
+        <x:String>Plum</x:String>
+        <x:String>Fig</x:String>
+        <x:String>Grape</x:String>
+        <x:String>Guava</x:String>
+        <x:String>Lemon</x:String>
+        <x:String>Lime</x:String>
+        <x:String>Mango</x:String>
+        <x:String>Passion Fruit</x:String>
+        <x:String>Peach</x:String>
+        <x:String>Pear</x:String>
+        <x:String>Pomegranate</x:String>
+        <x:String>Raspberry</x:String>
+        <x:String>Tomato</x:String>
+    </material:AutoCompleteTextField.ItemsSource>
+</material:AutoCompleteTextField>
+            ]]>
+        </x:String>
+        <x:String x:Key="DocLink">https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/AutoCompleteTextField</x:String>
+    </ContentPage.Resources>
 
-        <material:AutoCompleteTextField
-            x:Name="ref" 
-            Title="Fruit"
-            Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static uranium:MaterialRegular.Forest}}"
-            MinimumWidthRequest="400">
-            <material:AutoCompleteTextField.ItemsSource>
-                <x:String>Apple</x:String>
-                <x:String>Orange</x:String>
-                <x:String>Banana</x:String>
-                <x:String>Strawberry</x:String>
-                <x:String>Watermelon</x:String>
-                <x:String>Cherry</x:String>
-                <x:String>Blueberry</x:String>
-                <x:String>Blackberry</x:String>
-                <x:String>Pineapple</x:String>
-                <x:String>Coconut</x:String>
-                <x:String>Apricot</x:String>
-                <x:String>Avocado</x:String>
-                <x:String>Plum</x:String>
-                <x:String>Fig</x:String>
-                <x:String>Grape</x:String>
-                <x:String>Guava</x:String>
-                <x:String>Lemon</x:String>
-                <x:String>Lime</x:String>
-                <x:String>Mango</x:String>
-                <x:String>Passion Fruit</x:String>
-                <x:String>Peach</x:String>
-                <x:String>Pear</x:String>
-                <x:String>Pomegranate</x:String>
-                <x:String>Raspberry</x:String>
-                <x:String>Tomato</x:String>
-            </material:AutoCompleteTextField.ItemsSource>
-        </material:AutoCompleteTextField>
+    <ScrollView>
+        <VerticalStackLayout Padding="20">
+            <Label Text="{Binding Title}" FontSize="Title" />
+            <Label Text="UraniumUI.Material.Controls" FontSize="Micro" Opacity=".6" />
 
-        <root:PropertyEditorView
-            VerticalOptions="FillAndExpand"
-            Hierarchical="True"
-            HierarchyLimitType="{x:Type material:InputField}"
-            Value="{Binding ., Source={x:Reference ref}}" />
-    </StackLayout>
+            <HorizontalStackLayout Padding="0,20">
+                <Button Text="Documentation" Command="{x:Static uranium:Commands.OpenLinkCommand}" CommandParameter="{StaticResource DocLink}" StyleClass="OutlinedButton" ImageSource="{FontImageSource Glyph={x:Static m:MaterialRegular.Insert_drive_file}, FontFamily=MaterialRegular, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
+                <Button Text="Source" StyleClass="OutlinedButton" IsEnabled="False" ImageSource="{FontImageSource Glyph={x:Static m:MaterialRegular.Code}, FontFamily=MaterialRegular, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
+                <!--<Button Text="Reset" Clicked="Reset_Clicked" StyleClass="OutlinedButton" ImageSource="{FontImageSource Glyph={x:Static m:MaterialRegular.Refresh}, FontFamily=MaterialRegular, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />-->
+            </HorizontalStackLayout>
+
+            <Label Text="AutoCompleteTextField is a text field that provides suggestions as you type. " />
+
+            <VerticalStackLayout Padding="{OnIdiom 10, Phone=0}" Spacing="10">
+
+                <Border StyleClass="SurfaceContainer, Rounded" StrokeThickness="0">
+                    <VerticalStackLayout>
+                        <Label Text="AutoCompleteTextField with static ItemsSource" FontSize="Subtitle" Margin="20,20,20,0"/>
+                        <Label Text="Start typing 'Blueberry' into the input:" FontSize="Body" Opacity=".6" Margin="20,0,20,20"/>
+
+                        <VerticalStackLayout StyleClass="ControlPreview" Spacing="12">
+                            <material:AutoCompleteTextField Title="Fruit">
+                                <material:AutoCompleteTextField.ItemsSource>
+                                    <x:String>Apple</x:String>
+                                    <x:String>Orange</x:String>
+                                    <x:String>Banana</x:String>
+                                    <x:String>Strawberry</x:String>
+                                    <x:String>Watermelon</x:String>
+                                    <x:String>Cherry</x:String>
+                                    <x:String>Blueberry</x:String>
+                                    <x:String>Blackberry</x:String>
+                                    <x:String>Pineapple</x:String>
+                                    <x:String>Coconut</x:String>
+                                    <x:String>Apricot</x:String>
+                                    <x:String>Avocado</x:String>
+                                    <x:String>Plum</x:String>
+                                    <x:String>Fig</x:String>
+                                    <x:String>Grape</x:String>
+                                    <x:String>Guava</x:String>
+                                    <x:String>Lemon</x:String>
+                                    <x:String>Lime</x:String>
+                                    <x:String>Mango</x:String>
+                                    <x:String>Passion Fruit</x:String>
+                                    <x:String>Peach</x:String>
+                                    <x:String>Pear</x:String>
+                                    <x:String>Pomegranate</x:String>
+                                    <x:String>Raspberry</x:String>
+                                    <x:String>Tomato</x:String>
+                                </material:AutoCompleteTextField.ItemsSource>
+                            </material:AutoCompleteTextField>
+                        </VerticalStackLayout>
+
+                        <uranium:ExpanderView>
+                            <uranium:ExpanderView.Header>
+                                <Label Text="Source Code (XAML)" Padding="10" />
+                            </uranium:ExpanderView.Header>
+                            <Grid>
+                                <uranium:CodeView Language="xml" SourceCode="{StaticResource SourceCode}" HeightRequest="480"/>
+                                <root:CopyButton TextToCopy="{StaticResource SourceCode}" />
+                            </Grid>
+                        </uranium:ExpanderView>
+                    </VerticalStackLayout>
+                </Border>
+
+                <BoxView StyleClass="Divider" />
+
+                <root:ViewShowcaseView>
+                    <ContentView StyleClass="ControlPreview" Content="{Binding Control}" />
+
+                    <root:ViewShowcaseView.SidePanel>
+                        <VerticalStackLayout Padding="20,20,20,0" Spacing="20">
+
+                            <root:PropertyEditorView MaximumHeightRequest="600"
+                                HierarchyLimitType="{Type material:InputField}"
+                                Hierarchical="True"
+                                Value="{Binding Control}"
+                                EditingProperties="{Binding EditingProperties}">
+
+                                <root:PropertyEditorView.Footer>
+                                    <uranium:ExpanderView>
+                                        <uranium:ExpanderView.Header>
+                                            <Label Text="ItemsSource" Padding="10" />
+                                        </uranium:ExpanderView.Header>
+                                        <VerticalStackLayout>
+
+                                            <VerticalStackLayout BindableLayout.ItemsSource="{Binding Control.ItemsSource}" Padding="10">
+                                                <BindableLayout.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Grid ColumnDefinitions="Auto,*">
+                                                            <uranium:StatefulContentView Padding="5">
+                                                                <uranium:StatefulContentView
+                                                                    TappedCommand="{Binding BindingContext.RemoveItemCommand, Source={x:Reference page}}"
+                                                                    CommandParameter="{Binding .}">
+                                                                    <Path Data="{x:Static uranium:UraniumShapes.X}" Fill="{AppThemeBinding {StaticResource Error}, Dark={StaticResource ErrorDark}}" />
+                                                                </uranium:StatefulContentView>
+                                                            </uranium:StatefulContentView>
+                                                            <Label Text="{Binding .}" Grid.Column="1"/>
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </BindableLayout.ItemTemplate>
+                                            </VerticalStackLayout>
+
+                                            <Button StyleClass="TextButton" Text="Add" HorizontalOptions="Center" Command="{Binding AddItemCommand}"/>
+                                        </VerticalStackLayout>
+                                    </uranium:ExpanderView>
+                                </root:PropertyEditorView.Footer>
+                            </root:PropertyEditorView>
+
+                        </VerticalStackLayout>
+                    </root:ViewShowcaseView.SidePanel>
+
+                    <root:ViewShowcaseView.BottomView>
+                        <uranium:ExpanderView>
+                            <uranium:ExpanderView.Header>
+                                <Label Margin="10" Text="Source Code (XAML)" />
+                            </uranium:ExpanderView.Header>
+                            <Grid>
+                                <uranium:CodeView Language="xml" SourceCode="{Binding XamlSourceCode}" HeightRequest="220"/>
+                                <root:CopyButton TextToCopy="{Binding XamlSourceCode}" />
+                            </Grid>
+                        </uranium:ExpanderView>
+                    </root:ViewShowcaseView.BottomView>
+                </root:ViewShowcaseView>
+
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

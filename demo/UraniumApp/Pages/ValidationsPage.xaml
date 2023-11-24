@@ -20,10 +20,10 @@
             <StackLayout Padding="25" MaximumWidthRequest="400">
                 <input:FormView SubmitCommand="{Binding SubmitCommand}" Spacing="20">
 
+
                     <material:TextField Title="Email"
                                         Text="{v:ValidationBinding Email}" 
                                         Icon="{FontImage FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Email}}"/>
-
 
                     <material:TextField Title="Fullname"
                                         Text="{v:ValidationBinding FullName}" 
@@ -73,8 +73,8 @@
                             input:FormView.IsSubmitButton="True"
                             StyleClass="FilledButton"/>
 
-                    <Button Text="Clear"
-                            Command="{Binding ClearCommand}"
+                    <Button Text="Reset"
+                            input:FormView.IsResetButton="True"
                             StyleClass="OutlinedButton"/>
 
                     <Button Text="Fill" 

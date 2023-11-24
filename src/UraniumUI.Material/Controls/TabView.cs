@@ -33,17 +33,19 @@ public partial class TabView : Grid
         grid.Add(tabButton, 0, 0);
         grid.Triggers.Add(new DataTrigger(typeof(Grid))
         {
-            Binding = new Binding(nameof(TabItem.IsSelected), BindingMode.TwoWay),
+            Binding = new Binding(nameof(TabItem.IsSelected), BindingMode.OneWay),
             Value = true,
             EnterActions =
             {
                 new GenericTriggerAction<Grid>((sender) =>
                 {
-                    sender.SetAppThemeColor(
-                        Grid.BackgroundColorProperty,
-                        ColorResource.GetColor("Primary").WithAlpha(.2f),
-                        ColorResource.GetColor("PrimaryDark").WithAlpha(.2f)
-                    );
+                    //sender.SetAppThemeColor(
+                    //            Grid.BackgroundColorProperty,
+                    //            ColorResource.GetColor("Primary").WithAlpha(.2f),
+                    //            ColorResource.GetColor("PrimaryDark").WithAlpha(.2f)
+                    //        );
+                    // TODO: Find a way to set app theme color repeatedly.
+                    sender.BackgroundColor = ColorResource.GetColor("Primary", "PrimaryDark").WithAlpha(.2f);
 
                     var box = (sender.Children.FirstOrDefault(x => x is BoxView) as BoxView);
 
@@ -51,14 +53,16 @@ public partial class TabView : Grid
                     sender.FadeTo(1);
 
                     var button = sender.Children.FirstOrDefault(x=>x is Button) as Button;
-                    button?.SetAppThemeColor(Button.TextColorProperty, ColorResource.GetColor("Primary"), ColorResource.GetColor("PrimaryDark"));
+                    //button?.SetAppThemeColor(Button.TextColorProperty, ColorResource.GetColor("Primary"), ColorResource.GetColor("PrimaryDark"));
+                    // TODO: Find a way to set app theme color repeatedly.
+                    button.TextColor = ColorResource.GetColor("Primary", "PrimaryDark");
                 })
             }
         });
 
         grid.Triggers.Add(new DataTrigger(typeof(Grid))
         {
-            Binding = new Binding(nameof(TabItem.IsSelected), BindingMode.TwoWay),
+            Binding = new Binding(nameof(TabItem.IsSelected), BindingMode.OneWay),
             Value = false,
             EnterActions =
             {
@@ -72,7 +76,9 @@ public partial class TabView : Grid
                     sender.FadeTo(.5);
 
                     var button = sender.Children.FirstOrDefault(x=>x is Button) as Button;
-                    button?.SetAppThemeColor(Button.TextColorProperty, ColorResource.GetColor("OnBackground"), ColorResource.GetColor("OnBackgroundDark"));
+                    //button?.SetAppThemeColor(Button.TextColorProperty, ColorResource.GetColor("OnBackground"), ColorResource.GetColor("OnBackgroundDark"));
+                    // TODO: Find a way to set app theme color repeatedly.
+                    button.TextColor = ColorResource.GetColor("OnBackground", "OnBackgroundDark");
                 })
             }
         });
@@ -95,7 +101,7 @@ public partial class TabView : Grid
         return grid;
     });
 
-    protected readonly StackLayout _headerContainer = new StackLayout
+    protected readonly Grid _headerContainer = new Grid
     {
         HorizontalOptions = LayoutOptions.Fill
     };
@@ -106,14 +112,8 @@ public partial class TabView : Grid
         VerticalOptions = LayoutOptions.Fill
     };
 
-    protected readonly ScrollView _headerScrollView = new ScrollView
-    {
-        Orientation = ScrollOrientation.Horizontal,
-    };
-
     public TabView()
     {
-        _headerScrollView.Content = _headerContainer;
         Items = new ObservableCollection<TabItem>();
 
         InitializeLayout();
@@ -157,9 +157,8 @@ public partial class TabView : Grid
                 {
                     this.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
                     this.RowDefinitions.Add(new RowDefinition(GridLength.Star));
-                    _headerContainer.Orientation = StackOrientation.Horizontal;
 
-                    this.Add(_headerScrollView, row: 0);
+                    this.Add(_headerContainer, row: 0);
                     this.Add(_contentContainer, row: 1);
                 }
                 break;
@@ -167,9 +166,8 @@ public partial class TabView : Grid
                 {
                     this.RowDefinitions.Add(new RowDefinition(GridLength.Star));
                     this.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
-                    _headerContainer.Orientation = StackOrientation.Horizontal;
 
-                    this.Add(_headerScrollView, row: 1);
+                    this.Add(_headerContainer, row: 1);
                     this.Add(_contentContainer, row: 0);
                 }
                 break;
@@ -177,9 +175,8 @@ public partial class TabView : Grid
                 {
                     this.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Auto));
                     this.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Star));
-                    _headerContainer.Orientation = StackOrientation.Vertical;
 
-                    this.Add(_headerScrollView, column: 0);
+                    this.Add(_headerContainer, column: 0);
                     this.Add(_contentContainer, column: 1);
                 }
                 break;
@@ -187,14 +184,45 @@ public partial class TabView : Grid
                 {
                     this.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Star));
                     this.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Auto));
-                    _headerContainer.Orientation = StackOrientation.Vertical;
 
-                    this.Add(_headerScrollView, column: 1);
+                    this.Add(_headerContainer, column: 1);
                     this.Add(_contentContainer, column: 0);
                 }
                 break;
         }
+
+        AlignHeaderGridItems();
     }
+
+    protected virtual void AlignHeaderGridItems()
+    {
+        if (AreTabsVertical)
+        {
+            _headerContainer.RowDefinitions.Clear();
+            _headerContainer.ColumnDefinitions.Clear();
+
+            for (int i = 0; i < _headerContainer.Children.Count; i++)
+            {
+                _headerContainer.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
+
+                Grid.SetRow(_headerContainer.Children[i] as View, i);
+            }
+        }
+        else // Horizontal
+        {
+            _headerContainer.RowDefinitions.Clear();
+            _headerContainer.ColumnDefinitions.Clear();
+
+            for (int i = 0; i < _headerContainer.Children.Count; i++)
+            {
+                _headerContainer.ColumnDefinitions.Add(new ColumnDefinition(TabHeaderItemColumnWidth));
+
+                Grid.SetColumn(_headerContainer.Children[i] as View, i);
+            }
+        }
+    }
+
+    public bool AreTabsVertical => TabPlacement == TabViewTabPlacement.Start || TabPlacement == TabViewTabPlacement.End;
 
     protected virtual void OnItemsChanged(IList<TabItem> oldValue, IList<TabItem> newValue) // TODO: Test it and prevent multiple initializations.
     {
@@ -309,6 +337,16 @@ public partial class TabView : Grid
             SelectedTab = tabItem;
         }
 
+        if (AreTabsVertical)
+        {
+            _headerContainer.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
+            Grid.SetRow(view, _headerContainer.Children.Count);
+        }
+        else
+        {
+            _headerContainer.ColumnDefinitions.Add(new ColumnDefinition(TabHeaderItemColumnWidth));
+            Grid.SetColumn(view, _headerContainer.Children.Count);
+        }
         _headerContainer.Add(view);
     }
 
@@ -323,7 +361,19 @@ public partial class TabView : Grid
     {
         var existing = _headerContainer.Children.FirstOrDefault(x => x is View view && view.BindingContext == tabItem);
 
-        SelectedTab = Items.FirstOrDefault();
+        if (tabItem == SelectedTab)
+        {
+            ResetSelectedTab();
+        }
+
+        if (AreTabsVertical)
+        {
+            _headerContainer.RowDefinitions.RemoveAt(0);
+        }
+        else
+        {
+            _headerContainer.ColumnDefinitions.RemoveAt(0);
+        }
 
         _headerContainer.Children.Remove(existing);
     }
@@ -348,6 +398,7 @@ public partial class TabView : Grid
         if (newValue == null)
         {
             _contentContainer.Content = null;
+            CurrentItem = null;
             return;
         }
 
@@ -408,7 +459,7 @@ public partial class TabView : Grid
             }
         }
 
-        if (SelectedTab.Data != null)
+        if (SelectedTab?.Data != null)
         {
             CurrentItem = SelectedTab.Data;
         }
@@ -429,13 +480,16 @@ public enum TabViewCachingStrategy
 [ContentProperty(nameof(Content))]
 public class TabItem : UraniumBindableObject
 {
-    public string Title { get; set; }
+    public string Title { get => (string)GetValue(TitleProperty); set => SetValue(TitleProperty, value); }
+
+    public static readonly BindableProperty TitleProperty = BindableProperty.Create(nameof(Title), typeof(string), typeof(TabItem));
+
     public object Data { get; set; }
     public DataTemplate ContentTemplate { get; set; }
     public DataTemplate HeaderTemplate { get; set; }
     public View Content { get; set; }
     public TabView TabView { get; internal set; }
-    public bool IsSelected => TabView.SelectedTab == this || (TabView.CurrentItem != null && TabView.CurrentItem == Data);
+    public bool IsSelected { get => TabView.SelectedTab == this || (TabView.CurrentItem != null && TabView.CurrentItem == Data); }
     public ICommand Command { get; private set; }
 
     public TabItem()

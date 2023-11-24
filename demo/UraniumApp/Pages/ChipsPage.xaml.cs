@@ -1,3 +1,5 @@
+using UraniumApp.ViewModels;
+using UraniumUI;
 using UraniumUI.Dialogs.Mopups;
 using UraniumUI.Material.Controls;
 
@@ -7,19 +9,7 @@ public partial class ChipsPage : ContentPage
 {
 	public ChipsPage()
 	{
+		BindingContext = UraniumServiceProvider.Current.GetRequiredService<ChipsViewModel>();
 		InitializeComponent();
 	}
-
-    private void Chip_Destroyed(object sender, EventArgs e)
-    {
-        if (sender is View view && view.Parent is Layout parentLayout)
-        {
-            parentLayout.Children.Remove(view);
-        }
-    }
-
-    private async void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
-    {
-        await this.DisplayCheckBoxPromptAsync("Pick some of them", new[] { "Chip A", "Chip B", "Chip C" });
-    }
 }

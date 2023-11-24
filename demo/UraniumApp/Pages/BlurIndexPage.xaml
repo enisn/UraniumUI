@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="UraniumApp.Pages.BlurIndexPage"
+             xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
+             Title="BlurIndexPage">
+    <ContentPage.Content>
+        <VerticalStackLayout Padding="25" Spacing="10" MaximumWidthRequest="400">
+            <VerticalStackLayout.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="uranium:CascadingStyle.StyleClass" Value="TextButton" />
+                </Style>
+            </VerticalStackLayout.Resources>
+
+            <Button Text="Simple BlurView" Clicked="GoToPreviewPage" />
+            <Button Text="Demo with BlurView" Clicked="GoToDemoPage" />
+        </VerticalStackLayout>
+    </ContentPage.Content>
+</ContentPage>

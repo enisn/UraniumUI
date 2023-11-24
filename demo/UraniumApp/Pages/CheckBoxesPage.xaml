@@ -2,39 +2,164 @@
 <ContentPage x:Class="UraniumApp.Pages.CheckBoxesPage"
              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
              xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+             xmlns:vm="clr-namespace:UraniumApp.ViewModels"
              xmlns:root="clr-namespace:UraniumApp"
-             xmlns:local="clr-namespace:UraniumApp.Pages">
-    <ContentPage.Content>
+             xmlns:local="clr-namespace:UraniumApp"
+             x:DataType="vm:CheckBoxesViewModel">
 
-        <material:TabView>
-            <material:TabItem Title="Demo">
-                <VerticalStackLayout MaximumWidthRequest="400" Margin="20" Spacing="15">
-                    <material:CheckBox Text="Option 1" />
-                    <material:CheckBox Text="Option 2" IsChecked="True" />
-                    <material:CheckBox Text="Option 3 (Disabled)" IsDisabled="True" />
-                    <material:CheckBox Text="Option 4 (Disabled)" IsDisabled="True" IsChecked="True" />
+    <ContentPage.Resources>
+        <x:String x:Key="SourceCode">
+            <![CDATA[
+<VerticalStackLayout Spacing="15">
+    <material:CheckBox Text="Option 1" />
+    <material:CheckBox Text="Option 2" IsChecked="True" />
+    <material:CheckBox Text="Option 3 (Disabled)" IsDisabled="True" />
+    <material:CheckBox Text="Option 4 (Disabled)" IsDisabled="True" IsChecked="True" />
 
-                    <BoxView StyleClass="Divider" />
+    <BoxView StyleClass="Divider" />
 
-                    <material:CheckBox Text="Option 1" LabelPosition="Before" />
-                    <material:CheckBox Text="Option 2" LabelPosition="Before" IsChecked="True" />
-                    <material:CheckBox Text="Option 3 (Disabled)" IsDisabled="True" LabelPosition="Before" />
-                    <material:CheckBox Text="Option 4 (Disabled)" IsDisabled="True" IsChecked="True" LabelPosition="Before" />
+    <material:CheckBox Text="Option 1" LabelPosition="Before" />
+    <material:CheckBox Text="Option 2" LabelPosition="Before" IsChecked="True" />
+    <material:CheckBox Text="Option 3 (Disabled)" IsDisabled="True" LabelPosition="Before" />
+    <material:CheckBox Text="Option 4 (Disabled)" IsDisabled="True" IsChecked="True" LabelPosition="Before" />
+</VerticalStackLayout>
+            ]]>
+            </x:String>
+        <x:String x:Key="DocLink">https://enisn-projects.io/docs/en/uranium/latest/themes/material/CheckBox</x:String>
+    </ContentPage.Resources>
+    <ScrollView>
+        <VerticalStackLayout Padding="20">
+            <Label Text="CheckBox" FontSize="Title" />
+            <Label Text="UraniumUI.Material.Controls" FontSize="Micro" Opacity=".6" />
+
+            <HorizontalStackLayout Padding="0,20">
+                <Button Text="Documentation" Command="{x:Static uranium:Commands.OpenLinkCommand}" CommandParameter="{StaticResource DocLink}" StyleClass="OutlinedButton" ImageSource="{FontImageSource Glyph={x:Static m:MaterialRegular.Insert_drive_file}, FontFamily=MaterialRegular, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
+                <Button Text="Source" StyleClass="OutlinedButton" IsEnabled="False" ImageSource="{FontImageSource Glyph={x:Static m:MaterialRegular.Code}, FontFamily=MaterialRegular, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
+                <Button Text="Reset" Clicked="Button_Clicked" StyleClass="OutlinedButton" ImageSource="{FontImageSource Glyph={x:Static m:MaterialRegular.Refresh}, FontFamily=MaterialRegular, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
+            </HorizontalStackLayout>
+
+            <Label Text="CheckBox is a control that allows the user to choose a boolean value. UraniumU UI uses InputKit CheckBox instead of MAUI one. It is because InputKit CheckBox is more customizable and already has a Material theme." />
+
+            <VerticalStackLayout Spacing="12" Margin="{OnIdiom 10, Phone=0}" StyleClass="Elevation1">
+
+                <local:ViewShowcaseView>
+                    <material:CheckBox
+                        IconGeometry="{Binding IconGeometry}"
+                        Text="{Binding Text}" 
+                        IsChecked="{Binding IsChecked}"
+                        Type="{Binding Type}"
+                        LabelPosition="{Binding LabelPosition}"
+                        Color="{Binding Color}" 
+                        BorderColor="{Binding BorderColor}"
+                        TextColor="{Binding TextColor}"
+                        IconColor="{Binding IconColor}"/>
+
+                    <local:ViewShowcaseView.SidePanel>
+                        <VerticalStackLayout Padding="20" Spacing="20">
+                            <material:TextField Title="Text" Text="{Binding Text}" />
+
+                            <material:CheckBox Text="Is Checked" IsChecked="{Binding IsChecked}" />
+
+                            <VerticalStackLayout>
+                                <Label Text="Type" />
+                                <input:SelectionView ItemsSource="{Binding TypeList}" SelectedItem="{Binding Type}" ColumnNumber="1"/>
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout>
+                                <Label Text="LabelPosition" />
+                                <input:SelectionView ItemsSource="{Binding LabelPositionList}" SelectedItem="{Binding LabelPosition}" ColumnNumber="2"/>
+                            </VerticalStackLayout>
+
+                            <uranium:StatefulContentView TappedCommand="{Binding PickColorCommand}">
+                                <HorizontalStackLayout Spacing="8">
+                                    <BoxView Color="{Binding Color}" WidthRequest="25" HeightRequest="25"/>
+                                    <Label Text="Color" VerticalOptions="Center" />
+                                </HorizontalStackLayout>
+                            </uranium:StatefulContentView>
+
+                            <uranium:StatefulContentView TappedCommand="{Binding PickBorderColorCommand}">
+                                <HorizontalStackLayout Spacing="8">
+                                    <BoxView Color="{Binding BorderColor}" WidthRequest="25" HeightRequest="25"/>
+                                    <Label Text="BorderColor" VerticalOptions="Center" />
+                                </HorizontalStackLayout>
+                            </uranium:StatefulContentView>
+
+                            <uranium:StatefulContentView TappedCommand="{Binding PickIconColorCommand}">
+                                <HorizontalStackLayout Spacing="8">
+                                    <BoxView Color="{Binding IconColor}" WidthRequest="25" HeightRequest="25"/>
+                                    <Label Text="IconColor" VerticalOptions="Center" />
+                                </HorizontalStackLayout>
+                            </uranium:StatefulContentView>
+
+                            <uranium:StatefulContentView TappedCommand="{Binding PickTextColorCommand}">
+                                <HorizontalStackLayout Spacing="8">
+                                    <BoxView Color="{Binding TextColor}" WidthRequest="25" HeightRequest="25"/>
+                                    <Label Text="TextColor" VerticalOptions="Center" />
+                                </HorizontalStackLayout>
+                            </uranium:StatefulContentView>
+
+                            <uranium:StatefulContentView TappedCommand="{Binding PickIconGeometryCommand}">
+                                <HorizontalStackLayout Spacing="8">
+                                    <ContentView WidthRequest="25" HeightRequest="25">
+                                        <Path Data="{Binding IconGeometry}" VerticalOptions="Center" HorizontalOptions="Center" Fill="{AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}"/>
+                                    </ContentView>
+                                    <Label Text="IconGeometry" VerticalOptions="Center" />
+                                </HorizontalStackLayout>
+                            </uranium:StatefulContentView>
+
+                        </VerticalStackLayout>
+                    </local:ViewShowcaseView.SidePanel>
+
+                    <local:ViewShowcaseView.BottomView>
+                        <uranium:ExpanderView>
+                            <uranium:ExpanderView.Header>
+                                <Label Text="Source Code (XAML)" Padding="10"/>
+                            </uranium:ExpanderView.Header>
+                            <Grid>
+                                <uranium:CodeView Language="xml" SourceCode="{Binding XamlSourceCode}" HeightRequest="120"/>
+                                <local:CopyButton TextToCopy="{Binding XamlSourceCode}" />
+                            </Grid>
+                        </uranium:ExpanderView>
+                    </local:ViewShowcaseView.BottomView>
+                </local:ViewShowcaseView>
+
+            </VerticalStackLayout>
+
+            <BoxView StyleClass="Divider" />
+
+            <Border Margin="10" StyleClass="SurfaceContainer, Rounded" StrokeThickness="0">
+                <VerticalStackLayout>
+                    <VerticalStackLayout Padding="20" MaximumWidthRequest="400" Spacing="15" HorizontalOptions="Center">
+                        <material:CheckBox Text="Option 1" />
+                        <material:CheckBox Text="Option 2" IsChecked="True" />
+                        <material:CheckBox Text="Option 3 (Disabled)" IsDisabled="True" />
+                        <material:CheckBox Text="Option 4 (Disabled)" IsDisabled="True" IsChecked="True" />
+
+                        <BoxView StyleClass="Divider" />
+
+                        <material:CheckBox Text="Option 1" LabelPosition="Before" />
+                        <material:CheckBox Text="Option 2" LabelPosition="Before" IsChecked="True" />
+                        <material:CheckBox Text="Option 3 (Disabled)" IsDisabled="True" LabelPosition="Before" />
+                        <material:CheckBox Text="Option 4 (Disabled)" IsDisabled="True" IsChecked="True" LabelPosition="Before" />
+                    </VerticalStackLayout>
+
+                    <uranium:ExpanderView>
+                        <uranium:ExpanderView.Header>
+                            <Label Margin="10" Text="Source Code (XAML)" />
+                        </uranium:ExpanderView.Header>
+                        <Grid>
+                            <uranium:CodeView Language="xml" SourceCode="{StaticResource SourceCode}" HeightRequest="240"/>
+                            <local:CopyButton TextToCopy="{StaticResource SourceCode}" />
+                        </Grid>
+                    </uranium:ExpanderView>
                 </VerticalStackLayout>
-            </material:TabItem>
+            </Border>
 
-            <material:TabItem Title="Properties">
-                <Grid Padding="20" HorizontalOptions="Center" RowDefinitions="Auto,Auto,*">
-                    <material:CheckBox Text="Showcase CheckBox" x:Name="checkBox"/>
-                    <BoxView StyleClass="Divider" Grid.Row="1" />
-                    <root:PropertyEditorView Grid.Row="2" 
-                        Hierarchical="True"
-                        HierarchyLimitType="{x:Type input:CheckBox}"
-                        Value="{Binding ., Source={x:Reference checkBox}}" />
-                </Grid>
-            </material:TabItem>
-        </material:TabView>
-    </ContentPage.Content>
+        </VerticalStackLayout>
+    </ScrollView>
+
 </ContentPage>

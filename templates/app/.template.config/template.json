@@ -30,6 +30,10 @@
             "description":"Configure material icons by default."
           },
           {
+            "choice": "FluentIcons",
+            "description":"Configure Segoe Fluent Icons by default."
+          },
+          {
             "choice": "None",
             "description":"Configure no icons by default."
           }
@@ -42,6 +46,10 @@
       "MaterialIcons":{
         "type": "computed",
         "value": "(Icons == \"MaterialIcons\")"
+      },
+      "FluentIcons":{
+        "type": "computed",
+        "value": "(Icons == \"FluentIcons\")"
       },
       "Dialogs":{
         "type":"parameter",
@@ -69,6 +77,13 @@
       "Mopups":{
         "type": "computed",
         "value": "(Dialogs == \"Mopups\")"
+      },
+      "Blurs":{
+        "type": "parameter",
+        "datatype": "bool",
+        "defaultValue": "false",
+        "description": "Add Blurs library to use BlurEffects in XAML pages.",
+        "displayName": "Add Blurs library to use BlurEffects in UI (UraniumUI.Blurs)"
       }
     }
   }

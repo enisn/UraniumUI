@@ -8,7 +8,7 @@
              xmlns:local="clr-namespace:UraniumApp.Pages.BottomSheets">
 
     <VerticalStackLayout Spacing="20" Padding="20">
-        <Frame Margin="0,20,0,0" HorizontalOptions="Center">
+        <Frame Margin="0,20,0,0" HorizontalOptions="Center" MaximumWidthRequest="400">
             <VerticalStackLayout Spacing="10">
                 <Label Text="Info" FontSize="20" FontAttributes="Bold" HorizontalTextAlignment="Center" />
 
@@ -20,9 +20,11 @@
                 </Image>
             </VerticalStackLayout>
         </Frame>
+
+      <Frame MaximumWidthRequest="400">
         <root:PropertyEditorView Value="{Binding ., Source={x:Reference bottomSheet}}"
-                                 HorizontalOptions="Center"
-                                 MinimumWidthRequest="300"/>
+                                 HorizontalOptions="Center"/>
+      </Frame>
     </VerticalStackLayout>
 
     <uranium:UraniumContentPage.Attachments>

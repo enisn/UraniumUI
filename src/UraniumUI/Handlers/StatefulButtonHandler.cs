@@ -46,8 +46,10 @@ public class StatefulButtonHandler : ButtonHandler
     protected override void ConnectHandler(UIButton platformView)
     {
         // TODO: Find a better way to do this
-
-        PlatformView.AddGestureRecognizer(new UIHoverGestureRecognizer(OnHover));
+        if (OperatingSystem.IsIOSVersionAtLeast(13))
+        {
+            PlatformView.AddGestureRecognizer(new UIHoverGestureRecognizer(OnHover));
+        }
         //PlatformView.AddGestureRecognizer(new UIContinousGestureRecognizer(Tapped));
         base.ConnectHandler(platformView);
     }

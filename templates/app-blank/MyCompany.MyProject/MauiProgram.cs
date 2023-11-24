@@ -24,6 +24,9 @@ public static class MauiProgram
 #endif
 			.UseUraniumUI()
 			.UseUraniumUIMaterial()
+#if Blurs
+			.UseUraniumUIBlurs()
+#endif
 			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -35,10 +38,13 @@ public static class MauiProgram
 #if MaterialIcons
 				fonts.AddMaterialIconFonts();
 #endif
+#if FluentIcons
+				fonts.AddFluentIconFonts();
+#endif
             });
 
 #if CommunityToolkit
-        builder.Services.AddCommunityToolkitDialogs();
+		builder.Services.AddCommunityToolkitDialogs();
 #endif
 #if Mopups
 		builder.Services.AddMopupsDialogs();

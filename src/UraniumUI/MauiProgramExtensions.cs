@@ -15,6 +15,11 @@ public static class MauiProgramExtensions
             handlers.AddUraniumUIHandlers();
         });
 
+        builder.Services.Configure<DialogOptions>(options =>
+        {
+            // Keep this here
+        });
+
         builder.Services.AddTransient<IDialogService, DefaultDialogService>();
         return builder;
     }
@@ -26,6 +31,7 @@ public static class MauiProgramExtensions
             .AddHandler(typeof(Button), typeof(StatefulButtonHandler))
             .AddHandler(typeof(StatefulContentView), typeof(StatefulContentViewHandler))
             .AddHandler(typeof(AutoCompleteView), typeof(AutoCompleteViewHandler))
+            .AddHandler(typeof(SelectableLabel), typeof(SelectableLabelHandler))
             .AddPlainer();
     }
 }

@@ -10,13 +10,17 @@ public partial class ButtonViewHandler
     {
         base.ConnectHandler(platformView);
         platformView.AddGestureRecognizer(new UIContinousGestureRecognizer(Tapped));
-        platformView.AddGestureRecognizer(new UIHoverGestureRecognizer(OnHover));
+        if (OperatingSystem.IsIOSVersionAtLeast(13))
+        {
+            platformView.AddGestureRecognizer(new UIHoverGestureRecognizer(OnHover));
+        }
         platformView.AddGestureRecognizer(new UILongPressGestureRecognizer(OnLongPress));
     }
 
     private void OnLongPress(UILongPressGestureRecognizer recognizer)
     {
         ExecuteCommandIfCan(StatefulView.LongPressCommand);
+        StatefulView.InvokeLongPressed();
     }
 
     private void OnHover(UIHoverGestureRecognizer recognizer)
@@ -24,18 +28,17 @@ public partial class ButtonViewHandler
         switch (recognizer.State)
         {
             case UIGestureRecognizerState.Began:
-#if NET6_0
-                VisualStateManager.GoToState(StatefulView, "PointerOver");
-#else
+
                 VisualStateManager.GoToState(StatefulView, VisualStateManager.CommonStates.PointerOver);
-#endif
                 ExecuteCommandIfCan(StatefulView.HoverCommand);
+                StatefulView.InvokeHovered();
                 break;
             case UIGestureRecognizerState.Ended:
             case UIGestureRecognizerState.Cancelled:
             case UIGestureRecognizerState.Failed:
                 VisualStateManager.GoToState(StatefulView, VisualStateManager.CommonStates.Normal);
                 ExecuteCommandIfCan(StatefulView.HoverExitCommand);
+                StatefulView.InvokeHoverExited();
                 break;
         }
     }
@@ -47,11 +50,13 @@ public partial class ButtonViewHandler
             case UIGestureRecognizerState.Began:
                 VisualStateManager.GoToState(StatefulView, "Pressed");
                 ExecuteCommandIfCan(StatefulView.PressedCommand);
+                StatefulView.InvokePressed();
 
                 break;
             case UIGestureRecognizerState.Ended:
                 VisualStateManager.GoToState(StatefulView, VisualStateManager.CommonStates.Normal);
                 ExecuteCommandIfCan(StatefulView.TappedCommand);
+                StatefulView.InvokeTapped();
 
                 //// TODO: Fix working of native gesture recognizers of MAUI
                 foreach (var item in StatefulView.GestureRecognizers)

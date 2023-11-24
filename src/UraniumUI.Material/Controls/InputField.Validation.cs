@@ -16,6 +16,7 @@ public partial class InputField : IValidatable
         VerticalOptions = LayoutOptions.Center,
         HorizontalOptions = LayoutOptions.End,
         Padding = new Thickness(5, 0),
+        Margin = new Thickness(0, 0, 5, 0),
         Content = new Path
         {
             Fill = ColorResource.GetColor("Error", "ErrorDark", Colors.Red),
@@ -56,7 +57,7 @@ public partial class InputField : IValidatable
         }
         else
         {
-            var message = string.Join(",\n", results.Where(x => !x.isValid).Select(s => s.message));
+            var message = string.Join('\n', results.Where(x => !x.isValid).Select(s => s.message));
             labelValidation.Value.Text = message;
 
             if (isStateChanged)
@@ -94,8 +95,15 @@ public partial class InputField : IValidatable
         return new object();
     }
 
-    public void DisplayValidation()
+    public virtual void DisplayValidation()
     {
         CheckAndShowValidations();
+    }
+
+    public virtual void ResetValidation()
+    {
+        endIconsContainer.Remove(iconValidation.Value);
+        this.Remove(labelValidation.Value);
+        lastValidationState = true;
     }
 }

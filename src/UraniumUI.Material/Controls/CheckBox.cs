@@ -1,9 +1,11 @@
-﻿namespace UraniumUI.Material.Controls;
+﻿using Microsoft.Maui.Platform;
+
+namespace UraniumUI.Material.Controls;
 
 [ContentProperty(nameof(Validations))]
-public class CheckBox : InputKit.Shared.Controls.CheckBox
+public partial class CheckBox : InputKit.Shared.Controls.CheckBox
 {
-	public CheckBox()
-	{
-	}
+    public CheckBox()
+    {
+    }
 }

@@ -1,6 +1,10 @@
-﻿using Plainer.Maui.Controls;
+﻿#if WINDOWS
+using Microsoft.Maui.Platform;
+#endif
+using Plainer.Maui.Controls;
 using UraniumUI.Pages;
 using UraniumUI.Resources;
+using UraniumUI.Views;
 using Path = Microsoft.Maui.Controls.Shapes.Path;
 
 namespace UraniumUI.Material.Controls;
@@ -17,12 +21,13 @@ public partial class TextField : InputField
         VerticalOptions = LayoutOptions.Center
     };
 
-    protected ContentView iconClear = new ContentView
+    protected StatefulContentView iconClear = new StatefulContentView
     {
         VerticalOptions = LayoutOptions.Center,
         HorizontalOptions = LayoutOptions.End,
         IsVisible = false,
-        Padding = 10,
+        Padding = new Thickness(5, 0),
+        Margin = new Thickness(0, 0, 5, 0),
         Content = new Path
         {
             Data = UraniumShapes.X,
@@ -32,17 +37,16 @@ public partial class TextField : InputField
 
     public override bool HasValue { get => !string.IsNullOrEmpty(Text); }
 
+    public IList<Behavior> EntryBehaviors => EntryView?.Behaviors;
+
     public event EventHandler<TextChangedEventArgs> TextChanged;
+    public event EventHandler Completed;
 
     public TextField()
     {
-        iconClear.GestureRecognizers.Add(new TapGestureRecognizer
-        {
-            Command = new Command(OnClearTapped)
-        });
+        iconClear.TappedCommand = new Command(OnClearTapped);
         
         UpdateClearIconState();
-
         EntryView.SetBinding(Entry.TextProperty, new Binding(nameof(Text), source: this));
         EntryView.SetBinding(Entry.ReturnCommandParameterProperty, new Binding(nameof(ReturnCommandParameter), source: this));
         EntryView.SetBinding(Entry.ReturnCommandProperty, new Binding(nameof(ReturnCommand), source: this));
@@ -50,35 +54,30 @@ public partial class TextField : InputField
         EntryView.SetBinding(Entry.CursorPositionProperty, new Binding(nameof(CursorPosition), source: this));
         EntryView.SetBinding(Entry.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
         EntryView.SetBinding(Entry.IsReadOnlyProperty, new Binding(nameof(IsReadOnly), source: this));
-
-#if WINDOWS
-		EntryView.HandlerChanged += (s, e) =>
-		{
-			var textBox = EntryView.Handler.PlatformView as Microsoft.UI.Xaml.Controls.TextBox;
-
-			textBox.FocusVisualPrimaryThickness = new Microsoft.UI.Xaml.Thickness(0);
-			textBox.FocusVisualSecondaryThickness = new Microsoft.UI.Xaml.Thickness(0);
-			textBox.SelectionHighlightColor = new Microsoft.UI.Xaml.Media.SolidColorBrush(Windows.UI.Color.FromArgb(0, 0, 0, 0));
-			textBox.BorderThickness = new Microsoft.UI.Xaml.Thickness(0);
-		};
-#endif
     }
 
     protected override void OnHandlerChanged()
     {
-        EntryView.TextChanged += EntryView_TextChanged;
+        base.OnHandlerChanged();
+#if WINDOWS
+        if (EntryView.Handler.PlatformView is Microsoft.UI.Xaml.Controls.TextBox textBox)
+        {
+            textBox.SelectionHighlightColor = new Microsoft.UI.Xaml.Media.SolidColorBrush(ColorResource.GetColor("Primary", "PrimaryDark", Colors.Purple).ToWindowsColor());
+            textBox.BorderThickness = new Microsoft.UI.Xaml.Thickness(0);
+
+            textBox.Style = null;
+        }
+#endif
 
         if (Handler is null)
         {
             EntryView.TextChanged -= EntryView_TextChanged;
+            EntryView.Completed -= EntryView_Completed;
         }
-    }
-
-    public void ClearValue()
-    {
-        if (IsEnabled)
+        else
         {
-            Text = string.Empty;
+            EntryView.TextChanged += EntryView_TextChanged;
+            EntryView.Completed += EntryView_Completed;
         }
     }
 
@@ -89,7 +88,7 @@ public partial class TextField : InputField
             UpdateState();
         }
 
-        if (!string.IsNullOrEmpty(e.NewTextValue))
+        if (e.NewTextValue != null)
         {
             CheckAndShowValidations();
         }
@@ -100,6 +99,19 @@ public partial class TextField : InputField
         }
 
         TextChanged?.Invoke(this, e);
+    }
+
+    private void EntryView_Completed(object sender, EventArgs e)
+    {
+        Completed?.Invoke(this, e);
+    }
+
+    public void ClearValue()
+    {
+        if (IsEnabled)
+        {
+            Text = string.Empty;
+        }
     }
 
     protected override object GetValueForValidator()
@@ -130,5 +142,11 @@ public partial class TextField : InputField
         {
             endIconsContainer.Remove(iconClear);
         }
+    }
+
+    public override void ResetValidation()
+    {
+        EntryView.Text = string.Empty;
+        base.ResetValidation();
     }
 }

@@ -13,6 +13,7 @@
     xmlns:treeViews="clr-namespace:UraniumApp.Pages.TreeViews"
     xmlns:inputFields="clr-namespace:UraniumApp.Pages.InputFields"
     xmlns:autocompletes="clr-namespace:UraniumApp.Pages.AutoCompleteTextField"
+    FlyoutBackgroundColor="{AppThemeBinding Light={StaticResource Surface}, Dark={StaticResource SurfaceDark}}"
     Shell.FlyoutBehavior="{OnIdiom Desktop=Locked, Default=Flyout}">
 
     <Shell.FlyoutHeader>
@@ -30,9 +31,49 @@
     </Shell.FlyoutHeader>
 
     <FlyoutItem Title="MainPage" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Home}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
-        <ShellContent  ContentTemplate="{DataTemplate local:MainPage}"/>
+        <ShellContent ContentTemplate="{DataTemplate local:MainPage}"/>
+    </FlyoutItem>
+
+    <FlyoutItem Title="Buttons" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.All_inbox}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
+        <ShellContent ContentTemplate="{DataTemplate pages:ButtonsPage}"/>
+    </FlyoutItem>
+
+    <FlyoutItem Title="CheckBox" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Check_box}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
+        <ShellContent ContentTemplate="{DataTemplate pages:CheckBoxesPage}"/>
     </FlyoutItem>
     
+    <FlyoutItem Title="RadioButton" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Radio_button_unchecked}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
+        <ShellContent ContentTemplate="{DataTemplate pages:RadioButtonsPage}"/>
+    </FlyoutItem>
+
+    <FlyoutItem Title="TextField" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Short_text}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
+        <ShellContent ContentTemplate="{DataTemplate inputFields:TextFieldPage}" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Short_text}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}"/>
+    </FlyoutItem>
+
+    <FlyoutItem Title="EditorField" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Wrap_text}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
+        <ShellContent ContentTemplate="{DataTemplate inputFields:EditorFieldPage}" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Wrap_text}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}"/>
+    </FlyoutItem>
+
+    <FlyoutItem Title="AutoCompleteTextField" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.List_alt}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
+        <ShellContent ContentTemplate="{DataTemplate inputFields:AutoCompleteTextFieldPage}" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.List_alt}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}"/>
+    </FlyoutItem>
+
+    <FlyoutItem Title="PickerField" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Arrow_circle_down}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
+        <ShellContent ContentTemplate="{DataTemplate inputFields:PickerFieldPage}" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Arrow_circle_down}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}"/>
+    </FlyoutItem>
+
+    <FlyoutItem Title="MultiplePickerField" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Arrow_circle_down}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
+        <ShellContent ContentTemplate="{DataTemplate inputFields:MultiplePickerFieldPage}" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Grid_view}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}"/>
+    </FlyoutItem>
+
+    <FlyoutItem Title="TimePickerField" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Access_alarm}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
+        <ShellContent ContentTemplate="{DataTemplate inputFields:TimePickerFieldPage}" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Access_alarm}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}"/>
+    </FlyoutItem>
+
+    <FlyoutItem Title="DatePickerField" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Calendar_month}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
+        <ShellContent ContentTemplate="{DataTemplate inputFields:DatePickerFieldPage}" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Calendar_month}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}"/>
+    </FlyoutItem>
+
     <FlyoutItem Title="Chips" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Do_not_disturb_on_total_silence}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
         <ShellContent  ContentTemplate="{DataTemplate pages:ChipsPage}"/>
     </FlyoutItem>
@@ -79,9 +120,8 @@
             Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Folder}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}"/>
     </FlyoutItem>
 
-
-    <FlyoutItem Title="FontImages" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Insert_emoticon}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
-        <ShellContent Title="Material Icons" ContentTemplate="{DataTemplate pages:FontIconsMaterialPage}"/>
+    <FlyoutItem Title="Font Icons" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Insert_emoticon}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
+        <ShellContent ContentTemplate="{DataTemplate pages:FontImagesPage}"/>
     </FlyoutItem>
     
     <FlyoutItem Title="Elevation" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Vertical_shades}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
@@ -92,18 +132,6 @@
         <ShellContent Title="Dialogs" ContentTemplate="{DataTemplate pages:DialogsPage}"/>
     </FlyoutItem>
 
-    <FlyoutItem Title="Buttons" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.All_inbox}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
-        <ShellContent Title="Buttons" ContentTemplate="{DataTemplate pages:ButtonsPage}"/>
-    </FlyoutItem>
-
-    <FlyoutItem Title="CheckBox" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Check_box}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
-        <ShellContent Title="CheckBox" ContentTemplate="{DataTemplate pages:CheckBoxesPage}"/>
-    </FlyoutItem>
-    
-    <FlyoutItem Title="RadioButton" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Radio_button_unchecked}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
-        <ShellContent Title="RadioButton" ContentTemplate="{DataTemplate pages:RadioButtonsPage}"/>
-    </FlyoutItem>
-
     <FlyoutItem Title="Validations" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Warning}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
         <ShellContent Title="Validations" ContentTemplate="{DataTemplate pages:ValidationsPage}"/>
     </FlyoutItem>
@@ -112,18 +140,8 @@
         <ShellContent Title="AutoComplete" ContentTemplate="{DataTemplate autocompletes:GoogleAutoCompletePage}"/>
     </FlyoutItem>
 
-    <FlyoutItem FlyoutDisplayOptions="AsMultipleItems" Title="InputFields">
-        <ShellContent Title="TextField" ContentTemplate="{DataTemplate inputFields:TextFieldPage}" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Short_text}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}"/>
-        <ShellContent Title="EditorField" ContentTemplate="{DataTemplate inputFields:EditorFieldPage}" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Wrap_text}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}"/>
-        <ShellContent Title="PickerField" ContentTemplate="{DataTemplate inputFields:PickerFieldPage}" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Arrow_circle_down}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}"/>
-        <ShellContent Title="MultiplePickerField" ContentTemplate="{DataTemplate inputFields:MultiplePickerFieldPage}" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Grid_view}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}"/>
-        <ShellContent Title="DatePickerField" ContentTemplate="{DataTemplate inputFields:DatePickerFieldPage}" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Calendar_month}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}"/>
-        <ShellContent Title="TimePickerField" ContentTemplate="{DataTemplate inputFields:TimePickerFieldPage}" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Access_alarm}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}"/>
-        <ShellContent Title="AutoCompleteTextField" ContentTemplate="{DataTemplate inputFields:AutoCompleteTextFieldPage}" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.List_alt}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}"/>
-    </FlyoutItem>
-
-    <FlyoutItem Title="InputFields" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Short_text}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
-        <ShellContent Title="InputField" ContentTemplate="{DataTemplate pages:InputFieldsPage}"/>
+    <FlyoutItem Title="Blurs" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Filter_center_focus}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
+        <ShellContent Title="Blurs" ContentTemplate="{DataTemplate pages:BlurIndexPage}"/>
     </FlyoutItem>
 
     <!--

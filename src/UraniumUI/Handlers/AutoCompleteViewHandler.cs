@@ -23,7 +23,7 @@ public partial class AutoCompleteViewHandler
     }
 }
 
-#if (NET7_0 || NET6_0 ) && !ANDROID && !IOS && !MACCATALYST && !WINDOWS
+#if (NET8_0) && !ANDROID && !IOS && !MACCATALYST && !WINDOWS
 public partial class AutoCompleteViewHandler : ViewHandler<AutoCompleteView, object>
 {
     public AutoCompleteViewHandler(IPropertyMapper mapper, CommandMapper commandMapper = null) : base(IconViewMapper, commandMapper)

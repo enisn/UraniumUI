@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             xmlns:vm="clr-namespace:UraniumApp.ViewModels"
+             xmlns:root="clr-namespace:UraniumApp"
+             x:Class="UraniumApp.Pages.FontImagesPage"
+             x:DataType="vm:FontImagesViewModel"
+             BindingContext="{uranium:Inject {Type vm:FontImagesViewModel}}">
+    <Grid>
+        <material:TabView ItemsSource="{Binding Items}" CachingStrategy="CacheOnLayout">
+            <material:TabView.ItemTemplate>
+                <DataTemplate x:DataType="vm:FontImageViewModel">
+
+                    <Grid ColumnDefinitions="{OnIdiom Default='Auto, *', Phone='*,*'}">
+
+                        <Frame Padding="0" Margin="{OnIdiom Default=20, Phone=5}" HasShadow="False" CornerRadius="20" MaximumWidthRequest="400" >
+                            <Grid RowDefinitions="Auto,*">
+                                <VerticalStackLayout Padding="20" Spacing="20" StyleClass="PrimaryContainer,Elevation1">
+                                    <material:PickerField Title="Type" ItemsSource="{Binding Types}" SelectedItem="{Binding SelectedType}" AllowClear="False" />
+                                    <material:TextField Title="Search" Text="{Binding SearchText}" AllowClear="True" />
+                                </VerticalStackLayout>
+                                <CollectionView Grid.Row="1" ItemsSource="{Binding Icons}" SelectionMode="Single" SelectedItem="{Binding SelectedIcon}">
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate x:DataType="vm:FontImageItemViewModel">
+                                            <Grid ColumnDefinitions="Auto,*">
+                                                <Image Margin="5">
+                                                    <Image.Source>
+                                                        <FontImageSource Glyph="{Binding Glyph}" FontFamily="{Binding FontFamily}" Color="{AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}" />
+                                                    </Image.Source>
+                                                </Image>
+                                                <Label Grid.Column="1" Text="{Binding Alias}" VerticalOptions="Center" Margin="5" />
+                                            </Grid>
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+                            </Grid>
+                        </Frame>
+
+                        <Border HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="1" StyleClass="SurfaceContainer,Rounded">
+
+                            <VerticalStackLayout Spacing="10">
+                                <Border Padding="20" Margin="20">
+                                    <VerticalStackLayout>
+                                        <Image Margin="30" HeightRequest="60">
+                                            <Image.Source>
+                                                <FontImageSource Glyph="{Binding SelectedIcon.Glyph}" FontFamily="{Binding SelectedIcon.FontFamily}" Color="{AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}" Size="128" />
+                                            </Image.Source>
+                                        </Image>
+                                        <uranium:SelectableLabel Text="{Binding SelectedIcon.Alias}" HorizontalTextAlignment="Center" />
+
+                                    </VerticalStackLayout>
+                                </Border>
+
+                                <uranium:ExpanderView>
+                                    <uranium:ExpanderView.Header>
+                                        <Label Padding="10" Text="Source Code (XAML)" />
+                                    </uranium:ExpanderView.Header>
+
+                                    <Grid>
+                                        <uranium:CodeView SourceCode="{Binding XamlSourceCode}" Language="xml" HeightRequest="90" WidthRequest="500" />
+                                        <root:CopyButton TextToCopy="{Binding XamlSourceCode}" />
+                                    </Grid>
+                                </uranium:ExpanderView>
+                            </VerticalStackLayout>
+                        </Border>
+                    </Grid>
+
+                </DataTemplate>
+            </material:TabView.ItemTemplate>
+        </material:TabView>
+    </Grid>
+</ContentPage>

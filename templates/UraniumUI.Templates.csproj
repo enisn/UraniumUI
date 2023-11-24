@@ -2,13 +2,13 @@
 
   <PropertyGroup>
     <PackageType>Template</PackageType>
-    <PackageVersion>2.4.0-pre.2</PackageVersion>
+    <PackageVersion>2.6.0-pre.3</PackageVersion>
     <Title>Uranium UI MAUI Templates</Title>
     <Authors>enisn</Authors>
     <Description>Templates for new MAUI Apps, Themes and Libraries</Description>
     <PackageTags>dotnet-new;templates;maui,uikit</PackageTags>
 
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
 
     <IncludeContentInPack>true</IncludeContentInPack>
     <IncludeBuildOutput>false</IncludeBuildOutput>

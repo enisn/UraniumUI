@@ -15,7 +15,7 @@ Premium support is a special 1:1 meeting that you can book with the author of Ur
 - If it'll be a live session, post required environment tools such as OS, IDE, Database etc. on your book request.
 
 <center>
-<button class="btn btn-outline-light book-now">Book a Session</button>
+<button class="btn btn-primary book-now">Book a Session</button>
 </center>
 
 <link rel="stylesheet" type="text/css" href="https://widgets.superpeer.com/widget.css"><script src="https://widgets.superpeer.com/widget.js"></script><script>window.addEventListener("load", () => {new Superpeer.Widget({embed:{type:"popup"},launcher:{type:"custom",options:{selector:".book-now"}},config:{username:"enisn",serviceSlug:"UraniumUI-Support"}})})</script>

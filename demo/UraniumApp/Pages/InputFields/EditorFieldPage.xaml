@@ -3,21 +3,84 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+             xmlns:vm="clr-namespace:UraniumApp.ViewModels.InputFields"
              xmlns:root="clr-namespace:UraniumApp"
-             x:Class="UraniumApp.Pages.InputFields.EditorFieldPage"
-             Title="TextField">
-    <StackLayout Padding="30" Orientation="{OnIdiom Vertical, Desktop=Horizontal}" Spacing="10">
+             x:DataType="vm:EditorFieldViewModel"
+             BindingContext="{uranium:Inject {x:Type vm:EditorFieldViewModel}}"
+             x:Class="UraniumApp.Pages.InputFields.EditorFieldPage">
+    <ContentPage.Resources>
+        <x:String x:Key="SourceCode">
+            <![CDATA[
+<material:EditorField Title="Description" />
+            ]]>
+        </x:String>
+        <x:String x:Key="DocLink">https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/EditorField</x:String>
+    </ContentPage.Resources>
 
-        <material:EditorField
-            x:Name="ref"
-            Title="Name"
-            Icon="{FontImageSource Glyph={x:Static uranium:MaterialTwoTone.Person_2}, FontFamily=MaterialTwoTone}"
-            MinimumWidthRequest="400"/>
+    <ScrollView>
+        <VerticalStackLayout Padding="20">
+            <Label Text="{Binding Title}" FontSize="Title" />
+            <Label Text="UraniumUI.Material.Controls" FontSize="Micro" Opacity=".6" />
 
-        <root:PropertyEditorView
-            VerticalOptions="FillAndExpand"
-            Hierarchical="True"
-            HierarchyLimitType="{x:Type material:InputField}"
-            Value="{Binding ., Source={x:Reference ref}}" />
-    </StackLayout>
+            <HorizontalStackLayout Padding="0,20">
+                <Button Text="Documentation" Command="{x:Static uranium:Commands.OpenLinkCommand}" CommandParameter="{StaticResource DocLink}" StyleClass="OutlinedButton" ImageSource="{FontImageSource Glyph={x:Static m:MaterialRegular.Insert_drive_file}, FontFamily=MaterialRegular, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
+                <Button Text="Source" StyleClass="OutlinedButton" IsEnabled="False" ImageSource="{FontImageSource Glyph={x:Static m:MaterialRegular.Code}, FontFamily=MaterialRegular, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
+                <!--<Button Text="Reset" Clicked="Reset_Clicked" StyleClass="OutlinedButton" ImageSource="{FontImageSource Glyph={x:Static m:MaterialRegular.Refresh}, FontFamily=MaterialRegular, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />-->
+            </HorizontalStackLayout>
+
+            <Label Text="Text fields let users enter and edit text. It is an abstraction on MAUI Level for material inputs." />
+
+            <VerticalStackLayout Padding="{OnIdiom 10, Phone=0}" Spacing="10">
+
+                <Border StyleClass="SurfaceContainer, Rounded" StrokeThickness="0">
+                    <VerticalStackLayout>
+                        <Label Text="Simple EditorField" FontSize="Subtitle" Margin="20"/>
+
+                        <VerticalStackLayout StyleClass="ControlPreview" Spacing="12">
+                            <material:EditorField Title="Description" />
+                        </VerticalStackLayout>
+
+                        <uranium:ExpanderView>
+                            <uranium:ExpanderView.Header>
+                                <Label Text="Source Code (XAML)" Padding="10" />
+                            </uranium:ExpanderView.Header>
+                            <Grid>
+                                <uranium:CodeView Language="xml" SourceCode="{StaticResource SourceCode}" HeightRequest="80"/>
+                                <root:CopyButton TextToCopy="{StaticResource SourceCode}" />
+                            </Grid>
+                        </uranium:ExpanderView>
+                    </VerticalStackLayout>
+                </Border>
+
+                <BoxView StyleClass="Divider" />
+
+                <root:ViewShowcaseView>
+                    <ContentView StyleClass="ControlPreview" Content="{Binding Control}" />
+
+                    <root:ViewShowcaseView.SidePanel>
+                        <VerticalStackLayout Padding="20,20,20,0" Spacing="20">
+                            <root:PropertyEditorView MaximumHeightRequest="600"
+                                HierarchyLimitType="{Type material:InputField}"
+                                Hierarchical="True"
+                                Value="{Binding Control}"
+                                EditingProperties="{Binding EditingProperties}"/>
+                        </VerticalStackLayout>
+                    </root:ViewShowcaseView.SidePanel>
+
+                    <root:ViewShowcaseView.BottomView>
+                        <uranium:ExpanderView>
+                            <uranium:ExpanderView.Header>
+                                <Label Margin="10" Text="Source Code (XAML)" />
+                            </uranium:ExpanderView.Header>
+                            <Grid>
+                                <uranium:CodeView Language="xml" SourceCode="{Binding XamlSourceCode}" HeightRequest="120"/>
+                                <root:CopyButton TextToCopy="{Binding XamlSourceCode}" />
+                            </Grid>
+                        </uranium:ExpanderView>
+                    </root:ViewShowcaseView.BottomView>
+                </root:ViewShowcaseView>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

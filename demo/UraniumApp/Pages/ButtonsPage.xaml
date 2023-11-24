@@ -2,53 +2,168 @@
 <ContentPage x:Class="UraniumApp.Pages.ButtonsPage"
              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:UraniumApp.Pages">
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+             xmlns:vm="clr-namespace:UraniumApp.ViewModels"
+             xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
+             xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             xmlns:local="clr-namespace:UraniumApp">
+    <ContentPage.BindingContext>
+        <vm:ButtonsViewModel />
+    </ContentPage.BindingContext>
+
     <ContentPage.Resources>
         <Style TargetType="HorizontalStackLayout">
             <Setter Property="Padding" Value="0,20" />
         </Style>
     </ContentPage.Resources>
-    <ContentPage.Content>
-        <VerticalStackLayout Padding="20" Spacing="10">
 
-            <ScrollView Orientation="Horizontal">
-                <HorizontalStackLayout>
-                    <Button StyleClass="ElevatedButton" Text="Elevated Button" />
-                    <Button StyleClass="ElevatedButton" IsEnabled="False" Text="Elevated Button (Disabled)" />
-                </HorizontalStackLayout>
-            </ScrollView>
-            <BoxView StyleClass="Divider" Margin="0" />
+    <ScrollView>
+        <VerticalStackLayout Padding="20" >
+            <Label Text="Button" FontSize="Title" />
+            <Label Text="UraniumUI.Material.Controls" FontSize="Micro" Opacity=".6" />
 
-            <ScrollView Orientation="Horizontal">
-                <HorizontalStackLayout>
-                    <Button StyleClass="FilledButton" Text="Filled Button" />
-                    <Button StyleClass="FilledButton" IsEnabled="False" Text="Filled Button (Disabled)" />
-                </HorizontalStackLayout>
-            </ScrollView>
-            <BoxView StyleClass="Divider" Margin="0" />
+            <HorizontalStackLayout>
+                <Button Text="Documentation" StyleClass="OutlinedButton" Command="{Binding OpenDocumentationCommand}" ImageSource="{FontImageSource Glyph={x:Static m:MaterialRegular.Insert_drive_file}, FontFamily=MaterialRegular, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
+                <Button Text="Source" StyleClass="OutlinedButton" ImageSource="{FontImageSource Glyph={x:Static m:MaterialRegular.Code}, FontFamily=MaterialRegular, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
+            </HorizontalStackLayout>
 
-            <ScrollView Orientation="Horizontal">
-                <HorizontalStackLayout>
-                    <Button StyleClass="FilledTonalButton" Text="Filled Tonal Button" />
-                    <Button StyleClass="FilledTonalButton" IsEnabled="False" Text="Filled Tonal Button (Disabled)" />
-                </HorizontalStackLayout>
-            </ScrollView>
-            <BoxView StyleClass="Divider" Margin="0" />
-            
-            <ScrollView Orientation="Horizontal">
-                <HorizontalStackLayout>
-                    <Button StyleClass="OutlinedButton" Text="Outlined Button" />
-                    <Button StyleClass="OutlinedButton" IsEnabled="False" Text="Outlined Button (Disabled)" />
-                </HorizontalStackLayout>
-            </ScrollView>
-            <BoxView StyleClass="Divider" Margin="0" />
-            
-            <ScrollView Orientation="Horizontal">
-                <HorizontalStackLayout>
-                    <Button StyleClass="TextButton" Text="Text Button" />
-                    <Button StyleClass="TextButton" IsEnabled="False" Text="Text Button (Disabled)" />
-                </HorizontalStackLayout>
-            </ScrollView>
+            <Label Text="There are five types of common buttons: elevated, filled, filled tonal, outlined, and text." />
+
+            <VerticalStackLayout Spacing="12" Margin="{OnIdiom 10, Phone=0}">
+                <Label Text="FilledButton" FontSize="Subtitle"/>
+                <local:ViewShowcaseView BindingContext="{Binding FilledButtonContext}">
+                    <Button StyleClass="FilledButton" Text="{Binding Text}" IsEnabled="{Binding IsEnabled}"/>
+
+                    <local:ViewShowcaseView.SidePanel>
+                        <VerticalStackLayout Padding="20" Spacing="20">
+
+                            <material:TextField Title="Text" Text="{Binding Text}"/>
+                            <material:CheckBox Text="IsEnabled" IsChecked="{Binding IsEnabled}" Type="Regular" />
+
+                        </VerticalStackLayout>
+                    </local:ViewShowcaseView.SidePanel>
+                    <local:ViewShowcaseView.BottomView>
+                        <uranium:ExpanderView>
+                            <uranium:ExpanderView.Header>
+                                <Label Text="Source Code" Padding="10" />
+                            </uranium:ExpanderView.Header>
+                            <Grid>
+                                <uranium:CodeView Language="xml" SourceCode="{Binding XamlSourceCode}" HeightRequest="50"/>
+                                <local:CopyButton TextToCopy="{Binding XamlSourceCode}" />
+                            </Grid>
+                        </uranium:ExpanderView>
+                    </local:ViewShowcaseView.BottomView>
+                </local:ViewShowcaseView>
+
+                <BoxView StyleClass="Divider" />
+
+                <Label Text="OutlinedButton" FontSize="Subtitle"/>
+                <local:ViewShowcaseView BindingContext="{Binding OutlinedButtonContext}">
+                    <Button Text="{Binding Text}" StyleClass="OutlinedButton"/>
+
+                    <local:ViewShowcaseView.SidePanel>
+                        <VerticalStackLayout Padding="20" Spacing="20">
+
+                            <material:TextField Title="Text" Text="{Binding Text}"/>
+                            <material:CheckBox Text="IsEnabled" IsChecked="{Binding IsEnabled}" Type="Regular" />
+
+                        </VerticalStackLayout>
+                    </local:ViewShowcaseView.SidePanel>
+                    <local:ViewShowcaseView.BottomView>
+                        <uranium:ExpanderView>
+                            <uranium:ExpanderView.Header>
+                                <Label Text="Source Code" Padding="10" />
+                            </uranium:ExpanderView.Header>
+                            <Grid>
+                                <uranium:CodeView Language="xml" SourceCode="{Binding XamlSourceCode}" HeightRequest="50"/>
+                                <local:CopyButton TextToCopy="{Binding XamlSourceCode}" />
+                            </Grid>
+                        </uranium:ExpanderView>
+                    </local:ViewShowcaseView.BottomView>
+                </local:ViewShowcaseView>
+
+                <BoxView StyleClass="Divider" />
+
+                <Label Text="ElevatedButton" FontSize="Subtitle"/>
+                <local:ViewShowcaseView BindingContext="{Binding ElevatedButtonContext}">
+                    <Button Text="{Binding Text}" StyleClass="ElevatedButton"/>
+
+                    <local:ViewShowcaseView.SidePanel>
+                        <VerticalStackLayout Padding="20" Spacing="20">
+
+                            <material:TextField Title="Text" Text="{Binding Text}"/>
+                            <material:CheckBox Text="IsEnabled" IsChecked="{Binding IsEnabled}" Type="Regular" />
+
+                        </VerticalStackLayout>
+                    </local:ViewShowcaseView.SidePanel>
+                    <local:ViewShowcaseView.BottomView>
+                        <uranium:ExpanderView>
+                            <uranium:ExpanderView.Header>
+                                <Label Text="Source Code" Padding="10" />
+                            </uranium:ExpanderView.Header>
+                            <Grid>
+                                <uranium:CodeView Language="xml" SourceCode="{Binding XamlSourceCode}" HeightRequest="50"/>
+                                <local:CopyButton TextToCopy="{Binding XamlSourceCode}" />
+                            </Grid>
+                        </uranium:ExpanderView>
+                    </local:ViewShowcaseView.BottomView>
+                </local:ViewShowcaseView>
+
+                <BoxView StyleClass="Divider" />
+
+                <Label Text="FilledTonalButton" FontSize="Subtitle"/>
+                <local:ViewShowcaseView BindingContext="{Binding FilledTonalButtonContext}">
+                    <Button Text="{Binding Text}" StyleClass="FilledTonalButton"/>
+
+                    <local:ViewShowcaseView.SidePanel>
+                        <VerticalStackLayout Padding="20" Spacing="20">
+
+                            <material:TextField Title="Text" Text="{Binding Text}"/>
+                            <material:CheckBox Text="IsEnabled" IsChecked="{Binding IsEnabled}" Type="Regular" />
+
+                        </VerticalStackLayout>
+                    </local:ViewShowcaseView.SidePanel>
+                    <local:ViewShowcaseView.BottomView>
+                        <uranium:ExpanderView>
+                            <uranium:ExpanderView.Header>
+                                <Label Text="Source Code" Padding="10" />
+                            </uranium:ExpanderView.Header>
+                            <Grid>
+                                <uranium:CodeView Language="xml" SourceCode="{Binding XamlSourceCode}" HeightRequest="50"/>
+                                <local:CopyButton TextToCopy="{Binding XamlSourceCode}" />
+                            </Grid>
+                        </uranium:ExpanderView>
+                    </local:ViewShowcaseView.BottomView>
+                </local:ViewShowcaseView>
+
+                <BoxView StyleClass="Divider" />
+
+                <Label Text="TextButton" FontSize="Subtitle"/>
+                <local:ViewShowcaseView BindingContext="{Binding TextButtonContext}">
+                    <Button Text="{Binding Text}" StyleClass="TextButton"/>
+
+                    <local:ViewShowcaseView.SidePanel>
+                        <VerticalStackLayout Padding="20" Spacing="20">
+
+                            <material:TextField Title="Text" Text="{Binding Text}"/>
+                            <material:CheckBox Text="IsEnabled" IsChecked="{Binding IsEnabled}" Type="Regular" />
+
+                        </VerticalStackLayout>
+                    </local:ViewShowcaseView.SidePanel>
+                    <local:ViewShowcaseView.BottomView>
+                        <uranium:ExpanderView>
+                            <uranium:ExpanderView.Header>
+                                <Label Text="Source Code" Padding="10" />
+                            </uranium:ExpanderView.Header>
+                            <Grid>
+                                <uranium:CodeView Language="xml" SourceCode="{Binding XamlSourceCode}" HeightRequest="50"/>
+                                <local:CopyButton TextToCopy="{Binding XamlSourceCode}" />
+                            </Grid>
+                        </uranium:ExpanderView>
+                    </local:ViewShowcaseView.BottomView>
+                </local:ViewShowcaseView>
+            </VerticalStackLayout>
         </VerticalStackLayout>
-    </ContentPage.Content>
+    </ScrollView>
 </ContentPage>

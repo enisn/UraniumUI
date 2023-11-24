@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Maui.Views;
 using InputKit.Shared.Controls;
+using Microsoft.Extensions.Options;
 using Microsoft.Maui;
 using Plainer.Maui.Controls;
 using System.Threading.Channels;
@@ -40,15 +41,7 @@ public static class CommunityToolkitDialogExtensions
             Content = new ContentView
             {
                 BackgroundColor = Colors.Transparent,
-                Content = new Frame
-                {
-                    Content = rootContainer,
-                    CornerRadius = 20,
-                    Padding = 0,
-                    VerticalOptions = LayoutOptions.Center,
-                    HorizontalOptions = LayoutOptions.Center,
-                    WidthRequest = calculatedSize.Width,
-                }
+                Content = GetFrame(calculatedSize.Width, rootContainer)
             }
         };
 #endif
@@ -129,15 +122,7 @@ public static class CommunityToolkitDialogExtensions
             Content = new ContentView
             {
                 BackgroundColor = Colors.Transparent,
-                Content = new Frame
-                {
-                    Content = rootContainer,
-                    CornerRadius = 20,
-                    Padding = 0,
-                    VerticalOptions = LayoutOptions.Center,
-                    HorizontalOptions = LayoutOptions.Center,
-                    WidthRequest = calculatedSize.Width,
-                }
+                Content = GetFrame(calculatedSize.Width, rootContainer)
             }
         };
 #endif
@@ -232,15 +217,7 @@ public static class CommunityToolkitDialogExtensions
             Content = new ContentView
             {
                 BackgroundColor = Colors.Transparent,
-                Content = new Frame
-                {
-                    Content = rootContainer,
-                    CornerRadius = 20,
-                    Padding = 0,
-                    VerticalOptions = LayoutOptions.Center,
-                    HorizontalOptions = LayoutOptions.Center,
-                    WidthRequest = calculatedSize.Width,
-                }
+                Content = GetFrame(calculatedSize.Width, rootContainer)
             }
         };
 #endif
@@ -331,15 +308,7 @@ public static class CommunityToolkitDialogExtensions
             Content = new ContentView
             {
                 BackgroundColor = Colors.Transparent,
-                Content = new Frame
-                {
-                    Content = rootContainer,
-                    CornerRadius = 20,
-                    Padding = 0,
-                    VerticalOptions = LayoutOptions.Center,
-                    HorizontalOptions = LayoutOptions.Center,
-                    WidthRequest = calculatedSize.Width,
-                }
+                Content = GetFrame(calculatedSize.Width, rootContainer) 
             }
         };
 #endif
@@ -414,6 +383,28 @@ public static class CommunityToolkitDialogExtensions
         page.ShowPopup(popup);
 
         return tcs.Task;
+    }
+
+    private static View GetFrame(double width, View content)
+    {
+        var frame = new Frame
+        {
+            Content = content,
+            CornerRadius = 20,
+            Padding = 0,
+            VerticalOptions = LayoutOptions.Center,
+            HorizontalOptions = LayoutOptions.Center,
+            WidthRequest = width,
+        };
+
+        var options = UraniumServiceProvider.Current.GetRequiredService<IOptions<DialogOptions>>()?.Value;
+
+        foreach (var efectFactory in options.Effects)
+        {
+            frame.Effects.Add(efectFactory());
+        }
+
+        return frame;
     }
 
     private static BoxView GetDivider()

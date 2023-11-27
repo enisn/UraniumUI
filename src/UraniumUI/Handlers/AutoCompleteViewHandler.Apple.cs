@@ -24,7 +24,7 @@ public partial class AutoCompleteViewHandler : ViewHandler<IAutoCompleteView, UI
         var view = new UIAutoCompleteTextField
         {
             AutoCompleteViewSource = new AutoCompleteDefaultDataSource(),
-            SortingAlgorithm = (d, b) => b,
+            SortingAlgorithm = (d, b) => b.OrderBy(x => x.StartsWith(d, StringComparison.InvariantCultureIgnoreCase) ? 0 : 1).ToArray(),
         };
         view.Text = VirtualView.Text;
         view.TextColor = VirtualView.TextColor.ToPlatform();
@@ -133,7 +133,7 @@ public class UIAutoCompleteTextField : MauiTextField, IUITextFieldDelegate
     private UIViewController _parentViewController;
     private UIScrollView _scrollView;
 
-    public Func<string, ICollection<string>, ICollection<string>> SortingAlgorithm { get; set; } = (t, d) => d;
+    public Func<string, ICollection<string>, ICollection<string>> SortingAlgorithm { get; set; } = (t, d) => d.OrderBy(x => x.Contains(t, StringComparison.InvariantCultureIgnoreCase) ? 0 : 1).ToArray();
 
     public AutoCompleteViewSource AutoCompleteViewSource
     {

@@ -39,17 +39,19 @@ Set-Location ./templates
 
 if (!$skipbuild) {
     Write-Host "UraniumUI templates packing started."
-    Invoke-Expression "dotnet pack -c Release -o . -p:packageVersion=$version"
+    Invoke-Expression "dotnet pack -c Release -o . -p:packageVersion=$version --include-symbols"
     Write-Host "UraniumUI templates packing completed."
 }
 if ($push) {
     Write-Host "UraniumUI templates pushing started."
-    Invoke-Expression "dotnet nuget push '*.$version.nupkg' --api-key $apikey --skip-duplicate --source $source"
+    Invoke-Expression "dotnet nuget push '*.$version.symbols.nupkg' --api-key $apikey --skip-duplicate --source $source"
     Write-Host "UraniumUI templates has been pushed successfully." -ForegroundColor Green
     Write-Host "Removing nupkg files..."
-    Invoke-Expression "Remove-Item -Path '*.nupkg' -Force -Recurse"
-    Invoke-Expression "Remove-Item -Path '**\*.nupkg' -Force -Recurse"
+    
     Write-Host "Nupkg files has been removed successfully." -ForegroundColor Green
 }
 
 Set-Location ../ # back to root
+
+Invoke-Expression "Remove-Item -Path '*.nupkg' -Force -Recurse"
+Invoke-Expression "Remove-Item -Path '**\*.nupkg' -Force -Recurse"

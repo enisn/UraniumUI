@@ -24,13 +24,19 @@ Visit documentation for onboarding.
 ## Features ✨
 
 - Startup [Templates](https://enisn-projects.io/docs/en/uranium/latest/Getting-Started#new-projects)
-- Multiple Target Frameworks
-  - `.NET6` _(LTS)_
-  - `.NET7` _(Current)_
+- The lastest Framework `.NET8`
+  - Use UraniumUI **v2.5** for `.NET6` _(LTS)_ and `.NET7`.
 - Pre-built layouts and flexible controls.
 - Dark/light mode support.
 - All MAUI Platforms are supported.
+  - `net8.0-android`
+  - `net8.0-ios`
+  - `net8.0-maccatalyst`
+  - `net8.0-windows`
+  - `net8.0-tizen` _(limited support)_.
 - Infrastructure for building custom controls.
+  - [Plainer](https://github.com/enisn/Xamarin.Forms.Plainer)
+  - [InputField](https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/InputField)
 - [Color System](https://enisn-projects.io/docs/en/uranium/latest/theming/ColorSystem) with easy to customize.
 - Extensible styling.
 - Dialogs
@@ -42,6 +48,7 @@ Visit documentation for onboarding.
 - Font icon support.
   - [FontAwesome](https://enisn-projects.io/docs/en/uranium/latest/theming/Icons#fontawesome)
   - [Material](https://enisn-projects.io/docs/en/uranium/latest/theming/Icons#material-icons)
+  - [Fluent](https://enisn-projects.io/docs/en/uranium/latest/theming/Icons#segoe-fluent-icons)
 - Theming
   - [Material Theme](https://enisn-projects.io/docs/en/uranium/latest/themes/material/Index)
 

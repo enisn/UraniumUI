@@ -218,7 +218,7 @@ public class TreeViewNodeHolderView : VerticalStackLayout
         }
     }
 
-    internal virtual void OnSelectedItemChanged()
+    protected virtual void OnSelectedItemChanged()
     {
         if (TreeView.SelectionMode == SelectionMode.Single)
         {

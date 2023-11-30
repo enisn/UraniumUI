@@ -74,5 +74,6 @@ namespace UraniumApp.ViewModels
         public virtual bool IsExtended { get => isExtended; set => SetProperty(ref isExtended, value); }
         public virtual object Value { get => value; set => SetProperty(ref this.value, value); }
         public virtual IList<MyItem> Children { get; set; } = new ObservableCollection<MyItem>();
+        public bool IsLeaf => Children.Count == 0;
     }
 }

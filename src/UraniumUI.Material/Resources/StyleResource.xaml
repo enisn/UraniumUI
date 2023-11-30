@@ -445,6 +445,25 @@
             <Style TargetType="FontImageSource" CanCascade="True">
                 <Setter Property="Color" Value="{AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}"></Setter>
             </Style>
+
+            <Style TargetType="c:TreeView">
+                <Setter Property="SelectionColor" Value="{AppThemeBinding {StaticResource Tertiary}, Dark={StaticResource TertiaryDark}}" />
+            </Style>
+
+            <Style TargetType="Label" Class="TreeView.Label" BaseResourceKey="Microsoft.Maui.Controls.Label">
+            </Style>
+
+            <Style TargetType="Label" Class="TreeView.Label.Selected" BaseResourceKey="Microsoft.Maui.Controls.Label" >
+                <Setter Property="TextColor" Value="{AppThemeBinding {StaticResource OnTertiary}, Dark={StaticResource OnTertiaryDark}}" />
+            </Style>
+
+            <Style TargetType="Path" Class="TreeView.Arrow" BaseResourceKey="Microsoft.Maui.Controls.Shapes.Path">
+                <Setter Property="Fill" Value="{AppThemeBinding Light={StaticResource OnBackground},Dark={StaticResource OnBackgroundDark}}" />
+            </Style>
+
+            <Style TargetType="Path" Class="TreeView.Arrow.Selected" BaseResourceKey="Microsoft.Maui.Controls.StyleClass.TreeView.Arrow">
+                <Setter Property="Fill" Value="{AppThemeBinding {StaticResource OnTertiary}, Dark={StaticResource OnTertiaryDark}}" />
+            </Style>
         </ResourceDictionary>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

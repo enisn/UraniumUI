@@ -104,12 +104,14 @@ public class TreeViewHierarchicalSelectBehavior : Behavior<CheckBox>
 
     private static CheckBox FindCheckBox(TreeViewNodeHolderView child)
     {
-        if (child.NodeView is Layout layout)
+        if (child.NodeView is CheckBox checkBox)
         {
-            return layout.FindInChildrenHierarchy<CheckBox>();
+            return checkBox;
         }
 
-        return (child.NodeView as CheckBox);
+        return child.FindInChildrenHierarchy<CheckBox>();
+
+        throw new InvalidOperationException("CheckBox isn't in a TreeView ItemTemplate");
     }
 }
 

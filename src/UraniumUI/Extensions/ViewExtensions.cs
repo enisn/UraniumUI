@@ -1,4 +1,6 @@
-﻿namespace UraniumUI.Extensions;
+﻿using Microsoft.Maui.Controls;
+
+namespace UraniumUI.Extensions;
 public static class ViewExtensions
 {
     public static T FindInParents<T>(this View view)
@@ -18,40 +20,65 @@ public static class ViewExtensions
         return default;
     }
 
-    public static T FindInChildrenHierarchy<T>(this Layout layout)
+    public static T FindInChildrenHierarchy<T>(this View view)
         where T : VisualElement
     {
-        foreach (var item in layout.Children)
+        if (view is Layout layout)
         {
-            if (item is T found)
+            foreach (var item in layout.Children)
             {
-                return found;
+                if (item is T found)
+                {
+                    return found;
+                }
+                else if (item is Layout anotherLayout)
+                {
+                    return anotherLayout.FindInChildrenHierarchy<T>();
+                }
             }
-            else if (item is Layout anotherLayout)
-            {
-                return anotherLayout.FindInChildrenHierarchy<T>();
-            }
+        }
+
+        if (view is ContentView contentView)
+        {
+            return contentView.Content.FindInChildrenHierarchy<T>();
         }
 
         return null;
     }
 
-    public static IEnumerable<T> FindManyInChildrenHierarchy<T>(this Layout layout)
+    public static IEnumerable<T> FindManyInChildrenHierarchy<T>(this View view)
         where T : View
     {
-        foreach (var item in layout.Children)
+        if (view is T itself)
         {
-            if (item is T found)
+            yield return itself;
+        }
+
+        if (view is Layout layout)
+        {
+            foreach (var item in layout.Children)
             {
-                yield return found;
-            }
-            else if (item is Layout anotherLayout)
-            {
-                foreach (var child in anotherLayout.FindManyInChildrenHierarchy<T>())
+                if (item is T found)
                 {
-                    yield return child;
+                    yield return found;
+                }
+
+                if (item is View childView)
+                {
+                    foreach (var child in childView.FindManyInChildrenHierarchy<T>())
+                    {
+                        yield return child;
+                    }
                 }
             }
         }
+
+        if (view is IContentView contentView && contentView.Content is View contentViewContent)
+        {
+            foreach (var child in contentViewContent.FindManyInChildrenHierarchy<T>())
+            {
+                yield return child;
+            }
+        }      
     }
 }

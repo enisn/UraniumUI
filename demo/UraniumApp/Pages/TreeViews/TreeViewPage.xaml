@@ -115,7 +115,7 @@
                             <material:TreeView ItemsSource="{Binding Nodes}" IsExpandedPropertyName="IsExtended">
                                 <material:TreeView.ItemTemplate>
                                     <DataTemplate>
-                                        <material:CheckBox Text="{Binding Name}">
+                                        <material:CheckBox Text="{Binding Name}" Margin="10">
                                             <material:CheckBox.Behaviors>
                                                 <material:TreeViewHierarchicalSelectBehavior />
                                             </material:CheckBox.Behaviors>

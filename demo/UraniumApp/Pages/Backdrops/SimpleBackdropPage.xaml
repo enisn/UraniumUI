@@ -15,7 +15,7 @@
 
     <VerticalStackLayout Spacing="30">
 
-        <Frame HorizontalOptions="Center" MaximumWidthRequest="400">
+        <Border StyleClass="SurfaceContainer,Rounded" HorizontalOptions="Center" MaximumWidthRequest="400">
             <HorizontalStackLayout Spacing="10">
                 <Label Text="Click the filter icon above." VerticalOptions="Center"/>
                 <Image HorizontalOptions="Center" Rotation="45">
@@ -24,13 +24,13 @@
                     </Image.Source>
                 </Image>
             </HorizontalStackLayout>
-        </Frame>
+        </Border>
 
-      <Frame MaximumWidthRequest="400">
-        <root:PropertyEditorView 
-            ShowMissingProperties="False"
-            Value="{Binding ., Source={x:Reference backdrop}}"/>
-      </Frame>
+        <Border StyleClass="SurfaceContainer,Rounded" MaximumWidthRequest="400">
+            <root:PropertyEditorView 
+                ShowMissingProperties="False"
+                Value="{Binding ., Source={x:Reference backdrop}}"/>
+        </Border>
     </VerticalStackLayout>
 
     <uranium:UraniumContentPage.Attachments>

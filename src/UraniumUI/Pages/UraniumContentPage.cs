@@ -12,12 +12,19 @@ public class UraniumContentPage : ContentPage
 
     public ObservableCollection<IPageAttachment> Attachments { get; set; } = new();
 
-    public Frame ContentFrame { get; } = new Frame()
-    { HorizontalOptions = LayoutOptions.Fill, VerticalOptions = LayoutOptions.Fill, HasShadow = false, Padding = 0 };
+    public Border ContentFrame { get; } = new Border()
+    {
+        StyleClass = new[] { "SurfaceContainer", "Rounded" },
+        HorizontalOptions = LayoutOptions.Fill,
+        VerticalOptions = LayoutOptions.Fill,
+        Padding = 0,
+        StrokeThickness = 0,
+    };
 
     public UraniumContentPage()
     {
         ContentFrame.BackgroundColor = this.BackgroundColor;
+
         Content = _contentGrid = new Grid
         {
             Children =

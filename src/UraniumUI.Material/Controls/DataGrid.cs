@@ -8,7 +8,7 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace UraniumUI.Material.Controls;
 
-public partial class DataGrid : Frame
+public partial class DataGrid : Border
 {
     private Grid _rootGrid;
 

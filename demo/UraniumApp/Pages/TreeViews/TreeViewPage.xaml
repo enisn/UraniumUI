@@ -17,7 +17,7 @@
                 <material:TabItem Title="Simple">
                     <material:TabItem.ContentTemplate>
                         <DataTemplate>
-                            <material:TreeView SelectionMode="Single" ItemsSource="{Binding Nodes}" IsExpandedPropertyName="IsExtended"/>
+                            <material:TreeView SelectionMode="Multiple" ItemsSource="{Binding Nodes}" IsExpandedPropertyName="IsExtended"/>
                         </DataTemplate>
                     </material:TabItem.ContentTemplate>
                 </material:TabItem>

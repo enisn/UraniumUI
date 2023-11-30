@@ -147,6 +147,29 @@ If the node object contain its children in a different property, you can set `Ch
  <material:TreeView ItemsSource="{Binding Nodes}" ChildrenBinding="{Binding SubItems}" />
 ```
 
+## Selection
+TreeView supports single selection and multiple selection. You can set `SelectionMode` property of the TreeView to `Single` or `Multiple` to enable selection. Default value is `None`. You can bind `SelectedItem` or `SelectedItems` property of the TreeView to a property in your ViewModel to get the selected item or items.
+
+### Single Selection
+```xml
+<material:TreeView ItemsSource="{Binding Nodes}" SelectionMode="Single" SelectedItem="{Binding SelectedNode}" />
+```
+
+| Light | Dark |
+| --- | --- |
+| ![TreeView Light](images/treeview-selection-light.gif) | ![TreeView Dark](images/treeview-selection-dark.gif) |
+
+### Multiple Selection
+
+```xml
+<material:TreeView ItemsSource="{Binding Nodes}" SelectionMode="Multiple" SelectedItems="{Binding SelectedNodes}" />
+```
+
+| Light | Dark |
+| --- | --- |
+| ![TreeView Light](images/treeview-selection-multiple-light.gif.gif) | ![TreeView Dark](images/treeview-selection-multiple-dark.gif) |
+
+
 ---
 
 ## Customizations

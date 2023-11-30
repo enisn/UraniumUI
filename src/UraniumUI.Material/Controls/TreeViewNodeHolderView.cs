@@ -205,7 +205,7 @@ public class TreeViewNodeHolderView : VerticalStackLayout
                 TreeView.SelectedItem = BindingContext;
             }
         }
-        else
+        else if (TreeView.SelectionMode == SelectionMode.Multiple)
         {
             if (TreeView.SelectedItems.Contains(BindingContext))
             {

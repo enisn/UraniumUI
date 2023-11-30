@@ -2,6 +2,8 @@
 using CommunityToolkit.Maui;
 using DotNurse.Injector;
 using Mopups.Hosting;
+using ReactiveUI;
+using System.Reactive;
 using UraniumUI;
 using UraniumUI.Dialogs;
 
@@ -28,6 +30,13 @@ public static class MauiProgram
                 fonts.AddMaterialIconFonts();
                 fonts.AddFluentIconFonts();
             });
+
+        RxApp.DefaultExceptionHandler = new AnonymousObserver<Exception>(ex =>
+        {
+            App.Current.MainPage.DisplayAlert("Error", ex.Message, "OK");
+
+            // Track the exception here... (e.g. AppCenter, Sentry, etc.)
+        });
 
         var thisAssembly = typeof(MauiProgram).Assembly;
 

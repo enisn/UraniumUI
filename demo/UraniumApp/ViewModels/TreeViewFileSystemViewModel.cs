@@ -1,4 +1,7 @@
-﻿using System.Collections.ObjectModel;
+﻿using DynamicData;
+using ReactiveUI;
+using System.Collections.ObjectModel;
+using System.Reactive;
 using System.Windows.Input;
 using UraniumUI;
 
@@ -7,30 +10,12 @@ public class TreeViewFileSystemViewModel : UraniumBindableObject
 {
     public ObservableCollection<NodeItem> Nodes { get; private set; }
 
-    public ICommand LoadChildrenCommand { get; set; }
+    public ReactiveCommand<NodeItem, Unit> LoadChildrenCommand { get; }
 
     public TreeViewFileSystemViewModel()
     {
         InitializeNodes();
-        LoadChildrenCommand = new Command<NodeItem>((node) =>
-        {
-            try
-            {
-                foreach (var item in GetContent(node.Path))
-                {
-                    node.Children.Add(item);
-                }
-
-                if (node.Children.Count == 0)
-                {
-                    node.IsLeaf = true;
-                }
-            }
-            catch (Exception ex)
-            {
-                App.Current.MainPage.DisplayAlert("Error", ex.Message, "OK");
-            }
-        });
+        LoadChildrenCommand = ReactiveCommand.CreateFromTask<NodeItem>(LoadChildrenAsync);
     }
 
     void InitializeNodes()
@@ -44,6 +29,26 @@ public class TreeViewFileSystemViewModel : UraniumBindableObject
 
         Nodes = new ObservableCollection<NodeItem>(
             GetContent(path));
+    }
+
+    async Task LoadChildrenAsync(NodeItem node)
+    {
+        await Task.Yield();
+
+        try
+        {
+            node.Children.AddRange(GetContent(node.Path).ToArray());
+
+            if (node.Children.Count == 0)
+            {
+                node.IsLeaf = true;
+            }
+        }
+        catch (Exception ex)
+        {
+
+            await App.Current.MainPage.DisplayAlert("Error", ex.Message, "OK");
+        }
     }
 
     IEnumerable<NodeItem> GetContent(string dir)

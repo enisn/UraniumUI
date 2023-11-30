@@ -15,7 +15,7 @@
 
             <VerticalStackLayout>
 
-                <material:TreeView SelectionMode="Single" x:Name="treeView" ItemsSource="{Binding Nodes}" LoadChildrenCommand="{Binding LoadChildrenCommand}" IsExpandedPropertyName="IsExtended">
+                <material:TreeView SelectionMode="Multiple" x:Name="treeView" ItemsSource="{Binding Nodes}" LoadChildrenCommand="{Binding LoadChildrenCommand}" IsExpandedPropertyName="IsExtended">
                     <material:TreeView.ItemTemplate>
                         <DataTemplate>
                             <HorizontalStackLayout Spacing="5" VerticalOptions="Center">

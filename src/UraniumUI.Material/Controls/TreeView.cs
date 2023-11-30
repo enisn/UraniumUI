@@ -1,5 +1,8 @@
 ﻿using System.Collections;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Windows.Input;
+using UraniumUI.Extensions;
 using UraniumUI.Resources;
 
 namespace UraniumUI.Material.Controls;
@@ -14,13 +17,29 @@ public partial class TreeView : VerticalStackLayout
 
     public TreeView()
     {
-        Spacing = 10;
         BindableLayout.SetItemTemplate(this, new DataTemplate(() =>
         {
             var holder = new TreeViewNodeHolderView(ItemTemplate, this, ChildrenBinding);
             holder.TreeView = this;
             return holder;
         }));
+    }
+
+    protected override void OnHandlerChanged()
+    {
+        base.OnHandlerChanged();
+
+        if (SelectedItems is INotifyCollectionChanged observableSelectedItems)
+        {
+            if (Handler is null)
+            {
+                observableSelectedItems.CollectionChanged -= SelectedItemsChanged;
+            }
+            else
+            {
+                observableSelectedItems.CollectionChanged += SelectedItemsChanged;
+            }
+        }
     }
 
     private BindingBase childrenBinding = new Binding("Children");
@@ -38,7 +57,7 @@ public partial class TreeView : VerticalStackLayout
     }
 
     private string isExpandedPropertyName = "IsExpanded";
-    
+
     public string IsExpandedPropertyName
     {
         get => isExpandedPropertyName;
@@ -53,7 +72,7 @@ public partial class TreeView : VerticalStackLayout
     }
 
     private string isLeafPropertyName = "IsLeaf";
-    
+
     public string IsLeafPropertyName
     {
         get => isLeafPropertyName;
@@ -83,7 +102,7 @@ public partial class TreeView : VerticalStackLayout
 
         OnItemsSourceSet();
     }
-    
+
     private void OnExpanderTemplateChanged()
     {
         // Same logic (for now)
@@ -100,6 +119,56 @@ public partial class TreeView : VerticalStackLayout
         foreach (var childHolder in Children.OfType<TreeViewNodeHolderView>())
         {
             childHolder.OnSelectedItemChanged();
+        }
+    }
+
+    protected virtual void OnSelectedItemsChanged(IList oldValue, IList newValue)
+    {
+        if (oldValue is INotifyCollectionChanged observableOld)
+        {
+            observableOld.CollectionChanged -= SelectedItemsChanged;
+        }
+
+        if (newValue is INotifyCollectionChanged observableCollectionNew)
+        {
+            observableCollectionNew.CollectionChanged += SelectedItemsChanged;
+        }
+
+        // TODO: Init selected
+
+        foreach (var childNode in this.FindManyInChildrenHierarchy<TreeViewNodeHolderView>())
+        {
+            if (newValue.Contains(childNode.BindingContext) && !childNode.IsSelected)
+            {
+                childNode.IsSelected = true;
+            }
+        }
+    }
+
+    private void SelectedItemsChanged(object sender, NotifyCollectionChangedEventArgs e)
+    {
+        switch (e.Action)
+        {
+            case NotifyCollectionChangedAction.Add:
+                foreach (var item in e.NewItems)
+                {
+                    var node = this.FindManyInChildrenHierarchy<TreeViewNodeHolderView>().FirstOrDefault(x => x.BindingContext == item);
+                    if (node is not null && !node.IsSelected)
+                    {
+                        node.IsSelected = true;
+                    }
+                }
+                break;
+            case NotifyCollectionChangedAction.Remove:
+                foreach (var item in e.OldItems)
+                {
+                    var node = this.FindManyInChildrenHierarchy<TreeViewNodeHolderView>().FirstOrDefault(x => x.BindingContext == item);
+                    if (node is not null && node.IsSelected)
+                    {
+                        node.IsSelected = false;
+                    }
+                }
+                break;
         }
     }
 
@@ -121,7 +190,13 @@ public partial class TreeView : VerticalStackLayout
     public object SelectedItem { get => GetValue(SelectedItemProperty); set => SetValue(SelectedItemProperty, value); }
 
     public static readonly BindableProperty SelectedItemProperty = BindableProperty.Create(
-        nameof(SelectedItem), typeof(object), typeof(TreeView), default, propertyChanged: (bo, ov, nv)=> (bo as TreeView).SelectedItemChanged());
+        nameof(SelectedItem), typeof(object), typeof(TreeView), default, propertyChanged: (bo, ov, nv) => (bo as TreeView).SelectedItemChanged());
+
+    public IList SelectedItems { get => (IList)GetValue(SelectedItemsProperty); set => SetValue(SelectedItemsProperty, value); }
+
+    public static readonly BindableProperty SelectedItemsProperty = BindableProperty.Create(
+        nameof(SelectedItems), typeof(IList), typeof(TreeView), defaultValueCreator: bindable => new ObservableCollection<object>(),
+        propertyChanged: (bo, ov, nv) => (bo as TreeView).OnSelectedItemsChanged((IList)ov, (IList)nv));
 
     public DataTemplate ExpanderTemplate { get => (DataTemplate)GetValue(ExpanderTemplateProperty); set => SetValue(ExpanderTemplateProperty, value); }
 

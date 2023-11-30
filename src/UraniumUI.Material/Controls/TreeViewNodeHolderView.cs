@@ -205,6 +205,17 @@ public class TreeViewNodeHolderView : VerticalStackLayout
                 TreeView.SelectedItem = BindingContext;
             }
         }
+        else
+        {
+            if (TreeView.SelectedItems.Contains(BindingContext))
+            {
+                TreeView.SelectedItems.Remove(BindingContext);
+            }
+            else
+            {
+                TreeView.SelectedItems.Add(BindingContext);
+            }
+        }
     }
 
     internal virtual void OnSelectedItemChanged()
@@ -249,7 +260,6 @@ public class TreeViewNodeHolderView : VerticalStackLayout
         {
             VisualStateManager.GoToState(button, CommonStates.Normal);
             button.BackgroundColor = Colors.Transparent;
-
 
             foreach (var item in button.FindManyInChildrenHierarchy<Path>())
             {

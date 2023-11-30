@@ -28,16 +28,4 @@
     <PackageReference Include="InputKit.Maui" Version="4.4.0-pre.1" />
     <PackageReference Include="Plainer.Maui" Version="1.7.0" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="Resources\StyleResource.xaml.cs">
-      <DependentUpon>StyleResource.xaml</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <MauiXaml Update="Resources\StyleResource.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
-  </ItemGroup>
 </Project>

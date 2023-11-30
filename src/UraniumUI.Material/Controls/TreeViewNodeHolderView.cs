@@ -230,11 +230,11 @@ public class TreeViewNodeHolderView : VerticalStackLayout
             {
                 IsSelected = false;
             }
-        }
 
-        foreach (var childHolder in nodeChildren.Children.OfType<TreeViewNodeHolderView>())
-        {
-            childHolder.OnSelectedItemChanged();
+            foreach (var childHolder in nodeChildren.Children.OfType<TreeViewNodeHolderView>())
+            {
+                childHolder.OnSelectedItemChanged();
+            }
         }
     }
 

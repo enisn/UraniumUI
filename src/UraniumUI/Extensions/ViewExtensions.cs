@@ -62,7 +62,8 @@ public static class ViewExtensions
                 {
                     yield return found;
                 }
-                else if (item is View childView)
+
+                if (item is View childView)
                 {
                     foreach (var child in childView.FindManyInChildrenHierarchy<T>())
                     {

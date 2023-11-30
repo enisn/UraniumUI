@@ -46,7 +46,6 @@ public class TreeViewFileSystemViewModel : UraniumBindableObject
         }
         catch (Exception ex)
         {
-
             await App.Current.MainPage.DisplayAlert("Error", ex.Message, "OK");
         }
     }

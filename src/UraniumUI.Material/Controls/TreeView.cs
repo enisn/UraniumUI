@@ -134,8 +134,6 @@ public partial class TreeView : VerticalStackLayout
             observableCollectionNew.CollectionChanged += SelectedItemsChanged;
         }
 
-        // TODO: Init selected
-
         foreach (var childNode in this.FindManyInChildrenHierarchy<TreeViewNodeHolderView>())
         {
             if (newValue.Contains(childNode.BindingContext) && !childNode.IsSelected)
@@ -219,5 +217,4 @@ public partial class TreeView : VerticalStackLayout
 
     public static readonly BindableProperty SelectionColorProperty = BindableProperty.Create(
         nameof(SelectionColor), typeof(Color), typeof(TreeView), ColorResource.GetColor("Secondary", "SecondaryDark", Colors.Pink));
-
 }

@@ -7,11 +7,6 @@ namespace UraniumUI.Material.Controls;
 [ContentProperty(nameof(Content))]
 public class ButtonView : Border, IStatefulView
 {
-	public ButtonView()
-	{
-        Padding = 10;
-	}
-
     public event EventHandler<EventArgs> Pressed;
     public event EventHandler<EventArgs> LongPressed;
     public event EventHandler<EventArgs> Hovered;

@@ -338,6 +338,7 @@
 
             <Style TargetType="c:ButtonView" ApplyToDerivedTypes="True" CanCascade="True">
                 <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+                <Setter Property="Padding" Value="10" />
                 <Setter Property="StrokeShape" Value="{RoundRectangle CornerRadius=20}"/>
                 <Setter Property="VisualStateManager.VisualStateGroups">
                     <VisualStateGroupList>

@@ -13,7 +13,7 @@ public class ExpanderView : ContentView
     protected StatefulContentView headerContainer = new StatefulContentView();
     protected Grid headerGrid = new Grid
     {
-        Padding = 5,
+        StyleClass = new[] { "ExpanderView.Header" },
         ColumnDefinitions =
         {
             new ColumnDefinition(GridLength.Star),
@@ -23,6 +23,7 @@ public class ExpanderView : ContentView
 
     protected Path arrowIcon = new Path
     {
+        StyleClass = new[] { "ExpanderView.Arrow" },
         Data = UraniumShapes.ArrowDown,
         VerticalOptions = LayoutOptions.Center,
         HorizontalOptions = LayoutOptions.Center,
@@ -30,6 +31,7 @@ public class ExpanderView : ContentView
 
     protected ContentView actualContentContainer = new ContentView
     {
+        StyleClass = new[] { "ExpanderView.Content" },
         AnchorY = 0,
         ScaleY = 0,
         IsVisible = false,
@@ -43,10 +45,6 @@ public class ExpanderView : ContentView
             Padding = new Thickness(10, 0),
             Content = arrowIcon
         }, column: 1) ;
-        
-        arrowIcon.SetAppTheme(Path.FillProperty,
-            ColorResource.GetColor("OnBackground", Colors.Gray).ToSolidColorBrush(),
-            ColorResource.GetColor("OnBackgroundDark", Colors.Gray).ToSolidColorBrush());
 
         actualContentContainer.IsVisible = false;
         Content = new VerticalStackLayout

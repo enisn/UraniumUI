@@ -247,3 +247,18 @@ public class WebTabItem : UraniumBindableObject
 ```
 
 ![](images/tabview-dynamictabs-simple-windows-dark.gif)
+
+## Customizations
+
+You can customize the `TabView` by using the style properties. You can use the following example to create your own style:
+
+```xml
+<Style TargetType="Layout" Class="TabView.Header" ApplyToDerivedTypes="True">
+    <Setter Property="BackgroundColor" Value="Black" />
+</Style>
+<Style TargetType="ContentView" Class="TabView.Content">
+    <Setter Property="BackgroundColor" Value="DimGray" />
+</Style>
+```
+
+![MAUI TabView Customization](images/tabview-customizations-dark-windows.png)

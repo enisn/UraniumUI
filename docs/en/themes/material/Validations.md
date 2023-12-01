@@ -11,6 +11,50 @@ Validations are working compatible together FormView. So, you can use a FormView
 |--- | --- |
 | ![MAUI Validation](images/validations-all-demo-light-android.gif) | ![MAUI Validation](images/validations-all-demo-dark-windows.gif) |
 
+
+## Usage
+
+* Prebuilt validations are defined in `InputKit.Shared.Validations` namespace. You should add an xml namespace to use them or define your own namespace that contains your validation rules.
+
+```
+xmlns:validation="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
+```
+
+* Each UraniumUI Material control accepts validations as content. So, you can define validations in the control's content.
+
+```xml
+<material:TextField Title="Fullname" Text="{Binding FullName}">
+    <validation:RequiredValidation />
+    <validation:LettersOnlyValidation AllowSpaces="True" />
+</material:TextField>
+```
+
+* Using a [FormView](https://enisn-projects.io/docs/en/inputkit/latest/components/controls/FormView) is the easiest way to validate multiple inputs at the same time.
+
+```xml
+<input:FormView SubmitCommand="{Binding SubmitCommand}" Spacing="20">
+
+    <material:TextField Title="Email" Text="{Binding Email}">
+        <validation:RequiredValidation />
+        <validation:RegexValidation Message="Please type a valid e-mail address." Pattern="{x:Static input:AdvancedEntry.REGEX_EMAIL}"/>
+    </material:TextField>
+
+    <material:CheckBox Text="I Accept Terms &amp; Conditions"
+                        IsChecked="{Binding IsTermsAndConditionsAccepted}">
+        <validation:RequiredValidation />
+    </material:CheckBox>
+
+    <Button Text="Submit"
+            input:FormView.IsSubmitButton="True"
+            StyleClass="FilledButton"/>
+</input:FormView>
+```
+
+| Light | Dark |
+| --- | --- |
+| ![MAUI Validations](images/validations-demo-light-android.gif) | ![MAUI Validations](images/validations-demo-dark-windows.gif) |
+
+
 ## Prebuilt Validations
 UraniumUI Material doesn't provide any prebuilt validations. You can use validations from [InputKit](https://enisn-projects.io/docs/en/inputkit/latest/components/controls/FormView#validations) or create your own.
 
@@ -46,49 +90,6 @@ public class MyEmailValidation : IValidation
     }
 }
 ```
-
-## Usage
-
-* Prebuilt validations are defined in `InputKit.Shared.Validations` namespace. You should add an xml namespace to use them or define your own namespace that contains your validation rules.
-
-```
-xmlns:validation="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
-```
-
-* Each UraniumUI Material control accepts validations as content. So, you can define validations in the control's content.
-
-```xml
-<material:TextField Title="Fullname" Text="{Binding FullName}">
-    <validation:RequiredValidation />
-    <validation:LettersOnlyValidation AllowSpaces="True" />
-</material:TextField>
-```
-
-* Using a FormView is the easiest way to validate multiple inputs at the same time.
-
-```xml
-<input:FormView SubmitCommand="{Binding SubmitCommand}" Spacing="20">
-
-    <material:TextField Title="Email" Text="{Binding Email}">
-        <validation:RequiredValidation />
-        <validation:RegexValidation Message="Please type a valid e-mail address." Pattern="{x:Static input:AdvancedEntry.REGEX_EMAIL}"/>
-    </material:TextField>
-
-    <material:CheckBox Text="I Accept Terms &amp; Conditions"
-                        IsChecked="{Binding IsTermsAndConditionsAccepted}">
-        <validation:RequiredValidation />
-    </material:CheckBox>
-
-    <Button Text="Submit"
-            input:FormView.IsSubmitButton="True"
-            StyleClass="FilledButton"/>
-</input:FormView>
-```
-
-| Light | Dark |
-| --- | --- |
-| ![MAUI Validations](images/validations-demo-light-android.gif) | ![MAUI Validations](images/validations-demo-dark-windows.gif) |
-
 
 ## Validation Supported Controls
 

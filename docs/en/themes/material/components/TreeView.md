@@ -169,6 +169,27 @@ TreeView supports single selection and multiple selection. You can set `Selectio
 | --- | --- |
 | ![TreeView Light](images/treeview-selection-multiple-light.gif) | ![TreeView Dark](images/treeview-selection-multiple-dark.gif) |
 
+---
+
+### Hierarchical Selection (CheckBox)
+
+TreeView has a special behavior for CheckBoxes. TreeView supports hierarchical selection. It means that when you select a parent node, all of its children will be selected. When you deselect a parent node, all of its children will be deselected. When some of children is selected, CheckBox will enter semi-selected state. It's useful when you want to select a group of items. For example, you can select all files in a folder.
+
+TreeView provides `TreeViewHierarchicalSelectBehavior` that can be used only with `CheckBox` when it's directly ItemTemplate of the TreeView.
+
+```xml
+<material:TreeView ItemsSource="{Binding Nodes}">
+    <material:TreeView.ItemTemplate>
+        <DataTemplate>
+            <material:CheckBox Text="{Binding Name}">
+                <material:CheckBox.Behaviors>
+                    <material:TreeViewHierarchicalSelectBehavior />
+                </material:CheckBox.Behaviors>
+            </material:CheckBox>
+        </DataTemplate>
+    </material:TreeView.ItemTemplate>
+</material:TreeView>
+```
 
 ---
 
@@ -218,6 +239,10 @@ You can change the spacing between the arrow icon and the content with `Spacing`
 ```
 ![TreeView Spacing](images/treeview-spacing-dark-android.png)
 
+| Light | Dark |
+| --- | --- |
+| ![TreeView Light](images/treeview-selection-light-android.gif) | ![TreeView Dark](images/treeview-selection-dark-windows.gif) |
+
 ### ExpanderTemplate
 You can completely customize the expander with `ExpanderTemplate` property. It's an arrow by default. You can use any view as an expander. For example, you can use a `Switch` to expand and collapse nodes.
 
@@ -247,32 +272,6 @@ Determines whether to use animations when expanding and collapsing nodes. Defaul
 | Enabled | Disabled |
 | --- | --- |
 | ![TreeView Animations Enabled](images/treeview-useanimation-dark-windows-enabled.gif) | ![TreeView Animations Disabled](images/treeview-useanimation-dark-windows-disabled.gif) |
-
----
-
-## Selection
-
-TreeView has a special behavior for CheckBoxes. TreeView supports hierarchical selection. It means that when you select a parent node, all of its children will be selected. When you deselect a parent node, all of its children will be deselected. When some of children is selected, CheckBox will enter semi-selected state. It's useful when you want to select a group of items. For example, you can select all files in a folder.
-
-TreeView provides `TreeViewHierarchicalSelectBehavior` that can be used only with `CheckBox` when it's directly ItemTemplate of the TreeView.
-
-```xml
-<material:TreeView ItemsSource="{Binding Nodes}">
-    <material:TreeView.ItemTemplate>
-        <DataTemplate>
-            <material:CheckBox Text="{Binding Name}">
-                <material:CheckBox.Behaviors>
-                    <material:TreeViewHierarchicalSelectBehavior />
-                </material:CheckBox.Behaviors>
-            </material:CheckBox>
-        </DataTemplate>
-    </material:TreeView.ItemTemplate>
-</material:TreeView>
-```
-
-| Light | Dark |
-| --- | --- |
-| ![TreeView Light](images/treeview-selection-light-android.gif) | ![TreeView Dark](images/treeview-selection-dark-windows.gif) |
 
 ---
 

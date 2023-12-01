@@ -336,7 +336,7 @@
                 </Setter>
             </Style>
 
-            <Style TargetType="c:ButtonView" ApplyToDerivedTypes="True" CanCascade="True">
+            <Style TargetType="c:ButtonView" ApplyToDerivedTypes="True" CanCascade="True" x:Key="UraniumUI.Material.Controls.ButtonView.Base">
                 <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
                 <Setter Property="Padding" Value="10" />
                 <Setter Property="StrokeShape" Value="{RoundRectangle CornerRadius=20}"/>
@@ -357,6 +357,9 @@
                         </VisualStateGroup>
                     </VisualStateGroupList>
                 </Setter>
+            </Style>
+
+            <Style TargetType="c:ButtonView" ApplyToDerivedTypes="True" CanCascade="True" BaseResourceKey="UraniumUI.Material.Controls.ButtonView.Base">
             </Style>
 
             <Style TargetType="c:ButtonView" Class="TreeViewExpandButton"  CanCascade="True">
@@ -436,7 +439,7 @@
             <Style TargetType="Path" CanCascade="True">
                 <Setter Property="Fill" Value="{AppThemeBinding {StaticResource OnSurface}, Dark={StaticResource OnSurfaceDark}}"></Setter>
             </Style>
-            
+
             <Style TargetType="FontImageSource" CanCascade="True">
                 <Setter Property="Color" Value="{AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}"></Setter>
             </Style>
@@ -459,7 +462,7 @@
             <Style TargetType="Path" Class="TreeView.Arrow.Selected" BaseResourceKey="Microsoft.Maui.Controls.StyleClass.TreeView.Arrow">
                 <Setter Property="Fill" Value="{AppThemeBinding {StaticResource OnTertiary}, Dark={StaticResource OnTertiaryDark}}" />
             </Style>
-            
+
             <Style TargetType="Border" Class="BottomSheet">
                 <Setter Property="StrokeShape"  Value="RoundRectangle 8" />
                 <Setter Property="StrokeThickness" Value="0" />

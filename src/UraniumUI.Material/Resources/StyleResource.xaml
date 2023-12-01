@@ -273,13 +273,16 @@
                 <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Gray950}}"/>
             </Style>
 
-            <Style TargetType="c:DataGrid" CanCascade="True">
+            <Style TargetType="c:DataGrid" CanCascade="True" x:Name="DataGrid.Base" ApplyToDerivedTypes="True">
                 <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource  Surface},Dark={StaticResource  SurfaceDark}}" />
                 <Setter Property="LineSeparatorColor" Value="{AppThemeBinding Light={StaticResource Outline}, Dark={StaticResource OutlineDark}}"/>
                 <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource Outline}, Dark={StaticResource OutlineDark}}" />
                 <Setter Property="StrokeShape" Value="RoundRectangle 8" />
                 <Setter Property="StrokeThickness" Value=".5" />
                 <Setter Property="SelectionColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+            </Style>
+            
+            <Style TargetType="c:DataGrid" CanCascade="True" BaseResourceKey="DataGrid.Base">
             </Style>
 
             <Style TargetType="c:InputField" ApplyToDerivedTypes="True" x:Key="InputFieldBaseStyle" CanCascade="True">
@@ -466,7 +469,7 @@
                 <Setter Property="Fill" Value="{AppThemeBinding {StaticResource OnTertiary}, Dark={StaticResource OnTertiaryDark}}" />
             </Style>
 
-            <Style TargetType="Border" Class="BottomSheet">
+            <Style TargetType="Border" Class="BottomSheet" CanCascade="True">
                 <Setter Property="StrokeShape"  Value="RoundRectangle 8" />
                 <Setter Property="StrokeThickness" Value="0" />
                 <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Surface}, Dark={StaticResource SurfaceDark}}" />

@@ -273,7 +273,7 @@
                 <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Gray950}}"/>
             </Style>
 
-            <Style TargetType="c:DataGrid" CanCascade="True" x:Name="DataGrid.Base" ApplyToDerivedTypes="True">
+            <Style TargetType="c:DataGrid" CanCascade="True" x:Key="DataGrid.Base" ApplyToDerivedTypes="True">
                 <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource  Surface},Dark={StaticResource  SurfaceDark}}" />
                 <Setter Property="LineSeparatorColor" Value="{AppThemeBinding Light={StaticResource Outline}, Dark={StaticResource OutlineDark}}"/>
                 <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource Outline}, Dark={StaticResource OutlineDark}}" />

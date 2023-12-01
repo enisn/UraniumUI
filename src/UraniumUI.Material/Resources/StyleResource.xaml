@@ -275,7 +275,10 @@
 
             <Style TargetType="c:DataGrid" CanCascade="True">
                 <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource  Surface},Dark={StaticResource  SurfaceDark}}" />
-                <Setter Property="LineSeparatorColor" Value="{StaticResource Gray300}"/>
+                <Setter Property="LineSeparatorColor" Value="{AppThemeBinding Light={StaticResource Outline}, Dark={StaticResource OutlineDark}}"/>
+                <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource Outline}, Dark={StaticResource OutlineDark}}" />
+                <Setter Property="StrokeShape" Value="RoundRectangle 8" />
+                <Setter Property="StrokeThickness" Value=".5" />
                 <Setter Property="SelectionColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
             </Style>
 
@@ -444,6 +447,31 @@
             
             <Style TargetType="FontImageSource" CanCascade="True">
                 <Setter Property="Color" Value="{AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}"></Setter>
+            </Style>
+
+            <Style TargetType="c:TreeView">
+                <Setter Property="SelectionColor" Value="{AppThemeBinding {StaticResource Tertiary}, Dark={StaticResource TertiaryDark}}" />
+            </Style>
+
+            <Style TargetType="Label" Class="TreeView.Label" BaseResourceKey="Microsoft.Maui.Controls.Label">
+            </Style>
+
+            <Style TargetType="Label" Class="TreeView.Label.Selected" BaseResourceKey="Microsoft.Maui.Controls.Label" >
+                <Setter Property="TextColor" Value="{AppThemeBinding {StaticResource OnTertiary}, Dark={StaticResource OnTertiaryDark}}" />
+            </Style>
+
+            <Style TargetType="Path" Class="TreeView.Arrow" BaseResourceKey="Microsoft.Maui.Controls.Shapes.Path">
+                <Setter Property="Fill" Value="{AppThemeBinding Light={StaticResource OnBackground},Dark={StaticResource OnBackgroundDark}}" />
+            </Style>
+
+            <Style TargetType="Path" Class="TreeView.Arrow.Selected" BaseResourceKey="Microsoft.Maui.Controls.StyleClass.TreeView.Arrow">
+                <Setter Property="Fill" Value="{AppThemeBinding {StaticResource OnTertiary}, Dark={StaticResource OnTertiaryDark}}" />
+            </Style>
+            
+            <Style TargetType="Border" Class="BottomSheet">
+                <Setter Property="StrokeShape"  Value="RoundRectangle 8" />
+                <Setter Property="StrokeThickness" Value="0" />
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Surface}, Dark={StaticResource SurfaceDark}}" />
             </Style>
         </ResourceDictionary>
     </ResourceDictionary.MergedDictionaries>

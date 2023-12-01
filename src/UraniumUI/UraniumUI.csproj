@@ -24,20 +24,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.*-*" />
-    <PackageReference Include="InputKit.Maui" Version="4.4.0-pre.1" />
-    <PackageReference Include="Plainer.Maui" Version="1.7.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="Resources\StyleResource.xaml.cs">
-      <DependentUpon>StyleResource.xaml</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <MauiXaml Update="Resources\StyleResource.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
+    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.*" />
+    <PackageReference Include="InputKit.Maui" Version="4.4.0" />
+    <PackageReference Include="Plainer.Maui" Version="1.7.1" />
   </ItemGroup>
 </Project>

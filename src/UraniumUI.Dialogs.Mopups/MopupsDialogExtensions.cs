@@ -208,11 +208,10 @@ public static class MopupsDialogExtensions
             Text = initialValue,
         };
 
-        var entryholder = new Frame
+        var entryholder = new Border
         {
             BackgroundColor = ColorResource.GetColor("OnSurface", "OnSurfaceDark", Colors.DarkGray).WithAlpha(.2f),
-            HasShadow = false,
-            CornerRadius = 4,
+            StyleClass = new[] { "SurfaceContainer", "Rounded" },
             Margin = new Thickness(20, 0, 20, 20),
 #if IOS
             Padding = new Thickness(5, 5),
@@ -265,9 +264,9 @@ public static class MopupsDialogExtensions
     {
         var options = UraniumServiceProvider.Current.GetRequiredService<IOptions<DialogOptions>>()?.Value;
 
-        var frame = new Frame
+        var frame = new Border
         {
-            CornerRadius = 20,
+            StyleClass = new[] { "SurfaceContainer", "Rounded" },
             HorizontalOptions = LayoutOptions.Center,
             VerticalOptions = LayoutOptions.Center,
             Padding = 0,

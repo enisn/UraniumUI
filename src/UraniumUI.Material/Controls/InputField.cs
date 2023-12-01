@@ -16,14 +16,15 @@ public partial class InputField : Grid
         get => content;
         set
         {
-            rootGrid.Remove(content);
+            if (content is not null)
+            {
+                ReleaseEvents();
+            }
             content = value;
-            rootGrid.Add(content, column: 1);
-            content = value;
+            border.Content = content;
 
             if (value != null)
             {
-                border.Content = value;
                 RegisterForEvents();
             }
         }
@@ -206,7 +207,7 @@ public partial class InputField : Grid
         };
 #endif
 
-            border.StrokeDashArray = new DoubleCollection { calculatedFirstDash * 0.9, space, perimeter, 0 };
+        border.StrokeDashArray = new DoubleCollection { calculatedFirstDash * 0.9, space, perimeter, 0 };
 
 #if WINDOWS
         this.Add(border);

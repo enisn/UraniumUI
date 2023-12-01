@@ -179,9 +179,17 @@ public partial class InputField : Grid
     {
         var perimeter = (this.Width + this.Height) * 2;
         var calculatedFirstDash = FirstDash + CornerRadius.Clamp(FirstDash, double.MaxValue);
+
         var space = (labelTitle.Width + calculatedFirstDash) * .8;
         if (labelTitle.Width <= 0)
             space = 0;
+
+#if ANDROID
+        if (this.IsRtl())
+        {
+            calculatedFirstDash += this.Width - labelTitle.Width;
+        }
+#endif
 
 #if WINDOWS
         if (space <= 0 || perimeter <= 0)
@@ -226,9 +234,20 @@ public partial class InputField : Grid
 
         if (HasValue || Content.IsFocused)
         {
+            var x = CornerRadius.Clamp(10, MaxCornerRadius) - 10;
+
             UpdateOffset(0.01);
-            labelTitle.TranslateTo(CornerRadius.Clamp(10, MaxCornerRadius) - 10, -25, 90, Easing.BounceOut);
+            labelTitle.TranslateTo(x, -25, 90, Easing.BounceOut);
             labelTitle.AnchorX = 0;
+
+
+#if ANDROID
+            if (this.IsRtl())
+            {
+                labelTitle.AnchorX = .5;
+            }
+#endif
+
             labelTitle.ScaleTo(.8, 90);
         }
         else
@@ -237,7 +256,18 @@ public partial class InputField : Grid
             UpdateOffset(offsetToGo);
 
             labelTitle.CancelAnimations();
-            labelTitle.TranslateTo(imageIcon.IsValueCreated ? imageIcon.Value.Width : 0, 0, 90, Easing.BounceOut);
+
+            var x = imageIcon.IsValueCreated ? imageIcon.Value.Width : 0;
+
+#if ANDROID
+            if (this.IsRtl())
+            {
+                x = imageIcon.IsValueCreated ? -imageIcon.Value.Width : 0;
+            }
+#endif
+
+            labelTitle.TranslateTo(x, 0, 90, Easing.BounceOut);
+
             labelTitle.AnchorX = 0;
             labelTitle.ScaleTo(1, 90);
         }

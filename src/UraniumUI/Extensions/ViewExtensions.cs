@@ -1,4 +1,11 @@
-﻿using Microsoft.Maui.Controls;
+using System.Globalization;
+using Microsoft.Maui.Controls;
+using System.Runtime.CompilerServices;
+using Microsoft.Maui.Platform;
+
+#if ANDROID
+using ViewCompat = AndroidX.Core.View.ViewCompat;
+#endif
 
 namespace UraniumUI.Extensions;
 public static class ViewExtensions
@@ -38,7 +45,7 @@ public static class ViewExtensions
             }
         }
 
-        if (view is ContentView contentView)
+        if (view is Microsoft.Maui.Controls.ContentView contentView)
         {
             return contentView.Content.FindInChildrenHierarchy<T>();
         }
@@ -79,6 +86,30 @@ public static class ViewExtensions
             {
                 yield return child;
             }
-        }      
+        }
+    }
+
+    public static bool IsRtl(this VisualElement element)
+    {
+        if (element.FlowDirection != FlowDirection.MatchParent)
+        {
+            return element.FlowDirection == FlowDirection.RightToLeft;
+        }
+
+        if (element.Parent is VisualElement parentElement)
+        {
+            return IsRtl(parentElement);
+        }
+
+#if ANDROID
+        if (element.Handler is not null)
+        {
+            var dir = ViewCompat.GetLayoutDirection(element.ToPlatform(element.Handler.MauiContext));
+            return dir == ViewCompat.LayoutDirectionRtl;
+        }
+#endif
+
+        // Fallback to culture:
+        return CultureInfo.CurrentCulture.TextInfo.IsRightToLeft;
     }
 }

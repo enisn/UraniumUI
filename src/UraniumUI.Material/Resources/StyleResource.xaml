@@ -312,7 +312,7 @@
                 <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}" />
             </Style>
 
-            <Style TargetType="views:StatefulContentView" ApplyToDerivedTypes="True" CanCascade="True">
+            <Style TargetType="views:StatefulContentView" ApplyToDerivedTypes="True" CanCascade="True" x:Key="UraniumUI.Views.StatefulContentView.Base">
                 <Setter Property="VisualStateManager.VisualStateGroups">
                     <VisualStateGroupList>
                         <VisualStateGroup x:Name="CommonStates">
@@ -334,6 +334,9 @@
                         </VisualStateGroup>
                     </VisualStateGroupList>
                 </Setter>
+            </Style>
+
+            <Style TargetType="views:StatefulContentView" ApplyToDerivedTypes="True" CanCascade="True" BaseResourceKey="UraniumUI.Views.StatefulContentView.Base">
             </Style>
 
             <Style TargetType="c:ButtonView" ApplyToDerivedTypes="True" CanCascade="True" x:Key="UraniumUI.Material.Controls.ButtonView.Base">
@@ -362,7 +365,7 @@
             <Style TargetType="c:ButtonView" ApplyToDerivedTypes="True" CanCascade="True" BaseResourceKey="UraniumUI.Material.Controls.ButtonView.Base">
             </Style>
 
-            <Style TargetType="c:ButtonView" Class="TreeViewExpandButton"  CanCascade="True">
+            <Style TargetType="c:ButtonView" Class="TreeViewExpandButton" CanCascade="True">
                 <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
                 <Setter Property="t:DynamicTint.BackgroundColorOpacity" Value="0" />
                 <Setter Property="VisualStateManager.VisualStateGroups">

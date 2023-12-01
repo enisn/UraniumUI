@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="UraniumApp.Pages.ExpanderViewPage"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+             xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
+             Title="ExpanderViewPage">
+
+
+    <ContentPage.Resources>
+        <Style TargetType="HorizontalStackLayout">
+            <Setter Property="Padding" Value="0,20" />
+        </Style>
+        <x:String x:Key="SourceCode">
+            <![CDATA[
+<uranium:ExpanderView>
+    <uranium:ExpanderView.Header>
+        <Label Text="Section 1" />
+    </uranium:ExpanderView.Header>
+    <Label Text="This is the first ExpanderView's body. It is hidden by default until user clicks/taps the header. The body automatically is shown when user interacts, no custom implementation required. It's animated by default." />
+</uranium:ExpanderView>
+<uranium:ExpanderView>
+    <uranium:ExpanderView.Header>
+        <Label Text="Section 2" />
+    </uranium:ExpanderView.Header>
+    <Label Text="This is the second ExpanderView's body. It is hidden by default until user clicks/taps the header. The body automatically is shown when user interacts, no custom implementation required. It's animated by default." />
+</uranium:ExpanderView>
+<uranium:ExpanderView>
+    <uranium:ExpanderView.Header>
+        <Label Text="Section 1" />
+    </uranium:ExpanderView.Header>
+    <Label Text="This is the third ExpanderView's body. It is hidden by default until user clicks/taps the header. The body automatically is shown when user interacts, no custom implementation required. It's animated by default." />
+</uranium:ExpanderView>
+            ]]>
+        </x:String>
+        <x:String x:Key="DocLink">https://enisn-projects.io/docs/en/uranium/latest/infrastructure/ExpanderView</x:String>
+
+        <Style TargetType="Layout" Class="ExpanderView.Header" ApplyToDerivedTypes="True">
+            <Setter Property="BackgroundColor" Value="Orange" />
+        </Style>
+        
+        <Style TargetType="ContentView" Class="ExpanderView.Content">
+            <Setter Property="BackgroundColor" Value="DarkOrange" />
+        </Style>
+        
+        <Style TargetType="Path" Class="ExpanderView.Arrow">
+            <Setter Property="Fill" Value="Black" />
+        </Style>
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20">
+            <Label Text="Button" FontSize="Title" />
+            <Label Text="UraniumUI.Views" FontSize="Micro" Opacity=".6" />
+
+            <HorizontalStackLayout>
+                <Button Text="Documentation" StyleClass="OutlinedButton" Command="{x:Static uranium:Commands.OpenLinkCommand}" CommandParameter="{StaticResource DocLink}" ImageSource="{FontImageSource Glyph={x:Static m:MaterialRegular.Insert_drive_file}, FontFamily=MaterialRegular, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
+                <Button Text="Source" StyleClass="OutlinedButton" ImageSource="{FontImageSource Glyph={x:Static m:MaterialRegular.Code}, FontFamily=MaterialRegular, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
+            </HorizontalStackLayout>
+
+            <Label Text="ExpanderView is a view that can be expanded or collapsed. It is useful for showing and hiding content. Common use case is building accordion sections. " />
+
+            <BoxView StyleClass="Divider" />
+
+            <VerticalStackLayout Spacing="0">
+                
+                <uranium:ExpanderView>
+                    <uranium:ExpanderView.Header>
+                        <Label Margin="10" FontAttributes="Bold" Text="Section 1" />
+                    </uranium:ExpanderView.Header>
+                    <Label Margin="10" Text="This is the first ExpanderView's body. It is hidden by default until user clicks/taps the header. The body automatically is shown when user interacts, no custom implementation required. It's animated by default." />
+                </uranium:ExpanderView>
+                <uranium:ExpanderView>
+                    <uranium:ExpanderView.Header>
+                        <Label Margin="10" FontAttributes="Bold" Text="Section 2" />
+                    </uranium:ExpanderView.Header>
+                    <Label Margin="10" Text="This is the second ExpanderView's body. It is hidden by default until user clicks/taps the header. The body automatically is shown when user interacts, no custom implementation required. It's animated by default." />
+                </uranium:ExpanderView>
+                <uranium:ExpanderView>
+                    <uranium:ExpanderView.Header>
+                        <Label Margin="10" FontAttributes="Bold" Text="Section 1" />
+                    </uranium:ExpanderView.Header>
+                    <Label Margin="10" Text="This is the third ExpanderView's body. It is hidden by default until user clicks/taps the header. The body automatically is shown when user interacts, no custom implementation required. It's animated by default." />
+                </uranium:ExpanderView>
+            
+            </VerticalStackLayout>
+
+            <BoxView StyleClass="Divider" />
+
+            <Border StyleClass="SurfaceContainer,Rounded">
+                <uranium:CodeView Language="xml" SourceCode="{StaticResource SourceCode}" HeightRequest="140" />
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

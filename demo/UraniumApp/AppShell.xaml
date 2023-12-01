@@ -34,6 +34,10 @@
         <ShellContent ContentTemplate="{DataTemplate local:MainPage}"/>
     </FlyoutItem>
 
+    <FlyoutItem Title="ExpanderView" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Arrow_drop_down}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
+        <ShellContent ContentTemplate="{DataTemplate pages:ExpanderViewPage}"/>
+    </FlyoutItem>
+    
     <FlyoutItem Title="Buttons" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.All_inbox}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
         <ShellContent ContentTemplate="{DataTemplate pages:ButtonsPage}"/>
     </FlyoutItem>

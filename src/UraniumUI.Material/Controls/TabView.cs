@@ -103,11 +103,13 @@ public partial class TabView : Grid
 
     protected readonly Grid _headerContainer = new Grid
     {
+        StyleClass = new[] { "TabView.Header" },
         HorizontalOptions = LayoutOptions.Fill
     };
 
     protected readonly ContentView _contentContainer = new ContentView
     {
+        StyleClass = new[] { "TabView.Content" },
         HorizontalOptions = LayoutOptions.Fill,
         VerticalOptions = LayoutOptions.Fill
     };

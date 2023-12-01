@@ -249,6 +249,5 @@ public class PickerField : InputField
         nameof(SelectedValueChangedCommand),
         typeof(ICommand), typeof(PickerField),
         defaultValue: null);
-
     #endregion
 }

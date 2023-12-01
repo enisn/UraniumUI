@@ -16,14 +16,15 @@ public partial class InputField : Grid
         get => content;
         set
         {
-            rootGrid.Remove(content);
+            if (content is not null)
+            {
+                ReleaseEvents();
+            }
             content = value;
-            rootGrid.Add(content, column: 1);
-            content = value;
+            border.Content = content;
 
             if (value != null)
             {
-                border.Content = value;
                 RegisterForEvents();
             }
         }
@@ -130,9 +131,16 @@ public partial class InputField : Grid
 
     protected override async void OnSizeAllocated(double width, double height)
     {
-        base.OnSizeAllocated(width, height);
-        await Task.Delay(100);
-        InitializeBorder();
+        try
+        {
+            base.OnSizeAllocated(width, height);
+            await Task.Delay(100);
+            InitializeBorder();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error in {nameof(InputField)} - OnSizeAllocated: {ex}");
+        }
     }
 
 #if !WINDOWS
@@ -173,6 +181,8 @@ public partial class InputField : Grid
         var calculatedFirstDash = FirstDash + CornerRadius.Clamp(FirstDash, double.MaxValue);
 
         var space = (labelTitle.Width + calculatedFirstDash) * .8;
+        if (labelTitle.Width <= 0)
+            space = 0;
 
 #if ANDROID
         if (this.IsRtl())
@@ -380,7 +390,7 @@ public partial class InputField : Grid
     public double BorderThickness { get => (double)GetValue(BorderThicknessProperty); set => SetValue(BorderThicknessProperty, value); }
 
     public static readonly BindableProperty BorderThicknessProperty = BindableProperty.Create(
-        nameof(BorderColor),
+        nameof(BorderThickness),
         typeof(double),
         typeof(InputField),
         1.0,
@@ -389,7 +399,7 @@ public partial class InputField : Grid
     public Color InputBackgroundColor { get => (Color)GetValue(InputBackgroundColorProperty); set => SetValue(InputBackgroundColorProperty, value); }
 
     public static readonly BindableProperty InputBackgroundColorProperty = BindableProperty.Create(
-        nameof(BorderColor),
+        nameof(InputBackgroundColor),
         typeof(Color),
         typeof(InputField),
         Colors.Transparent,
@@ -398,7 +408,7 @@ public partial class InputField : Grid
     public Brush InputBackground { get => (Brush)GetValue(InputBackgroundProperty); set => SetValue(InputBackgroundProperty, value); }
 
     public static readonly BindableProperty InputBackgroundProperty = BindableProperty.Create(
-        nameof(BorderColor),
+        nameof(InputBackground),
         typeof(Brush),
         typeof(InputField),
         Brush.Transparent,
@@ -420,5 +430,16 @@ public partial class InputField : Grid
         typeof(InputField),
         defaultValue: 8.0,
         propertyChanged: (bindable, oldValue, newValue) => (bindable as InputField).OnCornerRadiusChanged());
+
+    [System.ComponentModel.TypeConverter(typeof(FontSizeConverter))]
+    public double TitleFontSize { get => (double)GetValue(TitleFontSizeProperty); set => SetValue(TitleFontSizeProperty, value); }
+
+    public static readonly BindableProperty TitleFontSizeProperty = BindableProperty.Create(
+        nameof(TitleFontSize),
+        typeof(double),
+        typeof(InputField),
+        defaultValue: Label.FontSizeProperty.DefaultValue,
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as InputField).labelTitle.FontSize = (double)newValue
+        );
     #endregion
 }

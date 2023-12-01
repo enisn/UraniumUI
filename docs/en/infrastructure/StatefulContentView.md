@@ -34,12 +34,13 @@ Then you can use it with `uranium:StatefulContentView` tag.
 - `TappedCommand` : A command that is executed when the view is tapped.
 - `CommandParameter` : A parameter that is passed to the command.
 
-## Visual States
-UraniumUI provides a set visual states for StatefulContentView by default. You can use them to change the appearance of the view based on the current state.
 
-Get the following style and customize it according to your requirements in your application.
+## Customizations
+
+You can customize the `StatefulContentView` by using the style properties. You can use the following template to create your own style:
+
 ```xml
-<Style TargetType="uranium:StatefulContentView">
+<Style TargetType="uranium:StatefulContentView" ApplyToDerivedTypes="True" CanCascade="True" BaseResourceKey="UraniumUI.Views.StatefulContentView.Base">
     <Setter Property="VisualStateManager.VisualStateGroups">
         <VisualStateGroupList>
             <VisualStateGroup x:Name="CommonStates">
@@ -63,3 +64,5 @@ Get the following style and customize it according to your requirements in your 
     </Setter>
 </Style>
 ```
+
+> **Note**: Make sure `xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"` namespace exists in your XAML file.

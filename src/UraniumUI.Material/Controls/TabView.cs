@@ -39,7 +39,6 @@ public partial class TabView : Grid
             {
                 new GenericTriggerAction<Grid>((sender) =>
                 {
-
                     //sender.SetAppThemeColor(
                     //            Grid.BackgroundColorProperty,
                     //            ColorResource.GetColor("Primary").WithAlpha(.2f),
@@ -113,14 +112,8 @@ public partial class TabView : Grid
         VerticalOptions = LayoutOptions.Fill
     };
 
-    protected readonly ScrollView _headerScrollView = new ScrollView
-    {
-        Orientation = ScrollOrientation.Horizontal,
-    };
-
     public TabView()
     {
-        _headerScrollView.Content = _headerContainer;
         Items = new ObservableCollection<TabItem>();
 
         InitializeLayout();
@@ -165,7 +158,7 @@ public partial class TabView : Grid
                     this.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
                     this.RowDefinitions.Add(new RowDefinition(GridLength.Star));
 
-                    this.Add(_headerScrollView, row: 0);
+                    this.Add(_headerContainer, row: 0);
                     this.Add(_contentContainer, row: 1);
                 }
                 break;
@@ -174,7 +167,7 @@ public partial class TabView : Grid
                     this.RowDefinitions.Add(new RowDefinition(GridLength.Star));
                     this.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
 
-                    this.Add(_headerScrollView, row: 1);
+                    this.Add(_headerContainer, row: 1);
                     this.Add(_contentContainer, row: 0);
                 }
                 break;
@@ -183,7 +176,7 @@ public partial class TabView : Grid
                     this.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Auto));
                     this.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Star));
 
-                    this.Add(_headerScrollView, column: 0);
+                    this.Add(_headerContainer, column: 0);
                     this.Add(_contentContainer, column: 1);
                 }
                 break;
@@ -192,7 +185,7 @@ public partial class TabView : Grid
                     this.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Star));
                     this.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Auto));
 
-                    this.Add(_headerScrollView, column: 1);
+                    this.Add(_headerContainer, column: 1);
                     this.Add(_contentContainer, column: 0);
                 }
                 break;

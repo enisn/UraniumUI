@@ -2,11 +2,11 @@
 <!--#if (FontAwesome)-->
 <uranium:UraniumContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:uranium="clr-namespace:UraniumUI.Pages;assembly=UraniumUI"
-             xmlns:attachment="clr-namespace:UraniumUI.Material.Attachments;assembly=UraniumUI.Material"
-             xmlns:material="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
+             xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
              xmlns:fa="clr-namespace:UraniumUI.Icons.FontAwesome;assembly=UraniumUI.Icons.FontAwesome"
              xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
+             xmlns:validation="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
              x:Class="MyCompany.MyProject.MainPage"
              xmlns:local="clr-namespace:MyCompany.MyProject"
              x:Name="page">
@@ -14,7 +14,7 @@
         <local:MainPageViewModel />
     </uranium:UraniumContentPage.BindingContext>
     
- <uranium:UraniumContentPage.Resources>
+    <uranium:UraniumContentPage.Resources>
         <Style TargetType="Frame">
             <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource SecondaryContainer}, Dark={StaticResource SecondaryContainerDark}}" />
         </Style>
@@ -42,17 +42,19 @@
     </ScrollView>
 
     <uranium:UraniumContentPage.Attachments>
-        <attachment:BackdropView
+        <uranium:BackdropView
                 Title="Add" 
                 IconImageSource="{FontImageSource FontFamily=FASolid, Glyph={x:Static fa:Solid.Plus}, Color={StaticResource OnPrimary}}"
                 BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Gray950}}">
-            <VerticalStackLayout Spacing="10" Padding="25,30" HorizontalOptions="Center"  MaximumWidthRequest="400">
+            <input:FormView SubmitCommand="{Binding AddNewItemCommand}" Spacing="10" Padding="25,30" HorizontalOptions="Center"  MaximumWidthRequest="400">
                 <material:TextField 
                     Title="What to do?"
                     Text="{Binding NewItem.Content}"
                     TextColor="{StaticResource OnPrimary}"
                     AccentColor="{StaticResource OnPrimary}"
-                    Icon="{FontImageSource FontFamily=FASolid, Glyph={x:Static fa:Solid.Pencil}, Color={StaticResource Primary}}"/>
+                    Icon="{FontImageSource FontFamily=FASolid, Glyph={x:Static fa:Solid.Pencil}, Color={StaticResource Primary}}">
+                    <validation:RequiredValidation />
+                </material:TextField>
                 <input:CheckBox 
                     IsChecked="{Binding NewItem.IsDone}" 
                     Text="Is done" Color="{StaticResource Primary}" 
@@ -66,12 +68,12 @@
                     ColumnSpacing="-2" 
                     ColumnNumber="4"/>
                 <Button 
-                    Command="{Binding AddNewItemCommand}" 
+                    input:FormView.IsSubmitButton="True"
                     Text="Add"
                     StyleClass="ElevatedButton"/>
-            </VerticalStackLayout>
-        </attachment:BackdropView>
-        <attachment:BottomSheetView x:Name="bottomSheet">
+            </input:FormView>
+        </uranium:BackdropView>
+        <uranium:BottomSheetView x:Name="bottomSheet">
             <TableView Intent="Menu" Margin="0,0,0,40" BackgroundColor="Transparent">
                 <TableRoot>
                     <TableSection Title="Actions">
@@ -84,7 +86,7 @@
                     </TableSection>
                 </TableRoot>
             </TableView>
-        </attachment:BottomSheetView>
+        </uranium:BottomSheetView>
     </uranium:UraniumContentPage.Attachments>
 </uranium:UraniumContentPage>
 <!--#endif-->
@@ -92,11 +94,11 @@
 <!--#if (MaterialIcons)-->
 <uranium:UraniumContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:uranium="clr-namespace:UraniumUI.Pages;assembly=UraniumUI"
-             xmlns:attachment="clr-namespace:UraniumUI.Material.Attachments;assembly=UraniumUI.Material"
-             xmlns:material="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
+             xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
              xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
              xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
+             xmlns:validation="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
              x:Class="MyCompany.MyProject.MainPage"
              xmlns:local="clr-namespace:MyCompany.MyProject"
              x:Name="page">
@@ -132,17 +134,19 @@
     </ScrollView>
 
     <uranium:UraniumContentPage.Attachments>
-        <attachment:BackdropView
+        <uranium:BackdropView
                 Title="Add" 
                 IconImageSource="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Add_circle}, Color={StaticResource OnPrimary}}"
                 BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Gray950}}">
-            <VerticalStackLayout Spacing="10" Padding="25,30" HorizontalOptions="Center"  MaximumWidthRequest="400">
+            <input:FormView SubmitCommand="{Binding AddNewItemCommand}" Spacing="10" Padding="25,30" HorizontalOptions="Center" MaximumWidthRequest="400">
                 <material:TextField 
                     Title="What to do?"
                     Text="{Binding NewItem.Content}"
                     TextColor="{StaticResource OnPrimary}"
                     AccentColor="{StaticResource OnPrimary}"
-                    Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Sticky_note_2}}"/>
+                    Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Sticky_note_2}}">
+                    <validation:RequiredValidation />
+                </material:TextField>
 
                 <input:CheckBox 
                     IsChecked="{Binding NewItem.IsDone}" 
@@ -157,12 +161,12 @@
                     ColumnSpacing="-2" 
                     ColumnNumber="4"/>
                 <Button 
-                    Command="{Binding AddNewItemCommand}" 
+                    input:FormView.IsSubmitButton="True"
                     Text="Add"
                     StyleClass="ElevatedButton"/>
-            </VerticalStackLayout>
-        </attachment:BackdropView>
-        <attachment:BottomSheetView x:Name="bottomSheet">
+            </input:FormView>
+        </uranium:BackdropView>
+        <uranium:BottomSheetView x:Name="bottomSheet">
             <TableView Intent="Menu" Margin="0,0,0,40" BackgroundColor="Transparent">
                 <TableRoot>
                     <TableSection Title="Actions">
@@ -175,7 +179,7 @@
                     </TableSection>
                 </TableRoot>
             </TableView>
-        </attachment:BottomSheetView>
+        </uranium:BottomSheetView>
     </uranium:UraniumContentPage.Attachments>
 </uranium:UraniumContentPage>
 <!--#endif-->
@@ -184,10 +188,10 @@
 <!--#if (FluentIcons)-->
 <uranium:UraniumContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:uranium="clr-namespace:UraniumUI.Pages;assembly=UraniumUI"
-             xmlns:attachment="clr-namespace:UraniumUI.Material.Attachments;assembly=UraniumUI.Material"
-             xmlns:material="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
+             xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
              xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
+             xmlns:validation="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
              x:Class="MyCompany.MyProject.MainPage"
              xmlns:local="clr-namespace:MyCompany.MyProject"
              x:Name="page">
@@ -223,17 +227,19 @@
     </ScrollView>
 
     <uranium:UraniumContentPage.Attachments>
-        <attachment:BackdropView
+        <uranium:BackdropView
                 Title="Add" 
                 IconImageSource="{FontImageSource FontFamily=Fluent, Glyph={x:Static uranium:FluentIcons.Add}, Color={StaticResource OnPrimary}}"
                 BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Gray950}}">
-            <VerticalStackLayout Spacing="10" Padding="25,30" HorizontalOptions="Center"  MaximumWidthRequest="400">
+            <input:FormView SubmitCommand="{Binding AddNewItemCommand}" Spacing="10" Padding="25,30" HorizontalOptions="Center"  MaximumWidthRequest="400">
                 <material:TextField 
                     Title="What to do?"
                     Text="{Binding NewItem.Content}"
                     TextColor="{StaticResource OnPrimary}"
                     AccentColor="{StaticResource OnPrimary}"
-                    Icon="{FontImageSource FontFamily=Fluent, Glyph={x:Static uranium:FluentIcons.TwoPage}}"/>
+                    Icon="{FontImageSource FontFamily=Fluent, Glyph={x:Static uranium:FluentIcons.TwoPage}}">
+                    <validation:RequiredValidation />
+                </material:TextField>
 
                 <input:CheckBox 
                     IsChecked="{Binding NewItem.IsDone}" 
@@ -248,12 +254,12 @@
                     ColumnSpacing="-2" 
                     ColumnNumber="4"/>
                 <Button 
-                    Command="{Binding AddNewItemCommand}" 
+                    input:FormView.IsSubmitButton="True"
                     Text="Add"
                     StyleClass="ElevatedButton"/>
-            </VerticalStackLayout>
-        </attachment:BackdropView>
-        <attachment:BottomSheetView x:Name="bottomSheet">
+            </input:FormView>
+        </uranium:BackdropView>
+        <uranium:BottomSheetView x:Name="bottomSheet">
             <TableView Intent="Menu" Margin="0,0,0,40" BackgroundColor="Transparent">
                 <TableRoot>
                     <TableSection Title="Actions">
@@ -266,7 +272,7 @@
                     </TableSection>
                 </TableRoot>
             </TableView>
-        </attachment:BottomSheetView>
+        </uranium:BottomSheetView>
     </uranium:UraniumContentPage.Attachments>
 </uranium:UraniumContentPage>
 <!--#endif-->

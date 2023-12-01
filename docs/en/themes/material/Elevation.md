@@ -7,26 +7,7 @@ _You can visit original [Material Design Elevation Guideline]_
 ## Configuration
 Elevation styles come from `StyleResource` from `UraniumUI.Material.Resources` namespace. It should be added to `App.xaml` as a merged dictionary to use it.
 
-```xml
-<?xml version = "1.0" encoding = "UTF-8" ?>
-<Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:MyCompany.MyProject"
-             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material
-             x:Class="MyCompany.MyProject.App">
-    <Application.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
-                <material:ColorResource />
-                <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
-                <material:StyleResource /> <!-- 👈 It should be added right after Styles.xaml -->
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Application.Resources>
-</Application>
-
-```
+> _You can check the [Colors & Styles Documentation](ColorsAndStyles.md) to see howit should be configured._
 
 ## Usage
 

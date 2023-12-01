@@ -147,21 +147,89 @@ If the node object contain its children in a different property, you can set `Ch
  <material:TreeView ItemsSource="{Binding Nodes}" ChildrenBinding="{Binding SubItems}" />
 ```
 
+## Selection
+TreeView supports single selection and multiple selection. You can set `SelectionMode` property of the TreeView to `Single` or `Multiple` to enable selection. Default value is `None`. You can bind `SelectedItem` or `SelectedItems` property of the TreeView to a property in your ViewModel to get the selected item or items.
+
+### Single Selection
+```xml
+<material:TreeView ItemsSource="{Binding Nodes}" SelectionMode="Single" SelectedItem="{Binding SelectedNode}" />
+```
+
+| Light | Dark |
+| --- | --- |
+| ![TreeView Light](images/treeview-selection-light.gif) | ![TreeView Dark](images/treeview-selection-dark.gif) |
+
+### Multiple Selection
+
+```xml
+<material:TreeView ItemsSource="{Binding Nodes}" SelectionMode="Multiple" SelectedItems="{Binding SelectedNodes}" />
+```
+
+| Light | Dark |
+| --- | --- |
+| ![TreeView Light](images/treeview-selection-multiple-light.gif) | ![TreeView Dark](images/treeview-selection-multiple-dark.gif) |
+
+---
+
+### Hierarchical Selection (CheckBox)
+
+TreeView has a special behavior for CheckBoxes. TreeView supports hierarchical selection. It means that when you select a parent node, all of its children will be selected. When you deselect a parent node, all of its children will be deselected. When some of children is selected, CheckBox will enter semi-selected state. It's useful when you want to select a group of items. For example, you can select all files in a folder.
+
+TreeView provides `TreeViewHierarchicalSelectBehavior` that can be used only with `CheckBox` when it's directly ItemTemplate of the TreeView.
+
+```xml
+<material:TreeView ItemsSource="{Binding Nodes}">
+    <material:TreeView.ItemTemplate>
+        <DataTemplate>
+            <material:CheckBox Text="{Binding Name}">
+                <material:CheckBox.Behaviors>
+                    <material:TreeViewHierarchicalSelectBehavior />
+                </material:CheckBox.Behaviors>
+            </material:CheckBox>
+        </DataTemplate>
+    </material:TreeView.ItemTemplate>
+</material:TreeView>
+```
+
 ---
 
 ## Customizations
 TreeView allows you to customize its appearance in a couple of ways.
 
-### ArrowColor
-You can change the color of the arrow icon with `ArrowColor` property:
+### Styles
+You can customize the appearance of the TreeView with styles. You override the following styles in your Page or App.xaml:
 
 ```xml
-<material:TreeView ItemsSource="{Binding Nodes}" ArrowColor="{StaticResource Primary}"/>
+    <!--TreeView Selection Background Color-->
+    <Style TargetType="material:TreeView">
+        <Setter Property="SelectionColor" Value="Red" />
+    </Style>
+
+    <!--TreeView Regular Label -->
+    <Style TargetType="Label" Class="TreeView.Label" BaseResourceKey="Microsoft.Maui.Controls.Label">
+        <Setter Property="TextColor" Value="Red" />
+    </Style>
+
+    <!--TreeView Selected Label -->
+    <Style TargetType="Label" Class="TreeView.Label.Selected" BaseResourceKey="Microsoft.Maui.Controls.Label" >
+        <Setter Property="TextColor" Value="White" />
+    </Style>
+
+    <!--TreeView Regular Arrow -->
+    <Style TargetType="Path" Class="TreeView.Arrow" BaseResourceKey="Microsoft.Maui.Controls.Shapes.Path">
+        <Setter Property="Fill" Value="Red" />
+    </Style>
+
+    <!--TreeView Selected Arrow -->
+    <Style TargetType="Path" Class="TreeView.Arrow.Selected" BaseResourceKey="Microsoft.Maui.Controls.StyleClass.TreeView.Arrow">
+        <Setter Property="Fill" Value="White" />
+    </Style>
 ```
 
-| Light | Dark |
-| --- | --- |
-| ![TreeView Light](images/treeview-arrowcolor-light-android.png) | ![TreeView Dark](images/treeview-arrowcolor-dark-windows.png) |
+> _**Note** that, Make sure `material` namespace of TreeView is added to your file, you can add `xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"`_
+
+
+![MAUI TreeView Customizations](images/treeview-customizations.gif)
 
 ### Spacing
 You can change the spacing between the arrow icon and the content with `Spacing` property. Default value is `10`.
@@ -170,6 +238,10 @@ You can change the spacing between the arrow icon and the content with `Spacing`
 <material:TreeView ItemsSource="{Binding Nodes}" Spacing="25"/>
 ```
 ![TreeView Spacing](images/treeview-spacing-dark-android.png)
+
+| Light | Dark |
+| --- | --- |
+| ![TreeView Light](images/treeview-selection-light-android.gif) | ![TreeView Dark](images/treeview-selection-dark-windows.gif) |
 
 ### ExpanderTemplate
 You can completely customize the expander with `ExpanderTemplate` property. It's an arrow by default. You can use any view as an expander. For example, you can use a `Switch` to expand and collapse nodes.
@@ -200,32 +272,6 @@ Determines whether to use animations when expanding and collapsing nodes. Defaul
 | Enabled | Disabled |
 | --- | --- |
 | ![TreeView Animations Enabled](images/treeview-useanimation-dark-windows-enabled.gif) | ![TreeView Animations Disabled](images/treeview-useanimation-dark-windows-disabled.gif) |
-
----
-
-## Selection
-
-TreeView has a special behavior for CheckBoxes. TreeView supports hierarchical selection. It means that when you select a parent node, all of its children will be selected. When you deselect a parent node, all of its children will be deselected. When some of children is selected, CheckBox will enter semi-selected state. It's useful when you want to select a group of items. For example, you can select all files in a folder.
-
-TreeView provides `TreeViewHierarchicalSelectBehavior` that can be used only with `CheckBox` when it's directly ItemTemplate of the TreeView.
-
-```xml
-<material:TreeView ItemsSource="{Binding Nodes}">
-    <material:TreeView.ItemTemplate>
-        <DataTemplate>
-            <material:CheckBox Text="{Binding Name}">
-                <material:CheckBox.Behaviors>
-                    <material:TreeViewHierarchicalSelectBehavior />
-                </material:CheckBox.Behaviors>
-            </material:CheckBox>
-        </DataTemplate>
-    </material:TreeView.ItemTemplate>
-</material:TreeView>
-```
-
-| Light | Dark |
-| --- | --- |
-| ![TreeView Light](images/treeview-selection-light-android.gif) | ![TreeView Dark](images/treeview-selection-dark-windows.gif) |
 
 ---
 

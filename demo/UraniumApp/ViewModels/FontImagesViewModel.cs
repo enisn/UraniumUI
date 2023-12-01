@@ -13,6 +13,7 @@ using UraniumUI.Icons.SegoeFluent;
 using System.Reactive.Linq;
 using System.Xml.Linq;
 using DynamicData.Binding;
+using DynamicData;
 
 namespace UraniumApp.ViewModels;
 
@@ -24,105 +25,100 @@ public class FontImagesViewModel : ReactiveObject
     {
         Items = new FontImageViewModel[]
         {
-            new FontImageViewModel("FontAwesome")
-            {
-                FontFamilyPrefix = "FA",
-                Types = new[]
+            new FontImageViewModel("FontAwesome", new[]
                 {
                     typeof(Solid),
                     typeof(Regular)
-                },
-                SelectedType = typeof(Solid),
-            },
-            new FontImageViewModel("MaterialIcons")
+                })
             {
-                Types = new[]
+                FontFamilyPrefix = "FA",
+            },
+            new FontImageViewModel("MaterialIcons", new[]
                 {
                     typeof(MaterialRegular),
                     typeof(MaterialOutlined),
                     typeof(MaterialRound),
                     typeof(MaterialSharp),
                     typeof(MaterialTwoTone),
-                },
-                SelectedType = typeof(MaterialRegular),
-            },
-            new FontImageViewModel("Fluent")
-            {
-                Types = new[]
-                {
-                    typeof(Fluent),
-                },
-                SelectedType = typeof(Fluent),
-            }
+                }),
+            new FontImageViewModel("Fluent", typeof(Fluent))
         };
     }
 }
 
 public class FontImageViewModel : ReactiveObject
 {
-
-    public FontImageViewModel(string name)
+    public FontImageViewModel(string name, params Type[] types)
     {
         this.Name = name;
-        this.WhenAnyValue(x => x.SelectedType)
-            .Subscribe(LoadIconsForSelectedType);
-        SourceCode = XDocument.Parse("""<ContentPage xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"><Image /></ContentPage>""");
+        this.Types = types;
 
-        this.WhenAnyPropertyChanged(nameof(SelectedType), nameof(SelectedIcon))
-            .Subscribe(GenerateSourceCode);
-    }
-    public string XamlSourceCode => SourceCode.ToString();
-    protected XDocument SourceCode { get; }
-
-    public Type[] Types { get; set; }
-
-    [Reactive] public string Name { get; set; }
-
-    [Reactive] public string SearchText { get; set; }
-
-    private IEnumerable<FontImageItemViewModel> icons;
-    public IEnumerable<FontImageItemViewModel> Icons
-    {
-        get
+        foreach (var type in types)
         {
-            if (string.IsNullOrEmpty(SearchText))
-            {
-                return icons;
-            }
-
-            return icons.Where(x => x.Alias.Contains(SearchText, StringComparison.InvariantCultureIgnoreCase));
-        }
-
-        protected set => this.RaiseAndSetIfChanged(ref icons, value);
-    }
-
-    [Reactive] public FontImageItemViewModel SelectedIcon { get; set; }
-
-    [Reactive] public Type SelectedType { get; set; }
-
-    public string FontFamilyPrefix { get; set; }
-
-    private void LoadIconsForSelectedType(Type type)
-    {
-        if (type == null)
-        {
-            Icons = null;
-            return;
-        }
-
-        Icons = type.GetFields(System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public)
+            var icons = type.GetFields(System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public)
             .Select(s => new FontImageItemViewModel
             {
+                DeclaredType = type,
                 Glyph = s.GetValue(null) as string,
                 Alias = s.Name,
                 FontFamily = FontFamilyPrefix + type.Name
             });
 
-        SelectedIcon = Icons.FirstOrDefault();
+            IconsSourceList.AddRange(icons);
+        }
+        var pageRequest = this
+            .WhenAnyValue(vm => vm.PageNumber)
+            .Select(number => new PageRequest(1, number * 10));
 
-        this.WhenAnyValue(x => x.SearchText)
-            .Throttle(TimeSpan.FromMilliseconds(250))
-            .Subscribe(_ => this.RaisePropertyChanged(nameof(Icons)));
+        IconsSourceList.Connect()
+            .Filter(this.WhenAnyValue(vm => vm.SelectedType)
+                .Select(MakeTypeFilter))
+            .Filter(
+                this.WhenAnyValue(vm => vm.SearchText)
+                .Throttle(TimeSpan.FromMilliseconds(500))
+                .Select(MakeSearchFilter))
+            .Page(pageRequest)
+            .ObserveOn(RxApp.MainThreadScheduler)
+            .Bind(out icons)
+            .Subscribe();
+
+        SourceCode = XDocument.Parse("""<ContentPage xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"><Image /></ContentPage>""");
+
+        this.WhenAnyPropertyChanged(nameof(SelectedType), nameof(SelectedIcon))
+            .Subscribe(GenerateSourceCode);
+
+        this.SelectedType = Types.FirstOrDefault();
+    }
+    public string XamlSourceCode => SourceCode.ToString();
+    protected XDocument SourceCode { get; }
+
+    public Type[] Types { get; }
+
+    [Reactive] public string Name { get; set; }
+
+    [Reactive] public string SearchText { get; set; }
+
+    public SourceList<FontImageItemViewModel> IconsSourceList { get; } = new();
+
+    private ReadOnlyObservableCollection<FontImageItemViewModel> icons;
+    public ReadOnlyObservableCollection<FontImageItemViewModel> Icons => icons;
+
+    [Reactive] public FontImageItemViewModel SelectedIcon { get; set; }
+
+    [Reactive] public Type SelectedType { get; set; }
+
+    [Reactive] public int PageNumber { get; set; } = 1;
+
+    public string FontFamilyPrefix { get; set; }
+
+    private Func<FontImageItemViewModel, bool> MakeSearchFilter(string term)
+    {
+        return x => string.IsNullOrEmpty(term) || x.Alias.Contains(term, StringComparison.InvariantCultureIgnoreCase);
+    }
+
+    private Func<FontImageItemViewModel, bool> MakeTypeFilter(Type type)
+    {
+        return x => x.DeclaredType == type;
     }
 
     protected virtual void GenerateSourceCode(object parameter = null)
@@ -144,6 +140,7 @@ public class FontImageViewModel : ReactiveObject
 
 public class FontImageItemViewModel
 {
+    public Type DeclaredType { get; set; }
     public string Glyph { get; set; }
     public string Alias { get; set; }
     public string FontFamily { get; set; }

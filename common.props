@@ -1,6 +1,6 @@
 <Project>
     <PropertyGroup>
-        <Version>2.5.5</Version>
+        <Version>2.7.1</Version>
         <PackageIcon>logo_128.png</PackageIcon>
         <NeutralLanguage>en</NeutralLanguage>
         <RepositoryUrl>https://github.com/enisn/UraniumUI</RepositoryUrl>
@@ -25,6 +25,6 @@
    </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All"/>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All"/>
   </ItemGroup>
 </Project>

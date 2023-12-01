@@ -325,11 +325,10 @@ public static class CommunityToolkitDialogExtensions
             Text = initialValue,
         };
 
-        var entryholder = new Frame
+        var entryholder = new Border
         {
             BackgroundColor = ColorResource.GetColor("OnSurface", "OnSurfaceDark").WithAlpha(.2f),
-            HasShadow = false,
-            CornerRadius = 4,
+            StyleClass = new[] { "SurfaceContainer", "Rounded" },
 #if IOS
             Padding = new Thickness(15, 0),
 #else
@@ -387,10 +386,10 @@ public static class CommunityToolkitDialogExtensions
 
     private static View GetFrame(double width, View content)
     {
-        var frame = new Frame
+        var frame = new Border
         {
             Content = content,
-            CornerRadius = 20,
+            StyleClass = new[] { "SurfaceContainer", "Rounded" },
             Padding = 0,
             VerticalOptions = LayoutOptions.Center,
             HorizontalOptions = LayoutOptions.Center,

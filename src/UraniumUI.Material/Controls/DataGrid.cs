@@ -8,7 +8,7 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace UraniumUI.Material.Controls;
 
-public partial class DataGrid : Frame
+public partial class DataGrid : Border
 {
     private Grid _rootGrid;
 
@@ -78,7 +78,7 @@ public partial class DataGrid : Frame
         {
             case NotifyCollectionChangedAction.Add:
                 {
-                    SlideRow(e.NewStartingIndex+1, 2 * e.NewItems.Count);
+                    SlideRow(e.NewStartingIndex + 1, 2 * e.NewItems.Count);
 
                     for (int i = 0; i < e.NewItems.Count; i++)
                     {
@@ -261,11 +261,7 @@ public partial class DataGrid : Frame
     protected virtual void AddSeparator(int row)
     {
         var line = HorizontalLineFactory() ?? CreateHorizontalLine();
-
-        Grid.SetColumnSpan(line, Columns.Count);
-
-        _rootGrid.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
-        _rootGrid.Add(line, 0, row);
+        _rootGrid.AddWithSpan(line, row, 0, columnSpan: Columns.Count);
     }
 
     private void ConfigureGridColumnDefinitions(int columns)

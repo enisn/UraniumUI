@@ -42,7 +42,7 @@
     </ScrollView>
 
     <uranium:UraniumContentPage.Attachments>
-        <uranium:BackdropView
+        <material:BackdropView
                 Title="Add" 
                 IconImageSource="{FontImageSource FontFamily=FASolid, Glyph={x:Static fa:Solid.Plus}, Color={StaticResource OnPrimary}}"
                 BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Gray950}}">
@@ -72,8 +72,8 @@
                     Text="Add"
                     StyleClass="ElevatedButton"/>
             </input:FormView>
-        </uranium:BackdropView>
-        <uranium:BottomSheetView x:Name="bottomSheet">
+        </material:BackdropView>
+        <material:BottomSheetView x:Name="bottomSheet">
             <TableView Intent="Menu" Margin="0,0,0,40" BackgroundColor="Transparent">
                 <TableRoot>
                     <TableSection Title="Actions">
@@ -86,7 +86,7 @@
                     </TableSection>
                 </TableRoot>
             </TableView>
-        </uranium:BottomSheetView>
+        </material:BottomSheetView>
     </uranium:UraniumContentPage.Attachments>
 </uranium:UraniumContentPage>
 <!--#endif-->
@@ -134,7 +134,7 @@
     </ScrollView>
 
     <uranium:UraniumContentPage.Attachments>
-        <uranium:BackdropView
+        <material:BackdropView
                 Title="Add" 
                 IconImageSource="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Add_circle}, Color={StaticResource OnPrimary}}"
                 BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Gray950}}">
@@ -165,8 +165,8 @@
                     Text="Add"
                     StyleClass="ElevatedButton"/>
             </input:FormView>
-        </uranium:BackdropView>
-        <uranium:BottomSheetView x:Name="bottomSheet">
+        </material:BackdropView>
+        <material:BottomSheetView x:Name="bottomSheet">
             <TableView Intent="Menu" Margin="0,0,0,40" BackgroundColor="Transparent">
                 <TableRoot>
                     <TableSection Title="Actions">
@@ -179,7 +179,7 @@
                     </TableSection>
                 </TableRoot>
             </TableView>
-        </uranium:BottomSheetView>
+        </material:BottomSheetView>
     </uranium:UraniumContentPage.Attachments>
 </uranium:UraniumContentPage>
 <!--#endif-->
@@ -227,9 +227,9 @@
     </ScrollView>
 
     <uranium:UraniumContentPage.Attachments>
-        <uranium:BackdropView
+        <material:BackdropView
                 Title="Add" 
-                IconImageSource="{FontImageSource FontFamily=Fluent, Glyph={x:Static uranium:FluentIcons.Add}, Color={StaticResource OnPrimary}}"
+                IconImageSource="{FontImageSource FontFamily=Fluent, Glyph={x:Static uranium:Fluent.Add}, Color={StaticResource OnPrimary}}"
                 BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Gray950}}">
             <input:FormView SubmitCommand="{Binding AddNewItemCommand}" Spacing="10" Padding="25,30" HorizontalOptions="Center"  MaximumWidthRequest="400">
                 <material:TextField 
@@ -237,7 +237,7 @@
                     Text="{Binding NewItem.Content}"
                     TextColor="{StaticResource OnPrimary}"
                     AccentColor="{StaticResource OnPrimary}"
-                    Icon="{FontImageSource FontFamily=Fluent, Glyph={x:Static uranium:FluentIcons.TwoPage}}">
+                    Icon="{FontImageSource FontFamily=Fluent, Glyph={x:Static uranium:Fluent.TwoPage}}">
                     <validation:RequiredValidation />
                 </material:TextField>
 
@@ -258,21 +258,21 @@
                     Text="Add"
                     StyleClass="ElevatedButton"/>
             </input:FormView>
-        </uranium:BackdropView>
-        <uranium:BottomSheetView x:Name="bottomSheet">
+        </material:BackdropView>
+        <material:BottomSheetView x:Name="bottomSheet">
             <TableView Intent="Menu" Margin="0,0,0,40" BackgroundColor="Transparent">
                 <TableRoot>
                     <TableSection Title="Actions">
-                        <ImageCell Text="Share" ImageSource="{FontImageSource FontFamily=Fluent, Glyph={x:Static uranium:FluentIcons.Share}, Color={StaticResource Primary}}"
+                        <ImageCell Text="Share" ImageSource="{FontImageSource FontFamily=Fluent, Glyph={x:Static uranium:Fluent.Share}, Color={StaticResource Primary}}"
                             Detail="Share this content with friends." />
-                        <ImageCell Text="Link" ImageSource="{FontImageSource FontFamily=Fluent, Glyph={x:Static uranium:FluentIcons.Link}, Color={StaticResource Primary}}"
+                        <ImageCell Text="Link" ImageSource="{FontImageSource FontFamily=Fluent, Glyph={x:Static uranium:Fluent.Link}, Color={StaticResource Primary}}"
                             Detail="Get link to this content" />
-                        <ImageCell Text="Report" ImageSource="{FontImageSource FontFamily=Fluent, Glyph={x:Static uranium:FluentIcons.Flag}, Color={StaticResource Primary}}"
+                        <ImageCell Text="Report" ImageSource="{FontImageSource FontFamily=Fluent, Glyph={x:Static uranium:Fluent.Flag}, Color={StaticResource Primary}}"
                             Detail="Report this content." />
                     </TableSection>
                 </TableRoot>
             </TableView>
-        </uranium:BottomSheetView>
+        </material:BottomSheetView>
     </uranium:UraniumContentPage.Attachments>
 </uranium:UraniumContentPage>
 <!--#endif-->

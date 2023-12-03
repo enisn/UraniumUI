@@ -42,6 +42,7 @@ public partial class TreeView : VerticalStackLayout
         }
     }
 
+    // TODO: Remove default value and make default value as null in the next major version.
     private BindingBase childrenBinding = new Binding("Children");
 
     public BindingBase ChildrenBinding
@@ -56,7 +57,7 @@ public partial class TreeView : VerticalStackLayout
         }
     }
 
-    private string isExpandedPropertyName = "IsExpanded";
+    private string isExpandedPropertyName;
 
     public string IsExpandedPropertyName
     {
@@ -71,7 +72,7 @@ public partial class TreeView : VerticalStackLayout
         }
     }
 
-    private string isLeafPropertyName = "IsLeaf";
+    private string isLeafPropertyName;
 
     public string IsLeafPropertyName
     {

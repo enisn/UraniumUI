@@ -47,7 +47,14 @@ public class TreeViewNodeHolderView : VerticalStackLayout
         internal set
         {
             childrenBinding = value;
-            nodeChildren.SetBinding(BindableLayout.ItemsSourceProperty, new Binding((ChildrenBinding as Binding)?.Path));
+            if (ChildrenBinding is not null)
+            {
+                nodeChildren.SetBinding(BindableLayout.ItemsSourceProperty, new Binding((ChildrenBinding as Binding)?.Path));
+            }
+            else
+            {
+                nodeChildren.RemoveBinding(BindableLayout.ItemsSourceProperty);
+            }
         }
     }
 
@@ -268,7 +275,7 @@ public class TreeViewNodeHolderView : VerticalStackLayout
         {
             VisualStateManager.GoToState(button, CommonStates.Normal);
             button.BackgroundColor = Colors.Transparent;
-            button.Background = Brush.Transparent;
+            button.Background = Brush.Default;
 
             foreach (var item in button.FindManyInChildrenHierarchy<Path>())
             {
@@ -314,7 +321,15 @@ public class TreeViewNodeHolderView : VerticalStackLayout
 
     public virtual void ApplyIsExpandedPropertyBindings()
     {
-        this.SetBinding(IsExpandedProperty, new Binding(TreeView.IsExpandedPropertyName, BindingMode.TwoWay));
+        if (TreeView.IsExpandedPropertyName is null)
+        {
+            this.RemoveBinding(IsExpandedProperty);
+        }
+        else
+        {
+            this.SetBinding(IsExpandedProperty, new Binding(TreeView.IsExpandedPropertyName, BindingMode.TwoWay));
+        }
+
         foreach (TreeViewNodeHolderView item in Children.Where(x => x is TreeViewNodeHolderView))
         {
             item.ApplyIsExpandedPropertyBindings();
@@ -323,7 +338,15 @@ public class TreeViewNodeHolderView : VerticalStackLayout
 
     public virtual void ApplyIsLeafPropertyBindings()
     {
-        this.SetBinding(IsLeafProperty, new Binding(this.TreeView.IsLeafPropertyName, BindingMode.TwoWay));
+        if (TreeView.IsLeafPropertyName is null)
+        {
+            this.RemoveBinding(IsLeafProperty);
+        }
+        else
+        {
+            this.SetBinding(IsLeafProperty, new Binding(this.TreeView.IsLeafPropertyName, BindingMode.TwoWay));
+        }
+
         foreach (TreeViewNodeHolderView item in Children.Where(x => x is TreeViewNodeHolderView))
         {
             item.ApplyIsLeafPropertyBindings();
@@ -337,9 +360,9 @@ public class TreeViewNodeHolderView : VerticalStackLayout
             if (TreeView.UseAnimation)
             {
                 nodeChildren.IsVisible = true;
-                nodeChildren.TranslateTo(0, 0, 50);
-                nodeChildren.ScaleTo(1, 50);
-                nodeChildren.FadeTo(1);
+                nodeChildren.TranslateTo(0, 0, 50).FireAndForget();
+                nodeChildren.ScaleTo(1, 50).FireAndForget();
+                nodeChildren.FadeTo(1).FireAndForget();
             }
             else
             {
@@ -350,8 +373,8 @@ public class TreeViewNodeHolderView : VerticalStackLayout
         {
             if (TreeView.UseAnimation)
             {
-                nodeChildren.TranslateTo(0, -nodeChildren.Height);
-                nodeChildren.ScaleTo(0);
+                nodeChildren.TranslateTo(0, -nodeChildren.Height).FireAndForget();
+                nodeChildren.ScaleTo(0).FireAndForget();
                 nodeChildren.AnchorX = 0;
                 nodeChildren.AnchorY = 0;
 

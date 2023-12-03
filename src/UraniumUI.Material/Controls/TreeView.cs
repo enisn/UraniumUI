@@ -188,7 +188,7 @@ public partial class TreeView : VerticalStackLayout
     public object SelectedItem { get => GetValue(SelectedItemProperty); set => SetValue(SelectedItemProperty, value); }
 
     public static readonly BindableProperty SelectedItemProperty = BindableProperty.Create(
-        nameof(SelectedItem), typeof(object), typeof(TreeView), default, propertyChanged: (bo, ov, nv) => (bo as TreeView).SelectedItemChanged());
+        nameof(SelectedItem), typeof(object), typeof(TreeView), default, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as TreeView).SelectedItemChanged());
 
     public IList SelectedItems { get => (IList)GetValue(SelectedItemsProperty); set => SetValue(SelectedItemsProperty, value); }
 

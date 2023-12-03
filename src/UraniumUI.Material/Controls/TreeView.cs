@@ -217,4 +217,8 @@ public partial class TreeView : VerticalStackLayout
 
     public static readonly BindableProperty SelectionColorProperty = BindableProperty.Create(
         nameof(SelectionColor), typeof(Color), typeof(TreeView), ColorResource.GetColor("Secondary", "SecondaryDark", Colors.Pink));
+
+    public Brush SelectionBrush { get => (Brush)GetValue(SelectionBrushProperty); set => SetValue(SelectionBrushProperty, value); }
+    public static readonly BindableProperty SelectionBrushProperty = BindableProperty.Create(
+        nameof(SelectionBrush), typeof(Brush), typeof(TreeView), null);
 }

@@ -245,7 +245,15 @@ public class TreeViewNodeHolderView : VerticalStackLayout
         if (IsSelected)
         {
             VisualStateManager.GoToState(this, CommonStates.Selected);
-            button.BackgroundColor = TreeView.SelectionColor;
+            if (TreeView.SelectionBrush is not null)
+            {
+                button.Background = TreeView.SelectionBrush;
+            }
+            else
+            {
+                button.BackgroundColor = TreeView.SelectionColor;
+            }
+
             foreach (var item in button.FindManyInChildrenHierarchy<Path>())
             {
                 item.StyleClass = new[] { "TreeView.Arrow.Selected" };
@@ -260,6 +268,7 @@ public class TreeViewNodeHolderView : VerticalStackLayout
         {
             VisualStateManager.GoToState(button, CommonStates.Normal);
             button.BackgroundColor = Colors.Transparent;
+            button.Background = Brush.Transparent;
 
             foreach (var item in button.FindManyInChildrenHierarchy<Path>())
             {

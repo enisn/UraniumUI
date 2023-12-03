@@ -117,8 +117,8 @@
                         <material:RadioButtonGroupView>
                             <material:RadioButton Text="Option 1" />
                             <material:RadioButton Text="Option 2" />
-                            <material:RadioButton Text="Option 3 (Disabled)" IsDisabled="True" />
-                            <material:RadioButton Text="Option 4 (Disabled)" IsDisabled="True" IsChecked="True" />
+                            <material:RadioButton Text="Option 3 (Disabled)" IsDisabled="True" IsEnabled="False" />
+                            <material:RadioButton Text="Option 4 (Disabled)" IsDisabled="True" IsEnabled="False" IsChecked="True" />
                         </material:RadioButtonGroupView>
 
                         <BoxView StyleClass="Divider" />
@@ -126,8 +126,8 @@
                         <material:RadioButtonGroupView>
                             <material:RadioButton Text="Option 1" LabelPosition="Before" />
                             <material:RadioButton Text="Option 2" LabelPosition="Before" />
-                            <material:RadioButton Text="Option 3 (Disabled)" IsDisabled="True" LabelPosition="Before" />
-                            <material:RadioButton Text="Option 4 (Disabled)" IsDisabled="True" IsChecked="True" LabelPosition="Before" />
+                            <material:RadioButton Text="Option 3 (Disabled)" IsDisabled="True" IsEnabled="False" LabelPosition="Before" />
+                            <material:RadioButton Text="Option 4 (Disabled)" IsDisabled="True" IsEnabled="False" IsChecked="True" LabelPosition="Before" />
                         </material:RadioButtonGroupView>
 
                         <BoxView StyleClass="Divider" />

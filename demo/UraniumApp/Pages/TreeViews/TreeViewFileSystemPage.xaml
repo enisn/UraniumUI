@@ -15,7 +15,12 @@
 
             <VerticalStackLayout>
 
-                <material:TreeView SelectionMode="Multiple" x:Name="treeView" ItemsSource="{Binding Nodes}" LoadChildrenCommand="{Binding LoadChildrenCommand}" IsExpandedPropertyName="IsExtended">
+                <material:TreeView
+                    SelectionMode="Multiple"
+                    x:Name="treeView"
+                    ItemsSource="{Binding Nodes}"
+                    LoadChildrenCommand="{Binding LoadChildrenCommand}"
+                    IsLeafPropertyName="IsLeaf">
                     <material:TreeView.ItemTemplate>
                         <DataTemplate>
                             <HorizontalStackLayout Spacing="5" VerticalOptions="Center">
@@ -37,7 +42,10 @@
 
                 <BoxView StyleClass="Divider" />
 
-                <root:PropertyEditorView Value="{Binding ., Source={x:Reference treeView}}" HorizontalOptions="Center" />
+                <Border StyleClass="SurfaceContainer,Rounded" HorizontalOptions="Center" MaximumWidthRequest="400">
+                    
+                <root:PropertyEditorView Value="{Binding ., Source={x:Reference treeView}}"/>
+                </Border>
             </VerticalStackLayout>
         </ScrollView>
     </ContentPage.Content>

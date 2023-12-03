@@ -171,9 +171,15 @@ public partial class TreeView : VerticalStackLayout
         }
     }
 
-    public SelectionMode SelectionMode { get; set; }
+    public SelectionMode SelectionMode { get => (SelectionMode)GetValue(SelectionModeProperty); set => SetValue(SelectionModeProperty, value); }
 
-    public bool UseAnimation { get; set; } = true;
+    public static readonly BindableProperty SelectionModeProperty = BindableProperty.Create(
+               nameof(SelectionMode), typeof(SelectionMode), typeof(TreeView), SelectionMode.None);
+
+    public bool UseAnimation { get => (bool)GetValue(UseAnimationProperty); set => SetValue(UseAnimationProperty, value); }
+
+    public static readonly BindableProperty UseAnimationProperty = BindableProperty.Create(
+               nameof(UseAnimation), typeof(bool), typeof(TreeView), true);
 
     /// <summary>
     /// Only indicates if TreeView is busy or not. Doesn't affect anything visually.

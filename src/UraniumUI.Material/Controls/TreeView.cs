@@ -42,6 +42,7 @@ public partial class TreeView : VerticalStackLayout
         }
     }
 
+    // TODO: Remove default value and make default value as null in the next major version.
     private BindingBase childrenBinding = new Binding("Children");
 
     public BindingBase ChildrenBinding
@@ -56,7 +57,7 @@ public partial class TreeView : VerticalStackLayout
         }
     }
 
-    private string isExpandedPropertyName = "IsExpanded";
+    private string isExpandedPropertyName;
 
     public string IsExpandedPropertyName
     {
@@ -71,7 +72,7 @@ public partial class TreeView : VerticalStackLayout
         }
     }
 
-    private string isLeafPropertyName = "IsLeaf";
+    private string isLeafPropertyName;
 
     public string IsLeafPropertyName
     {
@@ -188,7 +189,7 @@ public partial class TreeView : VerticalStackLayout
     public object SelectedItem { get => GetValue(SelectedItemProperty); set => SetValue(SelectedItemProperty, value); }
 
     public static readonly BindableProperty SelectedItemProperty = BindableProperty.Create(
-        nameof(SelectedItem), typeof(object), typeof(TreeView), default, propertyChanged: (bo, ov, nv) => (bo as TreeView).SelectedItemChanged());
+        nameof(SelectedItem), typeof(object), typeof(TreeView), default, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as TreeView).SelectedItemChanged());
 
     public IList SelectedItems { get => (IList)GetValue(SelectedItemsProperty); set => SetValue(SelectedItemsProperty, value); }
 
@@ -217,4 +218,8 @@ public partial class TreeView : VerticalStackLayout
 
     public static readonly BindableProperty SelectionColorProperty = BindableProperty.Create(
         nameof(SelectionColor), typeof(Color), typeof(TreeView), ColorResource.GetColor("Secondary", "SecondaryDark", Colors.Pink));
+
+    public Brush SelectionBrush { get => (Brush)GetValue(SelectionBrushProperty); set => SetValue(SelectionBrushProperty, value); }
+    public static readonly BindableProperty SelectionBrushProperty = BindableProperty.Create(
+        nameof(SelectionBrush), typeof(Brush), typeof(TreeView), null);
 }

@@ -46,7 +46,7 @@ public class DefaultDialogService : IDialogService
                                 new Button
                                 {
                                     Text = accept,
-                                    StyleClass = new []{ "FilledButton" },
+                                    StyleClass = new []{ "FilledButton", "Dialog.Accept" },
                                     Command = new Command(() =>
                                     {
                                         tcs.SetResult(selectionView.SelectedItems.Cast<T>());
@@ -57,7 +57,7 @@ public class DefaultDialogService : IDialogService
                                 {
                                     Text = cancel,
 
-                                    StyleClass = new []{ "OutlinedButton" },
+                                    StyleClass = new []{ "OutlinedButton", "Dialog.Cancel" },
                                     Command = new Command(() =>
                                     {
                                         tcs.SetResult(null);
@@ -113,7 +113,7 @@ public class DefaultDialogService : IDialogService
                                 new Button
                                 {
                                     Text = accept,
-                                    StyleClass = new []{ "FilledButton" },
+                                    StyleClass = new []{ "FilledButton", "Dialog.Accept" },
                                     Command = new Command(() =>
                                     {
                                         tcs.SetResult((T)(selectionView.SelectedItem ?? default(T)));
@@ -123,7 +123,7 @@ public class DefaultDialogService : IDialogService
                                 new Button
                                 {
                                     Text = cancel,
-                                    StyleClass = new []{ "OutlinedButton" },
+                                    StyleClass = new []{ "OutlinedButton", "Dialog.Cancel" },
                                     Command = new Command(() =>
                                     {
                                         tcs.SetResult(default(T));

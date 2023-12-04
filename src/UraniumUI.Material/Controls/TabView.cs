@@ -423,12 +423,25 @@ public partial class TabView : Grid
             item.NotifyIsSelectedChanged();
         }
 
-        if (CachingStrategy == TabViewCachingStrategy.RecreateAlways && oldValue is not null)
+        if (CachingStrategy == TabViewCachingStrategy.CacheOnCodeBehing)
         {
-            oldValue.Content = null; // Make it null, in the next visit of this method, a new instance will be created.
-        }
+            if (_contentContainer.Content != null)
+            {
+                if (UseAnimation)
+                {
+                    await _contentContainer.Content?.FadeTo(0, 60);
+                }
+            }
 
-        if (CachingStrategy == TabViewCachingStrategy.CacheOnLayout)
+            content.Opacity = 0;
+
+            _contentContainer.Content = content;
+            if (UseAnimation)
+            {
+                await content.FadeTo(1, 60);
+            }
+        }
+        else
         {
             if (_contentContainer.Content is not Layout layout)
             {
@@ -447,24 +460,6 @@ public partial class TabView : Grid
                 (child as View).IsVisible = content == child;
             }
         }
-        else
-        {
-            if (_contentContainer.Content != null)
-            {
-                if (UseAnimation)
-                {
-                    await _contentContainer.Content?.FadeTo(0, 60);
-                }
-            }
-
-            content.Opacity = 0;
-
-            _contentContainer.Content = content;
-            if (UseAnimation)
-            {
-                await content.FadeTo(1, 60);
-            }
-        }
 
         if (SelectedTab?.Data != null)
         {
@@ -480,20 +475,8 @@ public partial class TabView : Grid
 
 public enum TabViewCachingStrategy
 {
-    /// <summary>
-    /// The view is removed from the visual tree when a tab is deselected. But instance is kept in memory. And same instance is used when tab is selected again.
-    /// </summary>
-    CacheOnCodeBehind,
-
-    /// <summary>
-    /// The view is kept in the visual tree and visibility is toggled when a tab is selected.
-    /// </summary>
+    CacheOnCodeBehing,
     CacheOnLayout,
-
-    /// <summary>
-    /// No caching. View is removed from the visual tree and a new instance is created when a tab is selected.
-    /// </summary>
-    RecreateAlways
 }
 
 [ContentProperty(nameof(Content))]

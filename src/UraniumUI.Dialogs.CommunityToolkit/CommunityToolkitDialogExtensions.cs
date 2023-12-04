@@ -439,13 +439,13 @@ public static class CommunityToolkitDialogExtensions
                 new Button
                 {
                     Text = cancel,
-                    StyleClass = new []{ "TextButton" },
+                    StyleClass = new []{ "TextButton", "Dialog.Cancel" },
                     Command = cancelCommand
                 },
                 new Button
                 {
                     Text = accept,
-                    StyleClass = new []{ "TextButton" },
+                    StyleClass = new []{ "TextButton", "Dialog.Accept" },
                     Command = acceptCommand
                 }
             }

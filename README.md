@@ -21,6 +21,11 @@ Visit documentation for onboarding.
 - [Getting Started](https://enisn-projects.io/docs/en/uranium/latest/Getting-Started)
 - [Live Demo on Android Emulator](https://appetize.io/embed/6rii3gn7ovqjjd5ynkracdjruq?device=pixel4&osVersion=11.0&scale=75)
 
+Or watch the video:
+<a href="https://youtu.be/4S_KKT2JeGE?si=omJoZpd-p3asDIvR">
+<img width="232" alt="image" src="https://github.com/enisn/UraniumUI/assets/23705418/3d97e437-9995-43cd-adc2-b8163ce83eff">
+</a>
+
 ## Features ✨
 
 - Startup [Templates](https://enisn-projects.io/docs/en/uranium/latest/Getting-Started#new-projects)

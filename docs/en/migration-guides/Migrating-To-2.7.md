@@ -1,4 +1,4 @@
-# Migration Guide to v2.4
+# Migration Guide to v2.7
 Version 2.4 comes with some changes. You should follow this docuemnt to migrate your code to the new version properly.
 
 ## Changes

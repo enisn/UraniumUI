@@ -248,6 +248,22 @@ public class WebTabItem : UraniumBindableObject
 
 ![](images/tabview-dynamictabs-simple-windows-dark.gif)
 
+## Caching options
+TabView has three caching options. `CacheOnCodeBehind`, `CacheOnLayout` and `RecreateAlways` You can choose the best option for your scenario.
+
+You can define caching option by setting **CachingStrategy** property of `TabView`.
+
+```xml
+<material:TabView CachingStrategy="CacheOnCodeBehind" />
+```
+
+- `CacheOnCodeBehind`: This is the default caching option. It caches the tab contents when the tab is created. The view is removed from the visual tree when a tab is deselected. But instance is kept in memory. And same instance is used when tab is selected again. Reloading the tab content from code-behind to visual tree can take some time when content is huge. It's good for small and simple tab contents. This option is memory friendly. and average performance friendly.
+
+- `CacheOnLayout`: It caches the tab contents when the tab is created and when the tab is layouted. It's useful when you have a lot of tabs and the tab contents are too complex to create. It's performance friendly when you have a lot of tabs. It's good for large & complex tab contents. This option is the most performance friendly option. But it uses much more memory. It keeps all tab contents in memory.
+
+- `RecreateAlways`: It refers to no caching. It creates the tab contents always when tab is selected. It's **not performance friendly** if tab contents are too complex to create. Also, tab contents **can't keep their state** when tab is selected again.
+
+
 ## Customizations
 
 You can customize the `TabView` by using the style properties. You can use the following example to create your own style:

@@ -84,6 +84,7 @@ This project is licensed under the Apache License License - see the [LICENSE](LI
 | [Hottemax](https://github.com/Hottemax) |  <!-- 6☕️ -->
 | [tjlangenkamp](https://github.com/tjlangenkamp) | <!-- 5☕️ -->
 | [C00lzer0](https://github.com/C00lzer0) |  <!-- 3☕️ -->
+| Eric | <!-- 3 ☕-->
 | _Anonymous_ |  <!-- 3☕️ -->
 | [gpproton](https://github.com/gpproton) |  <!-- 1☕️ -->
 | [kmaclagan-pcl](https://www.buymeacoffee.com/enisn) |  <!-- 1☕️ -->

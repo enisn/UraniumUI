@@ -66,7 +66,6 @@ public class RealtimeBlurView : View
         : base(context)
     {
         mBlurImpl = GetBlurImpl(); // provide your own by override getBlurImpl()
-        mPaint = new Paint();
 
         _formsId = formsId;
         _isContainerShown = true;
@@ -74,22 +73,13 @@ public class RealtimeBlurView : View
 
         preDrawListener = new PreDrawListener(this);
 
-        //RealtimeBlurViewInstanceCount++;
-        //InternalLogger.Debug("RealtimeBlurView", $"Constructor => Active instances: {RealtimeBlurViewInstanceCount}");
+        mPaint = new Paint();
     }
 
     public RealtimeBlurView(nint javaReference, JniHandleOwnership transfer)
         : base(javaReference, transfer)
     {
     }
-
-    //protected override void JavaFinalize()
-    //{
-    //    base.JavaFinalize();
-
-    //    RealtimeBlurViewInstanceCount--;
-    //    InternalLogger.Debug("RealtimeBlurView", $"JavaFinalize() => Active instances: {RealtimeBlurViewInstanceCount}");
-    //}
 
     protected IBlurImpl GetBlurImpl()
     {
@@ -389,7 +379,6 @@ public class RealtimeBlurView : View
             {
                 // Bitmap.createBitmap() may cause OOM error
                 // Simply ignore and fallback
-                //InternalLogger.Warn($"OutOfMemoryError occured while trying to render the blur view: {e.Message}");
             }
             finally
             {
@@ -455,15 +444,15 @@ public class RealtimeBlurView : View
             }
 
             var mDecorView = blurView.GetRootView();
-
-            //InternalLogger.Debug($"BlurView@{blurView.GetHashCode()}", $"OnPreDraw()");
-
+            if (mDecorView == null)
+            {
+                return true;
+            }
             var locations = new int[2];
             var oldBmp = blurView.mBlurredBitmap;
             var decor = mDecorView;
             if (!decor.IsNullOrDisposed() && blurView.IsShown && blurView.Prepare())
             {
-                //InternalLogger.Debug($"BlurView@{blurView.GetHashCode()}", $"OnPreDraw(formsId: {blurView._formsId}) => calling draw on decor");
                 var redrawBitmap = blurView.mBlurredBitmap != oldBmp;
                 oldBmp = null;
                 decor.GetLocationOnScreen(locations);
@@ -494,13 +483,7 @@ public class RealtimeBlurView : View
                     decor.Draw(blurView.mBlurringCanvas);
                 }
                 catch (StopException)
-                {
-                    //InternalLogger.Debug($"BlurView@{blurView.GetHashCode()}", $"OnPreDraw(formsId: {blurView._formsId}) => in catch StopException");
-                }
-                catch (Exception)
-                {
-                    //InternalLogger.Debug($"BlurView@{blurView.GetHashCode()}", $"OnPreDraw(formsId: {blurView._formsId}) => in catch global exception");
-                }
+                { }
                 finally
                 {
                     blurView.mIsRendering = false;
@@ -508,14 +491,10 @@ public class RealtimeBlurView : View
                     blurView.mBlurringCanvas.RestoreToCount(rc);
                 }
 
-                //InternalLogger.Debug($"BlurView@{blurView.GetHashCode()}", $"OnPreDraw(formsId: {blurView._formsId}) => blurView.Blur()");
                 blurView.Blur(blurView.mBitmapToBlur, blurView.mBlurredBitmap);
 
                 if (redrawBitmap || blurView.mDifferentRoot)
                 {
-                    //InternalLogger.Debug(
-                    //	$"BlurView@{blurView.GetHashCode()}",
-                    //	$"OnPreDraw(formsId: {blurView._formsId}, redrawBitmap: {redrawBitmap}, differentRoot: {blurView.mDifferentRoot}) => blurView.Invalidate()");
                     blurView.Invalidate();
                 }
             }
@@ -544,7 +523,6 @@ public class RealtimeBlurView : View
 
     protected override void OnAttachedToWindow()
     {
-        //InternalLogger.Debug($"BlurView@{GetHashCode()}", $"OnAttachedToWindow()");
         base.OnAttachedToWindow();
 
         var mDecorView = GetRootView();
@@ -565,8 +543,6 @@ public class RealtimeBlurView : View
         {
             UnsubscribeToPreDraw(mDecorView);
         }
-
-        //InternalLogger.Debug($"BlurView@{GetHashCode()}", $"OnDetachedFromWindow()");
         Release();
         base.OnDetachedFromWindow();
     }
@@ -575,8 +551,6 @@ public class RealtimeBlurView : View
     {
         if (mIsRendering)
         {
-            //InternalLogger.Debug($"BlurView@{GetHashCode()}", $"Draw() => throwing stop exception");
-
             // Quit here, don't draw views above me
             if (ThrowStopExceptionOnDraw)
             {
@@ -588,13 +562,10 @@ public class RealtimeBlurView : View
 
         if (RENDERING_COUNT > 0)
         {
-            //InternalLogger.Debug($"BlurView@{GetHashCode()}", $"Draw() => Doesn't support blurview overlap on another blurview");
-
             // Doesn't support blurview overlap on another blurview
         }
         else
         {
-            //InternalLogger.Debug($"BlurView@{GetHashCode()}", $"Draw() => calling base draw");
             base.Draw(canvas);
         }
     }
@@ -602,11 +573,7 @@ public class RealtimeBlurView : View
     protected override void OnDraw(Canvas canvas)
     {
         base.OnDraw(canvas);
-
-        //InternalLogger.Debug($"BlurView@{GetHashCode()}", $"OnDraw(formsId: {_formsId})");
         DrawRoundedBlurredBitmap(canvas, mBlurredBitmap, mOverlayColor);
-
-        // DrawBlurredBitmap(canvas, mBlurredBitmap, mOverlayColor);
     }
 
     /**
@@ -635,9 +602,6 @@ public class RealtimeBlurView : View
     {
         if (blurredBitmap != null)
         {
-            //InternalLogger.Debug(
-            //	$"BlurView@{GetHashCode()}", $"DrawRoundedBlurredBitmap( mCornerRadius: {mCornerRadius}, mOverlayColor: {mOverlayColor} )");
-
             var mRectF = new RectF { Right = Width, Bottom = Height };
 
             mPaint.Reset();

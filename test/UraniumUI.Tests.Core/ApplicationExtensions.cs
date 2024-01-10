@@ -11,7 +11,8 @@ public static class ApplicationExtensions
     public static void CreateAndSetMockApplication(Action<MauiAppBuilder> builder = null)
     {
         var appBuilder = MauiApp.CreateBuilder()
-                                .UseMauiApp<MockApplication>();
+                                .UseMauiApp<MockApplication>()
+                                .UseUraniumUI();
 
         builder?.Invoke(appBuilder);
 

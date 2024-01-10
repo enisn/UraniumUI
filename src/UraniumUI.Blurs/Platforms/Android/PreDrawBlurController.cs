@@ -6,22 +6,6 @@ using Color = Android.Graphics.Color;
 
 namespace UraniumUI.Blurs;
 
-public class OnPreDrawListener : Java.Lang.Object, ViewTreeObserver.IOnPreDrawListener
-{
-    Action actionOnPreDraw;
-
-    public OnPreDrawListener(Action actionOnPreDraw)
-    {
-        this.actionOnPreDraw = actionOnPreDraw;
-    }
-
-    public bool OnPreDraw()
-    {
-        actionOnPreDraw?.Invoke();
-        return true;
-    }
-}
-
 public class PreDrawBlurController : IBlurController
 {
     public const int TRANSPARENT = 0;

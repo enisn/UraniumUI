@@ -2,6 +2,7 @@
 using Android.Graphics;
 
 namespace UraniumUI.Blurs;
+
 public class RenderEffectBlur : IBlurAlgorithm
 {
     private readonly RenderNode node = new RenderNode("BlurViewNode");
@@ -29,7 +30,6 @@ public class RenderEffectBlur : IBlurAlgorithm
         // returning not blurred bitmap, because the rendering relies on the RenderNode
         return bitmap;
     }
-
 
     public void Destroy()
     {

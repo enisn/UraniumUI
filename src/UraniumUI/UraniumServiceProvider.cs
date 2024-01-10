@@ -11,7 +11,7 @@ public static class UraniumServiceProvider
 #elif ANDROID
             MauiApplication.Current.Services;
 #elif IOS || MACCATALYST
-			MauiUIApplicationDelegate.Current.Services;
+            MauiUIApplicationDelegate.Current.Services;
 #else
             Application.Current.Handler.MauiContext.Services;
 #endif

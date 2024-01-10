@@ -7,11 +7,6 @@ namespace UraniumUI.Blurs.Platforms.Android;
 
 public class AndroidStockBlurImpl : IBlurImpl
 {
-#if DEBUG
-    private const bool DEBUG = true;
-#else
-        private const bool DEBUG = false;
-#endif
 
     private RenderScript _mRenderScript;
 
@@ -30,18 +25,15 @@ public class AndroidStockBlurImpl : IBlurImpl
                 _mRenderScript = RenderScript.Create(context);
                 _mBlurScript = ScriptIntrinsicBlur.Create(_mRenderScript, Element.U8_4(_mRenderScript));
             }
-            catch (RSRuntimeException e)
+            catch (RSRuntimeException)
             {
-                if (DEBUG)
-                {
-                    throw e;
-                }
-                else
-                {
+                #if DEBUG
+                    throw;
+                #else
                     // In release mode, just ignore
                     Release();
                     return false;
-                }
+                #endif
             }
         }
 

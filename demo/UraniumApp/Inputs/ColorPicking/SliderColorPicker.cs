@@ -63,7 +63,7 @@ public class SliderColorPicker : VerticalStackLayout
         }
 
         var newColor = new Color((float)sliderRed.Value, (float)sliderGreen.Value, (float)sliderBlue.Value);
-        if (newColor.Red != Color.Red || newColor.Blue != Color.Blue || newColor.Green != Color.Green)
+        if (Color == null || newColor.Red != Color.Red || newColor.Blue != Color.Blue || newColor.Green != Color.Green)
         {
             Color = newColor;
         }
@@ -79,9 +79,16 @@ public class SliderColorPicker : VerticalStackLayout
         defaultBindingMode: BindingMode.TwoWay,
         propertyChanged: (bindable, oldValue, newValue) =>
         {
-            if (bindable is SliderColorPicker colorEditor && newValue is Color newColor)
+            if (bindable is SliderColorPicker colorEditor)
             {
-                colorEditor.UpdateFromColor();
+                if (newValue is Color newColor)
+                {
+                    colorEditor.UpdateFromColor();
+                }
+                else
+                {
+                    colorEditor.initialized = true;
+                }
             }
         });
 }

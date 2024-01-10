@@ -7,5 +7,5 @@ Blurs are implemented for each platforms.
 
 ### Android
 
-- Ported blurring logic to C# from [mmin18/RealtimeBlurView](https://github.com/mmin18/RealtimeBlurView)
+- Ported blurring logic to C# from [Dimezis/BlurView](https://github.com/Dimezis/BlurView)
 

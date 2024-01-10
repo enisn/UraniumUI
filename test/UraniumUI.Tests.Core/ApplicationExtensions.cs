@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace UraniumUI.Tests.Core;
+﻿namespace UraniumUI.Tests.Core;
 public static class ApplicationExtensions
 {
     public static Window LoadPage(this Application app, Page page)

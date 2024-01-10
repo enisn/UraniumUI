@@ -13,9 +13,4 @@ public partial class BlurIndexPage : ContentPage
     {
 		this.Navigation.PushAsync(new BlursPreviewPage());
     }
-
-    private void GoToDemoPage(object sender, EventArgs e)
-    {
-        this.Navigation.PushModalAsync(new BlursDemoPage());
-    }
 }

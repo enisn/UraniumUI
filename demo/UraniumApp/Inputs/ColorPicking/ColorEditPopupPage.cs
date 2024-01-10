@@ -11,14 +11,9 @@ public class ColorEditPopupPage : PopupPage
         this.BindingContext = source;
         this.BackgroundColor = Colors.Black.WithAlpha(0.6f);
         this.WidthRequest = 500;
-        var grid = new Grid
-        {
-            ColumnDefinitions =
-            {
-                new ColumnDefinition(GridLength.Auto),
-                new ColumnDefinition(GridLength.Star),
-            },
-        };
+        var isVertical = Microsoft.Maui.Devices.DeviceInfo.Idiom != DeviceIdiom.Desktop;
+
+        var grid = CreateGrid(isVertical);
 
         var boxSize = DeviceInfo.Idiom == DeviceIdiom.Phone ? 100 : 200;
 
@@ -35,6 +30,8 @@ public class ColorEditPopupPage : PopupPage
         var colorEditor = new ColorEditor
         {
             HorizontalOptions = LayoutOptions.Center,
+            Placeholder = "#ffffff",
+            PlaceholderColor = Colors.Grey.WithAlpha(.3f)
         };
 
         colorEditor.SetBinding(ColorEditor.ColorProperty, bindingPath);
@@ -45,7 +42,7 @@ public class ColorEditPopupPage : PopupPage
             Children =
             {
                 colorPreviewBox,
-                colorEditor
+                new Border { Content = colorEditor }
             }
         });
 
@@ -56,7 +53,14 @@ public class ColorEditPopupPage : PopupPage
 
         sliderColorPicker.SetBinding(SliderColorPicker.ColorProperty, bindingPath);
 
-        grid.Add(sliderColorPicker, column: 1);
+        if (isVertical)
+        {
+            grid.Add(sliderColorPicker, row: 1);
+        }
+        else
+        {
+            grid.Add(sliderColorPicker, column: 1);
+        }
 
         var rootStackLayout = new VerticalStackLayout
         {
@@ -94,5 +98,31 @@ public class ColorEditPopupPage : PopupPage
             ColorResource.GetColor("SurfaceDark"));
 
         this.Content = rootStackLayout;
+    }
+
+    private static Grid CreateGrid(bool isVertical)
+    {
+        if (isVertical)
+        {
+            return new Grid
+            {
+                RowDefinitions =
+                {
+                    new RowDefinition(GridLength.Auto),
+                    new RowDefinition(GridLength.Auto),
+                }
+            };
+        }
+        else
+        {
+            return new Grid
+            {
+                ColumnDefinitions =
+                {
+                    new ColumnDefinition(GridLength.Auto),
+                    new ColumnDefinition(GridLength.Star),
+                },
+            };
+        }
     }
 }

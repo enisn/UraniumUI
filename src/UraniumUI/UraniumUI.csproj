@@ -25,7 +25,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.*" />
-    <PackageReference Include="InputKit.Maui" Version="4.4.0" />
+    <PackageReference Include="InputKit.Maui" Version="4.4.1" />
     <PackageReference Include="Plainer.Maui" Version="1.7.1" />
   </ItemGroup>
 </Project>

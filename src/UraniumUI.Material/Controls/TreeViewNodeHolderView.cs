@@ -171,7 +171,7 @@ public class TreeViewNodeHolderView : VerticalStackLayout
             {
                 new GenericTriggerAction<View>((view) =>
                 {
-                    var rotation = this.IsRtl() ? 90 : -90;
+                    var rotation = 90;
                     if (TreeView.UseAnimation)
                     {
                         view.RotateTo(rotation, 90, easing: Easing.BounceOut);
@@ -186,7 +186,7 @@ public class TreeViewNodeHolderView : VerticalStackLayout
             {
                 new GenericTriggerAction<ButtonView>((view) =>
                 {
-                    var rotation = this.IsRtl() ? 180 : 0;
+                    var rotation = 0;
                     if (TreeView.UseAnimation)
                     {
                         view.RotateTo(rotation, 90, easing: Easing.BounceOut);
@@ -208,11 +208,7 @@ public class TreeViewNodeHolderView : VerticalStackLayout
 
         if (iconArrow is not null)
         {
-            var rotation = IsExpanded ? 
-                this.IsRtl() ? -90 : 90 :
-                this.IsRtl() ? 180 : 0;
-
-            iconArrow.Rotation = rotation;
+            iconArrow.RotationY = this.IsRtl() ? 180 : 0;
         }
     }
 

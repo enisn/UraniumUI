@@ -1,6 +1,11 @@
 # Blurs
 UraniumUI supports blur effects on MAUI. You can use it on any control by using `BlurEffect`.
 
+Apple has its own blur effect and Windows has a Brush for it. So it's implemented natively for those platforms.
+Android platform doesn't support blur effects by default. So it's implemented in [Dimezis/BlurView](https://github.com/Dimezis/BlurView) and ported to C#.
+
+
+
 ## Showcase
 
 ![Blurs](images/blurs-demo-dark-light.gif)
@@ -41,7 +46,9 @@ BlurEffect is defined in `UraniumUI.Blurs` namespace. But its assembly exports t
 xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
 ```
 
-BlurEffect is a `Effect` which means you can use it on any control. It's recommended to use it on a `Layout` such as `StackLayout`, `Grid`, `AbsoluteLayout`, `FlexLayout`, etc. to avoid overlapping issues.
+BlurEffect is a `Effect` which means you can use it on any control. 
+
+> **On Android**, it's recommended to use it on a `Layout` such as `StackLayout`, `Grid`, `AbsoluteLayout`, `FlexLayout`, etc. to avoid overlapping issues.
 
 
 ```xml

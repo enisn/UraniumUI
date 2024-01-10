@@ -29,6 +29,8 @@ public class TreeViewNodeHolderView : VerticalStackLayout
         IsVisible = false
     };
 
+    public DataTemplate DataTemplate { get; }
+
     protected Grid rowStack = new Grid
     {
         ColumnDefinitions =
@@ -37,8 +39,6 @@ public class TreeViewNodeHolderView : VerticalStackLayout
             new ColumnDefinition(GridLength.Star),
         }
     };
-
-    public DataTemplate DataTemplate { get; }
 
     private BindingBase childrenBinding;
     public BindingBase ChildrenBinding
@@ -58,7 +58,8 @@ public class TreeViewNodeHolderView : VerticalStackLayout
         }
     }
 
-    private View expanderView;
+    private protected View expanderView;
+    private protected ButtonView iconArrow;
 
     public TreeViewNodeHolderView(DataTemplate dataTemplate, TreeView treeView, BindingBase childrenBinding, int indentLevel = 0)
     {
@@ -118,7 +119,7 @@ public class TreeViewNodeHolderView : VerticalStackLayout
 
     protected virtual View InitializeArrowExpander()
     {
-        var iconArrow = new ButtonView
+        iconArrow = new ButtonView
         {
             VerticalOptions = LayoutOptions.Center,
             HorizontalOptions = LayoutOptions.Start,
@@ -170,13 +171,14 @@ public class TreeViewNodeHolderView : VerticalStackLayout
             {
                 new GenericTriggerAction<View>((view) =>
                 {
+                    var rotation = this.IsRtl() ? 90 : -90;
                     if (TreeView.UseAnimation)
                     {
-                        view.RotateTo(90, 90, easing: Easing.BounceOut);
+                        view.RotateTo(rotation, 90, easing: Easing.BounceOut);
                     }
                     else
                     {
-                        iconArrow.Rotation = 90;
+                        iconArrow.Rotation = rotation;
                     }
                 })
             },
@@ -184,19 +186,34 @@ public class TreeViewNodeHolderView : VerticalStackLayout
             {
                 new GenericTriggerAction<ButtonView>((view) =>
                 {
+                    var rotation = this.IsRtl() ? 180 : 0;
                     if (TreeView.UseAnimation)
                     {
-                        view.RotateTo(0, 90, easing: Easing.BounceOut);
+                        view.RotateTo(rotation, 90, easing: Easing.BounceOut);
                     }
                     else
                     {
-                        iconArrow.Rotation = 0;
+                        iconArrow.Rotation = rotation;
                     }
                 })
             }
         });
 
         return iconArrow;
+    }
+
+    protected override void OnSizeAllocated(double width, double height)
+    {
+        base.OnSizeAllocated(width, height);
+
+        if (iconArrow is not null)
+        {
+            var rotation = IsExpanded ? 
+                this.IsRtl() ? -90 : 90 :
+                this.IsRtl() ? 180 : 0;
+
+            iconArrow.Rotation = rotation;
+        }
     }
 
     protected virtual void ItemClicked()

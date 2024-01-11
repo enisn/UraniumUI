@@ -85,12 +85,15 @@ This project is licensed under the Apache License License - see the [LICENSE](LI
 | [tjlangenkamp](https://github.com/tjlangenkamp) | <!-- 5☕️ -->
 | [C00lzer0](https://github.com/C00lzer0) |  <!-- 3☕️ -->
 | Eric | <!-- 3 ☕-->
-| _Anonymous_ |  <!-- 3☕️ -->
 | [gpproton](https://github.com/gpproton) |  <!-- 1☕️ -->
 | [kmaclagan-pcl](https://www.buymeacoffee.com/enisn) |  <!-- 1☕️ -->
 | [@Geramy](https://github.com/Geramy) |  <!-- 1☕️ -->
 | [Malko_Josue](https://twitter.com/Malko_Josue) |  <!-- 1☕️ -->
+| [JohnStabler](https://github.com/JohnStabler) | <!-- GitHub Sponsor -->
+| [jfversluis](https://github.com/jfversluis) | <!-- GitHub Sponsor -->
+| [Lucasbk123](https://github.com/Lucasbk123) | <!-- GitHub Sponsor -->
 | Simon Brettschneider |    <!-- 1☕️ -->
+| _Anonymous people 5☕️_ |  <!-- 4☕️ -->
 
 > Donations are spent to infrastructural costs such as documentation website etc.
 

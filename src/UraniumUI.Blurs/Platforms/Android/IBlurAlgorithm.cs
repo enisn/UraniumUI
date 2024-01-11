@@ -8,11 +8,11 @@ public interface IBlurAlgorithm
 
     void Destroy();
 
-    bool CanModifyBitmap();  // TODO: Make it property
+    bool CanModifyBitmap { get; }
 
-    Bitmap.Config GetSupportedBitmapConfig();
+    Bitmap.Config SupportedBitmapConfig { get; }
 
-    float ScaleFactor(); // TODO: Make it property
+    float ScaleFactor { get; }
 
     void Render(Canvas canvas, Bitmap bitmap);
 }

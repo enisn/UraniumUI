@@ -4,7 +4,6 @@ using Android.Graphics;
 using Android.Content;
 using Paint = Android.Graphics.Paint;
 using Element = Android.Renderscripts.Element;
-using Xamarin.Google.Crypto.Tink.Shaded.Protobuf;
 using AndroidX.Annotations;
 
 namespace UraniumUI.Blurs;
@@ -73,20 +72,11 @@ public class RenderScriptBlur : IBlurAlgorithm
         }
     }
 
-    public bool CanModifyBitmap()
-    {
-        return true;
-    }
+    public bool CanModifyBitmap => true;
 
-    public Bitmap.Config GetSupportedBitmapConfig()
-    {
-        return Bitmap.Config.Argb8888;
-    }
+    public Bitmap.Config SupportedBitmapConfig => Bitmap.Config.Argb8888;
 
-    public float ScaleFactor()
-    {
-        return BlurViewDefaults.SCALE_FACTOR;
-    }
+    public float ScaleFactor => BlurViewDefaults.SCALE_FACTOR;
 
     public void Render(Canvas canvas, Bitmap bitmap)
     {

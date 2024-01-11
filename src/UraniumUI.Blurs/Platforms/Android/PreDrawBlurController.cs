@@ -53,7 +53,7 @@ public class PreDrawBlurController : IBlurController
     void Init(int measuredWidth, int measuredHeight)
     {
         SetBlurAutoUpdate(true);
-        SizeScaler sizeScaler = new SizeScaler(blurAlgorithm.ScaleFactor());
+        SizeScaler sizeScaler = new SizeScaler(blurAlgorithm.ScaleFactor);
         if (sizeScaler.IsZeroSized(measuredWidth, measuredHeight))
         {
             // Will be initialized later when the View reports a size change
@@ -63,7 +63,7 @@ public class PreDrawBlurController : IBlurController
 
         blurView.SetWillNotDraw(false);
         SizeScaler.Size bitmapSize = sizeScaler.scale(measuredWidth, measuredHeight);
-        internalBitmap = Bitmap.CreateBitmap(bitmapSize.width, bitmapSize.height, blurAlgorithm.GetSupportedBitmapConfig());
+        internalBitmap = Bitmap.CreateBitmap(bitmapSize.width, bitmapSize.height, blurAlgorithm.SupportedBitmapConfig);
         internalCanvas = new BlurViewCanvas(internalBitmap);
         initialized = true;
         // Usually it's not needed, because `onPreDraw` updates the blur anyway.
@@ -148,7 +148,7 @@ public class PreDrawBlurController : IBlurController
     private void BlurAndSave()
     {
         internalBitmap = blurAlgorithm.Blur(internalBitmap, blurRadius);
-        if (!blurAlgorithm.CanModifyBitmap())
+        if (!blurAlgorithm.CanModifyBitmap)
         {
             internalCanvas.SetBitmap(internalBitmap);
         }

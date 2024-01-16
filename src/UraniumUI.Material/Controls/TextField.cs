@@ -88,10 +88,12 @@ public partial class TextField : InputField
             UpdateState();
         }
 
+#if !WINDOWS // Workaround for https://github.com/enisn/UraniumUI/issues/373
         if (e.NewTextValue != null)
         {
             CheckAndShowValidations();
         }
+#endif
 
         if (AllowClear)
         {
@@ -99,6 +101,18 @@ public partial class TextField : InputField
         }
 
         TextChanged?.Invoke(this, e);
+    }
+
+    protected override void OnFocusChanged(object sender, FocusEventArgs args)
+    {
+        base.OnFocusChanged(sender, args);
+
+#if WINDOWS // Workaround for https://github.com/enisn/UraniumUI/issues/373
+        if (!args.IsFocused)
+        {
+            CheckAndShowValidations();
+        }
+#endif
     }
 
     private void EntryView_Completed(object sender, EventArgs e)

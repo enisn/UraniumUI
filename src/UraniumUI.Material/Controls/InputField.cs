@@ -143,7 +143,6 @@ public partial class InputField : Grid
         }
     }
 
-#if !WINDOWS
     protected override void OnHandlerChanged()
     {
         base.OnHandlerChanged();
@@ -160,9 +159,10 @@ public partial class InputField : Grid
 
     protected virtual void OnFocusChanged(object sender, FocusEventArgs args)
     {
+#if !WINDOWS
         (this as IGridLayout).IsFocused = args.IsFocused;
-    }
 #endif
+    }
 
     // TODO: Remove this member hiding after android unfocus fixed.
     public new void Unfocus()

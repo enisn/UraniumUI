@@ -14,6 +14,9 @@ public partial class TabView : Grid
 
     public bool UseAnimation { get; set; } = true;
 
+    public event EventHandler<object> CurrentItemChanged;
+    public event EventHandler<TabItem> SelectedTabChanged;
+
     public static DataTemplate DefaultTabHeaderItemTemplate => new DataTemplate(() =>
     {
         var grid = new Grid();
@@ -392,10 +395,12 @@ public partial class TabView : Grid
             return;
         }
 
+        CurrentItemChanged?.Invoke(this, newItem);
+
         SelectedTab = Items.FirstOrDefault(x => x.Data == newItem);
     }
 
-    protected virtual async void OnSelectedTabChanged(TabItem oldValue, TabItem newValue)
+    protected virtual async Task OnSelectedTabChanged(TabItem oldValue, TabItem newValue)
     {
         if (newValue == null)
         {
@@ -466,10 +471,14 @@ public partial class TabView : Grid
             }
         }
 
+        content.Opacity = 1;
+
         if (SelectedTab?.Data != null)
         {
             CurrentItem = SelectedTab.Data;
         }
+
+        SelectedTabChanged?.Invoke(this, newValue);
     }
 
     protected virtual void OnTabPlacementChanged()

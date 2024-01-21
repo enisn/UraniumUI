@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:UraniumUI.StyleBuilder.ViewModels"
+             xmlns:sm="clr-namespace:UraniumUI.StyleBuilder.StyleManager"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
+             x:DataType="vm:StyleEditorViewModel"
+             x:Class="UraniumUI.StyleBuilder.Views.StyleEditorView">
+
+    <Grid ColumnDefinitions="Auto,Auto">
+        <ScrollView>
+            <VerticalStackLayout BindableLayout.ItemsSource="{Binding ResourceStyleManager.Styles}" >
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="sm:ReactiveStyle">
+                        <Frame Padding="12" Margin="5">
+                            <toolkit:Expander>
+                                <toolkit:Expander.Header>
+                                    <uranium:StatefulContentView>
+                                        <HorizontalStackLayout>
+                                            <Label Text="{Binding TargetType}" />
+                                            <Label Text="{Binding Class, StringFormat='({0})'}" />
+                                        </HorizontalStackLayout>
+                                    </uranium:StatefulContentView>
+                                </toolkit:Expander.Header>
+                                <VerticalStackLayout>
+                                    <BoxView StyleClass="Divider" />
+                                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Setters}">
+                                        <BindableLayout.ItemTemplate>
+                                            <DataTemplate x:DataType="sm:ReactiveSetter">
+
+                                                <HorizontalStackLayout Margin="2" Spacing="5">
+                                                    <Label Text="{Binding Property.PropertyName}" FontAttributes="Bold" TextColor="{AppThemeBinding {StaticResource Primary},Dark={StaticResource PrimaryDark}}" />
+                                                    <Label Text="{Binding Value}" />
+                                                </HorizontalStackLayout>
+
+                                            </DataTemplate>
+                                        </BindableLayout.ItemTemplate>
+                                    </VerticalStackLayout>
+                                </VerticalStackLayout>
+                            </toolkit:Expander>
+                        </Frame>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentView>

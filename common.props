@@ -1,6 +1,6 @@
 <Project>
     <PropertyGroup>
-        <Version>2.7.4</Version>
+        <Version>2.8.0-pre.1</Version>
         <PackageIcon>logo_128.png</PackageIcon>
         <NeutralLanguage>en</NeutralLanguage>
         <RepositoryUrl>https://github.com/enisn/UraniumUI</RepositoryUrl>

@@ -16,7 +16,7 @@
                 <Label Text="You can swipe up/down the bottom sheet or just click the anchor." HorizontalTextAlignment="Center" />
                 <Image HorizontalOptions="Center" IsVisible="{OnPlatform WinUI=False, MacCatalyst=False}">
                     <Image.Source>
-                        <FontImageSource Size="75" FontFamily="MaterialRegular" Glyph="{x:Static uranium:MaterialRegular.Swipe_up}" Color="{AppThemeBinding {StaticResource OnSurface}, Dark={StaticResource OnSurfaceDark}}" />
+                        <FontImageSource Size="75" FontFamily="MaterialRegular" Glyph="{x:Static uranium:MaterialSharp.Swipe_up}" Color="{AppThemeBinding {StaticResource OnSurface}, Dark={StaticResource OnSurfaceDark}}" />
                     </Image.Source>
                 </Image>
             </VerticalStackLayout>

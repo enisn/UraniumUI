@@ -62,7 +62,7 @@
 	  <ProjectReference Include="..\..\src\UraniumUI.WebComponents\UraniumUI.WebComponents.csproj" />
 	  <ProjectReference Include="..\..\src\UraniumUI.Dialogs.Mopups\UraniumUI.Dialogs.Mopups.csproj" />
 	  <ProjectReference Include="..\..\src\UraniumUI.Dialogs.CommunityToolkit\UraniumUI.Dialogs.CommunityToolkit.csproj" />
-	  <ProjectReference Include="..\..\src\UraniumUI.Icons.MaterialIcons\UraniumUI.Icons.MaterialIcons.csproj" />
+	  <ProjectReference Include="..\..\src\UraniumUI.Icons.MaterialSymbols\UraniumUI.Icons.MaterialSymbols.csproj" />
 	  <ProjectReference Include="..\..\src\UraniumUI.Icons.FontAwesome\UraniumUI.Icons.FontAwesome.csproj" />
 	  <ProjectReference Include="..\..\src\UraniumUI.Icons.SegoeFluent\UraniumUI.Icons.SegoeFluent.csproj" />
 	  <ProjectReference Include="..\..\src\UraniumUI.Material\UraniumUI.Material.csproj" />

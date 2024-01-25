@@ -36,7 +36,7 @@ public static class MauiProgram
 #endif
 
 #if MaterialIcons
-				fonts.AddMaterialIconFonts();
+				fonts.AddMaterialSymbolsFonts();
 #endif
 #if FluentIcons
 				fonts.AddFluentIconFonts();

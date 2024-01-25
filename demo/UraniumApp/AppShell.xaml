@@ -5,10 +5,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:UraniumApp"
     xmlns:pages="clr-namespace:UraniumApp.Pages"
-    xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
     xmlns:bsheet="clr-namespace:UraniumApp.Pages.BottomSheets"
     xmlns:backdrop="clr-namespace:UraniumApp.Pages.Backdrops"
     xmlns:dataGrid="clr-namespace:UraniumApp.Pages.DataGrids"
+    xmlns:m="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
     xmlns:tabs="clr-namespace:UraniumApp.Pages.TabViews"
     xmlns:treeViews="clr-namespace:UraniumApp.Pages.TreeViews"
     xmlns:inputFields="clr-namespace:UraniumApp.Pages.InputFields"
@@ -70,8 +70,8 @@
         <ShellContent ContentTemplate="{DataTemplate inputFields:MultiplePickerFieldPage}" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Grid_view}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}"/>
     </FlyoutItem>
 
-    <FlyoutItem Title="TimePickerField" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Access_alarm}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
-        <ShellContent ContentTemplate="{DataTemplate inputFields:TimePickerFieldPage}" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Access_alarm}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}"/>
+    <FlyoutItem Title="TimePickerField" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Alarm}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
+        <ShellContent ContentTemplate="{DataTemplate inputFields:TimePickerFieldPage}" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Alarm}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}"/>
     </FlyoutItem>
 
     <FlyoutItem Title="DatePickerField" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Calendar_month}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
@@ -125,7 +125,7 @@
             Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Folder}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}"/>
     </FlyoutItem>
 
-    <FlyoutItem Title="Font Icons" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Insert_emoticon}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
+    <FlyoutItem Title="Font Icons" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Emoji_symbols}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
         <ShellContent ContentTemplate="{DataTemplate pages:FontImagesPage}"/>
     </FlyoutItem>
 

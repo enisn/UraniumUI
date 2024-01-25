@@ -27,7 +27,7 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 fonts.AddFontAwesomeIconFonts();
-                fonts.AddMaterialIconFonts();
+                fonts.AddMaterialSymbolsFonts();
                 fonts.AddFluentIconFonts();
             });
 
@@ -47,7 +47,7 @@ public static class MauiProgram
         .AddServicesByAttributes(assembly: thisAssembly);
 
         //builder.Services.AddCommunityToolkitDialogs();
-        builder.Services.AddMopupsDialogs();
+        //builder.Services.AddMopupsDialogs();
 
         return builder.Build();
     }

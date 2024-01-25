@@ -34,6 +34,9 @@
                                             </Grid>
                                         </DataTemplate>
                                     </CollectionView.ItemTemplate>
+                                    <CollectionView.Footer>
+                                        <Button StyleClass="TextButton" Text="Load More" Command="{Binding LoadMoreCommand}" WidthRequest="120" />
+                                    </CollectionView.Footer>
                                 </CollectionView>
                             </Grid>
                         </Border>

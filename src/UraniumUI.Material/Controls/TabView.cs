@@ -329,13 +329,13 @@ public partial class TabView : Grid
     protected virtual void AddHeaderFor(TabItem tabItem)
     {
         tabItem.TabView = this;
-        var view =
+        tabItem.Header =
             tabItem.HeaderTemplate?.CreateContent() as View
             ?? TabHeaderItemTemplate?.CreateContent() as View
             ?? throw new InvalidOperationException("TabView requires a HeaderTemplate or TabHeaderItemTemplate to be set.");
 
-        view.BindingContext = tabItem;
-        view.GestureRecognizers.Add(new TapGestureRecognizer { Command = new Command(() => SelectedTab = tabItem) });
+        tabItem.Header.BindingContext = tabItem;
+        tabItem.Header.GestureRecognizers.Add(new TapGestureRecognizer { Command = new Command(() => SelectedTab = tabItem) });
 
         if (!_headerContainer.Children.Any())
         {
@@ -345,14 +345,14 @@ public partial class TabView : Grid
         if (AreTabsVertical)
         {
             _headerContainer.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
-            Grid.SetRow(view, _headerContainer.Children.Count);
+            Grid.SetRow(tabItem.Header, _headerContainer.Children.Count);
         }
         else
         {
             _headerContainer.ColumnDefinitions.Add(new ColumnDefinition(TabHeaderItemColumnWidth));
-            Grid.SetColumn(view, _headerContainer.Children.Count);
+            Grid.SetColumn(tabItem.Header, _headerContainer.Children.Count);
         }
-        _headerContainer.Add(view);
+        _headerContainer.Add(tabItem.Header);
     }
 
     protected virtual void AddHeaderForItem(object item)
@@ -484,61 +484,5 @@ public partial class TabView : Grid
     protected virtual void OnTabPlacementChanged()
     {
         InitializeLayout();
-    }
-}
-
-public enum TabViewCachingStrategy
-{
-    /// <summary>
-    /// The view is removed from the visual tree when a tab is deselected. But instance is kept in memory. And same instance is used when tab is selected again.
-    /// </summary>
-    CacheOnCodeBehind,
-
-    /// <summary>
-    /// The view is kept in the visual tree and visibility is toggled when a tab is selected.
-    /// </summary>
-    CacheOnLayout,
-
-    /// <summary>
-    /// No caching. View is removed from the visual tree and a new instance is created when a tab is selected.
-    /// </summary>
-    RecreateAlways
-}
-
-[ContentProperty(nameof(Content))]
-public class TabItem : UraniumBindableObject
-{
-    public string Title { get => (string)GetValue(TitleProperty); set => SetValue(TitleProperty, value); }
-
-    public static readonly BindableProperty TitleProperty = BindableProperty.Create(nameof(Title), typeof(string), typeof(TabItem));
-
-    public object Data { get; set; }
-    public DataTemplate ContentTemplate { get; set; }
-    public DataTemplate HeaderTemplate { get; set; }
-    public View Content { get; set; }
-    public TabView TabView { get; internal set; }
-    public bool IsSelected { get => TabView.SelectedTab == this || (TabView.CurrentItem != null && TabView.CurrentItem == Data); }
-    public ICommand Command { get; private set; }
-
-    public TabItem()
-    {
-        Command = new Command(ChangedCommand);
-    }
-
-    private void ChangedCommand(object obj)
-    {
-        if (this.Data != null)
-        {
-            TabView.CurrentItem = this.Data;
-        }
-        else
-        {
-            TabView.SelectedTab = this;
-        }
-    }
-
-    protected internal void NotifyIsSelectedChanged()
-    {
-        OnPropertyChanged(nameof(IsSelected));
     }
 }

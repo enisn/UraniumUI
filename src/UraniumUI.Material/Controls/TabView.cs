@@ -554,5 +554,4 @@ public class TabItem : UraniumBindableObject
     {
         OnPropertyChanged(nameof(IsSelected));
     }
-
 }

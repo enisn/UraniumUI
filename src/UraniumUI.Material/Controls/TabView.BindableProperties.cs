@@ -61,6 +61,6 @@ public partial class TabView
         nameof(SelectedTab),
         typeof(TabItem),
         typeof(TabView),
-        propertyChanged: (bindable, oldValue, newValue)
-            => (bindable as TabView).OnSelectedTabChanged((TabItem)oldValue, (TabItem)newValue));
+        propertyChanged: async (bindable, oldValue, newValue)
+            => await (bindable as TabView).OnSelectedTabChanged((TabItem)oldValue, (TabItem)newValue));
 }

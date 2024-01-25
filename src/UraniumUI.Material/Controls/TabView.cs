@@ -329,13 +329,13 @@ public partial class TabView : Grid
     protected virtual void AddHeaderFor(TabItem tabItem)
     {
         tabItem.TabView = this;
-        var view =
+        tabItem.Header =
             tabItem.HeaderTemplate?.CreateContent() as View
             ?? TabHeaderItemTemplate?.CreateContent() as View
             ?? throw new InvalidOperationException("TabView requires a HeaderTemplate or TabHeaderItemTemplate to be set.");
 
-        view.BindingContext = tabItem;
-        view.GestureRecognizers.Add(new TapGestureRecognizer { Command = new Command(() => SelectedTab = tabItem) });
+        tabItem.Header.BindingContext = tabItem;
+        tabItem.Header.GestureRecognizers.Add(new TapGestureRecognizer { Command = new Command(() => SelectedTab = tabItem) });
 
         if (!_headerContainer.Children.Any())
         {
@@ -345,14 +345,14 @@ public partial class TabView : Grid
         if (AreTabsVertical)
         {
             _headerContainer.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
-            Grid.SetRow(view, _headerContainer.Children.Count);
+            Grid.SetRow(tabItem.Header, _headerContainer.Children.Count);
         }
         else
         {
             _headerContainer.ColumnDefinitions.Add(new ColumnDefinition(TabHeaderItemColumnWidth));
-            Grid.SetColumn(view, _headerContainer.Children.Count);
+            Grid.SetColumn(tabItem.Header, _headerContainer.Children.Count);
         }
-        _headerContainer.Add(view);
+        _headerContainer.Add(tabItem.Header);
     }
 
     protected virtual void AddHeaderForItem(object item)
@@ -516,8 +516,21 @@ public class TabItem : UraniumBindableObject
     public DataTemplate ContentTemplate { get; set; }
     public DataTemplate HeaderTemplate { get; set; }
     public View Content { get; set; }
+    public View Header { get; set; }
     public TabView TabView { get; internal set; }
     public bool IsSelected { get => TabView.SelectedTab == this || (TabView.CurrentItem != null && TabView.CurrentItem == Data); }
+
+    public bool IsVisible { get => (bool)GetValue(IsVisibleProperty); set => SetValue(IsVisibleProperty, value); }
+
+    public static readonly BindableProperty IsVisibleProperty = BindableProperty.Create(nameof(IsVisible), typeof(bool), typeof(TabItem), true,
+        propertyChanged: (bindable, oldValue, newValue) =>
+        {
+            if (bindable is TabItem tabItem && tabItem.Header is not null)
+            {
+                tabItem.Header.IsVisible = (bool)newValue;
+            }
+        });
+
     public ICommand Command { get; private set; }
 
     public TabItem()
@@ -541,4 +554,5 @@ public class TabItem : UraniumBindableObject
     {
         OnPropertyChanged(nameof(IsSelected));
     }
+
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Windows.Input;
 
 namespace UraniumUI.Material.Controls;
 public partial class TabView
@@ -63,4 +64,14 @@ public partial class TabView
         typeof(TabView),
         propertyChanged: async (bindable, oldValue, newValue)
             => await (bindable as TabView).OnSelectedTabChanged((TabItem)oldValue, (TabItem)newValue));
+
+    public ICommand CurrentItemChangedCommand { get => (ICommand)GetValue(CurrentItemChangedCommandProperty); set => SetValue(CurrentItemChangedCommandProperty, value); }
+
+    public static readonly BindableProperty CurrentItemChangedCommandProperty = BindableProperty.Create(
+        nameof(CurrentItemChangedCommand), typeof(ICommand), typeof(TabView));
+
+    public ICommand SelectedTabChangedCommand { get => (ICommand)GetValue(SelectedTabChangedCommandProperty); set => SetValue(SelectedTabChangedCommandProperty, value); }
+
+    public static readonly BindableProperty SelectedTabChangedCommandProperty = BindableProperty.Create(
+        nameof(SelectedTabChangedCommand), typeof(ICommand), typeof(TabView));
 }

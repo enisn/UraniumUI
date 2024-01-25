@@ -396,6 +396,7 @@ public partial class TabView : Grid
         }
 
         CurrentItemChanged?.Invoke(this, newItem);
+        ExecuteCommandIfCan(CurrentItemChangedCommand, newItem);
 
         SelectedTab = Items.FirstOrDefault(x => x.Data == newItem);
     }
@@ -479,10 +480,19 @@ public partial class TabView : Grid
         }
 
         SelectedTabChanged?.Invoke(this, newValue);
+        ExecuteCommandIfCan(SelectedTabChangedCommand, newValue);
     }
 
     protected virtual void OnTabPlacementChanged()
     {
         InitializeLayout();
+    }
+
+    protected virtual void ExecuteCommandIfCan(ICommand command, object parameter)
+    {
+        if (command?.CanExecute(parameter) == true)
+        {
+            command.Execute(parameter);
+        }
     }
 }

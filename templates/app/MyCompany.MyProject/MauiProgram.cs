@@ -4,6 +4,9 @@ using CommunityToolkit.Maui;
 #if Mopups
 using Mopups.Hosting;
 #endif
+#if MaterialIcons
+using UraniumUI.Icons.MaterialSymbols;
+#endif
 using InputKit.Shared.Controls;
 using UraniumUI;
 
@@ -36,7 +39,7 @@ public static class MauiProgram
 #endif
 
 #if MaterialIcons
-				fonts.AddMaterialIconFonts();
+				fonts.AddMaterialSymbolsFonts();
 #endif
 
 #if FluentIcons

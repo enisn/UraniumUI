@@ -96,7 +96,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
-             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
              xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
              xmlns:validation="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
              x:Class="MyCompany.MyProject.MainPage"
@@ -136,7 +135,7 @@
     <uranium:UraniumContentPage.Attachments>
         <material:BackdropView
                 Title="Add" 
-                IconImageSource="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Add_circle}, Color={StaticResource OnPrimary}}"
+                IconImageSource="{FontImageSource FontFamily=MaterialSharp, Glyph={x:Static uranium:MaterialSharp.Add_circle}, Color={StaticResource OnPrimary}}"
                 BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Gray950}}">
             <input:FormView SubmitCommand="{Binding AddNewItemCommand}" Spacing="10" Padding="25,30" HorizontalOptions="Center" MaximumWidthRequest="400">
                 <material:TextField 
@@ -144,7 +143,7 @@
                     Text="{Binding NewItem.Content}"
                     TextColor="{StaticResource OnPrimary}"
                     AccentColor="{StaticResource OnPrimary}"
-                    Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Sticky_note_2}}">
+                    Icon="{FontImageSource FontFamily=MaterialSharp, Glyph={x:Static uranium:MaterialSharp.Sticky_note_2}}">
                     <validation:RequiredValidation />
                 </material:TextField>
 
@@ -170,11 +169,11 @@
             <TableView Intent="Menu" Margin="0,0,0,40" BackgroundColor="Transparent">
                 <TableRoot>
                     <TableSection Title="Actions">
-                        <ImageCell Text="Share" ImageSource="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Share}, Color={StaticResource Primary}}"
+                        <ImageCell Text="Share" ImageSource="{FontImageSource FontFamily=MaterialSharp, Glyph={x:Static uranium:MaterialSharp.Share}, Color={StaticResource Primary}}"
                             Detail="Share this content with friends." />
-                        <ImageCell Text="Link" ImageSource="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Link}, Color={StaticResource Primary}}"
+                        <ImageCell Text="Link" ImageSource="{FontImageSource FontFamily=MaterialSharp, Glyph={x:Static uranium:MaterialSharp.Link}, Color={StaticResource Primary}}"
                             Detail="Get link to this content" />
-                        <ImageCell Text="Report" ImageSource="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Report}, Color={StaticResource Primary}}"
+                        <ImageCell Text="Report" ImageSource="{FontImageSource FontFamily=MaterialSharp, Glyph={x:Static uranium:MaterialSharp.Report}, Color={StaticResource Primary}}"
                             Detail="Report this content." />
                     </TableSection>
                 </TableRoot>

@@ -1,4 +1,4 @@
-﻿using UraniumUI.Icons.MaterialIcons;
+﻿using UraniumUI.Icons.MaterialSymbols;
 using UraniumUI.Resources;
 using UraniumUI.Views;
 
@@ -13,7 +13,7 @@ namespace UraniumApp
             Margin = 20;
             var copyImageSource = new FontImageSource
             {
-                Glyph = MaterialRegular.Content_copy,
+                Glyph = MaterialSharp.Content_copy,
                 FontFamily = "MaterialRegular",
             };
             copyImageSource.SetAppThemeColor(
@@ -35,7 +35,7 @@ namespace UraniumApp
 
                 img.Source = new FontImageSource
                 {
-                    Glyph = MaterialRegular.Done,
+                    Glyph = MaterialSharp.Done,
                     FontFamily = "MaterialRegular",
                     Color = Color.FromArgb("#8BC34A")
                 }; ;

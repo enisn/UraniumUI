@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="UraniumApp.Pages.ExpanderViewPage"
-             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialSymbols;assembly=UraniumUI.Icons.MaterialSymbols"
              xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
              Title="ExpanderViewPage">
 
@@ -54,8 +54,8 @@
             <Label Text="UraniumUI.Views" FontSize="Micro" Opacity=".6" />
 
             <HorizontalStackLayout>
-                <Button Text="Documentation" StyleClass="OutlinedButton" Command="{x:Static uranium:Commands.OpenLinkCommand}" CommandParameter="{StaticResource DocLink}" ImageSource="{FontImageSource Glyph={x:Static m:MaterialRegular.Insert_drive_file}, FontFamily=MaterialRegular, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
-                <Button Text="Source" StyleClass="OutlinedButton" ImageSource="{FontImageSource Glyph={x:Static m:MaterialRegular.Code}, FontFamily=MaterialRegular, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
+                <Button Text="Documentation" StyleClass="OutlinedButton" Command="{x:Static uranium:Commands.OpenLinkCommand}" CommandParameter="{StaticResource DocLink}" ImageSource="{FontImageSource Glyph={x:Static m:MaterialSharp.File_open}, FontFamily=MaterialSharp, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
+                <Button Text="Source" StyleClass="OutlinedButton" ImageSource="{FontImageSource Glyph={x:Static m:MaterialSharp.Code}, FontFamily=MaterialSharp, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
             </HorizontalStackLayout>
 
             <Label Text="ExpanderView is a view that can be expanded or collapsed. It is useful for showing and hiding content. Common use case is building accordion sections. " />

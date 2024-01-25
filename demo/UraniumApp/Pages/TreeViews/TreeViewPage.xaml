@@ -4,7 +4,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
              xmlns:vm="clr-namespace:UraniumApp.ViewModels"
-             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialSymbols;assembly=UraniumUI.Icons.MaterialSymbols"
              xmlns:root="clr-namespace:UraniumApp"
              xmlns:local="clr-namespace:UraniumApp.Pages">
     <ContentPage.BindingContext>
@@ -29,7 +29,7 @@
                                 <material:TreeView.ItemTemplate>
                                     <DataTemplate>
                                         <HorizontalStackLayout Margin="0,12" Spacing="5" VerticalOptions="Center">
-                                            <Image Source="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Folder}, Color={AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}}" />
+                                            <Image Source="{FontImageSource FontFamily=MaterialSharp, Glyph={x:Static m:MaterialSharp.Folder}, Color={AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}}" />
                                             <Label Text="{Binding Name}" FontAttributes="Bold" />
                                             <Label Text="{Binding Children.Count, StringFormat='({0})'}" />
                                         </HorizontalStackLayout>
@@ -49,7 +49,7 @@
                                         <vm:MyTemplateSelector.TemplateDefault>
                                             <DataTemplate>
                                                 <HorizontalStackLayout Margin="0,8" Spacing="5" VerticalOptions="Center">
-                                                    <Image Source="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Folder}, Color={AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}}" />
+                                                    <Image Source="{FontImageSource FontFamily=MaterialSharp, Glyph={x:Static m:MaterialSharp.Folder}, Color={AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}}" />
                                                     <Label Text="{Binding Name}" FontAttributes="Bold" />
                                                     <Label Text="{Binding Children.Count, StringFormat='({0})'}" />
                                                     <Label Text="Default Template" />
@@ -59,7 +59,7 @@
                                         <vm:MyTemplateSelector.TemplateA>
                                             <DataTemplate>
                                                 <HorizontalStackLayout Margin="0,8" Spacing="5" VerticalOptions="Center">
-                                                    <Image Source="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Folder}, Color={AppThemeBinding Light={StaticResource Tertiary}, Dark={StaticResource TertiaryDark}}}" />
+                                                    <Image Source="{FontImageSource FontFamily=MaterialSharp, Glyph={x:Static m:MaterialSharp.Folder}, Color={AppThemeBinding Light={StaticResource Tertiary}, Dark={StaticResource TertiaryDark}}}" />
                                                     <Label Text="{Binding Name}" FontAttributes="Bold" />
                                                     <Label Text="{Binding Children.Count, StringFormat='({0})'}" />
                                                     <Label Text="Template for A" />
@@ -69,7 +69,7 @@
                                         <vm:MyTemplateSelector.TemplateB>
                                             <DataTemplate>
                                                 <HorizontalStackLayout Margin="0,8" Spacing="5" VerticalOptions="Center">
-                                                    <Image Source="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Folder}, Color={AppThemeBinding Light={StaticResource Secondary}, Dark={StaticResource SecondaryDark}}}" />
+                                                    <Image Source="{FontImageSource FontFamily=MaterialSharp, Glyph={x:Static m:MaterialSharp.Folder}, Color={AppThemeBinding Light={StaticResource Secondary}, Dark={StaticResource SecondaryDark}}}" />
                                                     <Label Text="{Binding Name}" FontAttributes="Bold" />
                                                     <Label Text="{Binding Children.Count, StringFormat='({0})'}" />
                                                     <Label Text="Template for B" />
@@ -79,7 +79,7 @@
                                         <vm:MyTemplateSelector.TemplateC>
                                             <DataTemplate>
                                                 <HorizontalStackLayout Margin="0,8" Spacing="5" VerticalOptions="Center">
-                                                    <Image Source="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Folder}, Color={AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}}" />
+                                                    <Image Source="{FontImageSource FontFamily=MaterialSharp, Glyph={x:Static m:MaterialSharp.Folder}, Color={AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}}" />
                                                     <Label Text="{Binding Name}" FontAttributes="Bold" />
                                                     <Label Text="{Binding Children.Count, StringFormat='({0})'}" />
                                                     <Label Text="Template for C" />

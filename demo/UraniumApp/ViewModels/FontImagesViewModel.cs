@@ -1,19 +1,15 @@
 ﻿using DotNurse.Injector.Attributes;
+using DynamicData;
+using DynamicData.Binding;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using UraniumUI.Icons.FontAwesome;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UraniumUI.Icons.MaterialIcons;
-using UraniumUI.Icons.SegoeFluent;
+using System.Reactive;
 using System.Reactive.Linq;
 using System.Xml.Linq;
-using DynamicData.Binding;
-using DynamicData;
+using UraniumUI.Icons.FontAwesome;
+using UraniumUI.Icons.MaterialSymbols;
+using UraniumUI.Icons.SegoeFluent;
 
 namespace UraniumApp.ViewModels;
 
@@ -35,11 +31,9 @@ public class FontImagesViewModel : ReactiveObject
             },
             new FontImageViewModel("MaterialIcons", new[]
                 {
-                    typeof(MaterialRegular),
-                    typeof(MaterialOutlined),
-                    typeof(MaterialRound),
                     typeof(MaterialSharp),
-                    typeof(MaterialTwoTone),
+                    typeof(MaterialOutlined),
+                    typeof(MaterialRounded),
                 }),
             new FontImageViewModel("Fluent", typeof(Fluent))
         };
@@ -68,7 +62,7 @@ public class FontImageViewModel : ReactiveObject
         }
         var pageRequest = this
             .WhenAnyValue(vm => vm.PageNumber)
-            .Select(number => new PageRequest(1, number * 10));
+            .Select(number => new PageRequest(1, number * 500));
 
         IconsSourceList.Connect()
             .Filter(this.WhenAnyValue(vm => vm.SelectedType)
@@ -88,7 +82,15 @@ public class FontImageViewModel : ReactiveObject
             .Subscribe(GenerateSourceCode);
 
         this.SelectedType = Types.FirstOrDefault();
+
+        LoadMoreCommand = ReactiveCommand.Create(() =>
+        {
+            PageNumber++;
+        });
     }
+
+    public ReactiveCommand<Unit, Unit> LoadMoreCommand { get; }
+
     public string XamlSourceCode => SourceCode.ToString();
     protected XDocument SourceCode { get; }
 
@@ -122,7 +124,7 @@ public class FontImageViewModel : ReactiveObject
     }
 
     protected virtual void GenerateSourceCode(object parameter = null)
-    { 
+    {
         var contentPage = SourceCode.Descendants().First();
         var uranium = contentPage.GetNamespaceOfPrefix("uranium");
         var image = contentPage.Descendants("Image").First();

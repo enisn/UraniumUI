@@ -11,6 +11,7 @@
              Title="{Binding Title}">
 
     <ContentPage.Resources>
+        
         <x:String x:Key="SourceCode">
             <![CDATA[
 <VerticalStackLayout Spacing="12">
@@ -46,6 +47,8 @@
         </x:String>
 
         <x:String x:Key="DocLink">https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/TextField</x:String>
+
+
     </ContentPage.Resources>
 
     <ScrollView>

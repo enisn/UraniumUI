@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="UraniumApp.Pages.GridLayoutPage"
+             xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
+             Title="GridLayoutPage">
+    <ContentPage.Resources>
+        <Style TargetType="BoxView">
+            <Setter Property="MinimumWidthRequest" Value="120" />
+            <Setter Property="MinimumHeightRequest" Value="120" />
+        </Style>
+    </ContentPage.Resources>
+    <VerticalStackLayout>
+
+        <uranium:GridLayout ColumnCount="3" RowCount="5" ColumnSpacing="32" RowSpacing="32">
+            <BoxView Color="Blue" Grid.ColumnSpan="2" Grid.RowSpan="1" />
+            <BoxView Color="Green" />
+            <BoxView Color="Yellow" />
+            <BoxView Color="Red" />
+            <BoxView Color="Orange" />
+            <BoxView Color="White" Opacity="1" />
+        </uranium:GridLayout>
+    </VerticalStackLayout>
+</ContentPage>

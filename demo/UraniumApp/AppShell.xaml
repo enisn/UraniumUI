@@ -37,6 +37,10 @@
     <FlyoutItem Title="ExpanderView" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Arrow_drop_down}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
         <ShellContent ContentTemplate="{DataTemplate pages:ExpanderViewPage}"/>
     </FlyoutItem>
+
+    <FlyoutItem Title="GridLayout" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Grid_3x3}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
+        <ShellContent ContentTemplate="{DataTemplate pages:GridLayoutPage}"/>
+    </FlyoutItem>
     
     <FlyoutItem Title="Buttons" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.All_inbox}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
         <ShellContent ContentTemplate="{DataTemplate pages:ButtonsPage}"/>

@@ -212,6 +212,12 @@ public class TreeViewNodeHolderView : VerticalStackLayout
         }
     }
 
+    protected override void OnBindingContextChanged()
+    {
+        base.OnBindingContextChanged();
+        OnSelectedItemChanged();
+    }
+
     protected virtual void ItemClicked()
     {
         if (TreeView.SelectionMode == SelectionMode.Single)

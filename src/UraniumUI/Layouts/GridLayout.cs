@@ -1,4 +1,5 @@
-﻿using UraniumUI.Extensions;
+﻿using System.ComponentModel;
+using UraniumUI.Extensions;
 
 namespace UraniumUI.Layouts;
 public class GridLayout : Grid
@@ -29,8 +30,35 @@ public class GridLayout : Grid
             }
         });
 
-    public GridLayout()
+    [TypeConverter(typeof(GridLengthTypeConverter))]
+    public GridLength ColumnGridLength { get => (GridLength)GetValue(ColumnGridLengthProperty); set => SetValue(ColumnGridLengthProperty, value); }
+
+    public static readonly BindableProperty ColumnGridLengthProperty = BindableProperty.Create(
+        nameof(ColumnGridLength), typeof(GridLength), typeof(GridLayout), GridLength.Auto,
+        propertyChanged: (bindable, oldValue, newValue) =>
+        {
+            if (bindable is GridLayout grid)
+            {
+                grid.SetColumnDefinitions();
+            }
+        });
+
+    [TypeConverter(typeof(GridLengthTypeConverter))]
+    public GridLength RowGridLength { get => (GridLength)GetValue(RowGridLengthProperty); set => SetValue(RowGridLengthProperty, value); }
+
+    public static readonly BindableProperty RowGridLengthProperty = BindableProperty.Create(
+        nameof(RowGridLength), typeof(GridLength), typeof(GridLayout), GridLength.Auto,
+        propertyChanged: (bindable, oldValue, newValue) =>
+        {
+            if (bindable is GridLayout grid)
+            {
+                grid.SetRowDefinitions();
+            }
+        });
+
+    protected override void OnParentSet()
     {
+        base.OnParentSet();
         SetDefinitions();
     }
 
@@ -39,11 +67,13 @@ public class GridLayout : Grid
         base.OnChildAdded(child);
 
         var view = child as View;
-    }
+        //this.Children.Remove(view);
 
-    protected override void OnChildRemoved(Element child, int oldLogicalIndex)
-    {
-        base.OnChildRemoved(child, oldLogicalIndex);
+        var (row, column) = GetNextAvailablePosition();
+
+        Grid.SetRow(view, row);
+        Grid.SetColumn(view, column);
+        //this.Add(view);
     }
 
     protected virtual void SetDefinitions()
@@ -57,7 +87,7 @@ public class GridLayout : Grid
         ColumnDefinitions.Clear();
         for (int i = 0; i < ColumnCount; i++)
         {
-            ColumnDefinitions.Add(new ColumnDefinition(GridLength.Auto));
+            ColumnDefinitions.Add(new ColumnDefinition(ColumnGridLength));
         }
     }
 
@@ -66,16 +96,46 @@ public class GridLayout : Grid
         RowDefinitions.Clear();
         for (int i = 0; i < RowCount; i++)
         {
-            RowDefinitions.Add(new RowDefinition(GridLength.Auto));
+            RowDefinitions.Add(new RowDefinition(RowGridLength));
         }
     }
 
-    protected virtual void ArrangeChildren()
+    private (int, int) GetNextAvailablePosition()
     {
-        for (int i = 0; i < Children.Count; i++)
+        for (int row = 0; row < RowCount; row++)
         {
-
+            for (int column = 0; column < ColumnCount; column++)
+            {
+                if (IsCellAvailable(row, column))
+                {
+                    return (row, column);
+                }
+            }
         }
+
+        return (0, 0);
+    }
+
+    private bool IsCellAvailable(int row, int column)
+    {
+        foreach (var child in Children.Take(Children.Count - 1))
+        {
+            if (child is View view)
+            {
+                int childRow = (int)view.GetValue(RowProperty);
+                int childColumn = (int)view.GetValue(ColumnProperty);
+                int childRowSpan = (int)view.GetValue(RowSpanProperty);
+                int childColumnSpan = (int)view.GetValue(ColumnSpanProperty);
+
+                if (row >= childRow && row < childRow + childRowSpan &&
+                                       column >= childColumn && column < childColumn + childColumnSpan)
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     private static void FindEndPoint(View view, out int row, out int column)

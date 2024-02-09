@@ -16,6 +16,10 @@
           "path": "infrastructure/StatefulContentView.md"
         },
         {
+          "text": "Grid Layout",
+          "path": "infrastructure/GridLayout.md"
+        },
+        {
           "text": "ExpanderView",
           "path": "infrastructure/ExpanderView.md"
         },

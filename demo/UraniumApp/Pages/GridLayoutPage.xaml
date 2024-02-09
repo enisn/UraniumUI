@@ -2,23 +2,101 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="UraniumApp.Pages.GridLayoutPage"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialSymbols;assembly=UraniumUI.Icons.MaterialSymbols"
              xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
              Title="GridLayoutPage">
     <ContentPage.Resources>
-        <Style TargetType="BoxView">
-            <Setter Property="MinimumWidthRequest" Value="120" />
-            <Setter Property="MinimumHeightRequest" Value="120" />
-        </Style>
-    </ContentPage.Resources>
-    <VerticalStackLayout>
 
-        <uranium:GridLayout ColumnCount="3" RowCount="5" ColumnSpacing="32" RowSpacing="32">
-            <BoxView Color="Blue" Grid.ColumnSpan="2" Grid.RowSpan="1" />
-            <BoxView Color="Green" />
-            <BoxView Color="Yellow" />
-            <BoxView Color="Red" />
-            <BoxView Color="Orange" />
-            <BoxView Color="White" Opacity="1" />
-        </uranium:GridLayout>
-    </VerticalStackLayout>
+        <x:String x:Key="DocLink">https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/TextField</x:String>
+        <x:String x:Key="SourceCode">
+            <![CDATA[
+<uranium:GridLayout>
+    <BoxView Color="Blue" />
+    <BoxView Color="Green" />
+    <BoxView Color="Yellow" />
+    <BoxView Color="Red" />
+</uranium:GridLayout>
+            ]]>
+        </x:String>
+        <x:String x:Key="SourceCode2">
+            <![CDATA[
+<uranium:GridLayout RowCount="3" ColumnCount="3" ColumnGridLength="*" RowGridLength="120" ColumnSpacing="16" RowSpacing="16">
+    <BoxView Color="DarkBlue" />
+    <BoxView Color="Blue" />
+    <BoxView Color="LightBlue" />
+    <BoxView Color="Green" />
+    <BoxView Color="Yellow" />
+    <BoxView Color="Orange" />
+    <BoxView Color="Red" />
+    <BoxView Color="Pink" />
+</uranium:GridLayout>
+            ]]>
+        </x:String>
+    </ContentPage.Resources>
+    <ScrollView>
+        <VerticalStackLayout Padding="20">
+
+            <Label Text="GridLayout" FontSize="Title" />
+            <Label Text="UraniumUI.Layouts" FontSize="Micro" Opacity=".6" />
+
+            <HorizontalStackLayout Padding="0,20">
+                <Button Text="Documentation" Command="{x:Static uranium:Commands.OpenLinkCommand}" CommandParameter="{StaticResource DocLink}" StyleClass="OutlinedButton" ImageSource="{FontImageSource Glyph={x:Static m:MaterialSharp.File_open}, FontFamily=MaterialSharp, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
+                <Button Text="Source" StyleClass="OutlinedButton" IsEnabled="False" ImageSource="{FontImageSource Glyph={x:Static m:MaterialSharp.Code}, FontFamily=MaterialSharp, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
+            </HorizontalStackLayout>
+
+            <Label Text="GridLayout is a variation of MAUI Grid with a set of features. You can build a perfect grid without dealing with Grid.Row and Grid.Column properties. You can also bind dynamic items to the grid." />
+
+            <Border StyleClass="SurfaceContainer,Rounded">
+                <VerticalStackLayout>
+                    <uranium:GridLayout>
+                        <uranium:GridLayout.Resources>
+                            <Style TargetType="BoxView">
+                                <Setter Property="MinimumWidthRequest" Value="120" />
+                                <Setter Property="MinimumHeightRequest" Value="120" />
+                            </Style>
+                        </uranium:GridLayout.Resources>
+                        <BoxView Color="Blue" />
+                        <BoxView Color="Green" />
+                        <BoxView Color="Yellow" />
+                        <BoxView Color="Red" />
+                    </uranium:GridLayout>
+
+                    <uranium:ExpanderView>
+                        <uranium:ExpanderView.Header>
+                            <Label Text="Source Code (XAML)" Margin="10" />
+                        </uranium:ExpanderView.Header>
+                        <uranium:CodeView HeightRequest="120" SourceCode="{StaticResource SourceCode}"/>
+                    </uranium:ExpanderView>
+                </VerticalStackLayout>
+            </Border>
+
+            <BoxView StyleClass="Divider" />
+
+            <Border StyleClass="SurfaceContainer,Rounded">
+                <VerticalStackLayout>
+                    <uranium:GridLayout RowCount="3" ColumnCount="3" ColumnGridLength="*" RowGridLength="120" ColumnSpacing="16" RowSpacing="16">
+                        <BoxView Color="DarkBlue" />
+                        <BoxView Color="Blue" />
+                        <BoxView Color="LightBlue" />
+                        <BoxView Color="Green" />
+                        <BoxView Color="Yellow" />
+                        <BoxView Color="Orange" />
+                        <BoxView Color="Red" />
+                        <BoxView Color="Pink" />
+                    </uranium:GridLayout>
+
+                    <uranium:ExpanderView>
+                        <uranium:ExpanderView.Header>
+                            <Label Text="Source Code (XAML)" Margin="10" />
+                        </uranium:ExpanderView.Header>
+                        <uranium:CodeView HeightRequest="120" SourceCode="{StaticResource SourceCode2}"/>
+                    </uranium:ExpanderView>
+                </VerticalStackLayout>
+            </Border>
+            
+            <BoxView StyleClass="Divider" />
+            
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

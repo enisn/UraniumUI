@@ -215,7 +215,7 @@ public partial class InputField : Grid
         };
 #endif
 
-        border.StrokeDashArray = new DoubleCollection { calculatedFirstDash * 0.9, space, perimeter, 0 };
+        border.StrokeDashArray = new DoubleCollection { calculatedFirstDash * 0.9 / BorderThickness, space / BorderThickness, perimeter, 0 };
 
 #if WINDOWS
         this.Add(border);

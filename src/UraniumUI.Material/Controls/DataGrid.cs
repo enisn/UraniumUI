@@ -123,7 +123,6 @@ public partial class DataGrid : Border
                 {
                     Title = s.GetCustomAttribute<DisplayNameAttribute>()?.DisplayName ?? s.Name,
                     Binding = new Binding(s.Name),
-                    PropertyInfo = s,
                 }).ToList();
 
             Render();
@@ -136,8 +135,6 @@ public partial class DataGrid : Border
         {
             return; // Not ready yet.
         }
-
-        EnsurePropertyInfosAreSet();
 
         var tableHeaderRows = 1;
         ResetGrid();
@@ -211,7 +208,7 @@ public partial class DataGrid : Border
         {
             var binding = Columns[columnNumber].Binding as Binding;
 
-            var path = binding?.Path ?? Columns[columnNumber].PropertyName ?? "Value"; // Backward compatibility.
+            var path = binding?.Path; // Backward compatibility.
 
             var created = (View)Columns[columnNumber].CellItemTemplate?.CreateContent()
                 ?? (View)CellItemTemplate?.CreateContent()
@@ -220,10 +217,7 @@ public partial class DataGrid : Border
             var view = new ContentView
             {
                 Content = created,
-                BindingContext = (CellItemTemplate is null) ? item : new
-                {
-                    Value = Columns[columnNumber].PropertyInfo.GetValue(item)
-                }
+                BindingContext = item,
             };
 
             SetSelectionVisualStates(view);
@@ -297,15 +291,6 @@ public partial class DataGrid : Border
         {
             var newRow = Grid.GetRow(item) + amount;
             Grid.SetRow(item, newRow);
-        }
-    }
-
-    // TODO: Remove later. [Obsolete]
-    protected virtual void EnsurePropertyInfosAreSet()
-    {
-        foreach (var column in Columns.Where(x => x.PropertyInfo == null && x.PropertyName != null))
-        {
-            column.PropertyInfo = CurrentType.GetProperty(column.PropertyName);
         }
     }
 

@@ -16,6 +16,8 @@ public partial class DataGrid : Border
 
     public IList<DataGridColumn> Columns { get; protected set; } = new ObservableCollection<DataGridColumn>();
 
+    public bool ReadyToRender => Columns?.Any() ?? false;
+
     public DataGrid()
     {
         _rootGrid = new Grid
@@ -23,23 +25,21 @@ public partial class DataGrid : Border
             HorizontalOptions = LayoutOptions.Fill
         };
 
-        RenderEmptyView();
         InitializeFactoryMethods();
         this.Padding = new Thickness(0, 10);
         (Columns as INotifyCollectionChanged).CollectionChanged += Columns_CollectionChanged;
+        RenderEmptyView();
     }
 
     private void OnItemSourceSet(IList oldSource, IList newSource)
     {
-        var sourceType = newSource.GetType();
-        if (sourceType.GenericTypeArguments.Length != 1)
+        var sourceType = newSource?.GetType();
+        if (UseAutoColumns && sourceType?.GenericTypeArguments.Length != 1)
         {
             throw new InvalidOperationException("DataGrid collection must be a generic typed collection like List<T>.");
         }
 
-        CurrentType = sourceType.GenericTypeArguments.First();
-
-        var columnsAreReady = Columns?.Any() ?? false;
+        CurrentType = sourceType?.GenericTypeArguments.FirstOrDefault();
 
         SetAutoColumns();
 
@@ -53,7 +53,7 @@ public partial class DataGrid : Border
             newObservable.CollectionChanged += ItemsSource_CollectionChanged;
         }
 
-        if (columnsAreReady)
+        if (ReadyToRender)
         {
             Render();
         }
@@ -64,6 +64,7 @@ public partial class DataGrid : Border
         if (ItemsSource.Count == 0)
         {
             ResetGrid();
+            AddTableHeaders();
             RenderEmptyView();
             return;
         }
@@ -131,15 +132,9 @@ public partial class DataGrid : Border
 
     protected virtual void Render()
     {
-        if (Columns == null || Columns.Count == 0 || CurrentType == null)
+        if (Columns is null || Columns.Count == 0 || ItemsSource is null || (UseAutoColumns && CurrentType == null))
         {
             return; // Not ready yet.
-        }
-
-        if (ItemsSource.Count == 0)
-        {
-            RenderEmptyView();
-            return;
         }
 
         EnsurePropertyInfosAreSet();
@@ -158,6 +153,11 @@ public partial class DataGrid : Border
             AddRow(row, ItemsSource[i], i == ItemsSource.Count - 1);
         }
 
+        if (ItemsSource.Count == 0)
+        {
+            RenderEmptyView();
+        }
+
         RegisterSelectionChanges();
     }
 
@@ -174,6 +174,11 @@ public partial class DataGrid : Border
 
     protected virtual void AddTableHeaders(int row = 0)
     {
+        if (Columns is null)
+        {
+            return;
+        }
+
         for (int i = 0; i < Columns.Count; i++)
         {
             var titleView = Columns[i].TitleView
@@ -260,7 +265,7 @@ public partial class DataGrid : Border
 
     protected virtual void AddSeparator(int row)
     {
-        var line = HorizontalLineFactory() ?? CreateHorizontalLine();
+        var line = HorizontalLineFactory?.Invoke() ?? CreateHorizontalLine();
         _rootGrid.AddWithSpan(line, row, 0, columnSpan: Columns.Count);
     }
 
@@ -331,7 +336,18 @@ public partial class DataGrid : Border
 
     protected virtual void RenderEmptyView()
     {
-        this.Content = EmptyView ??= (View)EmptyViewTemplate?.CreateContent() ?? new BoxView { HorizontalOptions = LayoutOptions.Fill, Margin = 40 };
+        if (!ReadyToRender)
+        {
+            return;
+        }
+
+        EmptyView ??= (View)EmptyViewTemplate?.CreateContent() ?? new BoxView { HorizontalOptions = LayoutOptions.Fill, Margin = 40 };
+        if (!_rootGrid.Contains(EmptyView))
+        {
+            AddSeparator(1);
+            _rootGrid.Add(EmptyView, column: 0, row: 2);
+            Grid.SetColumnSpan(EmptyView, Columns.Count);
+        }
     }
 
     protected virtual void OnEmptyViewTemplateSet()

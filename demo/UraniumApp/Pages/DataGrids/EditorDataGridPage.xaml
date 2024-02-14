@@ -13,7 +13,6 @@
 
         <VerticalStackLayout>
             <material:DataGrid ItemsSource="{Binding Items}" HorizontalOptions="Center">
-
                 <material:DataGrid.Columns>
                     <material:DataGridColumn ValueBinding="{Binding Id}" Title="Id" />
                     <material:DataGridColumn ValueBinding="{Binding Name}" Title="Name" />
@@ -25,7 +24,6 @@
                         <plain:EntryView Text="{material:DataGridValueBinding Mode=TwoWay}" BackgroundColor="Transparent"/>
                     </DataTemplate>
                 </material:DataGrid.CellItemTemplate>
-
             </material:DataGrid>
 
             <BoxView StyleClass="Divider" />

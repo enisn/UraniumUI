@@ -178,11 +178,10 @@ public partial class DataGrid : Border
 
         for (int i = 0; i < Columns.Count; i++)
         {
-            var column = Columns[i];
-            var titleView = column.TitleView
+            var titleView = Columns[i].TitleView
                 ?? TitleTemplate?.CreateContent() as View
-                ?? LabelFactory(nameof(DataGridColumn.Title))
-                ?? CreateLabel(nameof(DataGridColumn.Title));
+                ?? LabelFactory("Value")
+                ?? CreateLabel("Value");
 
             if (titleView is Label label)
             {
@@ -190,8 +189,10 @@ public partial class DataGrid : Border
             }
 
             // TODO: Use an attribute to localize it.
-            titleView.BindingContext = column;
-            titleView.SetBinding(View.IsVisibleProperty, nameof(DataGridColumn.IsVisible));
+            titleView.BindingContext = new
+            {
+                Value = Columns[i].Title
+            };
 
             _rootGrid.Add(titleView, column: i, row);
         }
@@ -205,27 +206,24 @@ public partial class DataGrid : Border
 
         for (int columnNumber = 0; columnNumber < Columns.Count; columnNumber++)
         {
-            var column = Columns[columnNumber];
-            var binding = column.Binding as Binding;
+            var binding = Columns[columnNumber].Binding as Binding;
 
             var path = binding?.Path; // Backward compatibility.
 
-            var created = (View)column.CellItemTemplate?.CreateContent()
+            var created = (View)Columns[columnNumber].CellItemTemplate?.CreateContent()
                 ?? (View)CellItemTemplate?.CreateContent()
                 ?? LabelFactory(path) ?? CreateLabel(path);
 
-            var cell = new ContentView
+            var view = new ContentView
             {
                 Content = created,
                 BindingContext = item,
             };
 
-            cell.SetBinding(ContentView.IsVisibleProperty, new Binding(nameof(DataGridColumn.IsVisible), source: column));
-
-            SetSelectionVisualStates(cell);
+            SetSelectionVisualStates(view);
 
             _rootGrid.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
-            _rootGrid.Add(cell, columnNumber, row: actualRow);
+            _rootGrid.Add(view, columnNumber, row: actualRow);
         }
     }
 

@@ -22,7 +22,10 @@ public class DataGridColumn : BindableObject
 
     public DataTemplate CellItemTemplate { get; set; }
 
-    public BindingBase Binding { get; set; }
+    [Obsolete("Use ValueBinding instead!")]
+    public BindingBase Binding { get => ValueBinding; set => ValueBinding = value; }
+
+    public BindingBase ValueBinding { get; set; }
 
     [TypeConverter(typeof(GridLengthTypeConverter))]
     public GridLength Width { get; set; } = GridLength.Auto;

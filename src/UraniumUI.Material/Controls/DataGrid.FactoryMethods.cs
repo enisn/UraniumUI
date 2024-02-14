@@ -1,7 +1,7 @@
 ﻿namespace UraniumUI.Material.Controls;
 public partial class DataGrid
 {
-    public Func<string, Label> LabelFactory { get; set; }
+    public Func<BindingBase, Label> LabelFactory { get; set; }
 
     public Func<View> HorizontalLineFactory { get; set; }
 
@@ -11,7 +11,7 @@ public partial class DataGrid
         HorizontalLineFactory = CreateHorizontalLine;
     }
 
-    protected virtual Label CreateLabel(string propertyName)
+    protected virtual Label CreateLabel(BindingBase binding)
     {
         var label = new Label
         {
@@ -19,8 +19,7 @@ public partial class DataGrid
             HorizontalOptions = LayoutOptions.Center,
             VerticalOptions = LayoutOptions.Center
         };
-
-        label.SetBinding(Label.TextProperty, propertyName);
+        label.SetBinding(Label.TextProperty, binding);
 
         return label;
     }

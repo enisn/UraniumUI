@@ -3,6 +3,7 @@
              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:m="clr-namespace:UraniumUI.Icons.MaterialSymbols;assembly=UraniumUI.Icons.MaterialSymbols"
+             xmlns:plain="clr-namespace:Plainer.Maui.Controls;assembly=Plainer.Maui"
              xmlns:local="clr-namespace:UraniumApp.Pages.DataGrids"
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
              Title="DataGrid Selection">
@@ -25,13 +26,22 @@
                             <Label Text="No data available..." HorizontalOptions="Center"/>
                         </VerticalStackLayout>
                     </material:DataGrid.EmptyView>
+
+                    <material:DataGrid.TitleTemplate>
+                        <DataTemplate>
+                            <Label Text="{Binding Title}" />
+                        </DataTemplate>
+                    </material:DataGrid.TitleTemplate>
+                    
                     <material:DataGrid.Columns>
                         <material:DataGridSelectionColumn />
-                        <material:DataGridColumn Binding="{Binding Id}" Title="Identity" />
-                        <material:DataGridColumn Binding="{Binding Name}" Title="Name" />
-                        <material:DataGridColumn Binding="{Binding Age}" Title="Age" />
+                        <material:DataGridColumn ValueBinding="{Binding Id}" Title="Id" />
+                        <material:DataGridColumn ValueBinding="{Binding Name}" Title="Name" />
+                        <material:DataGridColumn ValueBinding="{Binding Age}" Title="Age" />
                     </material:DataGrid.Columns>
                 </material:DataGrid>
+
+                
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

@@ -16,6 +16,7 @@
             <Button Text="Simple with Custom Headers" Clicked="GoToSimpleCustomTitleDataGrid" />
             <Button Text="Custom DataGrid" Clicked="GoToCustomDataGrid" />
             <Button Text="Selectable DataGrid" Clicked="GoToSelectableDataGrid" />
+            <Button Text="Edit Mode DataGrid" Clicked="GoToEditorDataGrid" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

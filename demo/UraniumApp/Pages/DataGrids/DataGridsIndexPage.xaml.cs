@@ -26,4 +26,9 @@ public partial class DataGridsIndexPage : ContentPage
     {
         Navigation.PushAsync(new SimpleCustomTitleDataGridPage());
     }
+
+    private void GoToEditorDataGrid(object sender, EventArgs e)
+    {
+        Navigation.PushAsync(new EditorDataGridPage());
+    }
 }

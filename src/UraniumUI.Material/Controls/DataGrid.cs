@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Reflection;
-using System.Security.Cryptography.X509Certificates;
 
 namespace UraniumUI.Material.Controls;
 
@@ -179,10 +178,12 @@ public partial class DataGrid : Border
         for (int i = 0; i < Columns.Count; i++)
         {
             var column = Columns[i];
+
+            var binding = new Binding(nameof(DataGridColumn.Title));
             var titleView = column.TitleView
                 ?? TitleTemplate?.CreateContent() as View
-                ?? LabelFactory(nameof(DataGridColumn.Title))
-                ?? CreateLabel(nameof(DataGridColumn.Title));
+                ?? LabelFactory(binding)
+                ?? CreateLabel(binding);
 
             if (titleView is Label label)
             {
@@ -206,19 +207,25 @@ public partial class DataGrid : Border
         for (int columnNumber = 0; columnNumber < Columns.Count; columnNumber++)
         {
             var column = Columns[columnNumber];
-            var binding = column.Binding as Binding;
-
-            var path = binding?.Path; // Backward compatibility.
+            var valueBinding = column.ValueBinding;
 
             var created = (View)column.CellItemTemplate?.CreateContent()
                 ?? (View)CellItemTemplate?.CreateContent()
-                ?? LabelFactory(path) ?? CreateLabel(path);
+                ?? LabelFactory(valueBinding) ?? CreateLabel(valueBinding);
 
             var cell = new ContentView
             {
                 Content = created,
                 BindingContext = item,
             };
+
+            if (column.CellItemTemplate is null && CellItemTemplate is not null && column.ValueBinding is not null)
+            {
+                // TODO: This is a workaround, we need to find a better way to do this.
+                // Check DataGridValueBindingExtension.cs to see how it works.
+                var binding = (column.ValueBinding as Binding);
+                cell.BindingContext = new Binding(binding.Path, source: item);
+            }
 
             cell.SetBinding(ContentView.IsVisibleProperty, new Binding(nameof(DataGridColumn.IsVisible), source: column));
 

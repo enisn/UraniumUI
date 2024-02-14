@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using ReactiveUI.Fody.Helpers;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace UraniumApp.Pages.DataGrids;
 public class SimpleDataGridPageViewModel : BindableObject
@@ -23,11 +18,11 @@ public class SimpleDataGridPageViewModel : BindableObject
 			});
 		}
     }
-	public class Student
+	public class Student : ReactiveUI.ReactiveObject
 	{
 		[DisplayName("Identity Number")]
-		public int Id { get; set; }
-		public string Name { get; set; }
-		public int Age { get; set; }
+		[Reactive] public int Id { get; set; }
+		[Reactive] public string Name { get; set; }
+		[Reactive] public int Age { get; set; }
 	}
 }

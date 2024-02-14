@@ -59,7 +59,7 @@ You can customize the cell item template by using `CellItemTemplate` property. I
 <material:DataGrid ItemsSource="{Binding Items}" UseAutoColumns="True" HorizontalOptions="Center">
 	<material:DataGrid.CellItemTemplate>
 		<DataTemplate>
-			<Editor Margin="10" Text="{Binding Value}" />
+			<Editor Margin="10" Text="{material:DataGridValueBinding Mode=TwoWay}" />
 		</DataTemplate>
 	</material:DataGrid.CellItemTemplate>
 </material:DataGrid>
@@ -88,11 +88,11 @@ You can also define columns manually by adding `DataGridColumn` to `Columns` pro
 ```xml
 <material:DataGrid ItemsSource="{Binding Items}" HorizontalOptions="Center" Margin="30">
 	<material:DataGrid.Columns>
-		<material:DataGridColumn Binding="{Binding Name}" Title="Student Name"/>
+		<material:DataGridColumn ValueBinding="{Binding Name}" Title="Student Name"/>
 
-		<material:DataGridColumn Binding="{Binding Age}" Title="Student Age"/>
+		<material:DataGridColumn ValueBinding="{Binding Age}" Title="Student Age"/>
 
-		<material:DataGridColumn Binding="{Binding Id}" Title="Identity" />
+		<material:DataGridColumn ValueBinding="{Binding Id}" Title="Identity" />
 	</material:DataGrid.Columns>
 </material:DataGrid>
 ```
@@ -102,7 +102,7 @@ An ItemTemplate can be defined for each column via using `CellItemTemplate` prop
 ```xml
 <material:DataGrid ItemsSource="{Binding Items}" HorizontalOptions="Center" Margin="30">
 	<material:DataGrid.Columns>
-		<material:DataGridColumn Binding="{Binding Name}" Title="Student Name"/>
+		<material:DataGridColumn ValueBinding="{Binding Name}" Title="Student Name"/>
 
 		<material:DataGridColumn Title="Student Age">
 			<material:DataGridColumn.CellItemTemplate>
@@ -114,7 +114,7 @@ An ItemTemplate can be defined for each column via using `CellItemTemplate` prop
 			</material:DataGridColumn.CellItemTemplate>
 		</material:DataGridColumn>
 
-		<material:DataGridColumn Binding="{Binding Id}" Title="Identity" />
+		<material:DataGridColumn ValueBinding="{Binding Id}" Title="Identity" />
 
 	</material:DataGrid.Columns>
 </material:DataGrid>
@@ -155,11 +155,11 @@ Column width can be defined by using `Width` property of `DataGridColumn` class.
 <material:DataGrid ItemsSource="{Binding Items}" HorizontalOptions="Center" Margin="30">
 	<material:DataGrid.Columns>
 
-		<material:DataGridColumn Binding="{Binding Name}" Title="Student Name" Width="Auto"/>
+		<material:DataGridColumn ValueBinding="{Binding Name}" Title="Student Name" Width="Auto"/>
 
-		<material:DataGridColumn Binding="{Binding Age}" Title="Student Age" Width="*"/>
+		<material:DataGridColumn ValueBinding="{Binding Age}" Title="Student Age" Width="*"/>
 
-		<material:DataGridColumn Binding="{Binding Id}" Title="Identity" Width="100"/>
+		<material:DataGridColumn ValueBinding="{Binding Id}" Title="Identity" Width="100"/>
 
 	</material:DataGrid.Columns>
 </material:DataGrid>
@@ -173,19 +173,19 @@ You can define a custom view for the header of the column by using `TitleView` p
 ```xml
  <material:DataGrid ItemsSource="{Binding Items}">
 	<material:DataGrid.Columns>
-		<material:DataGridColumn Binding="{Binding Id}">
+		<material:DataGridColumn ValueBinding="{Binding Id}">
 			<material:DataGridColumn.TitleView>
 				<Image Source="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Fingerprint}, Color={StaticResource Primary}}" />
 			</material:DataGridColumn.TitleView>
 		</material:DataGridColumn>
 
-		<material:DataGridColumn Binding="{Binding Name}">
+		<material:DataGridColumn ValueBinding="{Binding Name}">
 			<material:DataGridColumn.TitleView>
 				<Image Source="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Badge}, Color={StaticResource Primary}}" />
 			</material:DataGridColumn.TitleView>
 		</material:DataGridColumn>
 
-		<material:DataGridColumn Binding="{Binding Age}">
+		<material:DataGridColumn ValueBinding="{Binding Age}">
 			<material:DataGridColumn.TitleView>
 				<Image Source="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Calendar_today}, Color={StaticResource Primary}}" />
 			</material:DataGridColumn.TitleView>
@@ -207,7 +207,7 @@ You can define a custom template for the title of the **DataGrid** by using `Tit
 <material:DataGrid ItemsSource="{Binding Items}" HorizontalOptions="Center" Margin="30">
 	<material:DataGrid.TitleTemplate>
 		<DataTemplate>
-			<Label Text="{Binding Value}" FontSize="Big" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+			<Label Text="{Binding Title}" FontSize="Big" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
 		</DataTemplate>
 	</material:DataGrid.TitleTemplate>
 </material:DataGrid>
@@ -246,9 +246,9 @@ DataGrid supports multiple row selection. You can add `DataGridSelectionColumn` 
 <material:DataGrid ItemsSource="{Binding Items}" SelectedItems="{Binding SelectedItems}">
 	<material:DataGrid.Columns>
 		<material:DataGridSelectionColumn />
-		<material:DataGridColumn Binding="{Binding Id}" Title="Identity" />
-		<material:DataGridColumn Binding="{Binding Name}" Title="Name" />
-		<material:DataGridColumn Binding="{Binding Age}" Title="Age" />
+		<material:DataGridColumn ValueBinding="{Binding Id}" Title="Identity" />
+		<material:DataGridColumn ValueBinding="{Binding Name}" Title="Name" />
+		<material:DataGridColumn ValueBinding="{Binding Age}" Title="Age" />
 	</material:DataGrid.Columns>
 </material:DataGrid>
 ```
@@ -289,9 +289,9 @@ public class MainViewModel
 	<material:DataGrid ItemsSource="{Binding Items}" SelectedItems="{Binding SelectedItems}">
 		<material:DataGrid.Columns>
 			<material:DataGridSelectionColumn />
-			<material:DataGridColumn Binding="{Binding Id}" Title="Identity" />
-			<material:DataGridColumn Binding="{Binding Name}" Title="Name" />
-			<material:DataGridColumn Binding="{Binding Age}" Title="Age" />
+			<material:DataGridColumn ValueBinding="{Binding Id}" Title="Identity" />
+			<material:DataGridColumn ValueBinding="{Binding Name}" Title="Name" />
+			<material:DataGridColumn ValueBinding="{Binding Age}" Title="Age" />
 		</material:DataGrid.Columns>
 	</material:DataGrid>
 </StackLayout>

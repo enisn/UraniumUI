@@ -29,11 +29,11 @@
                 <material:DataGrid.Columns>
                     <material:DataGridSelectionColumn/>
 
-                    <material:DataGridColumn Binding="{Binding Content}" Title="Todo" />
+                    <material:DataGridColumn ValueBinding="{Binding Content}" Title="Todo" />
 
-                    <material:DataGridColumn Binding="{Binding Type}" Title="Type"/>
+                    <material:DataGridColumn ValueBinding="{Binding Type}" Title="Type"/>
 
-                    <material:DataGridColumn Binding="{Binding IsDone}" Title="Done"/>
+                    <material:DataGridColumn ValueBinding="{Binding IsDone}" Title="Done"/>
 
                 </material:DataGrid.Columns>
             </material:DataGrid>
@@ -120,11 +120,11 @@
                 <material:DataGrid.Columns>
                     <material:DataGridSelectionColumn/>
 
-                    <material:DataGridColumn Binding="{Binding Content}" Title="Todo" />
+                    <material:DataGridColumn ValueBinding="{Binding Content}" Title="Todo" />
 
-                    <material:DataGridColumn Binding="{Binding Type}" Title="Type"/>
+                    <material:DataGridColumn ValueBinding="{Binding Type}" Title="Type"/>
 
-                    <material:DataGridColumn Binding="{Binding IsDone}" Title="Done"/>
+                    <material:DataGridColumn ValueBinding="{Binding IsDone}" Title="Done"/>
 
                 </material:DataGrid.Columns>
             </material:DataGrid>
@@ -213,11 +213,11 @@
                 <material:DataGrid.Columns>
                     <material:DataGridSelectionColumn/>
 
-                    <material:DataGridColumn Binding="{Binding Content}" Title="Todo" />
+                    <material:DataGridColumn ValueBinding="{Binding Content}" Title="Todo" />
 
-                    <material:DataGridColumn Binding="{Binding Type}" Title="Type"/>
+                    <material:DataGridColumn ValueBinding="{Binding Type}" Title="Type"/>
 
-                    <material:DataGridColumn Binding="{Binding IsDone}" Title="Done"/>
+                    <material:DataGridColumn ValueBinding="{Binding IsDone}" Title="Done"/>
 
                 </material:DataGrid.Columns>
             </material:DataGrid>

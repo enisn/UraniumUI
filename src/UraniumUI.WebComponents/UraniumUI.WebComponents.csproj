@@ -26,6 +26,13 @@
     <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>
 
+	<ItemGroup>
+		<Content Include="Resources/Raw/**/*.*">
+			<IncludeInPackage>true</IncludeInPackage>
+			<CopyToOutput>true</CopyToOutput>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
 
 	<ItemGroup>
 	  <ProjectReference Include="..\UraniumUI\UraniumUI.csproj" />

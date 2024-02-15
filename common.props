@@ -8,7 +8,7 @@
         <Authors>enisn</Authors>
         <Description>Uranium is a Free &amp; Open-Source UI Kit for MAUI.</Description>
         <PackageReleaseNotes>Check GitHub releases for changelog.</PackageReleaseNotes>
-        <MauiVersion>8.0.7</MauiVersion>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
         
         <PublishReadyToRun>false</PublishReadyToRun>
 
@@ -23,7 +23,11 @@
         <Pack>True</Pack>
         <PackagePath></PackagePath>
       </None>
-   </ItemGroup>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+    </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All"/>

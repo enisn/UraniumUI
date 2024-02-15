@@ -8,6 +8,7 @@
         <Authors>enisn</Authors>
         <Description>Uranium is a Free &amp; Open-Source UI Kit for MAUI.</Description>
         <PackageReleaseNotes>Check GitHub releases for changelog.</PackageReleaseNotes>
+        <MauiVersion>8.0.7</MauiVersion>
         
         <PublishReadyToRun>false</PublishReadyToRun>
 

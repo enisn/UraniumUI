@@ -16,7 +16,7 @@ Uranium is a Free & Open-Source UI Kit for .NET MAUI. It provides a set of contr
 - Visit [Documentation](https://enisn-projects.io/docs/en/uranium/latest)
 
  ## Getting Started 🚀
-Visit documentation for onboarding.
+Visit the documentation for onboarding.
 
 - [Getting Started](https://enisn-projects.io/docs/en/uranium/latest/Getting-Started)
 - [Live Demo on Android Emulator](https://appetize.io/embed/6rii3gn7ovqjjd5ynkracdjruq?device=pixel4&osVersion=11.0&scale=75)

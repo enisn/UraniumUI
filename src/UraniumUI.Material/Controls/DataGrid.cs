@@ -224,7 +224,8 @@ public partial class DataGrid : Border
             {
                 // TODO: This is a workaround, we need to find a better way to do this.
                 // Check DataGridValueBindingExtension.cs to see how it works.
-                cell.BindingContext = valueBinding;
+                var binding = (column.ValueBinding as Binding);
+                cell.BindingContext = new Binding(binding.Path, source: item);
             }
 
             cell.SetBinding(ContentView.IsVisibleProperty, new Binding(nameof(DataGridColumn.IsVisible), source: column));

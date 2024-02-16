@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Reflection;
+using UraniumUI.Extensions;
 
 namespace UraniumUI.Material.Controls;
 
@@ -121,7 +122,7 @@ public partial class DataGrid : Border
                 .Select(s => new DataGridColumn
                 {
                     Title = s.GetCustomAttribute<DisplayNameAttribute>()?.DisplayName ?? s.Name,
-                    Binding = new Binding(s.Name),
+                    ValueBinding = new Binding(s.Name),
                 }).ToList();
 
             Render();
@@ -207,7 +208,7 @@ public partial class DataGrid : Border
         for (int columnNumber = 0; columnNumber < Columns.Count; columnNumber++)
         {
             var column = Columns[columnNumber];
-            var valueBinding = column.ValueBinding;
+            var valueBinding = column.ValueBinding.CopyAsClone();
 
             var created = (View)column.CellItemTemplate?.CreateContent()
                 ?? (View)CellItemTemplate?.CreateContent()

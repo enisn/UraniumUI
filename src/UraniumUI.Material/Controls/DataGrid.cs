@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Reflection;
+using UraniumUI.Extensions;
 
 namespace UraniumUI.Material.Controls;
 
@@ -121,7 +122,7 @@ public partial class DataGrid : Border
                 .Select(s => new DataGridColumn
                 {
                     Title = s.GetCustomAttribute<DisplayNameAttribute>()?.DisplayName ?? s.Name,
-                    Binding = new Binding(s.Name),
+                    ValueBinding = new Binding(s.Name),
                 }).ToList();
 
             Render();
@@ -207,7 +208,7 @@ public partial class DataGrid : Border
         for (int columnNumber = 0; columnNumber < Columns.Count; columnNumber++)
         {
             var column = Columns[columnNumber];
-            var valueBinding = column.ValueBinding;
+            var valueBinding = column.ValueBinding.CopyAsClone();
 
             var created = (View)column.CellItemTemplate?.CreateContent()
                 ?? (View)CellItemTemplate?.CreateContent()
@@ -223,8 +224,7 @@ public partial class DataGrid : Border
             {
                 // TODO: This is a workaround, we need to find a better way to do this.
                 // Check DataGridValueBindingExtension.cs to see how it works.
-                var binding = (column.ValueBinding as Binding);
-                cell.BindingContext = new Binding(binding.Path, source: item);
+                cell.BindingContext = valueBinding;
             }
 
             cell.SetBinding(ContentView.IsVisibleProperty, new Binding(nameof(DataGridColumn.IsVisible), source: column));

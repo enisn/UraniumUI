@@ -22,4 +22,19 @@ internal class MockDialogService : IDialogService
     {
         return Task.FromResult(string.Empty);
     }
+
+    public Task<string> DisplayTextPromptAsync(string title, string message, string accept = "OK", string cancel = "Cancel", string placeholder = null, int maxLength = -1, Keyboard keyboard = null, string initialValue = "", bool isPassword = false)
+    {
+        return Task.FromResult(string.Empty);
+    }
+
+    public Task DisplayViewAsync(string title, View content, string okText = "OK")
+    {
+        return Task.CompletedTask;
+    }
+
+    public Task<TViewModel> DisplayFormViewAsync<TViewModel>(string title, TViewModel viewModel = null, string submit = "OK", string cancel = "Cancel") where TViewModel : class
+    {
+        return Task.FromResult(default(TViewModel));
+    }
 }

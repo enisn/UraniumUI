@@ -3,6 +3,7 @@ using Microsoft.Extensions.Options;
 using Mopups.Pages;
 using Mopups.Services;
 using Plainer.Maui.Controls;
+using UraniumUI.Controls;
 using UraniumUI.Resources;
 using CheckBox = InputKit.Shared.Controls.CheckBox;
 
@@ -191,7 +192,8 @@ public static class MopupsDialogExtensions
         string placeholder = null,
         int maxLength = -1,
         Keyboard keyboard = null,
-        string initialValue = "")
+        string initialValue = "",
+        bool isPassword = false)
     {
         var tcs = new TaskCompletionSource<string>();
 
@@ -206,6 +208,7 @@ public static class MopupsDialogExtensions
             PlaceholderColor = ColorResource.GetColor("Background", "BackgroundDark", Colors.Gray).WithAlpha(.5f),
             BackgroundColor = Colors.Transparent,
             Text = initialValue,
+            IsPassword = isPassword
         };
 
         var entryholder = new Border
@@ -253,6 +256,77 @@ public static class MopupsDialogExtensions
         });
 
         return await tcs.Task;
+    }
+
+    public static Task DisplayViewAsync(this Page page, string title, View content, string okText = "OK")
+    {
+        return MopupService.Instance.PushAsync(new PopupPage
+        {
+            BackgroundColor = backdropColor,
+            CloseWhenBackgroundIsClicked = false,
+            Content = GetFrame(page.Width, new VerticalStackLayout
+            {
+                Children =
+                {
+                    GetHeader(title),
+                    content,
+                    GetDivider(),
+                    new Button
+                    {
+                        Text = okText,
+                        StyleClass = new []{ "TextButton", "Dialog.Button0" },
+                        Command = new Command(() => MopupService.Instance.PopAsync())
+                    }
+                }
+            })
+        });
+    }
+
+    public static Task<TViewModel> DisplayFormViewAsync<TViewModel>(this Page page, string title, TViewModel viewModel = null, string submit = "OK", string cancel = "Cancel", string reset = null) where TViewModel : class
+    {
+        var tcs = new TaskCompletionSource<TViewModel>();
+        var formView = new AutoFormView
+        {
+            Padding = 8,
+            ShowSubmitButton = false,
+            ShowResetButton = false,
+            ShowMissingProperties = false,
+            Source = viewModel ?? UraniumServiceProvider.Current.GetRequiredService<TViewModel>(),
+        };
+
+        MopupService.Instance.PushAsync(new PopupPage
+        {
+            BackgroundColor = backdropColor,
+            CloseWhenBackgroundIsClicked = false,
+            Content = GetFrame(page.Width, new VerticalStackLayout
+            {
+                Children =
+                {
+                    GetHeader(title),
+                    formView,
+                    GetDivider(),
+                    GetFooter(
+                        submit,
+                        new Command(() =>
+                        {
+                            formView.Submit();
+                            if (formView.IsValidated)
+                            {
+                                tcs.SetResult(viewModel);
+                                MopupService.Instance.PopAsync();
+                            }
+                        }),
+                        cancel,
+                        new Command(() =>
+                        {
+                            tcs.SetResult(null);
+                            MopupService.Instance.PopAsync();
+                        }))
+                }
+            })
+        });
+
+        return tcs.Task;
     }
 
     private static BoxView GetDivider()

@@ -141,3 +141,32 @@ You can configure the `AutoFormView` to show missing properties using the `ShowM
 - `SohwResetButton`: Indicates whether the reset button is visible. The default value is `true`.
 - `SubmitButtonText`: The text of the submit button. The default value is `Submit`.
 - `ResetButtonText`: The text of the reset button. The default value is `Reset`.
+
+
+## Dialogs Support
+
+You can use the `AutoFormView` with the [Dialogs](../dialogs/Index.md) feature. You can open a dialog to show the `AutoFormView` and get the result by using the `DisplayAutoFormViewAsync` method of `IDialogService`.
+
+
+- Resolving  the ViewModel from the dependency injection:
+```csharp
+// ViewModel resolved from the DI
+var result = await _dialogService.DisplayFormViewAsync<AutoFormViewPageViewModel>("Auto Form View");
+if (result != null)
+{
+    // do something with the result
+}
+```
+
+- Using an existing ViewModel directly:
+```csharp
+var myViewModel = new AutoFormViewPageViewModel();
+
+var result = await _dialogService.DisplayFormViewAsync("Auto Form View", myViewModel);
+if (result != null)
+{
+    // do something with the result
+}
+```
+
+![AutoFormView](images/autoformview-dialogs-dark.png)

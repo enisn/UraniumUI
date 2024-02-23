@@ -9,10 +9,30 @@
              x:Class="UraniumApp.Pages.AutoFormViewPage"
              Title="AutoFormViewPage">
     <VerticalStackLayout>
-        <uranium:AutoFormView Source="{Binding .}" ShowMissingProperties="False">
-            <uranium:AutoFormView.FooterLayout>
-                <FlexLayout JustifyContent="SpaceEvenly" />
-            </uranium:AutoFormView.FooterLayout>
-        </uranium:AutoFormView>
+        <material:TabView>
+            <material:TabItem Title="Page">
+
+                <uranium:AutoFormView Source="{Binding .}" HorizontalOptions="Center" MaximumWidthRequest="400" ShowMissingProperties="False">
+                    <uranium:AutoFormView.FooterLayout>
+                        <FlexLayout JustifyContent="SpaceEvenly" />
+                    </uranium:AutoFormView.FooterLayout>
+                </uranium:AutoFormView>
+                
+            </material:TabItem>
+
+            <material:TabItem Title="Dialog">
+                <material:TabItem.ContentTemplate>
+                    <DataTemplate>
+                        <Button 
+                             Margin="32" 
+                             HorizontalOptions="Center"
+                             Text="Show Dialog"
+                             StyleClass="FilledButton"
+                             Command="{Binding ShowDialogCommand}" />
+                    </DataTemplate>
+                </material:TabItem.ContentTemplate>
+           
+            </material:TabItem>
+        </material:TabView>
     </VerticalStackLayout>
 </ContentPage>

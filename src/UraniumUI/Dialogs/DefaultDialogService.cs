@@ -334,16 +334,6 @@ public class DefaultDialogService : IDialogService
             Source = viewModel ?? UraniumServiceProvider.Current.GetRequiredService<TViewModel>(),
         };
 
-#if WINDOWS
-        formView.HandlerChanged += (s, e) =>
-        {
-            if (formView.Handler is Microsoft.Maui.Platform.LayoutPanel panel)
-            {
-                panel.IsTabStop = false;
-            }
-        };
-#endif
-
         var popupPage = new ContentPage
         {
             BackgroundColor = GetBackdropColor(),
@@ -352,7 +342,7 @@ public class DefaultDialogService : IDialogService
                 Children =
                 {
                     GetHeader(title),
-                    formView,
+                    new ScrollView { Content = formView },
                     GetDivider(),
                     GetFooter(new Dictionary<string, Command>
                     {

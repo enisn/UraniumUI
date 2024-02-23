@@ -5,11 +5,10 @@
              xmlns:m="clr-namespace:UraniumUI.Icons.MaterialSymbols;assembly=UraniumUI.Icons.MaterialSymbols"
              xmlns:plain="clr-namespace:Plainer.Maui.Controls;assembly=Plainer.Maui"
              xmlns:local="clr-namespace:UraniumApp.Pages.DataGrids"
+             xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             BindingContext="{uranium:Inject {Type local:SelectableDataGridPageViewModel}}"
              Title="DataGrid Selection">
-    <ContentPage.BindingContext>
-        <local:SelectableDataGridPageViewModel />
-    </ContentPage.BindingContext>
     <ContentPage.Content>
         <ScrollView>
             <StackLayout>
@@ -26,12 +25,6 @@
                             <Label Text="No data available..." HorizontalOptions="Center"/>
                         </VerticalStackLayout>
                     </material:DataGrid.EmptyView>
-
-                    <material:DataGrid.TitleTemplate>
-                        <DataTemplate>
-                            <Label Text="{Binding Title}" />
-                        </DataTemplate>
-                    </material:DataGrid.TitleTemplate>
                     
                     <material:DataGrid.Columns>
                         <material:DataGridSelectionColumn />

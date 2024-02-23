@@ -6,21 +6,19 @@
              xmlns:m="clr-namespace:UraniumUI.Icons.MaterialSymbols;assembly=UraniumUI.Icons.MaterialSymbols"
              xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             xmlns:plain="clr-namespace:Plainer.Maui.Controls;assembly=Plainer.Maui"
+             BindingContext="{uranium:Inject {Type local:CustomDataGridPageViewModel}}"
+             x:DataType="local:CustomDataGridPageViewModel"
              x:Name="page">
-    <ContentPage.BindingContext>
-        <local:CustomDataGridPageViewModel />
-    </ContentPage.BindingContext>
     <ContentPage.Content>
         <ScrollView>
             <StackLayout>
 
-                <Grid ColumnDefinitions="80,*,Auto" Padding="20">
-                    <Entry Text="{Binding Row}" Placeholder="RowIndex" Keyboard="Numeric" />
-                    <Entry Grid.Column="1" Text="{Binding Name}" Placeholder="Student Name" Keyboard="Plain" />
-                    <Button Grid.Column="2" Command="{Binding AddNewCommand}" Text="Add" BackgroundColor="{StaticResource Primary}" TextColor="{StaticResource OnPrimary}"/>
-                </Grid>
-
-                <Label Text="Fully Defined Columns:" />
+                <Label Text="Custom CellItemTemplate for each column" FontSize="Title"  HorizontalOptions="Center" />
+                <BoxView StyleClass="Divider" Margin="8,20" />
+                <HorizontalStackLayout HorizontalOptions="Center">
+                    <Button StyleClass="FilledButton" Text="Add data" Command="{Binding AddNewCommand}" />
+                </HorizontalStackLayout>
 
                 <material:DataGrid ItemsSource="{Binding Items}" HorizontalOptions="Center" Margin="30">
 
@@ -43,7 +41,7 @@
                         <material:DataGridColumn Title="Student Name">
                             <material:DataGridColumn.CellItemTemplate>
                                 <DataTemplate>
-                                    <Label Text="{Binding Name}" TextColor="Red" HorizontalOptions="Center" VerticalOptions="Center" Margin="0" />
+                                    <Label Text="{Binding Name}" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" Margin="0" />
                                 </DataTemplate>
                             </material:DataGridColumn.CellItemTemplate>
                         </material:DataGridColumn>
@@ -51,14 +49,16 @@
                         <material:DataGridColumn Title="Student Age">
                             <material:DataGridColumn.CellItemTemplate>
                                 <DataTemplate>
-                                    <Border BackgroundColor="Green" uranium:DynamicTint.BackgroundColorOpacity="0.5" Padding="5">
-                                        <Label Text="{Binding Age}" TextColor="Blue" />
+                                    <Border Padding="6" HorizontalOptions="Center" VerticalOptions="Center"
+                                            StrokeShape="RoundRectangle 6"
+                                            BackgroundColor="{AppThemeBinding Light={StaticResource Tertiary}, Dark={StaticResource TertiaryDark}}">
+                                        <plain:EntryView Text="{Binding Age}" TextColor="{AppThemeBinding Light={StaticResource OnTertiary}, Dark={StaticResource OnTertiaryDark}}" HorizontalOptions="Center"/>
                                     </Border>
                                 </DataTemplate>
                             </material:DataGridColumn.CellItemTemplate>
                         </material:DataGridColumn>
 
-                        <material:DataGridColumn Binding="{Binding Id}" Title="Identity" />
+                        <material:DataGridColumn ValueBinding="{Binding Id}" Title="Identity" />
 
                         <material:DataGridColumn Title="Actions" >
                             <material:DataGridColumn.CellItemTemplate>

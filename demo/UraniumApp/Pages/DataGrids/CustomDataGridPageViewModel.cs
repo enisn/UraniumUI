@@ -1,12 +1,15 @@
-﻿using System.Collections.ObjectModel;
+﻿using Bogus;
+using DotNurse.Injector.Attributes;
+using ReactiveUI;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
+using UraniumUI.Dialogs;
 
 namespace UraniumApp.Pages.DataGrids;
 
+[RegisterAs(typeof(CustomDataGridPageViewModel))]
 public class CustomDataGridPageViewModel : BindableObject
 {
-    static Random random = new();
-
     private ObservableCollection<Student> items;
     public ObservableCollection<Student> Items { get => items; protected set { items = value; OnPropertyChanged(); } }
     private bool isBusy;
@@ -15,20 +18,18 @@ public class CustomDataGridPageViewModel : BindableObject
     public ICommand AddNewCommand { get; set; }
     public ICommand RemoveItemCommand { get; set; }
     public int Row { get; set; }
-    public string Name { get; set; } = "Student Custom 1";
 
-    public CustomDataGridPageViewModel()
+    public CustomDataGridPageViewModel(IDialogService dialogService)
     {
         Initialize();
 
-        AddNewCommand = new Command(() =>
+        AddNewCommand = new Command(async () =>
         {
-            Items.Insert(Row, new Student
-            {
-                Age = random.Next(10, 99),
-                Id = random.Next(0, int.MaxValue),
-                Name = Name
-            });
+            var newStudent = StudentDataStore.faker.Generate();
+
+            newStudent.Name = await dialogService.DisplayTextPromptAsync("New Student", "Enter the name of the new student", "Add", "Cancel", initialValue: newStudent.Name);
+
+            Items.Add(newStudent);
         });
 
         RemoveItemCommand = new Command((item) =>
@@ -46,38 +47,40 @@ public class CustomDataGridPageViewModel : BindableObject
         Items = new ObservableCollection<Student>(await DataStore.GetListAsync());
         IsBusy = false;
     }
+}
 
-    public class Student
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public int Age { get; set; }
-        public Guid SecurityStamp { get; set; } = Guid.NewGuid();
-        public DateTime RegistrationDate { get; set; } = DateTime.UtcNow.AddDays(-1 * random.Next(1, 2100));
-    }
+public class Student
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public int Age { get; set; }
+    public Guid SecurityStamp { get; set; } = Guid.NewGuid();
+    public DateTime RegistrationDate { get; set; }
+}
 
-    public class StudentDataStore
+public class StudentDataStore
+{
+    internal static Faker<Student> faker = new Faker<Student>()
+        .RuleFor(x => x.Id, f => f.IndexFaker)
+        .RuleFor(x => x.Name, f => f.Person.FullName)
+        .RuleFor(x => x.Age, f => f.Random.Number(14, 85))
+        .RuleFor(x => x.SecurityStamp, f => f.Random.Guid())
+        .RuleFor(x => x.RegistrationDate, f => f.Date.Past(1));
+
+    public async Task<List<Student>> GetListAsync(bool simulateNetwork = true)
     {
-        public async Task<List<Student>> GetListAsync(bool simulateNetwork = true)
+        if (simulateNetwork)
         {
-            if (simulateNetwork)
-            {
-                await Task.Delay(random.Next(500, 2000));
-            }
-
-            var list = new List<Student>();
-
-            for (int i = 0; i < 18; i++)
-            {
-                list.Add(new Student
-                {
-                    Id = i,
-                    Name = "Student " + i,
-                    Age = random.Next(14, 85),
-                });
-            }
-
-            return list;
+            await Task.Delay(Random.Shared.Next(500, 2000));
         }
+
+        var list = new List<Student>();
+
+        for (int i = 0; i < 12; i++)
+        {
+            list.Add(faker.Generate());
+        }
+
+        return list;
     }
 }

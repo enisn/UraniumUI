@@ -319,8 +319,8 @@ public static class MopupsDialogExtensions
                         cancel,
                         new Command(() =>
                         {
-                                tcs.SetResult(null);
-                                MopupService.Instance.PopAsync();
+                            tcs.SetResult(null);
+                            MopupService.Instance.PopAsync();
                         }))
                 }
             })

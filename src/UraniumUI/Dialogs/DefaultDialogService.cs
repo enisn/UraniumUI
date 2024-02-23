@@ -72,7 +72,6 @@ public class DefaultDialogService : IDialogService
                             })
                         },
                         {
-
                             cancelText, new Command(() =>
                             {
                                 tcs.SetResult(false);
@@ -320,7 +319,7 @@ public class DefaultDialogService : IDialogService
         return tcs.Task;
     }
 
-    public Task<TViewModel> DisplayFormViewAsync<TViewModel>(string title, TViewModel viewModel = null, string submit = "OK", string cancel = "Cancel", string reset = null) where TViewModel : class
+    public Task<TViewModel> DisplayFormViewAsync<TViewModel>(string title, TViewModel viewModel = null, string submit = "OK", string cancel = "Cancel") where TViewModel : class
     {
         var tcs = new TaskCompletionSource<TViewModel>();
         var currentPage = GetCurrentPage();

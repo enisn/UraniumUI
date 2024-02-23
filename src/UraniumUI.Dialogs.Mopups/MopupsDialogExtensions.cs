@@ -321,7 +321,6 @@ public static class MopupsDialogExtensions
                         {
                                 tcs.SetResult(null);
                                 MopupService.Instance.PopAsync();
-
                         }))
                 }
             })

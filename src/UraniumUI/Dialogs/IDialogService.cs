@@ -45,6 +45,5 @@ public interface IDialogService
         string title,
         TViewModel viewModel = default,
         string submit = "OK",
-        string cancel = "Cancel",
-        string reset = null) where TViewModel : class;
+        string cancel = "Cancel") where TViewModel : class;
 }

@@ -30,9 +30,9 @@ public class MopupsDialogService : IDialogService
         return GetCurrentPage().DisplayViewAsync(title, content, okText);
     }
 
-    public Task<TViewModel> DisplayFormViewAsync<TViewModel>(string title, TViewModel viewModel = null, string submit = "OK", string cancel = "Cancel", string reset = null) where TViewModel : class
+    public Task<TViewModel> DisplayFormViewAsync<TViewModel>(string title, TViewModel viewModel = null, string submit = "OK", string cancel = "Cancel") where TViewModel : class
     {
-        return GetCurrentPage().DisplayFormViewAsync(title, viewModel, submit, cancel, reset);
+        return GetCurrentPage().DisplayFormViewAsync(title, viewModel, submit, cancel);
     }
 
     protected virtual Page GetCurrentPage()

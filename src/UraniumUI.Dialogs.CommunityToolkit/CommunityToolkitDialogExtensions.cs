@@ -443,7 +443,7 @@ public static class CommunityToolkitDialogExtensions
         return tcs.Task;
     }
 
-    public static Task<TViewModel> DisplayFormViewAsync<TViewModel>(this Page page, string title, TViewModel viewModel = null, string submit = "OK", string cancel = "Cancel", string reset = null) where TViewModel : class
+    public static Task<TViewModel> DisplayFormViewAsync<TViewModel>(this Page page, string title, TViewModel viewModel = null, string submit = "OK", string cancel = "Cancel") where TViewModel : class
     {
         var tcs = new TaskCompletionSource<TViewModel>();
         var calculatedSize = CalculateSize(page);

@@ -114,7 +114,7 @@ public class AutoFormView : FormView
         {
             flags |= BindingFlags.FlattenHierarchy;
         }
-        var props = Source.GetType()
+        var props = Source?.GetType()
             .GetProperties(flags)
             .Where(x => HierarchyLimitType.IsAssignableFrom(x.PropertyType))
             .ToArray();

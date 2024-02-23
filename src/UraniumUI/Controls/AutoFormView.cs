@@ -23,9 +23,9 @@ public class AutoFormView : FormView
         get => _footerView.Content; set
         {
             _footerView.Content = value;
-            if (_propertiesContainer.Children.Count > 0 && !_propertiesContainer.Contains(_footerView))
+            if (_itemsLayout.Children.Count > 0 && !_itemsLayout.Contains(_footerView))
             {
-                _propertiesContainer.Children.Add(_footerView);
+                _itemsLayout.Children.Add(_footerView);
             }
         }
     }
@@ -36,7 +36,7 @@ public class AutoFormView : FormView
 
     public Type HierarchyLimitType { get; set; } = typeof(object);
 
-    private Layout _propertiesContainer = new VerticalStackLayout
+    private Layout _itemsLayout = new VerticalStackLayout
     {
         Spacing = 20,
         Padding = 10,
@@ -44,29 +44,30 @@ public class AutoFormView : FormView
 
     public Layout ItemsLayout
     {
-        get => _propertiesContainer;
+        get => _itemsLayout;
         set
         {
-            Children.Remove(_propertiesContainer);
-            while (_propertiesContainer.Children.Count > 0)
+            Children.Remove(_itemsLayout);
+            while (_itemsLayout.Children.Count > 0)
             {
-                var item = _propertiesContainer.Children.First();
-                _propertiesContainer.Children.Remove(item);
+                var item = _itemsLayout.Children.First();
+                _itemsLayout.Children.Remove(item);
                 value.Children.Add(item);
             }
-            _propertiesContainer = value;
-            Children.Add(_propertiesContainer);
+            _itemsLayout = value;
+            Children.Add(_itemsLayout);
         }
     }
 
     protected Dictionary<Type, AutoFormViewOptions.EditorForType> EditorMapping { get; }
 
+    protected AutoFormViewOptions Options { get; }
     public AutoFormView()
     {
-        Children.Add(_propertiesContainer);
+        Children.Add(_itemsLayout);
 
-        var options = UraniumServiceProvider.Current.GetRequiredService<IOptions<AutoFormViewOptions>>();
-        EditorMapping = options.Value.EditorMapping;
+        Options = UraniumServiceProvider.Current.GetRequiredService<IOptions<AutoFormViewOptions>>().Value;
+        EditorMapping = Options.EditorMapping;
     }
 
     protected void OnSourceChanged()
@@ -90,7 +91,7 @@ public class AutoFormView : FormView
     {
         if (Source is null)
         {
-            _propertiesContainer.Children.Clear();
+            _itemsLayout.Children.Clear();
             return;
         }
 
@@ -99,11 +100,11 @@ public class AutoFormView : FormView
             var createEditor = EditorMapping.FirstOrDefault(x => x.Key.IsAssignableFrom(property.PropertyType.AsNonNullable())).Value;
             if (createEditor != null)
             {
-                _propertiesContainer.Children.Add(createEditor(property, Source));
+                _itemsLayout.Children.Add(createEditor(property, Source));
             }
             else if (ShowMissingProperties)
             {
-                _propertiesContainer.Children.Add(new Label
+                _itemsLayout.Children.Add(new Label
                 {
                     Text = $"No editor for {property.Name} ({property.PropertyType})",
                     FontAttributes = FontAttributes.Italic
@@ -111,9 +112,9 @@ public class AutoFormView : FormView
             }
         }
         
-        if (!_propertiesContainer.Children.Contains(_footerView))
+        if (!_itemsLayout.Children.Contains(_footerView))
         {
-            _propertiesContainer.Children.Add(_footerView);
+            _itemsLayout.Children.Add(_footerView);
         }
 
         if (_footerView.Content == null)
@@ -150,7 +151,7 @@ public class AutoFormView : FormView
     {
         var editor = new Entry();
         editor.SetBinding(Entry.TextProperty, new Binding(property.Name, source: source));
-
+        
         return new VerticalStackLayout
         {
             new Label { Text = property.Name },
@@ -200,7 +201,7 @@ public class AutoFormView : FormView
         };
     }
 
-    private static View CreateSelectionViewForValues(Array values, PropertyInfo property, object source)
+    public static View CreateSelectionViewForValues(Array values, PropertyInfo property, object source)
     {
         var shouldUseSingleColumn = values.Length > 3;
         var editor = new SelectionView
@@ -243,7 +244,7 @@ public class AutoFormView : FormView
         };
     }
 
-    private static View EditorForDateTime(PropertyInfo property, object source)
+    public static View EditorForDateTime(PropertyInfo property, object source)
     {
         var editor = new DatePicker();
         editor.SetBinding(DatePicker.DateProperty, new Binding(property.Name, source: source));
@@ -255,7 +256,7 @@ public class AutoFormView : FormView
         };
     }
 
-    private static View EditorForTimeSpan(PropertyInfo property, object source)
+    public static View EditorForTimeSpan(PropertyInfo property, object source)
     {
         var editor = new TimePicker();
         editor.SetBinding(TimePicker.TimeProperty, new Binding(property.Name, source: source));

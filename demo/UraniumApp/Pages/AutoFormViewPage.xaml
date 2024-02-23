@@ -10,6 +10,9 @@
              Title="AutoFormViewPage">
     <VerticalStackLayout>
         <uranium:AutoFormView Source="{Binding .}" ShowMissingProperties="False">
+            <uranium:AutoFormView.FooterLayout>
+                <FlexLayout JustifyContent="SpaceEvenly" />
+            </uranium:AutoFormView.FooterLayout>
         </uranium:AutoFormView>
     </VerticalStackLayout>
 </ContentPage>

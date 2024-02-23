@@ -18,18 +18,29 @@ public class AutoFormView : FormView
 
     public PropertyInfo[] EditingProperties { get; protected set; }
 
-    private ContentView _footerView = new ContentView();
-    public View FooterView
-    {
-        get => _footerView.Content; set
-        {
-            _footerView.Content = value;
-            if (_itemsLayout.Children.Count > 0 && !_itemsLayout.Contains(_footerView))
-            {
-                _itemsLayout.Children.Add(_footerView);
-            }
-        }
-    }
+    public bool ShowSubmitButton { get => (bool)GetValue(ShowSubmitbuttonProperty); set => SetValue(ShowSubmitbuttonProperty, value); }
+
+    public static readonly BindableProperty ShowSubmitbuttonProperty = BindableProperty.Create(
+        nameof(ShowSubmitButton), typeof(bool), typeof(AutoFormView), defaultValue: true,
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as AutoFormView).OnShowSubmitButtonChanged());
+
+    public bool ShowResetButton { get => (bool)GetValue(ShowResetButtonProperty); set => SetValue(ShowResetButtonProperty, value); }
+
+    public static readonly BindableProperty ShowResetButtonProperty = BindableProperty.Create(
+        nameof(ShowResetButton), typeof(bool), typeof(AutoFormView), defaultValue: true,
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as AutoFormView).OnShowResetButtonChanged());
+
+    public string SubmitButtonText { get => (string)GetValue(SubmitButtonTextProperty); set => SetValue(SubmitButtonTextProperty, value); }
+
+    public static readonly BindableProperty SubmitButtonTextProperty = BindableProperty.Create(
+        nameof(SubmitButtonText), typeof(string), typeof(AutoFormView), defaultValue: "Submit",
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as AutoFormView).OnSubmitButtonTextChanged());
+
+    public string ResetButtonText { get => (string)GetValue(ResetButtonTextProperty); set => SetValue(ResetButtonTextProperty, value); }
+
+    public static readonly BindableProperty ResetButtonTextProperty = BindableProperty.Create(
+        nameof(ResetButtonText), typeof(string), typeof(AutoFormView), defaultValue: "Reset",
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as AutoFormView).OnResetButtonTextChanged());
 
     public bool ShowMissingProperties { get; set; } = true;
 
@@ -59,6 +70,28 @@ public class AutoFormView : FormView
             if (_itemsLayout != null)
             {
                 Children.Add(_itemsLayout);
+            }
+        }
+    }
+
+    private Layout _footerLayout = new VerticalStackLayout { Spacing = 12 };
+
+    public Layout FooterLayout
+    {
+        get => _footerLayout;
+        set
+        {
+            ItemsLayout.Remove(_footerLayout);
+            while (ItemsLayout.Children.Count > 0)
+            {
+                var item = _footerLayout.Children.First();
+                ItemsLayout.Children.Remove(item);
+                value?.Children.Add(item);
+            }
+            _footerLayout = value;
+            if (ItemsLayout.Children.Count > 0 && _footerLayout != null)
+            {
+                ItemsLayout.Children.Add(_footerLayout);
             }
         }
     }
@@ -128,39 +161,80 @@ public class AutoFormView : FormView
             }
         }
 
-        if (!_itemsLayout.Children.Contains(_footerView))
+        if (!_itemsLayout.Children.Contains(_footerLayout))
         {
-            _itemsLayout.Children.Add(_footerView);
-        }
-
-        if (_footerView.Content == null)
-        {
-            _footerView.Content = GetFooter();
+            _itemsLayout.Children.Add(_footerLayout);
+            OnShowSubmitButtonChanged();
+            OnShowResetButtonChanged();
         }
     }
 
-    protected virtual View GetFooter()
+    Button? submitButton;
+    protected virtual void OnShowSubmitButtonChanged()
     {
-        var submitButton = new Button
+        if (ShowSubmitButton)
         {
-            Text = "Submit",
-            StyleClass = new List<string> { "FilledButton" },
-        };
+            if (submitButton is null)
+            {
+                submitButton = new Button
+                {
+                    Text = SubmitButtonText,
+                    StyleClass = new[] { "FilledButton" },
+                    Command = new Command(Submit)
+                };
+                _footerLayout.Children.Insert(0, submitButton);
+            }
+        }
+        else
+        {
+            if (submitButton is not null)
+            {
+                _footerLayout.Children.Remove(submitButton);
+                submitButton = null;
+            }
+        }
+    }
 
-        var resetButton = new Button
+    Button? resetButton;
+    protected virtual void OnShowResetButtonChanged()
+    {
+        if (ShowResetButton)
         {
-            Text = "Reset",
-            StyleClass = new List<string> { "OutlinedButton" },
-        };
+            if (resetButton is null)
+            {
+                resetButton = new Button
+                {
+                    Text = ResetButtonText,
+                    StyleClass = new[] { "OutlinedButton" },
+                    Command = new Command(Reset)
+                };
+                _footerLayout.Children.Add(resetButton);
+            }
+        }
+        else
+        {
+            if (resetButton != null)
+            {
+                _footerLayout.Children.Remove(resetButton);
+                resetButton = null;
+            }
+        }
+    }
 
-        FormView.SetIsSubmitButton(submitButton, true);
-        FormView.SetIsResetButton(resetButton, true);
-        return new StackLayout
+    protected virtual void OnSubmitButtonTextChanged()
+    {
+        if (submitButton != null)
         {
-            Margin = new Thickness(10),
-            Spacing = 12,
-            Children = { submitButton, resetButton }
-        };
+            submitButton.Text = SubmitButtonText;
+        }
+    }
+
+    protected virtual void OnResetButtonTextChanged()
+    {
+        if (resetButton != null)
+        {
+            resetButton.Text = ResetButtonText;
+        }
     }
 
     public static View EditorForString(PropertyInfo property, object source)

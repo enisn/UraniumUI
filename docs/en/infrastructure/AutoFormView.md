@@ -111,6 +111,19 @@ You can customize the `ItemsLayout` of the `AutoFormView` using the `ItemsLayout
 ![AutoFormView](images/autoformview-itemslayout-grid-dark.png)
 
 
+## FooterLayout
+You can customize the `FooterLayout` of the `AutoFormView` using the `FooterLayout` property. For example, you can use a `HorizontalStackLayout` to display the buttons in a horizontal stack.
+
+```xml
+<uranium:AutoFormView Source="{Binding .}" ShowMissingProperties="False">
+    <uranium:AutoFormView.FooterLayout>
+        <FlexLayout JustifyContent="SpaceEvenly" />
+    </uranium:AutoFormView.FooterLayout>
+</uranium:AutoFormView>
+```
+
+![AutoFormView](images/autoformview-footerlayout-dark.png)
+
 ## ShowMissingProperties
 
 You can configure the `AutoFormView` to show missing properties using the `ShowMissingProperties` property. For example, you can set the `ShowMissingProperties` to `true` to show all properties of the model.
@@ -120,3 +133,11 @@ You can configure the `AutoFormView` to show missing properties using the `ShowM
 ```
 
 ![AutoFormView](images/autoformview-showmissingproperties-dark.png)
+
+
+## Other Properties
+
+- `ShowSubmitButton`: Indicates whether the submit button is visible. The default value is `true`.
+- `SohwResetButton`: Indicates whether the reset button is visible. The default value is `true`.
+- `SubmitButtonText`: The text of the submit button. The default value is `Submit`.
+- `ResetButtonText`: The text of the reset button. The default value is `Reset`.

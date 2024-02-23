@@ -4,6 +4,7 @@ using UraniumUI.Extensions;
 using UraniumUI.Resources;
 using UraniumUI.Options;
 using Microsoft.Extensions.Options;
+using InputKit.Shared.Abstraction;
 
 namespace UraniumUI.Controls;
 public class AutoFormView : FormView
@@ -52,10 +53,13 @@ public class AutoFormView : FormView
             {
                 var item = _itemsLayout.Children.First();
                 _itemsLayout.Children.Remove(item);
-                value.Children.Add(item);
+                value?.Children.Add(item);
             }
             _itemsLayout = value;
-            Children.Add(_itemsLayout);
+            if (_itemsLayout != null)
+            {
+                Children.Add(_itemsLayout);
+            }
         }
     }
 
@@ -100,7 +104,19 @@ public class AutoFormView : FormView
             var createEditor = EditorMapping.FirstOrDefault(x => x.Key.IsAssignableFrom(property.PropertyType.AsNonNullable())).Value;
             if (createEditor != null)
             {
-                _itemsLayout.Children.Add(createEditor(property, Source));
+                var editor = createEditor(property, Source);
+
+                foreach (var action in Options.PostEditorActions)
+                {
+                    action(editor, property);
+                }
+
+                if (editor is IValidatable validatable && Options.ValidationFactory != null)
+                {
+                    validatable.Validations.AddRange(Options.ValidationFactory(property));
+                }
+
+                _itemsLayout.Children.Add(editor);
             }
             else if (ShowMissingProperties)
             {
@@ -111,7 +127,7 @@ public class AutoFormView : FormView
                 });
             }
         }
-        
+
         if (!_itemsLayout.Children.Contains(_footerView))
         {
             _itemsLayout.Children.Add(_footerView);
@@ -151,7 +167,7 @@ public class AutoFormView : FormView
     {
         var editor = new Entry();
         editor.SetBinding(Entry.TextProperty, new Binding(property.Name, source: source));
-        
+
         return new VerticalStackLayout
         {
             new Label { Text = property.Name },

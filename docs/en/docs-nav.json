@@ -20,6 +20,10 @@
           "path": "infrastructure/GridLayout.md"
         },
         {
+          "text": "Auto Form View",
+          "path": "infrastructure/AutoFormView.md"
+        },
+        {
           "text": "ExpanderView",
           "path": "infrastructure/ExpanderView.md"
         },

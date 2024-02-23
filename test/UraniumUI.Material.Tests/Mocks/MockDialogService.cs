@@ -13,13 +13,33 @@ internal class MockDialogService : IDialogService
         return Task.FromResult(Enumerable.Empty<T>());
     }
 
-    public Task<T> DisplayRadioButtonPromptAsync<T>(string message, IEnumerable<T> selectionSource, T selected = default, string accept = "Ok", string cancel = "Cancel", string displayMember = null)
+    public Task DisplayFormViewAsync<TViewModel>(string title, TViewModel viewModel = null, string submit = "OK", string cancel = "Cancel", string reset = null) where TViewModel : class
+    {
+        return Task.CompletedTask;
+    }
+
+    public Task<T> DisplayRadioButtonPromptAsync<T>(string message, IEnumerable<T> selectionSource, T selected = default, string accept = "Ok", string cancel = "Cancel", string displayMember = null, bool isPassword = false)
     {
         return Task.FromResult(default(T));
+    }
+
+    public Task<T> DisplayRadioButtonPromptAsync<T>(string message, IEnumerable<T> selectionSource, T selected = default, string accept = "Ok", string cancel = "Cancel", string displayMember = null)
+    {
+        throw new NotImplementedException();
     }
 
     public Task<string> DisplayTextPromptAsync(string title, string message, string accept = "OK", string cancel = "Cancel", string placeholder = null, int maxLength = -1, Keyboard keyboard = null, string initialValue = "")
     {
         return Task.FromResult(string.Empty);
+    }
+
+    public Task<string> DisplayTextPromptAsync(string title, string message, string accept = "OK", string cancel = "Cancel", string placeholder = null, int maxLength = -1, Keyboard keyboard = null, string initialValue = "", bool isPassword = false)
+    {
+        return Task.FromResult(string.Empty);
+    }
+
+    public Task DisplayViewAsync(string title, View content, string okText = "OK")
+    {
+        return Task.CompletedTask;
     }
 }

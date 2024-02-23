@@ -284,7 +284,8 @@ public static class CommunityToolkitDialogExtensions
         string placeholder = null,
         int maxLength = -1,
         Keyboard keyboard = null,
-        string initialValue = "")
+        string initialValue = "",
+        bool isPassword = false)
     {
         var tcs = new TaskCompletionSource<string>();
         var calculatedSize = CalculateSize(page);
@@ -323,6 +324,7 @@ public static class CommunityToolkitDialogExtensions
             PlaceholderColor = ColorResource.GetColor("Background", "BackgroundDark").WithAlpha(.5f),
             BackgroundColor = Colors.Transparent,
             Text = initialValue,
+            IsPassword = isPassword
         };
 
         var entryholder = new Border

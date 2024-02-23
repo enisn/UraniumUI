@@ -8,6 +8,40 @@ namespace UraniumUI.Dialogs;
 
 public class DefaultDialogService : IDialogService
 {
+    public Task DisplayViewAsync(string title, View content, string okText = "OK")
+    {
+        var tcs = new TaskCompletionSource<bool>();
+        var currentPage = GetCurrentPage();
+
+        var popupPage = new ContentPage
+        {
+            BackgroundColor = GetBackdropColor(),
+            Content = GetFrame(currentPage.Width, new VerticalStackLayout
+            {
+                Children =
+                {
+                    GetHeader(title),
+                    content,
+                    GetDivider(),
+                    GetFooter(new Dictionary<string, Command>
+                    {
+                        {
+                            okText, new Command(() =>
+                            {
+                                tcs.SetResult(true);
+                                currentPage.Navigation.PopModalAsync(animated: false);
+                            })
+                        }
+                    })
+                }
+            })
+        };
+
+        currentPage.Navigation.PushModalAsync(ConfigurePopupPage(popupPage), animated: false);
+
+        return tcs.Task;
+    }
+
     public async Task<bool> ConfirmAsync(string title, string message, string okText = "OK", string cancelText = "Cancel")
     {
         var tcs = new TaskCompletionSource<bool>();
@@ -27,15 +61,24 @@ public class DefaultDialogService : IDialogService
                         Margin = 20,
                     },
                     GetDivider(),
-                    GetFooter(okText, new Command(() =>
+                    GetFooter(new Dictionary<string, Command>
                     {
-                        tcs.SetResult(true);
-                        currentPage.Navigation.PopModalAsync(animated: false);
-                    }), cancelText, new Command(() =>
-                    {
-                        tcs.SetResult(false);
-                        currentPage.Navigation.PopModalAsync(animated: false);
-                    }))
+                        {
+                            okText, new Command(() =>
+                            {
+                                tcs.SetResult(true);
+                                currentPage.Navigation.PopModalAsync(animated: false);
+                            })
+                        },
+                        {
+
+                            cancelText, new Command(() =>
+                            {
+                                tcs.SetResult(false);
+                                currentPage.Navigation.PopModalAsync(animated: false);
+                            })
+                        }
+                    })
                 }
             })
         };
@@ -91,17 +134,23 @@ public class DefaultDialogService : IDialogService
         rootGrid.Add(GetHeader(message));
         rootGrid.Add(new ScrollView { Content = checkBoxGroup, VerticalOptions = LayoutOptions.Start, MaximumHeightRequest = currentPage.Height * 0.6, }, row: 1);
         rootGrid.Add(GetDivider(), row: 2);
-        rootGrid.Add(GetFooter(
-            accept, new Command(() =>
+        rootGrid.Add(GetFooter(new Dictionary<string, Command>
+        {
             {
-                tcs.TrySetResult(checkBoxGroup.Children.Where(x => x is CheckBox checkbox && checkbox.IsChecked).Select(s => (T)(s as CheckBox).CommandParameter));
-                currentPage.Navigation.PopModalAsync(animated: false);
-            }),
-            cancel, new Command(() =>
+                accept, new Command(() =>
+                {
+                    tcs.TrySetResult(checkBoxGroup.Children.Where(x => x is CheckBox checkbox && checkbox.IsChecked).Select(s => (T)(s as CheckBox).CommandParameter));
+                    currentPage.Navigation.PopModalAsync(animated: false);
+                })
+            },
             {
-                tcs.TrySetResult(null);
-                currentPage.Navigation.PopModalAsync(animated: false);
-            })
+                cancel, new Command(() =>
+                {
+                    tcs.TrySetResult(null);
+                    currentPage.Navigation.PopModalAsync(animated: false);
+                })
+            }
+        }
         ), row: 3);
 
         var popupPage = new ContentPage
@@ -160,18 +209,23 @@ public class DefaultDialogService : IDialogService
         rootGrid.Add(GetHeader(message));
         rootGrid.Add(new ScrollView { Content = rbGroup, VerticalOptions = LayoutOptions.Start, MaximumHeightRequest = currentPage.Height * 0.6, }, row: 1);
         rootGrid.Add(GetDivider(), row: 2);
-        rootGrid.Add(GetFooter(
-            accept, new Command(() =>
+        rootGrid.Add(GetFooter(new Dictionary<string, Command>
+        {
             {
-                tcs.TrySetResult((T)rbGroup.SelectedItem);
-                currentPage.Navigation.PopModalAsync(animated: false);
-            }),
-            cancel, new Command(() =>
+                accept, new Command(() =>
+                {
+                    tcs.TrySetResult((T)rbGroup.SelectedItem);
+                    currentPage.Navigation.PopModalAsync(animated: false);
+                })
+            },
             {
-                tcs.TrySetResult(default);
-                currentPage.Navigation.PopModalAsync(animated: false);
-            })
-        ), row: 3);
+                cancel, new Command(() =>
+                {
+                    tcs.TrySetResult(default);
+                    currentPage.Navigation.PopModalAsync(animated: false);
+                })
+            }
+        }), row: 3);
 
         currentPage.Navigation.PushModalAsync(ConfigurePopupPage(new ContentPage
         {
@@ -190,7 +244,8 @@ public class DefaultDialogService : IDialogService
         string placeholder = null,
         int maxLength = -1,
         Keyboard keyboard = null,
-        string initialValue = "")
+        string initialValue = "",
+        bool isPassword = false)
     {
         var tcs = new TaskCompletionSource<string>();
 
@@ -205,6 +260,7 @@ public class DefaultDialogService : IDialogService
             PlaceholderColor = ColorResource.GetColor("Background", "BackgroundDark", Colors.Gray).WithAlpha(.5f),
             BackgroundColor = Colors.Transparent,
             Text = initialValue,
+            IsPassword = isPassword
         };
 
         var entryholder = new Border
@@ -237,17 +293,23 @@ public class DefaultDialogService : IDialogService
                     },
                     entryholder,
                     GetDivider(),
-                    GetFooter(
-                        accept, new Command(()=>
+                    GetFooter(new Dictionary<string, Command>
+                    {
                         {
-                            tcs.TrySetResult(entry.Text);
-                            currentPage.Navigation.PopModalAsync(animated: false);
-                        }),
-                        cancel, new Command(()=>
+                            accept, new Command(() =>
+                            {
+                                tcs.TrySetResult(entry.Text);
+                                currentPage.Navigation.PopModalAsync(animated: false);
+                            })
+                        },
                         {
-                            tcs.TrySetResult(initialValue);
-                            currentPage.Navigation.PopModalAsync(animated: false);
-                        }))
+                            cancel, new Command(() =>
+                            {
+                                tcs.TrySetResult(initialValue);
+                                currentPage.Navigation.PopModalAsync(animated: false);
+                            })
+                        }
+                    })
                 }
             })
         };
@@ -255,6 +317,63 @@ public class DefaultDialogService : IDialogService
         currentPage.Navigation.PushModalAsync(ConfigurePopupPage(popupPage), animated: false);
 
         return tcs.Task;
+    }
+
+    public Task DisplayFormViewAsync(string title, FormView formView, string submit = "OK", string cancel = "Cancel", string reset = null)
+    {
+        var tcs = new TaskCompletionSource<bool>();
+        var currentPage = GetCurrentPage();
+
+        var popupPage = new ContentPage
+        {
+            BackgroundColor = GetBackdropColor(),
+            Content = GetFrame(currentPage.Width, new VerticalStackLayout
+            {
+                Children =
+                {
+                    GetHeader(title),
+                    formView,
+                    GetDivider(),
+                    GetFooter(new Dictionary<string, Command>
+                    {
+                        {
+                            submit, new Command(() =>
+                            {
+                                formView.Submit();
+                                if (formView.IsValidated)
+                                {
+                                    tcs.SetResult(true);
+                                    currentPage.Navigation.PopModalAsync(animated: false);
+                                }
+                            })
+                        },
+                        {
+                            cancel, new Command(() =>
+                            {
+                                tcs.SetResult(false);
+                                currentPage.Navigation.PopModalAsync(animated: false);
+                            })
+                        },
+                        {
+                            reset, new Command(() =>
+                            {
+                                formView.Reset();
+                            })
+                        }
+                    })
+                }
+            })
+        };
+
+        currentPage.Navigation.PushModalAsync(ConfigurePopupPage(popupPage), animated: false);
+
+        return tcs.Task;
+
+    }
+
+    public Task DisplayFormViewAsync<TViewModel>(string title, TViewModel viewModel = null, string submit = "OK", string cancel = "Cancel", string reset = null) where TViewModel : class
+    {
+        throw new NotImplementedException();
     }
 
     protected virtual Page GetCurrentPage()
@@ -320,10 +439,12 @@ public class DefaultDialogService : IDialogService
 
         return frame;
     }
+
     protected virtual BoxView GetDivider()
     {
         return new BoxView { StyleClass = new[] { "Divider" }, Margin = 0, HeightRequest = 1 };
     }
+
     protected virtual View GetHeader(string title)
     {
         return new StackLayout
@@ -341,27 +462,25 @@ public class DefaultDialogService : IDialogService
         };
     }
 
-    protected virtual View GetFooter(string accept, Command acceptCommand, string cancel, Command cancelCommand)
+    protected virtual View GetFooter(Dictionary<string, Command> footerButtons)
     {
-        return new FlexLayout
+        var layout = new FlexLayout
         {
             JustifyContent = Microsoft.Maui.Layouts.FlexJustify.End,
             Margin = new Thickness(10),
-            Children =
-            {
-                new Button
-                {
-                    Text = cancel,
-                    StyleClass = new []{ "TextButton", "Dialog.Cancel" },
-                    Command = cancelCommand
-                },
-                new Button
-                {
-                    Text = accept,
-                    StyleClass = new []{ "TextButton", "Dialog.Accept" },
-                    Command = acceptCommand
-                }
-            }
         };
+
+        foreach (var item in footerButtons)
+        {
+            layout.Children.Add(new Button
+            {
+                Text = item.Key,
+                // Can be styled with StyleClass `Dialog.Button0`, `Dialog.Button1`, etc
+                StyleClass = new[] { "TextButton", "Dialog.Button" + layout.Children.Count },
+                Command = item.Value
+            });
+        }
+
+        return layout;
     }
 }

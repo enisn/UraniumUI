@@ -191,7 +191,8 @@ public static class MopupsDialogExtensions
         string placeholder = null,
         int maxLength = -1,
         Keyboard keyboard = null,
-        string initialValue = "")
+        string initialValue = "",
+        bool isPassword = false)
     {
         var tcs = new TaskCompletionSource<string>();
 
@@ -206,6 +207,7 @@ public static class MopupsDialogExtensions
             PlaceholderColor = ColorResource.GetColor("Background", "BackgroundDark", Colors.Gray).WithAlpha(.5f),
             BackgroundColor = Colors.Transparent,
             Text = initialValue,
+            IsPassword = isPassword
         };
 
         var entryholder = new Border

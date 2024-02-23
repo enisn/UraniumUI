@@ -45,7 +45,7 @@ public partial class TextField : InputField
     public TextField()
     {
         iconClear.TappedCommand = new Command(OnClearTapped);
-        
+
         UpdateClearIconState();
         EntryView.SetBinding(Entry.TextProperty, new Binding(nameof(Text), source: this));
         EntryView.SetBinding(Entry.ReturnCommandParameterProperty, new Binding(nameof(ReturnCommandParameter), source: this));
@@ -54,7 +54,11 @@ public partial class TextField : InputField
         EntryView.SetBinding(Entry.CursorPositionProperty, new Binding(nameof(CursorPosition), source: this));
         EntryView.SetBinding(Entry.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
         EntryView.SetBinding(Entry.IsReadOnlyProperty, new Binding(nameof(IsReadOnly), source: this));
+
+        AfterConstructor();
     }
+
+    partial void AfterConstructor();
 
     protected override void OnHandlerChanged()
     {

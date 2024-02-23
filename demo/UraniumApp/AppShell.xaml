@@ -144,6 +144,10 @@
     <FlyoutItem Title="Validations" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Warning}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
         <ShellContent Title="Validations" ContentTemplate="{DataTemplate pages:ValidationsPage}"/>
     </FlyoutItem>
+    
+    <FlyoutItem Title="AutoFormView" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Dynamic_form}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
+        <ShellContent Title="Blurs" ContentTemplate="{DataTemplate pages:AutoFormViewPage}"/>
+    </FlyoutItem>
 
     <FlyoutItem Title="Google AutoComplete" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Spellcheck}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
         <ShellContent Title="AutoComplete" ContentTemplate="{DataTemplate autocompletes:GoogleAutoCompletePage}"/>

@@ -3,6 +3,7 @@ using Plainer.Maui;
 using UraniumUI.Controls;
 using UraniumUI.Dialogs;
 using UraniumUI.Handlers;
+using UraniumUI.Options;
 using UraniumUI.Views;
 
 namespace UraniumUI;
@@ -21,6 +22,9 @@ public static class MauiProgramExtensions
         });
 
         builder.Services.AddTransient<IDialogService, DefaultDialogService>();
+
+        builder.ConfigureAutoFormViewDefaults();
+
         return builder;
     }
 

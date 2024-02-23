@@ -6,6 +6,8 @@ using ReactiveUI;
 using System.Reactive;
 using UraniumUI;
 using UraniumUI.Dialogs;
+using UraniumUI.Options;
+using UraniumUI.Validations;
 
 namespace UraniumApp;
 
@@ -30,6 +32,11 @@ public static class MauiProgram
                 fonts.AddMaterialSymbolsFonts();
                 fonts.AddFluentIconFonts();
             });
+
+        builder.Services.Configure<AutoFormViewOptions>(options =>
+        {
+            options.ValidationFactory = DataAnnotationValidation.CreateValidations;
+        });
 
         RxApp.DefaultExceptionHandler = new AnonymousObserver<Exception>(ex =>
         {

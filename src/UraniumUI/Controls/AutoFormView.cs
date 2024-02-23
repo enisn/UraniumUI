@@ -180,7 +180,7 @@ public class AutoFormView : FormView
                 {
                     Text = SubmitButtonText,
                     StyleClass = new[] { "FilledButton" },
-                    Command = new Command(Submit)
+                    Command = buttonSubmitCommand,
                 };
                 _footerLayout.Children.Insert(0, submitButton);
             }
@@ -206,7 +206,7 @@ public class AutoFormView : FormView
                 {
                     Text = ResetButtonText,
                     StyleClass = new[] { "OutlinedButton" },
-                    Command = new Command(Reset)
+                    Command = buttonResetCommand,
                 };
                 _footerLayout.Children.Add(resetButton);
             }

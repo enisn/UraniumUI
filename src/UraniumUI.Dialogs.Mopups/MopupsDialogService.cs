@@ -15,11 +15,6 @@ public class MopupsDialogService : IDialogService
         return GetCurrentPage().DisplayCheckBoxPromptAsync(message, selectionSource, selectedItems, accept, cancel, displayMember);
     }
 
-    public Task DisplayFormViewAsync<TViewModel>(string title, TViewModel viewModel = null, string submit = "OK", string cancel = "Cancel", string reset = null) where TViewModel : class
-    {
-        throw new NotImplementedException();
-    }
-
     public virtual Task<T> DisplayRadioButtonPromptAsync<T>(string message, IEnumerable<T> selectionSource, T selected = default, string accept = "Ok", string cancel = "Cancel", string displayMember = null)
     {
         return GetCurrentPage().DisplayRadioButtonPromptAsync(message, selectionSource, selected, accept, cancel, displayMember);
@@ -30,9 +25,14 @@ public class MopupsDialogService : IDialogService
         return GetCurrentPage().DisplayTextPromptAsync(title, message, accept, cancel, placeholder, maxLength, keyboard, initialValue, isPassword);
     }
 
-    public Task DisplayViewAsync(string title, View content, string okText = "OK")
+    public virtual Task DisplayViewAsync(string title, View content, string okText = "OK")
     {
-        throw new NotImplementedException();
+        return GetCurrentPage().DisplayViewAsync(title, content, okText);
+    }
+
+    public Task<TViewModel> DisplayFormViewAsync<TViewModel>(string title, TViewModel viewModel = null, string submit = "OK", string cancel = "Cancel", string reset = null) where TViewModel : class
+    {
+        return GetCurrentPage().DisplayFormViewAsync(title, viewModel, submit, cancel, reset);
     }
 
     protected virtual Page GetCurrentPage()

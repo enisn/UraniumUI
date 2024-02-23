@@ -4,6 +4,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.Maui;
 using Plainer.Maui.Controls;
 using System.Threading.Channels;
+using UraniumUI.Controls;
 using UraniumUI.Extensions;
 using UraniumUI.Resources;
 using CheckBox = InputKit.Shared.Controls.CheckBox;
@@ -309,7 +310,7 @@ public static class CommunityToolkitDialogExtensions
             Content = new ContentView
             {
                 BackgroundColor = Colors.Transparent,
-                Content = GetFrame(calculatedSize.Width, rootContainer) 
+                Content = GetFrame(calculatedSize.Width, rootContainer)
             }
         };
 #endif
@@ -386,6 +387,132 @@ public static class CommunityToolkitDialogExtensions
         return tcs.Task;
     }
 
+    public static Task DisplayViewAsync(this Page page, string title, View content, string okText = "OK")
+    {
+        var tcs = new TaskCompletionSource();
+        var calculatedSize = CalculateSize(page);
+        var rootContainer = new VerticalStackLayout();
+
+#if IOS || MACCATALYST
+        var popup = new Popup
+        {
+            Size = new Size(calculatedSize.Width, 230),
+            Color = ColorResource.GetColor("Surface", "SurfaceDark", Colors.Transparent),
+            CanBeDismissedByTappingOutsideOfPopup = false,
+            Content = rootContainer,
+        };
+        rootContainer.VerticalOptions = LayoutOptions.Center;
+#else
+        var popup = new Popup()
+        {
+            Size = new Size(page.Width, page.Height),
+            Color = Colors.Transparent,
+            CanBeDismissedByTappingOutsideOfPopup = false,
+            Content = new ContentView
+            {
+                BackgroundColor = Colors.Transparent,
+                Content = GetFrame(calculatedSize.Width, rootContainer)
+            }
+        };
+#endif
+
+        var footer = GetFooter(
+            okText,
+            new Command(() =>
+            {
+                tcs.SetResult();
+                popup.Close();
+            }));
+
+        rootContainer.Add(GetHeader(title));
+        rootContainer.Add(new ScrollView
+        {
+            Content = content,
+            VerticalOptions = LayoutOptions.Start,
+#if IOS || MACCATALYST
+            //MaximumHeightRequest = calculatedSize.Height
+#else
+            MaximumHeightRequest = calculatedSize.Height
+#endif
+        });
+        rootContainer.Add(GetDivider());
+        rootContainer.Add(footer);
+
+        page.ShowPopup(popup);
+
+        return tcs.Task;
+    }
+
+    public static Task<TViewModel> DisplayFormViewAsync<TViewModel>(this Page page, string title, TViewModel viewModel = null, string submit = "OK", string cancel = "Cancel", string reset = null) where TViewModel : class
+    {
+        var tcs = new TaskCompletionSource<TViewModel>();
+        var calculatedSize = CalculateSize(page);
+        var rootContainer = new VerticalStackLayout();
+
+        var formView = new AutoFormView
+        {
+            Padding = 8,
+            ShowResetButton = false,
+            ShowSubmitButton = false,
+            ShowMissingProperties = false,
+            Source = viewModel,
+        };
+
+#if IOS || MACCATALYST
+        var popup = new Popup
+        {
+            Size = new Size(calculatedSize.Width, 230),
+            Color = ColorResource.GetColor("Surface", "SurfaceDark", Colors.Transparent),
+            CanBeDismissedByTappingOutsideOfPopup = false,
+            Content = rootContainer,
+        };
+        rootContainer.VerticalOptions = LayoutOptions.Center;
+#else
+        var popup = new Popup()
+        {
+            Size = new Size(page.Width, page.Height),
+            Color = Colors.Transparent,
+            CanBeDismissedByTappingOutsideOfPopup = false,
+            Content = new ContentView
+            {
+                BackgroundColor = Colors.Transparent,
+                Content = GetFrame(calculatedSize.Width, rootContainer)
+            }
+        };
+#endif
+
+        var footer = GetFooter(
+            submit,
+            new Command(() =>
+            {
+                tcs.SetResult(viewModel);
+                popup.Close();
+            }),
+            cancel, 
+            new Command(() =>
+            {
+                tcs.SetResult(null);
+            }));
+
+        rootContainer.Add(GetHeader(title));
+        rootContainer.Add(new ScrollView
+        {
+            Content = formView,
+            VerticalOptions = LayoutOptions.Start,
+#if IOS || MACCATALYST
+            //MaximumHeightRequest = calculatedSize.Height
+#else
+            MaximumHeightRequest = calculatedSize.Height
+#endif
+        });
+        rootContainer.Add(GetDivider());
+        rootContainer.Add(footer);
+
+        page.ShowPopup(popup);
+
+        return tcs.Task;
+    }
+
     private static View GetFrame(double width, View content)
     {
         var frame = new Border
@@ -430,9 +557,9 @@ public static class CommunityToolkitDialogExtensions
         };
     }
 
-    private static View GetFooter(string accept, Command acceptCommand, string cancel, Command cancelCommand)
+    private static View GetFooter(string accept, Command acceptCommand, string cancel = null, Command cancelCommand = null)
     {
-        return new FlexLayout
+        var layout = new FlexLayout
         {
             JustifyContent = Microsoft.Maui.Layouts.FlexJustify.End,
             Margin = new Thickness(10),
@@ -441,17 +568,23 @@ public static class CommunityToolkitDialogExtensions
                 new Button
                 {
                     Text = cancel,
-                    StyleClass = new []{ "TextButton", "Dialog.Cancel" },
+                    StyleClass = new []{ "TextButton", "Dialog.Button0" },
                     Command = cancelCommand
                 },
-                new Button
-                {
-                    Text = accept,
-                    StyleClass = new []{ "TextButton", "Dialog.Accept" },
-                    Command = acceptCommand
-                }
             }
         };
+
+        if (!string.IsNullOrEmpty(cancel))
+        {
+            layout.Children.Add(new Button
+            {
+                Text = accept,
+                StyleClass = new[] { "TextButton", "Dialog.Button1" },
+                Command = acceptCommand
+            });
+        }
+
+        return layout;
     }
 
     private static Size CalculateSize(Page page)

@@ -13,11 +13,6 @@ internal class MockDialogService : IDialogService
         return Task.FromResult(Enumerable.Empty<T>());
     }
 
-    public Task DisplayFormViewAsync<TViewModel>(string title, TViewModel viewModel = null, string submit = "OK", string cancel = "Cancel", string reset = null) where TViewModel : class
-    {
-        return Task.CompletedTask;
-    }
-
     public Task<T> DisplayRadioButtonPromptAsync<T>(string message, IEnumerable<T> selectionSource, T selected = default, string accept = "Ok", string cancel = "Cancel", string displayMember = null, bool isPassword = false)
     {
         return Task.FromResult(default(T));
@@ -41,5 +36,10 @@ internal class MockDialogService : IDialogService
     public Task DisplayViewAsync(string title, View content, string okText = "OK")
     {
         return Task.CompletedTask;
+    }
+
+    public Task<TViewModel> DisplayFormViewAsync<TViewModel>(string title, TViewModel viewModel = null, string submit = "OK", string cancel = "Cancel", string reset = null) where TViewModel : class
+    {
+        return Task.FromResult(default(TViewModel));
     }
 }

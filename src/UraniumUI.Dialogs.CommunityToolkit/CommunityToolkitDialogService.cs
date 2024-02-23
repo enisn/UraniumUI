@@ -27,12 +27,12 @@ public class CommunityToolkitDialogService : IDialogService
 
     public Task DisplayViewAsync(string title, View content, string okText = "OK")
     {
-        return Task.CompletedTask;
+        return GetCurrentPage().DisplayViewAsync(title, content, okText);
     }
 
-    public Task DisplayFormViewAsync<TViewModel>(string title, TViewModel viewModel = null, string submit = "OK", string cancel = "Cancel", string reset = null) where TViewModel : class
+    public Task<TViewModel> DisplayFormViewAsync<TViewModel>(string title, TViewModel viewModel = null, string submit = "OK", string cancel = "Cancel", string reset = null) where TViewModel : class
     {
-        throw new NotImplementedException();
+        return GetCurrentPage().DisplayFormViewAsync(title, viewModel, submit, cancel, reset);
     }
 
     private Page GetCurrentPage()

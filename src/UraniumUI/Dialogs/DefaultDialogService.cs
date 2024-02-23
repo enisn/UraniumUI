@@ -1,6 +1,7 @@
 ﻿using InputKit.Shared.Controls;
 using Microsoft.Extensions.Options;
 using Plainer.Maui.Controls;
+using UraniumUI.Controls;
 using UraniumUI.Resources;
 using CheckBox = InputKit.Shared.Controls.CheckBox;
 
@@ -319,10 +320,29 @@ public class DefaultDialogService : IDialogService
         return tcs.Task;
     }
 
-    public Task DisplayFormViewAsync(string title, FormView formView, string submit = "OK", string cancel = "Cancel", string reset = null)
+    public Task<TViewModel> DisplayFormViewAsync<TViewModel>(string title, TViewModel viewModel = null, string submit = "OK", string cancel = "Cancel", string reset = null) where TViewModel : class
     {
-        var tcs = new TaskCompletionSource<bool>();
+        var tcs = new TaskCompletionSource<TViewModel>();
         var currentPage = GetCurrentPage();
+
+        var formView = new AutoFormView()
+        {
+            Padding = 8,
+            ShowSubmitButton = false,
+            ShowResetButton = false,
+            ShowMissingProperties = false,
+            Source = viewModel ?? UraniumServiceProvider.Current.GetRequiredService<TViewModel>(),
+        };
+
+#if WINDOWS
+        formView.HandlerChanged += (s, e) =>
+        {
+            if (formView.Handler is Microsoft.Maui.Platform.LayoutPanel panel)
+            {
+                panel.IsTabStop = false;
+            }
+        };
+#endif
 
         var popupPage = new ContentPage
         {
@@ -342,22 +362,16 @@ public class DefaultDialogService : IDialogService
                                 formView.Submit();
                                 if (formView.IsValidated)
                                 {
-                                    tcs.SetResult(true);
                                     currentPage.Navigation.PopModalAsync(animated: false);
+                                    tcs.SetResult(viewModel);
                                 }
                             })
                         },
                         {
                             cancel, new Command(() =>
                             {
-                                tcs.SetResult(false);
                                 currentPage.Navigation.PopModalAsync(animated: false);
-                            })
-                        },
-                        {
-                            reset, new Command(() =>
-                            {
-                                formView.Reset();
+                                tcs.SetResult(null);
                             })
                         }
                     })
@@ -368,12 +382,6 @@ public class DefaultDialogService : IDialogService
         currentPage.Navigation.PushModalAsync(ConfigurePopupPage(popupPage), animated: false);
 
         return tcs.Task;
-
-    }
-
-    public Task DisplayFormViewAsync<TViewModel>(string title, TViewModel viewModel = null, string submit = "OK", string cancel = "Cancel", string reset = null) where TViewModel : class
-    {
-        throw new NotImplementedException();
     }
 
     protected virtual Page GetCurrentPage()
@@ -470,7 +478,7 @@ public class DefaultDialogService : IDialogService
             Margin = new Thickness(10),
         };
 
-        foreach (var item in footerButtons)
+        foreach (var item in footerButtons.Reverse())
         {
             layout.Children.Add(new Button
             {

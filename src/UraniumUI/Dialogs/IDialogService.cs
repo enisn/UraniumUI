@@ -41,7 +41,7 @@ public interface IDialogService
         string initialValue = "",
         bool isPassword = false);
 
-    Task DisplayFormViewAsync<TViewModel>(
+    Task<TViewModel> DisplayFormViewAsync<TViewModel>(
         string title,
         TViewModel viewModel = default,
         string submit = "OK",

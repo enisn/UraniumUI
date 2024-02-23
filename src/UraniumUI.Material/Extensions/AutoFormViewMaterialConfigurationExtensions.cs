@@ -8,7 +8,7 @@ using UraniumUI.Resources;
 
 namespace UraniumUI.Material.Extensions;
 
-public static class AutoFormViewMaterialConfigurationExtension
+public static class AutoFormViewMaterialConfigurationExtensions
 {
     public static MauiAppBuilder ConfigureAutoFormViewForMaterial(this MauiAppBuilder builder)
     {

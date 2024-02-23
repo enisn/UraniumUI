@@ -24,14 +24,15 @@ public partial class TextField
 
     protected override async void CheckAndShowValidations()
     {
-        base.CheckAndShowValidations();
-
+        /* Disable focus for a short time to prevent unfocusing
+         * while validation adding to the layout */
         canUnfocus = false;
         unfocusCts.Cancel();
         unfocusCts = new CancellationTokenSource();
-        /* Disable focus for a short time to prevent unfocusing
-         * while validation adding to the layout */
-        await EnableFocusAfterAsync(100, unfocusCts.Token);
+
+        base.CheckAndShowValidations();
+
+        await EnableFocusAfterAsync(500, unfocusCts.Token);
     }
 
     async Task EnableFocusAfterAsync(int delayMs, CancellationToken cancellationToken)

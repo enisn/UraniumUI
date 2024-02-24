@@ -4,10 +4,9 @@
              x:Class="UraniumApp.Pages.GridLayoutPage"
              xmlns:m="clr-namespace:UraniumUI.Icons.MaterialSymbols;assembly=UraniumUI.Icons.MaterialSymbols"
              xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
-             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
-             Title="GridLayoutPage">
-    <ContentPage.Resources>
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material">
 
+    <ContentPage.Resources>
         <x:String x:Key="DocLink">https://enisn-projects.io/docs/en/uranium/latest/infrastructure/GridLayout</x:String>
         <x:String x:Key="SourceCode">
             <![CDATA[

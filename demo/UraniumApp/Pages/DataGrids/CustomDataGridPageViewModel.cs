@@ -27,9 +27,11 @@ public class CustomDataGridPageViewModel : BindableObject
         {
             var newStudent = StudentDataStore.faker.Generate();
 
-            newStudent.Name = await dialogService.DisplayTextPromptAsync("New Student", "Enter the name of the new student", "Add", "Cancel", initialValue: newStudent.Name);
-
-            Items.Add(newStudent);
+            var result = await dialogService.DisplayFormViewAsync("New Student", newStudent);
+            if (result != null)
+            {
+                Items.Add(result);
+            }
         });
 
         RemoveItemCommand = new Command((item) =>

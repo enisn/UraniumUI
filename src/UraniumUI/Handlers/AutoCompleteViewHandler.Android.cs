@@ -1,5 +1,4 @@
 ﻿#if ANDROID
-
 using Android.Content;
 using Android.Graphics.Drawables;
 using Android.Views.InputMethods;
@@ -13,8 +12,6 @@ using UraniumUI.Controls;
 namespace UraniumUI.Handlers;
 public partial class AutoCompleteViewHandler : ViewHandler<IAutoCompleteView, AppCompatAutoCompleteTextView>
 {
-    private AppCompatAutoCompleteTextView NativeControl => PlatformView as AppCompatAutoCompleteTextView;
-
     protected override AppCompatAutoCompleteTextView CreatePlatformView()
     {
         var autoComplete = new AppCompatAutoCompleteTextView(Context)
@@ -34,18 +31,19 @@ public partial class AutoCompleteViewHandler : ViewHandler<IAutoCompleteView, Ap
 
         return autoComplete;
     }
+
     protected override void ConnectHandler(AppCompatAutoCompleteTextView platformView)
     {
-        PlatformView.TextChanged += PlatformView_TextChanged;
-        PlatformView.EditorAction += PlatformView_EditorAction;
-        PlatformView.ItemClick += PlatformView_ItemClicked;
+        platformView.TextChanged += PlatformView_TextChanged;
+        platformView.EditorAction += PlatformView_EditorAction;
+        platformView.ItemClick += PlatformView_ItemClicked;
     }
 
     protected override void DisconnectHandler(AppCompatAutoCompleteTextView platformView)
     {
-        PlatformView.TextChanged -= PlatformView_TextChanged;
-        PlatformView.EditorAction -= PlatformView_EditorAction;
-        PlatformView.ItemClick -= PlatformView_ItemClicked;
+        platformView.TextChanged -= PlatformView_TextChanged;
+        platformView.EditorAction -= PlatformView_EditorAction;
+        platformView.ItemClick -= PlatformView_ItemClicked;
     }
 
     private void PlatformView_TextChanged(object sender, Android.Text.TextChangedEventArgs e)
@@ -74,7 +72,10 @@ public partial class AutoCompleteViewHandler : ViewHandler<IAutoCompleteView, Ap
 
     private void SetItemsSource()
     {
-        if (VirtualView.ItemsSource == null) return;
+        if (VirtualView.ItemsSource == null)
+        {
+            return;
+        }
 
         ResetAdapter();
     }
@@ -85,16 +86,16 @@ public partial class AutoCompleteViewHandler : ViewHandler<IAutoCompleteView, Ap
             Android.Resource.Layout.SimpleDropDownItem1Line,
             VirtualView.ItemsSource.ToList());
 
-        NativeControl.Adapter = adapter;
+        PlatformView.Adapter = adapter;
 
         adapter.NotifyDataSetChanged();
     }
 
     public static void MapText(AutoCompleteViewHandler handler, AutoCompleteView view)
     {
-        if (handler.NativeControl.Text != view.Text)
+        if (handler.PlatformView.Text != view.Text)
         {
-            handler.NativeControl.Text = view.Text;
+            handler.PlatformView.Text = view.Text;
         }
     }
 

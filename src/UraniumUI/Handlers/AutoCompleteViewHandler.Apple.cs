@@ -8,12 +8,9 @@ using Microsoft.Maui.Platform;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using UIKit;
 using UraniumUI.Controls;
 using UraniumUI.Extensions;
-using UraniumUI.Controls;
 
 namespace UraniumUI.Handlers;
 public partial class AutoCompleteViewHandler : ViewHandler<IAutoCompleteView, UIAutoCompleteTextField>
@@ -44,18 +41,18 @@ public partial class AutoCompleteViewHandler : ViewHandler<IAutoCompleteView, UI
 
     protected override void ConnectHandler(UIAutoCompleteTextField platformView)
     {
-        PlatformView.EditingChanged += PlatformView_TextChanged;
-        PlatformView.EditingDidBegin += PlatformView_EditingDidBegin;
-        PlatformView.EditingDidEndOnExit += PlatformView_EditingDidEndOnExit;
-        PlatformView.EditingDidEnd += PlatformView_EditingDidEnd;
+        platformView.EditingChanged += PlatformView_TextChanged;
+        platformView.EditingDidBegin += PlatformView_EditingDidBegin;
+        platformView.EditingDidEndOnExit += PlatformView_EditingDidEndOnExit;
+        platformView.EditingDidEnd += PlatformView_EditingDidEnd;
     }
 
     protected override void DisconnectHandler(UIAutoCompleteTextField platformView)
     {
-        PlatformView.EditingChanged -= PlatformView_TextChanged;
-        PlatformView.EditingDidBegin -= PlatformView_EditingDidBegin;
-        PlatformView.EditingDidEndOnExit -= PlatformView_EditingDidEndOnExit;
-        PlatformView.EditingDidEnd -= PlatformView_EditingDidEnd;
+        platformView.EditingChanged -= PlatformView_TextChanged;
+        platformView.EditingDidBegin -= PlatformView_EditingDidBegin;
+        platformView.EditingDidEndOnExit -= PlatformView_EditingDidEndOnExit;
+        platformView.EditingDidEnd -= PlatformView_EditingDidEnd;
     }
 
     private void PlatformView_TextChanged(object sender, EventArgs e)

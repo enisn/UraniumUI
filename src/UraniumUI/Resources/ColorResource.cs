@@ -1,6 +1,6 @@
 ﻿namespace UraniumUI.Resources;
 
-public class ColorResource : ResourceDictionary
+public static class ColorResource
 {
     public static Color GetColor(string key, Color fallBack = default)
     {

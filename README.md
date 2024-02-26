@@ -92,6 +92,7 @@ This project is licensed under the Apache License License - see the [LICENSE](LI
 | [JohnStabler](https://github.com/JohnStabler) | <!-- GitHub Sponsor -->
 | [jfversluis](https://github.com/jfversluis) | <!-- GitHub Sponsor -->
 | [Lucasbk123](https://github.com/Lucasbk123) | <!-- GitHub Sponsor -->
+| [laszlodaniel](https://github.com/laszlodaniel) | <!-- GitHub Sponsor -->
 | Simon Brettschneider |    <!-- 1☕️ -->
 | _Anonymous people 5☕️_ |  <!-- 4☕️ -->
 

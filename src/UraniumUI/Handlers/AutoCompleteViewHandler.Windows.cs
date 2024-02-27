@@ -18,22 +18,22 @@ public partial class AutoCompleteViewHandler : ViewHandler<IAutoCompleteView, Au
 
     protected override void ConnectHandler(AutoSuggestBox platformView)
     {
-        PlatformView.BorderThickness = new Microsoft.UI.Xaml.Thickness(0);
-        PlatformView.FocusVisualPrimaryThickness = new Microsoft.UI.Xaml.Thickness(0);
-        PlatformView.FocusVisualSecondaryThickness = new Microsoft.UI.Xaml.Thickness(0);
+        platformView.BorderThickness = new Microsoft.UI.Xaml.Thickness(0);
+        platformView.FocusVisualPrimaryThickness = new Microsoft.UI.Xaml.Thickness(0);
+        platformView.FocusVisualSecondaryThickness = new Microsoft.UI.Xaml.Thickness(0);
 
-        PlatformView.TextBoxStyle = null;
+        platformView.TextBoxStyle = null;
 
-        PlatformView.TextChanged += PlatformView_TextChanged;
-        PlatformView.KeyDown += TextBox_KeyDown;
-        PlatformView.SuggestionChosen += PlatformView_SuggestionChosen;
+        platformView.TextChanged += PlatformView_TextChanged;
+        platformView.KeyDown += TextBox_KeyDown;
+        platformView.SuggestionChosen += PlatformView_SuggestionChosen;
     }
 
     protected override void DisconnectHandler(AutoSuggestBox platformView)
     {
-        PlatformView.TextChanged -= PlatformView_TextChanged;
-        PlatformView.KeyDown -= TextBox_KeyDown;
-        PlatformView.SuggestionChosen -= PlatformView_SuggestionChosen;
+        platformView.TextChanged -= PlatformView_TextChanged;
+        platformView.KeyDown -= TextBox_KeyDown;
+        platformView.SuggestionChosen -= PlatformView_SuggestionChosen;
     }
 
     private void PlatformView_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)

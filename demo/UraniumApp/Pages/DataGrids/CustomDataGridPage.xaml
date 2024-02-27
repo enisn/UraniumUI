@@ -46,10 +46,10 @@
                             </material:DataGridColumn.CellItemTemplate>
                         </material:DataGridColumn>
 
-                        <material:DataGridColumn Title="Student Age">
+                        <material:DataGridColumn Title="Age">
                             <material:DataGridColumn.CellItemTemplate>
                                 <DataTemplate>
-                                    <Border Padding="6" HorizontalOptions="Center" VerticalOptions="Center"
+                                    <Border Padding="3" HorizontalOptions="Center" VerticalOptions="Center"
                                             StrokeShape="RoundRectangle 6"
                                             BackgroundColor="{AppThemeBinding Light={StaticResource Tertiary}, Dark={StaticResource TertiaryDark}}">
                                         <plain:EntryView Text="{Binding Age}" TextColor="{AppThemeBinding Light={StaticResource OnTertiary}, Dark={StaticResource OnTertiaryDark}}" HorizontalOptions="Center"/>

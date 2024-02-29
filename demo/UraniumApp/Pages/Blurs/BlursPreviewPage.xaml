@@ -59,6 +59,7 @@
             ItemsSource="{Binding BackgroundImageSourceList}"
             SelectedItem="{Binding BackgroundImageSource}"
             ItemsLayout="HorizontalList"
+            HeightRequest="150"
             SelectionMode="Single">
             <CollectionView.ItemTemplate>
                 <DataTemplate>

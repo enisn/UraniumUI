@@ -32,7 +32,7 @@ public static class AutoFormViewMaterialConfigurationExtensions
     {
         var editor = new TextField();
         editor.SetBinding(TextField.TextProperty, new Binding(property.Name, source: source));
-        editor.AllowClear = true;
+        editor.AllowClear = property.PropertyType.IsNullable();
         editor.Title = property.Name;
 
         return editor;
@@ -43,7 +43,7 @@ public static class AutoFormViewMaterialConfigurationExtensions
         var editor = new TextField();
         editor.SetBinding(TextField.TextProperty, new Binding(property.Name, source: source));
         editor.Title = property.Name;
-        editor.AllowClear = false;
+        editor.AllowClear = property.PropertyType.IsNullable();
         editor.Keyboard = Keyboard.Numeric;
 
         return editor;
@@ -71,7 +71,7 @@ public static class AutoFormViewMaterialConfigurationExtensions
         editor.ItemsSource = values;
         editor.SetBinding(PickerField.SelectedItemProperty, new Binding(property.Name, source: source));
         editor.Title = property.Name;
-        editor.AllowClear = false;
+        editor.AllowClear = property.PropertyType.IsNullable();
         return editor;
     }
 
@@ -111,7 +111,7 @@ public static class AutoFormViewMaterialConfigurationExtensions
 
         editor.SetBinding(PickerField.SelectedItemProperty, new Binding(property.Name, source: source));
         editor.Title = property.Name;
-        editor.AllowClear = false;
+        editor.AllowClear = property.PropertyType.IsNullable();
         return editor;
     }
 
@@ -120,7 +120,7 @@ public static class AutoFormViewMaterialConfigurationExtensions
         var editor = new DatePickerField();
         editor.SetBinding(DatePickerField.DateProperty, new Binding(property.Name, source: source));
         editor.Title = property.Name;
-        editor.AllowClear = false;
+        editor.AllowClear = property.PropertyType.IsNullable();
         return editor;
     }
 
@@ -129,7 +129,7 @@ public static class AutoFormViewMaterialConfigurationExtensions
         var editor = new TimePickerField();
         editor.SetBinding(TimePickerField.TimeProperty, new Binding(property.Name, source: source));
         editor.Title = property.Name;
-        editor.AllowClear = false;
+        editor.AllowClear = property.PropertyType.IsNullable();
         return editor;
     }
 }

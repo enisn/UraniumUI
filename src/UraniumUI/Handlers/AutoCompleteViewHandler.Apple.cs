@@ -36,7 +36,7 @@ public partial class AutoCompleteViewHandler : ViewHandler<IAutoCompleteView, UI
     public override void PlatformArrange(Rect rect)
     {
         base.PlatformArrange(rect);
-        Draw(rect);
+        Render(rect);
     }
 
     protected override void ConnectHandler(UIAutoCompleteTextField platformView)
@@ -105,14 +105,14 @@ public partial class AutoCompleteViewHandler : ViewHandler<IAutoCompleteView, UI
         }
     }
 
-    public void Draw(CGRect rect)
+    public void Render(CGRect rect)
     {
         var ctrl = UIApplication.SharedApplication.GetTopViewController();
 
         var relativePosition = UIApplication.SharedApplication.KeyWindow;
         var relativeFrame = PlatformView.Superview.ConvertRectToView(PlatformView.Frame, relativePosition);
 
-        PlatformView.Draw(ctrl, PlatformView.Layer, VirtualView as AutoCompleteView, relativeFrame.X, relativeFrame.Y);
+        PlatformView.Render(ctrl, PlatformView.Layer, VirtualView as AutoCompleteView, relativeFrame.X, relativeFrame.Y);
     }
 
     private void AutoCompleteViewSourceOnSelected(object sender, SelectedItemChangedEventArgs args)
@@ -159,7 +159,7 @@ public class UIAutoCompleteTextField : MauiTextField, IUITextFieldDelegate
 
     public int AutocompleteTableViewHeight { get; set; } = 150;
 
-    public void Draw(UIViewController viewController, CALayer layer, AutoCompleteView virtualView, NFloat x, NFloat y)
+    public void Render(UIViewController viewController, CALayer layer, AutoCompleteView virtualView, NFloat x, NFloat y)
     {
         var _scrollView = GetParentScrollView(this);
         _drawnFrame = layer.Frame;
@@ -223,11 +223,22 @@ public class UIAutoCompleteTextField : MauiTextField, IUITextFieldDelegate
         view.AddSubview(AutoCompleteTableView);
 
         //listen to edit events
+        
+        EditingChanged -= OnEditingChanged;
+        EditingDidEnd -= OnEditingDidEnd;
+        EditingDidBegin -= UIAutoCompleteTextField_EditingDidBegin;
+
         EditingChanged += OnEditingChanged;
         EditingDidEnd += OnEditingDidEnd;
+        EditingDidBegin += UIAutoCompleteTextField_EditingDidBegin;
 
         UpdateTableViewData();
         IsInitialized = true;
+    }
+
+    private void UIAutoCompleteTextField_EditingDidBegin(object sender, EventArgs e)
+    {
+        HandleTableState();
     }
 
     private void OnEditingDidEnd(object sender, EventArgs eventArgs)
@@ -236,6 +247,11 @@ public class UIAutoCompleteTextField : MauiTextField, IUITextFieldDelegate
     }
 
     private void OnEditingChanged(object sender, EventArgs eventArgs)
+    {
+        HandleTableState();
+    }
+
+    private void HandleTableState()
     {
         if (Text.Length >= Threshold)
         {

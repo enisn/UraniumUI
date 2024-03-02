@@ -156,7 +156,6 @@ public class AutoCompleteTextField : InputField
             typeof(AutoCompleteView),
             null);
 
-
     public Color TextColor { get => (Color)GetValue(TextColorProperty); set => SetValue(TextColorProperty, value); }
 
     public static readonly BindableProperty TextColorProperty = BindableProperty.Create(
@@ -173,4 +172,13 @@ public class AutoCompleteTextField : InputField
         typeof(bool), typeof(TextField),
         false,
         propertyChanged: (bindable, oldValue, newValue) => (bindable as AutoCompleteTextField).OnAllowClearChanged());
+
+    public int Threshold { get => (int)GetValue(ThresholdProperty); set => SetValue(ThresholdProperty, value); }
+
+    public static BindableProperty ThresholdProperty = BindableProperty.Create(
+        nameof(Threshold),
+        typeof(int),
+        typeof(AutoCompleteTextField),
+        AutoCompleteView.ThresholdProperty.DefaultValue,
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as AutoCompleteTextField).AutoCompleteView.Threshold = (int)newValue);
 }

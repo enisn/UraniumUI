@@ -21,10 +21,10 @@ public partial class AutoCompleteViewHandler : ViewHandler<IAutoCompleteView, Au
         platformView.BorderThickness = new Microsoft.UI.Xaml.Thickness(0);
         platformView.FocusVisualPrimaryThickness = new Microsoft.UI.Xaml.Thickness(0);
         platformView.FocusVisualSecondaryThickness = new Microsoft.UI.Xaml.Thickness(0);
-
         platformView.TextBoxStyle = null;
 
         platformView.TextChanged += PlatformView_TextChanged;
+        platformView.GotFocus += PlatformView_GotFocus;
         platformView.KeyDown += TextBox_KeyDown;
         platformView.SuggestionChosen += PlatformView_SuggestionChosen;
     }
@@ -32,6 +32,7 @@ public partial class AutoCompleteViewHandler : ViewHandler<IAutoCompleteView, Au
     protected override void DisconnectHandler(AutoSuggestBox platformView)
     {
         platformView.TextChanged -= PlatformView_TextChanged;
+        platformView.GotFocus -= PlatformView_GotFocus;
         platformView.KeyDown -= TextBox_KeyDown;
         platformView.SuggestionChosen -= PlatformView_SuggestionChosen;
     }
@@ -43,10 +44,17 @@ public partial class AutoCompleteViewHandler : ViewHandler<IAutoCompleteView, Au
             VirtualView.Text = sender.Text;
         }
 
-        if (VirtualView.ItemsSource != null)
+        if (VirtualView.ItemsSource != null && !string.IsNullOrEmpty(sender.Text))
         {
             PlatformView.ItemsSource = VirtualView.ItemsSource.Where(x => x.Contains(sender.Text));
         }
+
+        PlatformView.IsSuggestionListOpen = sender.Text.Length < VirtualView.Threshold;
+    }
+
+    private void PlatformView_GotFocus(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+    {
+        PlatformView.IsSuggestionListOpen = PlatformView.Text.Length >= VirtualView.Threshold;
     }
 
     private void TextBox_KeyDown(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
@@ -56,7 +64,7 @@ public partial class AutoCompleteViewHandler : ViewHandler<IAutoCompleteView, Au
             VirtualView.Completed();
         }
     }
-    
+
     private void PlatformView_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
     {
         if (VirtualView.SelectedText != PlatformView.Text)
@@ -76,6 +84,11 @@ public partial class AutoCompleteViewHandler : ViewHandler<IAutoCompleteView, Au
     public static void MapItemsSource(AutoCompleteViewHandler handler, AutoCompleteView view)
     {
         handler.PlatformView.ItemsSource = view.ItemsSource;
+    }
+
+    public static void MapThreshold(AutoCompleteViewHandler handler, AutoCompleteView view)
+    {
+        // Not supported, handled manually
     }
 }
 #endif

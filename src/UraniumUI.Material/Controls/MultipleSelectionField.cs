@@ -55,7 +55,7 @@ public partial class MultiplePickerField : InputField
         {
             if (SelectedItems is null)
             {
-                return;
+                SelectedItems = new ObservableCollection<object>();
             }
 
             IsBusy = true;

@@ -86,8 +86,12 @@ public class TreeViewNodeHolderView : VerticalStackLayout
         var button = new StatefulContentView
         {
             Content = rowStack,
+            Padding = new Thickness(indentLevel * 16, 0, 0, 0),
+#if WINDOWS
+            GestureRecognizers = { new TapGestureRecognizer { Command = new Command(ItemClicked) } },
+#else
             TappedCommand = new Command(ItemClicked),
-            Padding = new Thickness(indentLevel * 16, 0, 0, 0)
+#endif
         };
 
         this.Add(button);
@@ -126,7 +130,11 @@ public class TreeViewNodeHolderView : VerticalStackLayout
             StyleClass = new[] { "TreeViewExpandButton" },
             Padding = 0,
             Margin = 0,
+#if WINDOWS
+            GestureRecognizers = { new TapGestureRecognizer { Command = new Command(() => IsExpanded = !IsExpanded) } },
+#else
             PressedCommand = new Command(() => IsExpanded = !IsExpanded),
+#endif
         };
 
         iconArrow.Content = new ContentView

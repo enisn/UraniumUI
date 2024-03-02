@@ -1,6 +1,7 @@
 ﻿#if ANDROID
 using Android.Content;
 using Android.Graphics.Drawables;
+using Android.Runtime;
 using Android.Views.InputMethods;
 using Android.Widget;
 using AndroidX.AppCompat.Widget;
@@ -10,6 +11,7 @@ using Microsoft.Maui.Handlers;
 using UraniumUI.Controls;
 
 namespace UraniumUI.Handlers;
+
 public partial class AutoCompleteViewHandler : ViewHandler<IAutoCompleteView, AppCompatAutoCompleteTextView>
 {
     protected override AppCompatAutoCompleteTextView CreatePlatformView()
@@ -24,6 +26,8 @@ public partial class AutoCompleteViewHandler : ViewHandler<IAutoCompleteView, Ap
         autoComplete.SetBackground(gd);
         autoComplete.SetSingleLine(true);
         autoComplete.ImeOptions = ImeAction.Done;
+        autoComplete.Threshold = VirtualView.Threshold;
+
         if (VirtualView != null)
         {
             autoComplete.SetTextColor(VirtualView.TextColor.ToAndroid());
@@ -35,6 +39,7 @@ public partial class AutoCompleteViewHandler : ViewHandler<IAutoCompleteView, Ap
     protected override void ConnectHandler(AppCompatAutoCompleteTextView platformView)
     {
         platformView.TextChanged += PlatformView_TextChanged;
+        platformView.FocusChange += PlatformView_FocusChange;
         platformView.EditorAction += PlatformView_EditorAction;
         platformView.ItemClick += PlatformView_ItemClicked;
     }
@@ -42,6 +47,7 @@ public partial class AutoCompleteViewHandler : ViewHandler<IAutoCompleteView, Ap
     protected override void DisconnectHandler(AppCompatAutoCompleteTextView platformView)
     {
         platformView.TextChanged -= PlatformView_TextChanged;
+        platformView.FocusChange -= PlatformView_FocusChange;
         platformView.EditorAction -= PlatformView_EditorAction;
         platformView.ItemClick -= PlatformView_ItemClicked;
     }
@@ -51,6 +57,14 @@ public partial class AutoCompleteViewHandler : ViewHandler<IAutoCompleteView, Ap
         if (VirtualView.Text != PlatformView.Text)
         {
             VirtualView.Text = PlatformView.Text;
+        }
+    }
+
+    private void PlatformView_FocusChange(object sender, Android.Views.View.FocusChangeEventArgs e)
+    {
+        if (e.HasFocus && VirtualView.Threshold == 0)
+        {
+            PlatformView.ShowDropDown();
         }
     }
 
@@ -102,6 +116,14 @@ public partial class AutoCompleteViewHandler : ViewHandler<IAutoCompleteView, Ap
     public static void MapItemsSource(AutoCompleteViewHandler handler, AutoCompleteView view)
     {
         handler.SetItemsSource();
+    }
+
+    public static void MapThreshold(AutoCompleteViewHandler handler, AutoCompleteView view)
+    {
+        if (handler.PlatformView.Threshold != view.Threshold)
+        {
+            handler.PlatformView.Threshold = view.Threshold;
+        }
     }
 }
 

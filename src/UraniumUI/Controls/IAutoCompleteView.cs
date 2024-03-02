@@ -6,6 +6,7 @@ public interface IAutoCompleteView : IView
     string SelectedText { get; set; }
     Color TextColor { get; set; }
     IList<string> ItemsSource { get; set; }
+    int Threshold { get; set; }
 
     void Completed();
 }

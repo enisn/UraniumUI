@@ -91,6 +91,11 @@ public partial class AutoCompleteViewHandler : ViewHandler<IAutoCompleteView, UI
         handler.SetItemsSource();
     }
 
+    public static void MapThreshold(AutoCompleteViewHandler handler, AutoCompleteView view)
+    {
+        handler.PlatformView.Threshold = view.Threshold;
+    }
+
     private void SetItemsSource()
     {
         if (VirtualView.ItemsSource != null)

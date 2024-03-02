@@ -156,7 +156,6 @@ public class AutoCompleteTextField : InputField
             typeof(AutoCompleteView),
             null);
 
-
     public Color TextColor { get => (Color)GetValue(TextColorProperty); set => SetValue(TextColorProperty, value); }
 
     public static readonly BindableProperty TextColorProperty = BindableProperty.Create(

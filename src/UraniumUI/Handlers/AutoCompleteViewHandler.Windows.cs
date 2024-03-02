@@ -21,7 +21,6 @@ public partial class AutoCompleteViewHandler : ViewHandler<IAutoCompleteView, Au
         platformView.BorderThickness = new Microsoft.UI.Xaml.Thickness(0);
         platformView.FocusVisualPrimaryThickness = new Microsoft.UI.Xaml.Thickness(0);
         platformView.FocusVisualSecondaryThickness = new Microsoft.UI.Xaml.Thickness(0);
-
         platformView.TextBoxStyle = null;
 
         platformView.TextChanged += PlatformView_TextChanged;

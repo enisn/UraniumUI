@@ -55,4 +55,11 @@ public partial class DataGrid
     public static readonly BindableProperty EmptyViewTemplateProperty =
         BindableProperty.Create(nameof(EmptyViewTemplate), typeof(DataTemplate), typeof(DataGrid),
             propertyChanged: (bo, ov, nv) => (bo as DataGrid).OnEmptyViewTemplateSet());
+
+    public IList<DataGridColumn> Columns { get => (IList<DataGridColumn>)GetValue(ColumnsProperty); set => SetValue(ColumnsProperty, value); }
+
+
+    public static readonly BindableProperty ColumnsProperty = 
+        BindableProperty.Create(nameof(Columns), typeof(IList<DataGridColumn>), typeof(DataGrid), defaultValueCreator: (bindable)=> new ObservableCollection<DataGridColumn>(),
+                       propertyChanged: (bo, ov, nv) => (bo as DataGrid).OnColumnsSet((IList<DataGridColumn>) ov, (IList<DataGridColumn>) nv));
 }

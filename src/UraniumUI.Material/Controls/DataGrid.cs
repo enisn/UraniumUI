@@ -14,8 +14,6 @@ public partial class DataGrid : Border
 
     public Type CurrentType { get; protected set; }
 
-    public IList<DataGridColumn> Columns { get; protected set; } = new ObservableCollection<DataGridColumn>();
-
     public bool ReadyToRender => Columns?.Any() ?? false;
 
     public DataGrid()
@@ -27,8 +25,25 @@ public partial class DataGrid : Border
 
         InitializeFactoryMethods();
         this.Padding = new Thickness(0, 10);
-        (Columns as INotifyCollectionChanged).CollectionChanged += Columns_CollectionChanged;
+        if (Columns is INotifyCollectionChanged observableColumnds)
+        {
+            observableColumnds.CollectionChanged += Columns_CollectionChanged;
+        }
+
         RenderEmptyView();
+    }
+
+    private void OnColumnsSet(IList<DataGridColumn> oldValue, IList<DataGridColumn> newValue)
+    {
+        if (oldValue is INotifyCollectionChanged oldObservableColumns)
+        {
+            oldObservableColumns.CollectionChanged -= Columns_CollectionChanged;
+        }
+
+        if (newValue is INotifyCollectionChanged newObservableColumns)
+        {
+            newObservableColumns.CollectionChanged += Columns_CollectionChanged;
+        }
     }
 
     private void OnItemSourceSet(IList oldSource, IList newSource)

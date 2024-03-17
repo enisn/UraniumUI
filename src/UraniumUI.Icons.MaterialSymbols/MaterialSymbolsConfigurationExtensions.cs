@@ -6,9 +6,12 @@ public static class MaterialIconsConfigurationExtensions
     {
         var thisAssembly = typeof(MaterialIconsConfigurationExtensions).Assembly;
 
-        fonts.AddEmbeddedResourceFont(thisAssembly, "MaterialSymbolsOutlined.ttf", "MaterialOutlined");
-        fonts.AddEmbeddedResourceFont(thisAssembly, "MaterialSymbolsRounded.ttf", "MaterialRounded");
-        fonts.AddEmbeddedResourceFont(thisAssembly, "MaterialSymbolsSharp.ttf", "MaterialSharp");
+        fonts.AddEmbeddedResourceFont(thisAssembly, "MaterialSymbolsOutlined.ttf", FontAliases.MaterialOutlined);
+        fonts.AddEmbeddedResourceFont(thisAssembly, "MaterialSymbolsOutlinedFilled.ttf", FontAliases.MaterialOutlinedFilled);
+        fonts.AddEmbeddedResourceFont(thisAssembly, "MaterialSymbolsRounded.ttf", FontAliases.MaterialRounded);
+        fonts.AddEmbeddedResourceFont(thisAssembly, "MaterialSymbolsRoundedFilled.ttf", FontAliases.MaterialRoundedFilled);
+        fonts.AddEmbeddedResourceFont(thisAssembly, "MaterialSymbolsSharp.ttf", FontAliases.MaterialSharp);
+        fonts.AddEmbeddedResourceFont(thisAssembly, "MaterialSymbolsSharpFilled.ttf", FontAliases.MaterialSharpFilled);
 
         return fonts;
     }

@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.ComponentModel;
 using System.Windows.Input;
+using UraniumUI.Extensions;
 using UraniumUI.Pages;
 using UraniumUI.Resources;
 using UraniumUI.Views;
@@ -130,7 +131,7 @@ public class PickerField : InputField
 
         UpdateState();
 
-        SelectedValueChangedCommand?.Execute(SelectedItem);
+        SelectedValueChangedCommand?.TryExecute(SelectedItem);
         SelectedValueChanged?.Invoke(this, SelectedItem);
     }
 

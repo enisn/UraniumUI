@@ -28,4 +28,4 @@ steps:
 - task: DotNetCoreCLI@2
   displayName: "Test"
   inputs:
-    command: 'test'
+    command: 'test -m:1'

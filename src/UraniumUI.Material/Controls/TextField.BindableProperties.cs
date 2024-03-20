@@ -157,4 +157,24 @@ public partial class TextField
         defaultValue: Label.FontSizeProperty.DefaultValue,
         propertyChanged: (bindable, oldValue, newValue) => (bindable as TextField).EntryView.FontSize = (double)newValue
         );
+
+    public FontAttributes FontAttributes { get => (FontAttributes)GetValue(FontAttributesProperty); set => SetValue(FontAttributesProperty, value); }
+
+    public static readonly BindableProperty FontAttributesProperty = BindableProperty.Create(
+        nameof(FontAttributes),
+        typeof(FontAttributes),
+        typeof(TextField),
+        defaultValue: Entry.FontAttributesProperty.DefaultValue,
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as TextField).EntryView.FontAttributes = (FontAttributes)newValue
+        );
+
+    public TextAlignment HorizontalTextAlignment { get => (TextAlignment)GetValue(HorizontalTextAlignmentProperty); set => SetValue(HorizontalTextAlignmentProperty, value); }
+
+    public static readonly BindableProperty HorizontalTextAlignmentProperty = BindableProperty.Create(
+        nameof(HorizontalTextAlignment),
+        typeof(TextAlignment),
+        typeof(TextField),
+        defaultValue: Entry.HorizontalTextAlignmentProperty.DefaultValue,
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as TextField).EntryView.HorizontalTextAlignment = (TextAlignment)newValue
+        );
 }

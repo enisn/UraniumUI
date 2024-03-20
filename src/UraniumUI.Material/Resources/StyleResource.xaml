@@ -309,6 +309,7 @@
 
             <Style TargetType="c:TextField" BaseResourceKey="InputFieldBaseStyle"  CanCascade="True">
                 <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}" />
+                <Setter Property="SelectionHighlightColor" Value="{StaticResource Primary}" />
             </Style>
 
             <Style TargetType="c:AutoCompleteTextField" BaseResourceKey="InputFieldBaseStyle" CanCascade="True">

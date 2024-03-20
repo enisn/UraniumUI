@@ -52,3 +52,40 @@ public class TimePickerField : InputField
 `HasValue` property should be overriden. That property is responsible for determining if the control has a value or not. If the control has a value, the title will be moved up. If the control does not have a value, the title will be moved down when unfocused. The following example shows how to implement the `HasValue` property for the Editor control.
 
 ![MAUI Material Input](images/inputfield-demo-custom.gif)
+
+
+## Styling
+InputField has the following style classes that can be used to style the control:
+
+```xml
+<Style TargetType="Label" Class="InputField.Title">
+    <Setter Property="FontAttributes" Value="Bold" />
+    <!--...-->
+</Style>
+
+<Style TargetType="Border" Class="InputField.Border">
+    <Setter Property="MaximumHeightRequest" Value="80" />
+    <!--...-->
+</Style>
+
+<Style TargetType="Image" Class="InputField.Icon">
+    <Setter Property="HeightRequest" Value="10" />
+    <Setter Property="WidthRequest" Value="10" />
+    <!--...-->
+</Style>
+
+<Style TargetType="HorizontalStackLayout" Class="InputField.Attachments">
+    <Setter Property="Spacing" Value="8" />
+    <!--...-->
+</Style>
+<Style TargetType="Path" Class="InputField.ValidationIcon">
+    <Setter Property="Fill" Value="MediumVioletRed" />
+    <Setter Property="Data" Value="M7 11V1H8V11H7ZM8 13V14.01H7V13H8Z" />
+    <!--...-->
+</Style>
+
+<Style TargetType="Label" Class="InputField.ValidationLabel">
+    <Setter Property="TextColor" Value="MediumVioletRed" />
+    <!--...-->
+</Style>
+```

@@ -144,3 +144,46 @@ TextField is fully compatible with [FormView](https://enisn-projects.io/docs/en/
 | Light | Dark |
 | --- | --- |
 | ![MAUI Material Input](images/textfield-formview-light-android.gif) | ![MAUI Material Input](images/textfield-formview-dark-windows.gif) |
+
+
+## Styling
+TextField has the following style classes that can be used to style the control:
+
+```xml
+<Style TargetType="Label" Class="InputField.Title">
+    <Setter Property="FontAttributes" Value="Bold" />
+    <!--...-->
+</Style>
+
+<Style TargetType="Border" Class="InputField.Border">
+    <Setter Property="MaximumHeightRequest" Value="80" />
+    <!--...-->
+</Style>
+
+<Style TargetType="Image" Class="InputField.Icon">
+    <Setter Property="HeightRequest" Value="10" />
+    <Setter Property="WidthRequest" Value="10" />
+    <!--...-->
+</Style>
+
+<Style TargetType="HorizontalStackLayout" Class="InputField.Attachments">
+    <Setter Property="Spacing" Value="8" />
+    <!--...-->
+</Style>
+<Style TargetType="Path" Class="InputField.ValidationIcon">
+    <Setter Property="Fill" Value="MediumVioletRed" />
+    <Setter Property="Data" Value="M7 11V1H8V11H7ZM8 13V14.01H7V13H8Z" />
+    <!--...-->
+</Style>
+
+<Style TargetType="Label" Class="InputField.ValidationLabel">
+    <Setter Property="TextColor" Value="MediumVioletRed" />
+    <!--...-->
+</Style>
+
+<Style TargetType="Path" Class="TextField.ClearIcon">
+    <Setter Property="Fill" Value="LightGray" />
+    <Setter Property="Data" Value="M1.5 1.5L13.5 13.5M1.5 13.5L13.5 1.5" />
+    <!--...-->
+</Style>
+```

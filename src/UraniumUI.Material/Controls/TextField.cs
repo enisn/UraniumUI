@@ -30,6 +30,7 @@ public partial class TextField : InputField
         Margin = new Thickness(0, 0, 5, 0),
         Content = new Path
         {
+            StyleClass = new[] { "TextField.ClearIcon" },
             Data = UraniumShapes.X,
             Fill = ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.DarkGray).WithAlpha(.5f),
         }

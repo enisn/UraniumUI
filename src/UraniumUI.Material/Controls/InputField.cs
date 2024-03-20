@@ -197,32 +197,21 @@ public partial class InputField : Grid
             return;
         }
 
-        border.Content = null;
-        this.Remove(border);
-        border = new Border
+        border.Padding = 0;
+        border.Stroke = BorderColor;
+        border.StrokeThickness = BorderThickness;
+        border.Background = InputBackground;
+        border.BackgroundColor = InputBackgroundColor;
+        border.StrokeDashOffset = 0;
+        border.StrokeShape = new RoundRectangle
         {
-            Padding = 0,
-            Stroke = BorderColor,
-            StrokeThickness = BorderThickness,
-            Background = InputBackground,
-            BackgroundColor = InputBackgroundColor,
-            StrokeDashOffset = 0,
-            StrokeShape = new RoundRectangle
-            {
-                CornerRadius = CornerRadius
-            },
-            Content = rootGrid
+            CornerRadius = CornerRadius
         };
 #endif
 
         border.StrokeDashArray = new DoubleCollection { calculatedFirstDash * 0.9 / BorderThickness, space / BorderThickness, perimeter, 0 };
 
-#if WINDOWS
-        this.Add(border);
-#endif
-
         UpdateState();
-        border.StrokeThickness = BorderThickness;
     }
 
     protected virtual void UpdateState()

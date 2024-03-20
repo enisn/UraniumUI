@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Windows.Input;
 using UraniumUI.Resources;
+using UraniumUI.Material.Extensions;
 
 namespace UraniumUI.Material.Controls;
 
@@ -156,5 +157,35 @@ public partial class TextField
         typeof(InputField),
         defaultValue: Label.FontSizeProperty.DefaultValue,
         propertyChanged: (bindable, oldValue, newValue) => (bindable as TextField).EntryView.FontSize = (double)newValue
+        );
+
+    public FontAttributes FontAttributes { get => (FontAttributes)GetValue(FontAttributesProperty); set => SetValue(FontAttributesProperty, value); }
+
+    public static readonly BindableProperty FontAttributesProperty = BindableProperty.Create(
+        nameof(FontAttributes),
+        typeof(FontAttributes),
+        typeof(TextField),
+        defaultValue: Entry.FontAttributesProperty.DefaultValue,
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as TextField).EntryView.FontAttributes = (FontAttributes)newValue
+        );
+
+    public TextAlignment HorizontalTextAlignment { get => (TextAlignment)GetValue(HorizontalTextAlignmentProperty); set => SetValue(HorizontalTextAlignmentProperty, value); }
+
+    public static readonly BindableProperty HorizontalTextAlignmentProperty = BindableProperty.Create(
+        nameof(HorizontalTextAlignment),
+        typeof(TextAlignment),
+        typeof(TextField),
+        defaultValue: Entry.HorizontalTextAlignmentProperty.DefaultValue,
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as TextField).EntryView.HorizontalTextAlignment = (TextAlignment)newValue
+        );
+
+    public Color SelectionHighlightColor { get => (Color)GetValue(SelectionHighlightColorProperty); set => SetValue(SelectionHighlightColorProperty, value); }
+
+    public static readonly BindableProperty SelectionHighlightColorProperty = BindableProperty.Create(
+        nameof(SelectionHighlightColor),
+        typeof(Color),
+        typeof(TextField),
+        defaultValue: EntryProperties.SelectionHighlightColorProperty.DefaultValue,
+        propertyChanged: (bindable, oldValue, newValue) => EntryProperties.SetSelectionHighlightColor(bindable, (Color)newValue)
         );
 }

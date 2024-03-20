@@ -1,7 +1,5 @@
-﻿#if WINDOWS
-using Microsoft.Maui.Platform;
-#endif
-using Plainer.Maui.Controls;
+﻿using Plainer.Maui.Controls;
+using UraniumUI.Material.Extensions;
 using UraniumUI.Pages;
 using UraniumUI.Resources;
 using UraniumUI.Views;
@@ -63,16 +61,6 @@ public partial class TextField : InputField
     protected override void OnHandlerChanged()
     {
         base.OnHandlerChanged();
-#if WINDOWS
-        if (EntryView.Handler.PlatformView is Microsoft.UI.Xaml.Controls.TextBox textBox)
-        {
-            textBox.SelectionHighlightColor = new Microsoft.UI.Xaml.Media.SolidColorBrush(ColorResource.GetColor("Primary", "PrimaryDark", Colors.Purple).ToWindowsColor());
-            textBox.BorderThickness = new Microsoft.UI.Xaml.Thickness(0);
-
-            textBox.Style = null;
-        }
-#endif
-
         if (Handler is null)
         {
             EntryView.TextChanged -= EntryView_TextChanged;
@@ -82,7 +70,13 @@ public partial class TextField : InputField
         {
             EntryView.TextChanged += EntryView_TextChanged;
             EntryView.Completed += EntryView_Completed;
+            ApplyAttachedProperties();
         }
+    }
+
+    protected virtual void ApplyAttachedProperties()
+    {
+        EntryProperties.SetSelectionHighlightColor(EntryView, SelectionHighlightColor);
     }
 
     private void EntryView_TextChanged(object sender, TextChangedEventArgs e)

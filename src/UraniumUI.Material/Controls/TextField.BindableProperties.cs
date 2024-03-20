@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Windows.Input;
 using UraniumUI.Resources;
+using UraniumUI.Material.Extensions;
 
 namespace UraniumUI.Material.Controls;
 
@@ -176,5 +177,15 @@ public partial class TextField
         typeof(TextField),
         defaultValue: Entry.HorizontalTextAlignmentProperty.DefaultValue,
         propertyChanged: (bindable, oldValue, newValue) => (bindable as TextField).EntryView.HorizontalTextAlignment = (TextAlignment)newValue
+        );
+
+    public Color SelectionHighlightColor { get => (Color)GetValue(SelectionHighlightColorProperty); set => SetValue(SelectionHighlightColorProperty, value); }
+
+    public static readonly BindableProperty SelectionHighlightColorProperty = BindableProperty.Create(
+        nameof(SelectionHighlightColor),
+        typeof(Color),
+        typeof(TextField),
+        defaultValue: EntryProperties.SelectionHighlightColorProperty.DefaultValue,
+        propertyChanged: (bindable, oldValue, newValue) => EntryProperties.SetSelectionHighlightColor(bindable, (Color)newValue)
         );
 }

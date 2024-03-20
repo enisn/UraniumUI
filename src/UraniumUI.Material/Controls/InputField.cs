@@ -32,7 +32,7 @@ public partial class InputField : Grid
 
     protected Label labelTitle = new Label()
     {
-        Text = "Title",
+        StyleClass = new [] { "InputField.Title" },
         HorizontalOptions = LayoutOptions.Start,
         VerticalOptions = LayoutOptions.Start,
         InputTransparent = true,
@@ -41,7 +41,7 @@ public partial class InputField : Grid
 
     protected Border border = new Border
     {
-        Padding = 0,
+        StyleClass = new [] { "InputField.Border" },
         StrokeThickness = 1,
         StrokeDashOffset = 0,
         BackgroundColor = Colors.Transparent,
@@ -53,6 +53,7 @@ public partial class InputField : Grid
     {
         return new Image
         {
+            StyleClass = new [] { "InputField.Icon" },
             HorizontalOptions = LayoutOptions.Start,
             VerticalOptions = LayoutOptions.Center,
             WidthRequest = 20,
@@ -61,7 +62,10 @@ public partial class InputField : Grid
         };
     });
 
-    protected HorizontalStackLayout endIconsContainer = new HorizontalStackLayout();
+    protected readonly HorizontalStackLayout endIconsContainer = new HorizontalStackLayout
+    {
+        StyleClass = new[] { "InputField.Attachments" },
+    };
 
     public IList<IView> Attachments => endIconsContainer.Children;
 

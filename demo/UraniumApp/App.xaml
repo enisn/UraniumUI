@@ -14,6 +14,7 @@
                 <ResourceDictionary x:Name="appColors" Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary x:Name="appStyles" Source="Resources/Styles/Styles.xaml" />
                 <m:StyleResource BasedOn="{x:Reference appStyles}" />
+                <ResourceDictionary x:Name="overrideStyles" Source="Resources/Styles/Override.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <Style TargetType="Grid" Class="InputFieldDemoGrid">

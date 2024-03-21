@@ -319,6 +319,7 @@
             <!--Use Legacy Base Name-->
             <Style x:Key="UraniumUI.Styles.TextField" BaseResourceKey="InputFieldBaseStyle" TargetType="c:TextField"  CanCascade="True">
                 <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}" />
+                <Setter Property="SelectionHighlightColor" Value="{StaticResource Primary}" />
             </Style>
 
             <!--Use Legacy Base Name-->

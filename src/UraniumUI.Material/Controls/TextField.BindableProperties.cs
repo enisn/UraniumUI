@@ -188,4 +188,15 @@ public partial class TextField
         defaultValue: EntryProperties.SelectionHighlightColorProperty.DefaultValue,
         propertyChanged: (bindable, oldValue, newValue) => EntryProperties.SetSelectionHighlightColor(bindable, (Color)newValue)
         );
+
+    public bool DisallowEndIconFocus { get => (bool)GetValue(DisallowEndIconFocusProperty); set => SetValue(DisallowEndIconFocusProperty, value); }
+
+    public static BindableProperty DisallowEndIconFocusProperty = BindableProperty.Create(
+        nameof(DisallowEndIconFocus),
+        typeof(bool),
+        typeof(TextField),
+        false,
+        propertyChanged: (bindable, oldValue, newValue) => {
+            (bindable as TextField).ValidateFocus();
+        });
 }

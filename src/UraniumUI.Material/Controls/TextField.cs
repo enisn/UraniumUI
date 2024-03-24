@@ -54,6 +54,8 @@ public partial class TextField : InputField
         EntryView.SetBinding(Entry.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
         EntryView.SetBinding(Entry.IsReadOnlyProperty, new Binding(nameof(IsReadOnly), source: this));
 
+        endIconsContainer.Focused += (s, e) => { ValidateFocus(); };
+
         AfterConstructor();
     }
 
@@ -148,4 +150,27 @@ public partial class TextField : InputField
         EntryView.Text = string.Empty;
         base.ResetValidation();
     }
+
+    #region DisallowEndIconsFocus Logic
+
+    protected void ValidateFocus()
+    {
+        if (DisallowEndIconFocus)
+        {
+            var controlToFocus = GetNextExternalFocusableControl();
+
+            if (controlToFocus != null)
+            {
+                //Attempt to focus, I guess just ignore failures for now
+                //Maybe loop to next until we find ourselves?
+                controlToFocus.Focus();
+            }
+        }
+    }
+
+    protected IView GetNextExternalFocusableControl()
+    {
+        return UraniumUI.Extensions.ViewExtensions.GetNextElement(this.Parent, this) as IView;
+    }
+    #endregion DisallowEndIconsFocus Logic
 }

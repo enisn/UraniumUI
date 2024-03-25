@@ -54,8 +54,6 @@ public partial class TextField : InputField
         EntryView.SetBinding(Entry.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
         EntryView.SetBinding(Entry.IsReadOnlyProperty, new Binding(nameof(IsReadOnly), source: this));
 
-        iconClear.Focused += (s, e) => { ValidateClearButtonFocus(); };
-
         AfterConstructor();
     }
 
@@ -64,15 +62,19 @@ public partial class TextField : InputField
     protected override void OnHandlerChanged()
     {
         base.OnHandlerChanged();
+
         if (Handler is null)
         {
             EntryView.TextChanged -= EntryView_TextChanged;
             EntryView.Completed -= EntryView_Completed;
+            iconClear.Focused -= IconClear_Focused;
         }
         else
         {
             EntryView.TextChanged += EntryView_TextChanged;
             EntryView.Completed += EntryView_Completed;
+            iconClear.Focused -= IconClear_Focused;
+
             ApplyAttachedProperties();
         }
     }
@@ -105,6 +107,11 @@ public partial class TextField : InputField
     private void EntryView_Completed(object sender, EventArgs e)
     {
         Completed?.Invoke(this, e);
+    }
+
+    private void IconClear_Focused(object sender, FocusEventArgs e)
+    {
+        ValidateClearButtonFocus();
     }
 
     public void ClearValue()

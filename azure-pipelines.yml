@@ -25,7 +25,10 @@ steps:
   inputs:
     command: 'build'
 
-- task: DotNetCoreCLI@2
-  displayName: "Test"
-  inputs:
-    command: 'test'
+# - task: DotNetCoreCLI@2
+#  displayName: "Test"
+#  inputs:
+#    command: 'test'
+
+- script: 'dotnet test -m:1'
+  displayName: 'dotnet test'

@@ -189,14 +189,14 @@ public partial class TextField
         propertyChanged: (bindable, oldValue, newValue) => EntryProperties.SetSelectionHighlightColor(bindable, (Color)newValue)
         );
 
-    public bool DisallowEndIconFocus { get => (bool)GetValue(DisallowEndIconFocusProperty); set => SetValue(DisallowEndIconFocusProperty, value); }
+    public bool DisallowClearButtonFocus { get => (bool)GetValue(DisallowClearButtonFocusProperty); set => SetValue(DisallowClearButtonFocusProperty, value); }
 
-    public static BindableProperty DisallowEndIconFocusProperty = BindableProperty.Create(
-        nameof(DisallowEndIconFocus),
+    public static BindableProperty DisallowClearButtonFocusProperty = BindableProperty.Create(
+        nameof(DisallowClearButtonFocus),
         typeof(bool),
         typeof(TextField),
         false,
         propertyChanged: (bindable, oldValue, newValue) => {
-            (bindable as TextField).ValidateFocus();
+            (bindable as TextField).ValidateClearButtonFocus();
         });
 }

@@ -54,7 +54,7 @@ public partial class TextField : InputField
         EntryView.SetBinding(Entry.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
         EntryView.SetBinding(Entry.IsReadOnlyProperty, new Binding(nameof(IsReadOnly), source: this));
 
-        iconClear.Focused += (s, e) => { ValidateFocus(); };
+        iconClear.Focused += (s, e) => { ValidateClearButtonFocus(); };
 
         AfterConstructor();
     }
@@ -151,11 +151,11 @@ public partial class TextField : InputField
         base.ResetValidation();
     }
 
-    #region DisallowEndIconsFocus Logic
+    #region DisallowClearButtonFocus Logic
 
-    protected void ValidateFocus()
+    protected void ValidateClearButtonFocus()
     {
-        if (DisallowEndIconFocus)
+        if (DisallowClearButtonFocus)
         {
             var controlToFocus = GetNextExternalFocusableControl();
 
@@ -173,5 +173,5 @@ public partial class TextField : InputField
         return UraniumUI.Extensions.ViewExtensions.GetNextElement(this.Parent, this) as IView;
     }
 
-    #endregion DisallowEndIconsFocus Logic
+    #endregion DisallowClearButtonFocus Logic
 }

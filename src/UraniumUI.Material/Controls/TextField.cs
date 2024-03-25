@@ -73,7 +73,7 @@ public partial class TextField : InputField
         {
             EntryView.TextChanged += EntryView_TextChanged;
             EntryView.Completed += EntryView_Completed;
-            iconClear.Focused -= IconClear_Focused;
+            iconClear.Focused += IconClear_Focused;
 
             ApplyAttachedProperties();
         }

@@ -54,7 +54,7 @@ public partial class TextField : InputField
         EntryView.SetBinding(Entry.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
         EntryView.SetBinding(Entry.IsReadOnlyProperty, new Binding(nameof(IsReadOnly), source: this));
 
-        endIconsContainer.Focused += (s, e) => { ValidateFocus(); };
+        iconClear.Focused += (s, e) => { ValidateFocus(); };
 
         AfterConstructor();
     }
@@ -172,5 +172,6 @@ public partial class TextField : InputField
     {
         return UraniumUI.Extensions.ViewExtensions.GetNextElement(this.Parent, this) as IView;
     }
+
     #endregion DisallowEndIconsFocus Logic
 }

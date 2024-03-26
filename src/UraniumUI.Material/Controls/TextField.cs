@@ -54,6 +54,8 @@ public partial class TextField : InputField
         EntryView.SetBinding(Entry.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
         EntryView.SetBinding(Entry.IsReadOnlyProperty, new Binding(nameof(IsReadOnly), source: this));
 
+        iconClear.SetBinding(StatefulContentView.IsNotFocusableProperty, new Binding(nameof(DisallowClearButtonFocus), BindingMode.TwoWay, source: this));
+
         AfterConstructor();
     }
 
@@ -67,13 +69,11 @@ public partial class TextField : InputField
         {
             EntryView.TextChanged -= EntryView_TextChanged;
             EntryView.Completed -= EntryView_Completed;
-            iconClear.Focused -= IconClear_Focused;
         }
         else
         {
             EntryView.TextChanged += EntryView_TextChanged;
             EntryView.Completed += EntryView_Completed;
-            iconClear.Focused -= IconClear_Focused;
 
             ApplyAttachedProperties();
         }
@@ -107,11 +107,6 @@ public partial class TextField : InputField
     private void EntryView_Completed(object sender, EventArgs e)
     {
         Completed?.Invoke(this, e);
-    }
-
-    private void IconClear_Focused(object sender, FocusEventArgs e)
-    {
-        ValidateClearButtonFocus();
     }
 
     public void ClearValue()
@@ -157,28 +152,4 @@ public partial class TextField : InputField
         EntryView.Text = string.Empty;
         base.ResetValidation();
     }
-
-    #region DisallowClearButtonFocus Logic
-
-    protected void ValidateClearButtonFocus()
-    {
-        if (DisallowClearButtonFocus)
-        {
-            var controlToFocus = GetNextExternalFocusableControl();
-
-            if (controlToFocus != null)
-            {
-                //Attempt to focus, I guess just ignore failures for now
-                //Maybe loop to next until we find ourselves?
-                controlToFocus.Focus();
-            }
-        }
-    }
-
-    protected IView GetNextExternalFocusableControl()
-    {
-        return UraniumUI.Extensions.ViewExtensions.GetNextElement(this.Parent, this) as IView;
-    }
-
-    #endregion DisallowClearButtonFocus Logic
 }

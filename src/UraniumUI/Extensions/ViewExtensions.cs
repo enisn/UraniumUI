@@ -113,7 +113,7 @@ public static class ViewExtensions
         return CultureInfo.CurrentCulture.TextInfo.IsRightToLeft;
     }
 
-    public static IVisualTreeElement GetNextElement(IVisualTreeElement parent, IVisualTreeElement startAfterElement)
+    public static IVisualTreeElement GetNextFocusableElement(IVisualTreeElement parent, IVisualTreeElement startAfterElement)
     {
         if (parent == null || startAfterElement == null)
         {
@@ -169,7 +169,7 @@ public static class ViewExtensions
             else
             {
                 //Go up the stack
-                return GetNextElement(parent.GetVisualParent(), parent);
+                return GetNextFocusableElement(parent.GetVisualParent(), parent);
             }
         }
 

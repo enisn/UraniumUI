@@ -9,6 +9,102 @@ public class StatefulContentView : ContentView, IStatefulView
     public event EventHandler<EventArgs> HoverExited;
     public event EventHandler<EventArgs> Tapped;
 
+    #region Focus Handling
+
+    protected override void OnHandlerChanged()
+    {
+        base.OnHandlerChanged();
+
+        UpdateFocus();
+    }
+
+    protected void UpdateFocus()
+    {
+        if (UpdateFocusWindows()) return;
+        if (UpdateFocusMACorIOS()) return;
+        if (UpdateFocusAndroid26OrHigher()) return;
+        UpdateFocusGeneric();
+    }
+
+    protected bool UpdateFocusWindows()
+    {
+#if WINDOWS
+        var view = Handler?.PlatformView as Microsoft.Maui.Platform.ContentPanel;
+
+        if (view != null)
+        {
+            view.IsTabStop = !IsNotFocusable;
+
+            return true;
+        }
+
+#endif
+        return false;
+    }
+
+    protected bool UpdateFocusMACorIOS()
+    {
+#if IOS || MACCATALYST
+            var view = Handler?.PlatformView as UIKit.UIView;
+
+            if (view != null)
+            {
+                view.ExclusiveTouch = IsNotFocusable;
+
+                return true;
+            }
+#endif
+        return false;
+    }
+
+    protected bool UpdateFocusAndroid26OrHigher()
+    {
+
+#if ANDROID26_0_OR_GREATER
+        var view = Handler?.PlatformView as PlatformContentViewGroup;
+
+        if (view != null)
+        {
+#pragma warning disable CA1416 // Validate platform compatibility
+            view.SetFocusable(IsNotFocusable ? Android.Views.ViewFocusability.NotFocusable : Android.Views.ViewFocusability.FocusableAuto);
+
+            return true;
+#pragma warning restore CA1416 // Validate platform compatibility
+        }
+#endif
+        return false;
+    }
+
+    protected void UpdateFocusGeneric()
+    {
+        //Fallback to focused event
+        if (Handler == null)
+        {
+            Focused -= StatefulContentView_Focused;
+        }
+        else
+        {
+            Focused += StatefulContentView_Focused;
+        }
+    }
+
+    private void StatefulContentView_Focused(object sender, FocusEventArgs e)
+    {
+        if (IsNotFocusable)
+        {
+            var controlToFocus = UraniumUI.Extensions.ViewExtensions.GetNextFocusableElement(Parent, this) as IView;
+
+            if (controlToFocus != null)
+            {
+                //Attempt to focus, I guess just ignore failures for now
+                //Maybe loop to next until we find ourselves?
+                controlToFocus.Focus();
+            }
+        }
+    }
+
+    #endregion Focus Handling
+
     internal void InvokePressed() => Pressed?.Invoke(this, EventArgs.Empty);
 
     internal void InvokeLongPressed() => LongPressed?.Invoke(this, EventArgs.Empty);
@@ -42,4 +138,8 @@ public class StatefulContentView : ContentView, IStatefulView
     public object CommandParameter { get => GetValue(CommandParameterProperty); set => SetValue(CommandParameterProperty, value); }
 
     public static BindableProperty CommandParameterProperty = BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(StatefulContentView));
+
+    public bool IsNotFocusable { get => (bool)GetValue(IsNotFocusableProperty); set => SetValue(IsNotFocusableProperty, value); }
+
+    public static BindableProperty IsNotFocusableProperty = BindableProperty.Create(nameof(IsNotFocusable), typeof(bool), typeof(StatefulContentView), false, BindingMode.TwoWay);
 }

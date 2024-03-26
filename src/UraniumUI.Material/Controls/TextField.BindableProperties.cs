@@ -196,7 +196,5 @@ public partial class TextField
         typeof(bool),
         typeof(TextField),
         false,
-        propertyChanged: (bindable, oldValue, newValue) => {
-            (bindable as TextField).ValidateClearButtonFocus();
-        });
+        BindingMode.TwoWay);
 }

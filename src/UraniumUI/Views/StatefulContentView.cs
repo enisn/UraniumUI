@@ -59,7 +59,6 @@ public class StatefulContentView : ContentView, IStatefulView
 
     protected bool UpdateFocusAndroid26OrHigher()
     {
-
 #if ANDROID26_0_OR_GREATER
         var view = Handler?.PlatformView as PlatformContentViewGroup;
 

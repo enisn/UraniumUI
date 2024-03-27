@@ -72,6 +72,26 @@ public class TextField_Test
     }
 
     [Fact]
+    public void TextProperty_Parent_ShouldTwoWayBind_Child()
+    {
+        var control = AnimationReadyHandler.Prepare(new TextField());
+
+        //Test Child->Parent
+        // Act
+        control.EntryView.Text = "Test 1";
+
+        // Assert
+        control.Text.ShouldBe(control.EntryView.Text);
+
+        //Test Parent->Child
+        // Act
+        control.Text = "Test 2";
+
+        // Assert
+        control.Text.ShouldBe(control.EntryView.Text);
+    }
+
+    [Fact]
     public void SelectionLength_ShouldBeSent_ToViewModel()
     {
         var control = AnimationReadyHandler.Prepare(new TextField());
@@ -84,6 +104,46 @@ public class TextField_Test
 
         // Assert
         viewModel.SelectionLength.ShouldBe(control.SelectionLength);
+    }
+
+    [Fact]
+    public void SelectionLengthProperty_Parent_ShouldTwoWayBind_Child ()
+    {
+        var control = AnimationReadyHandler.Prepare(new TextField());
+
+        //Test Child->Parent
+        // Act
+        control.EntryView.SelectionLength = 5;
+
+        // Assert
+        control.SelectionLength.ShouldBe(control.EntryView.SelectionLength);
+
+        //Test Parent->Child
+        // Act
+        control.SelectionLength = 10;
+
+        // Assert
+        control.SelectionLength.ShouldBe(control.EntryView.SelectionLength);
+    }
+
+    [Fact]
+    public void CursorPositionProperty_Parent_ShouldTwoWayBind_Child()
+    {
+        var control = AnimationReadyHandler.Prepare(new TextField());
+
+        //Test Child->Parent
+        // Act
+        control.EntryView.CursorPosition = 5;
+
+        // Assert
+        control.CursorPosition.ShouldBe(control.EntryView.CursorPosition);
+
+        //Test Parent->Child
+        // Act
+        control.CursorPosition = 10;
+
+        // Assert
+        control.CursorPosition.ShouldBe(control.EntryView.CursorPosition);
     }
 
     [Fact]
@@ -186,8 +246,11 @@ public class TextField_Test
         // Act
         control.SetBinding(TextField.ReturnCommandParameterProperty, new Binding(nameof(TestViewModel.CommandParameter)));
 
-        // Assert
+        // Assert child
         control.EntryView.ReturnCommandParameter.ShouldBe(viewModel.CommandParameter);
+
+        // Assert parent
+        control.ReturnCommandParameter.ShouldBe(viewModel.CommandParameter);
     }
 
     [Fact]

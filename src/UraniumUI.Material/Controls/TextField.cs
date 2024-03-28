@@ -54,6 +54,8 @@ public partial class TextField : InputField
         EntryView.SetBinding(Entry.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
         EntryView.SetBinding(Entry.IsReadOnlyProperty, new Binding(nameof(IsReadOnly), source: this));
 
+        iconClear.SetBinding(StatefulContentView.IsNotFocusableProperty, new Binding(nameof(DisallowClearButtonFocus), BindingMode.TwoWay, source: this));
+
         AfterConstructor();
     }
 
@@ -62,6 +64,7 @@ public partial class TextField : InputField
     protected override void OnHandlerChanged()
     {
         base.OnHandlerChanged();
+
         if (Handler is null)
         {
             EntryView.TextChanged -= EntryView_TextChanged;
@@ -71,6 +74,7 @@ public partial class TextField : InputField
         {
             EntryView.TextChanged += EntryView_TextChanged;
             EntryView.Completed += EntryView_Completed;
+
             ApplyAttachedProperties();
         }
     }

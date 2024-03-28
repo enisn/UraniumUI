@@ -188,4 +188,13 @@ public partial class TextField
         defaultValue: EntryProperties.SelectionHighlightColorProperty.DefaultValue,
         propertyChanged: (bindable, oldValue, newValue) => EntryProperties.SetSelectionHighlightColor(bindable, (Color)newValue)
         );
+
+    public bool DisallowClearButtonFocus { get => (bool)GetValue(DisallowClearButtonFocusProperty); set => SetValue(DisallowClearButtonFocusProperty, value); }
+
+    public static BindableProperty DisallowClearButtonFocusProperty = BindableProperty.Create(
+        nameof(DisallowClearButtonFocus),
+        typeof(bool),
+        typeof(TextField),
+        false,
+        BindingMode.TwoWay);
 }

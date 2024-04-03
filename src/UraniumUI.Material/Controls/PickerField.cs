@@ -86,7 +86,7 @@ public class PickerField : InputField
     protected override void OnSizeAllocated(double width, double height)
     {
         base.OnSizeAllocated(width, height);
-        PickerView.WidthRequest = (width * .96f) - (AllowClear ? iconClear.Width : 0) - (imageIcon.IsValueCreated ? imageIcon.Value.Width : 0); // TODO:Make this value dynamic later.
+        PickerView.MinimumWidthRequest = (width * .96f) - (AllowClear ? iconClear.Width : 0) - (imageIcon.IsValueCreated ? imageIcon.Value.Width : 0);
     }
 #endif
 

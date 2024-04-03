@@ -232,5 +232,8 @@ public partial class TextField
         typeof(bool),
         typeof(TextField),
         false,
-        BindingMode.TwoWay);
+        propertyChanged: (bindable, oldValue, newValue) =>
+        {
+            (bindable as TextField).iconClear.IsFocusable = !(bool)newValue;
+        });
 }

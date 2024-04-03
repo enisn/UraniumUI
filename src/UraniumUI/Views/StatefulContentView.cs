@@ -1,4 +1,5 @@
 ﻿using System.Windows.Input;
+using UraniumUI.Handlers;
 
 namespace UraniumUI.Views;
 public class StatefulContentView : ContentView, IStatefulView
@@ -42,4 +43,8 @@ public class StatefulContentView : ContentView, IStatefulView
     public object CommandParameter { get => GetValue(CommandParameterProperty); set => SetValue(CommandParameterProperty, value); }
 
     public static BindableProperty CommandParameterProperty = BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(StatefulContentView));
+
+    public bool IsFocusable { get => (bool)GetValue(IsFocusableProperty); set => SetValue(IsFocusableProperty, value); }
+
+    public static BindableProperty IsFocusableProperty = BindableProperty.Create(nameof(IsFocusable), typeof(bool), typeof(StatefulContentView), true);
 }

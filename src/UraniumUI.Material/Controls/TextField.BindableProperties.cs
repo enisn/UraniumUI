@@ -224,4 +224,16 @@ public partial class TextField
         {
             EntryProperties.SetSelectionHighlightColor(bindable, (Color)newValue);
         });
+
+    public bool DisallowClearButtonFocus { get => (bool)GetValue(DisallowClearButtonFocusProperty); set => SetValue(DisallowClearButtonFocusProperty, value); }
+
+    public static BindableProperty DisallowClearButtonFocusProperty = BindableProperty.Create(
+        nameof(DisallowClearButtonFocus),
+        typeof(bool),
+        typeof(TextField),
+        false,
+        propertyChanged: (bindable, oldValue, newValue) =>
+        {
+            (bindable as TextField).iconClear.IsFocusable = !(bool)newValue;
+        });
 }

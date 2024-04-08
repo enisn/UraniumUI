@@ -52,8 +52,9 @@ public partial class TextField : InputField
         EntryView.SetBinding(Entry.ReturnCommandProperty, new Binding(nameof(ReturnCommand), BindingMode.TwoWay, source: this));
         EntryView.SetBinding(Entry.SelectionLengthProperty, new Binding(nameof(SelectionLength), BindingMode.TwoWay, source: this));
         EntryView.SetBinding(Entry.CursorPositionProperty, new Binding(nameof(CursorPosition), BindingMode.TwoWay, source: this));
-        EntryView.SetBinding(Entry.IsEnabledProperty, new Binding(nameof(IsEnabled), BindingMode.TwoWay, source: this));
-        EntryView.SetBinding(Entry.IsReadOnlyProperty, new Binding(nameof(IsReadOnly), BindingMode.TwoWay, source: this));
+
+        EntryView.SetBinding(Entry.IsEnabledProperty, new Binding(nameof(IsEnabled), BindingMode.OneWay, source: this));
+        EntryView.SetBinding(Entry.IsReadOnlyProperty, new Binding(nameof(IsReadOnly), BindingMode.OneWay, source: this));
 
         iconClear.SetBinding(StatefulContentView.IsFocusableProperty, new Binding(nameof(DisallowClearButtonFocus), source: this));
 

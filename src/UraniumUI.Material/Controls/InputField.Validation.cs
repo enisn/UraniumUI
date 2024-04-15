@@ -55,7 +55,8 @@ public partial class InputField : IValidatable
             {
                 endIconsContainer.Remove(iconValidation.Value);
                 this.Remove(labelValidation.Value);
-            }
+                OnPropertyChanged(nameof(IsValid));
+			}
         }
         else
         {
@@ -66,7 +67,8 @@ public partial class InputField : IValidatable
             {
                 endIconsContainer.Add(iconValidation.Value);
                 this.Add(labelValidation.Value, row: 1);
-            }
+                OnPropertyChanged(nameof(IsValid));
+			}
         }
     }
 

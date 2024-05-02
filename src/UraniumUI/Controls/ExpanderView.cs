@@ -55,7 +55,13 @@ public class ExpanderView : ContentView
             }
         };
 
-        headerContainer.TappedCommand = new Command(() => IsExpanded = !IsExpanded);
+        var tapGesture = new TapGestureRecognizer();
+        tapGesture.Tapped += (sender, e) =>
+        {
+            IsExpanded = !IsExpanded;
+        };
+
+        headerContainer.GestureRecognizers.Add(tapGesture);
     }
 
     public View Header

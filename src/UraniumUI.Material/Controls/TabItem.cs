@@ -9,11 +9,17 @@ public class TabItem : UraniumBindableObject
 
     public static readonly BindableProperty TitleProperty = BindableProperty.Create(nameof(Title), typeof(string), typeof(TabItem));
 
-    public object Data { get; set; }
-    public DataTemplate ContentTemplate { get; set; }
-    public DataTemplate HeaderTemplate { get; set; }
+    public DataTemplate HeaderTemplate { get => (DataTemplate)GetValue(HeaderTemplateProperty); set => SetValue(HeaderTemplateProperty, value); }
+
+    public static readonly BindableProperty HeaderTemplateProperty = BindableProperty.Create(nameof(HeaderTemplate), typeof(DataTemplate), typeof(TabItem), defaultBindingMode: BindingMode.TwoWay);
+
+    public DataTemplate ContentTemplate { get => (DataTemplate)GetValue(ContentTemplateProperty); set => SetValue(ContentTemplateProperty, value); }
+
+    public static readonly BindableProperty ContentTemplateProperty = BindableProperty.Create(nameof(ContentTemplate), typeof(DataTemplate), typeof(TabItem), defaultBindingMode: BindingMode.TwoWay);
+
     public View Content { get; set; }
     public View Header { get; set; }
+    public object Data { get; set; }
     public TabView TabView { get; internal set; }
     public bool IsSelected { get => TabView.SelectedTab == this || (TabView.CurrentItem != null && TabView.CurrentItem == Data); }
 

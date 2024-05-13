@@ -27,36 +27,40 @@ public static class ViewExtensions
         return default;
     }
 
-    public static T FindInChildrenHierarchy<T>(this View view)
+    public static T FindInChildrenHierarchy<T>(this View view, Func<T, bool> expression = null)
         where T : VisualElement
     {
+        expression ??= _ => true;
+
         if (view is Layout layout)
         {
             foreach (var item in layout.Children)
             {
-                if (item is T found)
+                if (item is T found && expression(found))
                 {
                     return found;
                 }
                 else if (item is Layout anotherLayout)
                 {
-                    return anotherLayout.FindInChildrenHierarchy<T>();
+                    return anotherLayout.FindInChildrenHierarchy<T>(expression);
                 }
             }
         }
 
         if (view is Microsoft.Maui.Controls.ContentView contentView)
         {
-            return contentView.Content.FindInChildrenHierarchy<T>();
+            return contentView.Content.FindInChildrenHierarchy<T>(expression);
         }
 
         return null;
     }
 
-    public static IEnumerable<T> FindManyInChildrenHierarchy<T>(this View view)
+    public static IEnumerable<T> FindManyInChildrenHierarchy<T>(this View view, Func<T, bool> expression = null)
         where T : View
     {
-        if (view is T itself)
+        expression ??= _ => true;
+
+        if (view is T itself && expression(itself))
         {
             yield return itself;
         }
@@ -65,14 +69,14 @@ public static class ViewExtensions
         {
             foreach (var item in layout.Children)
             {
-                if (item is T found)
+                if (item is T found && expression(found))
                 {
                     yield return found;
                 }
 
                 if (item is View childView)
                 {
-                    foreach (var child in childView.FindManyInChildrenHierarchy<T>())
+                    foreach (var child in childView.FindManyInChildrenHierarchy<T>(expression))
                     {
                         yield return child;
                     }
@@ -82,7 +86,7 @@ public static class ViewExtensions
 
         if (view is IContentView contentView && contentView.Content is View contentViewContent)
         {
-            foreach (var child in contentViewContent.FindManyInChildrenHierarchy<T>())
+            foreach (var child in contentViewContent.FindManyInChildrenHierarchy<T>(expression))
             {
                 yield return child;
             }

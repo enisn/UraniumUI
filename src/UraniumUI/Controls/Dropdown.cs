@@ -2,7 +2,7 @@
 using System.Collections.Specialized;
 
 namespace UraniumUI.Controls;
-public class Dropdown : View, IDropdown
+public class Dropdown : Button, IDropdown
 {
     public object SelectedItem { get => GetValue(SelectedItemProperty); set => SetValue(SelectedItemProperty, value); }
 
@@ -25,6 +25,11 @@ public class Dropdown : View, IDropdown
         if (newValue is INotifyCollectionChanged newObservable)
         {
             newObservable.CollectionChanged += ItemsSource_CollectionChanged;
+        }
+
+        if (SelectedItem is null && ItemsSource.Count > 0)
+        {
+            SelectedItem = ItemsSource[0];
         }
     }
 

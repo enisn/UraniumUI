@@ -30,6 +30,7 @@ public class Dropdown : Button, IDropdown
         if (SelectedItem is null && ItemsSource.Count > 0)
         {
             SelectedItem = ItemsSource[0];
+            Text = SelectedItem.ToString();
         }
     }
 

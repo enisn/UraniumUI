@@ -90,10 +90,11 @@ public partial class DropdownHandler : ViewHandler<Dropdown, UIKit.UIButton>
                 items[i] = UIKit.UIAction.Create(VirtualView.ItemsSource[i].ToString().ToString(), null, VirtualView.ItemsSource[i].ToString(), _ => { Console.WriteLine("Selected"); });
             }
 
+            button.SetTitle(VirtualView?.SelectedItem?.ToString() ?? "Tap to choose", UIKit.UIControlState.Normal);
             button.Menu = UIKit.UIMenu.Create(items);
+            button.ShowsMenuAsPrimaryAction = true;
+            button.ChangesSelectionAsPrimaryAction = true;
         }
-
-        button.SetTitle(VirtualView?.SelectedItem?.ToString(), UIKit.UIControlState.Normal);
 
         return button;
     }

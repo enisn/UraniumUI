@@ -24,6 +24,16 @@
         </Grid>
 
       <uranium:SelectableLabel Margin="15" Text="Hello, World! This text should be selectable!" />
+
+      <uranium:Dropdown>
+        <uranium:Dropdown.ItemsSource>
+            <x:Array Type="{x:Type x:String}">
+                <x:String>Item 1</x:String>
+                <x:String>Item 2</x:String>
+                <x:String>Item 3</x:String>
+            </x:Array>
+        </uranium:Dropdown.ItemsSource>
+      </uranium:Dropdown>
       
     </VerticalStackLayout>
 </ContentPage>

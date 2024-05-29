@@ -116,4 +116,12 @@ public static class ViewExtensions
         // Fallback to culture:
         return CultureInfo.CurrentCulture.TextInfo.IsRightToLeft;
     }
+
+    public static void AddIf(this ICollection<IView> collection, View view, bool condition)
+    {
+        if (condition)
+        {
+            collection.Add(view);
+        }
+    }
 }

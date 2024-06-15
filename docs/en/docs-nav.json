@@ -189,6 +189,10 @@
           "path": "themes/material/components/DataGrid.md"
         },
         {
+          "text": "Paginator",
+          "path": "themes/material/components/Paginator.md"
+        },
+        {
           "text": "TreeView",
           "path": "themes/material/components/TreeView.md"
         },

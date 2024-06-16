@@ -1,4 +1,121 @@
-- name: Introduction
-  href: introduction.md
 - name: Getting Started
-  href: getting-started.md
+  href: en/Getting-Started.md
+- name: Core
+  items:
+    - name: Uranium Content Page
+      href: en/infrastructure/UraniumContentPage.md
+    - name: Stateful Content View
+      href: en/infrastructure/StatefulContentView.md
+    - name: Grid Layout
+      href: en/infrastructure/GridLayout.md
+    - name: Auto Form View
+      href: en/infrastructure/AutoFormView.md
+    - name: ExpanderView
+      href: en/infrastructure/ExpanderView.md
+    - name: Validations
+      href: en/validations/Index.md
+      items:
+        - name: InputKit Validations
+          href: en/validations/InputKitValidations.md
+        - name: Data Annotations
+          href: en/validations/DataAnnotations.md
+- name: Dialogs
+  href: en/dialogs/Index.md
+  items:
+    - name: CommunityToolkit
+      href: en/dialogs/Index.md#communitytoolkit
+    - name: Mopups
+      href: en/dialogs/Index.md#mopups
+- name: Icons
+  href: en/theming/Icons.md
+  items:
+    - name: Material Icons
+      href: en/theming/Icons.md#material-icons
+    - name: Font Awesome
+      href: en/theming/Icons.md#fontawesome
+    - name: Segoe Fluent Icons
+      href: en/theming/Icons.md#segoe-fluent-icons
+- name: Web Components
+  items: []
+- name: Styling
+  items:
+    - name: Color System
+      href: en/theming/ColorSystem.md
+    - name: Cascading Styling
+      href: en/theming/CascadingStyling.md
+    - name: Creating a Theme
+      href: en/theming/CreatingTheme.md
+- name: Effects
+  items:
+    - name: Blur
+      href: en/Blurs.md
+- name: Material
+  items:
+    - name: Colors & Styles
+      href: en/themes/material/ColorsAndStyles.md
+    - name: Elevation
+      href: en/themes/material/Elevation.md
+    - name: ButtonView
+      href: en/themes/material/ButtonView.md
+    - name: Buttons
+      href: en/themes/material/Buttons.md
+    - name: InputFields
+      href: en/themes/material/components/InputField.md
+      items:
+        - name: TextField
+          href: en/themes/material/components/TextField.md
+        - name: EditorField
+          href: en/themes/material/components/EditorField.md
+        - name: AutoCompleteTextField
+          href: en/themes/material/components/AutoCompleteTextField.md
+        - name: PickerField
+          href: en/themes/material/components/PickerField.md
+        - name: MultiplePickerField
+          href: en/themes/material/components/MultiplePickerField.md
+        - name: TimePickerField
+          href: en/themes/material/components/TimePickerField.md
+        - name: DatePickerField
+          href: en/themes/material/components/DatePickerField.md
+    - name: Validations
+      href: en/themes/material/Validations.md
+    - name: CheckBox
+      href: en/themes/material/CheckBox.md
+    - name: RadioButton
+      href: en/themes/material/RadioButton.md
+    - name: Divider
+      href: en/themes/material/Divider.md
+    - name: Backdrop
+      href: en/themes/material/components/Backdrop.md
+    - name: Bottom Sheet
+      href: en/themes/material/components/BottomSheet.md
+    - name: DataGrid
+      href: en/themes/material/components/DataGrid.md
+    - name: Paginator
+      href: en/themes/material/components/Paginator.md
+    - name: TreeView
+      href: en/themes/material/components/TreeView.md
+    - name: TabView
+      href: en/themes/material/components/TabView.md
+    - name: Containers
+      href: en/themes/material/Containers.md
+- name: Migration Guide
+  items:
+    - name: Migration to v1.1
+      href: en/migration-guides/Migrating-To-1.1.md
+    - name: Migration to v2.0
+      href: en/migration-guides/Migrating-To-2.0.md
+    - name: Migration to v2.1
+      href: en/migration-guides/Migrating-To-2.1.md
+    - name: Migration to v2.2
+      href: en/migration-guides/Migrating-To-2.2.md
+    - name: Migration to v2.3
+      href: en/migration-guides/Migrating-To-2.3.md
+    - name: Migration to v2.4
+      href: en/migration-guides/Migrating-To-2.4.md
+    - name: Migration to v2.7
+      href: en/migration-guides/Migrating-To-2.7.md
+- name: Support
+  href: en/Support.md
+  items:
+    - name: Premium Support
+      href: en/PremiumSupport.md

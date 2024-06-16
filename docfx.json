@@ -19,6 +19,7 @@
           "**/*.{md,yml}"
         ],
         "exclude": [
+          "azure-pipelines.yml",
           "_site/**"
         ]
       }

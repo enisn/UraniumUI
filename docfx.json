@@ -1,4 +1,17 @@
 {
+  "metadata": [
+    {
+      "src": [
+        {
+          "src": "../UraniumUI/src",
+          "files": [
+            "**/*.csproj"
+          ]
+        }
+      ],
+      "dest": "api"
+    }
+  ],
   "build": {
     "content": [
       {
@@ -6,7 +19,6 @@
           "**/*.{md,yml}"
         ],
         "exclude": [
-          "azure-pipelines.yml",
           "_site/**"
         ]
       }

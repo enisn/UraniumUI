@@ -1,26 +1,4 @@
 {
-  "metadata": [
-    {
-      "src": [
-        {
-          "src": "../UraniumUI/src",
-          "files": [
-            "UraniumUI/bin/Debug/net8.0/UraniumUI.dll",
-            "UraniumUI.Material/bin/Debug/net8.0/UraniumUI.Material.dll",
-            "UraniumUI.Blurs/bin/Debug/net8.0/UraniumUI.Blurs.dll",
-            "UraniumUI.Dialogs.CommunityToolkit/bin/Debug/net8.0/UraniumUI.Dialogs.CommunityToolkit.dll",
-            "UraniumUI.Dialogs.Mopups/bin/Debug/net8.0/UraniumUI.Dialogs.Mopups.dll",
-            "UraniumUI.Icons.FontAwesome/bin/Debug/net8.0/UraniumUI.Icons.FontAwesome.dll",
-            "UraniumUI.Icons.MaterialIcons/bin/Debug/net8.0/UraniumUI.Icons.MaterialIcons.dll",
-            "UraniumUI.Icons.MaterialSymbols/bin/Debug/net8.0/UraniumUI.Icons.MaterialSymbols.dll",
-            "UraniumUI.Icons.SegoeFluent/bin/Debug/net8.0/UraniumUI.Icons.SegoeFluent.dll",
-            "UraniumUI.Validations.DataAnnotations/bin/Debug/net8.0/UraniumUI.Validations.DataAnnotations.dll"
-          ]
-        }
-      ],
-      "dest": "api"
-    }
-  ],
   "build": {
     "content": [
       {
@@ -28,6 +6,7 @@
           "**/*.{md,yml}"
         ],
         "exclude": [
+          "azure-pipelines.yml",
           "_site/**"
         ]
       }

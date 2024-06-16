@@ -18,6 +18,8 @@ concurrency:
   
 jobs:
   publish-docs:
+    runs-on: windows-latest
+
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -30,8 +32,7 @@ jobs:
       with:
         dotnet-version: 8.x
 
-    # - run: dotnet workload restore
-    # - run: dotnet build src/src.sln -f net8.0
+    - run: dotnet workload restore
     - run: dotnet tool update -g docfx
     - run: docfx docfx.json
 

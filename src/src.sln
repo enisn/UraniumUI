@@ -1,0 +1,76 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UraniumUI", "UraniumUI\UraniumUI.csproj", "{0AF07F4D-E156-4911-8DAE-B407A7305EE1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UraniumUI.Material", "UraniumUI.Material\UraniumUI.Material.csproj", "{1C733998-0A73-46FC-826F-6BAA854186FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UraniumUI.Blurs", "UraniumUI.Blurs\UraniumUI.Blurs.csproj", "{8B265DE7-B68E-4B07-B6A1-F0EAA590E92E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UraniumUI.Dialogs.CommunityToolkit", "UraniumUI.Dialogs.CommunityToolkit\UraniumUI.Dialogs.CommunityToolkit.csproj", "{CACFCD60-38EF-470E-8A7E-5C9A6D9A1524}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UraniumUI.Dialogs.Mopups", "UraniumUI.Dialogs.Mopups\UraniumUI.Dialogs.Mopups.csproj", "{B3929E44-ABFE-4FB7-94C7-75ABC30EDC66}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UraniumUI.Icons.FontAwesome", "UraniumUI.Icons.FontAwesome\UraniumUI.Icons.FontAwesome.csproj", "{0A43B775-E0B1-436D-AA29-134540763D8D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UraniumUI.Icons.MaterialIcons", "UraniumUI.Icons.MaterialIcons\UraniumUI.Icons.MaterialIcons.csproj", "{466D4E07-9A9C-43E9-B64B-EF7AEB697FB4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UraniumUI.Icons.MaterialSymbols", "UraniumUI.Icons.MaterialSymbols\UraniumUI.Icons.MaterialSymbols.csproj", "{B5EA0C59-63ED-4C4A-B81D-BDF802E3BE4D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UraniumUI.Icons.SegoeFluent", "UraniumUI.Icons.SegoeFluent\UraniumUI.Icons.SegoeFluent.csproj", "{53805A33-A096-49EF-8665-F980C431E98A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UraniumUI.Validations.DataAnnotations", "UraniumUI.Validations.DataAnnotations\UraniumUI.Validations.DataAnnotations.csproj", "{621D320B-28CE-4D6F-B4C0-BE1B3705D438}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0AF07F4D-E156-4911-8DAE-B407A7305EE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AF07F4D-E156-4911-8DAE-B407A7305EE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AF07F4D-E156-4911-8DAE-B407A7305EE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AF07F4D-E156-4911-8DAE-B407A7305EE1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C733998-0A73-46FC-826F-6BAA854186FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C733998-0A73-46FC-826F-6BAA854186FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C733998-0A73-46FC-826F-6BAA854186FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C733998-0A73-46FC-826F-6BAA854186FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B265DE7-B68E-4B07-B6A1-F0EAA590E92E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B265DE7-B68E-4B07-B6A1-F0EAA590E92E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B265DE7-B68E-4B07-B6A1-F0EAA590E92E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B265DE7-B68E-4B07-B6A1-F0EAA590E92E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CACFCD60-38EF-470E-8A7E-5C9A6D9A1524}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CACFCD60-38EF-470E-8A7E-5C9A6D9A1524}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CACFCD60-38EF-470E-8A7E-5C9A6D9A1524}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CACFCD60-38EF-470E-8A7E-5C9A6D9A1524}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3929E44-ABFE-4FB7-94C7-75ABC30EDC66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3929E44-ABFE-4FB7-94C7-75ABC30EDC66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3929E44-ABFE-4FB7-94C7-75ABC30EDC66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3929E44-ABFE-4FB7-94C7-75ABC30EDC66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A43B775-E0B1-436D-AA29-134540763D8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A43B775-E0B1-436D-AA29-134540763D8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A43B775-E0B1-436D-AA29-134540763D8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A43B775-E0B1-436D-AA29-134540763D8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{466D4E07-9A9C-43E9-B64B-EF7AEB697FB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{466D4E07-9A9C-43E9-B64B-EF7AEB697FB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{466D4E07-9A9C-43E9-B64B-EF7AEB697FB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{466D4E07-9A9C-43E9-B64B-EF7AEB697FB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5EA0C59-63ED-4C4A-B81D-BDF802E3BE4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5EA0C59-63ED-4C4A-B81D-BDF802E3BE4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5EA0C59-63ED-4C4A-B81D-BDF802E3BE4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5EA0C59-63ED-4C4A-B81D-BDF802E3BE4D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53805A33-A096-49EF-8665-F980C431E98A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53805A33-A096-49EF-8665-F980C431E98A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53805A33-A096-49EF-8665-F980C431E98A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53805A33-A096-49EF-8665-F980C431E98A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{621D320B-28CE-4D6F-B4C0-BE1B3705D438}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{621D320B-28CE-4D6F-B4C0-BE1B3705D438}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{621D320B-28CE-4D6F-B4C0-BE1B3705D438}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{621D320B-28CE-4D6F-B4C0-BE1B3705D438}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

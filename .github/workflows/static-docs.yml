@@ -30,8 +30,8 @@ jobs:
       with:
         dotnet-version: 8.x
 
-    - run: dotnet workload install maui
-    - run: dotnet build src/src.sln -f net8.0
+    # - run: dotnet workload restore
+    # - run: dotnet build src/src.sln -f net8.0
     - run: dotnet tool update -g docfx
     - run: docfx docfx.json
 

@@ -20,7 +20,7 @@ public sealed class AutoFormViewOptions
         var attribute = property.GetCustomAttribute<DisplayAttribute>();
         if (attribute != null)
         {
-            return attribute.Name;
+            return attribute.GetName();
         }
 
         return property.Name;

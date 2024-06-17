@@ -7,7 +7,7 @@ public sealed class AutoFormViewOptions
 {
     public Dictionary<Type, EditorForType> EditorMapping { get; } = new();
 
-    public delegate View EditorForType(PropertyInfo property, object source);
+    public delegate View EditorForType(PropertyInfo property, Func<PropertyInfo, string> propertyNameFactory, object source);
 
     public List<Action<View, PropertyInfo>> PostEditorActions { get; } = new();
 
@@ -20,7 +20,7 @@ public sealed class AutoFormViewOptions
         var attribute = property.GetCustomAttribute<DisplayAttribute>();
         if (attribute != null)
         {
-            return attribute.Name;
+            return attribute.GetName();
         }
 
         return property.Name;

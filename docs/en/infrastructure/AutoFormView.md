@@ -13,7 +13,7 @@ xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
 Then you can use it like this:
 
 ```xml
-<uranium:FormView Source="{Binding .}" />
+<uranium:AutoFormView Source="{Binding .}" />
 ```
 
 ### Example

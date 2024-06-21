@@ -19,7 +19,6 @@
           "**/*.{md,yml}"
         ],
         "exclude": [
-          "azure-pipelines.yml",
           "_site/**"
         ]
       }
@@ -27,7 +26,8 @@
     "resource": [
       {
         "files": [
-          "images/**"
+          "images/**",
+          "en/images/**"
         ]
       }
     ],

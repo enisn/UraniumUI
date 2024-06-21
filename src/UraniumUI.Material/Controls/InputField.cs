@@ -2,6 +2,7 @@
 using UraniumUI.Resources;
 using UraniumUI.Extensions;
 using System.Collections;
+using Microsoft.Maui.Controls;
 
 namespace UraniumUI.Material.Controls;
 
@@ -152,6 +153,10 @@ public partial class InputField : Grid
     {
         base.OnHandlerChanged();
 
+#if ANDROID
+        Loaded += OnLoaded;
+#endif
+        
         Content.Focused += OnFocusChanged;
         Content.Unfocused += OnFocusChanged;
 
@@ -159,12 +164,37 @@ public partial class InputField : Grid
         {
             Content.Focused -= OnFocusChanged;
             Content.Unfocused -= OnFocusChanged;
+#if ANDROID
+            Loaded -= OnLoaded;
+#endif
         }
     }
 
     protected virtual void OnFocusChanged(object sender, FocusEventArgs args)
     {
         (this as IGridLayout).IsFocused = args.IsFocused;
+    }
+#endif
+
+#if ANDROID
+    // Android icon loading fix.
+    protected virtual void OnLoaded(object sender, EventArgs e)
+    {
+        AlignIconColor();
+    }
+    void AlignIconColor()
+    {
+        if (Icon is not FontImageSource fontImageSource || LastFontimageColor.IsNullOrTransparent())
+        {
+            return;
+        }
+
+        fontImageSource.Color = null;
+
+        Dispatcher.Dispatch(() =>
+        {
+            fontImageSource.Color = LastFontimageColor;
+        });
     }
 #endif
 
@@ -311,7 +341,7 @@ public partial class InputField : Grid
 
         if (Icon is FontImageSource fontImageSource && fontImageSource.Color != AccentColor)
         {
-            LastFontimageColor = fontImageSource.Color?.WithAlpha(1); // To createnew instance.
+            LastFontimageColor = fontImageSource.Color?.WithAlpha(1); // To create a new instance.
             fontImageSource.Color = AccentColor;
         }
     }

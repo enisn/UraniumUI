@@ -3,7 +3,7 @@
     {
       "src": [
         {
-          "src": "../UraniumUI/src",
+          "src": "../src",
           "files": [
             "**/*.csproj"
           ]
@@ -38,7 +38,8 @@
     ],
     "globalMetadata": {
       "_appName": "UraniumUI",
-      "_appTitle": "UraniumUI",
+      "_appTitle": "",
+      "_appLogoPath": "images/logo.png",
       "_enableSearch": true,
       "pdf": false
     }

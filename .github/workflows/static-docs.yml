@@ -32,13 +32,13 @@ jobs:
 
     - run: dotnet workload restore
     - run: dotnet tool update -g docfx
-    - run: docfx docfx.json
+    - run: docfx docs/docfx.json
 
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v3
       with:
         # Upload entire repository
-        path: '_site'
+        path: 'docs/_site'
     - name: Deploy to GitHub Pages
       id: deployment
       uses: actions/deploy-pages@v4

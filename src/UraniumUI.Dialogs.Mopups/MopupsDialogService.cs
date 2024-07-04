@@ -53,7 +53,7 @@ public class MopupsDialogService : IDialogService
         }
         if (Application.Current.MainPage is FlyoutPage page)
         {
-            return page;
+            return page.Flyout;
         }
         return Application.Current.MainPage;
     }

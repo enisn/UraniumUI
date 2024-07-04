@@ -51,7 +51,10 @@ public class MopupsDialogService : IDialogService
         {
             return tabbed.CurrentPage;
         }
-
+        if (Application.Current.MainPage is FlyoutPage page)
+        {
+            return page;
+        }
         return Application.Current.MainPage;
     }
 }

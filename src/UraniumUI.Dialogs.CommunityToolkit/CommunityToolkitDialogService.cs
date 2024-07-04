@@ -51,7 +51,10 @@ public class CommunityToolkitDialogService : IDialogService
         {
             return tabbed.CurrentPage;
         }
-
+        if (Application.Current.MainPage is FlyoutPage page)
+        {
+	        return page.Flyout;
+        }
         return Application.Current.MainPage;
     }
 }

@@ -40,7 +40,7 @@
 
                         <material:DataGridColumn Title="Student Name">
                             <material:DataGridColumn.CellItemTemplate>
-                                <DataTemplate>
+                                <DataTemplate x:DataType="local:Student">
                                     <Label Text="{Binding Name}" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" Margin="0" />
                                 </DataTemplate>
                             </material:DataGridColumn.CellItemTemplate>
@@ -48,7 +48,7 @@
 
                         <material:DataGridColumn Title="Age">
                             <material:DataGridColumn.CellItemTemplate>
-                                <DataTemplate>
+                                <DataTemplate x:DataType="local:Student">
                                     <Border Padding="3" HorizontalOptions="Center" VerticalOptions="Center"
                                             StrokeShape="RoundRectangle 6"
                                             BackgroundColor="{AppThemeBinding Light={StaticResource Tertiary}, Dark={StaticResource TertiaryDark}}">

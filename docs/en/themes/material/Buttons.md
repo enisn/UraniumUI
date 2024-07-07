@@ -47,12 +47,12 @@ List of all available style classes:
 ```
 | Light | Dark |
 | --- | --- |
-| ![MAUI Material Buttons](images/buttons-preview.png)| ![MAUI Material Buttons](images/buttons-preview-dark.png) |
+| ![MAUI Material Buttons](../../images/buttons-preview.png)| ![MAUI Material Buttons](../../images/buttons-preview-dark.png) |
 
 
 All the buttons are implemented by following [Material Design Button Guidelines](https://m3.material.io/components/buttons/overview). So each state works well like Hover on Windows.
 
-![MAUI Button Hover](images/buttons-hover.gif)
+![MAUI Button Hover](../../images/buttons-hover.gif)
 
 
 ## Customization

@@ -19,7 +19,7 @@ Then you can use it like this:
 </material:ButtonView>
 ```
 
-![uraniumui buttonview](images/buttonview-demo.png)
+![uraniumui buttonview](../../images/buttonview-demo.png)
 
 
 ## Customizations

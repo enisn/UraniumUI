@@ -39,4 +39,4 @@ With the simple `Binding` method, controls can't know the validation rules. You 
 
     > You can check the [DataAnnotations](https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations?view=net-5.0) documentation to learn more about the attributes.
 
-![uraniumui data annotations](images/validations-dataannotations-demo.gif)
+    ![uraniumui data annotations](../images/validations-dataannotations-demo.gif)

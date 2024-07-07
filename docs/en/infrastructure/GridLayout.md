@@ -51,7 +51,7 @@ The above code will create a grid with 2 columns and 2 rows. The first BoxView w
 </uranium:GridLayout>
 ```
 
-![MAUI GridLayout](images/gridlayout-simple.png)
+![MAUI GridLayout](../images/gridlayout-simple.png)
 
 
 ## Span
@@ -75,4 +75,4 @@ You can use the **Grid.RowSpan** and **Grid.ColumnSpan** properties to span an i
 </uranium:GridLayout>
 ```
 
-![MAUI GridLayout Span](images/gridlayout-spans.png)
+![MAUI GridLayout Span](../images/gridlayout-spans.png)

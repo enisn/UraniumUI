@@ -21,7 +21,7 @@ Then you can use it with `uranium:StatefulContentView` tag.
 
 | Windows (Dark) | MAC Catalyst (Light) |
 | --- | --- |
-| ![uranium ui stateful view windows](images/statefulcontentview-demo-windows-dark.gif) | ![uranium ui stateful view mac](images/statefulcontentview-demo-mac-light.gif) |
+| ![uranium ui stateful view windows](../images/statefulcontentview-demo-windows-dark.gif) | ![uranium ui stateful view mac](../images/statefulcontentview-demo-mac-light.gif) |
 
 > Hover over the view to see the `PointerOver` state. A mouse should be connected to see this state on mobile platforms.
 

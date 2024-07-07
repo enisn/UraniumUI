@@ -35,7 +35,7 @@ public class AutoFormViewPageViewModel : ViewModelBase
 <uranium:AutoFormView Source="{Binding .}" />
 ```
 
-![AutoFormView](images/autoformview-example-dark.png)
+![AutoFormView](../images/autoformview-example-dark.png)
 
 
 ## Configuration
@@ -108,7 +108,7 @@ You can customize the `ItemsLayout` of the `AutoFormView` using the `ItemsLayout
 </uranium:AutoFormView>
 ```
 
-![AutoFormView](images/autoformview-itemslayout-grid-dark.png)
+![AutoFormView](../images/autoformview-itemslayout-grid-dark.png)
 
 
 ## FooterLayout
@@ -122,7 +122,7 @@ You can customize the `FooterLayout` of the `AutoFormView` using the `FooterLayo
 </uranium:AutoFormView>
 ```
 
-![AutoFormView](images/autoformview-footerlayout-dark.png)
+![AutoFormView](../images/autoformview-footerlayout-dark.png)
 
 ## ShowMissingProperties
 
@@ -132,7 +132,7 @@ You can configure the `AutoFormView` to show missing properties using the `ShowM
 <uranium:AutoFormView Source="{Binding .}" ShowMissingProperties="True" />
 ```
 
-![AutoFormView](images/autoformview-showmissingproperties-dark.png)
+![AutoFormView](../images/autoformview-showmissingproperties-dark.png)
 
 
 ## Other Properties
@@ -169,4 +169,4 @@ if (result != null)
 }
 ```
 
-![AutoFormView](images/autoformview-dialogs-dark.png)
+![AutoFormView](../images/autoformview-dialogs-dark.png)

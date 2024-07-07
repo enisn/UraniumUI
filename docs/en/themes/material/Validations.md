@@ -9,7 +9,7 @@ Validations are working compatible together FormView. So, you can use a FormView
 
 | Light - Mobile | Dark - Desktop |
 |--- | --- |
-| ![MAUI Validation](images/validations-all-demo-light-android.gif) | ![MAUI Validation](images/validations-all-demo-dark-windows.gif) |
+| ![MAUI Validation](../../images/validations-all-demo-light-android.gif) | ![MAUI Validation](../../images/validations-all-demo-dark-windows.gif) |
 
 
 ## Usage
@@ -52,7 +52,7 @@ xmlns:validation="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Ma
 
 | Light | Dark |
 | --- | --- |
-| ![MAUI Validations](images/validations-demo-light-android.gif) | ![MAUI Validations](images/validations-demo-dark-windows.gif) |
+| ![MAUI Validations](../../images/validations-demo-light-android.gif) | ![MAUI Validations](../../images/validations-demo-dark-windows.gif) |
 
 
 ## Prebuilt Validations

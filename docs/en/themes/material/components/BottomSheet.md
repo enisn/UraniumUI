@@ -7,7 +7,7 @@ You may visit [Material Design Bottom Sheets](https://material.io/components/she
 
 | Regular | Custom Header |
 | --- | --- |
-| ![MAUI Bottom Sheet Material](images/bottomsheet-regular-demo.gif) | ![MAUI Bottom Sheet Material](images/bottomsheet-expanding-demo.gif) |
+| ![MAUI Bottom Sheet Material](../../../../images/bottomsheet-regular-demo.gif) | ![MAUI Bottom Sheet Material](../../../../images/bottomsheet-expanding-demo.gif) |
 
 ## Usage
 Bottom Sheet is an [attachment](../../../infrastructure/UraniumContentPage.md#attachments) of [UraniumContentPage](../../../infrastructure/UraniumContentPage.md). So, it can be used only together with UraniumContentPage.

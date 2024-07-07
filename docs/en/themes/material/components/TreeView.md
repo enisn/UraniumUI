@@ -88,7 +88,7 @@ Now you can bind your ViewModel to the TreeView:
 
 | Light | Dark |
 | --- | --- |
-| ![TreeView Light](images/treeview-demo-light-android.gif) | ![TreeView Dark](images/treeview-demo-dark-windows.gif) |
+| ![TreeView Light](../../../../images/treeview-demo-light-android.gif) | ![TreeView Dark](../../../../images/treeview-demo-dark-windows.gif) |
 
 ### ItemTemplate
 You can customize nodes with `ItemTemplate`. It's just like a `ListView` or `CollectionView`:
@@ -109,7 +109,7 @@ You can customize nodes with `ItemTemplate`. It's just like a `ListView` or `Col
 
 | Light | Dark |
 | --- | --- |
-| ![MAUI Custom TreeView](images/treeview-itemtemplate-light-android.png)  | ![MAUI Custom TreeView](images/treeview-itemtemplate-dark-windows.png) |
+| ![MAUI Custom TreeView](../../../../images/treeview-itemtemplate-light-android.png)  | ![MAUI Custom TreeView](../../../../images/treeview-itemtemplate-dark-windows.png) |
 
 
 ### IsExpandedPropertyName
@@ -159,7 +159,7 @@ TreeView supports single selection and multiple selection. You can set `Selectio
 
 | Light | Dark |
 | --- | --- |
-| ![TreeView Light](images/treeview-selection-light.gif) | ![TreeView Dark](images/treeview-selection-dark.gif) |
+| ![TreeView Light](../../../../images/treeview-selection-light.gif) | ![TreeView Dark](../../../../images/treeview-selection-dark.gif) |
 
 ### Multiple Selection
 
@@ -169,7 +169,7 @@ TreeView supports single selection and multiple selection. You can set `Selectio
 
 | Light | Dark |
 | --- | --- |
-| ![TreeView Light](images/treeview-selection-multiple-light.gif) | ![TreeView Dark](images/treeview-selection-multiple-dark.gif) |
+| ![TreeView Light](../../../../images/treeview-selection-multiple-light.gif) | ![TreeView Dark](../../../../images/treeview-selection-multiple-dark.gif) |
 
 ---
 
@@ -231,7 +231,7 @@ You can customize the appearance of the TreeView with styles. You override the f
 > _**Note** that, Make sure `material` namespace of TreeView is added to your file, you can add `xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"`_
 
 
-![MAUI TreeView Customizations](images/treeview-customizations.gif)
+![MAUI TreeView Customizations](../../../../images/treeview-customizations.gif)
 
 ### Spacing
 You can change the spacing between the arrow icon and the content with `Spacing` property. Default value is `10`.
@@ -239,11 +239,11 @@ You can change the spacing between the arrow icon and the content with `Spacing`
 ```xml
 <material:TreeView ItemsSource="{Binding Nodes}" Spacing="25"/>
 ```
-![TreeView Spacing](images/treeview-spacing-dark-android.png)
+![TreeView Spacing](../../../../images/treeview-spacing-dark-android.png)
 
 | Light | Dark |
 | --- | --- |
-| ![TreeView Light](images/treeview-selection-light-android.gif) | ![TreeView Dark](images/treeview-selection-dark-windows.gif) |
+| ![TreeView Light](../../../../images/treeview-selection-light-android.gif) | ![TreeView Dark](../../../../images/treeview-selection-dark-windows.gif) |
 
 ### ExpanderTemplate
 You can completely customize the expander with `ExpanderTemplate` property. It's an arrow by default. You can use any view as an expander. For example, you can use a `Switch` to expand and collapse nodes.
@@ -262,7 +262,7 @@ You can use following binding properties in the `ExpanderTemplate`:
 </material:TreeView>
 ```
 
-![Treeview Expander](images/treeview-expander-dark-android.gif)
+![Treeview Expander](../../../../images/treeview-expander-dark-android.gif)
 
 ### UseAnimation
 Determines whether to use animations when expanding and collapsing nodes. Default value is `true`. You may want to disable animations if you want to improve performance while working with huge amount of tree nodes.
@@ -273,7 +273,7 @@ Determines whether to use animations when expanding and collapsing nodes. Defaul
 
 | Enabled | Disabled |
 | --- | --- |
-| ![TreeView Animations Enabled](images/treeview-useanimation-dark-windows-enabled.gif) | ![TreeView Animations Disabled](images/treeview-useanimation-dark-windows-disabled.gif) |
+| ![TreeView Animations Enabled](../../../../images/treeview-useanimation-dark-windows-enabled.gif) | ![TreeView Animations Disabled](../../../../images/treeview-useanimation-dark-windows-disabled.gif) |
 
 ---
 
@@ -391,4 +391,4 @@ public class TreeViewFileSystemViewModel : UraniumBindableObject
 
 | Dark |
 | --- |
-| ![MAUI TreeView lazy-loading](images/treeview-filesystem-dark-windows.gif) |
+| ![MAUI TreeView lazy-loading](../../../../images/treeview-filesystem-dark-windows.gif) |

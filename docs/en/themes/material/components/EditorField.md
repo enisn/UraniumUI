@@ -16,7 +16,7 @@ Then you can use it like this:
 
 | Light | Dark |
 | --- | --- |
-| ![MAUI EditorView](images/editorfield-demo-android-light.gif) | ![MAUI EditorView](images/editorfield-demo-android-dark.gif) |
+| ![MAUI EditorView](../../../../images/editorfield-demo-android-light.gif) | ![MAUI EditorView](../../../../images/editorfield-demo-android-dark.gif) |
 
 
 ## Icon
@@ -28,7 +28,7 @@ TextFields support setting an icon on the left side of the control. You can set 
     Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Edit}}"/>
 ```
 
-![MAUI EditorView icon](images/editorfield-icon-android-dark.png)
+![MAUI EditorView icon](../../../../images/editorfield-icon-android-dark.png)
 
 ## AccentColor
 The color that is used to fill border and icon of control when it's focused. You can change it by setting `AccentColor` property of the control.
@@ -41,7 +41,7 @@ The color that is used to fill border and icon of control when it's focused. You
 ```
 
 
-![MAUI AccentColor InputField](images/editorfield-accentcolor-android-dark.gif)
+![MAUI AccentColor InputField](../../../../images/editorfield-accentcolor-android-dark.gif)
 
 
 ## Validation

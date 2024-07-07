@@ -25,7 +25,7 @@ InputField can be used in XAML like any other control. You can pass an existing 
 </material:InputField>
 ```
 
-![MAUI Material Design Picker](images/inputfield-demo-timepicker.png)
+![MAUI Material Design Picker](../../../../images/inputfield-demo-timepicker.png)
 
 ### Inherit from InputField
 
@@ -51,7 +51,7 @@ public class TimePickerField : InputField
 
 `HasValue` property should be overriden. That property is responsible for determining if the control has a value or not. If the control has a value, the title will be moved up. If the control does not have a value, the title will be moved down when unfocused. The following example shows how to implement the `HasValue` property for the Editor control.
 
-![MAUI Material Input](images/inputfield-demo-custom.gif)
+![MAUI Material Input](../../../../images/inputfield-demo-custom.gif)
 
 
 ## Styling

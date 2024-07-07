@@ -20,7 +20,7 @@ Then, you can use the paginator in your XAML file like this:
         HorizontalOptions="Center"/>
 ```
 
-![Paginator](images/paginator-preview.png)
+![Paginator](../../../../images/paginator-preview.png)
 
 
 ## Properties

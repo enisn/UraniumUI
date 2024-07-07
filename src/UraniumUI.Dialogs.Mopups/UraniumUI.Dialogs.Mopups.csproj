@@ -26,7 +26,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Mopups" Version="1.1.0" />
+    <PackageReference Include="Mopups" Version="1.3.0" />
   </ItemGroup>
 
   <ItemGroup>

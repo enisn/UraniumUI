@@ -16,13 +16,15 @@ public static class MopupsDialogExtensions
     {
         var tcs = new TaskCompletionSource<bool>();
 
-        await MopupService.Instance.PushAsync(new PopupPage
+        var popup = new PopupPage
         {
             BackgroundColor = backdropColor,
             CloseWhenBackgroundIsClicked = false,
-            Content = GetFrame(page.Width, new VerticalStackLayout
-            {
-                Children =
+        };
+
+        popup.Content = GetFrame(page.Width, new VerticalStackLayout
+        {
+            Children =
                 {
                     GetHeader(title),
                     new Label
@@ -35,16 +37,17 @@ public static class MopupsDialogExtensions
                         okText, new Command(()=>
                         {
                             tcs.TrySetResult(true);
-                            MopupService.Instance.PopAsync();
+                            MopupService.Instance.RemovePageAsync(popup);
                         }),
                         cancelText, new Command(()=>
                         {
                             tcs.TrySetResult(false);
-                            MopupService.Instance.PopAsync();
+                            MopupService.Instance.RemovePageAsync(popup);
                         }))
                 }
-            })
         });
+
+        await MopupService.Instance.PushAsync(popup);
 
         return await tcs.Task;
     }
@@ -147,6 +150,14 @@ public static class MopupsDialogExtensions
                 new RowDefinition(GridLength.Auto),
             }
         };
+
+        var popup = new PopupPage
+        {
+            BackgroundColor = backdropColor,
+            CloseWhenBackgroundIsClicked = false,
+            Content = GetFrame(page.Width, rootGrid)
+        };
+
         rootGrid.Add(GetHeader(message));
         rootGrid.Add(new ScrollView { Content = checkBoxGroup, VerticalOptions = LayoutOptions.Start, MaximumHeightRequest = page.Height * 0.6, }, row: 1);
         rootGrid.Add(GetDivider(), row: 2);
@@ -154,21 +165,16 @@ public static class MopupsDialogExtensions
             accept, new Command(() =>
             {
                 tcs.TrySetResult(checkBoxGroup.Children.Where(x => x is CheckBox checkbox && checkbox.IsChecked).Select(s => (T)(s as CheckBox).CommandParameter));
-                MopupService.Instance.PopAsync();
+                MopupService.Instance.RemovePageAsync(popup);
             }),
             cancel, new Command(() =>
             {
                 tcs.TrySetResult(null);
-                MopupService.Instance.PopAsync();
+                MopupService.Instance.RemovePageAsync(popup);
             })
         ), row: 3);
 
-        await MopupService.Instance.PushAsync(new PopupPage
-        {
-            BackgroundColor = backdropColor,
-            CloseWhenBackgroundIsClicked = false,
-            Content = GetFrame(page.Width, rootGrid)
-        });
+        await MopupService.Instance.PushAsync(popup);
 
         return await tcs.Task;
     }
@@ -215,6 +221,13 @@ public static class MopupsDialogExtensions
             }
         };
 
+        var popup = new PopupPage
+        {
+            BackgroundColor = backdropColor,
+            CloseWhenBackgroundIsClicked = false,
+            Content = GetFrame(page.Width, rootGrid)
+        };
+
         rootGrid.Add(GetHeader(message));
         rootGrid.Add(new ScrollView { Content = rbGroup, VerticalOptions = LayoutOptions.Start, MaximumHeightRequest = page.Height * 0.6, }, row: 1);
         rootGrid.Add(GetDivider(), row: 2);
@@ -222,21 +235,16 @@ public static class MopupsDialogExtensions
             accept, new Command(() =>
             {
                 tcs.TrySetResult((T)rbGroup.SelectedItem);
-                MopupService.Instance.PopAsync();
+                MopupService.Instance.RemovePageAsync(popup);
             }),
             cancel, new Command(() =>
             {
                 tcs.TrySetResult(default);
-                MopupService.Instance.PopAsync();
+                MopupService.Instance.RemovePageAsync(popup);
             })
         ), row: 3);
 
-        await MopupService.Instance.PushAsync(new PopupPage
-        {
-            BackgroundColor = backdropColor,
-            CloseWhenBackgroundIsClicked = false,
-            Content = GetFrame(page.Width, rootGrid)
-        });
+        await MopupService.Instance.PushAsync(popup);
 
         return await tcs.Task;
     }
@@ -282,13 +290,15 @@ public static class MopupsDialogExtensions
             Content = entry
         };
 
-        await MopupService.Instance.PushAsync(new PopupPage
+        var popup = new PopupPage
         {
             BackgroundColor = backdropColor,
             CloseWhenBackgroundIsClicked = false,
-            Content = GetFrame(page.Width, new VerticalStackLayout
-            {
-                Children =
+        };
+
+        popup.Content = GetFrame(page.Width, new VerticalStackLayout
+        {
+            Children =
                 {
                     GetHeader(title),
                     new Label
@@ -302,29 +312,31 @@ public static class MopupsDialogExtensions
                         accept, new Command(()=>
                         {
                             tcs.TrySetResult(entry.Text);
-                            MopupService.Instance.PopAsync();
+                            MopupService.Instance.RemovePageAsync(popup);
                         }),
                         cancel, new Command(()=>
                         {
                             tcs.TrySetResult(initialValue);
-                            MopupService.Instance.PopAsync();
+                            MopupService.Instance.RemovePageAsync(popup);
                         }))
                 }
-            })
         });
+        await MopupService.Instance.PushAsync(popup);
 
         return await tcs.Task;
     }
 
     public static Task DisplayViewAsync(this Page page, string title, View content, string okText = "OK")
     {
-        return MopupService.Instance.PushAsync(new PopupPage
+        var popup = new PopupPage
         {
             BackgroundColor = backdropColor,
             CloseWhenBackgroundIsClicked = false,
-            Content = GetFrame(page.Width, new VerticalStackLayout
-            {
-                Children =
+        };
+
+        popup.Content = GetFrame(page.Width, new VerticalStackLayout
+        {
+            Children =
                 {
                     GetHeader(title),
                     content,
@@ -333,11 +345,12 @@ public static class MopupsDialogExtensions
                     {
                         Text = okText,
                         StyleClass = new []{ "TextButton", "Dialog.Button0" },
-                        Command = new Command(() => MopupService.Instance.PopAsync())
+                        Command = new Command(() => MopupService.Instance.RemovePageAsync(popup))
                     }
                 }
-            })
         });
+
+        return MopupService.Instance.PushAsync(popup);
     }
 
     public static Task<TViewModel> DisplayFormViewAsync<TViewModel>(this Page page, string title, TViewModel viewModel = null, string submit = "OK", string cancel = "Cancel", string reset = null) where TViewModel : class

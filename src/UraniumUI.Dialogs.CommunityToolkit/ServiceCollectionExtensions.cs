@@ -7,7 +7,7 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddCommunityToolkitDialogs(this IServiceCollection services, ServiceLifetime lifetime = ServiceLifetime.Transient)
     {
-        services.Replace(new ServiceDescriptor(typeof(IDialogService), typeof(CommunityToolkitDialogService), lifetime));
+        services.Add(new ServiceDescriptor(typeof(IDialogService), typeof(CommunityToolkitDialogService), lifetime));
         services.Add(new ServiceDescriptor(typeof(CommunityToolkitDialogService), typeof(CommunityToolkitDialogService), lifetime));
         return services;
     }

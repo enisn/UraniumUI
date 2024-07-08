@@ -381,7 +381,6 @@ public static class MopupsDialogExtensions
                     {
                         tcs.TrySetResult(null);
                         MopupService.Instance.RemovePageAsync(popup);
-
                     }))
             }
         });

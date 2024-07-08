@@ -135,7 +135,7 @@ public partial class BottomSheetView : Border, IPageAttachment
 
         if (animate)
         {
-            this.TranslateTo(this.X, y, 50);
+            this.TranslateToSafely(this.X, y, 50);
 
         }
         else
@@ -152,7 +152,7 @@ public partial class BottomSheetView : Border, IPageAttachment
         {
             AttachedPage.Body.InputTransparent = IsPresented;
 
-            AttachedPage.Body.FadeTo(IsPresented ? .5 : 1);
+            AttachedPage.Body.FadeToSafely(IsPresented ? .5 : 1);
         }
     }
 }

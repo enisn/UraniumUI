@@ -1,10 +1,4 @@
-﻿using Microsoft.Maui.Controls;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UraniumUI.Extensions;
+﻿using UraniumUI.Extensions;
 
 namespace UraniumUI.ViewExtensions;
 public static class ViewQuery

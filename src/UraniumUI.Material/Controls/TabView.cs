@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Windows.Input;
+using UraniumUI.Extensions;
 using UraniumUI.Resources;
 using UraniumUI.Triggers;
 
@@ -52,8 +53,8 @@ public partial class TabView : Grid
 
                     var box = (sender.Children.FirstOrDefault(x => x is BoxView) as BoxView);
 
-                    box.FadeTo(1, easing: Easing.SpringIn);
-                    sender.FadeTo(1);
+                    box.FadeToSafely(1, easing: Easing.SpringIn);
+                    sender.FadeToSafely(1);
 
                     var button = sender.Children.FirstOrDefault(x=>x is Button) as Button;
                     //button?.SetAppThemeColor(Button.TextColorProperty, ColorResource.GetColor("Primary"), ColorResource.GetColor("PrimaryDark"));
@@ -75,8 +76,8 @@ public partial class TabView : Grid
 
                     sender.BackgroundColor = Colors.Transparent;
 
-                    box.FadeTo(0, easing: Easing.SpringIn);
-                    sender.FadeTo(.5);
+                    box.FadeToSafely(0, easing: Easing.SpringIn);
+                    sender.FadeToSafely(.5);
 
                     var button = sender.Children.FirstOrDefault(x=>x is Button) as Button;
                     //button?.SetAppThemeColor(Button.TextColorProperty, ColorResource.GetColor("OnBackground"), ColorResource.GetColor("OnBackgroundDark"));
@@ -459,7 +460,7 @@ public partial class TabView : Grid
             {
                 if (UseAnimation)
                 {
-                    await _contentContainer.Content?.FadeTo(0, 60);
+                    await _contentContainer.Content?.FadeToSafely(0, 60);
                 }
             }
 
@@ -468,7 +469,7 @@ public partial class TabView : Grid
             _contentContainer.Content = content;
             if (UseAnimation)
             {
-                await content.FadeTo(1, 60);
+                await content.FadeToSafely(1, 60);
             }
         }
 

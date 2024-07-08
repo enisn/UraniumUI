@@ -82,7 +82,7 @@ public class ExpanderView : ContentView
 
             await Task.WhenAll(
                 actualContentContainer.ScaleYTo(1, ANIMATION_LENGTH, Easing.BounceIn),
-                arrowIcon.RotateTo(180, ANIMATION_LENGTH)
+                arrowIcon.RotateToSafely(180, ANIMATION_LENGTH)
                 );
 
         }
@@ -90,7 +90,7 @@ public class ExpanderView : ContentView
         {
             await Task.WhenAll(
                 actualContentContainer.ScaleYTo(0, ANIMATION_LENGTH, Easing.BounceIn),
-                arrowIcon.RotateTo(0, ANIMATION_LENGTH)
+                arrowIcon.RotateToSafely(0, ANIMATION_LENGTH)
                 );
 
             actualContentContainer.IsVisible = false;

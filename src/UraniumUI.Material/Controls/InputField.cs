@@ -33,7 +33,7 @@ public partial class InputField : Grid
 
     protected Label labelTitle = new Label()
     {
-        StyleClass = new [] { "InputField.Title" },
+        StyleClass = new[] { "InputField.Title" },
         HorizontalOptions = LayoutOptions.Start,
         VerticalOptions = LayoutOptions.Start,
         InputTransparent = true,
@@ -42,7 +42,7 @@ public partial class InputField : Grid
 
     protected Border border = new Border
     {
-        StyleClass = new [] { "InputField.Border" },
+        StyleClass = new[] { "InputField.Border" },
         StrokeThickness = 1,
         StrokeDashOffset = 0,
         BackgroundColor = Colors.Transparent,
@@ -54,7 +54,7 @@ public partial class InputField : Grid
     {
         return new Image
         {
-            StyleClass = new [] { "InputField.Icon" },
+            StyleClass = new[] { "InputField.Icon" },
             HorizontalOptions = LayoutOptions.Start,
             VerticalOptions = LayoutOptions.Center,
             WidthRequest = 20,
@@ -156,7 +156,7 @@ public partial class InputField : Grid
 #if ANDROID
         Loaded += OnLoaded;
 #endif
-        
+
         Content.Focused += OnFocusChanged;
         Content.Unfocused += OnFocusChanged;
 
@@ -260,8 +260,11 @@ public partial class InputField : Grid
             var x = CornerRadius.Clamp(10, MaxCornerRadius) - 10;
 
             UpdateOffset(0.01);
-            labelTitle.TranslateTo(x, -25, 90, Easing.BounceOut);
+
             labelTitle.AnchorX = 0;
+
+            labelTitle.TranslateToSafely(x, -25, 90, Easing.BounceOut);
+            labelTitle.ScaleToSafely(.8, 90);
 
 
 #if ANDROID
@@ -270,8 +273,6 @@ public partial class InputField : Grid
                 labelTitle.AnchorX = .5;
             }
 #endif
-
-            labelTitle.ScaleTo(.8, 90);
         }
         else
         {
@@ -289,10 +290,9 @@ public partial class InputField : Grid
             }
 #endif
 
-            labelTitle.TranslateTo(x, 0, 90, Easing.BounceOut);
-
             labelTitle.AnchorX = 0;
-            labelTitle.ScaleTo(1, 90);
+            labelTitle.TranslateToSafely(x, 0, 90, Easing.BounceOut);
+            labelTitle.ScaleToSafely(1, 90);
         }
     }
 

@@ -1,17 +1,31 @@
-﻿using System.Net.WebSockets;
+﻿using ReactiveUI;
 using UraniumUI.Dialogs;
-using UraniumUI.Extensions;
 
 namespace UraniumApp.Pages;
 
 public partial class DialogsPage : ContentPage
 {
-    public IDialogService DialogService { get; }
+    public IDialogService DialogService { get; private set; }
 
-    public DialogsPage(IDialogService dialogService)
+    private readonly IDialogService[] dialogServices;
+
+    public DialogsPage(IEnumerable<IDialogService> dialogServices)
     {
         InitializeComponent();
-        DialogService = dialogService;
+        this.dialogServices = dialogServices.ToArray();
+        this.DialogService = this.dialogServices.FirstOrDefault();
+
+        implementationSelectionView.ItemsSource = dialogServices.Select(x => x.GetType().Name.Replace("DialogService", string.Empty)).ToList();
+        implementationSelectionView.WhenAnyValue(x => x.SelectedIndex)
+            .Subscribe(x =>
+            {
+                if (x >= 0)
+                {
+                    DialogService = this.dialogServices[x];
+                }
+            });
+
+        implementationSelectionView.SelectedIndex = 0;
     }
 
     private async void AskRadioButtons(object sender, EventArgs e)
@@ -37,7 +51,7 @@ public partial class DialogsPage : ContentPage
         var result = await DialogService.DisplayCheckBoxPromptAsync(
             "Pick some of them below",
             options
-            ,checkBoxResultListView.ItemsSource as IEnumerable<string>
+            , checkBoxResultListView.ItemsSource as IEnumerable<string>
             );
 
         checkBoxResultListView.ItemsSource = result;
@@ -68,5 +82,32 @@ public partial class DialogsPage : ContentPage
         {
             yield return "Option " + i;
         }
+    }
+
+    private async void DisplayProgress(object sender, EventArgs e)
+    {
+        using (await DialogService.DisplayProgressAsync("Loading", "Work in progress, please wait..."))
+        {
+            await Task.Delay((int)sliderForProgress.Value);
+        }
+    }
+
+    private async void DisplayProgressCancellable(object sender, EventArgs e)
+    {
+        var tokenSource = new CancellationTokenSource();
+
+        using (await DialogService.DisplayProgressCancellableAsync("Loading", "Work in progress, please wait...", tokenSource: tokenSource))
+        {
+            try
+            {
+                // Long operation...
+                await Task.Delay((int)sliderForProgress.Value, tokenSource.Token);
+            }
+            catch (TaskCanceledException)
+            {
+            }
+        }
+
+        labelProgressCancellable.Text = tokenSource.Token.IsCancellationRequested ? "Cancelled" : "Completed!";
     }
 }

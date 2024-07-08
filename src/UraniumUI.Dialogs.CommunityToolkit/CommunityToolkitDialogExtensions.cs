@@ -6,6 +6,7 @@ using Plainer.Maui.Controls;
 using System.Threading.Channels;
 using UraniumUI.Controls;
 using UraniumUI.Extensions;
+using UraniumUI.Infrastructure;
 using UraniumUI.Resources;
 using CheckBox = InputKit.Shared.Controls.CheckBox;
 
@@ -84,6 +85,66 @@ public static class CommunityToolkitDialogExtensions
         page.ShowPopup(popup);
 
         return tcs.Task;
+    }
+
+    public static Task<IDisposable> DisplayProgressAsync(this Page page, string title, string message)
+    {
+        return DisplayProgressCancellableAsync(page, title, message, null, null);
+    }
+
+    public static Task<IDisposable> DisplayProgressCancellableAsync(this Page page, string title, string message, string cancelText = "Cancel", CancellationTokenSource tokenSource = null)
+    {
+        tokenSource ??= new CancellationTokenSource();
+        var calculatedSize = CalculateSize(page);
+
+        var progress = new ActivityIndicator
+        {
+            IsRunning = true,
+            IsVisible = true,
+            HorizontalOptions = LayoutOptions.Center,
+            Color = ColorResource.GetColor("Primary", "PrimaryDark", Colors.Blue),
+            Margin = 20,
+        };
+
+        var verticalStackLayout = new VerticalStackLayout
+        {
+            Children =
+            {
+                GetHeader(title),
+                new Label
+                {
+                    Text = message,
+                    Margin = 20,
+                },
+                progress
+            }
+        };
+
+        if (!string.IsNullOrEmpty(cancelText))
+        {
+            verticalStackLayout.Children.Add(GetDivider());
+            verticalStackLayout.Children.Add(GetFooter(null, null, cancelText, new Command(() => tokenSource?.Cancel())));
+        }
+
+        var popup = new Popup()
+        {
+            Size = new Size(page.Width, page.Height),
+            Color = Colors.Transparent,
+            CanBeDismissedByTappingOutsideOfPopup = false,
+
+            Content = new ContentView
+            {
+                BackgroundColor = Colors.Transparent,
+                Content = GetFrame(calculatedSize.Width, verticalStackLayout)
+            }
+        };
+
+        var cancelAction = new DisposableAction(() => popup.Close());
+        tokenSource.Token.Register(cancelAction.Dispose);
+
+        page.ShowPopup(popup);
+
+        return Task.FromResult<IDisposable>(cancelAction);
     }
 
     public static Task<IEnumerable<T>> DisplayCheckBoxPromptAsync<T>(
@@ -557,29 +618,30 @@ public static class CommunityToolkitDialogExtensions
         };
     }
 
-    private static View GetFooter(string accept, Command acceptCommand, string cancel = null, Command cancelCommand = null)
+    private static View GetFooter(string accept = null, Command acceptCommand = null, string cancel = null, Command cancelCommand = null)
     {
         var layout = new FlexLayout
         {
             JustifyContent = Microsoft.Maui.Layouts.FlexJustify.End,
             Margin = new Thickness(10),
-            Children =
-            {
-                new Button
-                {
-                    Text = cancel,
-                    StyleClass = new []{ "TextButton", "Dialog.Button0" },
-                    Command = cancelCommand
-                },
-            }
         };
 
         if (!string.IsNullOrEmpty(cancel))
         {
             layout.Children.Add(new Button
             {
-                Text = accept,
+                Text = cancel,
                 StyleClass = new[] { "TextButton", "Dialog.Button1" },
+                Command = cancelCommand
+            });
+        }
+
+        if (!string.IsNullOrEmpty(accept))
+        {
+            layout.Children.Add(new Button
+            {
+                Text = accept,
+                StyleClass = new[] { "TextButton", "Dialog.Button0" },
                 Command = acceptCommand
             });
         }

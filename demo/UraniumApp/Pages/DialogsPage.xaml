@@ -13,53 +13,78 @@
         </Style>
     </ContentPage.Resources>
     <ContentPage.Content>
-        <material:TabView VerticalOptions="Fill" HorizontalOptions="Fill" TabPlacement="Start">
 
-            <material:TabItem Title="Radio Button">
-                <VerticalStackLayout Padding="40">
-                    <Label Text="Amount of RadioButton options" />
-                    <Slider x:Name="sliderForRadioButtons" Minimum="1" Maximum="12" Value="3" />
-                    <Button Text="Ask RadioButtons" Clicked="AskRadioButtons" StyleClass="FilledButton" HorizontalOptions="Center" />
-                    <HorizontalStackLayout Margin="20">
-                        <Label Text="Result: " FontAttributes="Bold" />
-                        <Label x:Name="labelSelected" />
-                    </HorizontalStackLayout>
+        <VerticalStackLayout>
+            <Border StyleClass="SurfaceContiner,Rounded" Margin="8" Padding="20">
+                <VerticalStackLayout>
+                    <Label Text="Implementation" FontSize="Subtitle" />
+                    <input:SelectionView x:Name="implementationSelectionView" SelectionType="Button" ColumnNumber="{x:OnIdiom Default=3, Phone=1}" RowSpacing="0" />
                 </VerticalStackLayout>
-            </material:TabItem>
+            </Border>
 
-            <material:TabItem Title="Check Box">
-                <ListView Margin="20" x:Name="checkBoxResultListView" VerticalOptions="FillAndExpand" BackgroundColor="Transparent">
-                    <ListView.Header>
-                        <VerticalStackLayout Padding="20">
-                            <Label Text="Amount of CheckBox options" />
-                            <Slider x:Name="sliderForCheckBoxes" Minimum="1" Maximum="12" Value="3" />
-                            <Button Text="Ask CheckBoxes" Clicked="AskCheckBoxes" StyleClass="FilledButton" HorizontalOptions="Center" />
-                            <Label Text="Selected Items:" FontAttributes="Bold" Margin="20" />
+            <BoxView StyleClass="Divider" />
+
+            <Border StyleClass="SurfaceContiner,Rounded" Margin="8">
+                <material:TabView VerticalOptions="Fill" HorizontalOptions="Fill" TabPlacement="Start" BackgroundColor="Transparent">
+
+                    <material:TabItem Title="Radio Button">
+                        <VerticalStackLayout Padding="40">
+                            <Label Text="Amount of RadioButton options" />
+                            <Slider x:Name="sliderForRadioButtons" Minimum="1" Maximum="12" Value="3" />
+                            <Button Text="Ask RadioButtons" Clicked="AskRadioButtons" StyleClass="FilledButton" HorizontalOptions="Center" />
+                            <HorizontalStackLayout Margin="20">
+                                <Label Text="Result: " FontAttributes="Bold" />
+                                <Label x:Name="labelSelected" />
+                            </HorizontalStackLayout>
                         </VerticalStackLayout>
-                    </ListView.Header>
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                <Label Text="{Binding .}" />
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </material:TabItem>
+                    </material:TabItem>
 
-            <material:TabItem Title="Text Prompt">
-                <VerticalStackLayout Padding="20">
-                    <Button Text="Ask Text Prompt" Clicked="AskTextPrompt" StyleClass="FilledButton" HorizontalOptions="Center" />
-                    <Label Text="Result: " x:Name="labelTextPrompt"/>
-                </VerticalStackLayout>
-            </material:TabItem>
+                    <material:TabItem Title="Check Box">
+                        <Grid RowDefinitions="Auto,*">
+                            <VerticalStackLayout Padding="20">
+                                <Label Text="Amount of CheckBox options" />
+                                <Slider x:Name="sliderForCheckBoxes" Minimum="1" Maximum="12" Value="3" />
+                                <Button Text="Ask CheckBoxes" Clicked="AskCheckBoxes" StyleClass="FilledButton" HorizontalOptions="Center" />
+                                <Label Text="Selected Items:" FontAttributes="Bold" Margin="20" />
+                            </VerticalStackLayout>
 
-            <material:TabItem Title="Confirmation">
-                <VerticalStackLayout Padding="20">
-                    <Button Text="Ask Confirmation Prompt" Clicked="AskConfirmation" StyleClass="FilledButton" HorizontalOptions="Center" />
-                    <Label Text="Result: " x:Name="labelConfirmation"/>
-                </VerticalStackLayout>
-            </material:TabItem>
-        </material:TabView>
+                            <CollectionView Grid.Row="1" x:Name="checkBoxResultListView" BackgroundColor="Transparent">
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Label Text="{Binding .}" />
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </Grid>
+                    </material:TabItem>
+
+                    <material:TabItem Title="Text Prompt">
+                        <VerticalStackLayout Padding="20">
+                            <Button Text="Ask Text Prompt" Clicked="AskTextPrompt" StyleClass="FilledButton" HorizontalOptions="Center" />
+                            <Label Text="Result: " x:Name="labelTextPrompt"/>
+                        </VerticalStackLayout>
+                    </material:TabItem>
+
+                    <material:TabItem Title="Confirmation">
+                        <VerticalStackLayout Padding="20">
+                            <Button Text="Ask Confirmation Prompt" Clicked="AskConfirmation" StyleClass="FilledButton" HorizontalOptions="Center" />
+                            <Label Text="Result: " x:Name="labelConfirmation"/>
+                        </VerticalStackLayout>
+                    </material:TabItem>
+
+                    <material:TabItem Title="Progress">
+                        <VerticalStackLayout Padding="20">
+                            <Slider x:Name="sliderForProgress" Minimum="1000" Maximum="5000" Value="2500" />
+                            <Label Text="{Binding Value,Source={x:Reference sliderForProgress}, StringFormat='{0} ms.'}" />
+                            <Button Text="Display Progress Prompt" Clicked="DisplayProgress" StyleClass="FilledButton" HorizontalOptions="Center" />
+                            <BoxView StyleClass="Divider" />
+                            <Button Text="Display Cancellable" Clicked="DisplayProgressCancellable" StyleClass="FilledButton" HorizontalOptions="Center" />
+                            <Label Text="Result: " x:Name="labelProgressCancellable" HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+                    </material:TabItem>
+                </material:TabView>
+            </Border>
+
+        </VerticalStackLayout>
     </ContentPage.Content>
 </ContentPage>

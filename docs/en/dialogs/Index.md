@@ -219,3 +219,106 @@ private async void Button_Clicked(object sender, EventArgs e)
 }
 ```
 
+### Progress
+
+Progress dialog can be used to show a progress dialog to the user. There are 2 types of progress dialogs in UraniumUI. They are blocking and cancellable. Blocking progress dialog will block the UI until it's closed. Cancellable progress dialog will have a cancel button to allow user to cancel the operation. It returns an `IDisposable` and it'll be visible until you dispose it. You can use it with `using` statement to show a progress dialog.
+
+```csharp
+private async void Button_Clicked(object sender, EventArgs e)
+{
+    using (await DialogService.DisplayProgressAsync("Loading", "Work in progress, please wait..."))
+    {
+        // Indicate a long running operation
+        await Task.Delay(5000);
+    }
+}
+```
+
+| Light | Dark |
+| --- | --- |
+| ![MAUI Material Design Dialogs](../../images/dialogs-progress-light.png) | ![MAUI Material Design Dialogs](../../images/dialogs-progress-dark.png) |
+
+
+```csharp
+private async void Button_Clicked(object sender, EventArgs e)
+{
+    using (await DialogService.DisplayCancellableProgressAsync("Loading", "Work in progress, please wait...", "Cancel"))
+    {
+        // Indicate a long running operation
+        await Task.Delay(5000);
+    }
+}
+```
+
+| Light | Dark |
+| --- | --- |
+| ![MAUI Material Design Dialogs](../../images/dialogs-progress-cancellable-light.png) | ![MAUI Material Design Dialogs](../../images/dialogs-progress-cancellable-dark.png) |
+
+#### Handling Cancellation
+You can handle the cancellation of the progress dialog by checking the `IsCancellationRequested` property of the `CancellationToken` parameter of the `DisplayCancellableProgressAsync` method.
+
+- You can handle with registering an action to the `CancellationToken`.
+    ```csharp
+    private async void Button_Clicked(object sender, EventArgs e)
+    {
+        var cts = new CancellationTokenSource();
+        cts.Token.Register(() =>
+        {
+            // Handle cancellation
+            Console.WriteLine("Progress dialog cancelled");
+        });
+
+        using (var progress = await DialogService.DisplayCancellableProgressAsync(
+            "Loading", "Work in progress, please wait...", "Cancel", cts))
+        {
+            // Indicate a long running operation
+            await Task.Delay(5000);
+        }
+    ```
+
+- You can handle at the end of the operation by checking the `IsCancellationRequested` property of the `CancellationToken`.
+    ```csharp
+    private async void Button_Clicked(object sender, EventArgs e)
+    {
+        var cts = new CancellationTokenSource();
+
+        using (var progress = await DialogService.DisplayCancellableProgressAsync(
+            "Loading", "Work in progress, please wait...", "Cancel", cts))
+        {
+            // Indicate a long running operation
+            await Task.Delay(5000);
+        }
+
+        if (cts.IsCancellationRequested)
+        {
+            // Handle cancellation
+            Console.WriteLine("Progress dialog cancelled");
+        }
+        else
+        {
+            // Handle completion
+            Console.WriteLine("Progress dialog completed");
+        }
+    ```
+
+- You can even cancel the long running Task operation when user cancels the operation:
+    ```csharp
+    private async void Button_Clicked(object sender, EventArgs e)
+    {
+        var cts = new CancellationTokenSource();
+
+        using (var progress = await DialogService.DisplayCancellableProgressAsync(
+            "Loading", "Work in progress, please wait...", "Cancel", cts))
+        {
+            try
+            {
+                // Indicate a long running operation
+                await Task.Delay(5000, cts.Token);
+            }
+            catch (TaskCanceledException)
+            {
+                // Handle cancellation
+                Console.WriteLine("Progress dialog cancelled");
+            }
+        }
+    ```

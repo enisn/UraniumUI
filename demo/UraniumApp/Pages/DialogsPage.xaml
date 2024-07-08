@@ -18,7 +18,7 @@
             <Border StyleClass="SurfaceContiner,Rounded" Margin="8" Padding="20">
                 <VerticalStackLayout>
                     <Label Text="Implementation" FontSize="Subtitle" />
-                    <input:SelectionView x:Name="implementationSelectionView" SelectionType="Button" ColumnNumber="3" RowSpacing="0" />
+                    <input:SelectionView x:Name="implementationSelectionView" SelectionType="Button" ColumnNumber="{x:OnIdiom Default=3, Phone=1}" RowSpacing="0" />
                 </VerticalStackLayout>
             </Border>
 
@@ -40,23 +40,22 @@
                     </material:TabItem>
 
                     <material:TabItem Title="Check Box">
-                        <ListView Margin="20" x:Name="checkBoxResultListView" VerticalOptions="FillAndExpand" BackgroundColor="Transparent">
-                            <ListView.Header>
-                                <VerticalStackLayout Padding="20">
-                                    <Label Text="Amount of CheckBox options" />
-                                    <Slider x:Name="sliderForCheckBoxes" Minimum="1" Maximum="12" Value="3" />
-                                    <Button Text="Ask CheckBoxes" Clicked="AskCheckBoxes" StyleClass="FilledButton" HorizontalOptions="Center" />
-                                    <Label Text="Selected Items:" FontAttributes="Bold" Margin="20" />
-                                </VerticalStackLayout>
-                            </ListView.Header>
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <ViewCell>
+                        <Grid RowDefinitions="Auto,*">
+                            <VerticalStackLayout Padding="20">
+                                <Label Text="Amount of CheckBox options" />
+                                <Slider x:Name="sliderForCheckBoxes" Minimum="1" Maximum="12" Value="3" />
+                                <Button Text="Ask CheckBoxes" Clicked="AskCheckBoxes" StyleClass="FilledButton" HorizontalOptions="Center" />
+                                <Label Text="Selected Items:" FontAttributes="Bold" Margin="20" />
+                            </VerticalStackLayout>
+
+                            <CollectionView Grid.Row="1" x:Name="checkBoxResultListView" BackgroundColor="Transparent">
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
                                         <Label Text="{Binding .}" />
-                                    </ViewCell>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </Grid>
                     </material:TabItem>
 
                     <material:TabItem Title="Text Prompt">

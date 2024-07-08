@@ -13,8 +13,9 @@ public partial class DialogsPage : ContentPage
     {
         InitializeComponent();
         this.dialogServices = dialogServices.ToArray();
+        this.DialogService = this.dialogServices.FirstOrDefault();
 
-        implementationSelectionView.ItemsSource = dialogServices.Select(x => x.GetType().Name).ToList();
+        implementationSelectionView.ItemsSource = dialogServices.Select(x => x.GetType().Name.Replace("DialogService", string.Empty)).ToList();
         implementationSelectionView.WhenAnyValue(x => x.SelectedIndex)
             .Subscribe(x =>
             {

@@ -140,7 +140,6 @@ public static class MopupsDialogExtensions
             });
         }
 
-
         var rootGrid = new Grid
         {
             RowDefinitions = new RowDefinitionCollection

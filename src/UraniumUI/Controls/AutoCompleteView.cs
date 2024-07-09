@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Windows.Input;
 
 namespace UraniumUI.Controls;
@@ -56,7 +57,7 @@ public class AutoCompleteView : View, IAutoCompleteView
         typeof(AutoCompleteView),
         Colors.DarkGray);
 
-    public IList<string> ItemsSource { get => (IList<string>)GetValue(ItemsSourceProperty); set => SetValue(ItemsSourceProperty, value); }
+    public IList ItemsSource { get => (IList)GetValue(ItemsSourceProperty); set => SetValue(ItemsSourceProperty, value); }
 
     public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(nameof(ItemsSource),
             typeof(IList<string>),

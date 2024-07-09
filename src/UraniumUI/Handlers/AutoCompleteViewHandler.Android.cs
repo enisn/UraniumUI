@@ -8,6 +8,7 @@ using AndroidX.AppCompat.Widget;
 using Microsoft.Maui.Controls.Compatibility.Platform.Android;
 using Microsoft.Maui.Controls.Platform;
 using Microsoft.Maui.Handlers;
+using System.Collections;
 using UraniumUI.Controls;
 
 namespace UraniumUI.Handlers;
@@ -98,7 +99,7 @@ public partial class AutoCompleteViewHandler : ViewHandler<IAutoCompleteView, Ap
     {
         var adapter = new BoxArrayAdapter(Context,
             Android.Resource.Layout.SimpleDropDownItem1Line,
-            VirtualView.ItemsSource.ToList());
+            VirtualView.ItemsSource);
 
         PlatformView.Adapter = adapter;
 
@@ -129,12 +130,12 @@ public partial class AutoCompleteViewHandler : ViewHandler<IAutoCompleteView, Ap
 
 internal class BoxArrayAdapter : ArrayAdapter
 {
-    private readonly IList<string> _objects;
+    private readonly IList _objects;
 
     public BoxArrayAdapter(
         Context context,
         int textViewResourceId,
-        List<string> objects) : base(context, textViewResourceId, objects)
+        IList objects) : base(context, textViewResourceId, objects)
     {
         _objects = objects;
     }

@@ -45,6 +45,7 @@
             ]]>
         </x:String>
         <x:String x:Key="DocLink">https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/AutoCompleteTextField</x:String>
+        <x:String x:Key="SourceLink">https://github.com/enisn/UraniumUI/blob/develop/demo/UraniumApp/Pages/InputFields/AutoCompleteTextFieldPage.xaml</x:String>
     </ContentPage.Resources>
 
     <ScrollView>
@@ -54,7 +55,7 @@
 
             <HorizontalStackLayout Padding="0,20">
                 <Button Text="Documentation" Command="{x:Static uranium:Commands.OpenLinkCommand}" CommandParameter="{StaticResource DocLink}" StyleClass="OutlinedButton" ImageSource="{FontImageSource Glyph={x:Static m:MaterialSharp.File_open}, FontFamily=MaterialSharp, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
-                <Button Text="Source" StyleClass="OutlinedButton" IsEnabled="False" ImageSource="{FontImageSource Glyph={x:Static m:MaterialSharp.Code}, FontFamily=MaterialSharp, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
+                <Button Text="Source" StyleClass="OutlinedButton" Command="{x:Static uranium:Commands.OpenLinkCommand}" CommandParameter="{StaticResource SourceLink}" ImageSource="{FontImageSource Glyph={x:Static m:MaterialSharp.Code}, FontFamily=MaterialSharp, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
                 <!--<Button Text="Reset" Clicked="Reset_Clicked" StyleClass="OutlinedButton" ImageSource="{FontImageSource Glyph={x:Static m:MaterialSharp.Refresh}, FontFamily=MaterialSharp, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />-->
             </HorizontalStackLayout>
 

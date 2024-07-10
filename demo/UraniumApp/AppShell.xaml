@@ -13,8 +13,29 @@
     xmlns:treeViews="clr-namespace:UraniumApp.Pages.TreeViews"
     xmlns:inputFields="clr-namespace:UraniumApp.Pages.InputFields"
     xmlns:autocompletes="clr-namespace:UraniumApp.Pages.AutoCompleteTextField"
+    xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
+    xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+    xmlns:plain="clr-namespace:Plainer.Maui.Controls;assembly=Plainer.Maui"
+    x:Name="thisShell"
     FlyoutBackgroundColor="{AppThemeBinding Light={StaticResource Surface}, Dark={StaticResource SurfaceDark}}"
     Shell.FlyoutBehavior="{OnIdiom Desktop=Locked, Default=Flyout}">
+    <Shell.Resources>
+        <Style TargetType="HorizontalStackLayout" ApplyToDerivedTypes="True" CanCascade="True">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="{AppThemeBinding Light=#30000000, Dark=#30ffffff}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </Shell.Resources>
 
     <Shell.FlyoutHeader>
         <VerticalStackLayout StyleClass="PrimaryContainer" Padding="20">
@@ -30,6 +51,29 @@
         </VerticalStackLayout>
     </Shell.FlyoutHeader>
 
+    <Shell.FlyoutContent>
+        <Grid RowDefinitions="Auto,*">
+
+            <Grid.BindingContext>
+                <local:AppShellContentViewModel CurrentShell="{x:Reference thisShell}"/>
+            </Grid.BindingContext>
+            <StackLayout Padding="16,2">
+                <material:TextField Title="Search" Text="{Binding SearchText}" InputBackground="{AppThemeBinding Light={StaticResource OnSurfaceDark}, Dark={StaticResource OnSurface}}" AllowClear="True" DisallowClearButtonFocus="True" />
+                <BoxView StyleClass="Divider" />
+            </StackLayout>
+            <CollectionView Grid.Row="1" SelectedItem="{Binding SelectedItem}" SelectionMode="Single" ItemsSource="{Binding Items}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <HorizontalStackLayout Padding="20,12" Spacing="12">
+                            <Image Source="{Binding Icon}" WidthRequest="20" />
+                            <Label Text="{Binding Title}" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+    </Shell.FlyoutContent>
+
     <FlyoutItem Title="MainPage" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Home}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
         <ShellContent ContentTemplate="{DataTemplate local:MainPage}"/>
     </FlyoutItem>
@@ -41,7 +85,7 @@
     <FlyoutItem Title="GridLayout" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Grid_3x3}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
         <ShellContent ContentTemplate="{DataTemplate pages:GridLayoutPage}"/>
     </FlyoutItem>
-    
+
     <FlyoutItem Title="Buttons" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.All_inbox}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
         <ShellContent ContentTemplate="{DataTemplate pages:ButtonsPage}"/>
     </FlyoutItem>
@@ -144,7 +188,7 @@
     <FlyoutItem Title="Validations" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Warning}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
         <ShellContent Title="Validations" ContentTemplate="{DataTemplate pages:ValidationsPage}"/>
     </FlyoutItem>
-    
+
     <FlyoutItem Title="AutoFormView" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Dynamic_form}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
         <ShellContent Title="Blurs" ContentTemplate="{DataTemplate pages:AutoFormViewPage}"/>
     </FlyoutItem>

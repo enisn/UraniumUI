@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UraniumApp.Inputs.ColorPicking;
 using UraniumUI;
+using UraniumUI.Dialogs;
 using UraniumUI.Material.Controls;
 using UraniumUI.Resources;
 using UraniumUI.Views;
@@ -18,6 +19,7 @@ namespace UraniumApp
 {
     public class PropertyEditorView : ContentView
     {
+
         public object Value { get => GetValue(ValueProperty); set => SetValue(ValueProperty, value); }
         public static readonly BindableProperty ValueProperty = BindableProperty.Create(
             nameof(Value),
@@ -50,7 +52,9 @@ namespace UraniumApp
         };
 
         private ContentView _footerView = new ContentView();
-        public View Footer { get => _footerView.Content; set
+        public View Footer
+        {
+            get => _footerView.Content; set
             {
                 _footerView.Content = value;
                 if (_propertiesContainer.Children.Count > 0 && !_propertiesContainer.Contains(_footerView))
@@ -60,8 +64,12 @@ namespace UraniumApp
             }
         }
 
+        public IDialogService DialogService { get; private set; }
+
         public PropertyEditorView()
         {
+            DialogService = UraniumServiceProvider.Current.GetService<IDialogService>();
+
             var _titleContainer = new Label()
             {
                 Text = "Properties",
@@ -115,43 +123,56 @@ namespace UraniumApp
 
         public void Render()
         {
-            if (Value is null)
+            try
             {
-                _propertiesContainer.Children.Clear();
-                return;
-            }
-            var flags = BindingFlags.Static | BindingFlags.Public;
-            if (Hierarchical)
-            {
-                flags |= BindingFlags.FlattenHierarchy;
-            }
 
-            EditingProperties = Value.GetType().
-                GetFields(flags)
-                .Where(x => x.FieldType == typeof(BindableProperty) && HierarchyLimitType.IsAssignableFrom(x.DeclaringType))
-                .Select(x => x.GetValue(null) as BindableProperty)
-                .ToList();
 
-            foreach (var bindableProperty in EditingProperties)
-            {
-                var createEditor = EditorMapping.FirstOrDefault(x => x.Key.IsAssignableFrom(bindableProperty.ReturnType)).Value;
-                if (createEditor != null)
+                if (Value is null)
                 {
-                    _propertiesContainer.Children.Add(createEditor(bindableProperty, Value));
+                    _propertiesContainer.Children.Clear();
+                    return;
                 }
-                else if (ShowMissingProperties)
+                var flags = BindingFlags.Static | BindingFlags.Public;
+                if (Hierarchical)
                 {
-                    _propertiesContainer.Children.Add(new Label
+                    flags |= BindingFlags.FlattenHierarchy;
+                }
+
+                EditingProperties = Value.GetType().
+                    GetFields(flags)
+                    .Where(x => x.FieldType == typeof(BindableProperty) && HierarchyLimitType.IsAssignableFrom(x.DeclaringType))
+                    .Select(x => x.GetValue(null) as BindableProperty)
+                    .ToList();
+
+                foreach (var bindableProperty in EditingProperties)
+                {
+                    var createEditor = EditorMapping.FirstOrDefault(x => x.Key.IsAssignableFrom(bindableProperty.ReturnType)).Value;
+                    if (createEditor != null)
                     {
-                        Text = $"No editor for {bindableProperty.PropertyName} ({bindableProperty.ReturnType})",
-                        FontAttributes = FontAttributes.Italic
-                    });
+                        _propertiesContainer.Children.Add(createEditor(bindableProperty, Value));
+                    }
+                    else if (ShowMissingProperties)
+                    {
+                        _propertiesContainer.Children.Add(new Label
+                        {
+                            Text = $"No editor for {bindableProperty.PropertyName} ({bindableProperty.ReturnType})",
+                            FontAttributes = FontAttributes.Italic
+                        });
+                    }
+                }
+
+                if (_footerView.Content != null)
+                {
+                    _propertiesContainer.Children.Add(_footerView);
                 }
             }
-
-            if (_footerView.Content != null)
+            catch (Exception ex)
             {
-                _propertiesContainer.Children.Add(_footerView);
+                DialogService?.DisplayViewAsync("Error", new Label
+                {
+                    Text = ex.Message,
+                    Margin = 20
+                });
             }
         }
 

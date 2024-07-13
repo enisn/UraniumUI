@@ -4,7 +4,9 @@ The `AutoFormView` is a view that automatically generates a form based on the pr
 
 ## Usage
 
-`AutoFormView` is defined in `UraniumUI.Controls` namespace. You can use it in XAML like this:
+`AutoFormView` is defined in `UraniumUI.Controls` namespace. 
+
+You can use it in XAML like this:
 
 ```xml
 xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"

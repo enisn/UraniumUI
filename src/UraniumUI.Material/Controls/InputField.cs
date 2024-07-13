@@ -1,8 +1,6 @@
 ﻿using Microsoft.Maui.Controls.Shapes;
-using UraniumUI.Resources;
 using UraniumUI.Extensions;
-using System.Collections;
-using Microsoft.Maui.Controls;
+using UraniumUI.Resources;
 
 namespace UraniumUI.Material.Controls;
 

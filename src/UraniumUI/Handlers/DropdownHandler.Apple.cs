@@ -1,5 +1,6 @@
 ﻿#if IOS || MACCATALYST
 using Microsoft.Maui.Handlers;
+using System.Collections.Specialized;
 using UIKit;
 using UraniumUI.Controls;
 
@@ -21,7 +22,10 @@ public partial class DropdownHandler : ButtonHandler
         button.SetTitleColor(UIKit.UIColor.Label, UIControlState.Normal);
 
         button.ShowsMenuAsPrimaryAction = true;
-        button.ChangesSelectionAsPrimaryAction = true;
+        if (UIDevice.CurrentDevice.CheckSystemVersion(15, 0))
+        {
+            button.ChangesSelectionAsPrimaryAction = true;
+        }
 
         return button;
     }
@@ -40,6 +44,33 @@ public partial class DropdownHandler : ButtonHandler
                 items[i] = act;
             }
             button.Menu = UIKit.UIMenu.Create(items);
+
+            dropdown.ItemsSourceCollectionChangedCallback = (e) =>
+            {
+                switch (e.Action)
+                {
+                    case NotifyCollectionChangedAction.Add:
+                        {
+                            Array.Resize(ref items, items.Length + e.NewItems.Count);
+                            for (int i = 0; i < e.NewItems.Count; i++)
+                            {
+                                var item = e.NewItems[i];
+                                var act = UIKit.UIAction.Create(e.NewItems[i].ToString(), null, e.NewItems[i].ToString(), _ => { dropdown.SelectedItem = item; });
+                                items[items.Length - e.NewItems.Count + i] = act;
+                            }
+                        }
+                        break;
+                    case NotifyCollectionChangedAction.Remove:
+                        {
+                            for (int i = 0; i < e.OldItems.Count; i++)
+                            {
+                                items = items.Where(x => x.Title != e.OldItems[i].ToString()).ToArray();
+                            }
+                            button.Menu = UIKit.UIMenu.Create(items);
+                        }
+                        break;
+                }
+            };
         }
     }
 

@@ -1,6 +1,7 @@
 ﻿#if WINDOWS
 using Microsoft.Maui.Handlers;
 using Microsoft.Maui.Platform;
+using Microsoft.UI.Xaml.Controls;
 using UraniumUI.Controls;
 
 namespace UraniumUI.Handlers;
@@ -20,7 +21,14 @@ public partial class DropdownHandler : ButtonHandler
         dropdownButton.Foreground = new Microsoft.UI.Xaml.Media.SolidColorBrush(Microsoft.UI.Colors.Red);
 
         SetItemSource(VirtualViewDropdown, dropdownButton);
+
         return dropdownButton;
+    }
+
+    protected override void ConnectHandler(Microsoft.UI.Xaml.Controls.Button platformView)
+    {
+        base.ConnectHandler(platformView);
+        ArrangeSelectedItem();
     }
 
     private static void SetItemSource(Dropdown dropdown, Microsoft.UI.Xaml.Controls.DropDownButton dropdownButton)
@@ -99,15 +107,20 @@ public partial class DropdownHandler : ButtonHandler
             return;
         }
 
-        if (dropdown.SelectedItem is null)
+        handler.ArrangeSelectedItem();
+    }
+
+    protected void ArrangeSelectedItem()
+    {
+        if (VirtualViewDropdown.SelectedItem is null)
         {
-            dropdownButton.Content = dropdown.Placeholder;
-            dropdownButton.Foreground = dropdown.PlaceholderColor.ToPlatform();
+            PlatformView.Content = VirtualViewDropdown.Placeholder;
+            PlatformView.Foreground = VirtualViewDropdown.PlaceholderColor.ToPlatform();
         }
         else
         {
-            dropdownButton.Content = dropdown.SelectedItem.ToString();
-            dropdownButton.Foreground = dropdown.TextColor?.ToPlatform() ?? Colors.Black.ToPlatform();
+            PlatformView.Content = VirtualViewDropdown.SelectedItem.ToString();
+            PlatformView.Foreground = VirtualViewDropdown.TextColor?.ToPlatform() ?? Colors.Black.ToPlatform();
         }
     }
 

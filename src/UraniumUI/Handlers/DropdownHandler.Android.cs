@@ -19,7 +19,6 @@ public partial class DropdownHandler : ButtonHandler
         var button = base.CreatePlatformView();
         button.Text = VirtualViewDropdown?.SelectedItem?.ToString();
 
-        button.TextAlignment = Android.Views.TextAlignment.TextStart;
         return button;
     }
 
@@ -59,6 +58,7 @@ public partial class DropdownHandler : ButtonHandler
     protected override void ConnectHandler(MaterialButton platformView)
     {
         base.ConnectHandler(platformView);
+        ArrangeSelectedItem();
         platformView.Click += Button_Click;
     }
 
@@ -75,15 +75,20 @@ public partial class DropdownHandler : ButtonHandler
 
     public static void MapSelectedItem(DropdownHandler handler, Dropdown dropdown)
     {
-        if (dropdown.SelectedItem is null)
+        handler.ArrangeSelectedItem();
+    }
+
+    protected void ArrangeSelectedItem()
+    {
+        if (VirtualViewDropdown.SelectedItem is null)
         {
-            handler.PlatformView.Text = dropdown.Placeholder;
-            handler.PlatformView.SetTextColor(dropdown.PlaceholderColor.ToPlatform());
+            PlatformView.Text = VirtualViewDropdown.Placeholder;
+            PlatformView.SetTextColor(VirtualViewDropdown.PlaceholderColor.ToPlatform());
         }
         else
         {
-            handler.PlatformView.Text = dropdown.SelectedItem?.ToString();
-            handler.PlatformView.SetTextColor(dropdown.TextColor?.ToPlatform() ?? Colors.Black.ToPlatform());
+            PlatformView.Text = VirtualViewDropdown.SelectedItem?.ToString();
+            PlatformView.SetTextColor(VirtualViewDropdown.TextColor?.ToPlatform() ?? Colors.Black.ToPlatform());
         }
     }
 

@@ -12,8 +12,8 @@
         <x:String x:Key="SourceLink">https://github.com/enisn/UraniumUI/blob/develop/demo/UraniumApp/Pages/InputFields/TextFieldPage.xaml</x:String>
     </ContentPage.Resources>
 
-    <VerticalStackLayout>
-        <material:TabView TabPlacement="Bottom">
+    <Grid RowDefinitions="*">
+        <material:TabView TabPlacement="Top">
             <material:TabItem Title="DropdownField">
 
                 <ScrollView>
@@ -29,7 +29,7 @@
 
                         <StackLayout HorizontalOptions="Start">
 
-                            <material:DropdownField Title="Choose" HorizontalTextAlignment="Start" AllowClear="True" StyleClass="ControlPreview">
+                            <material:DropdownField Title="Choose" AllowClear="True" StyleClass="ControlPreview">
                                 <material:DropdownField.ItemsSource>
                                     <x:Array Type="{x:Type x:String}">
                                         <x:String>Option 1</x:String>
@@ -40,9 +40,9 @@
                             </material:DropdownField>
                         </StackLayout>
 
-                        <BoxView StyleClass="Divider"/>
+                        <!--<BoxView StyleClass="Divider"/>-->
 
-                        <local:ViewShowcaseView>
+                        <!--<local:ViewShowcaseView>
 
                             <material:DropdownField x:Name="demoDropdownField" />
 
@@ -57,7 +57,7 @@
                                 </VerticalStackLayout>
                             </local:ViewShowcaseView.SidePanel>
 
-                        </local:ViewShowcaseView>
+                        </local:ViewShowcaseView>-->
 
 
                     </VerticalStackLayout>
@@ -65,11 +65,11 @@
 
             </material:TabItem>
             <material:TabItem Title="Dropdown">
-                <VerticalStackLayout>
+                <VerticalStackLayout Padding="20">
                     <Label Text="Dropdown" FontSize="Title" />
                     <Label Text="UraniumUI.Controls" FontSize="Micro" Opacity=".6" />
 
-                    <uranium:Dropdown Margin="20" Placeholder="Choose" HorizontalOptions="Center">
+                    <uranium:Dropdown Placeholder="Choose" HorizontalOptions="Center" StyleClass="ControlPreview">
                         <uranium:Dropdown.ItemsSource>
                             <x:Array Type="{x:Type x:String}">
                                 <x:String>Item 1</x:String>
@@ -82,5 +82,5 @@
             </material:TabItem>
         </material:TabView>
 
-    </VerticalStackLayout>
+    </Grid>
 </ContentPage>

@@ -28,7 +28,14 @@ public partial class DropdownHandler : ButtonHandler
             button.ChangesSelectionAsPrimaryAction = true;
         }
 
+
         return button;
+    }
+
+    protected override void ConnectHandler(UIButton platformView)
+    {
+        base.ConnectHandler(platformView);
+        ArrangeSelectedItem(platformView);
     }
 
     private static void SetItemsSource(Dropdown dropdown, UIKit.UIButton button)
@@ -82,11 +89,16 @@ public partial class DropdownHandler : ButtonHandler
 
     public static void MapSelectedItem(DropdownHandler handler, Dropdown dropdown)
     {
-        var selectedIndex = dropdown.ItemsSource.IndexOf(dropdown.SelectedItem);
+       handler.ArrangeSelectedItem(handler.PlatformView);
+    }
 
-        for (int i = 0; i < handler.PlatformView.Menu.Children.Length; i++)
+    internal void ArrangeSelectedItem(UIButton platformView)
+    {
+        var selectedIndex = VirtualViewDropdown.ItemsSource?.IndexOf(VirtualViewDropdown.SelectedItem) ?? -1;
+
+        for (int i = 0; i < platformView.Menu.Children.Length; i++)
         {
-            var menuItem = handler.PlatformView.Menu.Children[i];
+            var menuItem = platformView.Menu.Children[i];
 
             if (menuItem is UIAction action)
             {
@@ -94,15 +106,15 @@ public partial class DropdownHandler : ButtonHandler
             }
         }
 
-        if (dropdown.SelectedItem is null)
+        if (VirtualViewDropdown.SelectedItem is null)
         {
-            handler.PlatformView.SetTitle(dropdown.Placeholder, UIControlState.Normal);
-            handler.PlatformView.SetTitleColor(dropdown.PlaceholderColor.ToPlatform(), UIControlState.Normal);
+            platformView.SetTitle(VirtualViewDropdown.Placeholder, UIControlState.Normal);
+            platformView.SetTitleColor(VirtualViewDropdown.PlaceholderColor.ToPlatform(), UIControlState.Normal);
         }
         else
         {
-            handler.PlatformView.SetTitle(dropdown.SelectedItem?.ToString(), UIControlState.Normal);
-            handler.PlatformView.SetTitleColor(dropdown.TextColor?.ToPlatform() ?? Colors.Black.ToPlatform(), UIControlState.Normal);
+            platformView.SetTitle(VirtualViewDropdown.SelectedItem?.ToString(), UIControlState.Normal);
+            platformView.SetTitleColor(VirtualViewDropdown.TextColor?.ToPlatform() ?? Colors.Black.ToPlatform(), UIControlState.Normal);
         }
     }
 

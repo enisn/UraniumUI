@@ -1,5 +1,6 @@
 ﻿#if WINDOWS
 using Microsoft.Maui.Handlers;
+using Microsoft.Maui.Platform;
 using UraniumUI.Controls;
 
 namespace UraniumUI.Handlers;
@@ -13,6 +14,9 @@ public partial class DropdownHandler : ButtonHandler
     protected override Microsoft.UI.Xaml.Controls.DropDownButton CreatePlatformView()
     {
         var dropdownButton = new Microsoft.UI.Xaml.Controls.DropDownButton();
+        dropdownButton.BorderThickness = new Microsoft.UI.Xaml.Thickness(0);
+        dropdownButton.Background = new Microsoft.UI.Xaml.Media.SolidColorBrush(Microsoft.UI.Colors.Transparent);
+        dropdownButton.Foreground = new Microsoft.UI.Xaml.Media.SolidColorBrush(Microsoft.UI.Colors.Red);
 
         SetItemSource(VirtualViewDropdown, dropdownButton);
         return dropdownButton;
@@ -78,10 +82,57 @@ public partial class DropdownHandler : ButtonHandler
 
     public static void MapSelectedItem(DropdownHandler handler, Dropdown dropdown)
     {
-        if (handler.PlatformView is Microsoft.UI.Xaml.Controls.DropDownButton dropdownButton)
+        if (handler.PlatformView is not Microsoft.UI.Xaml.Controls.DropDownButton dropdownButton)
         {
-            dropdownButton.Content = dropdown.SelectedItem?.ToString();
+            return;
+        }
+
+        if (dropdown.SelectedItem is null)
+        {
+            dropdownButton.Content = dropdown.Placeholder;
+            dropdownButton.Foreground = dropdown.PlaceholderColor.ToPlatform();
+        }
+        else
+        {
+            dropdownButton.Content = dropdown.SelectedItem.ToString();
+            dropdownButton.Foreground = dropdown.TextColor?.ToPlatform() ?? Colors.Black.ToPlatform();
         }
     }
+
+    public static void MapPlaceholder(DropdownHandler handler, Dropdown dropdown)
+    {
+        if (handler.PlatformView is not Microsoft.UI.Xaml.Controls.DropDownButton dropdownButton)
+        {
+            return;
+        }
+
+        if (dropdown.SelectedItem is null)
+        {
+            dropdownButton.Content = dropdown.Placeholder;
+        }
+    }
+
+    public static void MapPlaceholderColor(DropdownHandler handler, Dropdown dropdown)
+    {
+        if (handler.PlatformView is not Microsoft.UI.Xaml.Controls.DropDownButton dropdownButton)
+        {
+            return;
+        }
+
+        if (dropdown.SelectedItem is null)
+        {
+            dropdownButton.Foreground = dropdown.PlaceholderColor.ToPlatform();
+        }
+    }
+
+    public static void MapHorizontalTextAlignment(DropdownHandler handler, Dropdown dropdown)
+    {
+        if (handler.PlatformView is not Microsoft.UI.Xaml.Controls.DropDownButton dropdownButton)
+        {
+            return;
+        }
+
+        dropdownButton.HorizontalContentAlignment = dropdown.HorizontalTextAlignment.ToPlatformHorizontalAlignment();
+    }
 }
-# endif
+#endif

@@ -8,4 +8,9 @@ public partial class MainPage : ContentPage
     {
         InitializeComponent();
     }
+
+    private void Button_Clicked(object sender, EventArgs e)
+    {
+        dropdown.SelectedItem = null;
+    }
 }

@@ -1,5 +1,6 @@
 ﻿#if IOS || MACCATALYST
 using Microsoft.Maui.Handlers;
+using Microsoft.Maui.Platform;
 using System.Collections.Specialized;
 using UIKit;
 using UraniumUI.Controls;
@@ -39,9 +40,9 @@ public partial class DropdownHandler : ButtonHandler
             for (int i = 0; i < dropdown.ItemsSource.Count; i++)
             {
                 var item = dropdown.ItemsSource[i];
-                var act = UIKit.UIAction.Create(dropdown.ItemsSource[i].ToString(), null, dropdown.ItemsSource[i].ToString(), _ => { dropdown.SelectedItem = item; });
-                act.State = i == selectedIndex ? UIMenuElementState.On : UIMenuElementState.Off;
-                items[i] = act;
+                var action = UIKit.UIAction.Create(dropdown.ItemsSource[i].ToString(), null, dropdown.ItemsSource[i].ToString(), _ => { dropdown.SelectedItem = item; });
+                action.State = i == selectedIndex ? UIMenuElementState.On : UIMenuElementState.Off;
+                items[i] = action;
             }
             button.Menu = UIKit.UIMenu.Create(items);
 
@@ -93,7 +94,43 @@ public partial class DropdownHandler : ButtonHandler
             }
         }
 
-        handler.PlatformView.SetTitle(dropdown.SelectedItem?.ToString(), UIControlState.Normal);
+        if (dropdown.SelectedItem is null)
+        {
+            handler.PlatformView.SetTitle(dropdown.Placeholder, UIControlState.Normal);
+            handler.PlatformView.SetTitleColor(dropdown.PlaceholderColor.ToPlatform(), UIControlState.Normal);
+        }
+        else
+        {
+            handler.PlatformView.SetTitle(dropdown.SelectedItem?.ToString(), UIControlState.Normal);
+            handler.PlatformView.SetTitleColor(dropdown.TextColor?.ToPlatform() ?? Colors.Black.ToPlatform(), UIControlState.Normal);
+        }
+    }
+
+    public static void MapPlaceholder(DropdownHandler handler, Dropdown dropdown)
+    {
+        if (dropdown.SelectedItem is null)
+        {
+            handler.PlatformView.SetTitle(dropdown.Placeholder, UIControlState.Normal);
+        }
+    }
+
+    public static void MapPlaceholderColor(DropdownHandler handler, Dropdown dropdown)
+    {
+        if (dropdown.SelectedItem is null)
+        {
+            handler.PlatformView.SetTitleColor(dropdown.PlaceholderColor.ToPlatform(), UIControlState.Normal);
+        }
+    }
+
+    public static void MapHorizontalTextAlignment(DropdownHandler handler, Dropdown dropdown)
+    {
+        handler.PlatformView.HorizontalAlignment = dropdown.HorizontalTextAlignment switch
+        {
+            TextAlignment.Start => UIControlContentHorizontalAlignment.Left,
+            TextAlignment.Center => UIControlContentHorizontalAlignment.Center,
+            TextAlignment.End => UIControlContentHorizontalAlignment.Right,
+            _ => UIControlContentHorizontalAlignment.Left
+        };
     }
 }
 #endif

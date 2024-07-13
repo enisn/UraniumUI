@@ -1,10 +1,10 @@
 ﻿#if ANDROID
 using Android.Views;
-using Android.Widget;
 using Google.Android.Material.Button;
-using Java.Interop;
 using Microsoft.Maui.Handlers;
+using Microsoft.Maui.Platform;
 using UraniumUI.Controls;
+using UraniumUI.Platforms.Android;
 
 namespace UraniumUI.Handlers;
 public partial class DropdownHandler : ButtonHandler
@@ -18,6 +18,8 @@ public partial class DropdownHandler : ButtonHandler
     {
         var button = base.CreatePlatformView();
         button.Text = VirtualViewDropdown?.SelectedItem?.ToString();
+
+        button.TextAlignment = Android.Views.TextAlignment.TextStart;
         return button;
     }
 
@@ -43,22 +45,6 @@ public partial class DropdownHandler : ButtonHandler
         popupMenu.Show();
     }
 
-    class MenuItemOnMenuItemClickListener : Java.Lang.Object, IMenuItemOnMenuItemClickListener
-    {
-        private Action<IMenuItem> _onMenuItemClick;
-
-        public MenuItemOnMenuItemClickListener(Action<IMenuItem> onMenuItemClick)
-        {
-            _onMenuItemClick = onMenuItemClick;
-        }
-
-        public bool OnMenuItemClick(IMenuItem item)
-        {
-            _onMenuItemClick?.Invoke(item);
-            return true;
-        }
-    }
-
     protected override void ConnectHandler(MaterialButton platformView)
     {
         base.ConnectHandler(platformView);
@@ -78,7 +64,43 @@ public partial class DropdownHandler : ButtonHandler
 
     public static void MapSelectedItem(DropdownHandler handler, Dropdown dropdown)
     {
-        handler.PlatformView.Text = dropdown.SelectedItem?.ToString();
+        if (dropdown.SelectedItem is null)
+        {
+            handler.PlatformView.Text = dropdown.Placeholder;
+            handler.PlatformView.SetTextColor(dropdown.PlaceholderColor.ToPlatform());
+        }
+        else
+        {
+            handler.PlatformView.Text = dropdown.SelectedItem?.ToString();
+            handler.PlatformView.SetTextColor(dropdown.TextColor?.ToPlatform() ?? Colors.Black.ToPlatform());
+        }
+    }
+
+    public static void MapPlaceholder(DropdownHandler handler, Dropdown dropdown)
+    {
+        if (dropdown.SelectedItem is null)
+        {
+            handler.PlatformView.Text = dropdown.Placeholder;
+        }
+    }
+
+    public static void MapPlaceholderColor(DropdownHandler handler, Dropdown dropdown)
+    {
+        if (dropdown.SelectedItem is null)
+        {
+            handler.PlatformView.SetTextColor(dropdown.PlaceholderColor.ToPlatform());
+        }
+    }
+
+    public static void MapHorizontalTextAlignment(DropdownHandler handler, Dropdown dropdown)
+    {
+        handler.PlatformView.TextAlignment = dropdown.HorizontalTextAlignment switch
+        {
+            Microsoft.Maui.TextAlignment.Start => Android.Views.TextAlignment.TextStart,
+            Microsoft.Maui.TextAlignment.Center => Android.Views.TextAlignment.Center,
+            Microsoft.Maui.TextAlignment.End => Android.Views.TextAlignment.TextEnd,
+            _ => Android.Views.TextAlignment.TextStart
+        };
     }
 }
 #endif

@@ -57,7 +57,6 @@ public class PickerField : InputField
         iconClear.TappedCommand = new Command(OnClearTapped);
 
         UpdateClearIconState();
-
         PickerView.SetBinding(PickerView.SelectedItemProperty, new Binding(nameof(SelectedItem), source: this));
         PickerView.SetBinding(PickerView.SelectedIndexProperty, new Binding(nameof(SelectedIndex), source: this));
         PickerView.SetBinding(PickerView.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));

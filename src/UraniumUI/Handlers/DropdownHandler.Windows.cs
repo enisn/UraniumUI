@@ -14,6 +14,7 @@ public partial class DropdownHandler : ButtonHandler
     protected override Microsoft.UI.Xaml.Controls.DropDownButton CreatePlatformView()
     {
         var dropdownButton = new Microsoft.UI.Xaml.Controls.DropDownButton();
+        dropdownButton.HorizontalAlignment = Microsoft.UI.Xaml.HorizontalAlignment.Stretch;
         dropdownButton.BorderThickness = new Microsoft.UI.Xaml.Thickness(0);
         dropdownButton.Background = new Microsoft.UI.Xaml.Media.SolidColorBrush(Microsoft.UI.Colors.Transparent);
         dropdownButton.Foreground = new Microsoft.UI.Xaml.Media.SolidColorBrush(Microsoft.UI.Colors.Red);
@@ -27,7 +28,7 @@ public partial class DropdownHandler : ButtonHandler
         if (dropdown.ItemsSource is not null)
         {
             var flyout = new Microsoft.UI.Xaml.Controls.MenuFlyout();
-            flyout.Placement = Microsoft.UI.Xaml.Controls.Primitives.FlyoutPlacementMode.Bottom;
+            flyout.Placement = GetPlacement(dropdown.HorizontalTextAlignment);
             flyout.Items.Clear();
 
             // TODO: For customization. (only possible on windows :( )
@@ -57,7 +58,7 @@ public partial class DropdownHandler : ButtonHandler
                                 flyout.Items.Add(new Microsoft.UI.Xaml.Controls.MenuFlyoutItem() { Text = item.ToString(), Command = new Command(() => dropdown.SelectedItem = item) });
                             }
                         }
-                       break;
+                        break;
                     case System.Collections.Specialized.NotifyCollectionChangedAction.Remove:
                         {
                             foreach (var item in e.OldItems)
@@ -73,6 +74,17 @@ public partial class DropdownHandler : ButtonHandler
                 }
             };
         }
+    }
+
+    protected static Microsoft.UI.Xaml.Controls.Primitives.FlyoutPlacementMode GetPlacement(Microsoft.Maui.TextAlignment alignment)
+    {
+        return alignment switch
+        {
+            Microsoft.Maui.TextAlignment.Start => Microsoft.UI.Xaml.Controls.Primitives.FlyoutPlacementMode.BottomEdgeAlignedLeft,
+            Microsoft.Maui.TextAlignment.Center => Microsoft.UI.Xaml.Controls.Primitives.FlyoutPlacementMode.Bottom,
+            Microsoft.Maui.TextAlignment.End => Microsoft.UI.Xaml.Controls.Primitives.FlyoutPlacementMode.BottomEdgeAlignedRight,
+            _ => Microsoft.UI.Xaml.Controls.Primitives.FlyoutPlacementMode.BottomEdgeAlignedLeft
+        };
     }
 
     public static void MapItemsSource(DropdownHandler handler, Dropdown dropdown)
@@ -133,6 +145,11 @@ public partial class DropdownHandler : ButtonHandler
         }
 
         dropdownButton.HorizontalContentAlignment = dropdown.HorizontalTextAlignment.ToPlatformHorizontalAlignment();
+
+        if (dropdownButton.Flyout is Microsoft.UI.Xaml.Controls.MenuFlyout flyout)
+        {
+            flyout.Placement = GetPlacement(dropdown.HorizontalTextAlignment);
+        }
     }
 }
 #endif

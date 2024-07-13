@@ -37,9 +37,37 @@ public partial class DropdownHandler : ButtonHandler
                 var menuItem = new Microsoft.UI.Xaml.Controls.MenuFlyoutItem();
                 menuItem.Text = item.ToString();
                 menuItem.Command = new Command(() => dropdown.SelectedItem = item);
+                menuItem.CommandParameter = item;
                 flyout.Items.Add(menuItem);
             }
             dropdownButton.Flyout = flyout;
+
+            dropdown.ItemsSourceCollectionChangedCallback = (e) =>
+            {
+                switch (e.Action)
+                {
+                    case System.Collections.Specialized.NotifyCollectionChangedAction.Add:
+                        {
+                            foreach (var item in e.NewItems)
+                            {
+                                flyout.Items.Add(new Microsoft.UI.Xaml.Controls.MenuFlyoutItem() { Text = item.ToString(), Command = new Command(() => dropdown.SelectedItem = item) });
+                            }
+                        }
+                       break;
+                    case System.Collections.Specialized.NotifyCollectionChangedAction.Remove:
+                        {
+                            foreach (var item in e.OldItems)
+                            {
+                                var itemToRemove = flyout.Items.FirstOrDefault(x => x is Microsoft.UI.Xaml.Controls.MenuFlyoutItem menuItem && menuItem.CommandParameter == item);
+                                if (itemToRemove is not null)
+                                {
+                                    flyout.Items.Remove(itemToRemove);
+                                }
+                            }
+                        }
+                        break;
+                }
+            };
         }
     }
 

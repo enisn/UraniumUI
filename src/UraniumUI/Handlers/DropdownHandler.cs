@@ -14,7 +14,6 @@ public partial class DropdownHandler
 
     public DropdownHandler() : base(DropdownPropertyMapper)
     {
-
     }
 }
 

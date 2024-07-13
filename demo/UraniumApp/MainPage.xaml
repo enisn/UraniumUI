@@ -13,7 +13,7 @@
             <Label Text="Hello, Uranium! ☢️" FontSize="Large" />
             <Label Text="Welcome to the demo app." />
         </StackLayout>
-      
+
         <Grid ColumnDefinitions="Auto,*">
             <Image Rotation="-45" Margin="15">
                 <Image.Source>
@@ -23,21 +23,7 @@
             <Label FontSize="Large" Grid.Column="1" Text="Use the side navigation drawer to navigate to the other pages." VerticalOptions="Center"/>
         </Grid>
 
-      <uranium:SelectableLabel Margin="15" Text="Hello, World! This text should be selectable!" />
+        <uranium:SelectableLabel Margin="15" Text="Hello, World! This text should be selectable!" />
 
-        <Label Text="{Binding SelectedItem, Source={x:Reference dropdown}}" />
-        <BoxView StyleClass="Divider" />
-
-        <uranium:Dropdown BackgroundColor="Transparent" Margin="20" x:Name="dropdown">
-            <uranium:Dropdown.ItemsSource>
-                <x:Array Type="{x:Type x:String}">
-                    <x:String>Item 1</x:String>
-                    <x:String>Item 2</x:String>
-                    <x:String>Item 3</x:String>
-                    
-                </x:Array>
-        </uranium:Dropdown.ItemsSource>
-      </uranium:Dropdown>
-      
     </VerticalStackLayout>
 </ContentPage>

@@ -9,7 +9,8 @@ public class Dropdown : Button, IDropdown
     public static readonly BindableProperty SelectedItemProperty = BindableProperty.Create(
         nameof(SelectedItem), typeof(object), typeof(Dropdown));
 
-    public IList ItemsSource { get => (IList)GetValue(ItemsSourceProperty); set => SetValue(ItemsSourceProperty, value); } 
+    public IList ItemsSource { get => (IList)GetValue(ItemsSourceProperty); set => SetValue(ItemsSourceProperty, value); }
+    internal Action<NotifyCollectionChangedEventArgs> ItemsSourceCollectionChangedCallback { get; set; }
 
     public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(
         nameof(ItemsSource), typeof(IList), typeof(Dropdown),
@@ -36,6 +37,6 @@ public class Dropdown : Button, IDropdown
 
     private void ItemsSource_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
     {
-
+        ItemsSourceCollectionChangedCallback(e);
     }
 }

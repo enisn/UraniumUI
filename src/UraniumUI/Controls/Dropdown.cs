@@ -7,6 +7,7 @@ public class Dropdown : Button, IDropdown
     public Dropdown()
     {
         this.SetAppThemeColor(Button.TextColorProperty, Colors.Black, Colors.White);
+        this.SetAppThemeColor(Button.BackgroundColorProperty, Colors.Transparent, Colors.Transparent);
     }
 
     public TextAlignment HorizontalTextAlignment { get => (TextAlignment)GetValue(HorizontalTextAlignmentProperty); set => SetValue(HorizontalTextAlignmentProperty, value); }

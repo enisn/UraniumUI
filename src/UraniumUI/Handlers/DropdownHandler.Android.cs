@@ -27,7 +27,7 @@ public partial class DropdownHandler : ButtonHandler
     {
         var activity = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity;
 
-        var popupMenu = new Android.Widget.PopupMenu(activity, PlatformView, GravityFlags.Center);
+        var popupMenu = new Android.Widget.PopupMenu(activity, PlatformView, GetGravityFlags(VirtualViewDropdown.HorizontalTextAlignment));
 
         if (VirtualViewDropdown.ItemsSource is not null)
         {
@@ -43,6 +43,17 @@ public partial class DropdownHandler : ButtonHandler
         }
 
         popupMenu.Show();
+    }
+
+    private GravityFlags GetGravityFlags(Microsoft.Maui.TextAlignment textAlignment)
+    {
+        return textAlignment switch
+        {
+            Microsoft.Maui.TextAlignment.Start => GravityFlags.Start,
+            Microsoft.Maui.TextAlignment.Center => GravityFlags.Center,
+            Microsoft.Maui.TextAlignment.End => GravityFlags.End,
+            _ => GravityFlags.Start
+        };
     }
 
     protected override void ConnectHandler(MaterialButton platformView)

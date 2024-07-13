@@ -24,6 +24,10 @@
           "path": "infrastructure/AutoFormView.md"
         },
         {
+          "text": "Auto Form View",
+          "path": "infrastructure/Dropdown.md"
+        },
+        {
           "text": "ExpanderView",
           "path": "infrastructure/ExpanderView.md"
         },

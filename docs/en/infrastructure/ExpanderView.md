@@ -2,7 +2,7 @@
 
 ExpanderView is a view that can be expanded or collapsed. It is useful for showing and hiding content. Common use case is building accordion sections. 
 
-![MAUI Expander View Accordion](images/expanderview-demo-windows-dark.gif)
+![MAUI Expander View Accordion](../images/expanderview-demo-windows-dark.gif)
 
 ## Usage
 It is defined in `UraniumUI.Views` namespace. You can use it in XAML like this:
@@ -41,4 +41,4 @@ You can customize the `ExpanderView` by using the style properties. You can use 
 </Style>
 ```
 
-![MAUI Expander View Accordion Customized](images/expanderview-customizations-windows-dark.gif)
+![MAUI Expander View Accordion Customized](../images/expanderview-customizations-windows-dark.gif)

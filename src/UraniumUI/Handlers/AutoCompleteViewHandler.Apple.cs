@@ -6,6 +6,7 @@ using Microsoft.Maui.Controls.Compatibility.Platform.iOS;
 using Microsoft.Maui.Handlers;
 using Microsoft.Maui.Platform;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UIKit;
@@ -100,8 +101,8 @@ public partial class AutoCompleteViewHandler : ViewHandler<IAutoCompleteView, UI
     {
         if (VirtualView.ItemsSource != null)
         {
-            var items = VirtualView.ItemsSource.ToList();
-            PlatformView.UpdateItems(items);   
+            var items = VirtualView.ItemsSource;
+            PlatformView.UpdateItems(items);
         }
     }
 
@@ -131,11 +132,11 @@ public class UIAutoCompleteTextField : MauiTextField, IUITextFieldDelegate
     private AutoCompleteViewSource _autoCompleteViewSource;
     private UIView _background;
     private CGRect _drawnFrame;
-    private List<string> _items = new();
+    private IList _items = new List<string>();
     private UIViewController _parentViewController;
     private UIScrollView _scrollView;
 
-    public Func<string, ICollection<string>, ICollection<string>> SortingAlgorithm { get; set; } = (t, d) => d.OrderBy(x => x.Contains(t, StringComparison.InvariantCultureIgnoreCase) ? 0 : 1).ToArray();
+    public Func<string, IEnumerable<string>, IList<string>> SortingAlgorithm { get; set; } = (t, d) => d.OrderBy(x => x.Contains(t, StringComparison.InvariantCultureIgnoreCase) ? 0 : 1).ToArray();
 
     public AutoCompleteViewSource AutoCompleteViewSource
     {
@@ -282,13 +283,21 @@ public class UIAutoCompleteTextField : MauiTextField, IUITextFieldDelegate
 
     public void UpdateTableViewData()
     {
-        var sorted = SortingAlgorithm(Text, _items);
-        if (!sorted.Any())
+        if (_items is IEnumerable<object> _itemAsObject)
         {
-            HideAutoCompleteView();
-            return;
+            var sorted = SortingAlgorithm(Text, _itemAsObject.Select(x => x.ToString()));
+            if (!sorted.Any())
+            {
+                HideAutoCompleteView();
+                return;
+            }
+            AutoCompleteViewSource.Suggestions = (IList) sorted;
         }
-        AutoCompleteViewSource.Suggestions = sorted;
+        else
+        {
+            AutoCompleteViewSource.Suggestions = _items;
+        }
+
         AutoCompleteTableView.ReloadData();
 
         var f = AutoCompleteTableView.Frame;
@@ -298,7 +307,7 @@ public class UIAutoCompleteTextField : MauiTextField, IUITextFieldDelegate
         _background.Frame = frame;
     }
 
-    public void UpdateItems(List<string> items)
+    public void UpdateItems(IList items)
     {
         _items = items;
         AutoCompleteViewSource.UpdateSuggestions(items);
@@ -315,11 +324,11 @@ public class UIAutoCompleteTextField : MauiTextField, IUITextFieldDelegate
 
 public abstract class AutoCompleteViewSource : UITableViewSource
 {
-    public ICollection<string> Suggestions { get; set; } = new List<string>();
+    public IList Suggestions { get; set; } = new List<string>();
 
     public UIAutoCompleteTextField AutoCompleteTextField { get; set; }
 
-    public abstract void UpdateSuggestions(ICollection<string> suggestions);
+    public abstract void UpdateSuggestions(IList suggestions);
 
     public abstract override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath);
 
@@ -334,9 +343,9 @@ public abstract class AutoCompleteViewSource : UITableViewSource
     {
         AutoCompleteTextField.AutoCompleteTableView.Hidden = true;
         if (indexPath.Row < Suggestions.Count)
-            AutoCompleteTextField.Text = Suggestions.ElementAt(indexPath.Row);
+            AutoCompleteTextField.Text = Suggestions[indexPath.Row]?.ToString();
         AutoCompleteTextField.ResignFirstResponder();
-        var item = Suggestions.ToList()[(int)indexPath.Item];
+        var item = Suggestions[(int)indexPath.Item];
         Selected?.Invoke(tableView, new SelectedItemChangedEventArgs(item, -1));
         // don't call base.RowSelected
     }
@@ -346,7 +355,7 @@ public class AutoCompleteDefaultDataSource : AutoCompleteViewSource
 {
     private const string _cellIdentifier = "DefaultIdentifier";
 
-    public override void UpdateSuggestions(ICollection<string> suggestions)
+    public override void UpdateSuggestions(IList suggestions)
     {
         Suggestions = suggestions;
     }
@@ -354,13 +363,13 @@ public class AutoCompleteDefaultDataSource : AutoCompleteViewSource
     public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
     {
         var cell = tableView.DequeueReusableCell(_cellIdentifier);
-        var item = Suggestions.ElementAt(indexPath.Row);
+        var item = Suggestions[indexPath.Row];
 
         if (cell == null)
             cell = new UITableViewCell(UITableViewCellStyle.Default, _cellIdentifier);
 
         cell.BackgroundColor = UIColor.Clear;
-        cell.TextLabel.Text = item;
+        cell.TextLabel.Text = item.ToString();
 
         return cell;
     }

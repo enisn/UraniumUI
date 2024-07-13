@@ -44,12 +44,10 @@ public partial class AutoCompleteViewHandler : ViewHandler<IAutoCompleteView, Au
             VirtualView.Text = sender.Text;
         }
 
-        if (VirtualView.ItemsSource != null && !string.IsNullOrEmpty(sender.Text))
+        if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput && VirtualView.ItemsSource != null && !string.IsNullOrEmpty(sender.Text) && VirtualView.ItemsSource is IEnumerable<object> suggestions)
         {
-            PlatformView.ItemsSource = VirtualView.ItemsSource.Where(x => x.Contains(sender.Text));
+            PlatformView.ItemsSource = suggestions.Where(x => x != null && x.ToString().Contains(sender.Text, StringComparison.InvariantCultureIgnoreCase));
         }
-
-        PlatformView.IsSuggestionListOpen = sender.Text.Length < VirtualView.Threshold;
     }
 
     private void PlatformView_GotFocus(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)

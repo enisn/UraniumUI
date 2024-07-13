@@ -182,7 +182,7 @@ public class TreeViewNodeHolderView : VerticalStackLayout
                     var rotation = 90;
                     if (TreeView.UseAnimation)
                     {
-                        view.RotateTo(rotation, 90, easing: Easing.BounceOut);
+                        view.RotateToSafely(rotation, 90, easing: Easing.BounceOut);
                     }
                     else
                     {
@@ -197,7 +197,7 @@ public class TreeViewNodeHolderView : VerticalStackLayout
                     var rotation = 0;
                     if (TreeView.UseAnimation)
                     {
-                        view.RotateTo(rotation, 90, easing: Easing.BounceOut);
+                        view.RotateToSafely(rotation, 90, easing: Easing.BounceOut);
                     }
                     else
                     {
@@ -387,9 +387,9 @@ public class TreeViewNodeHolderView : VerticalStackLayout
             if (TreeView.UseAnimation)
             {
                 nodeChildren.IsVisible = true;
-                nodeChildren.TranslateTo(0, 0, 50).FireAndForget();
-                nodeChildren.ScaleTo(1, 50).FireAndForget();
-                nodeChildren.FadeTo(1).FireAndForget();
+                nodeChildren.TranslateToSafely(0, 0, 50).FireAndForget();
+                nodeChildren.ScaleToSafely(1, 50).FireAndForget();
+                nodeChildren.FadeToSafely(1).FireAndForget();
             }
             else
             {
@@ -400,12 +400,12 @@ public class TreeViewNodeHolderView : VerticalStackLayout
         {
             if (TreeView.UseAnimation)
             {
-                nodeChildren.TranslateTo(0, -nodeChildren.Height).FireAndForget();
-                nodeChildren.ScaleTo(0).FireAndForget();
+                nodeChildren.TranslateToSafely(0, -nodeChildren.Height).FireAndForget();
+                nodeChildren.ScaleToSafely(0).FireAndForget();
                 nodeChildren.AnchorX = 0;
                 nodeChildren.AnchorY = 0;
 
-                await nodeChildren.FadeTo(0, 50);
+                await nodeChildren.FadeToSafely(0, 50);
             }
 
             nodeChildren.IsVisible = false;

@@ -10,6 +10,16 @@ public class MopupsDialogService : IDialogService
         return GetCurrentPage().ConfirmAsync(title, message, okText, cancelText);
     }
 
+    public Task<IDisposable> DisplayProgressAsync(string title, string message)
+    {
+        return GetCurrentPage().DisplayProgressAsync(title, message);
+    }
+
+    public Task<IDisposable> DisplayProgressCancellableAsync(string title, string message, string cancelText = "Cancel", CancellationTokenSource tokenSource = null)
+    {
+        return GetCurrentPage().DisplayProgressCancellableAsync(title, message, cancelText, tokenSource);
+    }
+
     public virtual Task<IEnumerable<T>> DisplayCheckBoxPromptAsync<T>(string message, IEnumerable<T> selectionSource, IEnumerable<T> selectedItems = null, string accept = "OK", string cancel = "Cancel", string displayMember = null)
     {
         return GetCurrentPage().DisplayCheckBoxPromptAsync(message, selectionSource, selectedItems, accept, cancel, displayMember);
@@ -51,7 +61,10 @@ public class MopupsDialogService : IDialogService
         {
             return tabbed.CurrentPage;
         }
-
+        if (Application.Current.MainPage is FlyoutPage page)
+        {
+            return page.Flyout;
+        }
         return Application.Current.MainPage;
     }
 }

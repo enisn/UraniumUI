@@ -31,4 +31,9 @@ public partial class DataGridsIndexPage : ContentPage
     {
         Navigation.PushAsync(new EditorDataGridPage());
     }
+
+    private void GoToPaginationDataGrid(object sender, EventArgs e)
+    {
+        Navigation.PushAsync(new PaginationSamplePage());
+    }
 }

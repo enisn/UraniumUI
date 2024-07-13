@@ -1,6 +1,5 @@
 ﻿using InputKit.Shared.Controls;
 using System.Reflection;
-using UraniumUI.Controls;
 using UraniumUI.Extensions;
 using UraniumUI.Material.Controls;
 using UraniumUI.Options;
@@ -28,54 +27,54 @@ public static class AutoFormViewMaterialConfigurationExtensions
         return builder;
     }
 
-    public static View EditorForString(PropertyInfo property, object source)
+    public static View EditorForString(PropertyInfo property, Func<PropertyInfo, string> propertyNameFactory, object source)
     {
         var editor = new TextField();
         editor.SetBinding(TextField.TextProperty, new Binding(property.Name, source: source));
         editor.AllowClear = property.PropertyType.IsNullable();
-        editor.Title = property.Name;
+        editor.Title = propertyNameFactory(property);
 
         return editor;
     }
 
-    public static View EditorForNumeric(PropertyInfo property, object source)
+    public static View EditorForNumeric(PropertyInfo property, Func<PropertyInfo, string> propertyNameFactory, object source)
     {
         var editor = new TextField();
         editor.SetBinding(TextField.TextProperty, new Binding(property.Name, source: source));
-        editor.Title = property.Name;
+        editor.Title = propertyNameFactory(property);
         editor.AllowClear = property.PropertyType.IsNullable();
         editor.Keyboard = Keyboard.Numeric;
 
         return editor;
     }
 
-    public static View EditorForBoolean(PropertyInfo property, object source)
+    public static View EditorForBoolean(PropertyInfo property, Func<PropertyInfo, string> propertyNameFactory, object source)
     {
         var editor = new UraniumUI.Material.Controls.CheckBox();
         editor.SetBinding(UraniumUI.Material.Controls.CheckBox.IsCheckedProperty, new Binding(property.Name, source: source));
-        editor.Text = property.Name;
+        editor.Text = propertyNameFactory(property);
 
         return editor;
     }
 
-    public static View EditorForEnum(PropertyInfo property, object source)
+    public static View EditorForEnum(PropertyInfo property, Func<PropertyInfo, string> propertyNameFactory, object source)
     {
         var editor = new PickerField();
 
         var values = Enum.GetValues(property.PropertyType.AsNonNullable());
         if (values.Length <= 5)
         {
-            return CreateSelectionViewForValues(values, property, source);
+            return CreateSelectionViewForValues(values, property, propertyNameFactory,  source);
         }
 
         editor.ItemsSource = values;
         editor.SetBinding(PickerField.SelectedItemProperty, new Binding(property.Name, source: source));
-        editor.Title = property.Name;
+        editor.Title = propertyNameFactory(property);
         editor.AllowClear = property.PropertyType.IsNullable();
         return editor;
     }
 
-    private static View CreateSelectionViewForValues(Array values, PropertyInfo property, object source)
+    private static View CreateSelectionViewForValues(Array values, PropertyInfo property, Func<PropertyInfo, string> propertyNameFactory, object source)
     {
         var shouldUseSingleColumn = values.Length > 3;
         var editor = new SelectionView
@@ -94,13 +93,13 @@ public static class AutoFormViewMaterialConfigurationExtensions
         {
             Spacing = 6,
             Children = {
-                new Label { Text = property.Name },
+                new Label { Text = propertyNameFactory(property) },
                 editor
             }
         };
     }
 
-    public static View EditorForKeyboard(PropertyInfo property, object source)
+    public static View EditorForKeyboard(PropertyInfo property, Func<PropertyInfo, string> propertyNameFactory, object source)
     {
         var editor = new PickerField();
 
@@ -110,25 +109,25 @@ public static class AutoFormViewMaterialConfigurationExtensions
             .ToArray();
 
         editor.SetBinding(PickerField.SelectedItemProperty, new Binding(property.Name, source: source));
-        editor.Title = property.Name;
+        editor.Title = propertyNameFactory(property);
         editor.AllowClear = property.PropertyType.IsNullable();
         return editor;
     }
 
-    public static View EditorForDateTime(PropertyInfo property, object source)
+    public static View EditorForDateTime(PropertyInfo property, Func<PropertyInfo, string> propertyNameFactory, object source)
     {
         var editor = new DatePickerField();
         editor.SetBinding(DatePickerField.DateProperty, new Binding(property.Name, source: source));
-        editor.Title = property.Name;
+        editor.Title = propertyNameFactory(property);
         editor.AllowClear = property.PropertyType.IsNullable();
         return editor;
     }
 
-    public static View EditorForTimeSpan(PropertyInfo property, object source)
+    public static View EditorForTimeSpan(PropertyInfo property, Func<PropertyInfo, string> propertyNameFactory, object source)
     {
         var editor = new TimePickerField();
         editor.SetBinding(TimePickerField.TimeProperty, new Binding(property.Name, source: source));
-        editor.Title = property.Name;
+        editor.Title = propertyNameFactory(property);
         editor.AllowClear = property.PropertyType.IsNullable();
         return editor;
     }

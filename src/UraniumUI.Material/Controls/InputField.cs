@@ -2,6 +2,7 @@
 using UraniumUI.Resources;
 using UraniumUI.Extensions;
 using System.Collections;
+using Microsoft.Maui.Controls;
 
 namespace UraniumUI.Material.Controls;
 
@@ -32,7 +33,7 @@ public partial class InputField : Grid
 
     protected Label labelTitle = new Label()
     {
-        StyleClass = new [] { "InputField.Title" },
+        StyleClass = new[] { "InputField.Title" },
         HorizontalOptions = LayoutOptions.Start,
         VerticalOptions = LayoutOptions.Start,
         InputTransparent = true,
@@ -41,7 +42,7 @@ public partial class InputField : Grid
 
     protected Border border = new Border
     {
-        StyleClass = new [] { "InputField.Border" },
+        StyleClass = new[] { "InputField.Border" },
         StrokeThickness = 1,
         StrokeDashOffset = 0,
         BackgroundColor = Colors.Transparent,
@@ -53,7 +54,7 @@ public partial class InputField : Grid
     {
         return new Image
         {
-            StyleClass = new [] { "InputField.Icon" },
+            StyleClass = new[] { "InputField.Icon" },
             HorizontalOptions = LayoutOptions.Start,
             VerticalOptions = LayoutOptions.Center,
             WidthRequest = 20,
@@ -152,6 +153,10 @@ public partial class InputField : Grid
     {
         base.OnHandlerChanged();
 
+#if ANDROID
+        Loaded += OnLoaded;
+#endif
+
         Content.Focused += OnFocusChanged;
         Content.Unfocused += OnFocusChanged;
 
@@ -159,12 +164,37 @@ public partial class InputField : Grid
         {
             Content.Focused -= OnFocusChanged;
             Content.Unfocused -= OnFocusChanged;
+#if ANDROID
+            Loaded -= OnLoaded;
+#endif
         }
     }
 
     protected virtual void OnFocusChanged(object sender, FocusEventArgs args)
     {
         (this as IGridLayout).IsFocused = args.IsFocused;
+    }
+#endif
+
+#if ANDROID
+    // Android icon loading fix.
+    protected virtual void OnLoaded(object sender, EventArgs e)
+    {
+        AlignIconColor();
+    }
+    void AlignIconColor()
+    {
+        if (Icon is not FontImageSource fontImageSource || LastFontimageColor.IsNullOrTransparent())
+        {
+            return;
+        }
+
+        fontImageSource.Color = null;
+
+        Dispatcher.Dispatch(() =>
+        {
+            fontImageSource.Color = LastFontimageColor;
+        });
     }
 #endif
 
@@ -230,8 +260,11 @@ public partial class InputField : Grid
             var x = CornerRadius.Clamp(10, MaxCornerRadius) - 10;
 
             UpdateOffset(0.01);
-            labelTitle.TranslateTo(x, -25, 90, Easing.BounceOut);
+
             labelTitle.AnchorX = 0;
+
+            labelTitle.TranslateToSafely(x, -25, 90, Easing.BounceOut);
+            labelTitle.ScaleToSafely(.8, 90);
 
 
 #if ANDROID
@@ -240,8 +273,6 @@ public partial class InputField : Grid
                 labelTitle.AnchorX = .5;
             }
 #endif
-
-            labelTitle.ScaleTo(.8, 90);
         }
         else
         {
@@ -259,10 +290,9 @@ public partial class InputField : Grid
             }
 #endif
 
-            labelTitle.TranslateTo(x, 0, 90, Easing.BounceOut);
-
             labelTitle.AnchorX = 0;
-            labelTitle.ScaleTo(1, 90);
+            labelTitle.TranslateToSafely(x, 0, 90, Easing.BounceOut);
+            labelTitle.ScaleToSafely(1, 90);
         }
     }
 
@@ -311,7 +341,7 @@ public partial class InputField : Grid
 
         if (Icon is FontImageSource fontImageSource && fontImageSource.Color != AccentColor)
         {
-            LastFontimageColor = fontImageSource.Color?.WithAlpha(1); // To createnew instance.
+            LastFontimageColor = fontImageSource.Color?.WithAlpha(1); // To create a new instance.
             fontImageSource.Color = AccentColor;
         }
     }

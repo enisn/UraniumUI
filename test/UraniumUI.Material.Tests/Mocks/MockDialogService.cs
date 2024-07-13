@@ -1,4 +1,5 @@
 ﻿using UraniumUI.Dialogs;
+using UraniumUI.Infrastructure;
 
 namespace UraniumUI.Material.Tests.Mocks;
 internal class MockDialogService : IDialogService
@@ -6,6 +7,16 @@ internal class MockDialogService : IDialogService
     public Task<bool> ConfirmAsync(string title, string message, string okText = "OK", string cancelText = "Cancel")
     {
         return Task.FromResult(default(bool));
+    }
+
+    public Task<IDisposable> DisplayProgressAsync(string title, string message)
+    {
+        return Task.FromResult<IDisposable>(new DisposableAction(() => { }));
+    }
+
+    public Task<IDisposable> DisplayProgressCancellableAsync(string title, string message, string cancelText = "Cancel", CancellationTokenSource tokenSource = null)
+    {
+        return Task.FromResult<IDisposable>(new DisposableAction(() => { }));
     }
 
     public Task<IEnumerable<T>> DisplayCheckBoxPromptAsync<T>(string message, IEnumerable<T> selectionSource, IEnumerable<T> selectedItems = null, string accept = "OK", string cancel = "Cancel", string displayMember = null)

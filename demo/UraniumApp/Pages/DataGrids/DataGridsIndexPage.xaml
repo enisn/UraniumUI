@@ -17,6 +17,7 @@
             <Button Text="Custom DataGrid" Clicked="GoToCustomDataGrid" />
             <Button Text="Selectable DataGrid" Clicked="GoToSelectableDataGrid" />
             <Button Text="Edit Mode DataGrid" Clicked="GoToEditorDataGrid" />
+            <Button Text="Pagination" Clicked="GoToPaginationDataGrid" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

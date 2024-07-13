@@ -46,7 +46,7 @@ MAUI support font icons by using `FontImageSource` class. You can use it in `Ima
 </Image>
 ```
 
-![MAUI FontAwesome](images/fontawesome-demo.png)
+![MAUI FontAwesome](../images/fontawesome-demo.png)
 
 ---
 

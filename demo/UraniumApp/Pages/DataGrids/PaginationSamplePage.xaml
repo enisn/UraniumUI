@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
+             xmlns:vm="clr-namespace:UraniumApp.ViewModels.DataGrid"
+             x:Class="UraniumApp.Pages.DataGrids.PaginationSamplePage"
+             Title="PaginationSamplePage">
+    <ContentPage.BindingContext>
+        <vm:PaginationSampleViewModel />
+    </ContentPage.BindingContext>
+
+    <VerticalStackLayout>
+        <Grid>
+            <material:DataGrid HorizontalOptions="Center" ItemsSource="{Binding Products}">
+                <material:DataGrid.Columns>
+                    <material:DataGridColumn Title="Image" ValueBinding="{Binding thumbnail}">
+                        <material:DataGridColumn.CellItemTemplate>
+                            <DataTemplate>
+                                <Image Source="{Binding thumbnail}" WidthRequest="60" />
+                            </DataTemplate>
+                        </material:DataGridColumn.CellItemTemplate>
+                    </material:DataGridColumn>
+
+                    <material:DataGridColumn Title="Title" ValueBinding="{Binding title}" />
+                    <material:DataGridColumn Title="Price" ValueBinding="{Binding price}" />
+                    <material:DataGridColumn Title="Rating" ValueBinding="{Binding rating}" />
+                    <material:DataGridColumn Title="Stock" ValueBinding="{Binding stock}" />
+                    <material:DataGridColumn Title="Brand" ValueBinding="{Binding brand}" />
+                    <material:DataGridColumn Title="Category" ValueBinding="{Binding category}" />
+
+                </material:DataGrid.Columns>
+            </material:DataGrid>
+            <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}" VerticalOptions="Center" HorizontalOptions="Center" />
+
+        </Grid>
+
+        <material:Paginator 
+            ChangePageCommand="{Binding SetPageCommand}"
+            CurrentPage="{Binding CurrentPage}"
+            TotalPageCount="{Binding TotalPages}"
+            HorizontalOptions="Center"/>
+    </VerticalStackLayout>
+</ContentPage>

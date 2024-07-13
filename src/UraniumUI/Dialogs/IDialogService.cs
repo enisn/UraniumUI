@@ -9,6 +9,16 @@ public interface IDialogService
         View content,
         string okText = "OK");
 
+    Task<IDisposable> DisplayProgressAsync(
+        string title,
+        string message);
+
+    Task<IDisposable> DisplayProgressCancellableAsync(
+        string title,
+        string message,
+        string cancelText = "Cancel",
+        CancellationTokenSource tokenSource = default);
+
     Task<bool> ConfirmAsync(
         string title,
         string message,

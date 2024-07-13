@@ -8,7 +8,7 @@ You may visit [Material Design Backdrops](https://material.io/components/backdro
 
 | Regular Implementation |
 | --- |
-| ![MAUI Material Design backdrop](images/backdrop-demo.gif) |
+| ![MAUI Material Design backdrop](../../../../images/backdrop-demo.gif) |
 
 ## Usage
 Backdrop is an [attachment](../../../infrastructure/UraniumContentPage.md#attachments) of [UraniumContentPage](../../../infrastructure/UraniumContentPage.md). So, it can be used only together with UraniumContentPage.

@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Options;
 using Plainer.Maui.Controls;
 using UraniumUI.Controls;
+using UraniumUI.Infrastructure;
 using UraniumUI.Resources;
 using CheckBox = InputKit.Shared.Controls.CheckBox;
 
@@ -41,6 +42,76 @@ public class DefaultDialogService : IDialogService
         currentPage.Navigation.PushModalAsync(ConfigurePopupPage(popupPage), animated: false);
 
         return tcs.Task;
+    }
+
+    public Task<IDisposable> DisplayProgressAsync(string title, string message)
+    {
+        return DisplayProgressCancellableAsync(title, message, cancelText: null);
+    }
+
+    public async Task<IDisposable> DisplayProgressCancellableAsync(string title, string message, string cancelText = "Cancel", CancellationTokenSource tokenSource = default)
+    {
+        var currentPage = GetCurrentPage();
+        tokenSource ??= new CancellationTokenSource();
+
+        var progress = new ActivityIndicator
+        {
+            IsRunning = true,
+            IsVisible = true,
+            HorizontalOptions = LayoutOptions.Center,
+            Color = ColorResource.GetColor("Primary", "PrimaryDark", Colors.Blue),
+            Margin = 20,
+        };
+
+        var verticalStackLayout = new VerticalStackLayout
+        {
+            Children =
+            {
+                GetHeader(title),
+                new Label
+                {
+                    Text = message,
+                    Margin = 20,
+                },
+                progress
+            }
+        };
+
+        if (!string.IsNullOrEmpty(cancelText))
+        {
+            verticalStackLayout.Children.Add(GetDivider());
+            verticalStackLayout.Children.Add(GetFooter(new Dictionary<string, Command>
+            {
+                { 
+                    cancelText,  new Command(() =>
+                    {
+                        tokenSource?.Cancel();
+                    })
+                }
+            }));
+        }
+
+        var popupPage = new ContentPage
+        {
+            BackgroundColor = GetBackdropColor(),
+            Content = GetFrame(currentPage.Width, verticalStackLayout)
+        };
+
+        await currentPage.Navigation.PushModalAsync(ConfigurePopupPage(popupPage), animated: false);
+
+        var cancelAction = new DisposableAction(() =>
+        {
+            currentPage.Navigation.RemovePage(popupPage);
+
+            if (currentPage.Navigation.ModalStack.LastOrDefault() == popupPage)
+            {
+                currentPage.Navigation.PopModalAsync(animated: false);
+            }
+        });
+
+        tokenSource.Token.Register(cancelAction.Dispose);
+
+        return cancelAction;
     }
 
     public async Task<bool> ConfirmAsync(string title, string message, string okText = "OK", string cancelText = "Cancel")
@@ -466,6 +537,11 @@ public class DefaultDialogService : IDialogService
             JustifyContent = Microsoft.Maui.Layouts.FlexJustify.End,
             Margin = new Thickness(10),
         };
+
+        if (footerButtons is null)
+        {
+            return layout;
+        }
 
         foreach (var item in footerButtons.Reverse())
         {

@@ -1,4 +1,5 @@
-﻿using UraniumUI.Pages;
+﻿using UraniumUI.Extensions;
+using UraniumUI.Pages;
 
 namespace UraniumUI.Material.Attachments;
 
@@ -48,7 +49,7 @@ public partial class BackdropView : ContentView, IPageAttachment
     {
         if (!isPresented)
         {
-            await AttachedPage.ContentFrame.TranslateTo(0, 0);
+            await AttachedPage.ContentFrame.TranslateToSafely(0, 0);
         }
 
         foreach (BackdropView backdrop in AttachedPage.Attachments.Where(x => x is BackdropView).Cast<BackdropView>())
@@ -58,7 +59,7 @@ public partial class BackdropView : ContentView, IPageAttachment
 
         if (isPresented)
         {
-            await AttachedPage.ContentFrame.TranslateTo(0, Content.Height);
+            await AttachedPage.ContentFrame.TranslateToSafely(0, Content.Height);
         }
     }
 }

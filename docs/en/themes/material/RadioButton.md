@@ -48,4 +48,4 @@ xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
 
 | Dark - Desktop | Light - Mobile |
 | --- | --- |
-| ![MAUI Material Design RadioButton](images/radiobutton-demo-windows-dark.gif) | ![MAUI Material Design RadioButton](images/radiobutton-demo-android-light.gif)  |
+| ![MAUI Material Design RadioButton](../../images/radiobutton-demo-windows-dark.gif) | ![MAUI Material Design RadioButton](../../images/radiobutton-demo-android-light.gif)  |

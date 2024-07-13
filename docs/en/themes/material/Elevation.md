@@ -25,7 +25,7 @@ Elevation can be applied any type of `View` by using Elevation style classes.
 </StackLayout>
 ```
 
-![MAUI Material Design Elevation](images/elevation-single-demo.png)
+![MAUI Material Design Elevation](../../images/elevation-single-demo.png)
 
 
 All elevation levels are listed below.
@@ -41,4 +41,4 @@ All elevation levels are listed below.
 ```
 
 
-![MAUI Material Design Elevation](images/elevation-all-demo.png)
+![MAUI Material Design Elevation](../../images/elevation-all-demo.png)

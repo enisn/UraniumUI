@@ -137,7 +137,7 @@ public class AutoFormView : FormView
             var createEditor = EditorMapping.FirstOrDefault(x => x.Key.IsAssignableFrom(property.PropertyType.AsNonNullable())).Value;
             if (createEditor != null)
             {
-                var editor = createEditor(property, Source);
+                var editor = createEditor(property, Options.PropertyNameFactory, Source);
 
                 foreach (var action in Options.PostEditorActions)
                 {
@@ -237,19 +237,19 @@ public class AutoFormView : FormView
         }
     }
 
-    public static View EditorForString(PropertyInfo property, object source)
+    public static View EditorForString(PropertyInfo property, Func<PropertyInfo, string> propertyNameFactory, object source)
     {
         var editor = new Entry();
         editor.SetBinding(Entry.TextProperty, new Binding(property.Name, source: source));
 
         return new VerticalStackLayout
         {
-            new Label { Text = property.Name },
+            new Label { Text = propertyNameFactory(property) },
             editor
         };
     }
 
-    public static View EditorForNumeric(PropertyInfo property, object source)
+    public static View EditorForNumeric(PropertyInfo property, Func<PropertyInfo, string> propertyNameFactory, object source)
     {
         var editor = new Entry();
         editor.SetBinding(Entry.TextProperty, new Binding(property.Name, source: source));
@@ -257,41 +257,42 @@ public class AutoFormView : FormView
 
         return new VerticalStackLayout
         {
-            new Label { Text = property.Name },
+            new Label { Text = propertyNameFactory(property) },
             editor
         };
     }
 
-    public static View EditorForBoolean(PropertyInfo property, object source)
+    public static View EditorForBoolean(PropertyInfo property, Func<PropertyInfo, string> propertyNameFactory, object source)
     {
         var editor = new InputKit.Shared.Controls.CheckBox();
         editor.SetBinding(InputKit.Shared.Controls.CheckBox.IsCheckedProperty, new Binding(property.Name, source: source));
-        editor.Text = property.Name;
+        editor.Text = propertyNameFactory(property);
 
         return editor;
     }
 
-    public static View EditorForEnum(PropertyInfo property, object source)
+    public static View EditorForEnum(PropertyInfo property, Func<PropertyInfo, string> propertyNameFactory, object source)
     {
         var editor = new Picker();
 
         var values = Enum.GetValues(property.PropertyType.AsNonNullable());
         if (values.Length <= 5)
         {
-            return CreateSelectionViewForValues(values, property, source);
+            return CreateSelectionViewForValues(values, property, propertyNameFactory, source);
         }
 
         editor.ItemsSource = values;
         editor.SetBinding(Picker.SelectedItemProperty, new Binding(property.Name, source: source));
-        editor.Title = property.Name;
+        var title = propertyNameFactory(property);
+        editor.Title = title;
         return new VerticalStackLayout
         {
-            new Label { Text = property.Name },
+            new Label { Text = title },
             editor
         };
     }
 
-    public static View CreateSelectionViewForValues(Array values, PropertyInfo property, object source)
+    public static View CreateSelectionViewForValues(Array values, PropertyInfo property, Func<PropertyInfo, string> propertyNameFactory, object source)
     {
         var shouldUseSingleColumn = values.Length > 3;
         var editor = new SelectionView
@@ -310,13 +311,13 @@ public class AutoFormView : FormView
         {
             Spacing = 6,
             Children = {
-                    new Label { Text = property.Name },
+                    new Label { Text = propertyNameFactory(property) },
                     editor
                 }
         };
     }
 
-    public static View EditorForKeyboard(PropertyInfo property, object source)
+    public static View EditorForKeyboard(PropertyInfo property, Func<PropertyInfo, string> propertyNameFactory, object source)
     {
         var editor = new Picker();
 
@@ -326,34 +327,35 @@ public class AutoFormView : FormView
             .ToArray();
 
         editor.SetBinding(Picker.SelectedItemProperty, new Binding(property.Name, source: source));
-        editor.Title = property.Name;
+        var title = propertyNameFactory(property);
+        editor.Title = title;
         return new VerticalStackLayout
         {
-            new Label { Text = property.Name },
+            new Label { Text = title },
             editor
         };
     }
 
-    public static View EditorForDateTime(PropertyInfo property, object source)
+    public static View EditorForDateTime(PropertyInfo property, Func<PropertyInfo, string> propertyNameFactory, object source)
     {
         var editor = new DatePicker();
         editor.SetBinding(DatePicker.DateProperty, new Binding(property.Name, source: source));
 
         return new VerticalStackLayout
         {
-            new Label { Text = property.Name },
+            new Label { Text = propertyNameFactory(property) },
             editor
         };
     }
 
-    public static View EditorForTimeSpan(PropertyInfo property, object source)
+    public static View EditorForTimeSpan(PropertyInfo property, Func<PropertyInfo, string> propertyNameFactory, object source)
     {
         var editor = new TimePicker();
         editor.SetBinding(TimePicker.TimeProperty, new Binding(property.Name, source: source));
 
         return new VerticalStackLayout
         {
-            new Label { Text = property.Name },
+            new Label { Text = propertyNameFactory(property) },
             editor
         };
     }

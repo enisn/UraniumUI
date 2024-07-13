@@ -46,7 +46,7 @@ Then you can use it like this:
 
 | Light - Mobile | Dark - Desktop | Light - iOS |
 | --- | --- | --- |
-| ![MAUI TabView](images/tabview-simple-light-android.gif) | ![MAUI TabView](images/tabview-simple-dark-windows.gif)  | ![MAUI TabView](images/tabview-simple-light-ios.gif) |
+| ![MAUI TabView](../../../../images/tabview-simple-light-android.gif) | ![MAUI TabView](../../../../images/tabview-simple-dark-windows.gif)  | ![MAUI TabView](../../../../images/tabview-simple-light-ios.gif) |
 
 
 ### TabHeader Placement
@@ -60,7 +60,7 @@ Table tabs can be placed at the top, bottom, start or left of the tab view. You 
 
 | Light - Android | Dark - Desktop | Light - iOS |
 | --- | --- | --- |
-| ![MAUI TabView Tab Placement](images/tabview-tabplacement-light-android.gif)| ![MAUI TabView Tab Placement](images/tabview-tabplacement-dark-windows.gif)  | ![MAUI TabView Tab Placement](images/tabview-tabplacement-light-ios.gif) |
+| ![MAUI TabView Tab Placement](../../../../images/tabview-tabplacement-light-android.gif)| ![MAUI TabView Tab Placement](../../../../images/tabview-tabplacement-dark-windows.gif)  | ![MAUI TabView Tab Placement](../../../../images/tabview-tabplacement-light-ios.gif) |
 
 ### Custom Tab Header
 You can customize the tab header by setting the `TabHeaderItemTemplate` property. The `TabHeaderItemTemplate` property is a **DataTemplate** that is used to render the tab header. The `TabHeaderItemTemplate` property is useful when you want to customize the tab header. In the datatemplate `Command` must be used in binding. That Command must be triggered when use tapped in the custom tab header.
@@ -86,7 +86,7 @@ Following parameters can be used in DataTemplate for binding:
 
 | Light - Mobile | Dark - Desktop |
 | --- | --- |
-| ![MAUI TabView](images/tabview-simple-custom-light-android.gif) | ![MAUI TabView](images/tabview-simple-custom-dark-windows.gif)  |
+| ![MAUI TabView](../../../../images/tabview-simple-custom-light-android.gif) | ![MAUI TabView](../../../../images/tabview-simple-custom-dark-windows.gif)  |
 
 
 Also, tabs can be customized using [Triggers](https://docs.microsoft.com/en-us/dotnet/maui/fundamentals/triggers) according to the state of tab. `DataTrigger` can be used for styling tab item according to the state of tab. `IsSelected` property of `TabItem` can be used in DataTrigger.
@@ -135,7 +135,7 @@ Also, tabs can be customized using [Triggers](https://docs.microsoft.com/en-us/d
 
 | Light - Mobile | Dark - Desktop |
 | --- | --- |
-| ![MAUI TabView](images/tabview-custom-template-light-android.gif) | ![MAUI TabView](images/tabview-custom-template-dark-windows.gif)  |
+| ![MAUI TabView](../../../../images/tabview-custom-template-light-android.gif) | ![MAUI TabView](../../../../images/tabview-custom-template-dark-windows.gif)  |
 
 
 ---
@@ -187,7 +187,7 @@ Even you can define DataTemplate tab by tab separetely.
 
 | Light - Mobile | Dark - Desktop |
 | --- | --- |
-| ![MAUI TabView](images/tabview-custom-item-template-light-android.gif) | ![MAUI TabView](images/tabview-custom-item-template-dark-windows.gif)  |
+| ![MAUI TabView](../../../../images/tabview-custom-item-template-light-android.gif) | ![MAUI TabView](../../../../images/tabview-custom-item-template-dark-windows.gif)  |
 
 ### Dynamic Tabs
 TabView supports dynamic tabs. You can add/remove tabs dynamically from a source. `ItemsSource` and `Itemtemplate` properties can be used for this purpose.
@@ -246,7 +246,7 @@ public class WebTabItem : UraniumBindableObject
 }
 ```
 
-![](images/tabview-dynamictabs-simple-windows-dark.gif)
+![](../../../../images/tabview-dynamictabs-simple-windows-dark.gif)
 
 ## Caching options
 TabView has three caching options. `CacheOnCodeBehind`, `CacheOnLayout` and `RecreateAlways` You can choose the best option for your scenario.
@@ -277,4 +277,4 @@ You can customize the `TabView` by using the style properties. You can use the f
 </Style>
 ```
 
-![MAUI TabView Customization](images/tabview-customizations-dark-windows.png)
+![MAUI TabView Customization](../../../../images/tabview-customizations-dark-windows.png)

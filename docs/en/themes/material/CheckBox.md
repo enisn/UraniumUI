@@ -38,4 +38,4 @@ And result will be like this:
 
 | Dark - Desktop | Light - Mobile |
 | --- | --- |
-| ![MAUI Material Design CheckBox](images/checkbox-demo-dark.gif) | ![MAUI Material Design CheckBox](images/checkbox-demo-light.gif)  |
+| ![MAUI Material Design CheckBox](../../images/checkbox-demo-dark.gif) | ![MAUI Material Design CheckBox](../../images/checkbox-demo-light.gif)  |

@@ -1,6 +1,8 @@
 ﻿#if ANDROID
 using Android.Views;
+using Android.Widget;
 using Google.Android.Material.Button;
+using Java.Interop;
 using Microsoft.Maui.Handlers;
 using UraniumUI.Controls;
 
@@ -16,7 +18,6 @@ public partial class DropdownHandler : ButtonHandler
     {
         var button = base.CreatePlatformView();
         button.Text = VirtualViewDropdown?.SelectedItem?.ToString();
-        button.Click += Button_Click;
         return button;
     }
 
@@ -24,17 +25,44 @@ public partial class DropdownHandler : ButtonHandler
     {
         var activity = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity;
 
-        var popupMenu = new Android.Widget.PopupMenu(activity, PlatformView, GravityFlags.Top);
+        var popupMenu = new Android.Widget.PopupMenu(activity, PlatformView, GravityFlags.Center);
 
         if (VirtualViewDropdown.ItemsSource is not null)
         {
             foreach (var item in VirtualViewDropdown.ItemsSource)
             {
-                popupMenu.Menu.Add(new Java.Lang.String(item.ToString()));
+                var menuItem = popupMenu.Menu.Add(new Java.Lang.String(item.ToString()));
+
+                menuItem.SetOnMenuItemClickListener(new MenuItemOnMenuItemClickListener((menuitem) =>
+                {
+                    VirtualViewDropdown.SelectedItem = item;
+                }));
             }
         }
 
         popupMenu.Show();
+    }
+
+    class MenuItemOnMenuItemClickListener : Java.Lang.Object, IMenuItemOnMenuItemClickListener
+    {
+        private Action<IMenuItem> _onMenuItemClick;
+
+        public MenuItemOnMenuItemClickListener(Action<IMenuItem> onMenuItemClick)
+        {
+            _onMenuItemClick = onMenuItemClick;
+        }
+
+        public bool OnMenuItemClick(IMenuItem item)
+        {
+            _onMenuItemClick?.Invoke(item);
+            return true;
+        }
+    }
+
+    protected override void ConnectHandler(MaterialButton platformView)
+    {
+        base.ConnectHandler(platformView);
+        platformView.Click += Button_Click;
     }
 
     protected override void DisconnectHandler(MaterialButton platformView)

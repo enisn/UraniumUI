@@ -114,6 +114,10 @@
         <ShellContent ContentTemplate="{DataTemplate inputFields:PickerFieldPage}" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Arrow_circle_down}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}"/>
     </FlyoutItem>
 
+    <FlyoutItem Title="DropdownField" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Dropdown}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
+        <ShellContent ContentTemplate="{DataTemplate pages:DropdownFieldPage}" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Dropdown}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}"/>
+    </FlyoutItem>
+
     <FlyoutItem Title="MultiplePickerField" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Arrow_circle_down}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
         <ShellContent ContentTemplate="{DataTemplate inputFields:MultiplePickerFieldPage}" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Grid_view}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}"/>
     </FlyoutItem>

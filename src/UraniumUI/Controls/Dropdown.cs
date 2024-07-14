@@ -50,12 +50,6 @@ public class Dropdown : Button, IDropdown
         {
             newObservable.CollectionChanged += ItemsSource_CollectionChanged;
         }
-
-        if (SelectedItem is null && ItemsSource.Count > 0)
-        {
-            SelectedItem = ItemsSource[0];
-            Text = SelectedItem.ToString();
-        }
     }
 
     private void ItemsSource_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)

@@ -20,15 +20,20 @@ public partial class DropdownHandler : ButtonHandler
 
         SetItemsSource(VirtualViewDropdown, button);
 
-        button.SetTitleColor(UIKit.UIColor.Label, UIControlState.Normal);
-
         button.ShowsMenuAsPrimaryAction = true;
         if (UIDevice.CurrentDevice.CheckSystemVersion(15, 0))
         {
             button.ChangesSelectionAsPrimaryAction = true;
         }
 
+
         return button;
+    }
+
+    protected override void ConnectHandler(UIButton platformView)
+    {
+        base.ConnectHandler(platformView);
+        ArrangeText();
     }
 
     private static void SetItemsSource(Dropdown dropdown, UIKit.UIButton button)
@@ -82,11 +87,16 @@ public partial class DropdownHandler : ButtonHandler
 
     public static void MapSelectedItem(DropdownHandler handler, Dropdown dropdown)
     {
-        var selectedIndex = dropdown.ItemsSource.IndexOf(dropdown.SelectedItem);
+       handler.ArrangeText();
+    }
 
-        for (int i = 0; i < handler.PlatformView.Menu.Children.Length; i++)
+    internal void ArrangeText()
+    {
+        var selectedIndex = VirtualViewDropdown.ItemsSource?.IndexOf(VirtualViewDropdown.SelectedItem) ?? -1;
+
+        for (int i = 0; i < PlatformView.Menu.Children.Length; i++)
         {
-            var menuItem = handler.PlatformView.Menu.Children[i];
+            var menuItem = PlatformView.Menu.Children[i];
 
             if (menuItem is UIAction action)
             {
@@ -94,15 +104,15 @@ public partial class DropdownHandler : ButtonHandler
             }
         }
 
-        if (dropdown.SelectedItem is null)
+        if (VirtualViewDropdown.SelectedItem is null)
         {
-            handler.PlatformView.SetTitle(dropdown.Placeholder, UIControlState.Normal);
-            handler.PlatformView.SetTitleColor(dropdown.PlaceholderColor.ToPlatform(), UIControlState.Normal);
+            VirtualViewDropdown.Text = VirtualViewDropdown.Placeholder;
+            PlatformView.SetTitleColor(VirtualViewDropdown.PlaceholderColor.ToPlatform(), UIControlState.Normal);
         }
         else
         {
-            handler.PlatformView.SetTitle(dropdown.SelectedItem?.ToString(), UIControlState.Normal);
-            handler.PlatformView.SetTitleColor(dropdown.TextColor?.ToPlatform() ?? Colors.Black.ToPlatform(), UIControlState.Normal);
+            VirtualViewDropdown.Text = VirtualViewDropdown.SelectedItem?.ToString();
+            PlatformView.SetTitleColor(VirtualViewDropdown.TextColor?.ToPlatform() ?? Colors.Black.ToPlatform(), UIControlState.Normal);
         }
     }
 
@@ -131,6 +141,11 @@ public partial class DropdownHandler : ButtonHandler
             TextAlignment.End => UIControlContentHorizontalAlignment.Right,
             _ => UIControlContentHorizontalAlignment.Left
         };
+    }
+
+    public static void MapTextColor(DropdownHandler handler, Dropdown dropdown)
+    {
+        handler.ArrangeText();
     }
 }
 #endif

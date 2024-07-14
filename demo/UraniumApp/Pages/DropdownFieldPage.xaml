@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:UraniumApp"
+             xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             x:Class="UraniumApp.Pages.DropdownFieldPage"
+             Title="DropdownFieldPage">
+
+    <ContentPage.Resources>
+        <x:String x:Key="DocLink">https://enisn-projects.io/docs/en/uranium/2.9/infrastructure/Dropdown</x:String>
+        <x:String x:Key="SourceLink">https://github.com/enisn/UraniumUI/blob/develop/demo/UraniumApp/Pages/DropdownFieldPage.xaml</x:String>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="*">
+        <material:TabView TabPlacement="Top">
+            <material:TabItem Title="DropdownField">
+
+                <ScrollView>
+                    <VerticalStackLayout Padding="20">
+                        <Label Text="DropdownField" FontSize="Title" />
+                        <Label Text="UraniumUI.Material.Controls" FontSize="Micro" Opacity=".6" />
+
+                        <HorizontalStackLayout Padding="0,20">
+                            <Button Text="Documentation" Command="{x:Static uranium:Commands.OpenLinkCommand}" CommandParameter="{StaticResource DocLink}" StyleClass="OutlinedButton" ImageSource="{FontImageSource Glyph={x:Static uranium:MaterialSharp.File_open}, FontFamily=MaterialSharp, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
+                            <Button Text="Source" StyleClass="OutlinedButton" Command="{x:Static uranium:Commands.OpenLinkCommand}" CommandParameter="{StaticResource SourceLink}" ImageSource="{FontImageSource Glyph={x:Static uranium:MaterialSharp.Code}, FontFamily=MaterialSharp, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
+                        </HorizontalStackLayout>
+
+                        <StackLayout HorizontalOptions="Start">
+
+                            <material:DropdownField Title="Choose" AllowClear="True" StyleClass="ControlPreview">
+                                <material:DropdownField.ItemsSource>
+                                    <x:Array Type="{x:Type x:String}">
+                                        <x:String>Option 1</x:String>
+                                        <x:String>Option 2</x:String>
+                                        <x:String>Option 3</x:String>
+                                    </x:Array>
+                                </material:DropdownField.ItemsSource>
+                            </material:DropdownField>
+                        </StackLayout>
+
+                        <BoxView StyleClass="Divider"/>
+
+                        <!--<local:ViewShowcaseView>
+
+                            <material:DropdownField x:Name="demoDropdownField" />
+
+                            <local:ViewShowcaseView.SidePanel>
+                                <VerticalStackLayout>
+                                    <local:PropertyEditorView 
+                                        MaximumHeightRequest="600"
+                                        HierarchyLimitType="{Type material:InputField}"
+                                        Hierarchical="True"
+                                        Value="{x:Reference demoDropdownField}"
+                                        />
+                                </VerticalStackLayout>
+                            </local:ViewShowcaseView.SidePanel>
+
+                        </local:ViewShowcaseView>-->
+
+
+                    </VerticalStackLayout>
+                </ScrollView>
+
+            </material:TabItem>
+            <material:TabItem Title="Dropdown">
+                <VerticalStackLayout Padding="20">
+                    <Label Text="Dropdown" FontSize="Title" />
+                    <Label Text="UraniumUI.Controls" FontSize="Micro" Opacity=".6" />
+
+                    <VerticalStackLayout StyleClass="ControlPreview" HorizontalOptions="Center" Spacing="32">
+
+                        <uranium:Dropdown Placeholder="Choose" x:Name="dropdown">
+                            <uranium:Dropdown.ItemsSource>
+                                <x:Array Type="{x:Type x:String}">
+                                    <x:String>Item 1</x:String>
+                                    <x:String>Item 2</x:String>
+                                    <x:String>Item 3</x:String>
+                                </x:Array>
+                            </uranium:Dropdown.ItemsSource>
+                        </uranium:Dropdown>
+
+                        <Button StyleClass="TextButton" Text="Clear" Clicked="Button_Clicked" />
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </material:TabItem>
+        </material:TabView>
+
+    </Grid>
+</ContentPage>

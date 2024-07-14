@@ -1,6 +1,7 @@
 ﻿#if WINDOWS
 using Microsoft.Maui.Handlers;
 using Microsoft.Maui.Platform;
+using Microsoft.UI.Xaml.Controls;
 using UraniumUI.Controls;
 
 namespace UraniumUI.Handlers;
@@ -14,12 +15,20 @@ public partial class DropdownHandler : ButtonHandler
     protected override Microsoft.UI.Xaml.Controls.DropDownButton CreatePlatformView()
     {
         var dropdownButton = new Microsoft.UI.Xaml.Controls.DropDownButton();
+        dropdownButton.HorizontalAlignment = Microsoft.UI.Xaml.HorizontalAlignment.Stretch;
         dropdownButton.BorderThickness = new Microsoft.UI.Xaml.Thickness(0);
         dropdownButton.Background = new Microsoft.UI.Xaml.Media.SolidColorBrush(Microsoft.UI.Colors.Transparent);
         dropdownButton.Foreground = new Microsoft.UI.Xaml.Media.SolidColorBrush(Microsoft.UI.Colors.Red);
 
         SetItemSource(VirtualViewDropdown, dropdownButton);
+
         return dropdownButton;
+    }
+
+    protected override void ConnectHandler(Microsoft.UI.Xaml.Controls.Button platformView)
+    {
+        base.ConnectHandler(platformView);
+        ArrangeText();
     }
 
     private static void SetItemSource(Dropdown dropdown, Microsoft.UI.Xaml.Controls.DropDownButton dropdownButton)
@@ -27,7 +36,7 @@ public partial class DropdownHandler : ButtonHandler
         if (dropdown.ItemsSource is not null)
         {
             var flyout = new Microsoft.UI.Xaml.Controls.MenuFlyout();
-            flyout.Placement = Microsoft.UI.Xaml.Controls.Primitives.FlyoutPlacementMode.Bottom;
+            flyout.Placement = GetPlacement(dropdown.HorizontalTextAlignment);
             flyout.Items.Clear();
 
             // TODO: For customization. (only possible on windows :( )
@@ -57,7 +66,7 @@ public partial class DropdownHandler : ButtonHandler
                                 flyout.Items.Add(new Microsoft.UI.Xaml.Controls.MenuFlyoutItem() { Text = item.ToString(), Command = new Command(() => dropdown.SelectedItem = item) });
                             }
                         }
-                       break;
+                        break;
                     case System.Collections.Specialized.NotifyCollectionChangedAction.Remove:
                         {
                             foreach (var item in e.OldItems)
@@ -75,6 +84,17 @@ public partial class DropdownHandler : ButtonHandler
         }
     }
 
+    protected static Microsoft.UI.Xaml.Controls.Primitives.FlyoutPlacementMode GetPlacement(Microsoft.Maui.TextAlignment alignment)
+    {
+        return alignment switch
+        {
+            Microsoft.Maui.TextAlignment.Start => Microsoft.UI.Xaml.Controls.Primitives.FlyoutPlacementMode.BottomEdgeAlignedLeft,
+            Microsoft.Maui.TextAlignment.Center => Microsoft.UI.Xaml.Controls.Primitives.FlyoutPlacementMode.Bottom,
+            Microsoft.Maui.TextAlignment.End => Microsoft.UI.Xaml.Controls.Primitives.FlyoutPlacementMode.BottomEdgeAlignedRight,
+            _ => Microsoft.UI.Xaml.Controls.Primitives.FlyoutPlacementMode.BottomEdgeAlignedLeft
+        };
+    }
+
     public static void MapItemsSource(DropdownHandler handler, Dropdown dropdown)
     {
         SetItemSource(dropdown, handler.PlatformView as Microsoft.UI.Xaml.Controls.DropDownButton);
@@ -87,15 +107,20 @@ public partial class DropdownHandler : ButtonHandler
             return;
         }
 
-        if (dropdown.SelectedItem is null)
+        handler.ArrangeText();
+    }
+
+    protected void ArrangeText()
+    {
+        if (VirtualViewDropdown.SelectedItem is null)
         {
-            dropdownButton.Content = dropdown.Placeholder;
-            dropdownButton.Foreground = dropdown.PlaceholderColor.ToPlatform();
+            PlatformView.Content = VirtualViewDropdown.Placeholder;
+            PlatformView.Foreground = VirtualViewDropdown.PlaceholderColor.ToPlatform();
         }
         else
         {
-            dropdownButton.Content = dropdown.SelectedItem.ToString();
-            dropdownButton.Foreground = dropdown.TextColor?.ToPlatform() ?? Colors.Black.ToPlatform();
+            PlatformView.Content = VirtualViewDropdown.SelectedItem.ToString();
+            PlatformView.Foreground = VirtualViewDropdown.TextColor?.ToPlatform() ?? Colors.Black.ToPlatform();
         }
     }
 
@@ -133,6 +158,16 @@ public partial class DropdownHandler : ButtonHandler
         }
 
         dropdownButton.HorizontalContentAlignment = dropdown.HorizontalTextAlignment.ToPlatformHorizontalAlignment();
+
+        if (dropdownButton.Flyout is Microsoft.UI.Xaml.Controls.MenuFlyout flyout)
+        {
+            flyout.Placement = GetPlacement(dropdown.HorizontalTextAlignment);
+        }
+    }
+
+    public static void MapTextColor(DropdownHandler handler, Dropdown dropdown)
+    {
+        handler.ArrangeText();
     }
 }
 #endif

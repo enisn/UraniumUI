@@ -12,7 +12,8 @@ public partial class DropdownHandler
             [nameof(Dropdown.SelectedItem)] = MapSelectedItem,
             [nameof(Dropdown.Placeholder)] = MapPlaceholder,
             [nameof(Dropdown.PlaceholderColor)] = MapPlaceholderColor,
-            [nameof(Dropdown.HorizontalTextAlignment)] = MapHorizontalTextAlignment
+            [nameof(Dropdown.HorizontalTextAlignment)] = MapHorizontalTextAlignment,
+            [nameof(Dropdown.TextColor)] = MapTextColor
         };
 
     public DropdownHandler() : base(DropdownPropertyMapper)
@@ -54,6 +55,11 @@ public partial class DropdownHandler : ViewHandler<Dropdown, object>
     }
 
     public static void MapHorizontalTextAlignment(DropdownHandler handler, Dropdown dropdown)
+    {
+
+    }
+
+    public static void MapTextColor(DropdownHandler handler, Dropdown dropdown)
     {
 
     }

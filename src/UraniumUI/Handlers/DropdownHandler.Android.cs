@@ -19,7 +19,6 @@ public partial class DropdownHandler : ButtonHandler
         var button = base.CreatePlatformView();
         button.Text = VirtualViewDropdown?.SelectedItem?.ToString();
 
-        button.TextAlignment = Android.Views.TextAlignment.TextStart;
         return button;
     }
 
@@ -59,6 +58,7 @@ public partial class DropdownHandler : ButtonHandler
     protected override void ConnectHandler(MaterialButton platformView)
     {
         base.ConnectHandler(platformView);
+        ArrangeText();
         platformView.Click += Button_Click;
     }
 
@@ -75,15 +75,20 @@ public partial class DropdownHandler : ButtonHandler
 
     public static void MapSelectedItem(DropdownHandler handler, Dropdown dropdown)
     {
-        if (dropdown.SelectedItem is null)
+        handler.ArrangeText();
+    }
+
+    protected void ArrangeText()
+    {
+        if (VirtualViewDropdown.SelectedItem is null)
         {
-            handler.PlatformView.Text = dropdown.Placeholder;
-            handler.PlatformView.SetTextColor(dropdown.PlaceholderColor.ToPlatform());
+            VirtualViewDropdown.Text = VirtualViewDropdown.Placeholder;
+            PlatformView.SetTextColor(VirtualViewDropdown.PlaceholderColor.ToPlatform());
         }
         else
         {
-            handler.PlatformView.Text = dropdown.SelectedItem?.ToString();
-            handler.PlatformView.SetTextColor(dropdown.TextColor?.ToPlatform() ?? Colors.Black.ToPlatform());
+            VirtualViewDropdown.Text = VirtualViewDropdown.SelectedItem?.ToString();
+            PlatformView.SetTextColor(VirtualViewDropdown.TextColor?.ToPlatform() ?? Colors.Black.ToPlatform());
         }
     }
 
@@ -91,7 +96,7 @@ public partial class DropdownHandler : ButtonHandler
     {
         if (dropdown.SelectedItem is null)
         {
-            handler.PlatformView.Text = dropdown.Placeholder;
+            dropdown.Text = dropdown.Placeholder;
         }
     }
 
@@ -112,6 +117,11 @@ public partial class DropdownHandler : ButtonHandler
             Microsoft.Maui.TextAlignment.End => Android.Views.TextAlignment.TextEnd,
             _ => Android.Views.TextAlignment.TextStart
         };
+    }
+
+    public static void MapTextColor(DropdownHandler handler, Dropdown dropdown)
+    {
+        handler.ArrangeText();
     }
 }
 #endif

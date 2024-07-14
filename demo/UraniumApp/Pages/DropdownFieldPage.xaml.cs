@@ -6,4 +6,9 @@ public partial class DropdownFieldPage : ContentPage
 	{
 		InitializeComponent();
 	}
+
+    private void Button_Clicked(object sender, EventArgs e)
+    {
+        dropdown.SelectedItem = null;
+    }
 }

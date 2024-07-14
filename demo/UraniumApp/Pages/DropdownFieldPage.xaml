@@ -8,8 +8,8 @@
              Title="DropdownFieldPage">
 
     <ContentPage.Resources>
-        <x:String x:Key="DocLink">https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/TextField</x:String>
-        <x:String x:Key="SourceLink">https://github.com/enisn/UraniumUI/blob/develop/demo/UraniumApp/Pages/InputFields/TextFieldPage.xaml</x:String>
+        <x:String x:Key="DocLink">https://enisn-projects.io/docs/en/uranium/2.9/infrastructure/Dropdown</x:String>
+        <x:String x:Key="SourceLink">https://github.com/enisn/UraniumUI/blob/develop/demo/UraniumApp/Pages/DropdownFieldPage.xaml</x:String>
     </ContentPage.Resources>
 
     <Grid RowDefinitions="*">
@@ -17,7 +17,6 @@
             <material:TabItem Title="DropdownField">
 
                 <ScrollView>
-
                     <VerticalStackLayout Padding="20">
                         <Label Text="DropdownField" FontSize="Title" />
                         <Label Text="UraniumUI.Material.Controls" FontSize="Micro" Opacity=".6" />
@@ -40,7 +39,7 @@
                             </material:DropdownField>
                         </StackLayout>
 
-                        <!--<BoxView StyleClass="Divider"/>-->
+                        <BoxView StyleClass="Divider"/>
 
                         <!--<local:ViewShowcaseView>
 
@@ -69,15 +68,20 @@
                     <Label Text="Dropdown" FontSize="Title" />
                     <Label Text="UraniumUI.Controls" FontSize="Micro" Opacity=".6" />
 
-                    <uranium:Dropdown Placeholder="Choose" HorizontalOptions="Center" StyleClass="ControlPreview">
-                        <uranium:Dropdown.ItemsSource>
-                            <x:Array Type="{x:Type x:String}">
-                                <x:String>Item 1</x:String>
-                                <x:String>Item 2</x:String>
-                                <x:String>Item 3</x:String>
-                            </x:Array>
-                        </uranium:Dropdown.ItemsSource>
-                    </uranium:Dropdown>
+                    <VerticalStackLayout StyleClass="ControlPreview" HorizontalOptions="Center" Spacing="32">
+
+                        <uranium:Dropdown Placeholder="Choose" x:Name="dropdown">
+                            <uranium:Dropdown.ItemsSource>
+                                <x:Array Type="{x:Type x:String}">
+                                    <x:String>Item 1</x:String>
+                                    <x:String>Item 2</x:String>
+                                    <x:String>Item 3</x:String>
+                                </x:Array>
+                            </uranium:Dropdown.ItemsSource>
+                        </uranium:Dropdown>
+
+                        <Button StyleClass="TextButton" Text="Clear" Clicked="Button_Clicked" />
+                    </VerticalStackLayout>
                 </VerticalStackLayout>
             </material:TabItem>
         </material:TabView>

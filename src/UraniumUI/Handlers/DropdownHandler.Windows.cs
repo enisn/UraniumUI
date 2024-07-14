@@ -28,7 +28,7 @@ public partial class DropdownHandler : ButtonHandler
     protected override void ConnectHandler(Microsoft.UI.Xaml.Controls.Button platformView)
     {
         base.ConnectHandler(platformView);
-        ArrangeSelectedItem();
+        ArrangeText();
     }
 
     private static void SetItemSource(Dropdown dropdown, Microsoft.UI.Xaml.Controls.DropDownButton dropdownButton)
@@ -107,10 +107,10 @@ public partial class DropdownHandler : ButtonHandler
             return;
         }
 
-        handler.ArrangeSelectedItem();
+        handler.ArrangeText();
     }
 
-    protected void ArrangeSelectedItem()
+    protected void ArrangeText()
     {
         if (VirtualViewDropdown.SelectedItem is null)
         {
@@ -163,6 +163,11 @@ public partial class DropdownHandler : ButtonHandler
         {
             flyout.Placement = GetPlacement(dropdown.HorizontalTextAlignment);
         }
+    }
+
+    public static void MapTextColor(DropdownHandler handler, Dropdown dropdown)
+    {
+        handler.ArrangeText();
     }
 }
 #endif

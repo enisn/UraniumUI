@@ -58,7 +58,7 @@ public partial class DropdownHandler : ButtonHandler
     protected override void ConnectHandler(MaterialButton platformView)
     {
         base.ConnectHandler(platformView);
-        ArrangeSelectedItem();
+        ArrangeText();
         platformView.Click += Button_Click;
     }
 
@@ -75,19 +75,19 @@ public partial class DropdownHandler : ButtonHandler
 
     public static void MapSelectedItem(DropdownHandler handler, Dropdown dropdown)
     {
-        handler.ArrangeSelectedItem();
+        handler.ArrangeText();
     }
 
-    protected void ArrangeSelectedItem()
+    protected void ArrangeText()
     {
         if (VirtualViewDropdown.SelectedItem is null)
         {
-            PlatformView.Text = VirtualViewDropdown.Placeholder;
+            VirtualViewDropdown.Text = VirtualViewDropdown.Placeholder;
             PlatformView.SetTextColor(VirtualViewDropdown.PlaceholderColor.ToPlatform());
         }
         else
         {
-            PlatformView.Text = VirtualViewDropdown.SelectedItem?.ToString();
+            VirtualViewDropdown.Text = VirtualViewDropdown.SelectedItem?.ToString();
             PlatformView.SetTextColor(VirtualViewDropdown.TextColor?.ToPlatform() ?? Colors.Black.ToPlatform());
         }
     }
@@ -96,7 +96,7 @@ public partial class DropdownHandler : ButtonHandler
     {
         if (dropdown.SelectedItem is null)
         {
-            handler.PlatformView.Text = dropdown.Placeholder;
+            dropdown.Text = dropdown.Placeholder;
         }
     }
 
@@ -117,6 +117,11 @@ public partial class DropdownHandler : ButtonHandler
             Microsoft.Maui.TextAlignment.End => Android.Views.TextAlignment.TextEnd,
             _ => Android.Views.TextAlignment.TextStart
         };
+    }
+
+    public static void MapTextColor(DropdownHandler handler, Dropdown dropdown)
+    {
+        handler.ArrangeText();
     }
 }
 #endif

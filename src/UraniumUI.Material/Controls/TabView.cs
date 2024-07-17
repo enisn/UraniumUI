@@ -291,11 +291,10 @@ public partial class TabView : Grid
         }
     }
 
-    protected virtual void Render()
+    internal virtual void Render()
     {
         if (Items?.Count > 0 || ItemsSource?.Count > 0)
         {
-            _headerContainer.Children.Clear();
             RenderHeaders();
 
             if (SelectedTab is null)
@@ -305,13 +304,13 @@ public partial class TabView : Grid
         }
     }
 
-    protected virtual void RenderHeaders()
+    internal virtual void RenderHeaders()
     {
+        _headerContainer.Children.Clear();
         foreach (var item in Items)
         {
             AddHeaderFor(item);
         }
-
 
         if (ItemsSource is not null)
         {
@@ -322,9 +321,29 @@ public partial class TabView : Grid
         }
     }
 
+    internal virtual void InvalidateTabItemContents()
+    {
+        foreach (var tabItem in this.Items)
+        {
+            tabItem.Content = null;
+            tabItem.Header = null;
+        }
+
+        ResetSelectedTab();
+    }
+
     protected void ResetSelectedTab()
     {
-        SelectedTab = Items.FirstOrDefault();
+        if (SelectedTab is null)
+        {
+            SelectedTab = Items.FirstOrDefault();
+        }
+        else
+        {
+            // Send previous selected tab to null, to force re-rendering.
+            // TODO: Create an API to force re-rendering for header, content or both.
+            OnSelectedTabChanged(null, SelectedTab).FireAndForget();
+        }
     }
 
     protected virtual void AddHeaderFor(TabItem tabItem)
@@ -333,6 +352,7 @@ public partial class TabView : Grid
         tabItem.Header =
             tabItem.HeaderTemplate?.CreateContent() as View
             ?? TabHeaderItemTemplate?.CreateContent() as View
+            //?? DefaultTabHeaderItemTemplate.CreateContent() as View
             ?? throw new InvalidOperationException("TabView requires a HeaderTemplate or TabHeaderItemTemplate to be set.");
 
         tabItem.Header.BindingContext = tabItem;

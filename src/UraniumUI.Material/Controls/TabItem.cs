@@ -11,11 +11,18 @@ public class TabItem : UraniumBindableObject
 
     public DataTemplate HeaderTemplate { get => (DataTemplate)GetValue(HeaderTemplateProperty); set => SetValue(HeaderTemplateProperty, value); }
 
-    public static readonly BindableProperty HeaderTemplateProperty = BindableProperty.Create(nameof(HeaderTemplate), typeof(DataTemplate), typeof(TabItem), defaultBindingMode: BindingMode.TwoWay);
+    public static readonly BindableProperty HeaderTemplateProperty = 
+        BindableProperty.Create(
+            nameof(HeaderTemplate),typeof(DataTemplate), typeof(TabItem), 
+            defaultBindingMode: BindingMode.TwoWay, 
+            propertyChanged: (bindable, oldValue, newValue) => (bindable as TabItem).TabView.RenderHeaders());
 
     public DataTemplate ContentTemplate { get => (DataTemplate)GetValue(ContentTemplateProperty); set => SetValue(ContentTemplateProperty, value); }
 
-    public static readonly BindableProperty ContentTemplateProperty = BindableProperty.Create(nameof(ContentTemplate), typeof(DataTemplate), typeof(TabItem), defaultBindingMode: BindingMode.TwoWay);
+    public static readonly BindableProperty ContentTemplateProperty = BindableProperty.Create(
+        nameof(ContentTemplate), typeof(DataTemplate), typeof(TabItem),
+        defaultBindingMode: BindingMode.TwoWay,
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as TabItem).TabView.Render());
 
     public View Content { get; set; }
     public View Header { get; set; }

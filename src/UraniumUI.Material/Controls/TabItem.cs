@@ -22,7 +22,7 @@ public class TabItem : UraniumBindableObject
     public static readonly BindableProperty ContentTemplateProperty = BindableProperty.Create(
         nameof(ContentTemplate), typeof(DataTemplate), typeof(TabItem),
         defaultBindingMode: BindingMode.TwoWay,
-        propertyChanged: (bindable, oldValue, newValue) => (bindable as TabItem).TabView.Render());
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as TabItem).TabView.InvalidateTabItemContents());
 
     public View Content { get; set; }
     public View Header { get; set; }

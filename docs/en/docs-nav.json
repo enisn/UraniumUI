@@ -5,7 +5,7 @@
       "path": "Getting-Started.md"
     },
     {
-      "text": "Core",
+      "text": "Fundamentals",
       "items": [
         {
           "text": "Uranium Content Page",
@@ -242,6 +242,10 @@
           "path": "migration-guides/Migrating-To-2.7.md"
         }
       ]
+    },
+    {
+        "text": "API Reference",
+        "path": "https://uraniumui.gh.enisn-projects.io/api/UraniumUI.html"
     },
     {
         "text": "Support",

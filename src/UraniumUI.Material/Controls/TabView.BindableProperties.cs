@@ -18,7 +18,8 @@ public partial class TabView
     public DataTemplate TabHeaderItemTemplate { get => (DataTemplate)GetValue(TabHeaderItemTemplateProperty); set => SetValue(TabHeaderItemTemplateProperty, value); }
 
     public static readonly BindableProperty TabHeaderItemTemplateProperty =
-        BindableProperty.Create(nameof(TabHeaderItemTemplate), typeof(DataTemplate), typeof(TabView), defaultValue: TabView.DefaultTabHeaderItemTemplate,
+        BindableProperty.Create(nameof(TabHeaderItemTemplate), typeof(DataTemplate), typeof(TabView),
+            defaultValueCreator: (bindable) => TabView.DefaultTabHeaderItemTemplate,
             propertyChanged: (bo, ov, nv) => (bo as TabView).RenderHeaders());
 
     [TypeConverter(typeof(GridLengthTypeConverter))]

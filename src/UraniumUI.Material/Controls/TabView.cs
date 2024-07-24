@@ -43,13 +43,13 @@ public partial class TabView : Grid
             {
                 new GenericTriggerAction<Grid>((sender) =>
                 {
-                    //sender.SetAppThemeColor(
-                    //            Grid.BackgroundColorProperty,
-                    //            ColorResource.GetColor("Primary").WithAlpha(.2f),
-                    //            ColorResource.GetColor("PrimaryDark").WithAlpha(.2f)
-                    //        );
+                    sender.SetAppThemeColor(
+                                Grid.BackgroundColorProperty,
+                                ColorResource.GetColor("Primary").WithAlpha(.2f),
+                                ColorResource.GetColor("PrimaryDark").WithAlpha(.2f)
+                            );
                     // TODO: Find a way to set app theme color repeatedly.
-                    sender.BackgroundColor = ColorResource.GetColor("Primary", "PrimaryDark").WithAlpha(.2f);
+                    //sender.BackgroundColor = ColorResource.GetColor("Primary", "PrimaryDark").WithAlpha(.2f);
 
                     var box = (sender.Children.FirstOrDefault(x => x is BoxView) as BoxView);
 
@@ -57,9 +57,9 @@ public partial class TabView : Grid
                     sender.FadeToSafely(1);
 
                     var button = sender.Children.FirstOrDefault(x=>x is Button) as Button;
-                    //button?.SetAppThemeColor(Button.TextColorProperty, ColorResource.GetColor("Primary"), ColorResource.GetColor("PrimaryDark"));
+                    button?.SetAppThemeColor(Button.TextColorProperty, ColorResource.GetColor("Primary"), ColorResource.GetColor("PrimaryDark"));
                     // TODO: Find a way to set app theme color repeatedly.
-                    button.TextColor = ColorResource.GetColor("Primary", "PrimaryDark");
+                    //button.TextColor = ColorResource.GetColor("Primary", "PrimaryDark");
                 })
             }
         });
@@ -80,9 +80,9 @@ public partial class TabView : Grid
                     sender.FadeToSafely(.5);
 
                     var button = sender.Children.FirstOrDefault(x=>x is Button) as Button;
-                    //button?.SetAppThemeColor(Button.TextColorProperty, ColorResource.GetColor("OnBackground"), ColorResource.GetColor("OnBackgroundDark"));
+                    button?.SetAppThemeColor(Button.TextColorProperty, ColorResource.GetColor("OnBackground"), ColorResource.GetColor("OnBackgroundDark"));
                     // TODO: Find a way to set app theme color repeatedly.
-                    button.TextColor = ColorResource.GetColor("OnBackground", "OnBackgroundDark");
+                    //button.TextColor = ColorResource.GetColor("OnBackground", "OnBackgroundDark");
                 })
             }
         });

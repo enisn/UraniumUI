@@ -48,8 +48,6 @@ public partial class TabView : Grid
                                 ColorResource.GetColor("Primary").WithAlpha(.2f),
                                 ColorResource.GetColor("PrimaryDark").WithAlpha(.2f)
                             );
-                    // TODO: Find a way to set app theme color repeatedly.
-                    //sender.BackgroundColor = ColorResource.GetColor("Primary", "PrimaryDark").WithAlpha(.2f);
 
                     var box = (sender.Children.FirstOrDefault(x => x is BoxView) as BoxView);
 
@@ -58,8 +56,6 @@ public partial class TabView : Grid
 
                     var button = sender.Children.FirstOrDefault(x=>x is Button) as Button;
                     button?.SetAppThemeColor(Button.TextColorProperty, ColorResource.GetColor("Primary"), ColorResource.GetColor("PrimaryDark"));
-                    // TODO: Find a way to set app theme color repeatedly.
-                    //button.TextColor = ColorResource.GetColor("Primary", "PrimaryDark");
                 })
             }
         });

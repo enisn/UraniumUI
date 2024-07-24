@@ -15,14 +15,14 @@ public class TabItem : UraniumBindableObject
         BindableProperty.Create(
             nameof(HeaderTemplate),typeof(DataTemplate), typeof(TabItem), 
             defaultBindingMode: BindingMode.TwoWay, 
-            propertyChanged: (bindable, oldValue, newValue) => (bindable as TabItem).TabView.RenderHeaders());
+            propertyChanged: (bindable, oldValue, newValue) => (bindable as TabItem).TabView?.RenderHeaders());
 
     public DataTemplate ContentTemplate { get => (DataTemplate)GetValue(ContentTemplateProperty); set => SetValue(ContentTemplateProperty, value); }
 
     public static readonly BindableProperty ContentTemplateProperty = BindableProperty.Create(
         nameof(ContentTemplate), typeof(DataTemplate), typeof(TabItem),
         defaultBindingMode: BindingMode.TwoWay,
-        propertyChanged: (bindable, oldValue, newValue) => (bindable as TabItem).TabView.InvalidateTabItemContents());
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as TabItem).TabView?.InvalidateTabItemContents());
 
     public View Content { get; set; }
     public View Header { get; set; }

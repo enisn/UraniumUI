@@ -104,20 +104,25 @@ public partial class TabView : Grid
     protected readonly Grid _headerContainer = new Grid
     {
         StyleClass = new[] { "TabView.Header" },
-        HorizontalOptions = LayoutOptions.Fill
     };
 
     protected readonly ContentView _contentContainer = new ContentView
     {
         StyleClass = new[] { "TabView.Content" },
-        HorizontalOptions = LayoutOptions.Fill,
-        VerticalOptions = LayoutOptions.Fill
+    };
+
+    protected readonly ScrollView _headerScrollView = new ScrollView
+    {
+        Orientation = ScrollOrientation.Horizontal,
     };
 
     public TabView()
     {
         Items = new ObservableCollection<TabItem>();
 
+        _headerScrollView.Content = _headerContainer;
+        this.Add(_headerScrollView);
+        this.Add(_contentContainer);
         InitializeLayout();
         if (Items is INotifyCollectionChanged observable)
         {
@@ -149,10 +154,17 @@ public partial class TabView : Grid
 
     protected virtual void InitializeLayout()
     {
-        this.Clear();
         this.ColumnDefinitions.Clear();
         this.RowDefinitions.Clear();
 
+        _headerScrollView.Orientation = AreTabsVertical ? ScrollOrientation.Vertical : ScrollOrientation.Horizontal;
+
+        AlignTabPlacement();
+        AlignHeaderGridItems();
+    }
+
+    protected virtual void AlignTabPlacement()
+    {
         switch (TabPlacement)
         {
             case TabViewTabPlacement.Top:
@@ -160,8 +172,11 @@ public partial class TabView : Grid
                     this.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
                     this.RowDefinitions.Add(new RowDefinition(GridLength.Star));
 
-                    this.Add(_headerContainer, row: 0);
-                    this.Add(_contentContainer, row: 1);
+                    Grid.SetRow(_headerScrollView, 0);
+                    Grid.SetColumn(_headerScrollView, 0);
+
+                    Grid.SetRow(_contentContainer, 1);
+                    Grid.SetColumn(_contentContainer, 0);
                 }
                 break;
             case TabViewTabPlacement.Bottom:
@@ -169,8 +184,12 @@ public partial class TabView : Grid
                     this.RowDefinitions.Add(new RowDefinition(GridLength.Star));
                     this.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
 
-                    this.Add(_headerContainer, row: 1);
-                    this.Add(_contentContainer, row: 0);
+
+                    Grid.SetRow(_headerScrollView, 1);
+                    Grid.SetColumn(_headerScrollView, 0);
+
+                    Grid.SetRow(_contentContainer, 0);
+                    Grid.SetColumn(_contentContainer, 0);
                 }
                 break;
             case TabViewTabPlacement.Start:
@@ -178,8 +197,12 @@ public partial class TabView : Grid
                     this.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Auto));
                     this.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Star));
 
-                    this.Add(_headerContainer, column: 0);
-                    this.Add(_contentContainer, column: 1);
+
+                    Grid.SetRow(_headerScrollView, 0);
+                    Grid.SetColumn(_headerScrollView, 0);
+
+                    Grid.SetRow(_contentContainer, 0);
+                    Grid.SetColumn(_contentContainer, 1);
                 }
                 break;
             case TabViewTabPlacement.End:
@@ -187,13 +210,14 @@ public partial class TabView : Grid
                     this.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Star));
                     this.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Auto));
 
-                    this.Add(_headerContainer, column: 1);
-                    this.Add(_contentContainer, column: 0);
+                    Grid.SetRow(_headerScrollView, 0);
+                    Grid.SetColumn(_headerScrollView, 1);
+
+                    Grid.SetRow(_contentContainer, 0);
+                    Grid.SetColumn(_contentContainer, 0);
                 }
                 break;
         }
-
-        AlignHeaderGridItems();
     }
 
     protected virtual void AlignHeaderGridItems()

@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
-             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialSymbols;assembly=UraniumUI.Icons.MaterialSymbols"
              xmlns:vm="clr-namespace:UraniumApp.ViewModels.InputFields"
              x:DataType="vm:TimePickerFieldViewModel"
              BindingContext="{uranium:Inject {Type vm:TimePickerFieldViewModel}}"
@@ -16,11 +16,12 @@
             <![CDATA[
  <material:TimePickerField 
     Title="Pick time"
-    Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Access_time}}"
+    Icon="{FontImageSource FontFamily=MaterialSharp, Glyph={x:Static m:MaterialSharp.Access_time}}"
     />
             ]]>
         </x:String>
         <x:String x:Key="DocLink">https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/TimePickerField</x:String>
+        <x:String x:Key="SourceLink">https://github.com/enisn/UraniumUI/blob/develop/demo/UraniumApp/Pages/InputFields/TimePickerFieldPage.xaml</x:String>
     </ContentPage.Resources>
 
     <ScrollView>
@@ -29,9 +30,9 @@
             <Label Text="UraniumUI.Material.Controls" FontSize="Micro" Opacity=".6" />
 
             <HorizontalStackLayout Padding="0,20">
-                <Button Text="Documentation" Command="{x:Static uranium:Commands.OpenLinkCommand}" CommandParameter="{StaticResource DocLink}" StyleClass="OutlinedButton" ImageSource="{FontImageSource Glyph={x:Static m:MaterialRegular.Insert_drive_file}, FontFamily=MaterialRegular, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
-                <Button Text="Source" StyleClass="OutlinedButton" IsEnabled="False" ImageSource="{FontImageSource Glyph={x:Static m:MaterialRegular.Code}, FontFamily=MaterialRegular, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
-                <Button Text="Reset" Clicked="Reset" StyleClass="OutlinedButton" ImageSource="{FontImageSource Glyph={x:Static m:MaterialRegular.Refresh}, FontFamily=MaterialRegular, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
+                <Button Text="Documentation" Command="{x:Static uranium:Commands.OpenLinkCommand}" CommandParameter="{StaticResource DocLink}" StyleClass="OutlinedButton" ImageSource="{FontImageSource Glyph={x:Static m:MaterialSharp.File_open}, FontFamily=MaterialSharp, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
+                <Button Text="Source" StyleClass="OutlinedButton" Command="{x:Static uranium:Commands.OpenLinkCommand}" CommandParameter="{StaticResource SourceLink}" ImageSource="{FontImageSource Glyph={x:Static m:MaterialSharp.Code}, FontFamily=MaterialSharp, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
+                <Button Text="Reset" Clicked="Reset" StyleClass="OutlinedButton" ImageSource="{FontImageSource Glyph={x:Static m:MaterialSharp.Refresh}, FontFamily=MaterialSharp, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
             </HorizontalStackLayout>
 
             <Label Text="TimePickerField is a control that allows users to select a time. It is a wrapper around the TimePicker control and makes it in line with the material design guidelines." />
@@ -42,7 +43,7 @@
                         <ContentView StyleClass="ControlPreview">
                             <material:TimePickerField 
                                 Title="Pick time"
-                                Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Access_time}}"
+                                Icon="{FontImageSource FontFamily=MaterialSharp, Glyph={x:Static m:MaterialSharp.Timer}}"
                                 />
                         </ContentView>
                         <uranium:ExpanderView>

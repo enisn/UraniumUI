@@ -5,7 +5,7 @@ using UraniumUI.Pages;
 namespace UraniumUI.Material.Attachments;
 
 [ContentProperty(nameof(Body))]
-public partial class BottomSheetView : Frame, IPageAttachment
+public partial class BottomSheetView : Border, IPageAttachment
 {
     public UraniumContentPage AttachedPage { get; protected set; }
     public AttachmentPosition AttachmentPosition => AttachmentPosition.Front;
@@ -31,7 +31,7 @@ public partial class BottomSheetView : Frame, IPageAttachment
     {
         Header ??= GenerateAnchor();
         Padding = 0;
-        this.CornerRadius = 10;
+        this.StyleClass = new[] { "BottomSheet" };
         this.VerticalOptions = LayoutOptions.End;
         this.HorizontalOptions = LayoutOptions.Fill;
         this.Content = new VerticalStackLayout()
@@ -135,7 +135,7 @@ public partial class BottomSheetView : Frame, IPageAttachment
 
         if (animate)
         {
-            this.TranslateTo(this.X, y, 50);
+            this.TranslateToSafely(this.X, y, 50);
 
         }
         else
@@ -152,7 +152,7 @@ public partial class BottomSheetView : Frame, IPageAttachment
         {
             AttachedPage.Body.InputTransparent = IsPresented;
 
-            AttachedPage.Body.FadeTo(IsPresented ? .5 : 1);
+            AttachedPage.Body.FadeToSafely(IsPresented ? .5 : 1);
         }
     }
 }

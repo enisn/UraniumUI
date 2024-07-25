@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             xmlns:local="clr-namespace:UraniumApp.Pages.DataGrids"
+             xmlns:plain="clr-namespace:Plainer.Maui.Controls;assembly=Plainer.Maui"
+             x:Class="UraniumApp.Pages.DataGrids.EditorDataGridPage"
+             Title="EditorDataGridPage">
+    <ContentPage.BindingContext>
+        <local:EditorDataGridPageViewModel />
+    </ContentPage.BindingContext>
+    <ScrollView>
+
+        <VerticalStackLayout>
+            <material:DataGrid ItemsSource="{Binding Items}" HorizontalOptions="Center">
+                <material:DataGrid.Columns>
+                    <material:DataGridColumn ValueBinding="{Binding Id}" Title="Id" />
+                    <material:DataGridColumn ValueBinding="{Binding Name}" Title="Name" />
+                    <material:DataGridColumn ValueBinding="{Binding Age}" Title="Age" />
+                </material:DataGrid.Columns>
+
+                <material:DataGrid.CellItemTemplate>
+                    <DataTemplate>
+                        <plain:EntryView Text="{material:DataGridValueBinding Mode=TwoWay}" BackgroundColor="Transparent"/>
+                    </DataTemplate>
+                </material:DataGrid.CellItemTemplate>
+            </material:DataGrid>
+
+            <BoxView StyleClass="Divider" />
+            <Label Text="Actual data in the ViewModel:" HorizontalOptions="Center" FontAttributes="Bold" FontSize="Title"/>
+            <VerticalStackLayout BindableLayout.ItemsSource="{Binding Items}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <HorizontalStackLayout Spacing="12" HorizontalOptions="Center">
+                            <Label Text="{Binding Id}" />
+                            <Label Text="{Binding Name}" />
+                            <Label Text="{Binding Age}" />
+                        </HorizontalStackLayout>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

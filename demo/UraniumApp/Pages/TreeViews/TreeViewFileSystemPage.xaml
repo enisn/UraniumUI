@@ -3,7 +3,7 @@
              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
-             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialSymbols;assembly=UraniumUI.Icons.MaterialSymbols"
              xmlns:vm="clr-namespace:UraniumApp.ViewModels"
              xmlns:root="clr-namespace:UraniumApp"
              xmlns:local="clr-namespace:UraniumApp.Pages.TreeViews">
@@ -15,17 +15,22 @@
 
             <VerticalStackLayout>
 
-                <material:TreeView x:Name="treeView" ItemsSource="{Binding Nodes}" LoadChildrenCommand="{Binding LoadChildrenCommand}" IsExpandedPropertyName="IsExtended">
+                <material:TreeView
+                    SelectionMode="Multiple"
+                    x:Name="treeView"
+                    ItemsSource="{Binding Nodes}"
+                    LoadChildrenCommand="{Binding LoadChildrenCommand}"
+                    IsLeafPropertyName="IsLeaf">
                     <material:TreeView.ItemTemplate>
                         <DataTemplate>
                             <HorizontalStackLayout Spacing="5" VerticalOptions="Center">
                                 <Image>
                                     <Image.Triggers>
                                         <DataTrigger TargetType="Image" Binding="{Binding IsDirectory}" Value="True">
-                                            <Setter Property="Source" Value="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Folder}, Color={AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}}" />
+                                            <Setter Property="Source" Value="{FontImageSource FontFamily=MaterialSharp, Glyph={x:Static m:MaterialSharp.Folder}, Color={AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}}" />
                                         </DataTrigger>
                                         <DataTrigger TargetType="Image" Binding="{Binding IsDirectory}" Value="False">
-                                            <Setter Property="Source" Value="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Insert_drive_file}, Color={AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}}" />
+                                            <Setter Property="Source" Value="{FontImageSource FontFamily=MaterialSharp, Glyph={x:Static m:MaterialSharp.File_open}, Color={AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}}" />
                                         </DataTrigger>
                                     </Image.Triggers>
                                 </Image>
@@ -37,7 +42,10 @@
 
                 <BoxView StyleClass="Divider" />
 
-                <root:PropertyEditorView Value="{Binding ., Source={x:Reference treeView}}" HorizontalOptions="Center" />
+                <Border StyleClass="SurfaceContainer,Rounded" HorizontalOptions="Center" MaximumWidthRequest="400">
+                    
+                <root:PropertyEditorView Value="{Binding ., Source={x:Reference treeView}}"/>
+                </Border>
             </VerticalStackLayout>
         </ScrollView>
     </ContentPage.Content>

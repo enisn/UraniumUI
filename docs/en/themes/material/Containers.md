@@ -21,7 +21,7 @@ Valid container classes are:
 </Frame>
 ```
 
-![Uranium UI Simple Container](images/containers-demo.png)
+![Uranium UI Simple Container](../../images/containers-demo.png)
 
 ---
 
@@ -48,4 +48,4 @@ List of all containers:
 
 | Light | Dark |
 | --- | --- |
-| ![Uranium UI Containers Light](images/containers-demo-android-light.png) | ![Uranium UI Containers Dark](images/containers-demo-android-dark.png) |
+| ![Uranium UI Containers Light](../../images/containers-demo-android-light.png) | ![Uranium UI Containers Dark](../../images/containers-demo-android-dark.png) |

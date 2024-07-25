@@ -46,7 +46,7 @@ Then you can use it like this:
 
 | Light - Mobile | Dark - Desktop | Light - iOS |
 | --- | --- | --- |
-| ![MAUI TabView](images/tabview-simple-light-android.gif) | ![MAUI TabView](images/tabview-simple-dark-windows.gif)  | ![MAUI TabView](images/tabview-simple-light-ios.gif) |
+| ![MAUI TabView](../../../../images/tabview-simple-light-android.gif) | ![MAUI TabView](../../../../images/tabview-simple-dark-windows.gif)  | ![MAUI TabView](../../../../images/tabview-simple-light-ios.gif) |
 
 
 ### TabHeader Placement
@@ -60,7 +60,7 @@ Table tabs can be placed at the top, bottom, start or left of the tab view. You 
 
 | Light - Android | Dark - Desktop | Light - iOS |
 | --- | --- | --- |
-| ![MAUI TabView Tab Placement](images/tabview-tabplacement-light-android.gif)| ![MAUI TabView Tab Placement](images/tabview-tabplacement-dark-windows.gif)  | ![MAUI TabView Tab Placement](images/tabview-tabplacement-light-ios.gif) |
+| ![MAUI TabView Tab Placement](../../../../images/tabview-tabplacement-light-android.gif)| ![MAUI TabView Tab Placement](../../../../images/tabview-tabplacement-dark-windows.gif)  | ![MAUI TabView Tab Placement](../../../../images/tabview-tabplacement-light-ios.gif) |
 
 ### Custom Tab Header
 You can customize the tab header by setting the `TabHeaderItemTemplate` property. The `TabHeaderItemTemplate` property is a **DataTemplate** that is used to render the tab header. The `TabHeaderItemTemplate` property is useful when you want to customize the tab header. In the datatemplate `Command` must be used in binding. That Command must be triggered when use tapped in the custom tab header.
@@ -86,7 +86,7 @@ Following parameters can be used in DataTemplate for binding:
 
 | Light - Mobile | Dark - Desktop |
 | --- | --- |
-| ![MAUI TabView](images/tabview-simple-custom-light-android.gif) | ![MAUI TabView](images/tabview-simple-custom-dark-windows.gif)  |
+| ![MAUI TabView](../../../../images/tabview-simple-custom-light-android.gif) | ![MAUI TabView](../../../../images/tabview-simple-custom-dark-windows.gif)  |
 
 
 Also, tabs can be customized using [Triggers](https://docs.microsoft.com/en-us/dotnet/maui/fundamentals/triggers) according to the state of tab. `DataTrigger` can be used for styling tab item according to the state of tab. `IsSelected` property of `TabItem` can be used in DataTrigger.
@@ -135,7 +135,7 @@ Also, tabs can be customized using [Triggers](https://docs.microsoft.com/en-us/d
 
 | Light - Mobile | Dark - Desktop |
 | --- | --- |
-| ![MAUI TabView](images/tabview-custom-template-light-android.gif) | ![MAUI TabView](images/tabview-custom-template-dark-windows.gif)  |
+| ![MAUI TabView](../../../../images/tabview-custom-template-light-android.gif) | ![MAUI TabView](../../../../images/tabview-custom-template-dark-windows.gif)  |
 
 
 ---
@@ -187,7 +187,7 @@ Even you can define DataTemplate tab by tab separetely.
 
 | Light - Mobile | Dark - Desktop |
 | --- | --- |
-| ![MAUI TabView](images/tabview-custom-item-template-light-android.gif) | ![MAUI TabView](images/tabview-custom-item-template-dark-windows.gif)  |
+| ![MAUI TabView](../../../../images/tabview-custom-item-template-light-android.gif) | ![MAUI TabView](../../../../images/tabview-custom-item-template-dark-windows.gif)  |
 
 ### Dynamic Tabs
 TabView supports dynamic tabs. You can add/remove tabs dynamically from a source. `ItemsSource` and `Itemtemplate` properties can be used for this purpose.
@@ -246,4 +246,35 @@ public class WebTabItem : UraniumBindableObject
 }
 ```
 
-![](images/tabview-dynamictabs-simple-windows-dark.gif)
+![](../../../../images/tabview-dynamictabs-simple-windows-dark.gif)
+
+## Caching options
+TabView has three caching options. `CacheOnCodeBehind`, `CacheOnLayout` and `RecreateAlways` You can choose the best option for your scenario.
+
+You can define caching option by setting **CachingStrategy** property of `TabView`.
+
+```xml
+<material:TabView CachingStrategy="CacheOnCodeBehind" />
+```
+
+- `CacheOnCodeBehind`: This is the default caching option. It caches the tab contents when the tab is created. The view is removed from the visual tree when a tab is deselected. But instance is kept in memory. And same instance is used when tab is selected again. Reloading the tab content from code-behind to visual tree can take some time when content is huge. It's good for small and simple tab contents. This option is memory friendly. and average performance friendly.
+
+- `CacheOnLayout`: It caches the tab contents when the tab is created and when the tab is layouted. It's useful when you have a lot of tabs and the tab contents are too complex to create. It's performance friendly when you have a lot of tabs. It's good for large & complex tab contents. This option is the most performance friendly option. But it uses much more memory. It keeps all tab contents in memory.
+
+- `RecreateAlways`: It refers to no caching. It creates the tab contents always when tab is selected. It's **not performance friendly** if tab contents are too complex to create. Also, tab contents **can't keep their state** when tab is selected again.
+
+
+## Customizations
+
+You can customize the `TabView` by using the style properties. You can use the following example to create your own style:
+
+```xml
+<Style TargetType="Layout" Class="TabView.Header" ApplyToDerivedTypes="True">
+    <Setter Property="BackgroundColor" Value="Black" />
+</Style>
+<Style TargetType="ContentView" Class="TabView.Content">
+    <Setter Property="BackgroundColor" Value="DimGray" />
+</Style>
+```
+
+![MAUI TabView Customization](../../../../images/tabview-customizations-dark-windows.png)

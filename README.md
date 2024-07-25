@@ -16,21 +16,33 @@ Uranium is a Free & Open-Source UI Kit for .NET MAUI. It provides a set of contr
 - Visit [Documentation](https://enisn-projects.io/docs/en/uranium/latest)
 
  ## Getting Started 🚀
-Visit documentation for onboarding.
+Visit the documentation for onboarding.
 
 - [Getting Started](https://enisn-projects.io/docs/en/uranium/latest/Getting-Started)
 - [Live Demo on Android Emulator](https://appetize.io/embed/6rii3gn7ovqjjd5ynkracdjruq?device=pixel4&osVersion=11.0&scale=75)
 
+Or watch the video:
+
+<a href="https://youtu.be/4S_KKT2JeGE?si=omJoZpd-p3asDIvR">
+<img width="232" alt="image" src="https://github.com/enisn/UraniumUI/assets/23705418/3d97e437-9995-43cd-adc2-b8163ce83eff">
+</a>
+
 ## Features ✨
 
 - Startup [Templates](https://enisn-projects.io/docs/en/uranium/latest/Getting-Started#new-projects)
-- Multiple Target Frameworks
-  - `.NET6` _(LTS)_
-  - `.NET7` _(Current)_
+- The lastest Framework `.NET8`
+  - Use UraniumUI **v2.5** for `.NET6` _(LTS)_ and `.NET7`.
 - Pre-built layouts and flexible controls.
 - Dark/light mode support.
 - All MAUI Platforms are supported.
+  - `net8.0-android`
+  - `net8.0-ios`
+  - `net8.0-maccatalyst`
+  - `net8.0-windows`
+  - `net8.0-tizen` _(limited support)_.
 - Infrastructure for building custom controls.
+  - [Plainer](https://github.com/enisn/Xamarin.Forms.Plainer)
+  - [InputField](https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/InputField)
 - [Color System](https://enisn-projects.io/docs/en/uranium/latest/theming/ColorSystem) with easy to customize.
 - Extensible styling.
 - Dialogs
@@ -42,6 +54,7 @@ Visit documentation for onboarding.
 - Font icon support.
   - [FontAwesome](https://enisn-projects.io/docs/en/uranium/latest/theming/Icons#fontawesome)
   - [Material](https://enisn-projects.io/docs/en/uranium/latest/theming/Icons#material-icons)
+  - [Fluent](https://enisn-projects.io/docs/en/uranium/latest/theming/Icons#segoe-fluent-icons)
 - Theming
   - [Material Theme](https://enisn-projects.io/docs/en/uranium/latest/themes/material/Index)
 
@@ -71,12 +84,19 @@ This project is licensed under the Apache License License - see the [LICENSE](LI
 | [Hottemax](https://github.com/Hottemax) |  <!-- 6☕️ -->
 | [tjlangenkamp](https://github.com/tjlangenkamp) | <!-- 5☕️ -->
 | [C00lzer0](https://github.com/C00lzer0) |  <!-- 3☕️ -->
-| _Anonymous_ |  <!-- 3☕️ -->
+| Eric | <!-- 3 ☕-->
+| Volker Busch | <!-- 3 ☕-->
 | [gpproton](https://github.com/gpproton) |  <!-- 1☕️ -->
 | [kmaclagan-pcl](https://www.buymeacoffee.com/enisn) |  <!-- 1☕️ -->
 | [@Geramy](https://github.com/Geramy) |  <!-- 1☕️ -->
 | [Malko_Josue](https://twitter.com/Malko_Josue) |  <!-- 1☕️ -->
+| [JohnStabler](https://github.com/JohnStabler) | <!-- GitHub Sponsor -->
+| [jfversluis](https://github.com/jfversluis) | <!-- GitHub Sponsor -->
+| [Lucasbk123](https://github.com/Lucasbk123) | <!-- GitHub Sponsor -->
+| [laszlodaniel](https://github.com/laszlodaniel) | <!-- GitHub Sponsor -->
+| Juliette Dianne Moss | <!-- patreon -->
 | Simon Brettschneider |    <!-- 1☕️ -->
+| _Anonymous people 5☕️_ |  <!-- 4☕️ -->
 
 > Donations are spent to infrastructural costs such as documentation website etc.
 

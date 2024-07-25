@@ -5,7 +5,7 @@
              xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
              xmlns:validation="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
-             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialSymbols;assembly=UraniumUI.Icons.MaterialSymbols"
              xmlns:local="clr-namespace:UraniumApp.Pages">
     <ContentPage.Content>
         <ScrollView>
@@ -13,19 +13,19 @@
 
                 <input:FormView Spacing="20">
 
-                    <material:TextField Title="E-mail" Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Email}}">
+                    <material:TextField Title="E-mail" Icon="{FontImageSource FontFamily=MaterialSharp, Glyph={x:Static m:MaterialSharp.Mail}}">
                         <validation:RequiredValidation />
                         <validation:RegexValidation Pattern="{x:Static input:AdvancedEntry.REGEX_EMAIL}" Message="Invalid email address" />
                     </material:TextField>
 
-                    <material:TextField Title="Name" AllowClear="True" Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Person}}">
+                    <material:TextField Title="Name" AllowClear="True" Icon="{FontImageSource FontFamily=MaterialSharp, Glyph={x:Static m:MaterialSharp.Person}}">
                         <validation:LettersOnlyValidation AllowSpaces="True" />
                         <validation:RequiredValidation />
                         <validation:MinLengthValidation MinLength="5" />
                     </material:TextField>
 
                     <material:AutoCompleteTextField Title="Fruit" 
-                            Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Forest}}">
+                            Icon="{FontImageSource FontFamily=MaterialSharp, Glyph={x:Static m:MaterialSharp.Forest}}">
                         <material:AutoCompleteTextField.ItemsSource>
                             <x:String>Apple</x:String>
                             <x:String>Orange</x:String>
@@ -55,19 +55,19 @@
                         </material:AutoCompleteTextField.ItemsSource>
                     </material:AutoCompleteTextField>
 
-                    <material:TimePickerField Title="Pick a time" Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Alarm}}">
+                    <material:TimePickerField Title="Pick a time" Icon="{FontImageSource FontFamily=MaterialSharp, Glyph={x:Static m:MaterialSharp.Alarm}}">
                         <validation:MinValueValidation MinValue="09:00" />
                         <validation:MaxValueValidation MaxValue="12:00" />
                     </material:TimePickerField>
                     
-                    <material:TextField Title="Age" Keyboard="Numeric" Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Numbers}}">
+                    <material:TextField Title="Age" Keyboard="Numeric" Icon="{FontImageSource FontFamily=MaterialSharp, Glyph={x:Static m:MaterialSharp.Numbers}}">
                         <material:TextField.Validations>
                             <validation:MinValueValidation MinValue="18" />
                             <validation:DigitsOnlyValidation />
                         </material:TextField.Validations>
                     </material:TextField>
 
-                    <material:DatePickerField Title="What is your birth date?"  Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Calendar_month}}">
+                    <material:DatePickerField Title="What is your birth date?"  Icon="{FontImageSource FontFamily=MaterialSharp, Glyph={x:Static m:MaterialSharp.Calendar_month}}">
                         <validation:MinValueValidation MinValue="9/18/2022" />
                         <validation:RequiredValidation />
                     </material:DatePickerField>

@@ -1,4 +1,6 @@
 ﻿
+using InputKit.Shared.Controls;
+
 namespace UraniumUI.Dialogs.CommunityToolkit;
 
 public class CommunityToolkitDialogService : IDialogService
@@ -6,6 +8,16 @@ public class CommunityToolkitDialogService : IDialogService
     public Task<bool> ConfirmAsync(string title, string message, string okText = "OK", string cancelText = "Cancel")
     {
         return GetCurrentPage().ConfirmAsync(title, message, okText, cancelText);
+    }
+
+    public Task<IDisposable> DisplayProgressAsync(string title, string message)
+    {
+        return GetCurrentPage().DisplayProgressAsync(title, message);
+    }
+
+    public Task<IDisposable> DisplayProgressCancellableAsync(string title, string message, string cancelText = "Cancel", CancellationTokenSource tokenSource = null)
+    {
+        return GetCurrentPage().DisplayProgressCancellableAsync(title, message, cancelText, tokenSource);
     }
 
     public Task<IEnumerable<T>> DisplayCheckBoxPromptAsync<T>(string message, IEnumerable<T> selectionSource, IEnumerable<T> selectedItems = null, string accept = "OK", string cancel = "Cancel", string displayMember = null)
@@ -18,9 +30,19 @@ public class CommunityToolkitDialogService : IDialogService
         return GetCurrentPage().DisplayRadioButtonPromptAsync(message, selectionSource, selected, accept, cancel, displayMember);
     }
 
-    public Task<string> DisplayTextPromptAsync(string title, string message, string accept = "OK", string cancel = "Cancel", string placeholder = null, int maxLength = -1, Keyboard keyboard = null, string initialValue = "")
+    public Task<string> DisplayTextPromptAsync(string title, string message, string accept = "OK", string cancel = "Cancel", string placeholder = null, int maxLength = -1, Keyboard keyboard = null, string initialValue = "", bool isPassword = false)
     {
-        return GetCurrentPage().DisplayTextPromptAsync(title, message, accept, cancel, placeholder, maxLength, keyboard, initialValue);
+        return GetCurrentPage().DisplayTextPromptAsync(title, message, accept, cancel, placeholder, maxLength, keyboard, initialValue, isPassword);
+    }
+
+    public Task DisplayViewAsync(string title, View content, string okText = "OK")
+    {
+        return GetCurrentPage().DisplayViewAsync(title, content, okText);
+    }
+
+    public Task<TViewModel> DisplayFormViewAsync<TViewModel>(string title, TViewModel viewModel = null, string submit = "OK", string cancel = "Cancel") where TViewModel : class
+    {
+        return GetCurrentPage().DisplayFormViewAsync(title, viewModel, submit, cancel);
     }
 
     private Page GetCurrentPage()
@@ -39,7 +61,10 @@ public class CommunityToolkitDialogService : IDialogService
         {
             return tabbed.CurrentPage;
         }
-
+        if (Application.Current.MainPage is FlyoutPage page)
+        {
+	        return page.Flyout;
+        }
         return Application.Current.MainPage;
     }
 }

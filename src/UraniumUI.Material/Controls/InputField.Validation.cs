@@ -19,6 +19,7 @@ public partial class InputField : IValidatable
         Margin = new Thickness(0, 0, 5, 0),
         Content = new Path
         {
+            StyleClass = new[] { "InputField.ValidationIcon" },
             Fill = ColorResource.GetColor("Error", "ErrorDark", Colors.Red),
             Data = UraniumShapes.ExclamationCircle,
         }
@@ -26,6 +27,7 @@ public partial class InputField : IValidatable
 
     protected Lazy<Label> labelValidation = new Lazy<Label>(() => new Label
     {
+        StyleClass = new[] { "InputField.ValidationLabel" },
         HorizontalOptions = LayoutOptions.Start,
         TextColor = ColorResource.GetColor("Error", "ErrorDark", Colors.Red),
     });
@@ -53,7 +55,8 @@ public partial class InputField : IValidatable
             {
                 endIconsContainer.Remove(iconValidation.Value);
                 this.Remove(labelValidation.Value);
-            }
+                OnPropertyChanged(nameof(IsValid));
+			}
         }
         else
         {
@@ -64,7 +67,8 @@ public partial class InputField : IValidatable
             {
                 endIconsContainer.Add(iconValidation.Value);
                 this.Add(labelValidation.Value, row: 1);
-            }
+                OnPropertyChanged(nameof(IsValid));
+			}
         }
     }
 

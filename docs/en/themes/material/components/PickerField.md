@@ -16,7 +16,7 @@ Then you can use it like this:
 
 | Light | Dark |
 | --- | --- |
-| ![MAUI Material PickerField](images/pickerfield-demo-light-android.gif) | ![MAUI Material PickerField](images/pickerfield-demo-dark-ios.gif) |
+| ![MAUI Material PickerField](../../../../images/pickerfield-demo-light-android.gif) | ![MAUI Material PickerField](../../../../images/pickerfield-demo-dark-ios.gif) |
 
 
 ## Icon
@@ -33,7 +33,7 @@ PickerFields support setting an icon on the left side of the control. You can se
 
 | Light | Dark |
 | --- | --- |
-| ![MAUI Material PickerField](images/pickerfield-icon-light-android.gif) | ![MAUI Material PickerField](images/pickerfield-icon-dark-ios.gif) |
+| ![MAUI Material PickerField](../../../../images/pickerfield-icon-light-android.gif) | ![MAUI Material PickerField](../../../../images/pickerfield-icon-dark-ios.gif) |
 
 ## AllowClear
 PickerFields support clearing the selected item by setting the `AllowClear` property to `true`. Default value is `true`. You can make it `false` to disable clearing.
@@ -52,7 +52,7 @@ PickerFields support clearing the selected item by setting the `AllowClear` prop
 
 | Dark | Light|
 | --- | --- |
-| ![MAUI Material Input](images/pickerfield-allowclear-dark-android.gif) | ![MAUI Material Input](images/pickerfield-allowclear-light-android.gif) |
+| ![MAUI Material Input](../../../../images/pickerfield-allowclear-dark-android.gif) | ![MAUI Material Input](../../../../images/pickerfield-allowclear-light-android.gif) |
 
 ## Validation
 PickerField supports validation rules since it uses `object` as its **SelectedItem**. You can use any validation rule that supports your type. For example, if you are using List of `int` as **ItemsSource**, you can use `MinValueValidation` and `MaxValueValidation` rules. Still `RequiredValidation` is supported with any type of ItemsSource.
@@ -67,4 +67,4 @@ PickerField supports validation rules since it uses `object` as its **SelectedIt
 
 ```
 
-![MAUI Material Picker Validation](images/pickerfield-validation-light-android.gif)
+![MAUI Material Picker Validation](../../../../images/pickerfield-validation-light-android.gif)

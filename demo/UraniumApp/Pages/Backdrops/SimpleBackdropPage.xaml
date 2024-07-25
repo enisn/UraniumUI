@@ -3,7 +3,7 @@
              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
-             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialSymbols;assembly=UraniumUI.Icons.MaterialSymbols"
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
              xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
              xmlns:root="clr-namespace:UraniumApp"
@@ -15,28 +15,28 @@
 
     <VerticalStackLayout Spacing="30">
 
-        <Frame HorizontalOptions="Center" MaximumWidthRequest="400">
+        <Border StyleClass="SurfaceContainer,Rounded" HorizontalOptions="Center" MaximumWidthRequest="400">
             <HorizontalStackLayout Spacing="10">
                 <Label Text="Click the filter icon above." VerticalOptions="Center"/>
                 <Image HorizontalOptions="Center" Rotation="45">
                     <Image.Source>
-                        <FontImageSource Size="35" FontFamily="MaterialRegular" Glyph="{x:Static uranium:MaterialRegular.Arrow_upward}" Color="{AppThemeBinding {StaticResource OnSurface}, Dark={StaticResource OnSurfaceDark}}" />
+                        <FontImageSource Size="35" FontFamily="MaterialRegular" Glyph="{x:Static uranium:MaterialSharp.Arrow_upward}" Color="{AppThemeBinding {StaticResource OnSurface}, Dark={StaticResource OnSurfaceDark}}" />
                     </Image.Source>
                 </Image>
             </HorizontalStackLayout>
-        </Frame>
+        </Border>
 
-      <Frame MaximumWidthRequest="400">
-        <root:PropertyEditorView 
-            ShowMissingProperties="False"
-            Value="{Binding ., Source={x:Reference backdrop}}"/>
-      </Frame>
+        <Border StyleClass="SurfaceContainer,Rounded" MaximumWidthRequest="400">
+            <root:PropertyEditorView 
+                ShowMissingProperties="False"
+                Value="{Binding ., Source={x:Reference backdrop}}"/>
+        </Border>
     </VerticalStackLayout>
 
     <uranium:UraniumContentPage.Attachments>
         <material:BackdropView Title="Filter" x:Name="backdrop" InsertAfterToolbarIcons="false">
             <material:BackdropView.IconImageSource>
-                <FontImageSource FontFamily="MaterialRound" Glyph="{x:Static m:MaterialRound.Filter_alt}" Color="{DynamicResource OnPrimary}" />
+                <FontImageSource FontFamily="MaterialRound" Glyph="{x:Static m:MaterialSharp.Filter}" Color="{DynamicResource OnPrimary}" />
             </material:BackdropView.IconImageSource>
             <material:BackdropView.Resources>
                 <ResourceDictionary>

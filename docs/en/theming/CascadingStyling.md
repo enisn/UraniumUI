@@ -41,7 +41,7 @@ Now you can use your container in a XAML page like the following example. The `L
 </StackLayout>
 ```
 
-![MAUI Cascading Styles](images/cascadingstyle-demo.png)
+![MAUI Cascading Styles](../images/cascadingstyle-demo.png)
 
 
 ### Nested usage
@@ -80,7 +80,7 @@ When you run run the following XAML, you will see the following result:
 </StackLayout>
 ```
 
-![MAUI Cascading Styles](images/cascadingstyle-nested.png)
+![MAUI Cascading Styles](../images/cascadingstyle-nested.png)
 
 ### Referencing Existing Styles
 
@@ -145,4 +145,4 @@ The following usage is enough to apply the style to all buttons under `MyContain
 </StackLayout>
 ```
 
-![uranium ui cascading style](images/cascadingstyle-styleclass.png)
+![uranium ui cascading style](../images/cascadingstyle-styleclass.png)

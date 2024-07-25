@@ -3,6 +3,7 @@ using Plainer.Maui;
 using UraniumUI.Controls;
 using UraniumUI.Dialogs;
 using UraniumUI.Handlers;
+using UraniumUI.Options;
 using UraniumUI.Views;
 
 namespace UraniumUI;
@@ -21,6 +22,9 @@ public static class MauiProgramExtensions
         });
 
         builder.Services.AddTransient<IDialogService, DefaultDialogService>();
+
+        builder.ConfigureAutoFormViewDefaults();
+
         return builder;
     }
 
@@ -32,6 +36,7 @@ public static class MauiProgramExtensions
             .AddHandler(typeof(StatefulContentView), typeof(StatefulContentViewHandler))
             .AddHandler(typeof(AutoCompleteView), typeof(AutoCompleteViewHandler))
             .AddHandler(typeof(SelectableLabel), typeof(SelectableLabelHandler))
+            .AddHandler(typeof(Dropdown), typeof(DropdownHandler))
             .AddPlainer();
     }
 }

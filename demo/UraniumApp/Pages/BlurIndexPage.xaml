@@ -12,8 +12,17 @@
                 </Style>
             </VerticalStackLayout.Resources>
 
-            <Button Text="Simple BlurView" Clicked="GoToPreviewPage" />
-            <Button Text="Demo with BlurView" Clicked="GoToDemoPage" />
+            <Button Text="BlurView Properties" Clicked="GoToPreviewPage" />
+
+            <Grid>
+                <Image HeightRequest="300" Source="https://images.unsplash.com/photo-1464820453369-31d2c0b651af?q=80&amp;w=2080&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" Aspect="AspectFill" />
+                <StackLayout HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="200">
+                    <StackLayout.Effects>
+                        <uranium:BlurEffect />
+                    </StackLayout.Effects>
+                    <Label Text="Hello, World!" Margin="32" HorizontalOptions="Center" VerticalOptions="Center" />
+                </StackLayout>
+            </Grid>
         </VerticalStackLayout>
     </ContentPage.Content>
 </ContentPage>

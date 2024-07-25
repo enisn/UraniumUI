@@ -1,20 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using DotNurse.Injector.Attributes;
+using ReactiveUI.Fody.Helpers;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
+using UraniumUI.Dialogs;
 
 namespace UraniumApp.Pages.DataGrids;
-public class SelectableDataGridPageViewModel : CustomDataGridPageViewModel
+
+[RegisterAs(typeof(SelectableDataGridPageViewModel))]
+public class SelectableDataGridPageViewModel : BindableObject
 {
+    [Reactive] public ObservableCollection<Student> Items { get; private set; } = new();
     public ObservableCollection<Student> SelectedItems { get; set; } = new ObservableCollection<Student>();
 
     public ICommand RemoveSelectedCommand { get; set; }
 
-    public SelectableDataGridPageViewModel() : base()
+    protected StudentDataStore DataStore { get; } = new StudentDataStore();
+
+    public SelectableDataGridPageViewModel()
     {
+        Initialize();
+
         RemoveSelectedCommand = new Command(() =>
         {
             for (int i = 0; i < SelectedItems.Count; i++)
@@ -24,9 +29,10 @@ public class SelectableDataGridPageViewModel : CustomDataGridPageViewModel
         });
     }
 
-    protected override async void Initialize()
+    protected async void Initialize()
     {
-        Items = new ObservableCollection<Student>(await DataStore.GetListAsync(simulateNetwork: false));
+        Items = new ObservableCollection<Student>(
+            await DataStore.GetListAsync(simulateNetwork: false));
 
         SelectedItems.Add(Items[0]);
         SelectedItems.Add(Items[2]);

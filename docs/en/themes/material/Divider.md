@@ -7,4 +7,4 @@ Divider is a simple separator for your content. It's not a standalone component.
 
 | Light | Dark |
 | --- | --- |
-| ![MAUI Divider](images/divider-demo-android-light.png) | ![MAUI Divider](images/divider-demo-android-dark.png) |
+| ![MAUI Divider](../../images/divider-demo-android-light.png) | ![MAUI Divider](../../images/divider-demo-android-dark.png) |

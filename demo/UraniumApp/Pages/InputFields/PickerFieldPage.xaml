@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
-             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialSymbols;assembly=UraniumUI.Icons.MaterialSymbols"
              xmlns:vm="clr-namespace:UraniumApp.ViewModels.InputFields"
              xmlns:root="clr-namespace:UraniumApp"
              x:Class="UraniumApp.Pages.InputFields.PickerFieldPage"
@@ -16,7 +16,7 @@
 <material:PickerField 
     Title="Pick an option"
     ItemsSource="{Binding Items}"
-    Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Expand_circle_down}}"
+    Icon="{FontImageSource FontFamily=MaterialSharp, Glyph={x:Static m:MaterialSharp.Expand_circle_down}}"
     />
             ]]>
         </x:String>
@@ -31,6 +31,7 @@ public ObservableCollection<string> Items { get; } = new ObservableCollection<st
             ]]>
         </x:String>
         <x:String x:Key="DocLink">https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/PickerField</x:String>
+        <x:String x:Key="SourceLink">https://github.com/enisn/UraniumUI/blob/develop/demo/UraniumApp/Pages/InputFields/PickerFieldPage.xaml</x:String>
     </ContentPage.Resources>
 
     <ScrollView>
@@ -39,9 +40,9 @@ public ObservableCollection<string> Items { get; } = new ObservableCollection<st
             <Label Text="UraniumUI.Material.Controls" FontSize="Micro" Opacity=".6" />
 
             <HorizontalStackLayout Padding="0,20">
-                <Button Text="Documentation" Command="{x:Static uranium:Commands.OpenLinkCommand}" CommandParameter="{StaticResource DocLink}" StyleClass="OutlinedButton" ImageSource="{FontImageSource Glyph={x:Static m:MaterialRegular.Insert_drive_file}, FontFamily=MaterialRegular, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
-                <Button Text="Source" StyleClass="OutlinedButton" IsEnabled="False" ImageSource="{FontImageSource Glyph={x:Static m:MaterialRegular.Code}, FontFamily=MaterialRegular, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
-                <!--<Button Text="Reset" Clicked="Reset_Clicked" StyleClass="OutlinedButton" ImageSource="{FontImageSource Glyph={x:Static m:MaterialRegular.Refresh}, FontFamily=MaterialRegular, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />-->
+                <Button Text="Documentation" Command="{x:Static uranium:Commands.OpenLinkCommand}" CommandParameter="{StaticResource DocLink}" StyleClass="OutlinedButton" ImageSource="{FontImageSource Glyph={x:Static m:MaterialSharp.File_open}, FontFamily=MaterialSharp, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
+                <Button Text="Source" StyleClass="OutlinedButton" Command="{x:Static uranium:Commands.OpenLinkCommand}" CommandParameter="{StaticResource SourceLink}" ImageSource="{FontImageSource Glyph={x:Static m:MaterialSharp.Code}, FontFamily=MaterialSharp, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
+                <!--<Button Text="Reset" Clicked="Reset_Clicked" StyleClass="OutlinedButton" ImageSource="{FontImageSource Glyph={x:Static m:MaterialSharp.Refresh}, FontFamily=MaterialSharp, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />-->
             </HorizontalStackLayout>
 
             <Label Text="Text fields let users enter and edit text. It is an abstraction on MAUI Level for material inputs." />
@@ -53,7 +54,7 @@ public ObservableCollection<string> Items { get; } = new ObservableCollection<st
                         <Label Text="Simple EditorField" FontSize="Subtitle" Margin="20"/>
 
                         <VerticalStackLayout StyleClass="ControlPreview" Spacing="12">
-                            <material:PickerField ItemsSource="{Binding TestModels}" ItemDisplayBinding="{Binding Value}" Title="Pick an option" Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Expand_circle_down}}"/>
+                            <material:PickerField ItemsSource="{Binding TestModels}" ItemDisplayBinding="{Binding Value}" Title="Pick an option" Icon="{FontImageSource FontFamily=MaterialSharp, Glyph={x:Static m:MaterialSharp.Expand_circle_down}}"/>
                         </VerticalStackLayout>
 
                         <uranium:ExpanderView>

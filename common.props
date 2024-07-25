@@ -1,6 +1,6 @@
 <Project>
     <PropertyGroup>
-        <Version>2.6.0-pre.3</Version>
+        <Version>2.9.0</Version>
         <PackageIcon>logo_128.png</PackageIcon>
         <NeutralLanguage>en</NeutralLanguage>
         <RepositoryUrl>https://github.com/enisn/UraniumUI</RepositoryUrl>
@@ -8,6 +8,7 @@
         <Authors>enisn</Authors>
         <Description>Uranium is a Free &amp; Open-Source UI Kit for MAUI.</Description>
         <PackageReleaseNotes>Check GitHub releases for changelog.</PackageReleaseNotes>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
         
         <PublishReadyToRun>false</PublishReadyToRun>
 
@@ -22,7 +23,11 @@
         <Pack>True</Pack>
         <PackagePath></PackagePath>
       </None>
-   </ItemGroup>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+    </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All"/>

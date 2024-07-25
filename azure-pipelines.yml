@@ -29,3 +29,6 @@ steps:
   displayName: "Test"
   inputs:
     command: 'test'
+
+#- script: 'dotnet test -m:1'
+#  displayName: 'dotnet test'

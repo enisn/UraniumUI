@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace UraniumUI.Controls;
@@ -61,12 +57,19 @@ public class AutoCompleteView : View, IAutoCompleteView
         typeof(AutoCompleteView),
         Colors.DarkGray);
 
-    public IList<string> ItemsSource { get => (IList<string>)GetValue(ItemsSourceProperty); set => SetValue(ItemsSourceProperty, value); }
+    public IList ItemsSource { get => (IList)GetValue(ItemsSourceProperty); set => SetValue(ItemsSourceProperty, value); }
 
     public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(nameof(ItemsSource),
             typeof(IList<string>),
             typeof(AutoCompleteView),
             null);
+
+    public int Threshold { get => (int)GetValue(ThresholdProperty); set => SetValue(ThresholdProperty, value); }
+
+    public static readonly BindableProperty ThresholdProperty = BindableProperty.Create(nameof(Threshold),
+        typeof(int),
+        typeof(AutoCompleteView),
+        2);
 
     public ICommand ReturnCommand { get => (ICommand)GetValue(ReturnCommandProperty); set => SetValue(ReturnCommandProperty, value); }
 

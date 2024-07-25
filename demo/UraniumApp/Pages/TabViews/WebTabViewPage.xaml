@@ -13,7 +13,7 @@
     </ContentPage.BindingContext>
     <ContentPage.Content>
 
-        <Frame Padding="0" Margin="25">
+        <Border StyleClass="SurfaceContainer,Rounded" Padding="0" Margin="10">
             <Grid RowDefinitions="Auto,*">
                 <Button
                         Text="New Tab" 
@@ -26,6 +26,7 @@
                         Grid.Row="1" 
                         ItemsSource="{Binding TabItems}"
                         CurrentItem="{Binding CurrentTab, Mode=TwoWay}"
+                        TabHeaderItemColumnWidth="Auto"
                         CachingStrategy="CacheOnLayout">
                     <material:TabView.TabHeaderItemTemplate>
                         <DataTemplate>
@@ -61,6 +62,6 @@
                     </material:TabView.ItemTemplate>
                 </material:TabView>
             </Grid>
-        </Frame>
+        </Border>
     </ContentPage.Content>
 </ContentPage>

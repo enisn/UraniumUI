@@ -6,14 +6,14 @@
              xmlns:validation="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
              xmlns:v="clr-namespace:UraniumUI.Validations;assembly=UraniumUI.Validations.DataAnnotations"
              xmlns:vm="clr-namespace:UraniumApp.ViewModels"
-             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialSymbols;assembly=UraniumUI.Icons.MaterialSymbols"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:UraniumApp.Pages">
     <ContentPage.BindingContext>
         <vm:ValidationsPageViewModel />
     </ContentPage.BindingContext>
     <ContentPage.ToolbarItems>
-        <ToolbarItem Clicked="ToolbarItem_Clicked" IconImageSource="{FontImage FontFamily=MaterialRegular,Glyph={x:Static m:MaterialRegular.Open_in_new}, Color={StaticResource OnPrimary}}" />
+        <ToolbarItem Clicked="ToolbarItem_Clicked" IconImageSource="{FontImage FontFamily=MaterialSharp,Glyph={x:Static m:MaterialSharp.Open_in_new}, Color={StaticResource OnPrimary}}" />
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <ScrollView HorizontalOptions="Fill">
@@ -23,15 +23,15 @@
 
                     <material:TextField Title="Email"
                                         Text="{v:ValidationBinding Email}" 
-                                        Icon="{FontImage FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Email}}"/>
+                                        Icon="{FontImage FontFamily=MaterialSharp, Glyph={x:Static m:MaterialSharp.Mail}}"/>
 
                     <material:TextField Title="Fullname"
                                         Text="{v:ValidationBinding FullName}" 
-                                        Icon="{FontImage FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Person}}"/>
+                                        Icon="{FontImage FontFamily=MaterialSharp, Glyph={x:Static m:MaterialSharp.Person}}"/>
 
                     <material:PickerField Title="Gender"
                                           SelectedItem="{Binding Gender}"
-                                          Icon="{FontImage FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Wc}}">
+                                          Icon="{FontImage FontFamily=MaterialSharp, Glyph={x:Static m:MaterialSharp.Agender}}">
                         <material:PickerField.ItemsSource>
                             <x:Array Type="{x:Type vm:Gender}">
                                 <vm:Gender>Other</vm:Gender>
@@ -44,13 +44,13 @@
 
                     <material:DatePickerField Title="Birth Date"
                                         Date="{Binding BirthDate}" 
-                                        Icon="{FontImage FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Calendar_month}}">
+                                        Icon="{FontImage FontFamily=MaterialSharp, Glyph={x:Static m:MaterialSharp.Calendar_month}}">
                         <validation:RequiredValidation />
                     </material:DatePickerField>
 
                     <material:TimePickerField Title="Preferred Meeting Time"
                                         Time="{Binding MeetingTime}" 
-                                        Icon="{FontImage FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Alarm}}">
+                                        Icon="{FontImage FontFamily=MaterialSharp, Glyph={x:Static m:MaterialSharp.Alarm}}">
                         <validation:RequiredValidation />
                         <validation:MinValueValidation MinValue="07:00" />
                         <validation:MinValueValidation MinValue="10:30" />
@@ -59,7 +59,7 @@
                     <material:TextField Title="Number of seats"
                                         Text="{Binding NumberOfSeats}"
                                         Keyboard="Numeric"
-                                        Icon="{FontImage FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Airline_seat_recline_normal}}">
+                                        Icon="{FontImage FontFamily=MaterialSharp, Glyph={x:Static m:MaterialSharp.Airline_seat_recline_normal}}">
                         <validation:RequiredValidation />
                         <validation:DigitsOnlyValidation />
                     </material:TextField>

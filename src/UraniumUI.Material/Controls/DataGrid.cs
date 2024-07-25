@@ -4,17 +4,17 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Reflection;
-using System.Security.Cryptography.X509Certificates;
+using UraniumUI.Extensions;
 
 namespace UraniumUI.Material.Controls;
 
-public partial class DataGrid : Frame
+public partial class DataGrid : Border
 {
     private Grid _rootGrid;
 
     public Type CurrentType { get; protected set; }
 
-    public IList<DataGridColumn> Columns { get; protected set; } = new ObservableCollection<DataGridColumn>();
+    public bool ReadyToRender => Columns?.Any() ?? false;
 
     public DataGrid()
     {
@@ -23,23 +23,38 @@ public partial class DataGrid : Frame
             HorizontalOptions = LayoutOptions.Fill
         };
 
-        RenderEmptyView();
         InitializeFactoryMethods();
         this.Padding = new Thickness(0, 10);
-        (Columns as INotifyCollectionChanged).CollectionChanged += Columns_CollectionChanged;
+        if (Columns is INotifyCollectionChanged observableColumnds)
+        {
+            observableColumnds.CollectionChanged += Columns_CollectionChanged;
+        }
+
+        RenderEmptyView();
+    }
+
+    private void OnColumnsSet(IList<DataGridColumn> oldValue, IList<DataGridColumn> newValue)
+    {
+        if (oldValue is INotifyCollectionChanged oldObservableColumns)
+        {
+            oldObservableColumns.CollectionChanged -= Columns_CollectionChanged;
+        }
+
+        if (newValue is INotifyCollectionChanged newObservableColumns)
+        {
+            newObservableColumns.CollectionChanged += Columns_CollectionChanged;
+        }
     }
 
     private void OnItemSourceSet(IList oldSource, IList newSource)
     {
-        var sourceType = newSource.GetType();
-        if (sourceType.GenericTypeArguments.Length != 1)
+        var sourceType = newSource?.GetType();
+        if (UseAutoColumns && sourceType?.GenericTypeArguments.Length != 1)
         {
             throw new InvalidOperationException("DataGrid collection must be a generic typed collection like List<T>.");
         }
 
-        CurrentType = sourceType.GenericTypeArguments.First();
-
-        var columnsAreReady = Columns?.Any() ?? false;
+        CurrentType = sourceType?.GenericTypeArguments.FirstOrDefault();
 
         SetAutoColumns();
 
@@ -53,7 +68,7 @@ public partial class DataGrid : Frame
             newObservable.CollectionChanged += ItemsSource_CollectionChanged;
         }
 
-        if (columnsAreReady)
+        if (ReadyToRender)
         {
             Render();
         }
@@ -64,6 +79,7 @@ public partial class DataGrid : Frame
         if (ItemsSource.Count == 0)
         {
             ResetGrid();
+            AddTableHeaders();
             RenderEmptyView();
             return;
         }
@@ -121,8 +137,7 @@ public partial class DataGrid : Frame
                 .Select(s => new DataGridColumn
                 {
                     Title = s.GetCustomAttribute<DisplayNameAttribute>()?.DisplayName ?? s.Name,
-                    Binding = new Binding(s.Name),
-                    PropertyInfo = s,
+                    ValueBinding = new Binding(s.Name),
                 }).ToList();
 
             Render();
@@ -131,18 +146,10 @@ public partial class DataGrid : Frame
 
     protected virtual void Render()
     {
-        if (Columns == null || Columns.Count == 0 || CurrentType == null)
+        if (Columns is null || Columns.Count == 0 || ItemsSource is null || (UseAutoColumns && CurrentType == null))
         {
             return; // Not ready yet.
         }
-
-        if (ItemsSource.Count == 0)
-        {
-            RenderEmptyView();
-            return;
-        }
-
-        EnsurePropertyInfosAreSet();
 
         var tableHeaderRows = 1;
         ResetGrid();
@@ -156,6 +163,11 @@ public partial class DataGrid : Frame
             var row = i + tableHeaderRows; // +1 is table header.
 
             AddRow(row, ItemsSource[i], i == ItemsSource.Count - 1);
+        }
+
+        if (ItemsSource.Count == 0)
+        {
+            RenderEmptyView();
         }
 
         RegisterSelectionChanges();
@@ -174,12 +186,20 @@ public partial class DataGrid : Frame
 
     protected virtual void AddTableHeaders(int row = 0)
     {
+        if (Columns is null)
+        {
+            return;
+        }
+
         for (int i = 0; i < Columns.Count; i++)
         {
-            var titleView = Columns[i].TitleView
+            var column = Columns[i];
+
+            var binding = new Binding(nameof(DataGridColumn.Title));
+            var titleView = column.TitleView
                 ?? TitleTemplate?.CreateContent() as View
-                ?? LabelFactory("Value")
-                ?? CreateLabel("Value");
+                ?? LabelFactory(binding)
+                ?? CreateLabel(binding);
 
             if (titleView is Label label)
             {
@@ -187,10 +207,8 @@ public partial class DataGrid : Frame
             }
 
             // TODO: Use an attribute to localize it.
-            titleView.BindingContext = new
-            {
-                Value = Columns[i].Title
-            };
+            titleView.BindingContext = column;
+            titleView.SetBinding(View.IsVisibleProperty, nameof(DataGridColumn.IsVisible));
 
             _rootGrid.Add(titleView, column: i, row);
         }
@@ -204,27 +222,33 @@ public partial class DataGrid : Frame
 
         for (int columnNumber = 0; columnNumber < Columns.Count; columnNumber++)
         {
-            var binding = Columns[columnNumber].Binding as Binding;
+            var column = Columns[columnNumber];
+            var valueBinding = column.ValueBinding.CopyAsClone();
 
-            var path = binding?.Path ?? Columns[columnNumber].PropertyName ?? "Value"; // Backward compatibility.
-
-            var created = (View)Columns[columnNumber].CellItemTemplate?.CreateContent()
+            var created = (View)column.CellItemTemplate?.CreateContent()
                 ?? (View)CellItemTemplate?.CreateContent()
-                ?? LabelFactory(path) ?? CreateLabel(path);
+                ?? LabelFactory(valueBinding) ?? CreateLabel(valueBinding);
 
-            var view = new ContentView
+            var cell = new ContentView
             {
                 Content = created,
-                BindingContext = (CellItemTemplate is null) ? item : new
-                {
-                    Value = Columns[columnNumber].PropertyInfo.GetValue(item)
-                }
+                BindingContext = item,
             };
 
-            SetSelectionVisualStates(view);
+            if (column.CellItemTemplate is null && CellItemTemplate is not null && column.ValueBinding is not null)
+            {
+                // TODO: This is a workaround, we need to find a better way to do this.
+                // Check DataGridValueBindingExtension.cs to see how it works.
+                var binding = (column.ValueBinding as Binding);
+                cell.BindingContext = new Binding(binding.Path, source: item);
+            }
+
+            cell.SetBinding(ContentView.IsVisibleProperty, new Binding(nameof(DataGridColumn.IsVisible), source: column));
+
+            SetSelectionVisualStates(cell);
 
             _rootGrid.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
-            _rootGrid.Add(view, columnNumber, row: actualRow);
+            _rootGrid.Add(cell, columnNumber, row: actualRow);
         }
     }
 
@@ -260,7 +284,7 @@ public partial class DataGrid : Frame
 
     protected virtual void AddSeparator(int row)
     {
-        var line = HorizontalLineFactory() ?? CreateHorizontalLine();
+        var line = HorizontalLineFactory?.Invoke() ?? CreateHorizontalLine();
         _rootGrid.AddWithSpan(line, row, 0, columnSpan: Columns.Count);
     }
 
@@ -295,15 +319,6 @@ public partial class DataGrid : Frame
         }
     }
 
-    // TODO: Remove later. [Obsolete]
-    protected virtual void EnsurePropertyInfosAreSet()
-    {
-        foreach (var column in Columns.Where(x => x.PropertyInfo == null && x.PropertyName != null))
-        {
-            column.PropertyInfo = CurrentType.GetProperty(column.PropertyName);
-        }
-    }
-
     protected virtual void OnSelectedItemsSet()
     {
         UpdateSelections();
@@ -331,7 +346,18 @@ public partial class DataGrid : Frame
 
     protected virtual void RenderEmptyView()
     {
-        this.Content = EmptyView ??= (View)EmptyViewTemplate?.CreateContent() ?? new BoxView { HorizontalOptions = LayoutOptions.Fill, Margin = 40 };
+        if (!ReadyToRender)
+        {
+            return;
+        }
+
+        EmptyView ??= (View)EmptyViewTemplate?.CreateContent() ?? new BoxView { HorizontalOptions = LayoutOptions.Fill, Margin = 40 };
+        if (!_rootGrid.Contains(EmptyView))
+        {
+            AddSeparator(1);
+            _rootGrid.Add(EmptyView, column: 0, row: 2);
+            Grid.SetColumnSpan(EmptyView, Columns.Count);
+        }
     }
 
     protected virtual void OnEmptyViewTemplateSet()

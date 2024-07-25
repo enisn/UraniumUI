@@ -1,7 +1,5 @@
-﻿#if WINDOWS
-using Microsoft.Maui.Platform;
-#endif
-using Plainer.Maui.Controls;
+﻿using Plainer.Maui.Controls;
+using UraniumUI.Material.Extensions;
 using UraniumUI.Pages;
 using UraniumUI.Resources;
 using UraniumUI.Views;
@@ -30,6 +28,7 @@ public partial class TextField : InputField
         Margin = new Thickness(0, 0, 5, 0),
         Content = new Path
         {
+            StyleClass = new[] { "TextField.ClearIcon" },
             Data = UraniumShapes.X,
             Fill = ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.DarkGray).WithAlpha(.5f),
         }
@@ -45,29 +44,28 @@ public partial class TextField : InputField
     public TextField()
     {
         iconClear.TappedCommand = new Command(OnClearTapped);
-        
+
         UpdateClearIconState();
-        EntryView.SetBinding(Entry.TextProperty, new Binding(nameof(Text), source: this));
-        EntryView.SetBinding(Entry.ReturnCommandParameterProperty, new Binding(nameof(ReturnCommandParameter), source: this));
-        EntryView.SetBinding(Entry.ReturnCommandProperty, new Binding(nameof(ReturnCommand), source: this));
-        EntryView.SetBinding(Entry.SelectionLengthProperty, new Binding(nameof(SelectionLength), source: this));
-        EntryView.SetBinding(Entry.CursorPositionProperty, new Binding(nameof(CursorPosition), source: this));
-        EntryView.SetBinding(Entry.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
-        EntryView.SetBinding(Entry.IsReadOnlyProperty, new Binding(nameof(IsReadOnly), source: this));
+
+        EntryView.SetBinding(Entry.TextProperty, new Binding(nameof(Text), BindingMode.TwoWay, source: this));
+        EntryView.SetBinding(Entry.ReturnCommandParameterProperty, new Binding(nameof(ReturnCommandParameter), BindingMode.TwoWay, source: this));
+        EntryView.SetBinding(Entry.ReturnCommandProperty, new Binding(nameof(ReturnCommand), BindingMode.TwoWay, source: this));
+        EntryView.SetBinding(Entry.SelectionLengthProperty, new Binding(nameof(SelectionLength), BindingMode.TwoWay, source: this));
+        EntryView.SetBinding(Entry.CursorPositionProperty, new Binding(nameof(CursorPosition), BindingMode.TwoWay, source: this));
+
+        EntryView.SetBinding(Entry.IsEnabledProperty, new Binding(nameof(IsEnabled), BindingMode.OneWay, source: this));
+        EntryView.SetBinding(Entry.IsReadOnlyProperty, new Binding(nameof(IsReadOnly), BindingMode.OneWay, source: this));
+
+        iconClear.SetBinding(StatefulContentView.IsFocusableProperty, new Binding(nameof(DisallowClearButtonFocus), source: this));
+
+        AfterConstructor();
     }
+
+    partial void AfterConstructor();
 
     protected override void OnHandlerChanged()
     {
         base.OnHandlerChanged();
-#if WINDOWS
-        if (EntryView.Handler.PlatformView is Microsoft.UI.Xaml.Controls.TextBox textBox)
-        {
-            textBox.SelectionHighlightColor = new Microsoft.UI.Xaml.Media.SolidColorBrush(ColorResource.GetColor("Primary", "PrimaryDark", Colors.Purple).ToWindowsColor());
-            textBox.BorderThickness = new Microsoft.UI.Xaml.Thickness(0);
-
-            textBox.Style = null;
-        }
-#endif
 
         if (Handler is null)
         {
@@ -78,7 +76,14 @@ public partial class TextField : InputField
         {
             EntryView.TextChanged += EntryView_TextChanged;
             EntryView.Completed += EntryView_Completed;
+
+            ApplyAttachedProperties();
         }
+    }
+
+    protected virtual void ApplyAttachedProperties()
+    {
+        EntryProperties.SetSelectionHighlightColor(EntryView, SelectionHighlightColor);
     }
 
     private void EntryView_TextChanged(object sender, TextChangedEventArgs e)

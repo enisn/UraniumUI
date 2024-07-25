@@ -25,20 +25,20 @@
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
 		<ApplicationVersion>1</ApplicationVersion>
 
-    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">11.0</SupportedOSPlatformVersion>
-    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">13.1</SupportedOSPlatformVersion>
-    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
-    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
-    <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
-    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">11.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">13.1</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
+		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<!-- App Icon -->
 		<MauiIcon Include="Resources\AppIcon\appicon.svg" Color="#52D681" />
 
-    <!-- Splash Screen -->
-    <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#52D681" BaseSize="128,128" />
+		<!-- Splash Screen -->
+		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#52D681" BaseSize="128,128" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
@@ -52,25 +52,32 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="DotNurse.Injector" Version="2.5.2" />
-	  <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="ReactiveUI.Fody" Version="19.4.1" />
+		<PackageReference Include="DotNurse.Injector" Version="2.5.2" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<PackageReference Include="ReactiveUI.Fody" Version="19.5.1" />
+		<PackageReference Include="Bogus" Version="35.4.0" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\src\UraniumUI.Blurs\UraniumUI.Blurs.csproj" />
-	  <ProjectReference Include="..\..\src\UraniumUI.WebComponents\UraniumUI.WebComponents.csproj" />
-	  <ProjectReference Include="..\..\src\UraniumUI.Dialogs.Mopups\UraniumUI.Dialogs.Mopups.csproj" />
-	  <ProjectReference Include="..\..\src\UraniumUI.Dialogs.CommunityToolkit\UraniumUI.Dialogs.CommunityToolkit.csproj" />
-	  <ProjectReference Include="..\..\src\UraniumUI.Icons.MaterialIcons\UraniumUI.Icons.MaterialIcons.csproj" />
-	  <ProjectReference Include="..\..\src\UraniumUI.Icons.FontAwesome\UraniumUI.Icons.FontAwesome.csproj" />
-	  <ProjectReference Include="..\..\src\UraniumUI.Icons.SegoeFluent\UraniumUI.Icons.SegoeFluent.csproj" />
-	  <ProjectReference Include="..\..\src\UraniumUI.Material\UraniumUI.Material.csproj" />
-	  <ProjectReference Include="..\..\src\UraniumUI.Validations.DataAnnotations\UraniumUI.Validations.DataAnnotations.csproj" />
+		<ProjectReference Include="..\..\src\UraniumUI.Blurs\UraniumUI.Blurs.csproj" />
+		<ProjectReference Include="..\..\src\UraniumUI.WebComponents\UraniumUI.WebComponents.csproj" />
+		<ProjectReference Include="..\..\src\UraniumUI.Dialogs.Mopups\UraniumUI.Dialogs.Mopups.csproj" />
+		<ProjectReference Include="..\..\src\UraniumUI.Dialogs.CommunityToolkit\UraniumUI.Dialogs.CommunityToolkit.csproj" />
+		<ProjectReference Include="..\..\src\UraniumUI.Icons.MaterialSymbols\UraniumUI.Icons.MaterialSymbols.csproj" />
+		<ProjectReference Include="..\..\src\UraniumUI.Icons.FontAwesome\UraniumUI.Icons.FontAwesome.csproj" />
+		<ProjectReference Include="..\..\src\UraniumUI.Icons.SegoeFluent\UraniumUI.Icons.SegoeFluent.csproj" />
+		<ProjectReference Include="..\..\src\UraniumUI.Material\UraniumUI.Material.csproj" />
+		<ProjectReference Include="..\..\src\UraniumUI.Validations.DataAnnotations\UraniumUI.Validations.DataAnnotations.csproj" />
 	</ItemGroup>
-  
+
 	<ItemGroup>
-	  <MauiXaml Update="Pages\**\*.xaml">
+		<MauiXaml Update="Pages\**\*.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="Resources\Styles\Override.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

@@ -5,19 +5,19 @@
              xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
              xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
-             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialSymbols;assembly=UraniumUI.Icons.MaterialSymbols"
              xmlns:vm="clr-namespace:UraniumApp.ViewModels"
              xmlns:local="clr-namespace:UraniumApp"
              x:DataType="vm:RadioButtonsViewModel">
     <ScrollView>
         <VerticalStackLayout Padding="20">
-            <Label Text="CheckBox" FontSize="Title" />
+            <Label Text="RadioButton" FontSize="Title" />
             <Label Text="UraniumUI.Material.Controls" FontSize="Micro" Opacity=".6" />
 
             <HorizontalStackLayout Padding="0,20">
-                <Button Text="Documentation" StyleClass="OutlinedButton" Command="{x:Static uranium:Commands.OpenLinkCommand}" CommandParameter="https://enisn-projects.io/docs/en/uranium/latest/themes/material/RadioButton" ImageSource="{FontImageSource Glyph={x:Static m:MaterialRegular.Insert_drive_file}, FontFamily=MaterialRegular, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
-                <Button Text="Source" StyleClass="OutlinedButton" IsEnabled="False" ImageSource="{FontImageSource Glyph={x:Static m:MaterialRegular.Code}, FontFamily=MaterialRegular, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
-                <Button Text="Reset" Clicked="Reset_Clicked" StyleClass="OutlinedButton" ImageSource="{FontImageSource Glyph={x:Static m:MaterialRegular.Refresh}, FontFamily=MaterialRegular, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
+                <Button Text="Documentation" StyleClass="OutlinedButton" Command="{x:Static uranium:Commands.OpenLinkCommand}" CommandParameter="{StaticResource DocLink}" ImageSource="{FontImageSource Glyph={x:Static m:MaterialSharp.File_open}, FontFamily=MaterialSharp, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
+                <Button Text="Source" StyleClass="OutlinedButton" Command="{x:Static uranium:Commands.OpenLinkCommand}" CommandParameter="{StaticResource SourceLink}" ImageSource="{FontImageSource Glyph={x:Static m:MaterialSharp.Code}, FontFamily=MaterialSharp, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
+                <Button Text="Reset" Clicked="Reset_Clicked" StyleClass="OutlinedButton" ImageSource="{FontImageSource Glyph={x:Static m:MaterialSharp.Refresh}, FontFamily=MaterialSharp, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
             </HorizontalStackLayout>
 
             <VerticalStackLayout Spacing="12" Margin="{OnIdiom 10, Phone=0}" StyleClass="Elevation1">
@@ -83,7 +83,7 @@
                                                     </HorizontalStackLayout>
                                                 </uranium:StatefulContentView>
 
-                                                <Button Command="{Binding Parent.RemoveRadioButtonItemCommand}" CommandParameter="{Binding .}" StyleClass="TextButton" Text="Remove" ImageSource="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Close}, Size=16}" />
+                                                <Button Command="{Binding Parent.RemoveRadioButtonItemCommand}" CommandParameter="{Binding .}" StyleClass="TextButton" Text="Remove" ImageSource="{FontImageSource FontFamily=MaterialSharp, Glyph={x:Static m:MaterialSharp.Close}, Size=16}" />
 
                                             </VerticalStackLayout>
                                         </uranium:ExpanderView>
@@ -117,8 +117,8 @@
                         <material:RadioButtonGroupView>
                             <material:RadioButton Text="Option 1" />
                             <material:RadioButton Text="Option 2" />
-                            <material:RadioButton Text="Option 3 (Disabled)" IsDisabled="True" />
-                            <material:RadioButton Text="Option 4 (Disabled)" IsDisabled="True" IsChecked="True" />
+                            <material:RadioButton Text="Option 3 (Disabled)" IsDisabled="True" IsEnabled="False" />
+                            <material:RadioButton Text="Option 4 (Disabled)" IsDisabled="True" IsEnabled="False" IsChecked="True" />
                         </material:RadioButtonGroupView>
 
                         <BoxView StyleClass="Divider" />
@@ -126,8 +126,8 @@
                         <material:RadioButtonGroupView>
                             <material:RadioButton Text="Option 1" LabelPosition="Before" />
                             <material:RadioButton Text="Option 2" LabelPosition="Before" />
-                            <material:RadioButton Text="Option 3 (Disabled)" IsDisabled="True" LabelPosition="Before" />
-                            <material:RadioButton Text="Option 4 (Disabled)" IsDisabled="True" IsChecked="True" LabelPosition="Before" />
+                            <material:RadioButton Text="Option 3 (Disabled)" IsDisabled="True" IsEnabled="False" LabelPosition="Before" />
+                            <material:RadioButton Text="Option 4 (Disabled)" IsDisabled="True" IsEnabled="False" IsChecked="True" LabelPosition="Before" />
                         </material:RadioButtonGroupView>
 
                         <BoxView StyleClass="Divider" />
@@ -182,5 +182,7 @@
 </VerticalStackLayout>
             ]]>
         </x:String>
+        <x:String x:Key="DocLink">https://enisn-projects.io/docs/en/uranium/latest/themes/material/RadioButton</x:String>
+        <x:String x:Key="SourceLink">https://github.com/enisn/UraniumUI/blob/develop/demo/UraniumApp/Pages/RadioButtonsPage.xaml</x:String>
     </ContentPage.Resources>
 </ContentPage>

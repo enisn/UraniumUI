@@ -2,8 +2,12 @@
 using CommunityToolkit.Maui;
 using DotNurse.Injector;
 using Mopups.Hosting;
+using ReactiveUI;
+using System.Reactive;
 using UraniumUI;
 using UraniumUI.Dialogs;
+using UraniumUI.Options;
+using UraniumUI.Validations;
 
 namespace UraniumApp;
 
@@ -25,9 +29,21 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 fonts.AddFontAwesomeIconFonts();
-                fonts.AddMaterialIconFonts();
+                fonts.AddMaterialSymbolsFonts();
                 fonts.AddFluentIconFonts();
             });
+
+        builder.Services.Configure<AutoFormViewOptions>(options =>
+        {
+            options.ValidationFactory = DataAnnotationValidation.CreateValidations;
+        });
+
+        RxApp.DefaultExceptionHandler = new AnonymousObserver<Exception>(ex =>
+        {
+            App.Current.MainPage.DisplayAlert("Error", ex.Message, "OK");
+
+            // Track the exception here... (e.g. AppCenter, Sentry, etc.)
+        });
 
         var thisAssembly = typeof(MauiProgram).Assembly;
 
@@ -37,7 +53,7 @@ public static class MauiProgram
             options => options.Assembly = thisAssembly)
         .AddServicesByAttributes(assembly: thisAssembly);
 
-        //builder.Services.AddCommunityToolkitDialogs();
+        builder.Services.AddCommunityToolkitDialogs();
         builder.Services.AddMopupsDialogs();
 
         return builder.Build();

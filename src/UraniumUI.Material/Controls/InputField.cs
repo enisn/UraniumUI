@@ -1,7 +1,6 @@
 ﻿using Microsoft.Maui.Controls.Shapes;
-using UraniumUI.Resources;
 using UraniumUI.Extensions;
-using System.Collections;
+using UraniumUI.Resources;
 
 namespace UraniumUI.Material.Controls;
 
@@ -16,14 +15,15 @@ public partial class InputField : Grid
         get => content;
         set
         {
-            rootGrid.Remove(content);
+            if (content is not null)
+            {
+                ReleaseEvents();
+            }
             content = value;
-            rootGrid.Add(content, column: 1);
-            content = value;
+            border.Content = content;
 
             if (value != null)
             {
-                border.Content = value;
                 RegisterForEvents();
             }
         }
@@ -31,7 +31,7 @@ public partial class InputField : Grid
 
     protected Label labelTitle = new Label()
     {
-        Text = "Title",
+        StyleClass = new[] { "InputField.Title" },
         HorizontalOptions = LayoutOptions.Start,
         VerticalOptions = LayoutOptions.Start,
         InputTransparent = true,
@@ -40,7 +40,7 @@ public partial class InputField : Grid
 
     protected Border border = new Border
     {
-        Padding = 0,
+        StyleClass = new[] { "InputField.Border" },
         StrokeThickness = 1,
         StrokeDashOffset = 0,
         BackgroundColor = Colors.Transparent,
@@ -52,6 +52,7 @@ public partial class InputField : Grid
     {
         return new Image
         {
+            StyleClass = new[] { "InputField.Icon" },
             HorizontalOptions = LayoutOptions.Start,
             VerticalOptions = LayoutOptions.Center,
             WidthRequest = 20,
@@ -60,7 +61,10 @@ public partial class InputField : Grid
         };
     });
 
-    protected HorizontalStackLayout endIconsContainer = new HorizontalStackLayout();
+    protected readonly HorizontalStackLayout endIconsContainer = new HorizontalStackLayout
+    {
+        StyleClass = new[] { "InputField.Attachments" },
+    };
 
     public IList<IView> Attachments => endIconsContainer.Children;
 
@@ -147,6 +151,10 @@ public partial class InputField : Grid
     {
         base.OnHandlerChanged();
 
+#if ANDROID
+        Loaded += OnLoaded;
+#endif
+
         Content.Focused += OnFocusChanged;
         Content.Unfocused += OnFocusChanged;
 
@@ -154,12 +162,37 @@ public partial class InputField : Grid
         {
             Content.Focused -= OnFocusChanged;
             Content.Unfocused -= OnFocusChanged;
+#if ANDROID
+            Loaded -= OnLoaded;
+#endif
         }
     }
 
     protected virtual void OnFocusChanged(object sender, FocusEventArgs args)
     {
         (this as IGridLayout).IsFocused = args.IsFocused;
+    }
+#endif
+
+#if ANDROID
+    // Android icon loading fix.
+    protected virtual void OnLoaded(object sender, EventArgs e)
+    {
+        AlignIconColor();
+    }
+    void AlignIconColor()
+    {
+        if (Icon is not FontImageSource fontImageSource || LastFontimageColor.IsNullOrTransparent())
+        {
+            return;
+        }
+
+        fontImageSource.Color = null;
+
+        Dispatcher.Dispatch(() =>
+        {
+            fontImageSource.Color = LastFontimageColor;
+        });
     }
 #endif
 
@@ -178,9 +211,17 @@ public partial class InputField : Grid
     {
         var perimeter = (this.Width + this.Height) * 2;
         var calculatedFirstDash = FirstDash + CornerRadius.Clamp(FirstDash, double.MaxValue);
+
         var space = (labelTitle.Width + calculatedFirstDash) * .8;
         if (labelTitle.Width <= 0)
             space = 0;
+
+#if ANDROID
+        if (this.IsRtl())
+        {
+            calculatedFirstDash += this.Width - labelTitle.Width;
+        }
+#endif
 
 #if WINDOWS
         if (space <= 0 || perimeter <= 0)
@@ -188,32 +229,21 @@ public partial class InputField : Grid
             return;
         }
 
-        border.Content = null;
-        this.Remove(border);
-        border = new Border
+        border.Padding = 0;
+        border.Stroke = BorderColor;
+        border.StrokeThickness = BorderThickness;
+        border.Background = InputBackground;
+        border.BackgroundColor = InputBackgroundColor;
+        border.StrokeDashOffset = 0;
+        border.StrokeShape = new RoundRectangle
         {
-            Padding = 0,
-            Stroke = BorderColor,
-            StrokeThickness = BorderThickness,
-            Background = InputBackground,
-            BackgroundColor = InputBackgroundColor,
-            StrokeDashOffset = 0,
-            StrokeShape = new RoundRectangle
-            {
-                CornerRadius = CornerRadius
-            },
-            Content = rootGrid
+            CornerRadius = CornerRadius
         };
 #endif
 
-            border.StrokeDashArray = new DoubleCollection { calculatedFirstDash * 0.9, space, perimeter, 0 };
-
-#if WINDOWS
-        this.Add(border);
-#endif
+        border.StrokeDashArray = new DoubleCollection { calculatedFirstDash * 0.9 / BorderThickness, space / BorderThickness, perimeter, 0 };
 
         UpdateState();
-        border.StrokeThickness = BorderThickness;
     }
 
     protected virtual void UpdateState()
@@ -225,10 +255,22 @@ public partial class InputField : Grid
 
         if (HasValue || Content.IsFocused)
         {
+            var x = CornerRadius.Clamp(10, MaxCornerRadius) - 10;
+
             UpdateOffset(0.01);
-            labelTitle.TranslateTo(CornerRadius.Clamp(10, MaxCornerRadius) - 10, -25, 90, Easing.BounceOut);
+
             labelTitle.AnchorX = 0;
-            labelTitle.ScaleTo(.8, 90);
+
+            labelTitle.TranslateToSafely(x, -25, 90, Easing.BounceOut);
+            labelTitle.ScaleToSafely(.8, 90);
+
+
+#if ANDROID
+            if (this.IsRtl())
+            {
+                labelTitle.AnchorX = .5;
+            }
+#endif
         }
         else
         {
@@ -236,9 +278,19 @@ public partial class InputField : Grid
             UpdateOffset(offsetToGo);
 
             labelTitle.CancelAnimations();
-            labelTitle.TranslateTo(imageIcon.IsValueCreated ? imageIcon.Value.Width : 0, 0, 90, Easing.BounceOut);
+
+            var x = imageIcon.IsValueCreated ? imageIcon.Value.Width : 0;
+
+#if ANDROID
+            if (this.IsRtl())
+            {
+                x = imageIcon.IsValueCreated ? -imageIcon.Value.Width : 0;
+            }
+#endif
+
             labelTitle.AnchorX = 0;
-            labelTitle.ScaleTo(1, 90);
+            labelTitle.TranslateToSafely(x, 0, 90, Easing.BounceOut);
+            labelTitle.ScaleToSafely(1, 90);
         }
     }
 
@@ -287,7 +339,7 @@ public partial class InputField : Grid
 
         if (Icon is FontImageSource fontImageSource && fontImageSource.Color != AccentColor)
         {
-            LastFontimageColor = fontImageSource.Color?.WithAlpha(1); // To createnew instance.
+            LastFontimageColor = fontImageSource.Color?.WithAlpha(1); // To create a new instance.
             fontImageSource.Color = AccentColor;
         }
     }

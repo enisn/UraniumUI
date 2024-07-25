@@ -1,13 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using InputKit.Shared.Controls;
 
 namespace UraniumUI.Dialogs;
 
 public interface IDialogService
 {
+    Task DisplayViewAsync(
+        string title,
+        View content,
+        string okText = "OK");
+
+    Task<IDisposable> DisplayProgressAsync(
+        string title,
+        string message);
+
+    Task<IDisposable> DisplayProgressCancellableAsync(
+        string title,
+        string message,
+        string cancelText = "Cancel",
+        CancellationTokenSource tokenSource = default);
+
     Task<bool> ConfirmAsync(
         string title,
         string message,
@@ -29,7 +40,7 @@ public interface IDialogService
         string accept = "Ok",
         string cancel = "Cancel", string displayMember = null);
 
-        Task<string> DisplayTextPromptAsync(
+    Task<string> DisplayTextPromptAsync(
         string title,
         string message,
         string accept = "OK",
@@ -37,5 +48,12 @@ public interface IDialogService
         string placeholder = null,
         int maxLength = -1,
         Keyboard keyboard = null,
-        string initialValue = "");
+        string initialValue = "",
+        bool isPassword = false);
+
+    Task<TViewModel> DisplayFormViewAsync<TViewModel>(
+        string title,
+        TViewModel viewModel = default,
+        string submit = "OK",
+        string cancel = "Cancel") where TViewModel : class;
 }

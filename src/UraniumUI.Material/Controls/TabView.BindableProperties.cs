@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Windows.Input;
 
 namespace UraniumUI.Material.Controls;
 public partial class TabView
@@ -17,7 +18,8 @@ public partial class TabView
     public DataTemplate TabHeaderItemTemplate { get => (DataTemplate)GetValue(TabHeaderItemTemplateProperty); set => SetValue(TabHeaderItemTemplateProperty, value); }
 
     public static readonly BindableProperty TabHeaderItemTemplateProperty =
-        BindableProperty.Create(nameof(TabHeaderItemTemplate), typeof(DataTemplate), typeof(TabView), defaultValue: TabView.DefaultTabHeaderItemTemplate,
+        BindableProperty.Create(nameof(TabHeaderItemTemplate), typeof(DataTemplate), typeof(TabView),
+            defaultValueCreator: (bindable) => TabView.DefaultTabHeaderItemTemplate,
             propertyChanged: (bo, ov, nv) => (bo as TabView).RenderHeaders());
 
     [TypeConverter(typeof(GridLengthTypeConverter))]
@@ -61,6 +63,16 @@ public partial class TabView
         nameof(SelectedTab),
         typeof(TabItem),
         typeof(TabView),
-        propertyChanged: (bindable, oldValue, newValue)
-            => (bindable as TabView).OnSelectedTabChanged((TabItem)oldValue, (TabItem)newValue));
+        propertyChanged: async (bindable, oldValue, newValue)
+            => await (bindable as TabView).OnSelectedTabChanged((TabItem)oldValue, (TabItem)newValue));
+
+    public ICommand CurrentItemChangedCommand { get => (ICommand)GetValue(CurrentItemChangedCommandProperty); set => SetValue(CurrentItemChangedCommandProperty, value); }
+
+    public static readonly BindableProperty CurrentItemChangedCommandProperty = BindableProperty.Create(
+        nameof(CurrentItemChangedCommand), typeof(ICommand), typeof(TabView));
+
+    public ICommand SelectedTabChangedCommand { get => (ICommand)GetValue(SelectedTabChangedCommandProperty); set => SetValue(SelectedTabChangedCommandProperty, value); }
+
+    public static readonly BindableProperty SelectedTabChangedCommandProperty = BindableProperty.Create(
+        nameof(SelectedTabChangedCommand), typeof(ICommand), typeof(TabView));
 }

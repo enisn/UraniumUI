@@ -1,4 +1,7 @@
 <Project>
+    <PropertyGroup>
+        <MauiVersion>8.0.21</MauiVersion>
+    </PropertyGroup>
     <!-- <PropertyGroup Condition="$(TargetFramework.Contains('net7'))">
         <MauiVersion>7.0.92</MauiVersion>
     </PropertyGroup>

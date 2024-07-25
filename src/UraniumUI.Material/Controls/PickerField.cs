@@ -18,7 +18,6 @@ public class PickerField : InputField
     public override View Content { get; set; } = new PickerView
     {
         VerticalOptions = LayoutOptions.Center,
-        HorizontalOptions = LayoutOptions.Fill,
         Margin = new Thickness(15, 0),
 #if WINDOWS
         Opacity = 0,
@@ -58,7 +57,6 @@ public class PickerField : InputField
         iconClear.TappedCommand = new Command(OnClearTapped);
 
         UpdateClearIconState();
-
         PickerView.SetBinding(PickerView.SelectedItemProperty, new Binding(nameof(SelectedItem), source: this));
         PickerView.SetBinding(PickerView.SelectedIndexProperty, new Binding(nameof(SelectedIndex), source: this));
         PickerView.SetBinding(PickerView.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
@@ -87,7 +85,7 @@ public class PickerField : InputField
     protected override void OnSizeAllocated(double width, double height)
     {
         base.OnSizeAllocated(width, height);
-        PickerView.WidthRequest = width * .5; // TODO:Make this value dynamic later.
+        PickerView.MinimumWidthRequest = (width * .96f) - (AllowClear ? iconClear.Width : 0) - (imageIcon.IsValueCreated ? imageIcon.Value.Width : 0);
     }
 #endif
 

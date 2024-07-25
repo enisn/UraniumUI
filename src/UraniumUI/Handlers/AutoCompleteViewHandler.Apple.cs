@@ -6,14 +6,12 @@ using Microsoft.Maui.Controls.Compatibility.Platform.iOS;
 using Microsoft.Maui.Handlers;
 using Microsoft.Maui.Platform;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using UIKit;
 using UraniumUI.Controls;
 using UraniumUI.Extensions;
-using UraniumUI.Controls;
 
 namespace UraniumUI.Handlers;
 public partial class AutoCompleteViewHandler : ViewHandler<IAutoCompleteView, UIAutoCompleteTextField>
@@ -24,7 +22,7 @@ public partial class AutoCompleteViewHandler : ViewHandler<IAutoCompleteView, UI
         var view = new UIAutoCompleteTextField
         {
             AutoCompleteViewSource = new AutoCompleteDefaultDataSource(),
-            SortingAlgorithm = (d, b) => b,
+            SortingAlgorithm = (d, b) => b.OrderBy(x => x.StartsWith(d, StringComparison.InvariantCultureIgnoreCase) ? 0 : 1).ToArray(),
         };
         view.Text = VirtualView.Text;
         view.TextColor = VirtualView.TextColor.ToPlatform();
@@ -39,23 +37,23 @@ public partial class AutoCompleteViewHandler : ViewHandler<IAutoCompleteView, UI
     public override void PlatformArrange(Rect rect)
     {
         base.PlatformArrange(rect);
-        Draw(rect);
+        Render(rect);
     }
 
     protected override void ConnectHandler(UIAutoCompleteTextField platformView)
     {
-        PlatformView.EditingChanged += PlatformView_TextChanged;
-        PlatformView.EditingDidBegin += PlatformView_EditingDidBegin;
-        PlatformView.EditingDidEndOnExit += PlatformView_EditingDidEndOnExit;
-        PlatformView.EditingDidEnd += PlatformView_EditingDidEnd;
+        platformView.EditingChanged += PlatformView_TextChanged;
+        platformView.EditingDidBegin += PlatformView_EditingDidBegin;
+        platformView.EditingDidEndOnExit += PlatformView_EditingDidEndOnExit;
+        platformView.EditingDidEnd += PlatformView_EditingDidEnd;
     }
 
     protected override void DisconnectHandler(UIAutoCompleteTextField platformView)
     {
-        PlatformView.EditingChanged -= PlatformView_TextChanged;
-        PlatformView.EditingDidBegin -= PlatformView_EditingDidBegin;
-        PlatformView.EditingDidEndOnExit -= PlatformView_EditingDidEndOnExit;
-        PlatformView.EditingDidEnd -= PlatformView_EditingDidEnd;
+        platformView.EditingChanged -= PlatformView_TextChanged;
+        platformView.EditingDidBegin -= PlatformView_EditingDidBegin;
+        platformView.EditingDidEndOnExit -= PlatformView_EditingDidEndOnExit;
+        platformView.EditingDidEnd -= PlatformView_EditingDidEnd;
     }
 
     private void PlatformView_TextChanged(object sender, EventArgs e)
@@ -94,23 +92,28 @@ public partial class AutoCompleteViewHandler : ViewHandler<IAutoCompleteView, UI
         handler.SetItemsSource();
     }
 
+    public static void MapThreshold(AutoCompleteViewHandler handler, AutoCompleteView view)
+    {
+        handler.PlatformView.Threshold = view.Threshold;
+    }
+
     private void SetItemsSource()
     {
         if (VirtualView.ItemsSource != null)
         {
-            var items = VirtualView.ItemsSource.ToList();
-            PlatformView.UpdateItems(items);   
+            var items = VirtualView.ItemsSource;
+            PlatformView.UpdateItems(items);
         }
     }
 
-    public void Draw(CGRect rect)
+    public void Render(CGRect rect)
     {
         var ctrl = UIApplication.SharedApplication.GetTopViewController();
 
         var relativePosition = UIApplication.SharedApplication.KeyWindow;
         var relativeFrame = PlatformView.Superview.ConvertRectToView(PlatformView.Frame, relativePosition);
 
-        PlatformView.Draw(ctrl, PlatformView.Layer, VirtualView as AutoCompleteView, relativeFrame.X, relativeFrame.Y);
+        PlatformView.Render(ctrl, PlatformView.Layer, VirtualView as AutoCompleteView, relativeFrame.X, relativeFrame.Y);
     }
 
     private void AutoCompleteViewSourceOnSelected(object sender, SelectedItemChangedEventArgs args)
@@ -129,11 +132,11 @@ public class UIAutoCompleteTextField : MauiTextField, IUITextFieldDelegate
     private AutoCompleteViewSource _autoCompleteViewSource;
     private UIView _background;
     private CGRect _drawnFrame;
-    private List<string> _items = new();
+    private IList _items = new List<string>();
     private UIViewController _parentViewController;
     private UIScrollView _scrollView;
 
-    public Func<string, ICollection<string>, ICollection<string>> SortingAlgorithm { get; set; } = (t, d) => d;
+    public Func<string, IEnumerable<string>, IList<string>> SortingAlgorithm { get; set; } = (t, d) => d.OrderBy(x => x.Contains(t, StringComparison.InvariantCultureIgnoreCase) ? 0 : 1).ToArray();
 
     public AutoCompleteViewSource AutoCompleteViewSource
     {
@@ -157,7 +160,7 @@ public class UIAutoCompleteTextField : MauiTextField, IUITextFieldDelegate
 
     public int AutocompleteTableViewHeight { get; set; } = 150;
 
-    public void Draw(UIViewController viewController, CALayer layer, AutoCompleteView virtualView, NFloat x, NFloat y)
+    public void Render(UIViewController viewController, CALayer layer, AutoCompleteView virtualView, NFloat x, NFloat y)
     {
         var _scrollView = GetParentScrollView(this);
         _drawnFrame = layer.Frame;
@@ -221,11 +224,22 @@ public class UIAutoCompleteTextField : MauiTextField, IUITextFieldDelegate
         view.AddSubview(AutoCompleteTableView);
 
         //listen to edit events
+        
+        EditingChanged -= OnEditingChanged;
+        EditingDidEnd -= OnEditingDidEnd;
+        EditingDidBegin -= UIAutoCompleteTextField_EditingDidBegin;
+
         EditingChanged += OnEditingChanged;
         EditingDidEnd += OnEditingDidEnd;
+        EditingDidBegin += UIAutoCompleteTextField_EditingDidBegin;
 
         UpdateTableViewData();
         IsInitialized = true;
+    }
+
+    private void UIAutoCompleteTextField_EditingDidBegin(object sender, EventArgs e)
+    {
+        HandleTableState();
     }
 
     private void OnEditingDidEnd(object sender, EventArgs eventArgs)
@@ -234,6 +248,11 @@ public class UIAutoCompleteTextField : MauiTextField, IUITextFieldDelegate
     }
 
     private void OnEditingChanged(object sender, EventArgs eventArgs)
+    {
+        HandleTableState();
+    }
+
+    private void HandleTableState()
     {
         if (Text.Length >= Threshold)
         {
@@ -264,13 +283,21 @@ public class UIAutoCompleteTextField : MauiTextField, IUITextFieldDelegate
 
     public void UpdateTableViewData()
     {
-        var sorted = SortingAlgorithm(Text, _items);
-        if (!sorted.Any())
+        if (_items is IEnumerable<object> _itemAsObject)
         {
-            HideAutoCompleteView();
-            return;
+            var sorted = SortingAlgorithm(Text, _itemAsObject.Select(x => x.ToString()));
+            if (!sorted.Any())
+            {
+                HideAutoCompleteView();
+                return;
+            }
+            AutoCompleteViewSource.Suggestions = (IList) sorted;
         }
-        AutoCompleteViewSource.Suggestions = sorted;
+        else
+        {
+            AutoCompleteViewSource.Suggestions = _items;
+        }
+
         AutoCompleteTableView.ReloadData();
 
         var f = AutoCompleteTableView.Frame;
@@ -280,7 +307,7 @@ public class UIAutoCompleteTextField : MauiTextField, IUITextFieldDelegate
         _background.Frame = frame;
     }
 
-    public void UpdateItems(List<string> items)
+    public void UpdateItems(IList items)
     {
         _items = items;
         AutoCompleteViewSource.UpdateSuggestions(items);
@@ -297,11 +324,11 @@ public class UIAutoCompleteTextField : MauiTextField, IUITextFieldDelegate
 
 public abstract class AutoCompleteViewSource : UITableViewSource
 {
-    public ICollection<string> Suggestions { get; set; } = new List<string>();
+    public IList Suggestions { get; set; } = new List<string>();
 
     public UIAutoCompleteTextField AutoCompleteTextField { get; set; }
 
-    public abstract void UpdateSuggestions(ICollection<string> suggestions);
+    public abstract void UpdateSuggestions(IList suggestions);
 
     public abstract override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath);
 
@@ -316,9 +343,9 @@ public abstract class AutoCompleteViewSource : UITableViewSource
     {
         AutoCompleteTextField.AutoCompleteTableView.Hidden = true;
         if (indexPath.Row < Suggestions.Count)
-            AutoCompleteTextField.Text = Suggestions.ElementAt(indexPath.Row);
+            AutoCompleteTextField.Text = Suggestions[indexPath.Row]?.ToString();
         AutoCompleteTextField.ResignFirstResponder();
-        var item = Suggestions.ToList()[(int)indexPath.Item];
+        var item = Suggestions[(int)indexPath.Item];
         Selected?.Invoke(tableView, new SelectedItemChangedEventArgs(item, -1));
         // don't call base.RowSelected
     }
@@ -328,7 +355,7 @@ public class AutoCompleteDefaultDataSource : AutoCompleteViewSource
 {
     private const string _cellIdentifier = "DefaultIdentifier";
 
-    public override void UpdateSuggestions(ICollection<string> suggestions)
+    public override void UpdateSuggestions(IList suggestions)
     {
         Suggestions = suggestions;
     }
@@ -336,13 +363,13 @@ public class AutoCompleteDefaultDataSource : AutoCompleteViewSource
     public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
     {
         var cell = tableView.DequeueReusableCell(_cellIdentifier);
-        var item = Suggestions.ElementAt(indexPath.Row);
+        var item = Suggestions[indexPath.Row];
 
         if (cell == null)
             cell = new UITableViewCell(UITableViewCellStyle.Default, _cellIdentifier);
 
         cell.BackgroundColor = UIColor.Clear;
-        cell.TextLabel.Text = item;
+        cell.TextLabel.Text = item.ToString();
 
         return cell;
     }

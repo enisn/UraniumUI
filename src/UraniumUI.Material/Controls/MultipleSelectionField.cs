@@ -53,6 +53,11 @@ public partial class MultiplePickerField : InputField
 
         _pickSelectionsCommand = new Command(async () =>
         {
+            if (SelectedItems is null)
+            {
+                SelectedItems = new ObservableCollection<object>();
+            }
+
             IsBusy = true;
             var result = await DialogService.DisplayCheckBoxPromptAsync(
                 this.Title,
@@ -62,7 +67,12 @@ public partial class MultiplePickerField : InputField
 
             if (result != null)
             {
-                SelectedItems = new ObservableCollection<object>(result);
+                SelectedItems.Clear();
+                foreach (var item in result)
+                {
+                    SelectedItems.Add(item);
+                }
+
                 UpdateState();
             }
             IsBusy = false;

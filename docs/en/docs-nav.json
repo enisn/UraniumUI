@@ -5,7 +5,7 @@
       "path": "Getting-Started.md"
     },
     {
-      "text": "Infrastructure",
+      "text": "Fundamentals",
       "items": [
         {
           "text": "Uranium Content Page",
@@ -14,6 +14,22 @@
         {
           "text": "Stateful Content View",
           "path": "infrastructure/StatefulContentView.md"
+        },
+        {
+          "text": "Grid Layout",
+          "path": "infrastructure/GridLayout.md"
+        },
+        {
+          "text": "Auto Form View",
+          "path": "infrastructure/AutoFormView.md"
+        },
+        {
+          "text": "Auto Form View",
+          "path": "infrastructure/Dropdown.md"
+        },
+        {
+          "text": "ExpanderView",
+          "path": "infrastructure/ExpanderView.md"
         },
         {
           "text" : "Validations",
@@ -96,7 +112,7 @@
       ]
     },
     {
-      "text": "Material Theme",
+      "text": "Material",
       "items": [
         {
           "text": "Colors & Styles",
@@ -177,6 +193,10 @@
           "path": "themes/material/components/DataGrid.md"
         },
         {
+          "text": "Paginator",
+          "path": "themes/material/components/Paginator.md"
+        },
+        {
           "text": "TreeView",
           "path": "themes/material/components/TreeView.md"
         },
@@ -216,8 +236,16 @@
         {
           "text": "Migration to v2.4",
           "path": "migration-guides/Migrating-To-2.4.md"
+        },
+        {
+          "text": "Migration to v2.7",
+          "path": "migration-guides/Migrating-To-2.7.md"
         }
       ]
+    },
+    {
+        "text": "API Reference",
+        "path": "https://uraniumui.gh.enisn-projects.io/api/UraniumUI.html"
     },
     {
         "text": "Support",

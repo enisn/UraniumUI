@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             xmlns:vm="clr-namespace:UraniumApp.ViewModels"
+             BindingContext="{uranium:Inject {Type vm:AutoFormViewPageViewModel}}"
+             x:DataType="vm:AutoFormViewPageViewModel"
+             x:Class="UraniumApp.Pages.AutoFormViewPage"
+             Title="AutoFormViewPage">
+    <VerticalStackLayout>
+        <material:TabView>
+            <material:TabItem Title="Page">
+
+                <uranium:AutoFormView Source="{Binding .}" HorizontalOptions="Center" MaximumWidthRequest="400" ShowMissingProperties="False">
+                    <uranium:AutoFormView.FooterLayout>
+                        <FlexLayout JustifyContent="SpaceEvenly" />
+                    </uranium:AutoFormView.FooterLayout>
+                </uranium:AutoFormView>
+                
+            </material:TabItem>
+
+            <material:TabItem Title="Dialog">
+                <material:TabItem.ContentTemplate>
+                    <DataTemplate>
+                        <Button 
+                             Margin="32" 
+                             HorizontalOptions="Center"
+                             Text="Show Dialog"
+                             StyleClass="FilledButton"
+                             Command="{Binding ShowDialogCommand}" />
+                    </DataTemplate>
+                </material:TabItem.ContentTemplate>
+           
+            </material:TabItem>
+        </material:TabView>
+    </VerticalStackLayout>
+</ContentPage>

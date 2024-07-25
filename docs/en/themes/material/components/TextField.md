@@ -19,7 +19,7 @@ Then you can use it like this:
 
 | Light | Dark |
 | --- | --- |
-| ![MAUI Material Design TextField](images/textfield-demo-light-android.gif) | ![MAUI Material Design TextField](images/textfield-demo-dark-windows.gif) |
+| ![MAUI Material Design TextField](../../../../images/textfield-demo-light-android.gif) | ![MAUI Material Design TextField](../../../../images/textfield-demo-dark-windows.gif) |
 
 
 ## Icon
@@ -33,7 +33,7 @@ TextFields support setting an icon on the left side of the control. You can set 
 
 | Light | Dark |
 | --- | --- |
-| ![MAUI Material Input](images/textfield-icon-light-andoid.gif) | ![MAUI Material Input](images/textfield-icon-dark-windows.gif) |
+| ![MAUI Material Input](../../../../images/textfield-icon-light-andoid.gif) | ![MAUI Material Input](../../../../images/textfield-icon-dark-windows.gif) |
 
 ## AccentColor
 The color that is used to fill border and icon of control when it's focused. You can change it by setting `AccentColor` property of the control.
@@ -46,7 +46,7 @@ The color that is used to fill border and icon of control when it's focused. You
 ```
 
 
-![MAUI AccentColor InputField](images/editorfield-accentcolor-android-dark.gif)
+![MAUI AccentColor InputField](../../../../images/editorfield-accentcolor-android-dark.gif)
 
 ## AllowClear
 TextFields support clearing the text by setting the `AllowClear` property to `true`. Default value is `false`.
@@ -59,7 +59,7 @@ TextFields support clearing the text by setting the `AllowClear` property to `tr
 
 |Dark| Light|
 | --- | --- |
-| ![MAUI Material Input](images/textfield-allowclear-dark-android.gif) | ![MAUI Material Input](images/textfield-allowclear-light-android.gif) |
+| ![MAUI Material Input](../../../../images/textfield-allowclear-dark-android.gif) | ![MAUI Material Input](../../../../images/textfield-allowclear-light-android.gif) |
 
 ## Attachments
 Attachments are additional controls that can be placed inside the control. They are placed on the end of the control (right-side on LTR). You can add attachments by using `Attachments` property. It is a collection of `View` objects.
@@ -72,7 +72,7 @@ Attachments are additional controls that can be placed inside the control. They 
 </material:TextField>
 ```
 
-![maui-uraniumui-textfield-attachments](images/textfield-attachments-button.png)
+![maui-uraniumui-textfield-attachments](../../../../images/textfield-attachments-button.png)
 
 ### Password Show/Hide
 You can use pre-defined `TextFieldPasswordShowHideAttachment` to create a password show/hide button. It is a button that toggles the `IsPassword` property of the control.
@@ -85,7 +85,7 @@ You can use pre-defined `TextFieldPasswordShowHideAttachment` to create a passwo
 </material:TextField>
 ```
 
-![maui-uraniumui-textfield-attachments](images/textfield-attachments-passwordshowhide.gif)
+![maui-uraniumui-textfield-attachments](../../../../images/textfield-attachments-passwordshowhide.gif)
 
 ## Validation
 
@@ -143,4 +143,47 @@ TextField is fully compatible with [FormView](https://enisn-projects.io/docs/en/
 
 | Light | Dark |
 | --- | --- |
-| ![MAUI Material Input](images/textfield-formview-light-android.gif) | ![MAUI Material Input](images/textfield-formview-dark-windows.gif) |
+| ![MAUI Material Input](../../../../images/textfield-formview-light-android.gif) | ![MAUI Material Input](../../../../images/textfield-formview-dark-windows.gif) |
+
+
+## Styling
+TextField has the following style classes that can be used to style the control:
+
+```xml
+<Style TargetType="Label" Class="InputField.Title">
+    <Setter Property="FontAttributes" Value="Bold" />
+    <!--...-->
+</Style>
+
+<Style TargetType="Border" Class="InputField.Border">
+    <Setter Property="MaximumHeightRequest" Value="80" />
+    <!--...-->
+</Style>
+
+<Style TargetType="Image" Class="InputField.Icon">
+    <Setter Property="HeightRequest" Value="10" />
+    <Setter Property="WidthRequest" Value="10" />
+    <!--...-->
+</Style>
+
+<Style TargetType="HorizontalStackLayout" Class="InputField.Attachments">
+    <Setter Property="Spacing" Value="8" />
+    <!--...-->
+</Style>
+<Style TargetType="Path" Class="InputField.ValidationIcon">
+    <Setter Property="Fill" Value="MediumVioletRed" />
+    <Setter Property="Data" Value="M7 11V1H8V11H7ZM8 13V14.01H7V13H8Z" />
+    <!--...-->
+</Style>
+
+<Style TargetType="Label" Class="InputField.ValidationLabel">
+    <Setter Property="TextColor" Value="MediumVioletRed" />
+    <!--...-->
+</Style>
+
+<Style TargetType="Path" Class="TextField.ClearIcon">
+    <Setter Property="Fill" Value="LightGray" />
+    <Setter Property="Data" Value="M1.5 1.5L13.5 13.5M1.5 13.5L13.5 1.5" />
+    <!--...-->
+</Style>
+```

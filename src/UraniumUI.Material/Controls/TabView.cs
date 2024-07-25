@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Windows.Input;
+using UraniumUI.Extensions;
 using UraniumUI.Resources;
 using UraniumUI.Triggers;
 
@@ -13,6 +14,9 @@ public partial class TabView : Grid
     public TabViewCachingStrategy CachingStrategy { get; set; }
 
     public bool UseAnimation { get; set; } = true;
+
+    public event EventHandler<object> CurrentItemChanged;
+    public event EventHandler<TabItem> SelectedTabChanged;
 
     public static DataTemplate DefaultTabHeaderItemTemplate => new DataTemplate(() =>
     {
@@ -39,23 +43,19 @@ public partial class TabView : Grid
             {
                 new GenericTriggerAction<Grid>((sender) =>
                 {
-                    //sender.SetAppThemeColor(
-                    //            Grid.BackgroundColorProperty,
-                    //            ColorResource.GetColor("Primary").WithAlpha(.2f),
-                    //            ColorResource.GetColor("PrimaryDark").WithAlpha(.2f)
-                    //        );
-                    // TODO: Find a way to set app theme color repeatedly.
-                    sender.BackgroundColor = ColorResource.GetColor("Primary", "PrimaryDark").WithAlpha(.2f);
+                    sender.SetAppThemeColor(
+                                Grid.BackgroundColorProperty,
+                                ColorResource.GetColor("Primary").WithAlpha(.2f),
+                                ColorResource.GetColor("PrimaryDark").WithAlpha(.2f)
+                            );
 
                     var box = (sender.Children.FirstOrDefault(x => x is BoxView) as BoxView);
 
-                    box.FadeTo(1, easing: Easing.SpringIn);
-                    sender.FadeTo(1);
+                    box.FadeToSafely(1, easing: Easing.SpringIn);
+                    sender.FadeToSafely(1);
 
                     var button = sender.Children.FirstOrDefault(x=>x is Button) as Button;
-                    //button?.SetAppThemeColor(Button.TextColorProperty, ColorResource.GetColor("Primary"), ColorResource.GetColor("PrimaryDark"));
-                    // TODO: Find a way to set app theme color repeatedly.
-                    button.TextColor = ColorResource.GetColor("Primary", "PrimaryDark");
+                    button?.SetAppThemeColor(Button.TextColorProperty, ColorResource.GetColor("Primary"), ColorResource.GetColor("PrimaryDark"));
                 })
             }
         });
@@ -72,13 +72,13 @@ public partial class TabView : Grid
 
                     sender.BackgroundColor = Colors.Transparent;
 
-                    box.FadeTo(0, easing: Easing.SpringIn);
-                    sender.FadeTo(.5);
+                    box.FadeToSafely(0, easing: Easing.SpringIn);
+                    sender.FadeToSafely(.5);
 
                     var button = sender.Children.FirstOrDefault(x=>x is Button) as Button;
-                    //button?.SetAppThemeColor(Button.TextColorProperty, ColorResource.GetColor("OnBackground"), ColorResource.GetColor("OnBackgroundDark"));
+                    button?.SetAppThemeColor(Button.TextColorProperty, ColorResource.GetColor("OnBackground"), ColorResource.GetColor("OnBackgroundDark"));
                     // TODO: Find a way to set app theme color repeatedly.
-                    button.TextColor = ColorResource.GetColor("OnBackground", "OnBackgroundDark");
+                    //button.TextColor = ColorResource.GetColor("OnBackground", "OnBackgroundDark");
                 })
             }
         });
@@ -103,11 +103,13 @@ public partial class TabView : Grid
 
     protected readonly Grid _headerContainer = new Grid
     {
+        StyleClass = new[] { "TabView.Header" },
         HorizontalOptions = LayoutOptions.Fill
     };
 
     protected readonly ContentView _contentContainer = new ContentView
     {
+        StyleClass = new[] { "TabView.Content" },
         HorizontalOptions = LayoutOptions.Fill,
         VerticalOptions = LayoutOptions.Fill
     };
@@ -285,11 +287,10 @@ public partial class TabView : Grid
         }
     }
 
-    protected virtual void Render()
+    internal virtual void Render()
     {
         if (Items?.Count > 0 || ItemsSource?.Count > 0)
         {
-            _headerContainer.Children.Clear();
             RenderHeaders();
 
             if (SelectedTab is null)
@@ -299,13 +300,13 @@ public partial class TabView : Grid
         }
     }
 
-    protected virtual void RenderHeaders()
+    internal virtual void RenderHeaders()
     {
+        _headerContainer.Children.Clear();
         foreach (var item in Items)
         {
             AddHeaderFor(item);
         }
-
 
         if (ItemsSource is not null)
         {
@@ -316,21 +317,42 @@ public partial class TabView : Grid
         }
     }
 
+    internal virtual void InvalidateTabItemContents()
+    {
+        foreach (var tabItem in this.Items)
+        {
+            tabItem.Content = null;
+            tabItem.Header = null;
+        }
+
+        ResetSelectedTab();
+    }
+
     protected void ResetSelectedTab()
     {
-        SelectedTab = Items.FirstOrDefault();
+        if (SelectedTab is null)
+        {
+            SelectedTab = Items.FirstOrDefault();
+        }
+        else
+        {
+            // Send previous selected tab to null, to force re-rendering.
+            // TODO: Create an API to force re-rendering for header, content or both.
+            OnSelectedTabChanged(null, SelectedTab).FireAndForget();
+        }
     }
 
     protected virtual void AddHeaderFor(TabItem tabItem)
     {
         tabItem.TabView = this;
-        var view =
+        tabItem.Header =
             tabItem.HeaderTemplate?.CreateContent() as View
             ?? TabHeaderItemTemplate?.CreateContent() as View
+            //?? DefaultTabHeaderItemTemplate.CreateContent() as View
             ?? throw new InvalidOperationException("TabView requires a HeaderTemplate or TabHeaderItemTemplate to be set.");
 
-        view.BindingContext = tabItem;
-        view.GestureRecognizers.Add(new TapGestureRecognizer { Command = new Command(() => SelectedTab = tabItem) });
+        tabItem.Header.BindingContext = tabItem;
+        tabItem.Header.GestureRecognizers.Add(new TapGestureRecognizer { Command = new Command(() => SelectedTab = tabItem) });
 
         if (!_headerContainer.Children.Any())
         {
@@ -340,14 +362,14 @@ public partial class TabView : Grid
         if (AreTabsVertical)
         {
             _headerContainer.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
-            Grid.SetRow(view, _headerContainer.Children.Count);
+            Grid.SetRow(tabItem.Header, _headerContainer.Children.Count);
         }
         else
         {
             _headerContainer.ColumnDefinitions.Add(new ColumnDefinition(TabHeaderItemColumnWidth));
-            Grid.SetColumn(view, _headerContainer.Children.Count);
+            Grid.SetColumn(tabItem.Header, _headerContainer.Children.Count);
         }
-        _headerContainer.Add(view);
+        _headerContainer.Add(tabItem.Header);
     }
 
     protected virtual void AddHeaderForItem(object item)
@@ -390,10 +412,13 @@ public partial class TabView : Grid
             return;
         }
 
+        CurrentItemChanged?.Invoke(this, newItem);
+        ExecuteCommandIfCan(CurrentItemChangedCommand, newItem);
+
         SelectedTab = Items.FirstOrDefault(x => x.Data == newItem);
     }
 
-    protected virtual async void OnSelectedTabChanged(TabItem oldValue, TabItem newValue)
+    protected virtual async Task OnSelectedTabChanged(TabItem oldValue, TabItem newValue)
     {
         if (newValue == null)
         {
@@ -421,25 +446,12 @@ public partial class TabView : Grid
             item.NotifyIsSelectedChanged();
         }
 
-        if (CachingStrategy == TabViewCachingStrategy.CacheOnCodeBehing)
+        if (CachingStrategy == TabViewCachingStrategy.RecreateAlways && oldValue is not null)
         {
-            if (_contentContainer.Content != null)
-            {
-                if (UseAnimation)
-                {
-                    await _contentContainer.Content?.FadeTo(0, 60);
-                }
-            }
-
-            content.Opacity = 0;
-
-            _contentContainer.Content = content;
-            if (UseAnimation)
-            {
-                await content.FadeTo(1, 60);
-            }
+            oldValue.Content = null; // Make it null, in the next visit of this method, a new instance will be created.
         }
-        else
+
+        if (CachingStrategy == TabViewCachingStrategy.CacheOnLayout)
         {
             if (_contentContainer.Content is not Layout layout)
             {
@@ -458,59 +470,46 @@ public partial class TabView : Grid
                 (child as View).IsVisible = content == child;
             }
         }
+        else
+        {
+            if (_contentContainer.Content != null)
+            {
+                if (UseAnimation)
+                {
+                    await _contentContainer.Content?.FadeToSafely(0, 60);
+                }
+            }
+
+            content.Opacity = 0;
+
+            _contentContainer.Content = content;
+            if (UseAnimation)
+            {
+                await content.FadeToSafely(1, 60);
+            }
+        }
+
+        content.Opacity = 1;
 
         if (SelectedTab?.Data != null)
         {
             CurrentItem = SelectedTab.Data;
         }
+
+        SelectedTabChanged?.Invoke(this, newValue);
+        ExecuteCommandIfCan(SelectedTabChangedCommand, newValue);
     }
 
     protected virtual void OnTabPlacementChanged()
     {
         InitializeLayout();
     }
-}
 
-public enum TabViewCachingStrategy
-{
-    CacheOnCodeBehing,
-    CacheOnLayout,
-}
-
-[ContentProperty(nameof(Content))]
-public class TabItem : UraniumBindableObject
-{
-    public string Title { get => (string)GetValue(TitleProperty); set => SetValue(TitleProperty, value); }
-
-    public static readonly BindableProperty TitleProperty = BindableProperty.Create(nameof(Title), typeof(string), typeof(TabItem));
-
-    public object Data { get; set; }
-    public DataTemplate ContentTemplate { get; set; }
-    public DataTemplate HeaderTemplate { get; set; }
-    public View Content { get; set; }
-    public TabView TabView { get; internal set; }
-    public bool IsSelected { get => TabView.SelectedTab == this || (TabView.CurrentItem != null && TabView.CurrentItem == Data); }
-    public ICommand Command { get; private set; }
-
-    public TabItem()
+    protected virtual void ExecuteCommandIfCan(ICommand command, object parameter)
     {
-        Command = new Command(ChangedCommand);
-    }
-
-    private void ChangedCommand(object obj)
-    {
-        if (this.Data != null)
+        if (command?.CanExecute(parameter) == true)
         {
-            TabView.CurrentItem = this.Data;
+            command.Execute(parameter);
         }
-        else
-        {
-            TabView.SelectedTab = this;
-        }
-    }
-
-    protected internal void NotifyIsSelectedChanged()
-    {
-        OnPropertyChanged(nameof(IsSelected));
     }
 }

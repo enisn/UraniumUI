@@ -1,4 +1,5 @@
 ﻿using UraniumUI.Material.Controls;
+using UraniumUI.Material.Extensions;
 using UraniumUI.Material.Handlers;
 
 namespace UraniumUI;
@@ -10,7 +11,9 @@ public static class UraniumUIMaterialMauiProgramExtensions
         {
             handlers.AddHandler(typeof(ButtonView), typeof(ButtonViewHandler));
         });
-        
+
+        builder.ConfigureAutoFormViewForMaterial();
+
         return builder;
     }
 }

@@ -31,7 +31,7 @@ builder
 #### Glyphs
 Glyphs are provided with `FontAwesomeRegular` and `FontAwesomeSolid` classes. They can be accessed like `FontAwesomeRegular.Filter`. This class icluded in `UraniumUI` namespace. You should include following xml namespace to use it.
 
-```
+```xml
 xmlns:fa="clr-namespace:UraniumUI.Icons.FontAwesome;assembly=UraniumUI.Icons.FontAwesome"
 ```
 
@@ -46,7 +46,7 @@ MAUI support font icons by using `FontImageSource` class. You can use it in `Ima
 </Image>
 ```
 
-![MAUI FontAwesome](images/fontawesome-demo.png)
+![MAUI FontAwesome](../images/fontawesome-demo.png)
 
 ---
 
@@ -76,7 +76,7 @@ builder
 #### Glyphs
 Glyphs are provided with `MaterialOutlined`, `MaterialRegular`, `MaterialRoundRegular`, `MaterialSharpRegular` and `MaterialTwoTone`  classes. They can be accessed like `MaterialTwoTone.Account_circle`. This class icluded in `UraniumUI` namespace. You should include following xml namespace to use it.
 
-```
+```xml
 xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
 ```
 
@@ -94,7 +94,7 @@ MAUI support font icons by using `FontImageSource` class. You can use it in `Ima
 ---
 
 ### Segoe Fluent Icons
-Segoe Fluent Icons are included in [UraniumUI.Icons.SegoeFluentIcons](https://www.nuget.org/packages/UraniumUI.Icons.SegoeFluentIcons) package. After adding the package, you have to configure fonts in `MauiProgram.cs` file.
+Segoe Fluent Icons are included in [UraniumUI.Icons.SegoeFluent](https://www.nuget.org/packages/UraniumUI.Icons.SegoeFluent) package. After adding the package, you have to configure fonts in `MauiProgram.cs` file.
 
 ```csharp
 builder
@@ -113,7 +113,7 @@ Single font name is provided by the package. It can be used as `FontFamily` para
 - `Fluent`
 
 #### Glyphs
-Glyphs are provided with `FluentIcons` class. They can be accessed like `FluentIcons.Accept`. This class icluded in `UraniumUI.Icons.SegoeFluent` namespace. This namespace is exported to the default UraniumUI namespace.
+Glyphs are provided with `Fluent` class. They can be accessed like `Fluent.Accept`. This class included in `UraniumUI.Icons.SegoeFluent` namespace. This namespace is exported to the default UraniumUI namespace.
 
 ```xml
 xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
@@ -125,7 +125,7 @@ MAUI support font icons by using `FontImageSource` class. You can use it in `Ima
 ```xml
 <Image>
 	<Image.Source>
-		<FontImageSource FontFamily="Fluent" Glyph="{x:Static uranium:FluentIcons.Accept}" Color="Green" />
+		<FontImageSource FontFamily="Fluent" Glyph="{x:Static uranium:Fluent.Accept}" Color="Green" />
 	</Image.Source>
 </Image>
 ```
@@ -133,5 +133,5 @@ MAUI support font icons by using `FontImageSource` class. You can use it in `Ima
 Or you can use the `FontImageSource` markup extension.
 
 ```xml
-<Image Source="{FontImageSource Glyph={x:Static uranium:FluentIcons.Accept}, FontFamily=Fluent, Color=Blue}" />
+<Image Source="{FontImageSource Glyph={x:Static uranium:Fluent.Accept}, FontFamily=Fluent, Color=Blue}" />
 ```

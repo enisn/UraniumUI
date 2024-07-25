@@ -15,11 +15,7 @@ public class DatePickerField : InputField
 	{
 		VerticalOptions = LayoutOptions.Center,
 		Margin = new Thickness(10, 0),
-#if IOS || MACCATALYST
-        Opacity = 0.10,
-#else
 		Opacity = 0,
-#endif
 	};
 
 	protected StatefulContentView iconClear = new StatefulContentView
@@ -46,16 +42,20 @@ public class DatePickerField : InputField
 		DatePickerView.SetBinding(DatePickerView.DateProperty, new Binding(nameof(Date), source: this));
 		DatePickerView.SetBinding(DatePickerView.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
 
-#if MACCATALYST
-        labelTitle.InputTransparent = false;
-        labelTitle.GestureRecognizers.Add(new TapGestureRecognizer
+#if MACCATALYST || IOS
+        labelTitle.InputTransparent = true;
+        base.border.GestureRecognizers.Add(new TapGestureRecognizer
         {
             Command = new Command(() =>
             {
+#if MACCATALYST
                 if (!HasValue)
                 {
                     Date = (DateTime)DatePicker.DateProperty.DefaultValue;
                 }
+#else
+                DatePickerView.Focus();
+#endif
             })
         });
 #endif
@@ -71,6 +71,9 @@ public class DatePickerField : InputField
 		if (IsEnabled)
 		{
 			Date = null;
+#if MACCATALYST
+			DatePickerView.Unfocus();
+#endif
 		}
 	}
 
@@ -79,12 +82,7 @@ public class DatePickerField : InputField
 		OnPropertyChanged(nameof(Date));
 		CheckAndShowValidations();
 
-#if IOS || MACCATALYST
-        DatePickerView.Opacity = Date == null ? 0.1 : 1;
-#else
 		DatePickerView.Opacity = Date == null ? 0 : 1;
-#endif
-
 		if (AllowClear)
 		{
 			iconClear.IsVisible = Date != null;

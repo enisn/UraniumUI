@@ -44,7 +44,7 @@ Then you can use it in a page like this:
 
 | Light | Dark |
 | --- | --- |
-| ![MAUI AutoComplete Entry](images/autocompletetextfield-demo-android-light.gif) | ![MAUI AutoComplete Entry](images/autocompletetextfield-demo-android-dark.gif) |
+| ![MAUI AutoComplete Entry](../../../../images/autocompletetextfield-demo-android-light.gif) | ![MAUI AutoComplete Entry](../../../../images/autocompletetextfield-demo-android-dark.gif) |
 
 
 ## Icon
@@ -56,7 +56,7 @@ AutoCompleteTextFields support setting an icon on the left side of the control. 
     Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Forest}}"/>
 ```
 
-![MAUI AutoComplete Entry with icon](images/autocompletetextfield-icon-android-light.png)
+![MAUI AutoComplete Entry with icon](../../../../images/autocompletetextfield-icon-android-light.png)
 
 ## Validation
 Validation logic is exactly same with [InputKit Validations](https://enisn-projects.io/docs/en/inputkit/latest/components/controls/FormView#validations).

@@ -1,23 +1,47 @@
 ﻿using System.ComponentModel;
-using System.Reflection;
 
 namespace UraniumUI.Material.Controls;
-public class DataGridColumn
+
+public class DataGridColumn : BindableObject
 {
-    public string Title { get; set; }
+    public string Title { get => (string)GetValue(TitleProperty); set => SetValue(TitleProperty, value); }
+
+    public static readonly BindableProperty TitleProperty = BindableProperty.Create(
+        nameof(Title),
+        typeof(string),
+        typeof(DataGridColumn),
+        propertyChanged: (bindable, oldValue, newValue) =>
+        {
+            if (bindable is DataGridColumn column)
+            {
+                column.OnPropertyChanged(nameof(Title));
+            }
+        });
 
     public View TitleView { get; set; }
 
     public DataTemplate CellItemTemplate { get; set; }
 
-    [Obsolete("Use Binding property instead. Replace 'PropertyName=\"Name\"' with 'Binding=\"{Binding Name}\"'. Visit https://github.com/enisn/UraniumUI/blob/develop/docs/en/themes/material/components/DataGrid.md for the usage.")]
-    public string PropertyName { get; set; }
+    [Obsolete("Use ValueBinding instead!")]
+    public BindingBase Binding { get => ValueBinding; set => ValueBinding = value; }
 
-    public BindingBase Binding { get; set; }
+    public BindingBase ValueBinding { get; set; }
 
     [TypeConverter(typeof(GridLengthTypeConverter))]
     public GridLength Width { get; set; } = GridLength.Auto;
 
-    [Obsolete]
-    internal PropertyInfo PropertyInfo { get; set; }
+    public bool IsVisible { get => (bool)GetValue(IsVisibleProperty); set => SetValue(IsVisibleProperty, value); }
+
+    public static readonly BindableProperty IsVisibleProperty = BindableProperty.Create(
+        nameof(IsVisible),
+        typeof(bool),
+        typeof(DataGridColumn),
+        true,
+        propertyChanged: (bindable, oldValue, newValue) =>
+        {
+            if (bindable is DataGridColumn column)
+            {
+                column.OnPropertyChanged(nameof(IsVisible));
+            }
+        });
 }

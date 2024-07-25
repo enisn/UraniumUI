@@ -1,0 +1,123 @@
+- name: Getting Started
+  href: Getting-Started.md
+- name: Core
+  items:
+    - name: Uranium Content Page
+      href: infrastructure/UraniumContentPage.md
+    - name: Stateful Content View
+      href: infrastructure/StatefulContentView.md
+    - name: Grid Layout
+      href: infrastructure/GridLayout.md
+    - name: Auto Form View
+      href: infrastructure/AutoFormView.md
+    - name: Dropdown
+      href: infrastructure/Dropdown.md
+    - name: ExpanderView
+      href: infrastructure/ExpanderView.md
+    - name: Validations
+      href: validations/Index.md
+      items:
+        - name: InputKit Validations
+          href: validations/InputKitValidations.md
+        - name: Data Annotations
+          href: validations/DataAnnotations.md
+- name: Dialogs
+  href: dialogs/Index.md
+  items:
+    - name: CommunityToolkit
+      href: dialogs/Index.md#communitytoolkit
+    - name: Mopups
+      href: dialogs/Index.md#mopups
+- name: Icons
+  href: theming/Icons.md
+  items:
+    - name: Material Icons
+      href: theming/Icons.md#material-icons
+    - name: Font Awesome
+      href: theming/Icons.md#fontawesome
+    - name: Segoe Fluent Icons
+      href: theming/Icons.md#segoe-fluent-icons
+- name: Web Components
+  items: []
+- name: Styling
+  items:
+    - name: Color System
+      href: theming/ColorSystem.md
+    - name: Cascading Styling
+      href: theming/CascadingStyling.md
+    - name: Creating a Theme
+      href: theming/CreatingTheme.md
+- name: Effects
+  items:
+    - name: Blur
+      href: Blurs.md
+- name: Material
+  items:
+    - name: Colors & Styles
+      href: themes/material/ColorsAndStyles.md
+    - name: Elevation
+      href: themes/material/Elevation.md
+    - name: ButtonView
+      href: themes/material/ButtonView.md
+    - name: Buttons
+      href: themes/material/Buttons.md
+    - name: InputFields
+      href: themes/material/components/InputField.md
+      items:
+        - name: TextField
+          href: themes/material/components/TextField.md
+        - name: EditorField
+          href: themes/material/components/EditorField.md
+        - name: AutoCompleteTextField
+          href: themes/material/components/AutoCompleteTextField.md
+        - name: PickerField
+          href: themes/material/components/PickerField.md
+        - name: MultiplePickerField
+          href: themes/material/components/MultiplePickerField.md
+        - name: TimePickerField
+          href: themes/material/components/TimePickerField.md
+        - name: DatePickerField
+          href: themes/material/components/DatePickerField.md
+    - name: Validations
+      href: themes/material/Validations.md
+    - name: CheckBox
+      href: themes/material/CheckBox.md
+    - name: RadioButton
+      href: themes/material/RadioButton.md
+    - name: Divider
+      href: themes/material/Divider.md
+    - name: Backdrop
+      href: themes/material/components/Backdrop.md
+    - name: Bottom Sheet
+      href: themes/material/components/BottomSheet.md
+    - name: DataGrid
+      href: themes/material/components/DataGrid.md
+    - name: Paginator
+      href: themes/material/components/Paginator.md
+    - name: TreeView
+      href: themes/material/components/TreeView.md
+    - name: TabView
+      href: themes/material/components/TabView.md
+    - name: Containers
+      href: themes/material/Containers.md
+- name: Migration Guide
+  items:
+    - name: Migration to v1.1
+      href: migration-guides/Migrating-To-1.1.md
+    - name: Migration to v2.0
+      href: migration-guides/Migrating-To-2.0.md
+    - name: Migration to v2.1
+      href: migration-guides/Migrating-To-2.1.md
+    - name: Migration to v2.2
+      href: migration-guides/Migrating-To-2.2.md
+    - name: Migration to v2.3
+      href: migration-guides/Migrating-To-2.3.md
+    - name: Migration to v2.4
+      href: migration-guides/Migrating-To-2.4.md
+    - name: Migration to v2.7
+      href: migration-guides/Migrating-To-2.7.md
+- name: Support
+  href: Support.md
+  items:
+    - name: Premium Support
+      href: PremiumSupport.md

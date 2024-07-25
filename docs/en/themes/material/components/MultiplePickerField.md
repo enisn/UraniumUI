@@ -3,7 +3,7 @@ MultiplePickerField is a component that allows you to select multiple values fro
 
 | Light | Dark |
 | --- | --- |
-| ![MAUI Multiple selection](images/multiplepickerfield-demo-light.gif) | ![MAUI Multiple selection](images/multiplepickerfield-demo-dark.gif) |
+| ![MAUI Multiple selection](../../../../images/multiplepickerfield-demo-light.gif) | ![MAUI Multiple selection](../../../../images/multiplepickerfield-demo-dark.gif) |
 
 
 ## Usage

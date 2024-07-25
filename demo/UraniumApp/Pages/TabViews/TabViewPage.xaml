@@ -36,22 +36,6 @@
                                 </DataTemplate>
                             </material:TabItem.ContentTemplate>
                         </material:TabItem>
-
-                        <material:TabItem Title="Tab Three">
-                            <material:TabItem.ContentTemplate>
-                                <DataTemplate>
-                                    <Label Text="Third Tab" HorizontalOptions="Center" VerticalOptions="Center" Margin="50" />
-                                </DataTemplate>
-                            </material:TabItem.ContentTemplate>
-                        </material:TabItem>
-
-                        <material:TabItem Title="Tab Three">
-                            <material:TabItem.ContentTemplate>
-                                <DataTemplate>
-                                    <Label Text="Third Tab" HorizontalOptions="Center" VerticalOptions="Center" Margin="50" />
-                                </DataTemplate>
-                            </material:TabItem.ContentTemplate>
-                        </material:TabItem>
                     </material:TabView>
                 </Border>
 

@@ -52,24 +52,24 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
-		<PackageReference Include="UraniumUI.Material" Version="2.9.0" />
+		<PackageReference Include="UraniumUI.Material" Version="2.9.1" />
 		<!--#if (FontAwesome)-->
-		<PackageReference Include="UraniumUI.Icons.FontAwesome" Version="2.9.0" />
+		<PackageReference Include="UraniumUI.Icons.FontAwesome" Version="2.9.1" />
 		<!--#endif-->
 		<!--#if (MaterialIcons)-->
-		<PackageReference Include="UraniumUI.Icons.MaterialSymbols" Version="2.9.0" />
+		<PackageReference Include="UraniumUI.Icons.MaterialSymbols" Version="2.9.1" />
 		<!--#endif-->
 		<!--#if (FluentIcons)-->
-		<PackageReference Include="UraniumUI.Icons.SegoeFluent" Version="2.9.0" />
+		<PackageReference Include="UraniumUI.Icons.SegoeFluent" Version="2.9.1" />
 		<!--#endif-->
 		<!--#if (CommunityToolkit)-->
-		<PackageReference Include="UraniumUI.Dialogs.CommunityToolkit" Version="2.9.0" />
+		<PackageReference Include="UraniumUI.Dialogs.CommunityToolkit" Version="2.9.1" />
 		<!--#endif-->
 		<!--#if (Mopups)-->
-		<PackageReference Include="UraniumUI.Dialogs.Mopups" Version="2.9.0" />
+		<PackageReference Include="UraniumUI.Dialogs.Mopups" Version="2.9.1" />
 		<!--#endif-->		
 		<!--#if (Blurs)-->
-		<PackageReference Include="UraniumUI.Blurs" Version="2.9.0" />
+		<PackageReference Include="UraniumUI.Blurs" Version="2.9.1" />
 		<!--#endif-->
 	</ItemGroup>
 

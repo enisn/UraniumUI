@@ -3,8 +3,10 @@ using System;
 using System.Collections;
 using System.ComponentModel;
 using System.Windows.Input;
+using UraniumUI.Converters;
 using UraniumUI.Pages;
 using UraniumUI.Resources;
+using UraniumUI.ViewExtensions;
 using UraniumUI.Views;
 using Path = Microsoft.Maui.Controls.Shapes.Path;
 
@@ -13,40 +15,11 @@ namespace UraniumUI.Material.Controls;
 [ContentProperty(nameof(Validations))]
 public class PickerField : InputField
 {
-    public PickerView PickerView => Content as PickerView;
-
-    public override View Content { get; set; } = new PickerView
-    {
-        VerticalOptions = LayoutOptions.Center,
-        Margin = new Thickness(15, 0),
-#if WINDOWS
-        Opacity = 0,
-#endif
-    };
+    public PickerView PickerView => this.FindByViewQueryIdInVisualTreeDescendant<PickerView>("PickerView");
 
 #if WINDOWS
-    Label labelSelectedItem = new Label
-    {
-        InputTransparent = true,
-        HorizontalOptions = LayoutOptions.Start,
-        VerticalOptions = LayoutOptions.Center,
-        Margin = new Thickness(15, 0),
-        TextColor = ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.Gray)
-    };
+    protected Label labelSelectedItem => this.FindByViewQueryIdInVisualTreeDescendant<Label>("LabelSelectedItem");
 #endif
-
-    protected StatefulContentView iconClear = new StatefulContentView
-    {
-        VerticalOptions = LayoutOptions.Center,
-        HorizontalOptions = LayoutOptions.End,
-        IsVisible = false,
-        Padding = 10,
-        Content = new Path
-        {
-            Data = UraniumShapes.X,
-            Fill = ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.DarkGray).WithAlpha(.5f),
-        }
-    };
 
     public override bool HasValue => SelectedItem != null;
 
@@ -54,20 +27,37 @@ public class PickerField : InputField
 
     public PickerField()
     {
-        iconClear.TappedCommand = new Command(OnClearTapped);
+        var pickerView = new PickerView
+        {
+            VerticalOptions = LayoutOptions.Center,
+            Margin = new Thickness(15, 0),
+#if WINDOWS
+        Opacity = 0,
+#endif
+        };
+        pickerView.SetId("PickerView");
+
+        Content = pickerView;
 
         UpdateClearIconState();
-        PickerView.SetBinding(PickerView.SelectedItemProperty, new Binding(nameof(SelectedItem), source: this));
-        PickerView.SetBinding(PickerView.SelectedIndexProperty, new Binding(nameof(SelectedIndex), source: this));
-        PickerView.SetBinding(PickerView.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
+        pickerView.SetBinding(PickerView.SelectedItemProperty, new Binding(nameof(SelectedItem), source: this));
+        pickerView.SetBinding(PickerView.SelectedIndexProperty, new Binding(nameof(SelectedIndex), source: this));
+        pickerView.SetBinding(PickerView.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
+        pickerView.SetBinding(PickerView.ItemsSourceProperty, new Binding(nameof(ItemsSource), source: this));
+        pickerView.SetBinding(PickerView.FontAttributesProperty, new Binding(nameof(FontAttributes), source: this));
+        pickerView.SetBinding(PickerView.FontFamilyProperty, new Binding(nameof(FontFamily), source: this));
+        pickerView.SetBinding(PickerView.FontSizeProperty, new Binding(nameof(FontSize), source: this));
+        pickerView.SetBinding(PickerView.TextColorProperty, new Binding(nameof(TextColor), source: this));
+        pickerView.SetBinding(PickerView.CharacterSpacingProperty, new Binding(nameof(CharacterSpacing), source: this));
 
         // TODO: Move platform specific codes into separate files.
 #if ANDROID
-		PickerView.HandlerChanged += (s, e) =>
+// TODO: Possible memory leak here. Need to do without event handler.
+		pickerView.HandlerChanged += (s, e) =>
 		{
-			if (PickerView.Handler != null)
+			if (pickerView.Handler != null)
 			{
-				var editText = PickerView.Handler.PlatformView as AndroidX.AppCompat.Widget.AppCompatEditText;
+				var editText = pickerView.Handler.PlatformView as AndroidX.AppCompat.Widget.AppCompatEditText;
 				editText.AfterTextChanged += (_, args) =>
 				{
 					editText.ClearFocus();
@@ -76,8 +66,7 @@ public class PickerField : InputField
 		};
 #endif
 #if WINDOWS
-        rootGrid.Add(labelSelectedItem, column: 1);
-        PickerView.HorizontalOptions = LayoutOptions.Start;
+        innerGrid.Add(CreateLabelSelectedItem(), column: 1);
 #endif
     }
 
@@ -85,7 +74,27 @@ public class PickerField : InputField
     protected override void OnSizeAllocated(double width, double height)
     {
         base.OnSizeAllocated(width, height);
-        PickerView.MinimumWidthRequest = (width * .96f) - (AllowClear ? iconClear.Width : 0) - (imageIcon.IsValueCreated ? imageIcon.Value.Width : 0);
+        if (PickerView is null)
+        {
+            return;
+        }
+
+        //PickerView.MinimumWidthRequest = (width * .96f) - (AllowClear ? iconClear.Width : 0) - (imageIcon.IsValueCreated ? imageIcon.Value.Width : 0);
+    }
+
+    protected Label CreateLabelSelectedItem()
+    {
+        var selectedLabel = new Label
+        {
+            InputTransparent = true,
+            HorizontalOptions = LayoutOptions.Start,
+            VerticalOptions = LayoutOptions.Center,
+            Margin = new Thickness(15, 0),
+            TextColor = ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.Gray)
+        };
+        selectedLabel.SetId("LabelSelectedItem");
+
+        return selectedLabel;
     }
 #endif
 
@@ -107,11 +116,6 @@ public class PickerField : InputField
     {
         OnPropertyChanged(nameof(SelectedItem));
         CheckAndShowValidations();
-
-        if (AllowClear)
-        {
-            iconClear.IsVisible = SelectedItem != null;
-        }
 
 #if WINDOWS
         if (ItemDisplayBinding != null)
@@ -139,16 +143,19 @@ public class PickerField : InputField
 
     protected virtual void UpdateClearIconState()
     {
+        var existing = endIconsContainer.FindByViewQueryIdInVisualTreeDescendant<StatefulContentView>("ClearIcon");
+
         if (AllowClear)
         {
-            if (!endIconsContainer.Contains(iconClear))
+            if (existing == null)
             {
+                var iconClear = CreateIconClear();
                 endIconsContainer.Add(iconClear);
             }
         }
         else
         {
-            endIconsContainer.Remove(iconClear);
+            endIconsContainer?.Remove(existing);
         }
     }
 
@@ -158,7 +165,33 @@ public class PickerField : InputField
         base.ResetValidation();
     }
 
-    public IList<string> Items => PickerView.Items;
+    public IList<string> Items => PickerView?.Items;
+
+    private static readonly ControlTemplate clearIconPathControlTemplate = new ControlTemplate(() => new Path
+    {
+        StyleClass = new[] { "PickerField.ClearIcon" },
+        Data = UraniumShapes.X,
+        Fill = ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.DarkGray).WithAlpha(.5f),
+    });
+
+    protected virtual View CreateIconClear()
+    {
+        var iconClear = new StatefulContentView
+        {
+            VerticalOptions = LayoutOptions.Center,
+            HorizontalOptions = LayoutOptions.End,
+            IsVisible = false,
+            Padding = 10,
+            TappedCommand = new Command(OnClearTapped),
+            ControlTemplate = clearIconPathControlTemplate
+        };
+
+        iconClear.SetId("ClearIcon");
+
+        iconClear.SetBinding(StatefulContentView.IsVisibleProperty, new Binding(nameof(SelectedItem), converter: UraniumConverters.StringIsNotNullOrEmptyConverter, source: this));
+
+        return iconClear;
+    }
 
     #region BindableProperties
 
@@ -181,57 +214,19 @@ public class PickerField : InputField
 
     public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(
        nameof(ItemsSource), typeof(IList), typeof(PickerField),
-       defaultValue: Picker.ItemsSourceProperty.DefaultValue,
-       propertyChanged: (bindable, oldValue, newValue) => (bindable as PickerField).PickerView.ItemsSource = (IList)newValue);
+       defaultValue: Picker.ItemsSourceProperty.DefaultValue);
 
     public BindingBase ItemDisplayBinding { get => PickerView.ItemDisplayBinding; set => PickerView.ItemDisplayBinding = value; }
-
-    public FontAttributes FontAttributes { get => (FontAttributes)GetValue(FontAttributesProperty); set => SetValue(FontAttributesProperty, value); }
-
-    public static readonly BindableProperty FontAttributesProperty = BindableProperty.Create(
-       nameof(FontAttributes), typeof(FontAttributes), typeof(PickerField),
-       defaultValue: Picker.FontAttributesProperty.DefaultValue,
-       propertyChanged: (bindable, oldValue, newValue) =>
-       {
-           var pickerField = (bindable as PickerField);
-           pickerField.PickerView.FontAttributes = (FontAttributes)newValue;
-           pickerField.labelTitle.FontAttributes = (FontAttributes)newValue;
-#if WINDOWS
-           pickerField.labelSelectedItem.FontAttributes = (FontAttributes)newValue;
-#endif
-       });
-
-    public string FontFamily { get => (string)GetValue(FontFamilyProperty); set => SetValue(FontFamilyProperty, value); }
-
-    public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(
-         nameof(FontFamily), typeof(string), typeof(PickerField),
-         defaultValue: Picker.FontFamilyProperty.DefaultValue,
-         propertyChanged: (bindable, oldValue, newValue) => (bindable as PickerField).PickerView.FontFamily = (string)newValue);
-
-    [TypeConverter(typeof(FontSizeConverter))]
-    public double FontSize { get => (double)GetValue(FontSizeProperty); set => SetValue(FontSizeProperty, value); }
-
-    public static readonly BindableProperty FontSizeProperty = BindableProperty.Create(
-        nameof(FontSize), typeof(double), typeof(PickerField), Picker.FontSizeProperty.DefaultValue,
-        propertyChanged: (bindable, oldValue, newValue) => (bindable as PickerField).PickerView.FontSize = (double)newValue);
-
-    public bool FontAutoScalingEnabled { get => (bool)GetValue(FontAutoScalingEnabledProperty); set => SetValue(FontAutoScalingEnabledProperty, value); }
-
-    public static readonly BindableProperty FontAutoScalingEnabledProperty = BindableProperty.Create(
-        nameof(FontAutoScalingEnabled), typeof(bool), typeof(PickerField), Picker.FontAutoScalingEnabledProperty.DefaultValue,
-        propertyChanged: (bindable, oldValue, newValue) => (bindable as PickerField).PickerView.FontAutoScalingEnabled = (bool)newValue);
 
     public Color TextColor { get => (Color)GetValue(TextColorProperty); set => SetValue(TextColorProperty, value); }
 
     public static readonly BindableProperty TextColorProperty = BindableProperty.Create(
-        nameof(TextColor), typeof(Color), typeof(PickerField), Picker.TextColorProperty.DefaultValue,
-        propertyChanged: (bindable, oldValue, newValue) => (bindable as PickerField).PickerView.TextColor = (Color)newValue);
+        nameof(TextColor), typeof(Color), typeof(PickerField), Picker.TextColorProperty.DefaultValue);
 
     public double CharacterSpacing { get => (double)GetValue(CharacterSpacingProperty); set => SetValue(CharacterSpacingProperty, value); }
 
     public static readonly BindableProperty CharacterSpacingProperty = BindableProperty.Create(
-        nameof(CharacterSpacing), typeof(double), typeof(PickerField), Picker.CharacterSpacingProperty.DefaultValue,
-        propertyChanged: (bindable, oldValue, newValue) => (bindable as PickerField).PickerView.CharacterSpacing = (double)newValue);
+        nameof(CharacterSpacing), typeof(double), typeof(PickerField), Picker.CharacterSpacingProperty.DefaultValue);
 
     public bool AllowClear { get => (bool)GetValue(AllowClearProperty); set => SetValue(AllowClearProperty, value); }
 

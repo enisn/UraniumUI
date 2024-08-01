@@ -24,7 +24,7 @@ public static class EntryProperties
         }
 
 #if WINDOWS
-        if (entry.Handler.PlatformView is Microsoft.UI.Xaml.Controls.TextBox textBox)
+        if (entry.Handler?.PlatformView is Microsoft.UI.Xaml.Controls.TextBox textBox)
         {
             textBox.SelectionHighlightColor = new Microsoft.UI.Xaml.Media.SolidColorBrush(color.ToWindowsColor());
             textBox.BorderThickness = new Microsoft.UI.Xaml.Thickness(0);
@@ -32,13 +32,13 @@ public static class EntryProperties
             textBox.Style = null;
         }
 #elif ANDROID
-        if (entry.Handler.PlatformView is AndroidX.AppCompat.Widget.AppCompatEditText editText)
+        if (entry.Handler?.PlatformView is AndroidX.AppCompat.Widget.AppCompatEditText editText)
         {
             editText.SetHighlightColor(color.ToPlatform());
         }
 
 #elif IOS || MACCATALYST
-        if (entry.Handler.PlatformView is UIKit.UITextField textField)
+        if (entry.Handler?.PlatformView is UIKit.UITextField textField)
         {
             textField.TintColor = color.ToPlatform();
         }

@@ -1,6 +1,8 @@
 ﻿//using CommunityToolkit.Maui;
 using CommunityToolkit.Maui;
 using DotNurse.Injector;
+using MemoryToolkit.Maui;
+using Microsoft.Extensions.Logging;
 using Mopups.Hosting;
 using ReactiveUI;
 using System.Reactive;
@@ -32,6 +34,12 @@ public static class MauiProgram
                 fonts.AddMaterialSymbolsFonts();
                 fonts.AddFluentIconFonts();
             });
+
+#if DEBUG
+        builder.Logging.AddDebug();
+
+        builder.UseLeakDetection(target => Console.WriteLine("Leaked: " +target.Name));
+#endif
 
         builder.Services.Configure<AutoFormViewOptions>(options =>
         {

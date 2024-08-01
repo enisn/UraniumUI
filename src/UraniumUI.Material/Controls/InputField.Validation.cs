@@ -36,8 +36,8 @@ public partial class InputField : IValidatable
 
     protected virtual void InitializeValidation()
     {
-        this.AddRowDefinition(new RowDefinition(GridLength.Auto));
-        this.AddRowDefinition(new RowDefinition(GridLength.Auto));
+        //this.AddRowDefinition(new RowDefinition(GridLength.Auto));
+        //this.AddRowDefinition(new RowDefinition(GridLength.Auto));
     }
 
     protected virtual void CheckAndShowValidations()
@@ -54,7 +54,7 @@ public partial class InputField : IValidatable
             if (isStateChanged)
             {
                 endIconsContainer.Remove(iconValidation.Value);
-                this.Remove(labelValidation.Value);
+                this.rootGrid.Remove(labelValidation.Value);
                 OnPropertyChanged(nameof(IsValid));
 			}
         }
@@ -66,7 +66,7 @@ public partial class InputField : IValidatable
             if (isStateChanged)
             {
                 endIconsContainer.Add(iconValidation.Value);
-                this.Add(labelValidation.Value, row: 1);
+                this.rootGrid.Add(labelValidation.Value, row: 1);
                 OnPropertyChanged(nameof(IsValid));
 			}
         }
@@ -107,7 +107,7 @@ public partial class InputField : IValidatable
     public virtual void ResetValidation()
     {
         endIconsContainer.Remove(iconValidation.Value);
-        this.Remove(labelValidation.Value);
+        this.rootGrid.Remove(labelValidation.Value);
         lastValidationState = true;
     }
 }

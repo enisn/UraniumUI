@@ -2,6 +2,7 @@
 using UraniumUI.Controls;
 using UraniumUI.Pages;
 using UraniumUI.Resources;
+using UraniumUI.ViewExtensions;
 using Path = Microsoft.Maui.Controls.Shapes.Path;
 
 namespace UraniumUI.Material.Controls;
@@ -9,14 +10,7 @@ public class AutoCompleteTextField : InputField
 {
     private bool _clearTapped;
 
-    public AutoCompleteView AutoCompleteView => Content as AutoCompleteView;
-
-    public override View Content { get; set; } = new AutoCompleteView
-    {
-        Margin = new Thickness(10, 0),
-        BackgroundColor = Colors.Transparent,
-        VerticalOptions = LayoutOptions.Center
-    };
+    public AutoCompleteView AutoCompleteView => this.FindByViewQueryIdInVisualTreeDescendant<AutoCompleteView>("AutoCompleteView");
 
     protected ContentView iconClear = new ContentView
     {
@@ -35,22 +29,26 @@ public class AutoCompleteTextField : InputField
     {
         ItemsSource = new List<string>();
 
+        var autoCompleteView = new AutoCompleteView
+        {
+            Margin = new Thickness(10, 0),
+            BackgroundColor = Colors.Transparent,
+            VerticalOptions = LayoutOptions.Center
+        };
+        autoCompleteView.SetId("AutoCompleteView");
+
+        Content = autoCompleteView;
+
         iconClear.GestureRecognizers.Add(new TapGestureRecognizer
         {
             Command = new Command(OnClearTapped)
         });
 
-        AutoCompleteView.SetBinding(AutoCompleteView.TextProperty, new Binding(nameof(Text), source: this));
-        AutoCompleteView.SetBinding(AutoCompleteView.SelectedTextProperty, new Binding(nameof(SelectedText), source: this));
-        AutoCompleteView.SetBinding(AutoCompleteView.ItemsSourceProperty, new Binding(nameof(ItemsSource), source: this));
-
-        AutoCompleteView.Focused += AutoCompleteTextField_Focused;
-        this.Focused += AutoCompleteTextField_Focused;
-    }
-
-    private void AutoCompleteTextField_Focused(object sender, FocusEventArgs e)
-    {
-        Console.WriteLine("Focused");
+        autoCompleteView.SetBinding(AutoCompleteView.TextProperty, new Binding(nameof(Text), source: this));
+        autoCompleteView.SetBinding(AutoCompleteView.SelectedTextProperty, new Binding(nameof(SelectedText), source: this));
+        autoCompleteView.SetBinding(AutoCompleteView.ItemsSourceProperty, new Binding(nameof(ItemsSource), source: this));
+        autoCompleteView.SetBinding(AutoCompleteView.TextColorProperty, new Binding(nameof(TextColor), source: this));
+        autoCompleteView.SetBinding(AutoCompleteView.ThresholdProperty, new Binding(nameof(Threshold), source: this));
     }
 
     public override bool HasValue => !string.IsNullOrEmpty(Text);
@@ -162,8 +160,7 @@ public class AutoCompleteTextField : InputField
         nameof(TextColor),
         typeof(Color),
         typeof(AutoCompleteView),
-        ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.DarkGray),
-        propertyChanged: (bindable, oldValue, newValue) => (bindable as AutoCompleteTextField).AutoCompleteView.TextColor = (Color)newValue);
+        ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.DarkGray));
 
     public bool AllowClear { get => (bool)GetValue(AllowClearProperty); set => SetValue(AllowClearProperty, value); }
 

@@ -1,52 +1,49 @@
 ﻿using Microsoft.Maui.Controls.Shapes;
+using System.ComponentModel;
 using UraniumUI.Extensions;
 using UraniumUI.Resources;
+using UraniumUI.ViewExtensions;
 
 namespace UraniumUI.Material.Controls;
 
 [ContentProperty(nameof(Content))]
-public partial class InputField : Grid
+public partial class InputField : ContentView
 {
     internal const double FirstDash = 6;
     internal const double MaxCornerRadius = 24;
-    private View content;
-    public virtual View Content
-    {
-        get => content;
-        set
+    public virtual new View Content { get => (View) GetValue(ContentProperty); set => SetValue(ContentProperty, value); }
+
+    public static readonly new BindableProperty ContentProperty = BindableProperty.Create(
+        nameof(Content),
+        typeof(View),
+        typeof(InputField),
+        propertyChanged: (bindable, oldValue, newValue) =>
         {
-            if (content is not null)
+            if (bindable is not InputField inputField)
             {
-                ReleaseEvents();
+                return;
             }
-            content = value;
-            border.Content = content;
 
-            if (value != null)
+            if (oldValue is not null)
             {
-                RegisterForEvents();
+                inputField.ReleaseEvents();
             }
-        }
-    }
 
-    protected Label labelTitle = new Label()
-    {
-        StyleClass = new[] { "InputField.Title" },
-        HorizontalOptions = LayoutOptions.Start,
-        VerticalOptions = LayoutOptions.Start,
-        InputTransparent = true,
-        Margin = 15,
-    };
+            if (newValue is not null)
+            {
+                inputField.RegisterForEvents();
+            }
 
-    protected Border border = new Border
-    {
-        StyleClass = new[] { "InputField.Border" },
-        StrokeThickness = 1,
-        StrokeDashOffset = 0,
-        BackgroundColor = Colors.Transparent,
-    };
+            inputField.OnPropertyChanged(nameof(Content));
+        }, defaultBindingMode: BindingMode.TwoWay);
 
-    protected Grid rootGrid = new Grid();
+    protected Label labelTitle => this.FindByViewQueryIdInVisualTreeDescendant<Label>("TitleLabel");
+
+    protected Border border => this.FindByViewQueryIdInVisualTreeDescendant<Border>("Border");
+
+    protected Grid rootGrid => this.FindByViewQueryIdInVisualTreeDescendant<Grid>("RootGrid");
+
+    protected Grid innerGrid => this.FindByViewQueryIdInVisualTreeDescendant<Grid>("InnerGrid");
 
     protected Lazy<Image> imageIcon = new Lazy<Image>(() =>
     {
@@ -61,10 +58,7 @@ public partial class InputField : Grid
         };
     });
 
-    protected readonly HorizontalStackLayout endIconsContainer = new HorizontalStackLayout
-    {
-        StyleClass = new[] { "InputField.Attachments" },
-    };
+    protected HorizontalStackLayout endIconsContainer => this.FindByViewQueryIdInVisualTreeDescendant<HorizontalStackLayout>("EndIconsContainer");
 
     public IList<IView> Attachments => endIconsContainer.Children;
 
@@ -72,42 +66,91 @@ public partial class InputField : Grid
 
     private bool hasValue;
 
-    public InputField()
+    private static readonly ControlTemplate inputFieldControlTemplate = new ControlTemplate(() =>
     {
-        this.Padding = new Thickness(0, 5, 0, 0);
-        border.StrokeShape = new RoundRectangle
+        var @this = new Grid
         {
-            CornerRadius = this.CornerRadius,
-            Stroke = this.BorderColor,
-            StrokeThickness = this.BorderThickness,
-            Background = this.InputBackground,
-            BackgroundColor = this.InputBackgroundColor,
+            Padding = new Thickness(0, 5, 0, 0),
+        };
+        @this.SetId("RootGrid");
+        @this.SetBinding(Grid.BindingContextProperty, new Binding(".", source: new RelativeBindingSource(RelativeBindingSourceMode.TemplatedParent)));
+
+        @this.AddRowDefinition(new RowDefinition(GridLength.Auto));
+        @this.AddRowDefinition(new RowDefinition(GridLength.Auto));
+
+        var roundRect = new RoundRectangle();
+        roundRect.SetBinding(RoundRectangle.CornerRadiusProperty, new Binding(nameof(InputField.CornerRadius)));
+        roundRect.SetBinding(RoundRectangle.StrokeProperty, new Binding(nameof(InputField.BorderColor)));
+        roundRect.SetBinding(RoundRectangle.StrokeThicknessProperty, new Binding(nameof(InputField.BorderThickness)));
+        roundRect.SetBinding(RoundRectangle.BackgroundProperty, new Binding(nameof(InputField.InputBackground)));
+        roundRect.SetBinding(RoundRectangle.BackgroundColorProperty, new Binding(nameof(InputField.InputBackgroundColor)));
+
+        var border = new Border
+        {
+            StyleClass = new[] { "InputField.Border" },
+            StrokeThickness = 1,
+            StrokeDashOffset = 0,
+            BackgroundColor = Colors.Transparent,
+            StrokeShape = roundRect,
+            ZIndex = 0,
+        };
+        border.SetId("Border");
+
+        @this.Add(border);
+
+        var labelTitle = new Label()
+        {
+            StyleClass = new[] { "InputField.Title" },
+            HorizontalOptions = LayoutOptions.Start,
+            VerticalOptions = LayoutOptions.Start,
+            InputTransparent = true,
+            Margin = 15,
+            ZIndex = 1000,
         };
 
-        RegisterForEvents();
+        
 
-        border.ZIndex = 0;
-        labelTitle.ZIndex = 1000;
-
-        this.Add(border);
-        this.Add(labelTitle);
-
-        border.Content = rootGrid;
-
-        rootGrid.AddColumnDefinition(new ColumnDefinition(GridLength.Auto));
-        rootGrid.AddColumnDefinition(new ColumnDefinition(GridLength.Star));
-        rootGrid.AddColumnDefinition(new ColumnDefinition(GridLength.Auto));
-        rootGrid.AddRowDefinition(new RowDefinition(GridLength.Star));
-
-        if (Content != null)
-        {
-            rootGrid.Add(Content, column: 1);
-        }
-
-        rootGrid.Add(endIconsContainer, column: 2);
-
+        labelTitle.SetBinding(Label.TextColorProperty, new Binding(nameof(TitleColor)));
+        labelTitle.SetId("TitleLabel");
         labelTitle.Scale = 1;
-        labelTitle.SetBinding(Label.TextProperty, new Binding(nameof(Title), source: this));
+        labelTitle.SetBinding(Label.TextProperty, new Binding(nameof(Title)));
+        labelTitle.SetBinding(Label.FontSizeProperty, new Binding(nameof(TitleFontSize)));
+        labelTitle.SetBinding(Label.FontAttributesProperty, new Binding(nameof(FontAttributes)));
+        labelTitle.SetBinding(Label.FontFamilyProperty, new Binding(nameof(FontFamily)));
+        labelTitle.SetBinding(Label.FontSizeProperty, new Binding(nameof(FontSize)));
+        labelTitle.SetBinding(Label.FontAutoScalingEnabledProperty, new Binding(nameof(FontAutoScalingEnabled)));
+
+        @this.Add(labelTitle);
+
+        var innerGrid = new Grid();
+        innerGrid.SetId("InnerGrid");
+
+        border.Content = innerGrid;
+        innerGrid.AddColumnDefinition(new ColumnDefinition(GridLength.Auto));
+        innerGrid.AddColumnDefinition(new ColumnDefinition(GridLength.Star));
+        innerGrid.AddColumnDefinition(new ColumnDefinition(GridLength.Auto));
+        innerGrid.AddRowDefinition(new RowDefinition(GridLength.Star));
+
+        var contentHolder = new ContentView();
+        contentHolder.SetBinding(ContentView.ContentProperty, new Binding(nameof(InputField.Content), source: new RelativeBindingSource(RelativeBindingSourceMode.TemplatedParent)));
+
+        innerGrid.Add(contentHolder, column: 1);
+
+        var endIconsContainer = new HorizontalStackLayout
+        {
+            StyleClass = new[] { "InputField.Attachments" },
+        };
+
+        endIconsContainer.SetId("EndIconsContainer");
+
+        innerGrid.Add(endIconsContainer, column: 2);
+
+        return @this;
+    });
+
+    public InputField()
+    {
+        this.ControlTemplate = inputFieldControlTemplate;
 
         InitializeValidation();
     }
@@ -170,7 +213,7 @@ public partial class InputField : Grid
 
     protected virtual void OnFocusChanged(object sender, FocusEventArgs args)
     {
-        (this as IGridLayout).IsFocused = args.IsFocused;
+        (this.rootGrid as IGridLayout).IsFocused = args.IsFocused;
     }
 #endif
 
@@ -180,6 +223,7 @@ public partial class InputField : Grid
     {
         AlignIconColor();
     }
+
     void AlignIconColor()
     {
         if (Icon is not FontImageSource fontImageSource || LastFontimageColor.IsNullOrTransparent())
@@ -209,6 +253,11 @@ public partial class InputField : Grid
 
     private void InitializeBorder()
     {
+        if (labelTitle is null)
+        {
+            return;
+        }
+
         var perimeter = (this.Width + this.Height) * 2;
         var calculatedFirstDash = FirstDash + CornerRadius.Clamp(FirstDash, double.MaxValue);
 
@@ -248,6 +297,11 @@ public partial class InputField : Grid
 
     protected virtual void UpdateState()
     {
+        if (Content is null)
+        {
+            return;
+        }
+
         if (border.StrokeDashArray == null || border.StrokeDashArray.Count == 0 || labelTitle.Width <= 0)
         {
             return;
@@ -263,7 +317,6 @@ public partial class InputField : Grid
 
             labelTitle.TranslateToSafely(x, -25, 90, Easing.BounceOut);
             labelTitle.ScaleToSafely(.8, 90);
-
 
 #if ANDROID
             if (this.IsRtl())
@@ -362,9 +415,9 @@ public partial class InputField : Grid
                 ColorResource.GetColor("OnBackgroundDark", Colors.Gray));
         }
 
-        if (!rootGrid.Contains(imageIcon.Value))
+        if (!innerGrid.Contains(imageIcon.Value))
         {
-            rootGrid.Add(imageIcon.Value, column: 0);
+            innerGrid.Add(imageIcon.Value, column: 0);
         }
 
         var leftMargin = Icon != null ? 5 : 10;
@@ -395,13 +448,7 @@ public partial class InputField : Grid
         nameof(Title),
         typeof(string),
         typeof(InputField),
-        string.Empty,
-        propertyChanged: (bindable, oldValue, newValue) =>
-        {
-            var textField = (bindable as InputField);
-            textField.labelTitle.Text = (string)newValue;
-            textField.InitializeBorder();
-        });
+        string.Empty);
 
     public Color AccentColor { get => (Color)GetValue(AccentColorProperty); set => SetValue(AccentColorProperty, value); }
 
@@ -417,8 +464,7 @@ public partial class InputField : Grid
         nameof(TitleColor),
         typeof(Color),
         typeof(InputField),
-        ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.Gray),
-        propertyChanged: (bindable, oldValue, newValue) => (bindable as InputField).labelTitle.TextColor = (Color)newValue
+        ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.Gray)
         );
 
     public Color BorderColor { get => (Color)GetValue(BorderColorProperty); set => SetValue(BorderColorProperty, value); }
@@ -427,8 +473,7 @@ public partial class InputField : Grid
         nameof(BorderColor),
         typeof(Color),
         typeof(InputField),
-        ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.Gray),
-        propertyChanged: (bindable, oldValue, newValue) => (bindable as InputField).border.Stroke = (Color)newValue);
+        ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.Gray));
 
     public double BorderThickness { get => (double)GetValue(BorderThicknessProperty); set => SetValue(BorderThicknessProperty, value); }
 
@@ -436,8 +481,7 @@ public partial class InputField : Grid
         nameof(BorderThickness),
         typeof(double),
         typeof(InputField),
-        1.0,
-        propertyChanged: (bindable, oldValue, newValue) => (bindable as InputField).border.StrokeThickness = (double)newValue);
+        1.0);
 
     public Color InputBackgroundColor { get => (Color)GetValue(InputBackgroundColorProperty); set => SetValue(InputBackgroundColorProperty, value); }
 
@@ -445,8 +489,7 @@ public partial class InputField : Grid
         nameof(InputBackgroundColor),
         typeof(Color),
         typeof(InputField),
-        Colors.Transparent,
-        propertyChanged: (bindable, oldValue, newValue) => (bindable as InputField).border.BackgroundColor = (Color)newValue);
+        Colors.Transparent);
 
     public Brush InputBackground { get => (Brush)GetValue(InputBackgroundProperty); set => SetValue(InputBackgroundProperty, value); }
 
@@ -454,8 +497,7 @@ public partial class InputField : Grid
         nameof(InputBackground),
         typeof(Brush),
         typeof(InputField),
-        Brush.Transparent,
-        propertyChanged: (bindable, oldValue, newValue) => (bindable as InputField).border.Background = (Brush)newValue);
+        Brush.Transparent);
 
     public ImageSource Icon { get => (ImageSource)GetValue(IconProperty); set => SetValue(IconProperty, value); }
 
@@ -481,8 +523,33 @@ public partial class InputField : Grid
         nameof(TitleFontSize),
         typeof(double),
         typeof(InputField),
-        defaultValue: Label.FontSizeProperty.DefaultValue,
-        propertyChanged: (bindable, oldValue, newValue) => (bindable as InputField).labelTitle.FontSize = (double)newValue
+        defaultValue: Label.FontSizeProperty.DefaultValue
         );
+
+    public FontAttributes FontAttributes { get => (FontAttributes)GetValue(FontAttributesProperty); set => SetValue(FontAttributesProperty, value); }
+
+    public static readonly BindableProperty FontAttributesProperty = BindableProperty.Create(
+       nameof(FontAttributes), typeof(FontAttributes), typeof(InputField),
+       defaultValue: Label.FontAttributesProperty.DefaultValue);
+
+    public string FontFamily { get => (string)GetValue(FontFamilyProperty); set => SetValue(FontFamilyProperty, value); }
+
+    public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(
+         nameof(FontFamily), typeof(string), typeof(InputField),
+         defaultValue: Label.FontFamilyProperty.DefaultValue);
+
+
+    [TypeConverter(typeof(FontSizeConverter))]
+    public double FontSize { get => (double)GetValue(FontSizeProperty); set => SetValue(FontSizeProperty, value); }
+
+    public static readonly BindableProperty FontSizeProperty = BindableProperty.Create(
+        nameof(FontSize), typeof(double), typeof(PickerField), Picker.FontSizeProperty.DefaultValue,
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as PickerField).PickerView.FontSize = (double)newValue);
+
+    public bool FontAutoScalingEnabled { get => (bool)GetValue(FontAutoScalingEnabledProperty); set => SetValue(FontAutoScalingEnabledProperty, value); }
+
+    public static readonly BindableProperty FontAutoScalingEnabledProperty = BindableProperty.Create(
+        nameof(FontAutoScalingEnabled), typeof(bool), typeof(PickerField), Picker.FontAutoScalingEnabledProperty.DefaultValue,
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as PickerField).PickerView.FontAutoScalingEnabled = (bool)newValue);
     #endregion
 }

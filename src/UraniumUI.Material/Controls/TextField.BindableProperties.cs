@@ -27,11 +27,7 @@ public partial class TextField
         nameof(TextColor),
         typeof(Color),
         typeof(TextField),
-        ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.DarkGray),
-        propertyChanged: (bindable, oldValue, newValue) =>
-        {
-            (bindable as TextField).EntryView.TextColor = (Color)newValue;
-        });
+        ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.DarkGray));
 
     public string FontFamily { get => (string)GetValue(FontFamilyProperty); set => SetValue(FontFamilyProperty, value); }
 
@@ -231,9 +227,5 @@ public partial class TextField
         nameof(DisallowClearButtonFocus),
         typeof(bool),
         typeof(TextField),
-        false,
-        propertyChanged: (bindable, oldValue, newValue) =>
-        {
-            (bindable as TextField).iconClear.IsFocusable = !(bool)newValue;
-        });
+        false);
 }

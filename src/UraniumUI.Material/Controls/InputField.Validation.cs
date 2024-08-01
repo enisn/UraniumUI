@@ -36,8 +36,7 @@ public partial class InputField : IValidatable
 
     protected virtual void InitializeValidation()
     {
-        //this.AddRowDefinition(new RowDefinition(GridLength.Auto));
-        //this.AddRowDefinition(new RowDefinition(GridLength.Auto));
+        // Keep it for the future requirements
     }
 
     protected virtual void CheckAndShowValidations()

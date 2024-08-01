@@ -4,13 +4,13 @@ using Microsoft.Maui.Controls.Shapes;
 namespace UraniumUI.Pages;
 public static class UraniumShapes
 {
-    public static Geometry ArrowRight = GeometryConverter.FromPath(Paths.ArrowRight);
-    public static Geometry ArrowDown = GeometryConverter.FromPath(Paths.ArrowDown);
-    public static Geometry ExclamationCircle = GeometryConverter.FromPath(Paths.ExclamationCircle);
-    public static Geometry X = GeometryConverter.FromPath(Paths.X);
-    public static Geometry XCircle = GeometryConverter.FromPath(Paths.XCircle);
-    public static Geometry Eye = GeometryConverter.FromPath(Paths.Eye);
-    public static Geometry EyeSlash = GeometryConverter.FromPath(Paths.EyeSlash);
+    public static Geometry ArrowRight => GeometryConverter.FromPath(Paths.ArrowRight);
+    public static Geometry ArrowDown => GeometryConverter.FromPath(Paths.ArrowDown);
+    public static Geometry ExclamationCircle => GeometryConverter.FromPath(Paths.ExclamationCircle);
+    public static Geometry X => GeometryConverter.FromPath(Paths.X);
+    public static Geometry XCircle => GeometryConverter.FromPath(Paths.XCircle);
+    public static Geometry Eye => GeometryConverter.FromPath(Paths.Eye);
+    public static Geometry EyeSlash => GeometryConverter.FromPath(Paths.EyeSlash);
 
     public static class Paths
 	{

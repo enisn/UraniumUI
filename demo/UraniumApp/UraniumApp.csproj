@@ -52,10 +52,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="AdamE.MemoryToolkit.Maui" Version="1.0.0" />
 		<PackageReference Include="DotNurse.Injector" Version="2.5.2" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="ReactiveUI.Fody" Version="19.5.1" />
 		<PackageReference Include="Bogus" Version="35.4.0" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>

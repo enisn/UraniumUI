@@ -37,13 +37,13 @@ public partial class InputField : ContentView
             inputField.OnPropertyChanged(nameof(Content));
         }, defaultBindingMode: BindingMode.TwoWay);
 
-    protected Label labelTitle => this.FindByViewQueryIdInVisualTreeDescendant<Label>("TitleLabel");
+    protected Label labelTitle => this.FindByViewQueryIdInVisualTreeDescendants<Label>("TitleLabel");
 
-    protected Border border => this.FindByViewQueryIdInVisualTreeDescendant<Border>("Border");
+    protected Border border => this.FindByViewQueryIdInVisualTreeDescendants<Border>("Border");
 
-    protected Grid rootGrid => this.FindByViewQueryIdInVisualTreeDescendant<Grid>("RootGrid");
+    protected Grid rootGrid => this.FindByViewQueryIdInVisualTreeDescendants<Grid>("RootGrid");
 
-    protected Grid innerGrid => this.FindByViewQueryIdInVisualTreeDescendant<Grid>("InnerGrid");
+    protected Grid innerGrid => this.FindByViewQueryIdInVisualTreeDescendants<Grid>("InnerGrid");
 
     protected Lazy<Image> imageIcon = new Lazy<Image>(() =>
     {
@@ -58,7 +58,7 @@ public partial class InputField : ContentView
         };
     });
 
-    protected HorizontalStackLayout endIconsContainer => this.FindByViewQueryIdInVisualTreeDescendant<HorizontalStackLayout>("EndIconsContainer");
+    protected HorizontalStackLayout endIconsContainer => this.FindByViewQueryIdInVisualTreeDescendants<HorizontalStackLayout>("EndIconsContainer");
 
     public IList<IView> Attachments => endIconsContainer.Children;
 

@@ -10,7 +10,7 @@ public class AutoCompleteTextField : InputField
 {
     private bool _clearTapped;
 
-    public AutoCompleteView AutoCompleteView => this.FindByViewQueryIdInVisualTreeDescendant<AutoCompleteView>("AutoCompleteView");
+    public AutoCompleteView AutoCompleteView => this.FindByViewQueryIdInVisualTreeDescendants<AutoCompleteView>("AutoCompleteView");
 
     protected ContentView iconClear = new ContentView
     {

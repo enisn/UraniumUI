@@ -15,10 +15,10 @@ namespace UraniumUI.Material.Controls;
 [ContentProperty(nameof(Validations))]
 public class PickerField : InputField
 {
-    public PickerView PickerView => this.FindByViewQueryIdInVisualTreeDescendant<PickerView>("PickerView");
+    public PickerView PickerView => this.FindByViewQueryIdInVisualTreeDescendants<PickerView>("PickerView");
 
 #if WINDOWS
-    protected Label labelSelectedItem => this.FindByViewQueryIdInVisualTreeDescendant<Label>("LabelSelectedItem");
+    protected Label labelSelectedItem => this.FindByViewQueryIdInVisualTreeDescendants<Label>("LabelSelectedItem");
 #endif
 
     public override bool HasValue => SelectedItem != null;
@@ -143,7 +143,7 @@ public class PickerField : InputField
 
     protected virtual void UpdateClearIconState()
     {
-        var existing = endIconsContainer.FindByViewQueryIdInVisualTreeDescendant<StatefulContentView>("ClearIcon");
+        var existing = endIconsContainer.FindByViewQueryIdInVisualTreeDescendants<StatefulContentView>("ClearIcon");
 
         if (AllowClear)
         {

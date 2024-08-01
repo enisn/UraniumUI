@@ -31,7 +31,7 @@ public static class ViewQuery
         return view.FindManyInChildrenHierarchy<T>(x => GetId(x) == id);
     }
 
-    public static T FindByViewQueryIdInVisualTreeDescendant<T>(this View view, string id)
+    public static T FindByViewQueryIdInVisualTreeDescendants<T>(this View view, string id)
         where T : VisualElement
     {
         return view.GetVisualTreeDescendants().OfType<T>().FirstOrDefault(x => GetId(x) == id);

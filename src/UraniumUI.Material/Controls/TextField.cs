@@ -13,7 +13,7 @@ namespace UraniumUI.Material.Controls;
 [ContentProperty(nameof(Validations))]
 public partial class TextField : InputField
 {
-    public EntryView EntryView => this.FindByViewQueryIdInVisualTreeDescendant<EntryView>("EntryView");
+    public EntryView EntryView => this.FindByViewQueryIdInVisualTreeDescendants<EntryView>("EntryView");
 
     public override bool HasValue { get => !string.IsNullOrEmpty(Text); }
 
@@ -125,7 +125,7 @@ public partial class TextField : InputField
 
     protected virtual void UpdateClearIconState()
     {
-        var existing = endIconsContainer.FindByViewQueryIdInVisualTreeDescendant<StatefulContentView>("ClearIcon");
+        var existing = endIconsContainer.FindByViewQueryIdInVisualTreeDescendants<StatefulContentView>("ClearIcon");
         if (AllowClear)
         {
             if (existing == null)

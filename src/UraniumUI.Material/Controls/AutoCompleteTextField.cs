@@ -12,6 +12,13 @@ public class AutoCompleteTextField : InputField
 
     public AutoCompleteView AutoCompleteView => this.FindByViewQueryIdInVisualTreeDescendants<AutoCompleteView>("AutoCompleteView");
 
+    public override View Content { get; set; } = new AutoCompleteView
+    {
+        Margin = new Thickness(10, 0),
+        BackgroundColor = Colors.Transparent,
+        VerticalOptions = LayoutOptions.Center
+    };
+
     protected ContentView iconClear = new ContentView
     {
         VerticalOptions = LayoutOptions.Center,
@@ -29,12 +36,8 @@ public class AutoCompleteTextField : InputField
     {
         ItemsSource = new List<string>();
 
-        var autoCompleteView = new AutoCompleteView
-        {
-            Margin = new Thickness(10, 0),
-            BackgroundColor = Colors.Transparent,
-            VerticalOptions = LayoutOptions.Center
-        };
+        var autoCompleteView = Content as AutoCompleteView;
+
         autoCompleteView.SetId("AutoCompleteView");
 
         Content = autoCompleteView;

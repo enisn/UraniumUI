@@ -15,6 +15,13 @@ public partial class TextField : InputField
 {
     public EntryView EntryView => this.FindByViewQueryIdInVisualTreeDescendants<EntryView>("EntryView");
 
+    public override View Content { get; set; } = new EntryView
+    {
+        Margin = new Thickness(10, 0),
+        BackgroundColor = Colors.Transparent,
+        VerticalOptions = LayoutOptions.Center,
+    };
+
     public override bool HasValue { get => !string.IsNullOrEmpty(Text); }
 
     public IList<Behavior> EntryBehaviors => EntryView?.Behaviors;
@@ -26,14 +33,8 @@ public partial class TextField : InputField
 
     public TextField()
     {
-        var entryView = new EntryView
-        {
-            Margin = new Thickness(10, 0),
-            BackgroundColor = Colors.Transparent,
-            VerticalOptions = LayoutOptions.Center,
-        };
+        var entryView = Content as EntryView;
 
-        Content = entryView;
         entryView.SetId("EntryView");
 
         UpdateClearIconState();

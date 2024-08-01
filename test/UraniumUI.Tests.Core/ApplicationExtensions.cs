@@ -15,6 +15,7 @@ public static class ApplicationExtensions
                                 .UseUraniumUI();
 
         builder?.Invoke(appBuilder);
+        appBuilder.ConfigureDispatching();
 
         var mauiApp = appBuilder.Build();
         var application = mauiApp.Services.GetRequiredService<IApplication>();

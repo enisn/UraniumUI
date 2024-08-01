@@ -23,18 +23,20 @@ public class PickerField : InputField
 
     public override bool HasValue => SelectedItem != null;
 
+    public override View Content { get; set; } = new PickerView
+    {
+        VerticalOptions = LayoutOptions.Center,
+        Margin = new Thickness(15, 0),
+#if WINDOWS
+        Opacity = 0,
+#endif
+    };
+
     public event EventHandler<object> SelectedValueChanged;
 
     public PickerField()
     {
-        var pickerView = new PickerView
-        {
-            VerticalOptions = LayoutOptions.Center,
-            Margin = new Thickness(15, 0),
-#if WINDOWS
-        Opacity = 0,
-#endif
-        };
+        var pickerView = Content as PickerView;
         pickerView.SetId("PickerView");
 
         Content = pickerView;

@@ -74,7 +74,6 @@ public class TextField_Test
     [Fact]
     public void TextProperty_Parent_ShouldTwoWayBind_Child()
     {
-        
         var control = AnimationReadyHandler.Prepare(new TextField());
 
         //Test Child->Parent

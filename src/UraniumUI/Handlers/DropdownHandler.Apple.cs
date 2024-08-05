@@ -24,6 +24,8 @@ public partial class DropdownHandler : ButtonHandler
         if (UIDevice.CurrentDevice.CheckSystemVersion(15, 0))
         {
             button.ChangesSelectionAsPrimaryAction = true;
+            var configuration = UIButtonConfiguration.PlainButtonConfiguration;
+            button.Configuration = configuration;
         }
 
 

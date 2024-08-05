@@ -197,6 +197,12 @@ public partial class InputField : ContentView
 #if ANDROID
         Loaded += OnLoaded;
 #endif
+#if MACCATALYST
+        if (OperatingSystem.IsIOSVersionAtLeast(15) && Content.Handler.PlatformView is UIKit.UITextField textview)
+        {
+            textview.FocusEffect = null;
+        }
+#endif
 
         Content.Focused += OnFocusChanged;
         Content.Unfocused += OnFocusChanged;

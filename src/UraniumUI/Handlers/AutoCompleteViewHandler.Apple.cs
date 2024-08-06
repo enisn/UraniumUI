@@ -27,7 +27,10 @@ public partial class AutoCompleteViewHandler : ViewHandler<IAutoCompleteView, UI
         view.Text = VirtualView.Text;
         view.TextColor = VirtualView.TextColor.ToPlatform();
         view.ReturnKeyType = UIReturnKeyType.Done;
-        
+        if (OperatingSystem.IsIOSVersionAtLeast(15))
+        {
+            view.FocusEffect = null;
+        }
 
 
         view.AutoCompleteViewSource.Selected += AutoCompleteViewSourceOnSelected;

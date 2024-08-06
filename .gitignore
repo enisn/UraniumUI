@@ -400,3 +400,7 @@ FodyWeavers.xsd
 # DocFx
 _site/
 api/
+
+# Mac resource files
+.DS_Store
+**/.DS_Store

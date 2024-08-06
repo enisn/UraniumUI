@@ -6,7 +6,13 @@
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
              xmlns:plain="clr-namespace:Plainer.Maui.Controls;assembly=Plainer.Maui"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:mtk="clr-namespace:MemoryToolkit.Maui;assembly=MemoryToolkit.Maui"
+             mtk:LeakMonitorBehavior.Cascade="True"
              x:Class="UraniumApp.MainPage">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="New" Clicked="ToolbarItem_Clicked" />
+    </ContentPage.ToolbarItems>
 
     <VerticalStackLayout Spacing="25">
         <StackLayout StyleClass="PrimaryContainer" Padding="20" HeightRequest="150">

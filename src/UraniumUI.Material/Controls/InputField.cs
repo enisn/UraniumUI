@@ -79,7 +79,7 @@ public partial class InputField : ContentView
         @this.AddRowDefinition(new RowDefinition(GridLength.Auto));
 
         var roundRect = new RoundRectangle();
-        roundRect.SetBinding(RoundRectangle.CornerRadiusProperty, new Binding(nameof(InputField.CornerRadius)));
+        roundRect.CornerRadius = (double)InputField.CornerRadiusProperty.DefaultValue;
         roundRect.SetBinding(RoundRectangle.StrokeProperty, new Binding(nameof(InputField.BorderColor)));
         roundRect.SetBinding(RoundRectangle.StrokeThicknessProperty, new Binding(nameof(InputField.BorderThickness)));
         roundRect.SetBinding(RoundRectangle.BackgroundProperty, new Binding(nameof(InputField.InputBackground)));
@@ -428,8 +428,8 @@ public partial class InputField : ContentView
 
         var leftMargin = Icon != null ? 5 : 10;
         this.Content.Margin = new Thickness(leftMargin, 0, 0, 0);
-
     }
+
     protected virtual void OnCornerRadiusChanged()
     {
         if (CornerRadius > MaxCornerRadius)

@@ -33,6 +33,7 @@ public partial class TextField : InputField
 
     public TextField()
     {
+        base.RegisterForEvents();
         var entryView = Content as EntryView;
 
         entryView.SetId("EntryView");

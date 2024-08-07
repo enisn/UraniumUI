@@ -34,6 +34,8 @@ public class AutoCompleteTextField : InputField
 
     public AutoCompleteTextField()
     {
+        base.RegisterForEvents();
+
         ItemsSource = new List<string>();
 
         var autoCompleteView = Content as AutoCompleteView;

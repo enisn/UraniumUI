@@ -10,37 +10,38 @@ namespace UraniumUI.Material.Controls;
 [ContentProperty(nameof(Validations))]
 public class DatePickerField : InputField
 {
-	public DatePickerView DatePickerView => Content as DatePickerView;
-	public override View Content { get; set; } = new DatePickerView
-	{
-		VerticalOptions = LayoutOptions.Center,
-		Margin = new Thickness(10, 0),
-		Opacity = 0,
-	};
+    public DatePickerView DatePickerView => Content as DatePickerView;
+    public override View Content { get; set; } = new DatePickerView
+    {
+        VerticalOptions = LayoutOptions.Center,
+        Margin = new Thickness(10, 0),
+        Opacity = 0,
+    };
 
-	protected StatefulContentView iconClear = new StatefulContentView
-	{
-		VerticalOptions = LayoutOptions.Center,
-		HorizontalOptions = LayoutOptions.End,
-		IsVisible = false,
-		Padding = 10,
-		Content = new Path
-		{
-			Data = UraniumShapes.X,
-			Fill = ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.DarkGray).WithAlpha(.5f),
-		}
-	};
+    protected StatefulContentView iconClear = new StatefulContentView
+    {
+        VerticalOptions = LayoutOptions.Center,
+        HorizontalOptions = LayoutOptions.End,
+        IsVisible = false,
+        Padding = 10,
+        Content = new Path
+        {
+            Data = UraniumShapes.X,
+            Fill = ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.DarkGray).WithAlpha(.5f),
+        }
+    };
 
-	public override bool HasValue => Date != null;
+    public override bool HasValue => Date != null;
 
-	public DatePickerField()
-	{
-		iconClear.TappedCommand = new Command(OnClearTapped);
+    public DatePickerField()
+    {
+        base.RegisterForEvents();
+        iconClear.TappedCommand = new Command(OnClearTapped);
 
-		UpdateClearIconState();
+        UpdateClearIconState();
 
-		DatePickerView.SetBinding(DatePickerView.DateProperty, new Binding(nameof(Date), source: this));
-		DatePickerView.SetBinding(DatePickerView.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
+        DatePickerView.SetBinding(DatePickerView.DateProperty, new Binding(nameof(Date), source: this));
+        DatePickerView.SetBinding(DatePickerView.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
 
 #if MACCATALYST || IOS
         labelTitle.InputTransparent = true;
@@ -59,147 +60,147 @@ public class DatePickerField : InputField
             })
         });
 #endif
-	}
+    }
 
-	protected override object GetValueForValidator()
-	{
-		return Date;
-	}
+    protected override object GetValueForValidator()
+    {
+        return Date;
+    }
 
-	protected virtual void OnClearTapped(object parameter)
-	{
-		if (IsEnabled)
-		{
-			Date = null;
+    protected virtual void OnClearTapped(object parameter)
+    {
+        if (IsEnabled)
+        {
+            Date = null;
 #if MACCATALYST
 			DatePickerView.Unfocus();
 #endif
-		}
-	}
+        }
+    }
 
-	protected virtual void OnDateChanged()
-	{
-		OnPropertyChanged(nameof(Date));
-		CheckAndShowValidations();
+    protected virtual void OnDateChanged()
+    {
+        OnPropertyChanged(nameof(Date));
+        CheckAndShowValidations();
 
-		DatePickerView.Opacity = Date == null ? 0 : 1;
-		if (AllowClear)
-		{
-			iconClear.IsVisible = Date != null;
-		}
+        DatePickerView.Opacity = Date == null ? 0 : 1;
+        if (AllowClear)
+        {
+            iconClear.IsVisible = Date != null;
+        }
 
-		UpdateState();
-	}
+        UpdateState();
+    }
 
-	protected override void OnIconChanged()
-	{
-		base.OnIconChanged();
+    protected override void OnIconChanged()
+    {
+        base.OnIconChanged();
 
-		if (Icon == null)
-		{
-			DatePickerView.Margin = new Thickness(10, 0);
-		}
-		else
-		{
-			DatePickerView.Margin = new Thickness(5, 1);
-		}
-	}
-	protected virtual void OnAllowClearChanged()
-	{
-		UpdateClearIconState();
-	}
+        if (Icon == null)
+        {
+            DatePickerView.Margin = new Thickness(10, 0);
+        }
+        else
+        {
+            DatePickerView.Margin = new Thickness(5, 1);
+        }
+    }
+    protected virtual void OnAllowClearChanged()
+    {
+        UpdateClearIconState();
+    }
 
-	protected virtual void UpdateClearIconState()
-	{
-		if (AllowClear)
-		{
-			if (!endIconsContainer.Contains(iconClear))
-			{
-				endIconsContainer.Add(iconClear);
-			}
-		}
-		else
-		{
-			endIconsContainer.Remove(iconClear);
-		}
-	}
+    protected virtual void UpdateClearIconState()
+    {
+        if (AllowClear)
+        {
+            if (!endIconsContainer.Contains(iconClear))
+            {
+                endIconsContainer.Add(iconClear);
+            }
+        }
+        else
+        {
+            endIconsContainer.Remove(iconClear);
+        }
+    }
 
     public override void ResetValidation()
     {
-		Date = null;
+        Date = null;
         base.ResetValidation();
     }
 
     public DateTime? Date { get => (DateTime?)GetValue(DateProperty); set => SetValue(DateProperty, value); }
 
-	public static readonly BindableProperty DateProperty = BindableProperty.Create(
-		nameof(Date), typeof(DateTime?), typeof(DatePickerField), defaultValue: null, defaultBindingMode: BindingMode.TwoWay,
-		propertyChanged: (bindable, oldValue, newValue) => (bindable as DatePickerField).OnDateChanged()
-		);
+    public static readonly BindableProperty DateProperty = BindableProperty.Create(
+        nameof(Date), typeof(DateTime?), typeof(DatePickerField), defaultValue: null, defaultBindingMode: BindingMode.TwoWay,
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as DatePickerField).OnDateChanged()
+        );
 
-	public DateTime MaximumDate { get => (DateTime)GetValue(MaximumDateProperty); set => SetValue(MaximumDateProperty, value); }
+    public DateTime MaximumDate { get => (DateTime)GetValue(MaximumDateProperty); set => SetValue(MaximumDateProperty, value); }
 
-	public static readonly BindableProperty MaximumDateProperty = BindableProperty.Create(
-		 nameof(MaximumDate), typeof(DateTime?), typeof(DatePickerField),
-		 defaultValue: DatePicker.MaximumDateProperty.DefaultValue,
-		 propertyChanged: (bindable, oldValue, newValue) => (bindable as DatePickerField).DatePickerView.MaximumDate = (DateTime)newValue
-		 );
+    public static readonly BindableProperty MaximumDateProperty = BindableProperty.Create(
+         nameof(MaximumDate), typeof(DateTime?), typeof(DatePickerField),
+         defaultValue: DatePicker.MaximumDateProperty.DefaultValue,
+         propertyChanged: (bindable, oldValue, newValue) => (bindable as DatePickerField).DatePickerView.MaximumDate = (DateTime)newValue
+         );
 
-	public DateTime MinimumDate { get => (DateTime)GetValue(MinimumDateProperty); set => SetValue(MinimumDateProperty, value); }
+    public DateTime MinimumDate { get => (DateTime)GetValue(MinimumDateProperty); set => SetValue(MinimumDateProperty, value); }
 
-	public static readonly BindableProperty MinimumDateProperty = BindableProperty.Create(
-		 nameof(MinimumDate), typeof(DateTime?), typeof(DatePickerField),
-		 defaultValue: DatePicker.MinimumDateProperty.DefaultValue,
-		 propertyChanged: (bindable, oldValue, newValue) => (bindable as DatePickerField).DatePickerView.MinimumDate = (DateTime)newValue
-		 );
+    public static readonly BindableProperty MinimumDateProperty = BindableProperty.Create(
+         nameof(MinimumDate), typeof(DateTime?), typeof(DatePickerField),
+         defaultValue: DatePicker.MinimumDateProperty.DefaultValue,
+         propertyChanged: (bindable, oldValue, newValue) => (bindable as DatePickerField).DatePickerView.MinimumDate = (DateTime)newValue
+         );
 
-	public string Format { get => (string)GetValue(FormatProperty); set => SetValue(FormatProperty, value); }
+    public string Format { get => (string)GetValue(FormatProperty); set => SetValue(FormatProperty, value); }
 
-	public static readonly BindableProperty FormatProperty = BindableProperty.Create(
-			nameof(Format), typeof(string), typeof(DatePickerField), DatePicker.FormatProperty.DefaultValue,
-			propertyChanged: (bindable, oldValue, newValue) => (bindable as DatePickerField).DatePickerView.Format = (string)newValue);
+    public static readonly BindableProperty FormatProperty = BindableProperty.Create(
+            nameof(Format), typeof(string), typeof(DatePickerField), DatePicker.FormatProperty.DefaultValue,
+            propertyChanged: (bindable, oldValue, newValue) => (bindable as DatePickerField).DatePickerView.Format = (string)newValue);
 
-	public Color TextColor { get => (Color)GetValue(TextColorProperty); set => SetValue(TextColorProperty, value); }
+    public Color TextColor { get => (Color)GetValue(TextColorProperty); set => SetValue(TextColorProperty, value); }
 
-	public static readonly BindableProperty TextColorProperty = BindableProperty.Create(
-		nameof(TextColor), typeof(Color), typeof(DatePickerField), DatePicker.TextColorProperty.DefaultValue,
-		propertyChanged: (bindable, oldValue, newValue) => (bindable as DatePickerField).DatePickerView.TextColor = (Color)newValue);
+    public static readonly BindableProperty TextColorProperty = BindableProperty.Create(
+        nameof(TextColor), typeof(Color), typeof(DatePickerField), DatePicker.TextColorProperty.DefaultValue,
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as DatePickerField).DatePickerView.TextColor = (Color)newValue);
 
-	public double CharacterSpacing { get => (double)GetValue(CharacterSpacingProperty); set => SetValue(CharacterSpacingProperty, value); }
+    public double CharacterSpacing { get => (double)GetValue(CharacterSpacingProperty); set => SetValue(CharacterSpacingProperty, value); }
 
-	public static readonly BindableProperty CharacterSpacingProperty = BindableProperty.Create(
-		nameof(CharacterSpacing), typeof(double), typeof(DatePickerField), DatePicker.CharacterSpacingProperty.DefaultValue,
-		propertyChanged: (bindable, oldValue, newValue) => (bindable as DatePickerField).DatePickerView.CharacterSpacing = (double)newValue);
+    public static readonly BindableProperty CharacterSpacingProperty = BindableProperty.Create(
+        nameof(CharacterSpacing), typeof(double), typeof(DatePickerField), DatePicker.CharacterSpacingProperty.DefaultValue,
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as DatePickerField).DatePickerView.CharacterSpacing = (double)newValue);
 
-	public FontAttributes FontAttributes { get => (FontAttributes)GetValue(FontAttributesProperty); set => SetValue(FontAttributesProperty, value); }
+    public FontAttributes FontAttributes { get => (FontAttributes)GetValue(FontAttributesProperty); set => SetValue(FontAttributesProperty, value); }
 
-	public static readonly BindableProperty FontAttributesProperty = BindableProperty.Create(
-		nameof(FontAttributes), typeof(FontAttributes), typeof(DatePickerField), TimePicker.FontAttributesProperty.DefaultValue,
-		propertyChanged: (bindable, oldValue, newValue) => (bindable as DatePickerField).DatePickerView.FontAttributes = (FontAttributes)newValue);
+    public static readonly BindableProperty FontAttributesProperty = BindableProperty.Create(
+        nameof(FontAttributes), typeof(FontAttributes), typeof(DatePickerField), TimePicker.FontAttributesProperty.DefaultValue,
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as DatePickerField).DatePickerView.FontAttributes = (FontAttributes)newValue);
 
-	public string FontFamily { get => (string)GetValue(FontFamilyProperty); set => SetValue(FontFamilyProperty, value); }
+    public string FontFamily { get => (string)GetValue(FontFamilyProperty); set => SetValue(FontFamilyProperty, value); }
 
-	public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(
-		nameof(FontFamily), typeof(string), typeof(DatePickerField), TimePicker.FontFamilyProperty.DefaultValue,
-		propertyChanged: (bindable, oldValue, newValue) => (bindable as DatePickerField).DatePickerView.FontFamily = (string)newValue);
+    public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(
+        nameof(FontFamily), typeof(string), typeof(DatePickerField), TimePicker.FontFamilyProperty.DefaultValue,
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as DatePickerField).DatePickerView.FontFamily = (string)newValue);
 
-	[TypeConverter(typeof(FontSizeConverter))]
-	public double FontSize { get => (double)GetValue(FontSizeProperty); set => SetValue(FontSizeProperty, value); }
+    [TypeConverter(typeof(FontSizeConverter))]
+    public double FontSize { get => (double)GetValue(FontSizeProperty); set => SetValue(FontSizeProperty, value); }
 
-	public static readonly BindableProperty FontSizeProperty = BindableProperty.Create(
-		nameof(FontSize), typeof(double), typeof(DatePickerField), TimePicker.FontSizeProperty.DefaultValue,
-		propertyChanged: (bindable, oldValue, newValue) => (bindable as DatePickerField).DatePickerView.FontSize = (double)newValue);
+    public static readonly BindableProperty FontSizeProperty = BindableProperty.Create(
+        nameof(FontSize), typeof(double), typeof(DatePickerField), TimePicker.FontSizeProperty.DefaultValue,
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as DatePickerField).DatePickerView.FontSize = (double)newValue);
 
-	public bool FontAutoScalingEnabled { get => (bool)GetValue(FontAutoScalingEnabledProperty); set => SetValue(FontAutoScalingEnabledProperty, value); }
+    public bool FontAutoScalingEnabled { get => (bool)GetValue(FontAutoScalingEnabledProperty); set => SetValue(FontAutoScalingEnabledProperty, value); }
 
-	public static readonly BindableProperty FontAutoScalingEnabledProperty = BindableProperty.Create(
-		nameof(FontAutoScalingEnabled), typeof(bool), typeof(DatePickerField), TimePicker.FontAutoScalingEnabledProperty.DefaultValue,
-		propertyChanged: (bindable, oldValue, newValue) => (bindable as DatePickerField).DatePickerView.FontAutoScalingEnabled = (bool)newValue);
-	public bool AllowClear { get => (bool)GetValue(AllowClearProperty); set => SetValue(AllowClearProperty, value); }
+    public static readonly BindableProperty FontAutoScalingEnabledProperty = BindableProperty.Create(
+        nameof(FontAutoScalingEnabled), typeof(bool), typeof(DatePickerField), TimePicker.FontAutoScalingEnabledProperty.DefaultValue,
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as DatePickerField).DatePickerView.FontAutoScalingEnabled = (bool)newValue);
+    public bool AllowClear { get => (bool)GetValue(AllowClearProperty); set => SetValue(AllowClearProperty, value); }
 
-	public static BindableProperty AllowClearProperty = BindableProperty.Create(
-		nameof(AllowClear),
-		typeof(bool), typeof(DatePickerField),
-		true,
-		propertyChanged: (bindable, oldValue, newValue) => (bindable as DatePickerField).OnAllowClearChanged());
+    public static BindableProperty AllowClearProperty = BindableProperty.Create(
+        nameof(AllowClear),
+        typeof(bool), typeof(DatePickerField),
+        true,
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as DatePickerField).OnAllowClearChanged());
 }

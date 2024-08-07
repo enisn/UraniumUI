@@ -36,6 +36,7 @@ public class PickerField : InputField
 
     public PickerField()
     {
+        base.RegisterForEvents();
         var pickerView = Content as PickerView;
         pickerView.SetId("PickerView");
 

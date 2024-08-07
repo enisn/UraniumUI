@@ -40,6 +40,8 @@ public class DropdownField : InputField
 
     public DropdownField()
     {
+        base.RegisterForEvents();
+
         iconClear.TappedCommand = new Command(OnClearTapped);
         UpdateClearIconState();
 

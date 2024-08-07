@@ -37,6 +37,7 @@ public partial class MultiplePickerField : InputField
 
     public MultiplePickerField()
     {
+
         MaincontentView.Content = new ScrollView
         {
             Orientation = ScrollOrientation.Horizontal,
@@ -48,6 +49,8 @@ public partial class MultiplePickerField : InputField
 #endif
             Content = chipsHolderStackLayout,
         };
+
+        base.RegisterForEvents();
 
         DialogService = UraniumServiceProvider.Current.GetRequiredService<IDialogService>();
 

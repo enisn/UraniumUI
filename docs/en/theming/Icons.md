@@ -50,8 +50,8 @@ MAUI support font icons by using `FontImageSource` class. You can use it in `Ima
 
 ---
 
-### Material Icons
-Material icons are included in [UraniumUI.Icons.MaterialIcons](https://www.nuget.org/packages/UraniumUI.Icons.MaterialIcons) package. After adding the package, you have to configure fonts in `MauiProgram.cs` file.
+### Material Symbols
+Material symbols are included in [UraniumUI.Icons.MaterialSymbols](https://www.nuget.org/packages/UraniumUI.Icons.MaterialSymbols) package. After adding the package, you have to configure fonts in `MauiProgram.cs` file.
 
 ```csharp
 builder
@@ -60,36 +60,45 @@ builder
 	{
 		fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 		fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-		fonts.AddMaterialIconFonts(); // 👈 Add this line
+		fonts.AddMaterialSymbolsFonts(); // 👈 Add this line
 	})
 ```
 
 #### Font Names
-4 font names are provided by Material Icons. They can be used as `FontFamily` parameter in `FontImageSource`.
+3 font names are provided by Material Symbols. They can be used as `FontFamily` parameter in `FontImageSource`.
 
 - `MaterialOutlined`
-- `MaterialRegular`
 - `MaterialRound`
 - `MaterialSharp`
-- `MaterialTwoTone`
 
 #### Glyphs
-Glyphs are provided with `MaterialOutlined`, `MaterialRegular`, `MaterialRoundRegular`, `MaterialSharpRegular` and `MaterialTwoTone`  classes. They can be accessed like `MaterialTwoTone.Account_circle`. This class icluded in `UraniumUI` namespace. You should include following xml namespace to use it.
+Glyphs are provided with `MaterialOutlined`, `MaterialRound` and `MaterialSharp` classes. They can be accessed like `MaterialSharp.Account_circle`. This class icluded in `UraniumUI` namespace. You should include following xml namespace to use it.
 
 ```xml
-xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+xmlns:m="clr-namespace:UraniumUI.Icons.MaterialSymbols;assembly=UraniumUI.Icons.MaterialSymbols"
 ```
 
-### Usage
+#### Usage
 MAUI support font icons by using `FontImageSource` class. You can use it in `Image`, `Button` and any control that has a `ImageSource` typed property.
 
 ```xml
 <Image>
     <Image.Source>
-        <FontImageSource FontFamily="MaterialRegular" Glyph="{x:Static m:MaterialRegular.Warning}" Color="Red" />
+        <FontImageSource FontFamily="MaterialSharp" Glyph="{x:Static m:MaterialSharp.Warning}" Color="Red" />
     </Image.Source>
 </Image>
 ```
+
+#### Migrating from MaterialIcons
+With UraniumUI 2.8.0 the MaterialIcons became deprecated, since Google is recommending to switch over to MaterialSymbols instead.
+The "filled" (MaterialRegular) and two-tone (MaterialTwoTone) styles are not available in MaterialSymbols and you will have to choose between "Outlined", "Rounded" and "Sharp".
+You can compare the looks on [Google Fonts](https://fonts.google.com/icons?icon.set=Material+Symbols).
+
+Once a style is chosen, remove the MaterialIcons nuget package and install MaterialSymbols.
+Make sure to follow the instructions above on how to setup the MaterialSymbols package.
+Then adjust your `xmlns:` and `using`s.
+
+If you were using a style that became unavailable, replace all occurences of e.g. `MaterialRegular.Star` with `MaterialOutlined.Star`.
 
 ---
 
@@ -119,7 +128,7 @@ Glyphs are provided with `Fluent` class. They can be accessed like `Fluent.Accep
 xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
 ```
 
-### Usage
+#### Usage
 MAUI support font icons by using `FontImageSource` class. You can use it in `Image`, `Button` and any control that has a `ImageSource` typed property.
 
 ```xml

@@ -31,8 +31,8 @@
 - name: Icons
   href: theming/Icons.md
   items:
-    - name: Material Icons
-      href: theming/Icons.md#material-icons
+    - name: Material Symbols
+      href: theming/Icons.md#material-symbols
     - name: Font Awesome
       href: theming/Icons.md#fontawesome
     - name: Segoe Fluent Icons

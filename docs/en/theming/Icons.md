@@ -72,10 +72,10 @@ builder
 - `MaterialSharp`
 
 #### Glyphs
-Glyphs are provided with `MaterialOutlined`, `MaterialRegular`, `MaterialRoundRegular`, `MaterialSharpRegular` and `MaterialTwoTone`  classes. They can be accessed like `MaterialTwoTone.Account_circle`. This class icluded in `UraniumUI` namespace. You should include following xml namespace to use it.
+Glyphs are provided with `MaterialOutlined`, `MaterialRound` and `MaterialSharp` classes. They can be accessed like `MaterialSharp.Account_circle`. This class icluded in `UraniumUI` namespace. You should include following xml namespace to use it.
 
 ```xml
-xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+xmlns:m="clr-namespace:UraniumUI.Icons.MaterialSymbols;assembly=UraniumUI.Icons.MaterialSymbols"
 ```
 
 #### Usage
@@ -84,7 +84,7 @@ MAUI support font icons by using `FontImageSource` class. You can use it in `Ima
 ```xml
 <Image>
     <Image.Source>
-        <FontImageSource FontFamily="MaterialRegular" Glyph="{x:Static m:MaterialRegular.Warning}" Color="Red" />
+        <FontImageSource FontFamily="MaterialSharp" Glyph="{x:Static m:MaterialSharp.Warning}" Color="Red" />
     </Image.Source>
 </Image>
 ```

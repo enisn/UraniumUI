@@ -66,8 +66,8 @@
       "path": "theming/Icons.md",
       "items":[
         {
-          "text": "Material Icons",
-          "path": "theming/Icons#material-icons"
+          "text": "Material Symbols",
+          "path": "theming/Icons#material-symbols"
         },
         {
           "text": "Font Awesome",

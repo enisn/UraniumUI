@@ -94,6 +94,7 @@ This project is licensed under the Apache License License - see the [LICENSE](LI
 | [jfversluis](https://github.com/jfversluis) | <!-- GitHub Sponsor -->
 | [Lucasbk123](https://github.com/Lucasbk123) | <!-- GitHub Sponsor -->
 | [laszlodaniel](https://github.com/laszlodaniel) | <!-- GitHub Sponsor -->
+| [codychaplin](https://github.com/codychaplin) | <!-- GitHub Sponsor -->
 | Juliette Dianne Moss | <!-- patreon -->
 | Simon Brettschneider |    <!-- 1☕️ -->
 | _Anonymous people 5☕️_ |  <!-- 4☕️ -->

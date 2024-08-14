@@ -65,11 +65,14 @@ builder
 ```
 
 #### Font Names
-3 font names are provided by Material Symbols. They can be used as `FontFamily` parameter in `FontImageSource`.
+6 font names are provided by Material Symbols. They can be used as `FontFamily` parameter in `FontImageSource`.
 
 - `MaterialOutlined`
+- `MaterialOutlinedFilled`
 - `MaterialRound`
+- `MaterialRoundFilled`
 - `MaterialSharp`
+- `MaterialSharpFilled`
 
 #### Glyphs
 Glyphs are provided with `MaterialOutlined`, `MaterialRound` and `MaterialSharp` classes. They can be accessed like `MaterialSharp.Account_circle`. This class icluded in `UraniumUI` namespace. You should include following xml namespace to use it.
@@ -84,6 +87,7 @@ MAUI support font icons by using `FontImageSource` class. You can use it in `Ima
 ```xml
 <Image>
     <Image.Source>
+		<!-- Use FontFamily="MaterialSharpFilled" to get the filled variant of the selected glyph -->
         <FontImageSource FontFamily="MaterialSharp" Glyph="{x:Static m:MaterialSharp.Warning}" Color="Red" />
     </Image.Source>
 </Image>
@@ -91,8 +95,9 @@ MAUI support font icons by using `FontImageSource` class. You can use it in `Ima
 
 #### Migrating from MaterialIcons
 With UraniumUI 2.8.0 the MaterialIcons became deprecated, since Google is recommending to switch over to MaterialSymbols instead.
-The "filled" (MaterialRegular) and two-tone (MaterialTwoTone) styles are not available in MaterialSymbols and you will have to choose between "Outlined", "Rounded" and "Sharp".
-You can compare the looks on [Google Fonts](https://fonts.google.com/icons?icon.set=Material+Symbols).
+The two-tone (MaterialTwoTone) style is not available in MaterialSymbols.
+You will have to choose between "Outlined", "Rounded" and "Sharp".
+Looks can be compared on [Google Fonts](https://fonts.google.com/icons?icon.set=Material+Symbols).
 
 Once a style is chosen, remove the MaterialIcons nuget package and install MaterialSymbols.
 Make sure to follow the instructions above on how to setup the MaterialSymbols package.

@@ -67,9 +67,10 @@ You can configure the `AutoFormView` to use a specific editor for a type. For ex
 ```csharp
 builder.Services.Configure<AutoFormViewOptions>(options =>
 {
-    options.EditorMapping[typeof(string)] = (property, source) =>
+    options.EditorMapping[typeof(string)] = (property, propertyNameFactory, source) =>
     {
         var editor = new Entry();
+        editor.Placeholder = propertyNameFactory(property);
         editor.SetBinding(Entry.TextProperty, new Binding(property.Name, source: source));
         return editor;
     };

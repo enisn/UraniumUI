@@ -49,7 +49,7 @@ Also, templates has `ide.host.json` implementation that allows to create a new p
 
 
 - Go to `App.xaml` and add `ColorResource` & `StyleResource` of **Material**
-    - Define following xml namespace: `xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material`
+    - Define following xml namespace: `xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"`
     - Then define `ColorResource` and `StyleResource` into **MergedDictionaries**
         ```xml
         <ResourceDictionary.MergedDictionaries>

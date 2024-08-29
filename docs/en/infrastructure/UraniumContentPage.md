@@ -76,7 +76,7 @@ Attachments aren't same layer with page content and they will automatically rend
 ### IPageAttachment
 `IPageAttachment` is an interface and contains 2 members that you should implement. 
 
-- `OnAttached(UraniumContentPage attachedPage)`: A mothod that is executed right after attachment is added to the page. You can use this method to initialize your attachment.
+- `OnAttached(UraniumContentPage attachedPage)`: A method that is executed right after attachment is added to the page. You can use this method to initialize your attachment.
 
 - `AttachmentPosition`: A property you should return either of `Front` or `Behind` enum value. This property determines the position of the attachment. 
   - `Front`: The attachment will be rendered at the front.

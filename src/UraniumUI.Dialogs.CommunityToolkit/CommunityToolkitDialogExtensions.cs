@@ -651,7 +651,7 @@ public static class CommunityToolkitDialogExtensions
 
     private static Size CalculateSize(Page page)
     {
-        if (DeviceInfo.Current.Idiom == DeviceIdiom.Desktop)
+        if (DeviceInfo.Current.Idiom == DeviceIdiom.Desktop || DeviceInfo.Current.Idiom == DeviceIdiom.Tablet)
         {
             return new Size(400, 400);
         }

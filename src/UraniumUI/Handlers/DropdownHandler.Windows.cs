@@ -112,6 +112,19 @@ public partial class DropdownHandler : ButtonHandler
 
     protected void ArrangeText()
     {
+        var selectedIndex = VirtualViewDropdown.ItemsSource?.IndexOf(VirtualViewDropdown.SelectedItem) ?? -1;
+        if (PlatformView.Flyout is Microsoft.UI.Xaml.Controls.MenuFlyout flyout)
+        {
+            for (int i = 0; i < flyout.Items.Count; i++)
+            {
+                var menuItem = flyout.Items[i];
+                if (menuItem is Microsoft.UI.Xaml.Controls.MenuFlyoutItem menuFlyoutItem)
+                {
+                    menuFlyoutItem.Icon = i == selectedIndex ? new FontIcon() { Glyph="\uE73E" } : null;
+                }
+            }
+        }
+
         if (VirtualViewDropdown.SelectedItem is null)
         {
             PlatformView.Content = VirtualViewDropdown.Placeholder;

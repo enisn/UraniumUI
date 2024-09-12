@@ -186,6 +186,13 @@ public partial class TextField : InputField
         {
             EntryView.CursorPosition = 0;
             EntryView.SelectionLength = EntryView.Text.Length;
+
+#if ANDROID
+            if(EntryView.Handler.PlatformView is Android.Widget.EditText editText)
+            {
+                editText.SelectAll();
+            }
+#endif
         }
     }
 }

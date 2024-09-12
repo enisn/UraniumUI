@@ -241,7 +241,6 @@ public class DefaultDialogService : IDialogService
                 {
                     tcs.TrySetResult(null);
                     await ClosePopup();
-
                 })
             }
         }

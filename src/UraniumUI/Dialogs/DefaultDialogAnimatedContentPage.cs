@@ -39,6 +39,4 @@ public class DefaultDialogAnimatedContentPage : ContentPage
 
         await Navigation.PopModalAsync();
     }
-
-    
 }

@@ -321,8 +321,17 @@ public partial class InputField : ContentView
 
             labelTitle.AnchorX = 0;
 
-            labelTitle.TranslateToSafely(x, -25, 90, Easing.BounceOut);
-            labelTitle.ScaleToSafely(.8, 90);
+            if (HasValue)
+            {
+                labelTitle.TranslationX = x;
+                labelTitle.TranslationY = -25;
+                labelTitle.Scale = .8;
+            }
+            else
+            {
+                labelTitle.TranslateToSafely(x, -25, 90, Easing.BounceOut);
+                labelTitle.ScaleToSafely(.8, 90);
+            }
 
 #if ANDROID
             if (this.IsRtl())

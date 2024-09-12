@@ -228,4 +228,12 @@ public partial class TextField
         typeof(bool),
         typeof(TextField),
         false);
+
+    public bool SelectAllTextOnFocus { get => (bool)GetValue(SelectAllTextOnFocusProperty); set => SetValue(SelectAllTextOnFocusProperty, value); }
+
+    public static BindableProperty SelectAllTextOnFocusProperty = BindableProperty.Create(
+        nameof(SelectAllTextOnFocus),
+        typeof(bool),
+        typeof(TextField),
+        false);
 }

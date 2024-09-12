@@ -1,4 +1,5 @@
-﻿using Plainer.Maui.Controls;
+﻿using Microsoft.Extensions.Logging;
+using Plainer.Maui.Controls;
 using System.Windows.Input;
 using UraniumUI.Converters;
 using UraniumUI.Material.Extensions;
@@ -54,11 +55,6 @@ public partial class TextField : InputField
 
     partial void AfterConstructor();
 
-    protected override void OnApplyTemplate()
-    {
-        base.OnApplyTemplate();
-    }
-
     protected override void OnHandlerChanged()
     {
         base.OnHandlerChanged();
@@ -67,11 +63,13 @@ public partial class TextField : InputField
         {
             EntryView.TextChanged -= EntryView_TextChanged;
             EntryView.Completed -= EntryView_Completed;
+            EntryView.Focused -= EntryView_Focused;
         }
         else
         {
             EntryView.TextChanged += EntryView_TextChanged;
             EntryView.Completed += EntryView_Completed;
+            EntryView.Focused += EntryView_Focused;
 
             ApplyAttachedProperties();
         }
@@ -100,6 +98,14 @@ public partial class TextField : InputField
     private void EntryView_Completed(object sender, EventArgs e)
     {
         Completed?.Invoke(this, e);
+    }
+
+    private void EntryView_Focused(object sender, FocusEventArgs e)
+    {
+        if (SelectAllTextOnFocus)
+        {
+            SelectAllText();
+        }
     }
 
     public void ClearValue()
@@ -169,5 +175,17 @@ public partial class TextField : InputField
         contentView.SetBinding(StatefulContentView.IsFocusableProperty, new Binding(nameof(DisallowClearButtonFocus), source: this));
         contentView.SetBinding(StatefulContentView.IsVisibleProperty, new Binding(nameof(Text), converter: UraniumConverters.StringIsNotNullOrEmptyConverter, source: this));
         return contentView;
+    }
+
+    /// <summary>
+    /// Input has be be already focused when this method is called.
+    /// </summary>
+    public void SelectAllText()
+    {
+        if (EntryView.Text?.Length > 0)
+        {
+            EntryView.CursorPosition = 0;
+            EntryView.SelectionLength = EntryView.Text.Length;
+        }
     }
 }

@@ -31,7 +31,7 @@ public class DefaultDialogService : IDialogService
     {
         var tcs = new TaskCompletionSource<bool>();
 
-        var popupPage = new ContentPage
+        var popupPage = new DefaultDialogAnimatedContentPage
         {
             BackgroundColor = GetBackdropColor(),
             Content = GetFrame(Page.Width, new VerticalStackLayout
@@ -44,10 +44,14 @@ public class DefaultDialogService : IDialogService
                     GetFooter(new Dictionary<string, Command>
                     {
                         {
-                            okText, new Command(() =>
+                            okText, new Command(async () =>
                             {
                                 tcs.SetResult(true);
-                                Page.Navigation.PopModalAsync(animated: false);
+
+                                if (Page.Navigation.ModalStack.LastOrDefault() is DefaultDialogAnimatedContentPage _popupPage)
+                                {
+                                   await _popupPage.CloseAsync();
+                                }
                             })
                         }
                     })
@@ -97,7 +101,7 @@ public class DefaultDialogService : IDialogService
             verticalStackLayout.Children.Add(GetDivider());
             verticalStackLayout.Children.Add(GetFooter(new Dictionary<string, Command>
             {
-                { 
+                {
                     cancelText,  new Command(() =>
                     {
                         tokenSource?.Cancel();
@@ -106,7 +110,7 @@ public class DefaultDialogService : IDialogService
             }));
         }
 
-        var popupPage = new ContentPage
+        var popupPage = new DefaultDialogAnimatedContentPage
         {
             BackgroundColor = GetBackdropColor(),
             Content = GetFrame(Page.Width, verticalStackLayout)
@@ -131,7 +135,7 @@ public class DefaultDialogService : IDialogService
     {
         var tcs = new TaskCompletionSource<bool>();
 
-        var popupPage = new ContentPage
+        var popupPage = new DefaultDialogAnimatedContentPage
         {
             BackgroundColor = GetBackdropColor(),
             Content = GetFrame(Page.Width, new VerticalStackLayout
@@ -148,17 +152,17 @@ public class DefaultDialogService : IDialogService
                     GetFooter(new Dictionary<string, Command>
                     {
                         {
-                            okText, new Command(() =>
+                            okText, new Command(async () =>
                             {
                                 tcs.SetResult(true);
-                                Page.Navigation.PopModalAsync(animated: false);
+                                await ClosePopup();
                             })
                         },
                         {
-                            cancelText, new Command(() =>
+                            cancelText, new Command(async() =>
                             {
                                 tcs.SetResult(false);
-                                Page.Navigation.PopModalAsync(animated: false);
+                                await ClosePopup();
                             })
                         }
                     })
@@ -169,6 +173,14 @@ public class DefaultDialogService : IDialogService
         await Page.Navigation.PushModalAsync(ConfigurePopupPage(popupPage), animated: false);
 
         return await tcs.Task;
+    }
+
+    private async Task ClosePopup()
+    {
+        if (Page.Navigation.ModalStack.LastOrDefault() is DefaultDialogAnimatedContentPage popupPage)
+        {
+            await popupPage.CloseAsync();
+        }
     }
 
     public virtual Task<IEnumerable<T>> DisplayCheckBoxPromptAsync<T>(
@@ -218,23 +230,24 @@ public class DefaultDialogService : IDialogService
         rootGrid.Add(GetFooter(new Dictionary<string, Command>
         {
             {
-                accept, new Command(() =>
+                accept, new Command(async() =>
                 {
                     tcs.TrySetResult(checkBoxGroup.Children.Where(x => x is CheckBox checkbox && checkbox.IsChecked).Select(s => (T)(s as CheckBox).CommandParameter));
-                    Page.Navigation.PopModalAsync(animated: false);
+                    await ClosePopup();
                 })
             },
             {
-                cancel, new Command(() =>
+                cancel, new Command(async() =>
                 {
                     tcs.TrySetResult(null);
-                    Page.Navigation.PopModalAsync(animated: false);
+                    await ClosePopup();
+
                 })
             }
         }
         ), row: 3);
 
-        var popupPage = new ContentPage
+        var popupPage = new DefaultDialogAnimatedContentPage
         {
             BackgroundColor = GetBackdropColor(),
             Content = GetFrame(Page.Width, rootGrid)
@@ -291,22 +304,22 @@ public class DefaultDialogService : IDialogService
         rootGrid.Add(GetFooter(new Dictionary<string, Command>
         {
             {
-                accept, new Command(() =>
+                accept, new Command(async () =>
                 {
                     tcs.TrySetResult((T)rbGroup.SelectedItem);
-                    Page.Navigation.PopModalAsync(animated: false);
+                    await ClosePopup();
                 })
             },
             {
-                cancel, new Command(() =>
+                cancel, new Command(async () =>
                 {
                     tcs.TrySetResult(default);
-                    Page.Navigation.PopModalAsync(animated: false);
+                    await ClosePopup();
                 })
             }
         }), row: 3);
 
-        Page.Navigation.PushModalAsync(ConfigurePopupPage(new ContentPage
+        Page.Navigation.PushModalAsync(ConfigurePopupPage(new DefaultDialogAnimatedContentPage
         {
             BackgroundColor = GetBackdropColor(),
             Content = GetFrame(Page.Width, rootGrid)
@@ -355,7 +368,7 @@ public class DefaultDialogService : IDialogService
             Content = entry
         };
 
-        var popupPage = new ContentPage
+        var popupPage = new DefaultDialogAnimatedContentPage
         {
             BackgroundColor = GetBackdropColor(),
             Content = GetFrame(Page.Width, new VerticalStackLayout
@@ -373,17 +386,17 @@ public class DefaultDialogService : IDialogService
                     GetFooter(new Dictionary<string, Command>
                     {
                         {
-                            accept, new Command(() =>
+                            accept, new Command(async() =>
                             {
                                 tcs.TrySetResult(entry.Text);
-                                Page.Navigation.PopModalAsync(animated: false);
+                                await ClosePopup();
                             })
                         },
                         {
-                            cancel, new Command(() =>
+                            cancel, new Command(async() =>
                             {
                                 tcs.TrySetResult(initialValue);
-                                Page.Navigation.PopModalAsync(animated: false);
+                                await ClosePopup();
                             })
                         }
                     })
@@ -409,7 +422,7 @@ public class DefaultDialogService : IDialogService
             Source = viewModel ?? UraniumServiceProvider.Current.GetRequiredService<TViewModel>(),
         };
 
-        var popupPage = new ContentPage
+        var popupPage = new DefaultDialogAnimatedContentPage
         {
             BackgroundColor = GetBackdropColor(),
             Content = GetFrame(Page.Width, new VerticalStackLayout
@@ -422,20 +435,20 @@ public class DefaultDialogService : IDialogService
                     GetFooter(new Dictionary<string, Command>
                     {
                         {
-                            submit, new Command(() =>
+                            submit, new Command(async () =>
                             {
                                 formView.Submit();
                                 if (formView.IsValidated)
                                 {
-                                    Page.Navigation.PopModalAsync(animated: false);
+                                    await ClosePopup();
                                     tcs.SetResult(viewModel);
                                 }
                             })
                         },
                         {
-                            cancel, new Command(() =>
+                            cancel, new Command(async() =>
                             {
-                                Page.Navigation.PopModalAsync(animated: false);
+                                await ClosePopup();
                                 tcs.SetResult(null);
                             })
                         }
@@ -454,7 +467,7 @@ public class DefaultDialogService : IDialogService
         return DialogOptions.GetBackdropColor();
     }
 
-    protected virtual Page ConfigurePopupPage(ContentPage popupPage)
+    protected virtual Page ConfigurePopupPage(DefaultDialogAnimatedContentPage popupPage)
     {
 #if IOS
         Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific.Page.SetModalPresentationStyle(
@@ -462,11 +475,6 @@ public class DefaultDialogService : IDialogService
             Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific.UIModalPresentationStyle.OverFullScreen
             );
 #endif
-        popupPage.Content.Scale = .75f;
-        popupPage.Content.Opacity = 0;
-
-        popupPage.Content.ScaleTo(1, 360, Easing.Linear);
-        popupPage.Content.FadeTo(1, 200, Easing.Linear);
 
         return popupPage;
     }

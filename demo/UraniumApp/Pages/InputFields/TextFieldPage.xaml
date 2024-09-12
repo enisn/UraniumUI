@@ -67,7 +67,7 @@
                     <Label Text="Simple set of TextFields." FontSize="Subtitle" Margin="20"/>
 
                     <VerticalStackLayout StyleClass="ControlPreview" Spacing="12">
-                        <material:TextField Title="Name" SelectAllTextOnFocus="True" />
+                        <material:TextField Title="Name" />
                         <material:TextField Title="Surname" />
                         <material:TextField Title="Age" Keyboard="Numeric" />
                     </VerticalStackLayout>

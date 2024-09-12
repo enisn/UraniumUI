@@ -44,6 +44,8 @@ Or watch the video:
   - [Plainer](https://github.com/enisn/Xamarin.Forms.Plainer)
   - [InputField](https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/InputField)
 - [Color System](https://enisn-projects.io/docs/en/uranium/latest/theming/ColorSystem) with easy to customize.
+- Accessibility
+    -  _(All controls with [Keyboard Accesibility](https://learn.microsoft.com/en-us/windows/apps/design/accessibility/keyboard-accessibility) unlike drawn controls)_
 - Extensible styling.
 - Dialogs
   - [Mopups](https://enisn-projects.io/docs/en/uranium/latest/dialogs/Index#mopups)

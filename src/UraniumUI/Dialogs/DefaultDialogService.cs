@@ -10,15 +10,31 @@ namespace UraniumUI.Dialogs;
 
 public class DefaultDialogService : IDialogService
 {
+    public DialogOptions DialogOptions { get; }
+
+    private Page page;
+
+    public Page Page { get => page ?? GetCurrentPage(); set => page = value; }
+
+    public DefaultDialogService(IOptions<DialogOptions> options)
+    {
+        DialogOptions = options.Value;
+    }
+
+    public DefaultDialogService WithPage(Page page)
+    {
+        Page = page;
+        return this;
+    }
+
     public Task DisplayViewAsync(string title, View content, string okText = "OK")
     {
         var tcs = new TaskCompletionSource<bool>();
-        var currentPage = GetCurrentPage();
 
-        var popupPage = new ContentPage
+        var popupPage = new DefaultDialogAnimatedContentPage
         {
             BackgroundColor = GetBackdropColor(),
-            Content = GetFrame(currentPage.Width, new VerticalStackLayout
+            Content = GetFrame(Page.Width, new VerticalStackLayout
             {
                 Children =
                 {
@@ -28,10 +44,14 @@ public class DefaultDialogService : IDialogService
                     GetFooter(new Dictionary<string, Command>
                     {
                         {
-                            okText, new Command(() =>
+                            okText, new Command(async () =>
                             {
                                 tcs.SetResult(true);
-                                currentPage.Navigation.PopModalAsync(animated: false);
+
+                                if (Page.Navigation.ModalStack.LastOrDefault() is DefaultDialogAnimatedContentPage _popupPage)
+                                {
+                                   await _popupPage.CloseAsync();
+                                }
                             })
                         }
                     })
@@ -39,7 +59,7 @@ public class DefaultDialogService : IDialogService
             })
         };
 
-        currentPage.Navigation.PushModalAsync(ConfigurePopupPage(popupPage), animated: false);
+        Page.Navigation.PushModalAsync(ConfigurePopupPage(popupPage), animated: false);
 
         return tcs.Task;
     }
@@ -51,7 +71,6 @@ public class DefaultDialogService : IDialogService
 
     public async Task<IDisposable> DisplayProgressCancellableAsync(string title, string message, string cancelText = "Cancel", CancellationTokenSource tokenSource = default)
     {
-        var currentPage = GetCurrentPage();
         tokenSource ??= new CancellationTokenSource();
 
         var progress = new ActivityIndicator
@@ -82,7 +101,7 @@ public class DefaultDialogService : IDialogService
             verticalStackLayout.Children.Add(GetDivider());
             verticalStackLayout.Children.Add(GetFooter(new Dictionary<string, Command>
             {
-                { 
+                {
                     cancelText,  new Command(() =>
                     {
                         tokenSource?.Cancel();
@@ -91,21 +110,19 @@ public class DefaultDialogService : IDialogService
             }));
         }
 
-        var popupPage = new ContentPage
+        var popupPage = new DefaultDialogAnimatedContentPage
         {
             BackgroundColor = GetBackdropColor(),
-            Content = GetFrame(currentPage.Width, verticalStackLayout)
+            Content = GetFrame(Page.Width, verticalStackLayout)
         };
 
-        await currentPage.Navigation.PushModalAsync(ConfigurePopupPage(popupPage), animated: false);
+        await Page.Navigation.PushModalAsync(ConfigurePopupPage(popupPage), animated: false);
 
         var cancelAction = new DisposableAction(() =>
         {
-            currentPage.Navigation.RemovePage(popupPage);
-
-            if (currentPage.Navigation.ModalStack.LastOrDefault() == popupPage)
+            if (Page.Navigation.ModalStack.LastOrDefault() == popupPage)
             {
-                currentPage.Navigation.PopModalAsync(animated: false);
+                Page.Navigation.PopModalAsync(animated: false);
             }
         });
 
@@ -117,12 +134,11 @@ public class DefaultDialogService : IDialogService
     public async Task<bool> ConfirmAsync(string title, string message, string okText = "OK", string cancelText = "Cancel")
     {
         var tcs = new TaskCompletionSource<bool>();
-        var currentPage = GetCurrentPage();
 
-        var popupPage = new ContentPage
+        var popupPage = new DefaultDialogAnimatedContentPage
         {
             BackgroundColor = GetBackdropColor(),
-            Content = GetFrame(currentPage.Width, new VerticalStackLayout
+            Content = GetFrame(Page.Width, new VerticalStackLayout
             {
                 Children =
                 {
@@ -136,17 +152,17 @@ public class DefaultDialogService : IDialogService
                     GetFooter(new Dictionary<string, Command>
                     {
                         {
-                            okText, new Command(() =>
+                            okText, new Command(async () =>
                             {
                                 tcs.SetResult(true);
-                                currentPage.Navigation.PopModalAsync(animated: false);
+                                await ClosePopup();
                             })
                         },
                         {
-                            cancelText, new Command(() =>
+                            cancelText, new Command(async() =>
                             {
                                 tcs.SetResult(false);
-                                currentPage.Navigation.PopModalAsync(animated: false);
+                                await ClosePopup();
                             })
                         }
                     })
@@ -154,9 +170,17 @@ public class DefaultDialogService : IDialogService
             })
         };
 
-        await currentPage.Navigation.PushModalAsync(ConfigurePopupPage(popupPage), animated: false);
+        await Page.Navigation.PushModalAsync(ConfigurePopupPage(popupPage), animated: false);
 
         return await tcs.Task;
+    }
+
+    private async Task ClosePopup()
+    {
+        if (Page.Navigation.ModalStack.LastOrDefault() is DefaultDialogAnimatedContentPage popupPage)
+        {
+            await popupPage.CloseAsync();
+        }
     }
 
     public virtual Task<IEnumerable<T>> DisplayCheckBoxPromptAsync<T>(
@@ -189,8 +213,6 @@ public class DefaultDialogService : IDialogService
             });
         }
 
-        var currentPage = GetCurrentPage();
-
         var rootGrid = new Grid
         {
             RowDefinitions = new RowDefinitionCollection
@@ -203,34 +225,34 @@ public class DefaultDialogService : IDialogService
         };
 
         rootGrid.Add(GetHeader(message));
-        rootGrid.Add(new ScrollView { Content = checkBoxGroup, VerticalOptions = LayoutOptions.Start, MaximumHeightRequest = currentPage.Height * 0.6, }, row: 1);
+        rootGrid.Add(new ScrollView { Content = checkBoxGroup, VerticalOptions = LayoutOptions.Start, MaximumHeightRequest = Page.Height * 0.6, }, row: 1);
         rootGrid.Add(GetDivider(), row: 2);
         rootGrid.Add(GetFooter(new Dictionary<string, Command>
         {
             {
-                accept, new Command(() =>
+                accept, new Command(async() =>
                 {
                     tcs.TrySetResult(checkBoxGroup.Children.Where(x => x is CheckBox checkbox && checkbox.IsChecked).Select(s => (T)(s as CheckBox).CommandParameter));
-                    currentPage.Navigation.PopModalAsync(animated: false);
+                    await ClosePopup();
                 })
             },
             {
-                cancel, new Command(() =>
+                cancel, new Command(async() =>
                 {
                     tcs.TrySetResult(null);
-                    currentPage.Navigation.PopModalAsync(animated: false);
+                    await ClosePopup();
                 })
             }
         }
         ), row: 3);
 
-        var popupPage = new ContentPage
+        var popupPage = new DefaultDialogAnimatedContentPage
         {
             BackgroundColor = GetBackdropColor(),
-            Content = GetFrame(currentPage.Width, rootGrid)
+            Content = GetFrame(Page.Width, rootGrid)
         };
 
-        currentPage.Navigation.PushModalAsync(ConfigurePopupPage(popupPage), animated: false);
+        Page.Navigation.PushModalAsync(ConfigurePopupPage(popupPage), animated: false);
 
         return tcs.Task;
     }
@@ -275,33 +297,31 @@ public class DefaultDialogService : IDialogService
     }
         };
 
-        var currentPage = GetCurrentPage();
-
         rootGrid.Add(GetHeader(message));
-        rootGrid.Add(new ScrollView { Content = rbGroup, VerticalOptions = LayoutOptions.Start, MaximumHeightRequest = currentPage.Height * 0.6, }, row: 1);
+        rootGrid.Add(new ScrollView { Content = rbGroup, VerticalOptions = LayoutOptions.Start, MaximumHeightRequest = Page.Height * 0.6, }, row: 1);
         rootGrid.Add(GetDivider(), row: 2);
         rootGrid.Add(GetFooter(new Dictionary<string, Command>
         {
             {
-                accept, new Command(() =>
+                accept, new Command(async () =>
                 {
                     tcs.TrySetResult((T)rbGroup.SelectedItem);
-                    currentPage.Navigation.PopModalAsync(animated: false);
+                    await ClosePopup();
                 })
             },
             {
-                cancel, new Command(() =>
+                cancel, new Command(async () =>
                 {
                     tcs.TrySetResult(default);
-                    currentPage.Navigation.PopModalAsync(animated: false);
+                    await ClosePopup();
                 })
             }
         }), row: 3);
 
-        currentPage.Navigation.PushModalAsync(ConfigurePopupPage(new ContentPage
+        Page.Navigation.PushModalAsync(ConfigurePopupPage(new DefaultDialogAnimatedContentPage
         {
             BackgroundColor = GetBackdropColor(),
-            Content = GetFrame(currentPage.Width, rootGrid)
+            Content = GetFrame(Page.Width, rootGrid)
         }), animated: false);
 
         return tcs.Task;
@@ -347,12 +367,10 @@ public class DefaultDialogService : IDialogService
             Content = entry
         };
 
-        var currentPage = GetCurrentPage();
-
-        var popupPage = new ContentPage
+        var popupPage = new DefaultDialogAnimatedContentPage
         {
             BackgroundColor = GetBackdropColor(),
-            Content = GetFrame(currentPage.Width, new VerticalStackLayout
+            Content = GetFrame(Page.Width, new VerticalStackLayout
             {
                 Children =
                 {
@@ -367,17 +385,17 @@ public class DefaultDialogService : IDialogService
                     GetFooter(new Dictionary<string, Command>
                     {
                         {
-                            accept, new Command(() =>
+                            accept, new Command(async() =>
                             {
                                 tcs.TrySetResult(entry.Text);
-                                currentPage.Navigation.PopModalAsync(animated: false);
+                                await ClosePopup();
                             })
                         },
                         {
-                            cancel, new Command(() =>
+                            cancel, new Command(async() =>
                             {
                                 tcs.TrySetResult(initialValue);
-                                currentPage.Navigation.PopModalAsync(animated: false);
+                                await ClosePopup();
                             })
                         }
                     })
@@ -385,7 +403,7 @@ public class DefaultDialogService : IDialogService
             })
         };
 
-        currentPage.Navigation.PushModalAsync(ConfigurePopupPage(popupPage), animated: false);
+        Page.Navigation.PushModalAsync(ConfigurePopupPage(popupPage), animated: false);
 
         return tcs.Task;
     }
@@ -393,7 +411,6 @@ public class DefaultDialogService : IDialogService
     public Task<TViewModel> DisplayFormViewAsync<TViewModel>(string title, TViewModel viewModel = null, string submit = "OK", string cancel = "Cancel") where TViewModel : class
     {
         var tcs = new TaskCompletionSource<TViewModel>();
-        var currentPage = GetCurrentPage();
 
         var formView = new AutoFormView()
         {
@@ -404,10 +421,10 @@ public class DefaultDialogService : IDialogService
             Source = viewModel ?? UraniumServiceProvider.Current.GetRequiredService<TViewModel>(),
         };
 
-        var popupPage = new ContentPage
+        var popupPage = new DefaultDialogAnimatedContentPage
         {
             BackgroundColor = GetBackdropColor(),
-            Content = GetFrame(currentPage.Width, new VerticalStackLayout
+            Content = GetFrame(Page.Width, new VerticalStackLayout
             {
                 Children =
                 {
@@ -417,20 +434,20 @@ public class DefaultDialogService : IDialogService
                     GetFooter(new Dictionary<string, Command>
                     {
                         {
-                            submit, new Command(() =>
+                            submit, new Command(async () =>
                             {
                                 formView.Submit();
                                 if (formView.IsValidated)
                                 {
-                                    currentPage.Navigation.PopModalAsync(animated: false);
+                                    await ClosePopup();
                                     tcs.SetResult(viewModel);
                                 }
                             })
                         },
                         {
-                            cancel, new Command(() =>
+                            cancel, new Command(async() =>
                             {
-                                currentPage.Navigation.PopModalAsync(animated: false);
+                                await ClosePopup();
                                 tcs.SetResult(null);
                             })
                         }
@@ -439,42 +456,17 @@ public class DefaultDialogService : IDialogService
             })
         };
 
-        currentPage.Navigation.PushModalAsync(ConfigurePopupPage(popupPage), animated: false);
+        Page.Navigation.PushModalAsync(ConfigurePopupPage(popupPage), animated: false);
 
         return tcs.Task;
     }
 
-    protected virtual Page GetCurrentPage()
-    {
-        if (Application.Current.MainPage is Shell shell)
-        {
-            return shell.CurrentPage;
-        }
-
-        if (Application.Current.MainPage is NavigationPage nav)
-        {
-            return nav.CurrentPage;
-        }
-
-        if (Application.Current.MainPage is TabbedPage tabbed)
-        {
-            return tabbed.CurrentPage;
-        }
-
-        return Application.Current.MainPage;
-    }
-
     protected virtual Color GetBackdropColor()
     {
-        return Application.Current.RequestedTheme switch
-        {
-            AppTheme.Light => Color.FromArgb("#80000000"),
-            AppTheme.Dark => Color.FromArgb("#80ffffff"),
-            _ => Color.FromArgb("#80808080")
-        };
+        return DialogOptions.GetBackdropColor();
     }
 
-    protected virtual Page ConfigurePopupPage(Page popupPage)
+    protected virtual Page ConfigurePopupPage(DefaultDialogAnimatedContentPage popupPage)
     {
 #if IOS
         Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific.Page.SetModalPresentationStyle(
@@ -488,7 +480,6 @@ public class DefaultDialogService : IDialogService
 
     protected virtual View GetFrame(double width, View content)
     {
-        var options = UraniumServiceProvider.Current.GetRequiredService<IOptions<DialogOptions>>()?.Value;
         var desiredWidth = DeviceInfo.Idiom == DeviceIdiom.Desktop ? 400 : width * .8;
         var frame = new Border
         {
@@ -500,7 +491,7 @@ public class DefaultDialogService : IDialogService
             Content = content
         };
 
-        foreach (var effectFactory in options.Effects)
+        foreach (var effectFactory in DialogOptions.Effects)
         {
             frame.Effects.Add(effectFactory());
         }
@@ -508,13 +499,23 @@ public class DefaultDialogService : IDialogService
         return frame;
     }
 
-    protected virtual BoxView GetDivider()
+    protected virtual View GetDivider()
     {
+        if (DialogOptions.GetDivider != null)
+        {
+            return DialogOptions.GetDivider();
+        }
+
         return new BoxView { StyleClass = new[] { "Divider" }, Margin = 0, HeightRequest = 1 };
     }
 
     protected virtual View GetHeader(string title)
     {
+        if (DialogOptions.GetHeader != null)
+        {
+            return DialogOptions.GetHeader(title);
+        }
+
         return new StackLayout
         {
             HorizontalOptions = LayoutOptions.Fill,
@@ -532,6 +533,11 @@ public class DefaultDialogService : IDialogService
 
     protected virtual View GetFooter(Dictionary<string, Command> footerButtons)
     {
+        if (DialogOptions.GetFooter != null)
+        {
+            return DialogOptions.GetFooter(footerButtons);
+        }
+
         var layout = new FlexLayout
         {
             JustifyContent = Microsoft.Maui.Layouts.FlexJustify.End,
@@ -555,5 +561,25 @@ public class DefaultDialogService : IDialogService
         }
 
         return layout;
+    }
+
+    protected virtual Page GetCurrentPage()
+    {
+        if (Application.Current.MainPage is Shell shell)
+        {
+            return shell.CurrentPage;
+        }
+
+        if (Application.Current.MainPage is NavigationPage nav)
+        {
+            return nav.CurrentPage;
+        }
+
+        if (Application.Current.MainPage is TabbedPage tabbed)
+        {
+            return tabbed.CurrentPage;
+        }
+
+        return Application.Current.MainPage;
     }
 }

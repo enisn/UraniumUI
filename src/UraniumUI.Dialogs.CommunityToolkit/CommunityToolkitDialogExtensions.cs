@@ -1,11 +1,7 @@
 ﻿using CommunityToolkit.Maui.Views;
 using InputKit.Shared.Controls;
-using Microsoft.Extensions.Options;
-using Microsoft.Maui;
 using Plainer.Maui.Controls;
-using System.Threading.Channels;
 using UraniumUI.Controls;
-using UraniumUI.Extensions;
 using UraniumUI.Infrastructure;
 using UraniumUI.Resources;
 using CheckBox = InputKit.Shared.Controls.CheckBox;
@@ -20,131 +16,20 @@ public static class CommunityToolkitDialogExtensions
         string accept = "OK",
         string cancel = "Cancel")
     {
-        var tcs = new TaskCompletionSource<bool>();
-
-        var calculatedSize = CalculateSize(page);
-        var rootContainer = new VerticalStackLayout();
-
-#if IOS || MACCATALYST
-        var popup = new Popup
-        {
-            Size = new Size(calculatedSize.Width, 230),
-            Color = ColorResource.GetColor("Surface", "SurfaceDark", Colors.Transparent),
-            CanBeDismissedByTappingOutsideOfPopup = false,
-            Content = rootContainer,
-        };
-        rootContainer.VerticalOptions = LayoutOptions.Center;
-#else
-        var popup = new Popup()
-        {
-            Size = new Size(page.Width, page.Height),
-            Color = Colors.Transparent,
-            CanBeDismissedByTappingOutsideOfPopup = false,
-            Content = new ContentView
-            {
-                BackgroundColor = Colors.Transparent,
-                Content = GetFrame(calculatedSize.Width, rootContainer)
-            }
-        };
-#endif
-
-        var messageLabel = new Label
-        {
-            Text = message,
-            Margin = 20,
-        };
-
-        var footer = GetFooter(
-            accept,
-            new Command(() =>
-            {
-                tcs.SetResult(true);
-                popup.Close();
-            }),
-            cancel,
-            new Command(() =>
-            {
-                tcs.SetResult(false);
-                popup.Close();
-            }));
-
-        rootContainer.Add(GetHeader(title));
-        rootContainer.Add(new ScrollView
-        {
-            Content = messageLabel,
-            VerticalOptions = LayoutOptions.Start,
-#if IOS || MACCATALYST
-            //MaximumHeightRequest = calculatedSize.Height
-#else
-            MaximumHeightRequest = calculatedSize.Height
-#endif
-        });
-        rootContainer.Add(GetDivider());
-        rootContainer.Add(footer);
-
-        page.ShowPopup(popup);
-
-        return tcs.Task;
+       return GetService().WithPage(page)
+           .ConfirmAsync(title, message, accept, cancel);
     }
 
     public static Task<IDisposable> DisplayProgressAsync(this Page page, string title, string message)
     {
-        return DisplayProgressCancellableAsync(page, title, message, null, null);
+        return GetService().WithPage(page)
+            .DisplayProgressAsync(title, message);
     }
 
     public static Task<IDisposable> DisplayProgressCancellableAsync(this Page page, string title, string message, string cancelText = "Cancel", CancellationTokenSource tokenSource = null)
     {
-        tokenSource ??= new CancellationTokenSource();
-        var calculatedSize = CalculateSize(page);
-
-        var progress = new ActivityIndicator
-        {
-            IsRunning = true,
-            IsVisible = true,
-            HorizontalOptions = LayoutOptions.Center,
-            Color = ColorResource.GetColor("Primary", "PrimaryDark", Colors.Blue),
-            Margin = 20,
-        };
-
-        var verticalStackLayout = new VerticalStackLayout
-        {
-            Children =
-            {
-                GetHeader(title),
-                new Label
-                {
-                    Text = message,
-                    Margin = 20,
-                },
-                progress
-            }
-        };
-
-        if (!string.IsNullOrEmpty(cancelText))
-        {
-            verticalStackLayout.Children.Add(GetDivider());
-            verticalStackLayout.Children.Add(GetFooter(null, null, cancelText, new Command(() => tokenSource?.Cancel())));
-        }
-
-        var popup = new Popup()
-        {
-            Size = new Size(page.Width, page.Height),
-            Color = Colors.Transparent,
-            CanBeDismissedByTappingOutsideOfPopup = false,
-
-            Content = new ContentView
-            {
-                BackgroundColor = Colors.Transparent,
-                Content = GetFrame(calculatedSize.Width, verticalStackLayout)
-            }
-        };
-
-        var cancelAction = new DisposableAction(() => popup.Close());
-        tokenSource.Token.Register(cancelAction.Dispose);
-
-        page.ShowPopup(popup);
-
-        return Task.FromResult<IDisposable>(cancelAction);
+        return GetService().WithPage(page)
+            .DisplayProgressCancellableAsync(title, message, cancelText, tokenSource);  
     }
 
     public static Task<IEnumerable<T>> DisplayCheckBoxPromptAsync<T>(
@@ -156,92 +41,8 @@ public static class CommunityToolkitDialogExtensions
         string cancel = "Cancel",
         string displayMember = null)
     {
-        var tcs = new TaskCompletionSource<IEnumerable<T>>();
-        var calculatedSize = CalculateSize(page);
-#if IOS || MACCATALYST
-        var rootContainer = new Grid()
-        {
-            HeightRequest = calculatedSize.Height
-        };
-        var popup = new Popup
-        {
-            Size = new Size(calculatedSize.Width, calculatedSize.Height),
-            Color = ColorResource.GetColor("Surface", "SurfaceDark", Colors.Transparent),
-            CanBeDismissedByTappingOutsideOfPopup = false,
-            Content = rootContainer
-        };
-        rootContainer.HeightRequest = calculatedSize.Height;
-#else
-
-        var rootContainer = new StackLayout();
-
-        var popup = new Popup()
-        {
-            Size = new Size(page.Width, page.Height),
-            Color = Colors.Transparent,
-            CanBeDismissedByTappingOutsideOfPopup = false,
-
-            Content = new ContentView
-            {
-                BackgroundColor = Colors.Transparent,
-                Content = GetFrame(calculatedSize.Width, rootContainer)
-            }
-        };
-#endif
-
-        var prop = displayMember != null ? typeof(T).GetProperty(displayMember) : null;
-
-        var checkBoxGroup = new VerticalStackLayout
-        {
-            Margin = 20,
-            Spacing = 10,
-            VerticalOptions = LayoutOptions.Center,
-            HorizontalOptions = LayoutOptions.Start,
-        };
-
-        foreach (var item in selectionSource)
-        {
-            checkBoxGroup.Add(new CheckBox
-            {
-                Text = prop != null ? prop.GetValue(item)?.ToString() : item.ToString(),
-                CommandParameter = item,
-                IsChecked = selectedItems?.Contains(item) ?? false,
-            });
-        }
-
-        var footer = GetFooter(
-          accept,
-          new Command(() =>
-          {
-              tcs.SetResult(checkBoxGroup.Children.Where(x => x is CheckBox checkbox && checkbox.IsChecked).Select(s => (T)(s as CheckBox).CommandParameter));
-              popup.Close();
-          }),
-          cancel,
-          new Command(() =>
-          {
-              tcs.SetResult(null);
-              popup.Close();
-          }));
-
-#if IOS || MACCATALYST
-        rootContainer.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
-        rootContainer.RowDefinitions.Add(new RowDefinition(GridLength.Star));
-        rootContainer.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
-        rootContainer.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
-        rootContainer.Add(GetHeader(message));
-        rootContainer.Add(new ScrollView { Content = checkBoxGroup }, row: 1);
-        rootContainer.Add(GetDivider(), row: 2);
-        rootContainer.Add(footer, row: 3);
-#else
-        rootContainer.Add(GetHeader(message));
-        rootContainer.Add(new ScrollView { Content = checkBoxGroup, VerticalOptions = LayoutOptions.Start, MaximumHeightRequest = calculatedSize.Height });
-        rootContainer.Add(GetDivider());
-        rootContainer.Add(footer);
-#endif
-
-        page.ShowPopup(popup);
-
-        return tcs.Task;
+        return GetService().WithPage(page)
+            .DisplayCheckBoxPromptAsync(message, selectionSource, selectedItems, accept, cancel, displayMember);
     }
 
     public static Task<T> DisplayRadioButtonPromptAsync<T>(
@@ -252,89 +53,8 @@ public static class CommunityToolkitDialogExtensions
         string accept = "Ok",
         string cancel = "Cancel", string displayMember = null)
     {
-        var tcs = new TaskCompletionSource<T>();
-        var calculatedSize = CalculateSize(page);
-
-#if IOS || MACCATALYST
-        var rootContainer = new Grid()
-        {
-            HeightRequest = calculatedSize.Height
-        };
-        var popup = new Popup
-        {
-            Size = new Size(calculatedSize.Width, calculatedSize.Height),
-            Color = ColorResource.GetColor("Surface", "SurfaceDark", Colors.Transparent),
-            CanBeDismissedByTappingOutsideOfPopup = false,
-            Content = rootContainer
-        };
-        rootContainer.HeightRequest = calculatedSize.Height;
-#else
-        var rootContainer = new VerticalStackLayout();
-
-        var popup = new Popup()
-        {
-            Size = new Size(page.Width, page.Height),
-            Color = Colors.Transparent,
-            CanBeDismissedByTappingOutsideOfPopup = false,
-            Content = new ContentView
-            {
-                BackgroundColor = Colors.Transparent,
-                Content = GetFrame(calculatedSize.Width, rootContainer)
-            }
-        };
-#endif
-        var prop = displayMember != null ? typeof(T).GetProperty(displayMember) : null;
-
-        var rbGroup = new RadioButtonGroupView()
-        {
-            Margin = 20,
-            VerticalOptions = LayoutOptions.Center,
-            HorizontalOptions = LayoutOptions.Start
-        };
-
-        foreach (var item in selectionSource)
-        {
-            rbGroup.Add(new InputKit.Shared.Controls.RadioButton
-            {
-                Text = prop != null ? prop.GetValue(item)?.ToString() : item.ToString(),
-                Value = item,
-            });
-        }
-
-        rbGroup.SelectedItem = selected;
-
-        var footer = GetFooter(
-            accept,
-            new Command(() =>
-            {
-                tcs.SetResult((T)rbGroup.SelectedItem);
-                popup.Close();
-            }),
-            cancel,
-            new Command(() =>
-            {
-                tcs.SetResult(default);
-                popup.Close();
-            }));
-
-#if IOS || MACCATALYST
-        rootContainer.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
-        rootContainer.RowDefinitions.Add(new RowDefinition(GridLength.Star));
-        rootContainer.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
-        rootContainer.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
-        rootContainer.Add(GetHeader(message));
-        rootContainer.Add(new ScrollView { Content = rbGroup }, row: 1);
-        rootContainer.Add(GetDivider(), row: 2);
-        rootContainer.Add(footer, row: 3);
-#else
-        rootContainer.Add(GetHeader(message));
-        rootContainer.Add(new ScrollView { Content = rbGroup, VerticalOptions = LayoutOptions.Start, MaximumHeightRequest = calculatedSize.Height });
-        rootContainer.Add(GetDivider());
-        rootContainer.Add(footer);
-#endif
-        page.ShowPopup(popup);
-
-        return tcs.Task;
+        return GetService().WithPage(page)
+            .DisplayRadioButtonPromptAsync(message, selectionSource, selected, accept, cancel, displayMember);
     }
 
     public static Task<string> DisplayTextPromptAsync(
@@ -349,326 +69,22 @@ public static class CommunityToolkitDialogExtensions
         string initialValue = "",
         bool isPassword = false)
     {
-        var tcs = new TaskCompletionSource<string>();
-        var calculatedSize = CalculateSize(page);
-        var rootContainer = new VerticalStackLayout();
-
-#if IOS || MACCATALYST
-        var popup = new Popup
-        {
-            Size = new Size(calculatedSize.Width, 230),
-            Color = ColorResource.GetColor("Surface", "SurfaceDark", Colors.Transparent),
-            CanBeDismissedByTappingOutsideOfPopup = false,
-            Content = rootContainer,
-        };
-        rootContainer.VerticalOptions = LayoutOptions.Center;
-#else
-        var popup = new Popup()
-        {
-            Size = new Size(page.Width, page.Height),
-            Color = Colors.Transparent,
-            CanBeDismissedByTappingOutsideOfPopup = false,
-            Content = new ContentView
-            {
-                BackgroundColor = Colors.Transparent,
-                Content = GetFrame(calculatedSize.Width, rootContainer)
-            }
-        };
-#endif
-        var entry = new EntryView
-        {
-            HorizontalOptions = LayoutOptions.Fill,
-            Placeholder = placeholder,
-            MaxLength = maxLength != -1 ? maxLength : int.MaxValue,
-            ClearButtonVisibility = ClearButtonVisibility.WhileEditing,
-            Keyboard = keyboard,
-            TextColor = ColorResource.GetColor("OnBackground", "OnBackgroundDark"),
-            PlaceholderColor = ColorResource.GetColor("Background", "BackgroundDark").WithAlpha(.5f),
-            BackgroundColor = Colors.Transparent,
-            Text = initialValue,
-            IsPassword = isPassword
-        };
-
-        var entryholder = new Border
-        {
-            BackgroundColor = ColorResource.GetColor("OnSurface", "OnSurfaceDark").WithAlpha(.2f),
-            StyleClass = new[] { "SurfaceContainer", "Rounded" },
-#if IOS
-            Padding = new Thickness(15, 0),
-#else
-            Padding = new Thickness(5, 0),
-#endif
-            Content = entry
-        };
-
-        var entryContainer = new VerticalStackLayout
-        {
-            Margin = 20,
-            Spacing = 10,
-            Children =
-            {
-                new Label
-                {
-                    Text = message,
-                },
-                entryholder
-            }
-        };
-
-        var footer = GetFooter(
-            accept,
-            new Command(() =>
-            {
-                tcs.SetResult(entry.Text);
-                popup.Close();
-            }),
-            cancel,
-            new Command(() =>
-            {
-                tcs.SetResult(initialValue);
-                popup.Close();
-            }));
-
-        rootContainer.Add(GetHeader(title));
-        rootContainer.Add(new ScrollView
-        {
-            Content = entryContainer,
-            VerticalOptions = LayoutOptions.Start,
-#if IOS || MACCATALYST
-            //MaximumHeightRequest = calculatedSize.Height
-#else
-            MaximumHeightRequest = calculatedSize.Height
-#endif
-        });
-        rootContainer.Add(GetDivider());
-        rootContainer.Add(footer);
-
-        page.ShowPopup(popup);
-
-        return tcs.Task;
+        return GetService().WithPage(page)
+            .DisplayTextPromptAsync(title, message, accept, cancel, placeholder, maxLength, keyboard, initialValue, isPassword);
     }
 
     public static Task DisplayViewAsync(this Page page, string title, View content, string okText = "OK")
     {
-        var tcs = new TaskCompletionSource();
-        var calculatedSize = CalculateSize(page);
-        var rootContainer = new VerticalStackLayout();
-
-#if IOS || MACCATALYST
-        var popup = new Popup
-        {
-            Size = new Size(calculatedSize.Width, 230),
-            Color = ColorResource.GetColor("Surface", "SurfaceDark", Colors.Transparent),
-            CanBeDismissedByTappingOutsideOfPopup = false,
-            Content = rootContainer,
-        };
-        rootContainer.VerticalOptions = LayoutOptions.Center;
-#else
-        var popup = new Popup()
-        {
-            Size = new Size(page.Width, page.Height),
-            Color = Colors.Transparent,
-            CanBeDismissedByTappingOutsideOfPopup = false,
-            Content = new ContentView
-            {
-                BackgroundColor = Colors.Transparent,
-                Content = GetFrame(calculatedSize.Width, rootContainer)
-            }
-        };
-#endif
-
-        var footer = GetFooter(
-            okText,
-            new Command(() =>
-            {
-                tcs.SetResult();
-                popup.Close();
-            }));
-
-        rootContainer.Add(GetHeader(title));
-        rootContainer.Add(new ScrollView
-        {
-            Content = content,
-            VerticalOptions = LayoutOptions.Start,
-#if IOS || MACCATALYST
-            //MaximumHeightRequest = calculatedSize.Height
-#else
-            MaximumHeightRequest = calculatedSize.Height
-#endif
-        });
-        rootContainer.Add(GetDivider());
-        rootContainer.Add(footer);
-
-        page.ShowPopup(popup);
-
-        return tcs.Task;
+        return GetService().WithPage(page)
+            .DisplayViewAsync(title, content, okText);
     }
 
     public static Task<TViewModel> DisplayFormViewAsync<TViewModel>(this Page page, string title, TViewModel viewModel = null, string submit = "OK", string cancel = "Cancel") where TViewModel : class
     {
-        var tcs = new TaskCompletionSource<TViewModel>();
-        var calculatedSize = CalculateSize(page);
-        var rootContainer = new VerticalStackLayout();
-
-        var formView = new AutoFormView
-        {
-            Padding = 8,
-            ShowResetButton = false,
-            ShowSubmitButton = false,
-            ShowMissingProperties = false,
-            Source = viewModel,
-        };
-
-#if IOS || MACCATALYST
-        var popup = new Popup
-        {
-            Size = new Size(calculatedSize.Width, 230),
-            Color = ColorResource.GetColor("Surface", "SurfaceDark", Colors.Transparent),
-            CanBeDismissedByTappingOutsideOfPopup = false,
-            Content = rootContainer,
-        };
-        rootContainer.VerticalOptions = LayoutOptions.Center;
-#else
-        var popup = new Popup()
-        {
-            Size = new Size(page.Width, page.Height),
-            Color = Colors.Transparent,
-            CanBeDismissedByTappingOutsideOfPopup = false,
-            Content = new ContentView
-            {
-                BackgroundColor = Colors.Transparent,
-                Content = GetFrame(calculatedSize.Width, rootContainer)
-            }
-        };
-#endif
-
-        var footer = GetFooter(
-            submit,
-            new Command(() =>
-            {
-                tcs.SetResult(viewModel);
-                popup.Close();
-            }),
-            cancel, 
-            new Command(() =>
-            {
-                tcs.SetResult(null);
-            }));
-
-        rootContainer.Add(GetHeader(title));
-        rootContainer.Add(new ScrollView
-        {
-            Content = formView,
-            VerticalOptions = LayoutOptions.Start,
-#if IOS || MACCATALYST
-            //MaximumHeightRequest = calculatedSize.Height
-#else
-            MaximumHeightRequest = calculatedSize.Height
-#endif
-        });
-        rootContainer.Add(GetDivider());
-        rootContainer.Add(footer);
-
-        page.ShowPopup(popup);
-
-        return tcs.Task;
+        return GetService().WithPage(page)
+            .DisplayFormViewAsync(title, viewModel, submit, cancel);
     }
 
-    private static View GetFrame(double width, View content)
-    {
-        var frame = new Border
-        {
-            Content = content,
-            StyleClass = new[] { "SurfaceContainer", "Rounded" },
-            Padding = 0,
-            VerticalOptions = LayoutOptions.Center,
-            HorizontalOptions = LayoutOptions.Center,
-            WidthRequest = width,
-        };
-
-        var options = UraniumServiceProvider.Current.GetRequiredService<IOptions<DialogOptions>>()?.Value;
-
-        foreach (var efectFactory in options.Effects)
-        {
-            frame.Effects.Add(efectFactory());
-        }
-
-        return frame;
-    }
-
-    private static BoxView GetDivider()
-    {
-        return new BoxView { StyleClass = new[] { "Divider" }, Margin = 0 };
-    }
-
-    private static View GetHeader(string title)
-    {
-        return new StackLayout
-        {
-            HorizontalOptions = LayoutOptions.Fill,
-            Children =
-            {
-                new Label
-                {
-                    Text = title,
-                    Margin = 20,
-                },
-                GetDivider(),
-            }
-        };
-    }
-
-    private static View GetFooter(string accept = null, Command acceptCommand = null, string cancel = null, Command cancelCommand = null)
-    {
-        var layout = new FlexLayout
-        {
-            JustifyContent = Microsoft.Maui.Layouts.FlexJustify.End,
-            Margin = new Thickness(10),
-        };
-
-        if (!string.IsNullOrEmpty(cancel))
-        {
-            layout.Children.Add(new Button
-            {
-                Text = cancel,
-                StyleClass = new[] { "TextButton", "Dialog.Button1" },
-                Command = cancelCommand
-            });
-        }
-
-        if (!string.IsNullOrEmpty(accept))
-        {
-            layout.Children.Add(new Button
-            {
-                Text = accept,
-                StyleClass = new[] { "TextButton", "Dialog.Button0" },
-                Command = acceptCommand
-            });
-        }
-
-        return layout;
-    }
-
-    private static Size CalculateSize(Page page)
-    {
-        if (DeviceInfo.Current.Idiom == DeviceIdiom.Desktop || DeviceInfo.Current.Idiom == DeviceIdiom.Tablet)
-        {
-            return new Size(400, 400);
-        }
-
-        if (DeviceInfo.Current.Idiom == DeviceIdiom.Phone)
-        {
-            var baseValue = page.Width;
-            if (page.Width > page.Height)
-            {
-                baseValue = page.Height;
-            }
-
-            var edge = (baseValue * .8).Clamp(200, 400);
-
-            return new Size(edge, edge * .9);
-        }
-
-        return new Size(100, 100);
-    }
+    private static CommunityToolkitDialogService GetService()
+        => UraniumServiceProvider.Current.GetRequiredService<CommunityToolkitDialogService>();
 }

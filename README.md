@@ -10,11 +10,6 @@
    <a href="./LICENSE"><img src="https://img.shields.io/github/license/enisn/UraniumUI.svg"></a>
    <a href="https://enisn.visualstudio.com/Uranium%20UI/_build/latest?definitionId=15&branchName=develop"><img src="https://enisn.visualstudio.com/Uranium%20UI/_apis/build/status/enisn.UraniumUI?branchName=develop"></a>
    <a href="https://discord.gg/nN7Yvch73v"><img src="https://img.shields.io/discord/1277612890668404798"></a>
-
-    
-
-     [![Discord Shield](https://discord.com/api/guilds/951497912645476422/widget.png?style=shield)](https://discord.gg/abp)
-
 </div>
 
 Uranium is a Free & Open-Source UI Kit for .NET MAUI. It provides a set of controls and utilities to build modern applications. It is built on top of the .NET MAUI infrastructure and provides a set of controls and layouts to build modern UIs. It also provides infrastructure for building custom controls and themes on it.

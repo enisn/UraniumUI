@@ -4,6 +4,7 @@ using Google.Android.Material.Button;
 using Microsoft.Maui.Handlers;
 using Microsoft.Maui.Platform;
 using UraniumUI.Controls;
+using UraniumUI.Extensions;
 using UraniumUI.Platforms.Android;
 
 namespace UraniumUI.Handlers;
@@ -17,7 +18,8 @@ public partial class DropdownHandler : ButtonHandler
     protected override MaterialButton CreatePlatformView()
     {
         var button = base.CreatePlatformView();
-        button.Text = VirtualViewDropdown?.SelectedItem?.ToString();
+
+        button.Text = GetTextForItem(VirtualViewDropdown, VirtualViewDropdown?.SelectedItem);
 
         return button;
     }
@@ -32,7 +34,7 @@ public partial class DropdownHandler : ButtonHandler
         {
             foreach (var item in VirtualViewDropdown.ItemsSource)
             {
-                var menuItem = popupMenu.Menu.Add(new Java.Lang.String(item.ToString()));
+                var menuItem = popupMenu.Menu.Add(new Java.Lang.String(GetTextForItem(VirtualViewDropdown, item)));
 
                 menuItem.SetOnMenuItemClickListener(new MenuItemOnMenuItemClickListener((menuitem) =>
                 {
@@ -87,7 +89,7 @@ public partial class DropdownHandler : ButtonHandler
         }
         else
         {
-            VirtualViewDropdown.Text = VirtualViewDropdown.SelectedItem?.ToString();
+            VirtualViewDropdown.Text = GetTextForItem(VirtualViewDropdown, VirtualViewDropdown.SelectedItem);
             PlatformView.SetTextColor(VirtualViewDropdown.TextColor?.ToPlatform() ?? Colors.Black.ToPlatform());
         }
     }
@@ -122,6 +124,20 @@ public partial class DropdownHandler : ButtonHandler
     public static void MapTextColor(DropdownHandler handler, Dropdown dropdown)
     {
         handler.ArrangeText();
+    }
+
+    private string GetTextForItem(Dropdown dropdown, object item)
+    {
+        if (dropdown?.ItemDisplayBinding is not null)
+        {
+            return dropdown.ItemDisplayBinding.GetValueOnce<string>(item);
+        }
+        return item?.ToString();
+    }
+
+    public static void MapItemDisplayBinding(DropdownHandler handler, Dropdown dropdown)
+    {
+        // Do nothing on Android.
     }
 }
 #endif

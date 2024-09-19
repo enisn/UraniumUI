@@ -10,6 +10,14 @@ public class Dropdown : Button, IDropdown
         this.SetAppThemeColor(Button.BackgroundColorProperty, Colors.Transparent, Colors.Transparent);
     }
 
+    private BindingBase itemDisplayBinding;
+    public BindingBase ItemDisplayBinding { get => itemDisplayBinding; set
+        {
+            itemDisplayBinding = value;
+            OnPropertyChanged();
+        }
+    }
+
     public TextAlignment HorizontalTextAlignment { get => (TextAlignment)GetValue(HorizontalTextAlignmentProperty); set => SetValue(HorizontalTextAlignmentProperty, value); }
 
     public static readonly BindableProperty HorizontalTextAlignmentProperty = BindableProperty.Create(

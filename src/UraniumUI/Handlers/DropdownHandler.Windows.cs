@@ -137,7 +137,7 @@ public partial class DropdownHandler : ButtonHandler
         }
         else
         {
-            PlatformView.Content = VirtualViewDropdown.SelectedItem.ToString();
+            PlatformView.Content = GetTextForItem(VirtualViewDropdown, VirtualViewDropdown.SelectedItem);
             PlatformView.Foreground = VirtualViewDropdown.TextColor?.ToPlatform() ?? Colors.Black.ToPlatform();
         }
     }
@@ -202,16 +202,18 @@ public partial class DropdownHandler : ButtonHandler
         }
     }
 
+    private static string GetTextForItem(Dropdown dropdown, object item)
+    {
+        if (dropdown?.ItemDisplayBinding is not null)
+        {
+            return dropdown.ItemDisplayBinding.GetValueOnce<string>(item);
+        }
+        return item?.ToString();
+    }
+
     private static void SetFlyoutItemText(Dropdown dropdown, Microsoft.UI.Xaml.Controls.MenuFlyoutItem menuItem, object item)
     {
-        if (dropdown.ItemDisplayBinding != null)
-        {
-            menuItem.Text = dropdown.ItemDisplayBinding.GetValueOnce<string>(item);
-        }
-        else
-        {
-            menuItem.Text = item.ToString();
-        }
+        menuItem.Text = GetTextForItem(dropdown, item);
     }
 }
 #endif

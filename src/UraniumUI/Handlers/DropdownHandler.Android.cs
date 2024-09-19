@@ -89,7 +89,7 @@ public partial class DropdownHandler : ButtonHandler
         }
         else
         {
-            VirtualViewDropdown.Text = VirtualViewDropdown.SelectedItem?.ToString();
+            VirtualViewDropdown.Text = GetTextForItem(VirtualViewDropdown, VirtualViewDropdown.SelectedItem);
             PlatformView.SetTextColor(VirtualViewDropdown.TextColor?.ToPlatform() ?? Colors.Black.ToPlatform());
         }
     }

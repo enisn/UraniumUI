@@ -57,8 +57,8 @@
             <Grid.BindingContext>
                 <local:AppShellContentViewModel CurrentShell="{x:Reference thisShell}"/>
             </Grid.BindingContext>
-            <StackLayout Padding="16,2">
-                <material:TextField Title="Search" Text="{Binding SearchText}" InputBackground="{AppThemeBinding Light={StaticResource OnSurfaceDark}, Dark={StaticResource OnSurface}}" AllowClear="True" DisallowClearButtonFocus="True" />
+            <StackLayout Padding="8,8,8,0">
+                <plain:EntryView Placeholder="Search" Text="{Binding SearchText}" BackgroundColor="{AppThemeBinding Light={StaticResource OnSurfaceDark}, Dark={StaticResource OnSurface}}" ClearButtonVisibility="WhileEditing" />
                 <BoxView StyleClass="Divider" />
             </StackLayout>
             <CollectionView Grid.Row="1" SelectedItem="{Binding SelectedItem}" SelectionMode="Single" ItemsSource="{Binding Items}">

@@ -32,6 +32,11 @@ public static class BindingExtensions
 
     public static T GetValueOnce<T>(this BindingBase binding, object source)
     {
+        if (source is null)
+        {
+            return default;
+        }
+
         if (binding is Binding b)
         {
             var _value = source.GetType().GetProperty(b.Path).GetValue(source);

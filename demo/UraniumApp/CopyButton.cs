@@ -14,7 +14,7 @@ namespace UraniumApp
             var copyImageSource = new FontImageSource
             {
                 Glyph = MaterialSharp.Content_copy,
-                FontFamily = "MaterialRegular",
+                FontFamily = "MaterialSharp",
             };
             copyImageSource.SetAppThemeColor(
                 FontImageSource.ColorProperty,
@@ -36,7 +36,7 @@ namespace UraniumApp
                 img.Source = new FontImageSource
                 {
                     Glyph = MaterialSharp.Done,
-                    FontFamily = "MaterialRegular",
+                    FontFamily = "MaterialSharp",
                     Color = Color.FromArgb("#8BC34A")
                 }; ;
 

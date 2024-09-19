@@ -8,7 +8,7 @@ using UraniumUI.Triggers;
 
 namespace UraniumUI.Material.Controls;
 
-[ContentProperty(nameof(Items))]
+[ContentProperty(nameof(Tabs))]
 public partial class TabView : Grid
 {
     public TabViewCachingStrategy CachingStrategy { get; set; }
@@ -21,6 +21,7 @@ public partial class TabView : Grid
     public static DataTemplate DefaultTabHeaderItemTemplate => new DataTemplate(() =>
     {
         var grid = new Grid();
+
         grid.AddRowDefinition(new RowDefinition(GridLength.Auto));
         grid.AddRowDefinition(new RowDefinition(GridLength.Auto));
         grid.Opacity = .5;
@@ -118,13 +119,13 @@ public partial class TabView : Grid
 
     public TabView()
     {
-        Items = new ObservableCollection<TabItem>();
+        Tabs = new ObservableCollection<TabItem>();
 
         _headerScrollView.Content = _headerContainer;
         this.Add(_headerScrollView);
         this.Add(_contentContainer);
         InitializeLayout();
-        if (Items is INotifyCollectionChanged observable)
+        if (Tabs is INotifyCollectionChanged observable)
         {
             observable.CollectionChanged -= Items_CollectionChanged;
             observable.CollectionChanged += Items_CollectionChanged;
@@ -295,10 +296,10 @@ public partial class TabView : Grid
                         }
                         else
                         {
-                            tabItem = Items.FirstOrDefault(x => x.Data == item);
+                            tabItem = Tabs.FirstOrDefault(x => x.Data == item);
                             if (tabItem != null)
                             {
-                                Items.Remove(tabItem);
+                                Tabs.Remove(tabItem);
                             }
                         }
                     }
@@ -313,7 +314,7 @@ public partial class TabView : Grid
 
     internal virtual void Render()
     {
-        if (Items?.Count > 0 || ItemsSource?.Count > 0)
+        if (Tabs?.Count > 0 || ItemsSource?.Count > 0)
         {
             RenderHeaders();
 
@@ -327,7 +328,7 @@ public partial class TabView : Grid
     internal virtual void RenderHeaders()
     {
         _headerContainer.Children.Clear();
-        foreach (var item in Items)
+        foreach (var item in Tabs)
         {
             AddHeaderFor(item);
         }
@@ -343,7 +344,7 @@ public partial class TabView : Grid
 
     internal virtual void InvalidateTabItemContents()
     {
-        foreach (var tabItem in this.Items)
+        foreach (var tabItem in this.Tabs)
         {
             tabItem.Content = null;
             tabItem.Header = null;
@@ -356,7 +357,7 @@ public partial class TabView : Grid
     {
         if (SelectedTab is null)
         {
-            SelectedTab = Items.FirstOrDefault();
+            SelectedTab = Tabs.FirstOrDefault();
         }
         else
         {
@@ -400,7 +401,7 @@ public partial class TabView : Grid
     {
         var tabItem = new TabItem { Data = item, Title = item?.ToString() };
 
-        Items.Add(tabItem);
+        Tabs.Add(tabItem);
     }
 
     protected virtual void RemoveHeaderFor(TabItem tabItem)
@@ -439,7 +440,7 @@ public partial class TabView : Grid
         CurrentItemChanged?.Invoke(this, newItem);
         ExecuteCommandIfCan(CurrentItemChangedCommand, newItem);
 
-        SelectedTab = Items.FirstOrDefault(x => x.Data == newItem);
+        SelectedTab = Tabs.FirstOrDefault(x => x.Data == newItem);
     }
 
     protected virtual async Task OnSelectedTabChanged(TabItem oldValue, TabItem newValue)
@@ -465,7 +466,7 @@ public partial class TabView : Grid
             content.BindingContext = newValue.Data;
         }
 
-        foreach (var item in Items)
+        foreach (var item in Tabs)
         {
             item.NotifyIsSelectedChanged();
         }

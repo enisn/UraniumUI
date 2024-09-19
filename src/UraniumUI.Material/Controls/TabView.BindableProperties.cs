@@ -6,10 +6,13 @@ using System.Windows.Input;
 namespace UraniumUI.Material.Controls;
 public partial class TabView
 {
-    public IList<TabItem> Items { get => (IList<TabItem>)GetValue(ItemsProperty); set => SetValue(ItemsProperty, value); }
+    [Obsolete("This property is obsolete. Please use Tabs instead.")]
+    public IList<TabItem> Items { get => Tabs; set => Tabs = value; }
 
-    public static BindableProperty ItemsProperty = BindableProperty.Create(
-        nameof(Items),
+    public IList<TabItem> Tabs { get => (IList<TabItem>)GetValue(TabsProperty); set => SetValue(TabsProperty, value); }
+
+    public static BindableProperty TabsProperty = BindableProperty.Create(
+        nameof(Tabs),
         typeof(IList<TabItem>),
         typeof(TabView), null,
         defaultBindingMode: BindingMode.TwoWay,

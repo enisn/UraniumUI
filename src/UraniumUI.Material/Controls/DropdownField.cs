@@ -107,6 +107,8 @@ public class DropdownField : InputField
 
     #region BindableProperties
 
+    public BindingBase ItemDisplayBinding { get => DropdownView?.ItemDisplayBinding; set => DropdownView.ItemDisplayBinding = value; }
+
     public IList ItemsSource { get => (IList)GetValue(ItemsSourceProperty); set => SetValue(ItemsSourceProperty, value); }
 
     public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(

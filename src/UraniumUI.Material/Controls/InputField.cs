@@ -11,7 +11,7 @@ public partial class InputField : ContentView
 {
     internal const double FirstDash = 6;
     internal const double MaxCornerRadius = 24;
-    public virtual new View Content { get => (View) GetValue(ContentProperty); set => SetValue(ContentProperty, value); }
+    public virtual new View Content { get => (View)GetValue(ContentProperty); set => SetValue(ContentProperty, value); }
 
     public static readonly new BindableProperty ContentProperty = BindableProperty.Create(
         nameof(Content),
@@ -108,7 +108,7 @@ public partial class InputField : ContentView
             ZIndex = 1000,
         };
 
-        
+
 
         labelTitle.SetBinding(Label.TextColorProperty, new Binding(nameof(TitleColor)));
         labelTitle.SetId("TitleLabel");
@@ -312,53 +312,56 @@ public partial class InputField : ContentView
         {
             return;
         }
-
-        if (HasValue || Content.IsFocused)
+        using (border.Batch())
+        using (labelTitle.Batch())
         {
-            var x = CornerRadius.Clamp(10, MaxCornerRadius) - 10;
-
-            UpdateOffset(0.01);
-
-            labelTitle.AnchorX = 0;
-
-            if (HasValue)
+            if (HasValue || Content.IsFocused)
             {
-                labelTitle.TranslationX = x;
-                labelTitle.TranslationY = -25;
-                labelTitle.Scale = .8;
+                var x = CornerRadius.Clamp(10, MaxCornerRadius) - 10;
+
+                UpdateOffset(0.01);
+
+                labelTitle.AnchorX = 0;
+
+                if (HasValue)
+                {
+                    labelTitle.TranslationX = x;
+                    labelTitle.TranslationY = -25;
+                    labelTitle.Scale = .8;
+                }
+                else
+                {
+                    labelTitle.TranslateToSafely(x, -25, 90, Easing.BounceOut);
+                    labelTitle.ScaleToSafely(.8, 90);
+                }
+
+#if ANDROID
+                if (this.IsRtl())
+                {
+                    labelTitle.AnchorX = .5;
+                }
+#endif
             }
             else
             {
-                labelTitle.TranslateToSafely(x, -25, 90, Easing.BounceOut);
-                labelTitle.ScaleToSafely(.8, 90);
-            }
+                var offsetToGo = border.StrokeDashArray[0] + border.StrokeDashArray[1] + FirstDash;
+                UpdateOffset(offsetToGo);
+
+                labelTitle.CancelAnimations();
+
+                var x = imageIcon.IsValueCreated ? imageIcon.Value.Width : 0;
 
 #if ANDROID
-            if (this.IsRtl())
-            {
-                labelTitle.AnchorX = .5;
-            }
-#endif
-        }
-        else
-        {
-            var offsetToGo = border.StrokeDashArray[0] + border.StrokeDashArray[1] + FirstDash;
-            UpdateOffset(offsetToGo);
-
-            labelTitle.CancelAnimations();
-
-            var x = imageIcon.IsValueCreated ? imageIcon.Value.Width : 0;
-
-#if ANDROID
-            if (this.IsRtl())
-            {
-                x = imageIcon.IsValueCreated ? -imageIcon.Value.Width : 0;
-            }
+                if (this.IsRtl())
+                {
+                    x = imageIcon.IsValueCreated ? -imageIcon.Value.Width : 0;
+                }
 #endif
 
-            labelTitle.AnchorX = 0;
-            labelTitle.TranslateToSafely(x, 0, 90, Easing.BounceOut);
-            labelTitle.ScaleToSafely(1, 90);
+                labelTitle.AnchorX = 0;
+                labelTitle.TranslateToSafely(x, 0, 90, Easing.BounceOut);
+                labelTitle.ScaleToSafely(1, 90);
+            }
         }
     }
 

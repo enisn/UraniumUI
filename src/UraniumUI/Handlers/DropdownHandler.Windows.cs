@@ -1,8 +1,11 @@
 ﻿#if WINDOWS
+using Microsoft.Maui.Animations;
 using Microsoft.Maui.Handlers;
 using Microsoft.Maui.Platform;
 using Microsoft.UI.Xaml.Controls;
+using System.ComponentModel;
 using UraniumUI.Controls;
+using UraniumUI.Extensions;
 
 namespace UraniumUI.Handlers;
 public partial class DropdownHandler : ButtonHandler
@@ -18,7 +21,7 @@ public partial class DropdownHandler : ButtonHandler
         dropdownButton.HorizontalAlignment = Microsoft.UI.Xaml.HorizontalAlignment.Stretch;
         dropdownButton.BorderThickness = new Microsoft.UI.Xaml.Thickness(0);
         dropdownButton.Background = new Microsoft.UI.Xaml.Media.SolidColorBrush(Microsoft.UI.Colors.Transparent);
-        dropdownButton.Foreground = new Microsoft.UI.Xaml.Media.SolidColorBrush(Microsoft.UI.Colors.Red);
+        dropdownButton.Foreground = new Microsoft.UI.Xaml.Media.SolidColorBrush(Microsoft.UI.Colors.Transparent);
 
         SetItemSource(VirtualViewDropdown, dropdownButton);
 
@@ -48,7 +51,9 @@ public partial class DropdownHandler : ButtonHandler
             foreach (var item in dropdown.ItemsSource)
             {
                 var menuItem = new Microsoft.UI.Xaml.Controls.MenuFlyoutItem();
-                menuItem.Text = item.ToString();
+
+                SetFlyoutItemText(dropdown, menuItem, item);
+
                 menuItem.Command = new Command(() => dropdown.SelectedItem = item);
                 menuItem.CommandParameter = item;
                 flyout.Items.Add(menuItem);
@@ -181,6 +186,32 @@ public partial class DropdownHandler : ButtonHandler
     public static void MapTextColor(DropdownHandler handler, Dropdown dropdown)
     {
         handler.ArrangeText();
+    }
+
+    public static void MapItemDisplayBinding(DropdownHandler handler, Dropdown dropdown)
+    {
+        if (handler.PlatformView.Flyout is Microsoft.UI.Xaml.Controls.MenuFlyout flyout)
+        {
+            for (int i = 0; i < flyout.Items.Count; i++)
+            {
+                if (flyout.Items[i] is Microsoft.UI.Xaml.Controls.MenuFlyoutItem menuItem)
+                {
+                    SetFlyoutItemText(dropdown, menuItem, dropdown.ItemsSource[i]);
+                }
+            }
+        }
+    }
+
+    private static void SetFlyoutItemText(Dropdown dropdown, Microsoft.UI.Xaml.Controls.MenuFlyoutItem menuItem, object item)
+    {
+        if (dropdown.ItemDisplayBinding != null)
+        {
+            menuItem.Text = dropdown.ItemDisplayBinding.GetValueOnce<string>(item);
+        }
+        else
+        {
+            menuItem.Text = item.ToString();
+        }
     }
 }
 #endif

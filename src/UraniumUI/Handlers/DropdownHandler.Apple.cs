@@ -4,6 +4,7 @@ using Microsoft.Maui.Platform;
 using System.Collections.Specialized;
 using UIKit;
 using UraniumUI.Controls;
+using UraniumUI.Extensions;
 
 namespace UraniumUI.Handlers;
 
@@ -47,7 +48,7 @@ public partial class DropdownHandler : ButtonHandler
             for (int i = 0; i < dropdown.ItemsSource.Count; i++)
             {
                 var item = dropdown.ItemsSource[i];
-                var action = UIKit.UIAction.Create(dropdown.ItemsSource[i].ToString(), null, dropdown.ItemsSource[i].ToString(), _ => { dropdown.SelectedItem = item; });
+                var action = UIKit.UIAction.Create(GetTextForItem(dropdown, dropdown.ItemsSource[i]), null, dropdown.ItemsSource[i].ToString(), _ => { dropdown.SelectedItem = item; });
                 action.State = i == selectedIndex ? UIMenuElementState.On : UIMenuElementState.Off;
                 items[i] = action;
             }
@@ -113,7 +114,7 @@ public partial class DropdownHandler : ButtonHandler
         }
         else
         {
-            VirtualViewDropdown.Text = VirtualViewDropdown.SelectedItem?.ToString();
+            VirtualViewDropdown.Text = GetTextForItem(VirtualViewDropdown, VirtualViewDropdown.SelectedItem);
             PlatformView.SetTitleColor(VirtualViewDropdown.TextColor?.ToPlatform() ?? Colors.Black.ToPlatform(), UIControlState.Normal);
         }
     }
@@ -148,6 +149,29 @@ public partial class DropdownHandler : ButtonHandler
     public static void MapTextColor(DropdownHandler handler, Dropdown dropdown)
     {
         handler.ArrangeText();
+    }
+
+    public static void MapItemDisplayBinding(DropdownHandler handler, Dropdown dropdown)
+    {
+        if (handler.PlatformView.Menu != null)
+        {
+            for (int i = 0; i < handler.PlatformView.Menu.Children.Length; i++)
+            {
+                if (handler.PlatformView.Menu.Children[i] is UIAction action)
+                {
+                    action.Title = GetTextForItem(dropdown, dropdown.ItemsSource[i]);
+                }
+            }
+        }
+    }
+
+    private static string GetTextForItem(Dropdown dropdown, object item)
+    {
+        if (dropdown.ItemDisplayBinding is not null)
+        {
+            return dropdown.ItemDisplayBinding.GetValueOnce<string>(item);
+        }
+        return item?.ToString();
     }
 }
 #endif

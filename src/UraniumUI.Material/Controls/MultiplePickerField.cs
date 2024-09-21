@@ -1,11 +1,12 @@
-﻿using System.Collections;
+﻿using Microsoft.Maui.Layouts;
+using System.Collections;
 using System.Collections.ObjectModel;
 using UraniumUI.Dialogs;
 
 namespace UraniumUI.Material.Controls;
 public partial class MultiplePickerField : InputField
 {
-    public ContentView MaincontentView => Content as ContentView;
+    public ContentView MainContentView => Content as ContentView;
 
     private bool isBusy;
     public bool IsBusy
@@ -24,32 +25,14 @@ public partial class MultiplePickerField : InputField
 
     protected IDialogService DialogService { get; }
 
-    protected HorizontalStackLayout chipsHolderStackLayout = new HorizontalStackLayout
-    {
-        HorizontalOptions = LayoutOptions.Start,
-#if IOS || MACCATALYST
-        VerticalOptions = LayoutOptions.Center,
-#endif
-    };
+    protected FlexLayout chipsHolderLayout;
 
     private Command _destroyChipCommand;
     private Command _pickSelectionsCommand;
 
     public MultiplePickerField()
     {
-
-        MaincontentView.Content = new ScrollView
-        {
-            Orientation = ScrollOrientation.Horizontal,
-#if ANDROID
-            HorizontalOptions = LayoutOptions.Start,
-#endif
-#if !IOS && !MACCATALYST
-            VerticalOptions = LayoutOptions.Center,
-#endif
-            Content = chipsHolderStackLayout,
-        };
-
+        MainContentView.Content = chipsHolderLayout = CreateLayout();
         base.RegisterForEvents();
 
         DialogService = UraniumServiceProvider.Current.GetRequiredService<IDialogService>();
@@ -94,14 +77,33 @@ public partial class MultiplePickerField : InputField
                 UpdateState();
             }
         });
+    }
 
-        BindableLayout.SetItemTemplate(chipsHolderStackLayout, new DataTemplate(() =>
+    protected FlexLayout CreateLayout()
+    {
+        var layout = new FlexLayout
+        {
+            HorizontalOptions = LayoutOptions.Start,
+            AlignItems = Microsoft.Maui.Layouts.FlexAlignItems.Center,
+            AlignContent = Microsoft.Maui.Layouts.FlexAlignContent.Center,
+            Wrap = Microsoft.Maui.Layouts.FlexWrap.Wrap,
+            Margin = new Thickness(4),
+#if IOS || MACCATALYST
+        VerticalOptions = LayoutOptions.Center,
+#endif
+        };
+
+        BindableLayout.SetItemTemplate(layout, new DataTemplate(() =>
         {
             var chip = new Chip();
             chip.SetBinding(Chip.TextProperty, new Binding("."));
             chip.DestroyCommand = _destroyChipCommand;
             return chip;
         }));
+
+        BindableLayout.SetItemsSource(layout, SelectedItems);
+
+        return layout;
     }
 
     protected virtual void OnItemsSourceSet()
@@ -111,7 +113,7 @@ public partial class MultiplePickerField : InputField
 
     protected virtual void OnSelectedItemsSet()
     {
-        BindableLayout.SetItemsSource(chipsHolderStackLayout, SelectedItems);
+        BindableLayout.SetItemsSource(chipsHolderLayout, SelectedItems);
     }
 
     public IList ItemsSource { get => (IList)GetValue(ItemsSourceProperty); set => SetValue(ItemsSourceProperty, value); }

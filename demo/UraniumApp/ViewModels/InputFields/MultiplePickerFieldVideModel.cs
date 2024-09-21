@@ -13,13 +13,26 @@ public class MultiplePickerFieldVideModel : SingleControlEditingViewModel<Multip
     {
         return new MultiplePickerField
         {
-            Title = "Pick options",
+            Title = "Pick Fruits",
             ItemsSource = new[]
             {
-                "Option 1",
-                "Option 2",
-                "Option 3",
-                "Option 4",
+                "Apple",
+                "Banana",
+                "Cherry",
+                "Date",
+                "Elderberry",
+                "Fig",
+                "Grape",
+                "Honeydew",
+                "Jackfruit",
+                "Kiwi",
+                "Lemon",
+                "Mango",
+                "Nectarine",
+                "Orange",
+                "Peach",
+                "Quince",
+                "Raspberry",
             }
         };
     }

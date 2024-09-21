@@ -27,6 +27,7 @@ public partial class MultiplePickerField : InputField
     protected HorizontalStackLayout chipsHolderStackLayout = new HorizontalStackLayout
     {
         HorizontalOptions = LayoutOptions.Start,
+        Padding = new Thickness(4, 0),
 #if IOS || MACCATALYST
         VerticalOptions = LayoutOptions.Center,
 #endif
@@ -37,7 +38,6 @@ public partial class MultiplePickerField : InputField
 
     public MultiplePickerField()
     {
-
         MainContentView.Content = new ScrollView
         {
             Orientation = ScrollOrientation.Horizontal,

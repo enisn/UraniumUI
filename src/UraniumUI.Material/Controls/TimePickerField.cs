@@ -59,6 +59,9 @@ public class TimePickerField : InputField
 #endif
         TimePickerView.SetBinding(TimePicker.TimeProperty, new Binding(nameof(Time), source: this));
         TimePickerView.SetBinding(TimePicker.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
+        TimePickerView.SetBinding(TimePicker.FontSizeProperty, new Binding(nameof(FontSize), source: this));
+        TimePickerView.SetBinding(TimePicker.FontAutoScalingEnabledProperty, new Binding(nameof(FontAutoScalingEnabled), source: this));
+        TimePickerView.SetBinding(TimePicker.FontFamilyProperty, new Binding(nameof(FontFamily), source: this));
     }
 
     protected override object GetValueForValidator()

@@ -52,6 +52,7 @@ public class PickerField : InputField
         pickerView.SetBinding(PickerView.FontSizeProperty, new Binding(nameof(FontSize), source: this));
         pickerView.SetBinding(PickerView.TextColorProperty, new Binding(nameof(TextColor), source: this));
         pickerView.SetBinding(PickerView.CharacterSpacingProperty, new Binding(nameof(CharacterSpacing), source: this));
+        pickerView.SetBinding(PickerView.FontAutoScalingEnabledProperty, new Binding(nameof(FontAutoScalingEnabled), source: this));
 
         // TODO: Move platform specific codes into separate files.
 #if ANDROID

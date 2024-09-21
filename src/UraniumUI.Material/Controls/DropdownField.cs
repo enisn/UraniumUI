@@ -48,6 +48,9 @@ public class DropdownField : InputField
         DropdownView.SetBinding(Dropdown.SelectedItemProperty, new Binding(nameof(SelectedItem), BindingMode.TwoWay, source: this));
         DropdownView.SetBinding(Dropdown.ItemsSourceProperty, new Binding(nameof(ItemsSource), source: this));
         DropdownView.SetBinding(Dropdown.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
+        DropdownView.SetBinding(Dropdown.FontSizeProperty, new Binding(nameof(FontSize), source: this));
+        DropdownView.SetBinding(Dropdown.FontAutoScalingEnabledProperty, new Binding(nameof(FontAutoScalingEnabled), source: this));
+        DropdownView.SetBinding(Dropdown.FontFamilyProperty, new Binding(nameof(FontFamily), source: this));
     }
 
     protected override object GetValueForValidator()

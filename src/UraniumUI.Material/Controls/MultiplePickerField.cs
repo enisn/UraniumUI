@@ -5,7 +5,7 @@ using UraniumUI.Dialogs;
 namespace UraniumUI.Material.Controls;
 public partial class MultiplePickerField : InputField
 {
-    public ContentView MaincontentView => Content as ContentView;
+    public ContentView MainContentView => Content as ContentView;
 
     private bool isBusy;
     public bool IsBusy
@@ -38,7 +38,7 @@ public partial class MultiplePickerField : InputField
     public MultiplePickerField()
     {
 
-        MaincontentView.Content = new ScrollView
+        MainContentView.Content = new ScrollView
         {
             Orientation = ScrollOrientation.Horizontal,
 #if ANDROID

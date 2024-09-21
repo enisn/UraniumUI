@@ -108,8 +108,6 @@ public partial class InputField : ContentView
             ZIndex = 1000,
         };
 
-
-
         labelTitle.SetBinding(Label.TextColorProperty, new Binding(nameof(TitleColor)));
         labelTitle.SetId("TitleLabel");
         labelTitle.Scale = 1;
@@ -556,19 +554,17 @@ public partial class InputField : ContentView
          nameof(FontFamily), typeof(string), typeof(InputField),
          defaultValue: Label.FontFamilyProperty.DefaultValue);
 
-
     [TypeConverter(typeof(FontSizeConverter))]
     public double FontSize { get => (double)GetValue(FontSizeProperty); set => SetValue(FontSizeProperty, value); }
 
     public static readonly BindableProperty FontSizeProperty = BindableProperty.Create(
-        nameof(FontSize), typeof(double), typeof(PickerField), Picker.FontSizeProperty.DefaultValue,
-        propertyChanged: (bindable, oldValue, newValue) => (bindable as PickerField).PickerView.FontSize = (double)newValue);
+        nameof(FontSize), typeof(double), typeof(InputField), Picker.FontSizeProperty.DefaultValue);
 
     public bool FontAutoScalingEnabled { get => (bool)GetValue(FontAutoScalingEnabledProperty); set => SetValue(FontAutoScalingEnabledProperty, value); }
 
     public static readonly BindableProperty FontAutoScalingEnabledProperty = BindableProperty.Create(
-        nameof(FontAutoScalingEnabled), typeof(bool), typeof(PickerField), Picker.FontAutoScalingEnabledProperty.DefaultValue,
-        propertyChanged: (bindable, oldValue, newValue) => (bindable as PickerField).PickerView.FontAutoScalingEnabled = (bool)newValue);
+        nameof(FontAutoScalingEnabled), typeof(bool), typeof(InputField), Picker.FontAutoScalingEnabledProperty.DefaultValue,
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as InputField).labelTitle.FontAutoScalingEnabled = (bool)newValue);
 
     public string ContentAutomationId { get => (string)GetValue(ContentAutomationIdProperty); set => SetValue(ContentAutomationIdProperty, value); }
 

@@ -42,6 +42,9 @@ public class DatePickerField : InputField
 
         DatePickerView.SetBinding(DatePickerView.DateProperty, new Binding(nameof(Date), source: this));
         DatePickerView.SetBinding(DatePickerView.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
+        DatePickerView.SetBinding(DatePickerView.FontSizeProperty, new Binding(nameof(FontSize), source: this));
+        DatePickerView.SetBinding(DatePickerView.FontAutoScalingEnabledProperty, new Binding(nameof(FontAutoScalingEnabled), source: this));
+        DatePickerView.SetBinding(DatePickerView.FontFamilyProperty, new Binding(nameof(FontFamily), source: this));
 
 #if MACCATALYST || IOS
         labelTitle.InputTransparent = true;

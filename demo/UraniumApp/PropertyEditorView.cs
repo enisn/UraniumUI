@@ -189,7 +189,7 @@ namespace UraniumApp
         public static View EditorForNumeric(BindableProperty bindableProperty, object source)
         {
             var editor = new TextField();
-            editor.SetBinding(TextField.TextProperty, new Binding(bindableProperty.PropertyName, source: source));
+            editor.SetBinding(TextField.TextProperty, new Binding(bindableProperty.PropertyName,mode: BindingMode.TwoWay, source: source));
             editor.Title = bindableProperty.PropertyName;
             editor.AllowClear = false;
             editor.Keyboard = Keyboard.Numeric;

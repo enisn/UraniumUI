@@ -57,10 +57,12 @@
             <Grid.BindingContext>
                 <local:AppShellContentViewModel CurrentShell="{x:Reference thisShell}"/>
             </Grid.BindingContext>
-            <StackLayout Padding="8,8,8,0">
-                <plain:EntryView Placeholder="Search" Text="{Binding SearchText}" BackgroundColor="{AppThemeBinding Light={StaticResource OnSurfaceDark}, Dark={StaticResource OnSurface}}" ClearButtonVisibility="WhileEditing" />
+            <VerticalStackLayout>
+                <VerticalStackLayout Margin="8,8,8,0" BackgroundColor="{AppThemeBinding Light={StaticResource OnSurfaceDark}, Dark={StaticResource OnSurface}}">
+                    <plain:EntryView Placeholder="Search" Text="{Binding SearchText}" ClearButtonVisibility="WhileEditing"/>
+                </VerticalStackLayout>
                 <BoxView StyleClass="Divider" />
-            </StackLayout>
+            </VerticalStackLayout>
             <CollectionView Grid.Row="1" SelectedItem="{Binding SelectedItem}" SelectionMode="Single" ItemsSource="{Binding Items}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>

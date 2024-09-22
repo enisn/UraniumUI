@@ -63,6 +63,17 @@ namespace UraniumUI.Material.Controls
             {
                 DestroyCommand?.Execute(this);
                 DestroyClicked?.Invoke(this, new EventArgs());
+                if (SelfDestruct)
+                {
+                    if(this.Parent is Layout layout)
+                    {
+                        layout.Remove(this);
+                    }
+                    if (this.Parent is ContentView cv)
+                    {
+                        cv.Content = null;
+                    }
+                }
             });
         }
 
@@ -98,6 +109,29 @@ namespace UraniumUI.Material.Controls
                     if (bindable is Chip chip)
                     {
                         chip.label.TextColor = (Color)newValue;
+                    }
+                });
+
+        public bool SelfDestruct { get => (bool)GetValue(SelfDestructProperty); set => SetValue(SelfDestructProperty, value); }
+
+        public static readonly BindableProperty SelfDestructProperty = BindableProperty.Create(
+                nameof(SelfDestruct),
+                typeof(bool),
+                typeof(Chip),
+                defaultValue: true);
+
+        public bool IsDestroyVisible { get => (bool)GetValue(IsDestroyVisibleProperty); set => SetValue(IsDestroyVisibleProperty, value); }
+
+        public static readonly BindableProperty IsDestroyVisibleProperty = BindableProperty.Create(
+                nameof(IsDestroyVisible),
+                typeof(bool),
+                typeof(Chip),
+                defaultValue: true,
+                propertyChanged: (bindable, oldValue, newValue) =>
+                {
+                    if (bindable is Chip chip)
+                    {
+                        chip.closeButton.IsVisible = (bool)newValue;
                     }
                 });
     }

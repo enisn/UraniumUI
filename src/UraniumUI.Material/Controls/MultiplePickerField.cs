@@ -97,6 +97,7 @@ public partial class MultiplePickerField : InputField
         {
             var chip = new Chip();
             chip.SetBinding(Chip.TextProperty, new Binding("."));
+            chip.SelfDestruct = false;
             chip.DestroyCommand = _destroyChipCommand;
             return chip;
         }));

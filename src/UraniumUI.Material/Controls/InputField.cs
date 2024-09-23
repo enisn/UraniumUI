@@ -66,6 +66,8 @@ public partial class InputField : ContentView
 
     private bool hasValue;
 
+    private static Binding GetRelativeBinding(string path) => new Binding(path, source: new RelativeBindingSource(RelativeBindingSourceMode.TemplatedParent));
+
     private static readonly ControlTemplate inputFieldControlTemplate = new ControlTemplate(() =>
     {
         var @this = new Grid
@@ -73,17 +75,17 @@ public partial class InputField : ContentView
             Padding = new Thickness(0, 5, 0, 0),
         };
         @this.SetId("RootGrid");
-        @this.SetBinding(Grid.BindingContextProperty, new Binding(".", source: new RelativeBindingSource(RelativeBindingSourceMode.TemplatedParent)));
+        //@this.SetBinding(Grid.BindingContextProperty, new Binding(".", source: new RelativeBindingSource(RelativeBindingSourceMode.TemplatedParent)));
 
         @this.AddRowDefinition(new RowDefinition(GridLength.Auto));
         @this.AddRowDefinition(new RowDefinition(GridLength.Auto));
 
         var roundRect = new RoundRectangle();
         roundRect.CornerRadius = (double)InputField.CornerRadiusProperty.DefaultValue;
-        roundRect.SetBinding(RoundRectangle.StrokeProperty, new Binding(nameof(InputField.BorderColor)));
-        roundRect.SetBinding(RoundRectangle.StrokeThicknessProperty, new Binding(nameof(InputField.BorderThickness)));
-        roundRect.SetBinding(RoundRectangle.BackgroundProperty, new Binding(nameof(InputField.InputBackground)));
-        roundRect.SetBinding(RoundRectangle.BackgroundColorProperty, new Binding(nameof(InputField.InputBackgroundColor)));
+        roundRect.SetBinding(RoundRectangle.StrokeProperty, GetRelativeBinding(nameof(InputField.BorderColor)));
+        roundRect.SetBinding(RoundRectangle.StrokeThicknessProperty, GetRelativeBinding(nameof(InputField.BorderThickness)));
+        roundRect.SetBinding(RoundRectangle.BackgroundProperty, GetRelativeBinding(nameof(InputField.InputBackground)));
+        roundRect.SetBinding(RoundRectangle.BackgroundColorProperty, GetRelativeBinding(nameof(InputField.InputBackgroundColor)));
 
         var border = new Border
         {
@@ -108,15 +110,15 @@ public partial class InputField : ContentView
             ZIndex = 1000,
         };
 
-        labelTitle.SetBinding(Label.TextColorProperty, new Binding(nameof(TitleColor)));
+        labelTitle.SetBinding(Label.TextColorProperty, GetRelativeBinding(nameof(TitleColor)));
         labelTitle.SetId("TitleLabel");
         labelTitle.Scale = 1;
-        labelTitle.SetBinding(Label.TextProperty, new Binding(nameof(Title)));
-        labelTitle.SetBinding(Label.FontSizeProperty, new Binding(nameof(TitleFontSize)));
-        labelTitle.SetBinding(Label.FontAttributesProperty, new Binding(nameof(FontAttributes)));
-        labelTitle.SetBinding(Label.FontFamilyProperty, new Binding(nameof(FontFamily)));
-        labelTitle.SetBinding(Label.FontSizeProperty, new Binding(nameof(FontSize)));
-        labelTitle.SetBinding(Label.FontAutoScalingEnabledProperty, new Binding(nameof(FontAutoScalingEnabled)));
+        labelTitle.SetBinding(Label.TextProperty, GetRelativeBinding(nameof(Title)));
+        labelTitle.SetBinding(Label.FontSizeProperty, GetRelativeBinding(nameof(TitleFontSize)));
+        labelTitle.SetBinding(Label.FontAttributesProperty, GetRelativeBinding(nameof(FontAttributes)));
+        labelTitle.SetBinding(Label.FontFamilyProperty, GetRelativeBinding(nameof(FontFamily)));
+        labelTitle.SetBinding(Label.FontSizeProperty, GetRelativeBinding(nameof(FontSize)));
+        labelTitle.SetBinding(Label.FontAutoScalingEnabledProperty, GetRelativeBinding(nameof(FontAutoScalingEnabled)));
 
         @this.Add(labelTitle);
 
@@ -130,7 +132,7 @@ public partial class InputField : ContentView
         innerGrid.AddRowDefinition(new RowDefinition(GridLength.Star));
 
         var contentHolder = new ContentView();
-        contentHolder.SetBinding(ContentView.ContentProperty, new Binding(nameof(InputField.Content), source: new RelativeBindingSource(RelativeBindingSourceMode.TemplatedParent)));
+        contentHolder.SetBinding(ContentView.ContentProperty, GetRelativeBinding(nameof(InputField.Content)));
 
         innerGrid.Add(contentHolder, column: 1);
 

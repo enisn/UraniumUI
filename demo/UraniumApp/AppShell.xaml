@@ -51,11 +51,6 @@
                     ColumnNumber="2" ColumnSpacing="-2" Color="{StaticResource Tertiary}" >
                 </input:SelectionView>
             </VerticalStackLayout>
-            <!--<HorizontalStackLayout HorizontalOptions="Center">
-                <Label Text="Light" VerticalOptions="Center" />
-                <Switch x:Name="themeSwitch" Toggled="ThemeToggled"/>
-                <Label Text="Dark" VerticalOptions="Center" />
-            </HorizontalStackLayout>-->
         </VerticalStackLayout>
     </Shell.FlyoutHeader>
 
@@ -67,7 +62,7 @@
             </Grid.BindingContext>
             <VerticalStackLayout>
                 <VerticalStackLayout Margin="8,8,8,0" BackgroundColor="{AppThemeBinding Light={StaticResource OnSurfaceDark}, Dark={StaticResource OnSurface}}" StyleClass="Elevation1">
-                    <plain:EntryView Margin="{OnPlatform Default=0, Android='8,0'}" Placeholder="Search" Text="{Binding SearchText}" PlaceholderColor="{AppThemeBinding Light={StaticResource OnSurface}, Dark={StaticResource OnSurfaceDark}}" ClearButtonVisibility="WhileEditing"/>
+                    <plain:EntryView Margin="{OnPlatform Default=0, Android='8,0', iOS='8', MacCatalyst='8'}" Placeholder="Search" Text="{Binding SearchText}" PlaceholderColor="{AppThemeBinding Light={StaticResource OnSurface}, Dark={StaticResource OnSurfaceDark}}" ClearButtonVisibility="WhileEditing"/>
                 </VerticalStackLayout>
                 <BoxView StyleClass="Divider" />
             </VerticalStackLayout>

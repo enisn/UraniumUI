@@ -5,6 +5,7 @@ using System.Collections.Specialized;
 using UIKit;
 using UraniumUI.Controls;
 using UraniumUI.Extensions;
+using UraniumUI.Resources;
 
 namespace UraniumUI.Handlers;
 
@@ -22,6 +23,7 @@ public partial class DropdownHandler : ButtonHandler
         SetItemsSource(VirtualViewDropdown, button);
 
         button.ShowsMenuAsPrimaryAction = true;
+        button.TintColor = ColorResource.GetColor("Primary", "PrimaryDark", Colors.Azure).ToPlatform();
         if (UIDevice.CurrentDevice.CheckSystemVersion(15, 0))
         {
             button.ChangesSelectionAsPrimaryAction = true;
@@ -117,6 +119,8 @@ public partial class DropdownHandler : ButtonHandler
             VirtualViewDropdown.Text = GetTextForItem(VirtualViewDropdown, VirtualViewDropdown.SelectedItem);
             PlatformView.SetTitleColor(VirtualViewDropdown.TextColor?.ToPlatform() ?? Colors.Black.ToPlatform(), UIControlState.Normal);
         }
+
+        PlatformView.TintColor = ColorResource.GetColor("Primary", "PrimaryDark", Colors.Azure).ToPlatform();
     }
 
     public static void MapPlaceholder(DropdownHandler handler, Dropdown dropdown)

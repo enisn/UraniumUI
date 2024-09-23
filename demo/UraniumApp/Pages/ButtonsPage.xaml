@@ -61,7 +61,7 @@
 
                 <Label Text="OutlinedButton" FontSize="Subtitle"/>
                 <local:ViewShowcaseView BindingContext="{Binding OutlinedButtonContext}">
-                    <Button Text="{Binding Text}" StyleClass="OutlinedButton"/>
+                    <Button Text="{Binding Text}" StyleClass="OutlinedButton" IsEnabled="{Binding IsEnabled}"/>
 
                     <local:ViewShowcaseView.SidePanel>
                         <VerticalStackLayout Padding="20" Spacing="20">
@@ -88,7 +88,7 @@
 
                 <Label Text="ElevatedButton" FontSize="Subtitle"/>
                 <local:ViewShowcaseView BindingContext="{Binding ElevatedButtonContext}">
-                    <Button Text="{Binding Text}" StyleClass="ElevatedButton"/>
+                    <Button Text="{Binding Text}" StyleClass="ElevatedButton" IsEnabled="{Binding IsEnabled}"/>
 
                     <local:ViewShowcaseView.SidePanel>
                         <VerticalStackLayout Padding="20" Spacing="20">
@@ -115,7 +115,7 @@
 
                 <Label Text="FilledTonalButton" FontSize="Subtitle"/>
                 <local:ViewShowcaseView BindingContext="{Binding FilledTonalButtonContext}">
-                    <Button Text="{Binding Text}" StyleClass="FilledTonalButton"/>
+                    <Button Text="{Binding Text}" StyleClass="FilledTonalButton" IsEnabled="{Binding IsEnabled}"/>
 
                     <local:ViewShowcaseView.SidePanel>
                         <VerticalStackLayout Padding="20" Spacing="20">
@@ -142,7 +142,7 @@
 
                 <Label Text="TextButton" FontSize="Subtitle"/>
                 <local:ViewShowcaseView BindingContext="{Binding TextButtonContext}">
-                    <Button Text="{Binding Text}" StyleClass="TextButton"/>
+                    <Button Text="{Binding Text}" StyleClass="TextButton" IsEnabled="{Binding IsEnabled}"/>
 
                     <local:ViewShowcaseView.SidePanel>
                         <VerticalStackLayout Padding="20" Spacing="20">

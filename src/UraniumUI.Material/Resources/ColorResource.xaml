@@ -45,13 +45,13 @@
 
     <!--DARK COLORS-->
     <Color x:Key="PrimaryDark">#a8eac0</Color>
-    <Color x:Key="OnPrimaryDark">#1c783d</Color>
-    <Color x:Key="PrimaryContainerDark">#1a6c37</Color>
+    <Color x:Key="OnPrimaryDark">#00553b</Color>
+    <Color x:Key="PrimaryContainerDark">#001b11</Color>
     <Color x:Key="OnPrimaryContainerDark">#baefcd</Color>
 
     <Color x:Key="SecondaryDark">#daffbe</Color>
     <Color x:Key="OnSecondaryDark">#52be00</Color>
-    <Color x:Key="SecondaryContainerDark">#193900</Color>
+    <Color x:Key="SecondaryContainerDark">#007a57</Color>
     <Color x:Key="OnSecondaryContainerDark">#e1ffcb</Color>
 
     <Color x:Key="TertiaryDark">#feed9d</Color>
@@ -85,8 +85,21 @@
     <Color x:Key="DisabledBackground">#80919191</Color>
 
     <!--BRUSHES-->
-    <SolidColorBrush x:Key="PrimaryBrush" Color="{DynamicResource Primary}" />
-    <SolidColorBrush x:Key="PrimaryContainerBrush" Color="{StaticResource PrimaryContainer}" />
+    <LinearGradientBrush x:Key="PrimaryBrush">
+        <GradientStop Offset="0" Color="{StaticResource Primary}" />
+        <GradientStop Offset="1" Color="{StaticResource Secondary}" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="PrimaryContainerDarkBrush">
+        <GradientStop Offset="0" Color="{StaticResource PrimaryContainerDark}" />
+        <GradientStop Offset="1" Color="{StaticResource SecondaryContainerDark}" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="PrimaryContainerBrush">
+        <GradientStop Offset="0" Color="{StaticResource PrimaryContainer}" />
+        <GradientStop Offset="1" Color="{StaticResource SecondaryContainer}" />
+    </LinearGradientBrush>
+
     <SolidColorBrush x:Key="SecondaryBrush" Color="{StaticResource Secondary}" />
     <SolidColorBrush x:Key="OnSecondaryContainerBrush" Color="{StaticResource OnSecondaryContainer}" />
 

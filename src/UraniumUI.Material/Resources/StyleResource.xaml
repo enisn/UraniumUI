@@ -266,7 +266,7 @@
             </Style>
 
             <Style x:Key="UraniumUI.Styles.SelectionView" TargetType="input:SelectionView" ApplyToDerivedTypes="True" CanCascade="True">
-                <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource Secondary}, Dark={StaticResource SecondaryDark}}" />
+                <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource Tertiary}, Dark={StaticResource TertiaryDark}}" />
             </Style>
 
             <Style x:Key="UraniumUI.Styles.RadioButton.Checked" TargetType="c:RadioButton" CanCascade="True">
@@ -403,7 +403,7 @@
             </Style>
 
             <Style x:Key="UraniumUI.Styles.View.PrimaryContainer" TargetType="View" ApplyToDerivedTypes="True" CanCascade="True">
-                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource PrimaryContainer}, Dark={StaticResource PrimaryContainerDark}}" />
+                <Setter Property="Background" Value="{AppThemeBinding Light={StaticResource PrimaryContainerBrush}, Dark={StaticResource PrimaryContainerDarkBrush}}" />
                 <Setter Property="t:CascadingStyle.Resources">
                     <ResourceDictionary>
                         <Style TargetType="Label">

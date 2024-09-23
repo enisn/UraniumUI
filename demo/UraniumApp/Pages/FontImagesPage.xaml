@@ -18,7 +18,7 @@
                         <Border StyleClass="SurfaceContainer,Rounded" Padding="0" Margin="{OnIdiom Default=20, Phone=5}" MaximumWidthRequest="400" >
                             <Grid RowDefinitions="Auto,*">
                                 <VerticalStackLayout Padding="20" Spacing="20" StyleClass="PrimaryContainer,Elevation1">
-                                    <material:PickerField Title="Type" ItemsSource="{Binding Types}" SelectedItem="{Binding SelectedType}" AllowClear="False" />
+                                    <material:DropdownField Title="Type" ItemsSource="{Binding Types}" SelectedItem="{Binding SelectedType}" AllowClear="False" />
                                     <material:TextField Title="Search" Text="{Binding SearchText}" AllowClear="True" />
                                 </VerticalStackLayout>
                                 <CollectionView Grid.Row="1" ItemsSource="{Binding Icons}" SelectionMode="Single" SelectedItem="{Binding SelectedIcon}">

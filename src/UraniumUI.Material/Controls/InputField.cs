@@ -75,7 +75,6 @@ public partial class InputField : ContentView
             Padding = new Thickness(0, 5, 0, 0),
         };
         @this.SetId("RootGrid");
-        //@this.SetBinding(Grid.BindingContextProperty, new Binding(".", source: new RelativeBindingSource(RelativeBindingSourceMode.TemplatedParent)));
 
         @this.AddRowDefinition(new RowDefinition(GridLength.Auto));
         @this.AddRowDefinition(new RowDefinition(GridLength.Auto));

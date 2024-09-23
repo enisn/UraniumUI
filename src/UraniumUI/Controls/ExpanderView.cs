@@ -46,7 +46,6 @@ public class ExpanderView : ContentView
             Content = arrowIcon
         }, column: 1) ;
 
-        actualContentContainer.IsVisible = false;
         Content = new VerticalStackLayout
         {
             Children = {

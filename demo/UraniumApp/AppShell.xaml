@@ -16,6 +16,7 @@
     xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
     xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
     xmlns:plain="clr-namespace:Plainer.Maui.Controls;assembly=Plainer.Maui"
+    xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
     x:Name="thisShell"
     FlyoutBackgroundColor="{AppThemeBinding Light={StaticResource Surface}, Dark={StaticResource SurfaceDark}}"
     Shell.FlyoutBehavior="{OnIdiom Desktop=Locked, Default=Flyout}">
@@ -41,13 +42,20 @@
         <VerticalStackLayout StyleClass="PrimaryContainer" Padding="20">
             <Label Text="☢️&#xA;Uranium UI" FontSize="Large" HorizontalTextAlignment="Center" Margin="10" />
 
-            <Label Text="App Theme" HorizontalOptions="Center"/>
+            <VerticalStackLayout BindingContext="{uranium:Inject Type={Type local:ThemeChangeViewModel}}" x:DataType="local:ThemeChangeViewModel">
+                
+                <Label Text="App Theme" HorizontalOptions="Center"/>
 
-            <HorizontalStackLayout HorizontalOptions="Center">
+                <input:SelectionView HorizontalOptions="Center"
+                    ItemsSource="{Binding AppThemeList}" SelectedItem="{Binding SelectedTheme}" 
+                    ColumnNumber="2" ColumnSpacing="-2" Color="{StaticResource Tertiary}" >
+                </input:SelectionView>
+            </VerticalStackLayout>
+            <!--<HorizontalStackLayout HorizontalOptions="Center">
                 <Label Text="Light" VerticalOptions="Center" />
                 <Switch x:Name="themeSwitch" Toggled="ThemeToggled"/>
                 <Label Text="Dark" VerticalOptions="Center" />
-            </HorizontalStackLayout>
+            </HorizontalStackLayout>-->
         </VerticalStackLayout>
     </Shell.FlyoutHeader>
 
@@ -58,8 +66,8 @@
                 <local:AppShellContentViewModel CurrentShell="{x:Reference thisShell}"/>
             </Grid.BindingContext>
             <VerticalStackLayout>
-                <VerticalStackLayout Margin="8,8,8,0" BackgroundColor="{AppThemeBinding Light={StaticResource OnSurfaceDark}, Dark={StaticResource OnSurface}}">
-                    <plain:EntryView Placeholder="Search" Text="{Binding SearchText}" ClearButtonVisibility="WhileEditing"/>
+                <VerticalStackLayout Margin="8,8,8,0" BackgroundColor="{AppThemeBinding Light={StaticResource OnSurfaceDark}, Dark={StaticResource OnSurface}}" StyleClass="Elevation1">
+                    <plain:EntryView Margin="{OnPlatform Default=0, Android='8,0'}" Placeholder="Search" Text="{Binding SearchText}" PlaceholderColor="{AppThemeBinding Light={StaticResource OnSurface}, Dark={StaticResource OnSurfaceDark}}" ClearButtonVisibility="WhileEditing"/>
                 </VerticalStackLayout>
                 <BoxView StyleClass="Divider" />
             </VerticalStackLayout>

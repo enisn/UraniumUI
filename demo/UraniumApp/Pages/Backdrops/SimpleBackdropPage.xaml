@@ -20,7 +20,7 @@
                 <Label Text="Click the filter icon above." VerticalOptions="Center"/>
                 <Image HorizontalOptions="Center" Rotation="45">
                     <Image.Source>
-                        <FontImageSource Size="35" FontFamily="MaterialRegular" Glyph="{x:Static uranium:MaterialSharp.Arrow_upward}" Color="{AppThemeBinding {StaticResource OnSurface}, Dark={StaticResource OnSurfaceDark}}" />
+                        <FontImageSource Size="35" FontFamily="MaterialSharp" Glyph="{x:Static uranium:MaterialSharp.Arrow_upward}" Color="{AppThemeBinding {StaticResource OnSurface}, Dark={StaticResource OnSurfaceDark}}" />
                     </Image.Source>
                 </Image>
             </HorizontalStackLayout>
@@ -36,7 +36,7 @@
     <uranium:UraniumContentPage.Attachments>
         <material:BackdropView Title="Filter" x:Name="backdrop" InsertAfterToolbarIcons="false">
             <material:BackdropView.IconImageSource>
-                <FontImageSource FontFamily="MaterialRound" Glyph="{x:Static m:MaterialSharp.Filter}" Color="{DynamicResource OnPrimary}" />
+                <FontImageSource FontFamily="MaterialSharp" Glyph="{x:Static m:MaterialSharp.Filter}" Color="{DynamicResource OnPrimary}" />
             </material:BackdropView.IconImageSource>
             <material:BackdropView.Resources>
                 <ResourceDictionary>

@@ -80,6 +80,7 @@ public partial class InputField : ContentView
         @this.AddRowDefinition(new RowDefinition(GridLength.Auto));
 
         var roundRect = new RoundRectangle();
+        roundRect.BindingContext = new Binding(".", source: new RelativeBindingSource(RelativeBindingSourceMode.TemplatedParent));
         roundRect.CornerRadius = (double)InputField.CornerRadiusProperty.DefaultValue;
         roundRect.SetBinding(RoundRectangle.StrokeProperty, GetRelativeBinding(nameof(InputField.BorderColor)));
         roundRect.SetBinding(RoundRectangle.StrokeThicknessProperty, GetRelativeBinding(nameof(InputField.BorderThickness)));

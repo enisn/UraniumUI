@@ -20,6 +20,8 @@ public partial class TextField : InputField
     {
 #if WINDOWS
         Margin = new Thickness(2, 0),
+#elif ANDROID
+        Margin = new Thickness(16, 0),
 #else
         Margin = new Thickness(10, 0),
 #endif

@@ -15,7 +15,9 @@ public class DropdownField : InputField
     {
         VerticalOptions = LayoutOptions.Center,
         HorizontalOptions = LayoutOptions.Fill,
+#if WINDOWS
         Margin = new Thickness(2, 0),
+#endif
         StyleClass = new List<string> { "InputField.Dropdown" },
     };
 

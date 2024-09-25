@@ -14,7 +14,12 @@ public class TimePickerField : InputField
     public override View Content { get; set; } = new TimePickerView
     {
         VerticalOptions = LayoutOptions.Center,
+#if ANDROID
+        Margin = new Thickness(16, 0),
+#else
         Margin = new Thickness(10, 0),
+#endif
+
 #if IOS || MACCATALYST
         Opacity = 0.10,
 #else

@@ -66,9 +66,9 @@ public partial class InputField : ContentView
 
     private bool hasValue;
 
-    private static Binding GetRelativeBinding(string path) => new Binding(path, source: new RelativeBindingSource(RelativeBindingSourceMode.TemplatedParent));
+    private Binding GetBinding(string path) => new Binding(path, source: this);
 
-    private static readonly ControlTemplate inputFieldControlTemplate = new ControlTemplate(() =>
+    private View CreateContent()
     {
         var @this = new Grid
         {
@@ -81,20 +81,18 @@ public partial class InputField : ContentView
 
         var roundRect = new RoundRectangle();
         roundRect.CornerRadius = (double)InputField.CornerRadiusProperty.DefaultValue;
-        roundRect.SetBinding(RoundRectangle.StrokeProperty, GetRelativeBinding(nameof(InputField.BorderColor)));
-        roundRect.SetBinding(RoundRectangle.StrokeThicknessProperty, GetRelativeBinding(nameof(InputField.BorderThickness)));
-        roundRect.SetBinding(RoundRectangle.BackgroundProperty, GetRelativeBinding(nameof(InputField.InputBackground)));
-        roundRect.SetBinding(RoundRectangle.BackgroundColorProperty, GetRelativeBinding(nameof(InputField.InputBackgroundColor)));
-
+        
         var border = new Border
         {
             StyleClass = new[] { "InputField.Border" },
-            StrokeThickness = 1,
-            StrokeDashOffset = 0,
-            BackgroundColor = Colors.Transparent,
             StrokeShape = roundRect,
             ZIndex = 0,
         };
+        border.SetBinding(Border.StrokeThicknessProperty, GetBinding(nameof(InputField.BorderThickness)));
+        border.SetBinding(Border.StrokeProperty, GetBinding(nameof(InputField.BorderColor)));
+        border.SetBinding(Border.BackgroundColorProperty, GetBinding(nameof(InputField.InputBackgroundColor)));
+        border.SetBinding(Border.BackgroundProperty, GetBinding(nameof(InputField.InputBackground)));
+
         border.SetId("Border");
 
         @this.Add(border);
@@ -109,15 +107,15 @@ public partial class InputField : ContentView
             ZIndex = 1000,
         };
 
-        labelTitle.SetBinding(Label.TextColorProperty, GetRelativeBinding(nameof(TitleColor)));
+        labelTitle.SetBinding(Label.TextColorProperty, GetBinding(nameof(TitleColor)));
         labelTitle.SetId("TitleLabel");
         labelTitle.Scale = 1;
-        labelTitle.SetBinding(Label.TextProperty, GetRelativeBinding(nameof(Title)));
-        labelTitle.SetBinding(Label.FontSizeProperty, GetRelativeBinding(nameof(TitleFontSize)));
-        labelTitle.SetBinding(Label.FontAttributesProperty, GetRelativeBinding(nameof(FontAttributes)));
-        labelTitle.SetBinding(Label.FontFamilyProperty, GetRelativeBinding(nameof(FontFamily)));
-        labelTitle.SetBinding(Label.FontSizeProperty, GetRelativeBinding(nameof(FontSize)));
-        labelTitle.SetBinding(Label.FontAutoScalingEnabledProperty, GetRelativeBinding(nameof(FontAutoScalingEnabled)));
+        labelTitle.SetBinding(Label.TextProperty, GetBinding(nameof(Title)));
+        labelTitle.SetBinding(Label.FontSizeProperty, GetBinding(nameof(TitleFontSize)));
+        labelTitle.SetBinding(Label.FontAttributesProperty, GetBinding(nameof(FontAttributes)));
+        labelTitle.SetBinding(Label.FontFamilyProperty, GetBinding(nameof(FontFamily)));
+        labelTitle.SetBinding(Label.FontSizeProperty, GetBinding(nameof(FontSize)));
+        labelTitle.SetBinding(Label.FontAutoScalingEnabledProperty, GetBinding(nameof(FontAutoScalingEnabled)));
 
         @this.Add(labelTitle);
 
@@ -131,8 +129,14 @@ public partial class InputField : ContentView
         innerGrid.AddRowDefinition(new RowDefinition(GridLength.Star));
 
         var contentHolder = new ContentView();
-        contentHolder.SetBinding(ContentView.ContentProperty, GetRelativeBinding(nameof(InputField.Content)));
-
+        if (this.Content != null)
+        {
+            contentHolder.Content = this.Content;
+        }
+        else
+        {
+            contentHolder.SetBinding(ContentView.ContentProperty, GetBinding(nameof(InputField.Content)));
+        }
         innerGrid.Add(contentHolder, column: 1);
 
         var endIconsContainer = new HorizontalStackLayout
@@ -145,11 +149,11 @@ public partial class InputField : ContentView
         innerGrid.Add(endIconsContainer, column: 2);
 
         return @this;
-    });
+    }
 
     public InputField()
     {
-        this.ControlTemplate = inputFieldControlTemplate;
+        base.Content = CreateContent();
 
         InitializeValidation();
     }
@@ -441,6 +445,30 @@ public partial class InputField : ContentView
         this.Content.Margin = new Thickness(leftMargin, 0, 0, 0);
     }
 
+    protected virtual void OnBorderColorChanged()
+    {
+        if (border != null)
+        {
+            border.Stroke = BorderColor;
+        }
+    }
+
+    private void OnInputBackgroundChanged()
+    {
+        //if (InputBackground != default)
+        //{
+        //    border.Background = InputBackground;
+        //}
+    }
+
+    private void OnInputBackgroundColorChanged()
+    {
+        //if (InputBackground != default)
+        //{
+        //    border.BackgroundColor = InputBackgroundColor;
+        //}
+    }
+
     protected virtual void OnCornerRadiusChanged()
     {
         if (CornerRadius > MaxCornerRadius)
@@ -490,7 +518,8 @@ public partial class InputField : ContentView
         nameof(BorderColor),
         typeof(Color),
         typeof(InputField),
-        ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.Gray));
+        ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.Gray),
+        propertyChanged: (bo, ov, nv) => (bo as InputField).OnBorderColorChanged());
 
     public double BorderThickness { get => (double)GetValue(BorderThicknessProperty); set => SetValue(BorderThicknessProperty, value); }
 
@@ -506,7 +535,8 @@ public partial class InputField : ContentView
         nameof(InputBackgroundColor),
         typeof(Color),
         typeof(InputField),
-        Colors.Transparent);
+        Colors.Transparent,
+        propertyChanged: (bo, ov, nv) => (bo as InputField).OnInputBackgroundColorChanged());
 
     public Brush InputBackground { get => (Brush)GetValue(InputBackgroundProperty); set => SetValue(InputBackgroundProperty, value); }
 
@@ -514,7 +544,8 @@ public partial class InputField : ContentView
         nameof(InputBackground),
         typeof(Brush),
         typeof(InputField),
-        Brush.Transparent);
+        Brush.Transparent,
+        propertyChanged: (bo, ov, nv)  => (bo as InputField).OnInputBackgroundChanged());
 
     public ImageSource Icon { get => (ImageSource)GetValue(IconProperty); set => SetValue(IconProperty, value); }
 

@@ -102,7 +102,9 @@ This project is licensed under the Apache License License - see the [LICENSE](LI
 | [codychaplin](https://github.com/codychaplin) | <!-- GitHub Sponsor -->
 | Juliette Dianne Moss | <!-- patreon -->
 | Simon Brettschneider |    <!-- 1☕️ -->
-| _Anonymous people 5☕️_ |  <!-- 4☕️ -->
+| JohnCKoenig | <!-- 1☕ -->
+| 7 M O X D | <!-- 5☕ -->
+| _Anonymous people 6☕️_ |  <!-- 4☕️ -->
 
 > Donations are spent to infrastructural costs such as documentation website etc.
 

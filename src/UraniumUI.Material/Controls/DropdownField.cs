@@ -14,11 +14,9 @@ public class DropdownField : InputField
     public override View Content { get; set; } = new Dropdown
     {
         VerticalOptions = LayoutOptions.Center,
-#if WINDOWS
-        Margin = new Thickness(5, 0, 0, 0),
-#endif
         HorizontalOptions = LayoutOptions.Fill,
-        StyleClass = new List<string> { "InputField.Dropdown" }
+        Margin = new Thickness(2, 0),
+        StyleClass = new List<string> { "InputField.Dropdown" },
     };
 
     protected StatefulContentView iconClear = new StatefulContentView

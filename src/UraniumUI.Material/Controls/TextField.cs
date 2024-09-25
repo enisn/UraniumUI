@@ -18,7 +18,9 @@ public partial class TextField : InputField
 
     public override View Content { get; set; } = new EntryView
     {
-#if !WINDOWS
+#if WINDOWS
+        Margin = new Thickness(2, 0),
+#else
         Margin = new Thickness(10, 0),
 #endif
         BackgroundColor = Colors.Transparent,

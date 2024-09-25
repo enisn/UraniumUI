@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="UraniumApp.Pages.MemoryLeakTestPrePage"
+             xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
+             xmlns:vm="clr-namespace:UraniumApp.ViewModels"
+             BindingContext="{uranium:Inject Type={Type vm:MemoryLeakTestPrePageViewModel}}"
+             x:DataType="vm:MemoryLeakTestPrePageViewModel"
+             Title="MemoryLeak Test Page">
+
+    <Grid ColumnDefinitions="*,*">
+
+        <Grid RowDefinitions="*,Auto">
+            <CollectionView ItemsSource="{Binding ControlTypes}" SelectedItem="{Binding SelectedControlType}" SelectionMode="Single">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Label Padding="4" Text="{Binding .}" />
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Button Grid.Row="1" Margin="16" HorizontalOptions="Center" Text="Go Test" StyleClass="ElevatedButton" Command="{Binding GoToTestCommand}"></Button>
+        </Grid>
+
+        <Border Grid.Column="1" StyleClass="SurfaceContainer,Rounded" Padding="12">
+
+            <CollectionView  ItemsSource="{Binding Outputs}">
+                <CollectionView.Header>
+                    <Label Text="Result Outputs:" FontSize="Medium" FontAttributes="Bold"/>
+                </CollectionView.Header>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Label Text="{Binding .}" />
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                <CollectionView.Footer>
+                    <Button StyleClass="TextButton" Command="{Binding ClearOutputsCommand}" Margin="8" HorizontalOptions="Center" Text="Clear" />
+                </CollectionView.Footer>
+            </CollectionView>
+        </Border>
+    </Grid>
+</ContentPage>

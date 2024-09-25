@@ -210,6 +210,10 @@
         <ShellContent Title="Blurs" ContentTemplate="{DataTemplate pages:BlurIndexPage}"/>
     </FlyoutItem>
 
+    <FlyoutItem Title="MemoryLeakTest" FlyoutItemIsVisible="{x:Static local:App.IsDebug}" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Memory}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
+        <ShellContent ContentTemplate="{DataTemplate pages:MemoryLeakTestPrePage}"/>
+    </FlyoutItem>
+
     <!--
         Shell has implicit conversion operators that enable the Shell visual hierarchy to be simplified.
         This is possible because a subclassed Shell object can only ever contain a FlyoutItem object or a TabBar object,

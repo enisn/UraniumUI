@@ -20,16 +20,23 @@
             <StackLayout Padding="25" MaximumWidthRequest="400">
                 <input:FormView SubmitCommand="{Binding SubmitCommand}" Spacing="20">
 
-
                     <material:TextField Title="Email"
-                                        Text="{v:ValidationBinding Email}" 
-                                        Icon="{FontImage FontFamily=MaterialSharp, Glyph={x:Static m:MaterialSharp.Mail}}"/>
+                                        Text="{Binding Email}"
+                                        Icon="{FontImage FontFamily=MaterialSharp, Glyph={x:Static m:MaterialSharp.Mail}}">
+                        <material:TextField.Behaviors>
+                            <v:DataAnnotationsBehavior Binding="{Binding Email}" />
+                        </material:TextField.Behaviors>
+                    </material:TextField>
 
-                    <material:TextField Title="Fullname"
-                                        Text="{v:ValidationBinding FullName}" 
-                                        Icon="{FontImage FontFamily=MaterialSharp, Glyph={x:Static m:MaterialSharp.Person}}"/>
+                    <material:TextField Title="Fullname" 
+                                        Text="{Binding FullName}"
+                                        Icon="{FontImage FontFamily=MaterialSharp, Glyph={x:Static m:MaterialSharp.Person}}">
+                        <material:TextField.Behaviors>
+                            <v:DataAnnotationsBehavior Binding="{Binding FullName}" />
+                        </material:TextField.Behaviors>
+                    </material:TextField>
 
-                    <material:PickerField Title="Gender"
+                    <material:PickerField Title="Gender" AllowClear="True"
                                           SelectedItem="{Binding Gender}"
                                           Icon="{FontImage FontFamily=MaterialSharp, Glyph={x:Static m:MaterialSharp.Agender}}">
                         <material:PickerField.ItemsSource>

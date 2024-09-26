@@ -66,7 +66,7 @@ public partial class InputField : ContentView
 
     private bool hasValue;
 
-    private static Binding GetRelativeBinding(string path) => new Binding(path, source: new RelativeBindingSource(RelativeBindingSourceMode.TemplatedParent));
+    private static Binding GetRelativeBinding(string path, BindingMode mode = BindingMode.Default) => new Binding(path, mode: mode, source: new RelativeBindingSource(RelativeBindingSourceMode.TemplatedParent));
 
     private static readonly ControlTemplate inputFieldControlTemplate = new ControlTemplate(() =>
     {
@@ -81,20 +81,16 @@ public partial class InputField : ContentView
 
         var roundRect = new RoundRectangle();
         roundRect.CornerRadius = (double)InputField.CornerRadiusProperty.DefaultValue;
-        roundRect.SetBinding(RoundRectangle.StrokeProperty, GetRelativeBinding(nameof(InputField.BorderColor)));
-        roundRect.SetBinding(RoundRectangle.StrokeThicknessProperty, GetRelativeBinding(nameof(InputField.BorderThickness)));
-        roundRect.SetBinding(RoundRectangle.BackgroundProperty, GetRelativeBinding(nameof(InputField.InputBackground)));
-        roundRect.SetBinding(RoundRectangle.BackgroundColorProperty, GetRelativeBinding(nameof(InputField.InputBackgroundColor)));
 
         var border = new Border
         {
             StyleClass = new[] { "InputField.Border" },
-            StrokeThickness = 1,
-            StrokeDashOffset = 0,
-            BackgroundColor = Colors.Transparent,
             StrokeShape = roundRect,
-            ZIndex = 0,
         };
+        border.SetBinding(Border.StrokeProperty, GetRelativeBinding(nameof(InputField.BorderColor)));
+        border.SetBinding(Border.StrokeThicknessProperty, GetRelativeBinding(nameof(InputField.BorderThickness)));
+        border.SetBinding(Border.BackgroundProperty, GetRelativeBinding(nameof(InputField.InputBackground)));
+        border.SetBinding(Border.BackgroundColorProperty, GetRelativeBinding(nameof(InputField.InputBackgroundColor), BindingMode.TwoWay));
         border.SetId("Border");
 
         @this.Add(border);
@@ -465,7 +461,8 @@ public partial class InputField : ContentView
         nameof(Title),
         typeof(string),
         typeof(InputField),
-        string.Empty);
+        string.Empty,
+        propertyChanged: (bo, ov, nv) => (bo as InputField).InitializeBorder());
 
     public Color AccentColor { get => (Color)GetValue(AccentColorProperty); set => SetValue(AccentColorProperty, value); }
 
@@ -506,7 +503,7 @@ public partial class InputField : ContentView
         nameof(InputBackgroundColor),
         typeof(Color),
         typeof(InputField),
-        Colors.Transparent);
+        null);
 
     public Brush InputBackground { get => (Brush)GetValue(InputBackgroundProperty); set => SetValue(InputBackgroundProperty, value); }
 
@@ -514,7 +511,7 @@ public partial class InputField : ContentView
         nameof(InputBackground),
         typeof(Brush),
         typeof(InputField),
-        Brush.Transparent);
+        null);
 
     public ImageSource Icon { get => (ImageSource)GetValue(IconProperty); set => SetValue(IconProperty, value); }
 

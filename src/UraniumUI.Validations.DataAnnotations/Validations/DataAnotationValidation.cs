@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 
 namespace UraniumUI.Validations;
+
 public class DataAnnotationValidation : IValidation
 {
     public string Message { get; protected set; }

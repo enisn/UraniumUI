@@ -60,7 +60,7 @@ public partial class InputField : ContentView
 
     protected HorizontalStackLayout endIconsContainer => this.FindByViewQueryIdInVisualTreeDescendants<HorizontalStackLayout>("EndIconsContainer");
 
-    public IList<IView> Attachments => endIconsContainer.Children;
+    public IList<IView> Attachments => endIconsContainer?.Children;
 
     private Color LastFontimageColor;
 
@@ -415,6 +415,18 @@ public partial class InputField : ContentView
         InitializeBorder();
     }
 
+    protected override void OnApplyTemplate()
+    {
+        base.OnApplyTemplate();
+        if (Icon != null)
+        {
+            if (innerGrid != null && !innerGrid.Contains(imageIcon.Value))
+            {
+                innerGrid.Add(imageIcon.Value, column: 0);
+            }
+        }
+    }
+
     protected virtual void OnIconChanged()
     {
         imageIcon.Value.Source = Icon;
@@ -428,7 +440,7 @@ public partial class InputField : ContentView
                 ColorResource.GetColor("OnBackgroundDark", Colors.Gray));
         }
 
-        if (!innerGrid.Contains(imageIcon.Value))
+        if (innerGrid != null && !innerGrid.Contains(imageIcon.Value))
         {
             innerGrid.Add(imageIcon.Value, column: 0);
         }

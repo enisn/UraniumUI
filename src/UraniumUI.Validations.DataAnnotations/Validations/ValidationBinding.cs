@@ -7,6 +7,7 @@ using Microsoft.Maui.Controls.Internals;
 namespace UraniumUI.Validations;
 
 [ContentProperty(nameof(Path))]
+[Obsolete("Use the new DataAnnotationsBehavior instead.")]
 public class ValidationBinding : IMarkupExtension<BindingBase>, IMarkupExtension
 {
     public string Path { get; set; }

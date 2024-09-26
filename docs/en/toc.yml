@@ -116,6 +116,8 @@
       href: migration-guides/Migrating-To-2.4.md
     - name: Migration to v2.7
       href: migration-guides/Migrating-To-2.7.md
+    - name: Migration to v2.11
+      href: migration-guides/Migrating-To-2.11.md
 - name: Support
   href: Support.md
   items:

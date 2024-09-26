@@ -240,6 +240,10 @@
         {
           "text": "Migration to v2.7",
           "path": "migration-guides/Migrating-To-2.7.md"
+        },
+        {
+          "text": "Migration to v2.11",
+          "path": "migration-guides/Migrating-To-2.11.md"
         }
       ]
     },

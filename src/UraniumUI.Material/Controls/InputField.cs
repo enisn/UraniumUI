@@ -273,23 +273,7 @@ public partial class InputField : ContentView
         }
 #endif
 
-#if WINDOWS
-        if (space <= 0 || perimeter <= 0)
-        {
-            return;
-        }
 
-        border.Padding = 0;
-        border.Stroke = BorderColor;
-        border.StrokeThickness = BorderThickness;
-        border.Background = InputBackground;
-        border.BackgroundColor = InputBackgroundColor;
-        border.StrokeDashOffset = 0;
-        border.StrokeShape = new RoundRectangle
-        {
-            CornerRadius = CornerRadius
-        };
-#endif
 
         border.StrokeDashArray = new DoubleCollection { calculatedFirstDash * 0.9 / BorderThickness, space / BorderThickness, perimeter, 0 };
 
@@ -387,8 +371,8 @@ public partial class InputField : ContentView
 
     private void Content_Unfocused(object sender, FocusEventArgs e)
     {
-        border.Stroke = BorderColor;
-        labelTitle.TextColor = TitleColor;
+        border.SetBinding(Border.StrokeProperty, GetRelativeBinding(nameof(BorderColor)));
+        labelTitle.SetBinding(Label.TextColorProperty, GetRelativeBinding(nameof(TitleColor)));
         UpdateState();
 
         if (Icon is FontImageSource fontImageSource)

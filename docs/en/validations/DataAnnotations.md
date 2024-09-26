@@ -9,7 +9,7 @@ dotnet add package UraniumUI.Validations.DataAnnotations
 ```
 
 ## Usage
-With the simple `Binding` method, controls can't know the validation rules. You need to use the `ValidationBinding` method to bind the control with the validation rules.
+`DataAnnotationsBehavior` is a behavior that allows you to bind the validations from the ViewModel to the control. It's used with the `FormView` to validate the controls.
 
 - Add xmlns for the `UraniumUI.Validations` namespace.
 
@@ -17,11 +17,15 @@ With the simple `Binding` method, controls can't know the validation rules. You 
     xmlns:v="clr-namespace:UraniumUI.Validations;assembly=UraniumUI.Validations.DataAnnotations"
     ```
 
-- Use the `v:ValidationBinding` method to bind the control with the validation rules.
+- Use the `DataAnnotationsBehavior ` method to bind the control with the validation rules.
 
     ```xml
     <input:FormView>
-          <material:TextField Text="{v:ValidationBinding Email}" />
+        <material:TextField Text="{Binding Email}">
+            <material:TextField.Behaviors>
+                <v:DataAnnotationsBehavior Binding="{Binding Email}" />
+            </material:TextField.Behaviors>
+        </material:TextField>
             <!-- ... -->
     </input:FormView>
     ```

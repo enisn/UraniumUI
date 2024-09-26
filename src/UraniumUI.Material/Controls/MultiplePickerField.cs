@@ -1,6 +1,7 @@
 ﻿using Microsoft.Maui.Layouts;
 using System.Collections;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using UraniumUI.Dialogs;
 
 namespace UraniumUI.Material.Controls;
@@ -112,9 +113,26 @@ public partial class MultiplePickerField : InputField
 
     }
 
-    protected virtual void OnSelectedItemsSet()
+    protected virtual void OnSelectedItemsSet(IList oldValue, IList newValue)
     {
         BindableLayout.SetItemsSource(chipsHolderLayout, SelectedItems);
+        UpdateState();
+
+        if (oldValue is INotifyCollectionChanged oldObservable)
+        {
+            oldObservable.CollectionChanged -= SelectedItemsChanged;
+        }
+
+        if (newValue is INotifyCollectionChanged observable)
+        {
+            observable.CollectionChanged -= SelectedItemsChanged;
+            observable.CollectionChanged += SelectedItemsChanged;
+        }
+    }
+
+    private void SelectedItemsChanged(object sender, NotifyCollectionChangedEventArgs e)
+    {
+        UpdateState();
     }
 
     public IList ItemsSource { get => (IList)GetValue(ItemsSourceProperty); set => SetValue(ItemsSourceProperty, value); }
@@ -131,5 +149,5 @@ public partial class MultiplePickerField : InputField
         nameof(SelectedItems),
         typeof(IList),
         typeof(MultiplePickerField),
-        propertyChanged: (bindable, oldValue, newValue) => (bindable as MultiplePickerField).OnSelectedItemsSet());
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as MultiplePickerField).OnSelectedItemsSet(oldValue as IList, newValue as IList));
 }

@@ -38,9 +38,11 @@ public static class MauiProgram
 #if DEBUG
         builder.Logging.AddDebug();
 
-        builder.UseLeakDetection(target => Console.WriteLine("Leaked: " +target.Name));
+        var memoryLeakEvents = new MemoryLeakDetectEvents();
+        builder.Services.AddSingleton(memoryLeakEvents);
+        builder.UseLeakDetection(onLeaked: memoryLeakEvents.InvokeOnLeaked, memoryLeakEvents.InvokeOnCollected);
 #endif
-
+        
         builder.Services.Configure<AutoFormViewOptions>(options =>
         {
             options.ValidationFactory = DataAnnotationValidation.CreateValidations;

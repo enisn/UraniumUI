@@ -28,7 +28,8 @@ public class AppShellContentViewModel : ReactiveObject
     {
         var observableFilter = this.WhenAnyValue(x => x.SearchText)
           .Throttle(TimeSpan.FromMilliseconds(200))
-          .Select(searchText => (Func<ShellItem, bool>)(item => string.IsNullOrEmpty(SearchText) || item.Title.Contains(SearchText, StringComparison.OrdinalIgnoreCase)));
+          .Select(searchText => (Func<ShellItem, bool>)(item => item.FlyoutItemIsVisible 
+                && (string.IsNullOrEmpty(SearchText) || item.Title.Contains(SearchText, StringComparison.OrdinalIgnoreCase))));
       
         CurrentShell.Items.AsObservableChangeSet()
             .Filter(observableFilter)

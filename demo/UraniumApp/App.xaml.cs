@@ -9,6 +9,12 @@ namespace UraniumApp;
 
 public partial class App : Application
 {
+    public static bool IsDebug =>
+#if DEBUG
+    true;
+#else
+    false;
+#endif
     public App()
     {
         InitializeComponent();

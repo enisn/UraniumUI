@@ -14,7 +14,11 @@ public class DatePickerField : InputField
     public override View Content { get; set; } = new DatePickerView
     {
         VerticalOptions = LayoutOptions.Center,
+#if ANDROID
+        Margin = new Thickness(16, 0),
+#else
         Margin = new Thickness(10, 0),
+#endif
         Opacity = 0,
     };
 

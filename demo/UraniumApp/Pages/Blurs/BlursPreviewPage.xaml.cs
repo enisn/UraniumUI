@@ -4,6 +4,13 @@ public partial class BlursPreviewPage : ContentPage
 {
 	public BlursPreviewPage()
 	{
-		InitializeComponent();
+		try
+		{
+			InitializeComponent();
+		}
+		catch (Exception ex)
+		{
+			App.Current.MainPage.DisplayAlert("Error", ex.ToString(), "OK");
+        }
     }
 }

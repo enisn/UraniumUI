@@ -9,9 +9,26 @@
              xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
              x:DataType="vm:BlursPreviewViewModel"
              BindingContext="{uranium:Inject {Type vm:BlursPreviewViewModel}}">
+    <ContentPage.Resources>
+        <Style TargetType="Grid">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="Background"
+                                        Value="{AppThemeBinding Light={StaticResource PrimaryContainerBrush}, Dark={StaticResource PrimaryContainerDarkBrush}}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
 
     <Grid RowDefinitions="*,Auto">
-        <Image Source="{Binding BackgroundImageSource}" HorizontalOptions="Fill" Aspect="AspectFill" />
+        <Image Source="{Binding BackgroundImageSource.Url}" HorizontalOptions="Fill" Aspect="AspectFill" />
 
         <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
             <StackLayout.Effects>
@@ -56,14 +73,16 @@
 
         <CollectionView
             Grid.Row="1"
+            SelectionMode="Single"
             ItemsSource="{Binding BackgroundImageSourceList}"
             SelectedItem="{Binding BackgroundImageSource}"
             ItemsLayout="HorizontalList"
-            HeightRequest="150"
-            SelectionMode="Single">
+            HeightRequest="150">
             <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Image HeightRequest="120" Margin="10,5" Source="{Binding}" />
+                <DataTemplate x:DataType="vm:ImageItem">
+                    <Grid Padding="15,2">
+                        <Image HeightRequest="120" Aspect="AspectFill" BackgroundColor="Red" WidthRequest="120" Source="{Binding Url}" />
+                    </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>

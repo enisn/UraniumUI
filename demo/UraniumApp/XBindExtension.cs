@@ -17,11 +17,14 @@ public class XBindExtension : IMarkupExtension<object>
 
     public object ProvideValue(IServiceProvider serviceProvider)
     {
-        var root = serviceProvider.GetRequiredService<IRootObjectProvider>()
-                .RootObject as BindableObject;
+        //var root = serviceProvider.GetRequiredService<IRootObjectProvider>()
+        //        .RootObject as BindableObject;
 
-        var targetObject = serviceProvider.GetRequiredService<IProvideValueTarget>()
-            .TargetObject;
+        var provideValueTarget = serviceProvider.GetRequiredService<IProvideValueTarget>();
+
+        var root = GetRootObject(provideValueTarget) as BindableObject;
+
+        var targetObject = provideValueTarget.TargetObject;
 
         var targetPropertyInfo = serviceProvider.GetRequiredService<IProvideValueTarget>()
             .TargetProperty as PropertyInfo;
@@ -48,4 +51,12 @@ public class XBindExtension : IMarkupExtension<object>
         return bindingContext.GetType().GetProperty(Path).GetValue(bindingContext);
     }
 
+    public static object? GetRootObject(IProvideValueTarget provideValueTarget)
+    {
+        //Attemp to get the root object from the provided value target
+        var pvtType = provideValueTarget?.GetType();
+        var parentsInfo = pvtType?.GetProperty("Microsoft.Maui.Controls.Xaml.IProvideParentValues.ParentObjects", BindingFlags.NonPublic | BindingFlags.Instance);
+        var parents = parentsInfo?.GetValue(provideValueTarget) as IEnumerable<object>;
+        return parents?.LastOrDefault();
+    }
 }

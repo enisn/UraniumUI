@@ -86,8 +86,8 @@
 
     <!--BRUSHES-->
     <LinearGradientBrush x:Key="PrimaryBrush">
-        <GradientStop Offset="0" Color="{StaticResource Primary}" />
-        <GradientStop Offset="1" Color="{StaticResource Secondary}" />
+        <GradientStop Offset="0" Color="{StaticResource Secondary}" />
+        <GradientStop Offset="1" Color="{StaticResource Primary}" />
     </LinearGradientBrush>
 
     <LinearGradientBrush x:Key="PrimaryContainerDarkBrush">
@@ -96,8 +96,8 @@
     </LinearGradientBrush>
 
     <LinearGradientBrush x:Key="PrimaryContainerBrush">
-        <GradientStop Offset="0" Color="{StaticResource PrimaryContainer}" />
-        <GradientStop Offset="1" Color="{StaticResource SecondaryContainer}" />
+        <GradientStop Offset="0" Color="{StaticResource Secondary}" />
+        <GradientStop Offset="1" Color="{StaticResource Primary}" />
     </LinearGradientBrush>
 
     <SolidColorBrush x:Key="SecondaryBrush" Color="{StaticResource Secondary}" />

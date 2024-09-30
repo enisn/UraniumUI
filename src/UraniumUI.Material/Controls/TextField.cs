@@ -54,6 +54,7 @@ public partial class TextField : InputField
         entryView.SetBinding(Entry.IsEnabledProperty, new Binding(nameof(IsEnabled), BindingMode.OneWay, source: this));
         entryView.SetBinding(Entry.IsReadOnlyProperty, new Binding(nameof(IsReadOnly), BindingMode.OneWay, source: this));
         entryView.SetBinding(Entry.FontSizeProperty, new Binding(nameof(FontSize), BindingMode.OneWay, source: this));
+        entryView.SetBinding(Entry.FontFamilyProperty, new Binding(nameof(FontFamily), BindingMode.OneWay, source: this));
         entryView.SetBinding(Entry.FontAutoScalingEnabledProperty, new Binding(nameof(FontAutoScalingEnabled), BindingMode.OneWay, source: this));
 
         AfterConstructor();

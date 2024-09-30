@@ -29,20 +29,6 @@ public partial class TextField
         typeof(TextField),
         ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.DarkGray));
 
-    public string FontFamily { get => (string)GetValue(FontFamilyProperty); set => SetValue(FontFamilyProperty, value); }
-
-    public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(
-        nameof(FontFamily),
-        typeof(string),
-        typeof(TextField),
-        propertyChanged: (bindable, oldValue, newValue) =>
-        {
-            var textField = (bindable as TextField);
-
-            textField.EntryView.FontFamily = (string)newValue;
-            textField.labelTitle.FontFamily = (string)newValue;
-        });
-
     [TypeConverter(typeof(KeyboardTypeConverter))]
     public Keyboard Keyboard { get => (Keyboard)GetValue(KeyboardProperty); set => SetValue(KeyboardProperty, value); }
 

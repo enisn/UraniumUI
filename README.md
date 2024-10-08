@@ -85,7 +85,7 @@ This project is licensed under the Apache License License - see the [LICENSE](LI
 
 | Special thanks to project supporters 🎉 |
 | --- |
-| [YvanBrunel](https://twitter.com/YvanBrunel) | <!-- 8☕️ --> 
+| [YvanBrunel](https://twitter.com/YvanBrunel) | <!-- 12☕️ --> 
 | [Hottemax](https://github.com/Hottemax) |  <!-- 6☕️ -->
 | [tjlangenkamp](https://github.com/tjlangenkamp) | <!-- 5☕️ -->
 | [C00lzer0](https://github.com/C00lzer0) |  <!-- 3☕️ -->

@@ -1,5 +1,6 @@
 ﻿using Plainer.Maui.Controls;
 using System.ComponentModel;
+using UraniumUI.Controls;
 using UraniumUI.Pages;
 using UraniumUI.Resources;
 using UraniumUI.Views;
@@ -10,8 +11,8 @@ namespace UraniumUI.Material.Controls;
 [ContentProperty(nameof(Validations))]
 public class DatePickerField : InputField
 {
-    public DatePickerView DatePickerView => Content as DatePickerView;
-    public override View Content { get; set; } = new DatePickerView
+    public DatePickerWrappedView DatePickerView => Content as DatePickerWrappedView;
+    public override View Content { get; set; } = new DatePickerWrappedView
     {
         VerticalOptions = LayoutOptions.Center,
 #if ANDROID
@@ -44,11 +45,11 @@ public class DatePickerField : InputField
 
         UpdateClearIconState();
 
-        DatePickerView.SetBinding(DatePickerView.DateProperty, new Binding(nameof(Date), source: this));
-        DatePickerView.SetBinding(DatePickerView.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
-        DatePickerView.SetBinding(DatePickerView.FontSizeProperty, new Binding(nameof(FontSize), source: this));
-        DatePickerView.SetBinding(DatePickerView.FontAutoScalingEnabledProperty, new Binding(nameof(FontAutoScalingEnabled), source: this));
-        DatePickerView.SetBinding(DatePickerView.FontFamilyProperty, new Binding(nameof(FontFamily), source: this));
+        DatePickerView.SetBinding(DatePicker.DateProperty, new Binding(nameof(Date), source: this));
+        DatePickerView.SetBinding(DatePicker.IsEnabledProperty, new Binding(nameof(IsEnabled), source: this));
+        DatePickerView.SetBinding(DatePicker.FontSizeProperty, new Binding(nameof(FontSize), source: this));
+        DatePickerView.SetBinding(DatePicker.FontAutoScalingEnabledProperty, new Binding(nameof(FontAutoScalingEnabled), source: this));
+        DatePickerView.SetBinding(DatePicker.FontFamilyProperty, new Binding(nameof(FontFamily), source: this));
 
 #if MACCATALYST || IOS
         labelTitle.InputTransparent = true;

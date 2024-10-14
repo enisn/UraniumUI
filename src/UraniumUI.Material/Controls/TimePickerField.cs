@@ -1,5 +1,6 @@
 ﻿using Plainer.Maui.Controls;
 using System.ComponentModel;
+using UraniumUI.Controls;
 using UraniumUI.Pages;
 using UraniumUI.Resources;
 using UraniumUI.Views;
@@ -10,8 +11,8 @@ namespace UraniumUI.Material.Controls;
 [ContentProperty(nameof(Validations))]
 public class TimePickerField : InputField
 {
-    public TimePickerView TimePickerView => Content as TimePickerView;
-    public override View Content { get; set; } = new TimePickerView
+    public TimePickerWrappedView TimePickerView => Content as TimePickerWrappedView;
+    public override View Content { get; set; } = new TimePickerWrappedView
     {
         VerticalOptions = LayoutOptions.Center,
 #if WINDOWS

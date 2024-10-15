@@ -4,8 +4,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                     xmlns:local="clr-namespace:UraniumUI.Material.Resources"
                     xmlns:views="clr-namespace:UraniumUI.Views;assembly=UraniumUI"
-                    xmlns:a="clr-namespace:UraniumUI.Material.Attachments"
-                    xmlns:c="clr-namespace:UraniumUI.Material.Controls"
+                    xmlns:a="clr-namespace:UraniumUI.Material.Attachments;assembly=UraniumUI.Material"
+                    xmlns:c="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
                     xmlns:t="clr-namespace:UraniumUI.Theming;assembly=UraniumUI"
                     xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui">
     <ResourceDictionary.MergedDictionaries>

@@ -1,6 +1,6 @@
 # Uranium UI: Icons
 
-Uranium UI uses font icons to render icons on all platforms. Uranium Core provides a set of icons that can be used in your application.Themes provide their own icon sets. You can also use your own icons.
+Uranium UI uses font icons to render icons on all platforms. Uranium Core provides a set of icons that can be used in your application. Themes provide their own icon sets. You can also use your own icons.
 
 ## Using icons
 
@@ -29,14 +29,14 @@ builder
 - `FASolid`
 
 #### Glyphs
-Glyphs are provided with `FontAwesomeRegular` and `FontAwesomeSolid` classes. They can be accessed like `FontAwesomeRegular.Filter`. This class icluded in `UraniumUI` namespace. You should include following xml namespace to use it.
+Glyphs are provided with `FontAwesomeRegular` and `FontAwesomeSolid` classes. They can be accessed like `FontAwesomeRegular.Filter`. This class is included in `UraniumUI` namespace. You should include the following xml namespace to use it.
 
 ```xml
 xmlns:fa="clr-namespace:UraniumUI.Icons.FontAwesome;assembly=UraniumUI.Icons.FontAwesome"
 ```
 
 #### Usage
-MAUI support font icons by using `FontImageSource` class. You can use it in `Image`, `Button` and any control that has a `ImageSource` typed property.
+MAUI supports font icons by using `FontImageSource` class. You can use it in `Image`, `Button` and any control that has a `ImageSource` typed property.
 
 ```xml
 <Image>
@@ -75,14 +75,14 @@ builder
 - `MaterialSharpFilled`
 
 #### Glyphs
-Glyphs are provided with `MaterialOutlined`, `MaterialRound` and `MaterialSharp` classes. They can be accessed like `MaterialSharp.Account_circle`. This class icluded in `UraniumUI` namespace. You should include following xml namespace to use it.
+Glyphs are provided with `MaterialOutlined`, `MaterialRound` and `MaterialSharp` classes. They can be accessed like `MaterialSharp.Account_circle`. This class is included in `UraniumUI` namespace. You should include the following xml namespace to use it.
 
 ```xml
 xmlns:m="clr-namespace:UraniumUI.Icons.MaterialSymbols;assembly=UraniumUI.Icons.MaterialSymbols"
 ```
 
 #### Usage
-MAUI support font icons by using `FontImageSource` class. You can use it in `Image`, `Button` and any control that has a `ImageSource` typed property.
+MAUI supports font icons by using `FontImageSource` class. You can use it in `Image`, `Button` and any control that has a `ImageSource` typed property.
 
 ```xml
 <Image>
@@ -122,19 +122,19 @@ builder
 ```
 
 #### Font Names
-Single font name is provided by the package. It can be used as `FontFamily` parameter in `FontImageSource`.
+A single font name is provided by the package. It can be used as `FontFamily` parameter in `FontImageSource`.
 
 - `Fluent`
 
 #### Glyphs
-Glyphs are provided with `Fluent` class. They can be accessed like `Fluent.Accept`. This class included in `UraniumUI.Icons.SegoeFluent` namespace. This namespace is exported to the default UraniumUI namespace.
+Glyphs are provided with `Fluent` class. They can be accessed like `Fluent.Accept`. This class is included in `UraniumUI.Icons.SegoeFluent` namespace. This namespace is exported to the default UraniumUI namespace.
 
 ```xml
 xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
 ```
 
 #### Usage
-MAUI support font icons by using `FontImageSource` class. You can use it in `Image`, `Button` and any control that has a `ImageSource` typed property.
+MAUI supports font icons by using `FontImageSource` class. You can use it in `Image`, `Button` and any control that has a `ImageSource` typed property.
 
 ```xml
 <Image>

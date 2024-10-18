@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Windows.Input;
 using UraniumUI.Dialogs;
 
 namespace UraniumUI.Material.Controls;
@@ -23,6 +24,8 @@ public partial class MultiplePickerField : InputField
     public override View Content { get; set; } = new ContentView();
 
     public override bool HasValue { get => IsBusy || SelectedItems?.Count > 0; }
+
+    public event EventHandler<object> SelectedValuesChanged;
 
     protected IDialogService DialogService { get; }
 
@@ -133,6 +136,8 @@ public partial class MultiplePickerField : InputField
     private void SelectedItemsChanged(object sender, NotifyCollectionChangedEventArgs e)
     {
         UpdateState();
+        SelectedValuesChangedCommand?.Execute(SelectedItems);
+        SelectedValuesChanged?.Invoke(sender, SelectedItems);
     }
 
     public IList ItemsSource { get => (IList)GetValue(ItemsSourceProperty); set => SetValue(ItemsSourceProperty, value); }
@@ -150,4 +155,11 @@ public partial class MultiplePickerField : InputField
         typeof(IList),
         typeof(MultiplePickerField),
         propertyChanged: (bindable, oldValue, newValue) => (bindable as MultiplePickerField).OnSelectedItemsSet(oldValue as IList, newValue as IList));
+
+    public ICommand SelectedValuesChangedCommand { get => (ICommand)GetValue(SelectedValuesChangedCommandProperty); set => SetValue(SelectedValuesChangedCommandProperty, value); }
+
+    public static readonly BindableProperty SelectedValuesChangedCommandProperty = BindableProperty.Create(
+        nameof(SelectedValuesChangedCommand),
+        typeof(ICommand), typeof(MultiplePickerField),
+        defaultValue: null);
 }

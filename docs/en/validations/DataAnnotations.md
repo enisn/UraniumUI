@@ -17,6 +17,11 @@ dotnet add package UraniumUI.Validations.DataAnnotations
     xmlns:v="clr-namespace:UraniumUI.Validations;assembly=UraniumUI.Validations.DataAnnotations"
     ```
 
+> [!WARNING]
+> If you're using `v:ValidationBinding` in your project, you need to migrate to this new behavior.
+> 
+> See the [Migration Guide](../migration-guides/Migrating-To-2.11.md) for more information.
+
 - Use the `DataAnnotationsBehavior` method to bind the control with the validation rules.
 
     ```xml

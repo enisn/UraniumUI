@@ -193,7 +193,6 @@ public partial class CalendarViewHandler
 {
     public CalendarViewHandler() : base(CalendarViewPropertyMapper)
     {
-
     }
 
     public static IPropertyMapper<ICalendarView, CalendarViewHandler> CalendarViewPropertyMapper => new PropertyMapper<ICalendarView, CalendarViewHandler>(ViewMapper)

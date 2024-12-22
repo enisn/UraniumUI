@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="UraniumApp.Pages.CalendarViewPage"
+             xmlns:local="clr-namespace:UraniumApp"
+             xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
+             Title="CalendarViewPage">
+    <VerticalStackLayout>
+        <uranium:CalendarView x:Name="calendarView" SelectionMode="Single"/>
+
+        <local:PropertyEditorView Value="{x:Reference calendarView}"  />
+    </VerticalStackLayout>
+</ContentPage>

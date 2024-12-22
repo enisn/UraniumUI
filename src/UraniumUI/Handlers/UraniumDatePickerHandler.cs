@@ -4,7 +4,6 @@ using UraniumUI.Controls;
 
 namespace UraniumUI.Handlers;
 
-
 #if ANDROID
 using Android.Widget;
 using Android.App;

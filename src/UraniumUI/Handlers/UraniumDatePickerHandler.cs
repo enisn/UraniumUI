@@ -115,6 +115,11 @@ public partial class UraniumDatePickerHandler : ViewHandler<IUraniumDatePicker, 
 
     public static void MapSelectedDate(UraniumDatePickerHandler handler, IUraniumDatePicker datePicker)
     {
+        if (datePicker.Date == null)
+        {
+            return;
+        }
+
         handler.PlatformView.Date = datePicker.Date?.ToNSDate();
     }
 }

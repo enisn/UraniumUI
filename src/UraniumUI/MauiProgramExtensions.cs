@@ -37,6 +37,7 @@ public static class MauiProgramExtensions
             .AddHandler(typeof(AutoCompleteView), typeof(AutoCompleteViewHandler))
             .AddHandler(typeof(SelectableLabel), typeof(SelectableLabelHandler))
             .AddHandler(typeof(Dropdown), typeof(DropdownHandler))
+            .AddHandler(typeof(CalendarView), typeof(CalendarViewHandler))
             .AddPlainer();
     }
 }

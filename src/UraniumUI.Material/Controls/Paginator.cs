@@ -46,6 +46,78 @@ public class Paginator : ContentView
     public bool CanGoNext { get => canGoNext; set { canGoNext = value; OnPropertyChanged(); } }
     public bool CanGoPrevious { get => canGoPrevious; set { canGoPrevious = value; OnPropertyChanged(); } }
 
+    public string FirstPageButtonText { get => (string)GetValue(FirstPageButtonTextProperty); set => SetValue(FirstPageButtonTextProperty, value); }
+
+    public static readonly BindableProperty FirstPageButtonTextProperty = BindableProperty.Create(
+        nameof(FirstPageButtonText),
+        typeof(string),
+        typeof(Paginator),
+        defaultValue: "<<"
+    );
+
+    public string PreviousPageButtonText { get => (string)GetValue(PreviousPageButtonTextProperty); set => SetValue(PreviousPageButtonTextProperty, value); }
+
+    public static readonly BindableProperty PreviousPageButtonTextProperty = BindableProperty.Create(
+        nameof(PreviousPageButtonText),
+        typeof(string),
+        typeof(Paginator),
+        defaultValue: "<"
+    );
+
+    public string NextPageButtonText { get => (string)GetValue(NextPageButtonTextProperty); set => SetValue(NextPageButtonTextProperty, value); }
+
+    public static readonly BindableProperty NextPageButtonTextProperty = BindableProperty.Create(
+        nameof(NextPageButtonText),
+        typeof(string),
+        typeof(Paginator),
+        defaultValue: ">"
+    );
+
+    public string LastPageButtonText { get => (string)GetValue(LastPageButtonTextProperty); set => SetValue(LastPageButtonTextProperty, value); }
+
+    public static readonly BindableProperty LastPageButtonTextProperty = BindableProperty.Create(
+        nameof(LastPageButtonText),
+        typeof(string),
+        typeof(Paginator),
+        defaultValue: ">>"
+    );
+
+    public ImageSource FirstPageButtonImage { get => (ImageSource)GetValue(FirstPageButtonImageProperty); set => SetValue(FirstPageButtonImageProperty, value); }
+
+    public static readonly BindableProperty FirstPageButtonImageProperty = BindableProperty.Create(
+        nameof(FirstPageButtonImage),
+        typeof(ImageSource),
+        typeof(Paginator),
+        defaultValue: null
+    );
+
+    public ImageSource PreviousPageButtonImage { get => (ImageSource)GetValue(PreviousPageButtonImageProperty); set => SetValue(PreviousPageButtonImageProperty, value); }
+
+    public static readonly BindableProperty PreviousPageButtonImageProperty = BindableProperty.Create(
+        nameof(PreviousPageButtonImage),
+        typeof(ImageSource),
+        typeof(Paginator),
+        defaultValue: null
+    );
+
+    public ImageSource NextPageButtonImage { get => (ImageSource)GetValue(NextPageButtonImageProperty); set => SetValue(NextPageButtonImageProperty, value); }
+
+    public static readonly BindableProperty NextPageButtonImageProperty = BindableProperty.Create(
+        nameof(NextPageButtonImage),
+        typeof(ImageSource),
+        typeof(Paginator),
+        defaultValue: null
+    );
+
+    public ImageSource LastPageButtonImage { get => (ImageSource)GetValue(LastPageButtonImageProperty); set => SetValue(LastPageButtonImageProperty, value); }
+
+    public static readonly BindableProperty LastPageButtonImageProperty = BindableProperty.Create(
+        nameof(LastPageButtonImage),
+        typeof(ImageSource),
+        typeof(Paginator),
+        defaultValue: null
+    );
+
     private HorizontalStackLayout PagesStackLayout => this.FindByViewQueryId<HorizontalStackLayout>(nameof(PagesStackLayout));
     private bool canGoNext;
     private bool canGoPrevious;
@@ -56,20 +128,21 @@ public class Paginator : ContentView
 
         var firstPageButton = new Button
         {
-            Text = "<<",
             StyleClass = new[] { "TextButton" },
             CommandParameter = 1
         };
-
+        firstPageButton.SetBinding(Button.TextProperty, new Binding(nameof(FirstPageButtonText), source: this));
+        firstPageButton.SetBinding(Button.ImageSourceProperty, new Binding(nameof(FirstPageButtonImage), source: this));
         firstPageButton.SetBinding(Button.CommandProperty, new Binding(nameof(ChangePageCommand), source: this));
         firstPageButton.SetBinding(Button.IsEnabledProperty, new Binding(nameof(CanGoPrevious), source: this));
 
         var previousButton = new Button
         {
-            Text = "<",
             StyleClass = new[] { "TextButton" },
             Command = new Command(() => ChangePageCommand?.Execute(CurrentPage - 1)),
         };
+        previousButton.SetBinding(Button.TextProperty, new Binding(nameof(PreviousPageButtonText), source: this));
+        previousButton.SetBinding(Button.ImageSourceProperty, new Binding(nameof(PreviousPageButtonImage), source: this));
         previousButton.SetBinding(Button.IsEnabledProperty, new Binding(nameof(CanGoPrevious), source: this));
 
         var pagesStackLayout = new HorizontalStackLayout();
@@ -93,17 +166,19 @@ public class Paginator : ContentView
 
         var nextButton = new Button
         {
-            Text = ">",
             StyleClass = new[] { "TextButton" },
             Command = new Command(() => ChangePageCommand?.Execute(CurrentPage + 1)),
         };
+        nextButton.SetBinding(Button.TextProperty, new Binding(nameof(NextPageButtonText), source: this));
+        nextButton.SetBinding(Button.ImageSourceProperty, new Binding(nameof(NextPageButtonImage), source: this));
         nextButton.SetBinding(Button.IsEnabledProperty, new Binding(nameof(CanGoNext), source: this));
 
         var lastPageButton = new Button
         {
-            Text = ">>",
             StyleClass = new[] { "TextButton" },
         };
+        lastPageButton.SetBinding(Button.TextProperty, new Binding(nameof(LastPageButtonText), source: this));
+        lastPageButton.SetBinding(Button.ImageSourceProperty, new Binding(nameof(LastPageButtonImage), source: this));
         lastPageButton.SetBinding(Button.CommandProperty, new Binding(nameof(ChangePageCommand), source: this));
         lastPageButton.SetBinding(Button.CommandParameterProperty, new Binding(nameof(TotalPageCount), source: this));
         lastPageButton.SetBinding(Button.IsEnabledProperty, new Binding(nameof(CanGoNext), source: this));

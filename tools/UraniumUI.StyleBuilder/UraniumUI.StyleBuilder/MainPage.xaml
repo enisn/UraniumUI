@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             xmlns:views="clr-namespace:UraniumUI.StyleBuilder.Views"
+             x:Class="UraniumUI.StyleBuilder.MainPage"
+             Shell.NavBarIsVisible="{OnPlatform WinUI=True, MacCatalyst=False}"
+             xmlns:local="clr-namespace:UraniumUI.StyleBuilder"
+             x:Name="page"
+             x:DataType="local:MainPageViewModel">
+    <ContentPage.MenuBarItems>
+        <MenuBarItem Text="File" IsEnabled="False">
+            <MenuFlyoutSubItem Text="New">
+                <MenuFlyoutItem Text="Colors" Command="{Binding NewColorsCommand}" />
+                <MenuFlyoutItem Text="Styles" Command="{Binding NewStylesCommand}" />
+            </MenuFlyoutSubItem>
+
+            <MenuFlyoutSubItem Text="Open">
+                <MenuFlyoutItem Text="Open Colors" Command="{Binding OpenColorsCommand}" />
+                <MenuFlyoutItem Text="Open Styles" Command="{Binding OpenStylesCommand}" />
+            </MenuFlyoutSubItem>
+            <MenuFlyoutItem Text="Save" Command="{Binding SaveCommand}" />
+            <MenuFlyoutItem Text="Save As..." Command="{Binding SaveAsCommand}"/>
+        </MenuBarItem>
+    </ContentPage.MenuBarItems>
+
+    <Grid>
+        <material:TabView
+            BackgroundColor="#30909090"
+                ItemsSource="{Binding Items}"
+                CurrentItem="{Binding CurrentItem, Mode=TwoWay}">
+            <material:TabView.TabHeaderItemTemplate>
+                <DataTemplate x:DataType="material:TabItem">
+                    <uranium:StatefulContentView TappedCommand="{Binding Command}" MinimumWidthRequest="160">
+                        <Border StrokeShape="RoundRectangle 5,5,0,0" StrokeThickness="0">
+                            <Grid ColumnDefinitions="*,Auto" Padding="5,10" BackgroundColor="{AppThemeBinding {StaticResource Background}, Dark={StaticResource BackgroundDark}}">
+
+                                <Label Text="{Binding Title}" VerticalOptions="Center" LineBreakMode="CharacterWrap"/>
+
+                                <uranium:StatefulContentView Grid.Column="1"
+                                                                 Margin="5"
+                                                VerticalOptions="Center"
+                                                CommandParameter="{Binding Data}"
+                                                TappedCommand="{Binding Source={x:Reference page}, Path=BindingContext.CloseCommand}">
+                                    <Path Data="{x:Static uranium:UraniumShapes.X}" Fill="{AppThemeBinding {StaticResource OnSurface},Dark={StaticResource OnSurfaceDark}}" />
+                                </uranium:StatefulContentView>
+
+                                <Grid.Triggers>
+                                    <DataTrigger TargetType="Grid" Binding="{Binding IsSelected}" Value="True">
+                                        <Setter Property="uranium:DynamicTint.BackgroundColorOpacity" Value="0.9" />
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Grid" Binding="{Binding IsSelected}" Value="False">
+                                        <Setter Property="uranium:DynamicTint.BackgroundColorOpacity" Value="0.1" />
+                                    </DataTrigger>
+                                </Grid.Triggers>
+                            </Grid>
+                        </Border>
+                    </uranium:StatefulContentView>
+                </DataTemplate>
+            </material:TabView.TabHeaderItemTemplate>
+            <material:TabView.ItemTemplate>
+                <DataTemplate>
+                    <views:EditorTabItem BackgroundColor="{AppThemeBinding {StaticResource Background}, Dark={StaticResource BackgroundDark}}" />
+                </DataTemplate>
+            </material:TabView.ItemTemplate>
+        </material:TabView>
+        <HorizontalStackLayout IsVisible="{Binding CurrentItem, Converter={StaticResource IsNullConverter}}" HorizontalOptions="Center" VerticalOptions="Center" Spacing="6">
+            <Button Text="New" StyleClass="FilledButton" Command="{Binding NewColorsCommand}" />
+            <Button Text="Open..." StyleClass="OutlinedButton" Command="{Binding OpenColorsCommand}" />
+        </HorizontalStackLayout>
+    </Grid>
+
+</ContentPage>

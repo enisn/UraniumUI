@@ -158,6 +158,24 @@
                         </DataTemplate>
                     </material:TabItem.ContentTemplate>
                 </material:TabItem>
+
+                <material:TabItem Title="Command">
+                    <material:TabItem.ContentTemplate>
+                        <DataTemplate>
+                            <StackLayout Spacing="10" Padding="10">
+                                <Label Text="Selected Node:" FontAttributes="Bold" />
+                                <Label Text="{Binding SelectedNodeName}" FontSize="18" TextColor="{StaticResource Primary}" />
+                                <material:TreeView
+                                    IsExpandedPropertyName="IsExtended"
+                                    IsLeafPropertyName="IsLeaf"
+                                    ItemsSource="{Binding Nodes}"
+                                    SelectionMode="Single"
+                                    SelectedItem="{Binding SelectedNode}"
+                                    SelectedItemCommand="{Binding NodeSelectedCommand}" />
+                            </StackLayout>
+                        </DataTemplate>
+                    </material:TabItem.ContentTemplate>
+                </material:TabItem>
             </material:TabView>
 
         </StackLayout>

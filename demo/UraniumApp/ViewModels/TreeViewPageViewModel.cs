@@ -11,9 +11,25 @@ namespace UraniumApp.ViewModels
 {
     public class TreeViewPageViewModel : UraniumBindableObject
     {
+        private MyItem selectedNode;
+        private string selectedNodeName = "None";
+
         public ObservableCollection<MyItem> Nodes { get; set; } = new();
 
         public ICommand ExpandCommand { get; set; }
+        public ICommand NodeSelectedCommand { get; set; }
+
+        public MyItem SelectedNode
+        {
+            get => selectedNode;
+            set => SetProperty(ref selectedNode, value);
+        }
+
+        public string SelectedNodeName
+        {
+            get => selectedNodeName;
+            set => SetProperty(ref selectedNodeName, value);
+        }
 
         public TreeViewPageViewModel()
         {
@@ -51,6 +67,18 @@ namespace UraniumApp.ViewModels
             ExpandCommand = new Command(() =>
             {
                 App.Current.MainPage.DisplayAlert("S", Nodes.ToString(), "ok");
+            });
+
+            NodeSelectedCommand = new Command<MyItem>((node) =>
+            {
+                if (node != null)
+                {
+                    SelectedNodeName = node.Name;
+                }
+                else
+                {
+                    SelectedNodeName = "None";
+                }
             });
         }
     }

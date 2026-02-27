@@ -10,6 +10,8 @@ using UraniumUI.Platforms.Android;
 namespace UraniumUI.Handlers;
 public partial class DropdownHandler : ButtonHandler
 {
+    private Android.Widget.PopupMenu? _popupMenu;
+
     public DropdownHandler(IPropertyMapper mapper, CommandMapper commandMapper = null) : base(DropdownPropertyMapper, commandMapper)
     {
 
@@ -28,13 +30,13 @@ public partial class DropdownHandler : ButtonHandler
     {
         var activity = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity;
 
-        var popupMenu = new Android.Widget.PopupMenu(activity, PlatformView, GetGravityFlags(VirtualViewDropdown.HorizontalTextAlignment));
+        _popupMenu = new Android.Widget.PopupMenu(activity, PlatformView, GetGravityFlags(VirtualViewDropdown.HorizontalTextAlignment));
 
         if (VirtualViewDropdown.ItemsSource is not null)
         {
             foreach (var item in VirtualViewDropdown.ItemsSource)
             {
-                var menuItem = popupMenu.Menu.Add(new Java.Lang.String(GetTextForItem(VirtualViewDropdown, item)));
+                var menuItem = _popupMenu.Menu.Add(new Java.Lang.String(GetTextForItem(VirtualViewDropdown, item)));
 
                 menuItem.SetOnMenuItemClickListener(new MenuItemOnMenuItemClickListener((menuitem) =>
                 {
@@ -43,7 +45,7 @@ public partial class DropdownHandler : ButtonHandler
             }
         }
 
-        popupMenu.Show();
+        _popupMenu.Show();
     }
 
     private GravityFlags GetGravityFlags(Microsoft.Maui.TextAlignment textAlignment)
@@ -62,12 +64,19 @@ public partial class DropdownHandler : ButtonHandler
         base.ConnectHandler(platformView);
         ArrangeText();
         platformView.Click += Button_Click;
+        VirtualViewDropdown.RequestDismissPopupRequested += OnRequestDismissPopupRequested;
     }
 
     protected override void DisconnectHandler(MaterialButton platformView)
     {
         base.DisconnectHandler(platformView);
         platformView.Click -= Button_Click;
+        VirtualViewDropdown.RequestDismissPopupRequested -= OnRequestDismissPopupRequested;
+    }
+
+    private void OnRequestDismissPopupRequested(object? sender, EventArgs e)
+    {
+        MainThread.BeginInvokeOnMainThread(() => _popupMenu?.Dismiss());
     }
 
     public static void MapItemsSource(DropdownHandler handler, Dropdown dropdown)

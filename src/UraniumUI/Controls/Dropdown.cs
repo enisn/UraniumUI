@@ -64,4 +64,13 @@ public class Dropdown : Button, IDropdown
     {
         ItemsSourceCollectionChangedCallback(e);
     }
+
+    public event EventHandler? RequestDismissPopupRequested;
+
+    public void RequestDismissPopup() => OnRequestDismissPopupRequested();
+
+    protected virtual void OnRequestDismissPopupRequested()
+    {
+        RequestDismissPopupRequested?.Invoke(this, EventArgs.Empty);
+    }
 }

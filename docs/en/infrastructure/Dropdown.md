@@ -31,3 +31,9 @@ Then you can use it like this:
 | `PlaceholderColor` | The color of the placeholder text. |
 | `TextColor` | The color of the text in the dropdown. |
 | `HorizontalTextAlignment` | The horizontal alignment of the text in the dropdown. |
+
+## Methods
+
+| Method | Description |
+| --- | --- |
+| `RequestDismissPopup()` | Programmatically closes the dropdown popup. Useful to call before navigation to prevent the popup from remaining visible on the next page. |

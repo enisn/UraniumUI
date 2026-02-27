@@ -35,8 +35,6 @@ public partial class TextField : InputField
     public event EventHandler<TextChangedEventArgs> TextChanged;
     public event EventHandler Completed;
 
-    public ICommand ClearCommand { get; protected set; }
-
     public TextField()
     {
         base.RegisterForEvents();

@@ -10,6 +10,15 @@ public class Dropdown : Button, IDropdown
         this.SetAppThemeColor(Button.BackgroundColorProperty, Colors.Transparent, Colors.Transparent);
     }
 
+    public event EventHandler? RequestDismissPopupRequested;
+
+    public void RequestDismissPopup() => OnRequestDismissPopupRequested();
+
+    protected virtual void OnRequestDismissPopupRequested()
+    {
+        RequestDismissPopupRequested?.Invoke(this, EventArgs.Empty);
+    }
+
     private BindingBase itemDisplayBinding;
     public BindingBase ItemDisplayBinding { get => itemDisplayBinding; set
         {

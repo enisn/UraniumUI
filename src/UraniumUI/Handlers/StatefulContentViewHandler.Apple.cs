@@ -54,6 +54,9 @@ public partial class StatefulContentViewHandler
 
     private void Tapped(UIGestureRecognizer recognizer)
     {
+        if (VirtualView == null)
+            return;
+
         switch (recognizer.State)
         {
             case UIGestureRecognizerState.Began:

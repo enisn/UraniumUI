@@ -138,7 +138,7 @@ public partial class DropdownHandler : ButtonHandler
         else
         {
             PlatformView.Content = GetTextForItem(VirtualViewDropdown, VirtualViewDropdown.SelectedItem);
-            PlatformView.Foreground = VirtualViewDropdown.TextColor?.ToPlatform() ?? Colors.Black.ToPlatform();
+            PlatformView.Foreground = VirtualViewDropdown.TextColor.ToPlatform();
         }
     }
 

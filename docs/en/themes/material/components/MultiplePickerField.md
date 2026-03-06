@@ -47,3 +47,12 @@ The color that is used to fill border and icon of control when it's focused. You
     Title="Pick some options"
     AccentColor="DeepSkyBlue"/>
 ```
+
+## SelectedItemsColor
+The color that is used for the selected item chips and the checkboxes in the selection dialog. You can change it by setting the `SelectedItemsColor` property of the control.
+
+```xml
+ <material:MultiplePickerField
+    Title="Pick some options"
+    SelectedItemsColor="Green"/>
+```

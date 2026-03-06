@@ -19,7 +19,7 @@ internal class MockDialogService : IDialogService
         return Task.FromResult<IDisposable>(new DisposableAction(() => { }));
     }
 
-    public Task<IEnumerable<T>> DisplayCheckBoxPromptAsync<T>(string message, IEnumerable<T> selectionSource, IEnumerable<T> selectedItems = null, string accept = "OK", string cancel = "Cancel", string displayMember = null)
+    public Task<IEnumerable<T>> DisplayCheckBoxPromptAsync<T>(string message, IEnumerable<T> selectionSource, IEnumerable<T> selectedItems = null, string accept = "OK", string cancel = "Cancel", string displayMember = null, Color color = null)
     {
         return Task.FromResult(Enumerable.Empty<T>());
     }

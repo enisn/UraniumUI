@@ -34,6 +34,24 @@ public class MultiplePickerField_Test
         control.SelectedItems[0].ShouldBe(viewModel.ItemsSource[0]);
     }
 
+    [Fact]
+    public void SelectedItemsColor_SetProperty_ShouldBeStored()
+    {
+        var control = AnimationReadyHandler.Prepare(new MultiplePickerField());
+
+        control.SelectedItemsColor = Colors.Red;
+
+        control.SelectedItemsColor.ShouldBe(Colors.Red);
+    }
+
+    [Fact]
+    public void SelectedItemsColor_Default_ShouldBeNull()
+    {
+        var control = AnimationReadyHandler.Prepare(new MultiplePickerField());
+
+        control.SelectedItemsColor.ShouldBeNull();
+    }
+
     public class TestViewModel : UraniumBindableObject
     {
         public string[] ItemsSource { get; set; } = new string[] { "Option 1", "Option 2", "Option 3", "Option 4", };

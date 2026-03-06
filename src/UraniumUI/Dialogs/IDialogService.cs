@@ -31,7 +31,8 @@ public interface IDialogService
         IEnumerable<T> selectedItems = default,
         string accept = "OK",
         string cancel = "Cancel",
-        string displayMember = null);
+        string displayMember = null,
+        Color color = null);
 
     Task<T> DisplayRadioButtonPromptAsync<T>(
         string message,

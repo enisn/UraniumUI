@@ -161,7 +161,7 @@ public class CommunityToolkitDialogService : CommunityToolkitDialogServiceBase, 
         return Task.FromResult<IDisposable>(cancelAction);
     }
 
-    public Task<IEnumerable<T>> DisplayCheckBoxPromptAsync<T>(string message, IEnumerable<T> selectionSource, IEnumerable<T> selectedItems = null, string accept = "OK", string cancel = "Cancel", string displayMember = null)
+    public Task<IEnumerable<T>> DisplayCheckBoxPromptAsync<T>(string message, IEnumerable<T> selectionSource, IEnumerable<T> selectedItems = null, string accept = "OK", string cancel = "Cancel", string displayMember = null, Color color = null)
     {
         var tcs = new TaskCompletionSource<IEnumerable<T>>();
         var calculatedSize = CalculateSize(Page);
@@ -212,12 +212,17 @@ public class CommunityToolkitDialogService : CommunityToolkitDialogServiceBase, 
 
         foreach (var item in selectionSource)
         {
-            checkBoxGroup.Add(new CheckBox
+            var checkBox = new CheckBox
             {
                 Text = prop != null ? prop.GetValue(item)?.ToString() : item.ToString(),
                 CommandParameter = item,
                 IsChecked = selectedItems?.Contains(item) ?? false,
-            });
+            };
+            if (color != null)
+            {
+                checkBox.Color = color;
+            }
+            checkBoxGroup.Add(checkBox);
         }
 
         var footer = GetFooter(new Dictionary<string, Command>

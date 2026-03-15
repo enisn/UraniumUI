@@ -4,6 +4,9 @@ using UraniumUI.Infrastructure;
 namespace UraniumUI.Material.Tests.Mocks;
 internal class MockDialogService : IDialogService
 {
+    public Color LastCheckBoxPromptColor { get; private set; }
+    public IEnumerable<object> CheckBoxPromptResult { get; set; } = Enumerable.Empty<object>();
+
     public Task<bool> ConfirmAsync(string title, string message, string okText = "OK", string cancelText = "Cancel")
     {
         return Task.FromResult(default(bool));
@@ -21,7 +24,8 @@ internal class MockDialogService : IDialogService
 
     public Task<IEnumerable<T>> DisplayCheckBoxPromptAsync<T>(string message, IEnumerable<T> selectionSource, IEnumerable<T> selectedItems = null, string accept = "OK", string cancel = "Cancel", string displayMember = null, Color color = null)
     {
-        return Task.FromResult(Enumerable.Empty<T>());
+        LastCheckBoxPromptColor = color;
+        return Task.FromResult(CheckBoxPromptResult.OfType<T>());
     }
 
     public Task<T> DisplayRadioButtonPromptAsync<T>(string message, IEnumerable<T> selectionSource, T selected = default, string accept = "Ok", string cancel = "Cancel", string displayMember = null)

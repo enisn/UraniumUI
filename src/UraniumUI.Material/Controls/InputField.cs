@@ -1,4 +1,4 @@
-﻿using Microsoft.Maui.Controls.Shapes;
+using Microsoft.Maui.Controls.Shapes;
 using System.ComponentModel;
 using UraniumUI.Extensions;
 using UraniumUI.Resources;
@@ -271,8 +271,6 @@ public partial class InputField : ContentView
             calculatedFirstDash += this.Width - labelTitle.Width;
         }
 #endif
-
-
 
         border.StrokeDashArray = new DoubleCollection { calculatedFirstDash * 0.9 / BorderThickness, space / BorderThickness, perimeter, 0 };
 
@@ -559,7 +557,14 @@ public partial class InputField : ContentView
 
     public static readonly BindableProperty FontAutoScalingEnabledProperty = BindableProperty.Create(
         nameof(FontAutoScalingEnabled), typeof(bool), typeof(InputField), Picker.FontAutoScalingEnabledProperty.DefaultValue,
-        propertyChanged: (bindable, oldValue, newValue) => (bindable as InputField).labelTitle.FontAutoScalingEnabled = (bool)newValue);
+        propertyChanged: (bindable, oldValue, newValue) =>
+        {
+            var inputField = bindable as InputField;
+            if (inputField?.labelTitle != null)
+            {
+                inputField.labelTitle.FontAutoScalingEnabled = (bool)newValue;
+            }
+        });
 
     public string ContentAutomationId { get => (string)GetValue(ContentAutomationIdProperty); set => SetValue(ContentAutomationIdProperty, value); }
 

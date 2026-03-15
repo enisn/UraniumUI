@@ -1,4 +1,4 @@
-﻿using Microsoft.Maui.Converters;
+using Microsoft.Maui.Converters;
 using System.ComponentModel;
 using UraniumUI.Resources;
 
@@ -33,8 +33,15 @@ public partial class EditorField
         {
             var editorField = (bindable as EditorField);
 
-            editorField.EditorView.FontFamily = (string)newValue;
-            editorField.labelTitle.FontFamily = (string)newValue;
+            if (editorField.EditorView != null)
+            {
+                editorField.EditorView.FontFamily = (string)newValue;
+            }
+
+            if (editorField.labelTitle != null)
+            {
+                editorField.labelTitle.FontFamily = (string)newValue;
+            }
         });
 
     [TypeConverter(typeof(KeyboardTypeConverter))]
@@ -76,7 +83,6 @@ public partial class EditorField
         typeof(bool),
         typeof(EditorField),
         propertyChanged: (bindable, oldValue, newValue) => (bindable as EditorField).EditorView.IsTextPredictionEnabled = (bool)newValue);
-
 
     public int MaxLength { get => (int)GetValue(MaxLengthProperty); set => SetValue(MaxLengthProperty, value); }
 

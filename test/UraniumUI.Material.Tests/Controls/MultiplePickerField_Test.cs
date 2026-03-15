@@ -1,6 +1,9 @@
-﻿using Shouldly;
+using Microsoft.Extensions.DependencyInjection;
+using Shouldly;
 using System.Collections.ObjectModel;
+using System.Linq;
 using UraniumUI.Dialogs;
+using UraniumUI.Infrastructure;
 using UraniumUI.Material.Controls;
 using UraniumUI.Material.Tests.Mocks;
 using UraniumUI.Tests.Core;
@@ -13,7 +16,8 @@ public class MultiplePickerField_Test
     {
         ApplicationExtensions.CreateAndSetMockApplication(builder =>
         {
-            builder.Services.AddSingleton<IDialogService, MockDialogService>();
+            builder.Services.AddSingleton<MockDialogService>();
+            builder.Services.AddSingleton<IDialogService>(services => services.GetRequiredService<MockDialogService>());
         });
     }
 
@@ -50,6 +54,71 @@ public class MultiplePickerField_Test
         var control = AnimationReadyHandler.Prepare(new MultiplePickerField());
 
         control.SelectedItemsColor.ShouldBeNull();
+    }
+
+    [Fact]
+    public void ChangeSelectedItemsColor_ShouldUpdateExistingChips()
+    {
+        var control = AnimationReadyHandler.Prepare(new TestMultiplePickerField());
+        control.SelectedItems = new ObservableCollection<object>
+        {
+            "Option 1"
+        };
+
+        control.SelectedItemsColor = Colors.Red;
+
+        control.Chips.Single().BackgroundColor.ShouldBe(Colors.Red);
+    }
+
+    [Fact]
+    public void PickSelections_ShouldPassSelectedItemsColorToDialogService()
+    {
+        var control = AnimationReadyHandler.Prepare(new MultiplePickerField());
+        var dialogService = UraniumServiceProvider.Current.GetRequiredService<MockDialogService>();
+        control.ItemsSource = new[] { "Option 1" };
+        control.SelectedItems = new ObservableCollection<object>();
+        control.SelectedItemsColor = Colors.Red;
+
+        ((TapGestureRecognizer)control.GestureRecognizers[0]).Command.Execute(null);
+
+        dialogService.LastCheckBoxPromptColor.ShouldBe(Colors.Red);
+    }
+
+    [Fact]
+    public void SetSelectedItems_ShouldRefreshLayout()
+    {
+        var control = AnimationReadyHandler.Prepare(new TestMultiplePickerField());
+
+        control.SelectedItems = new ObservableCollection<object>
+        {
+            "Option 1"
+        };
+
+        control.RefreshChipLayoutCallCount.ShouldBe(1);
+    }
+
+    [Fact]
+    public void ChangeSelectedItems_ShouldRefreshLayout()
+    {
+        var selectedItems = new ObservableCollection<object>();
+        var control = AnimationReadyHandler.Prepare(new TestMultiplePickerField());
+        control.SelectedItems = selectedItems;
+
+        selectedItems.Add("Option 1");
+
+        control.RefreshChipLayoutCallCount.ShouldBe(2);
+    }
+
+    private sealed class TestMultiplePickerField : MultiplePickerField
+    {
+        public int RefreshChipLayoutCallCount { get; private set; }
+        public IReadOnlyList<Chip> Chips => chipsHolderLayout.Children.OfType<Chip>().ToList();
+
+        protected override void RefreshChipLayout()
+        {
+            RefreshChipLayoutCallCount++;
+            base.RefreshChipLayout();
+        }
     }
 
     public class TestViewModel : UraniumBindableObject

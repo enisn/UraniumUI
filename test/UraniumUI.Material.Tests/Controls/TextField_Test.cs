@@ -303,6 +303,35 @@ public class TextField_Test
     }
 
     [Fact]
+    public void ClearCommand_ShouldBeSet_FromViewModel()
+    {
+        var control = AnimationReadyHandler.Prepare(new TextField());
+        var viewModel = new TestViewModel();
+        viewModel.Command = new Command(() => Console.WriteLine("Clear Command"));
+        control.BindingContext = viewModel;
+
+        control.SetBinding(TextField.ClearCommandProperty, new Binding(nameof(TestViewModel.Command)));
+
+        control.ClearCommand.ShouldBe(viewModel.Command);
+    }
+
+    [Fact]
+    public void ClearIcon_ShouldExecute_ClearCommand_WhenProvided()
+    {
+        var control = AnimationReadyHandler.Prepare(new TextField { AllowClear = true });
+        var clearIcon = control.FindByViewQueryIdInVisualTreeDescendants<StatefulContentView>("ClearIcon");
+        object parameter = null;
+
+        control.ClearCommand = new Command<object>(value => parameter = value);
+        control.Text = "Test";
+
+        clearIcon.TappedCommand.Execute(null);
+
+        parameter.ShouldBe(control);
+        control.Text.ShouldBe("Test");
+    }
+
+    [Fact]
     public void CharacterSpacing_ShouldBeSet_FromViewModel()
     {
         var control = AnimationReadyHandler.Prepare(new TextField());

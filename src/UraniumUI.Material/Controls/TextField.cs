@@ -129,6 +129,12 @@ public partial class TextField : InputField
 
     protected virtual void OnClearTapped()
     {
+        if (ClearCommand?.CanExecute(this) ?? false)
+        {
+            ClearCommand.Execute(this);
+            return;
+        }
+
         EntryView.Text = string.Empty;
     }
 

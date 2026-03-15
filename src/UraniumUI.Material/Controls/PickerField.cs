@@ -145,6 +145,17 @@ public class PickerField : InputField
         UpdateClearIconState();
     }
 
+    protected virtual void OnTextColorChanged()
+    {
+#if WINDOWS
+        var label = labelSelectedItem;
+        if (label != null)
+        {
+            label.TextColor = TextColor ?? ColorResource.GetColor("OnBackground", "OnBackgroundDark", Colors.Gray);
+        }
+#endif
+    }
+
     protected virtual void UpdateClearIconState()
     {
         var existing = endIconsContainer.FindByViewQueryIdInVisualTreeDescendants<StatefulContentView>("ClearIcon");
@@ -225,7 +236,8 @@ public class PickerField : InputField
     public Color TextColor { get => (Color)GetValue(TextColorProperty); set => SetValue(TextColorProperty, value); }
 
     public static readonly BindableProperty TextColorProperty = BindableProperty.Create(
-        nameof(TextColor), typeof(Color), typeof(PickerField), Picker.TextColorProperty.DefaultValue);
+        nameof(TextColor), typeof(Color), typeof(PickerField), Picker.TextColorProperty.DefaultValue,
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as PickerField).OnTextColorChanged());
 
     public double CharacterSpacing { get => (double)GetValue(CharacterSpacingProperty); set => SetValue(CharacterSpacingProperty, value); }
 

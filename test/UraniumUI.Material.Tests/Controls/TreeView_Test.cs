@@ -99,6 +99,51 @@ public class TreeView_Test
         node.NodeChildren.ItemsSource.ShouldBeNull();
     }
 
+    [Fact]
+    public void ReleasingNode_ShouldPreventChildItemsSourceFromRebinding()
+    {
+        var tree = AnimationReadyHandler.Prepare(new TreeView());
+        var node = AnimationReadyHandler.Prepare(new TreeViewNodeHolderView(TreeView.DefaultItemTemplate, tree, new Binding(nameof(TestTreeNode.Children))));
+
+        node.BindingContext = new TestTreeNode
+        {
+            Children = new[] { new TestTreeNode() }
+        };
+
+        node.Handler = null;
+        node.BindingContext = new TestTreeNode
+        {
+            Children = new[] { new TestTreeNode(), new TestTreeNode() }
+        };
+
+        node.NodeChildren.ItemsSource.ShouldBeNull();
+    }
+
+    [Fact]
+    public void ReleasingTree_ShouldReleaseAllRegisteredNodes()
+    {
+        var tree = AnimationReadyHandler.Prepare(new TreeView());
+        var firstNode = AnimationReadyHandler.Prepare(new TreeViewNodeHolderView(TreeView.DefaultItemTemplate, tree, new Binding(nameof(TestTreeNode.Children))));
+        var secondNode = AnimationReadyHandler.Prepare(new TreeViewNodeHolderView(TreeView.DefaultItemTemplate, tree, new Binding(nameof(TestTreeNode.Children))));
+
+        firstNode.BindingContext = new TestTreeNode
+        {
+            Children = new[] { new TestTreeNode() }
+        };
+        secondNode.BindingContext = new TestTreeNode
+        {
+            Children = new[] { new TestTreeNode(), new TestTreeNode() }
+        };
+
+        tree.AllNodeViews.Count().ShouldBe(2);
+
+        tree.Handler = null;
+
+        tree.AllNodeViews.ShouldBeEmpty();
+        firstNode.NodeChildren.ItemsSource.ShouldBeNull();
+        secondNode.NodeChildren.ItemsSource.ShouldBeNull();
+    }
+
     public class TestViewModel : UraniumBindableObject
     {
         private IList itemSource;

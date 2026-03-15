@@ -205,6 +205,11 @@ public class TreeViewNodeHolderView : VerticalStackLayout
 
     protected override void OnBindingContextChanged()
     {
+        if (isReleased)
+        {
+            return;
+        }
+
         base.OnBindingContextChanged();
         OnSelectedItemChanged();
 
@@ -286,23 +291,8 @@ public class TreeViewNodeHolderView : VerticalStackLayout
         isReleased = true;
 
         // Stop receiving updates for expansion-related properties after release.
-        try
-        {
-            this.RemoveBinding(IsExpandedProperty);
-        }
-        catch
-        {
-            // Ignore if the binding was not set or the property is unavailable.
-        }
-
-        try
-        {
-            this.RemoveBinding(IsLeafProperty);
-        }
-        catch
-        {
-            // Ignore if the binding was not set or the property is unavailable.
-        }
+        this.RemoveBinding(IsExpandedProperty);
+        this.RemoveBinding(IsLeafProperty);
 
         if (nodeChildren is not null)
         {
@@ -487,6 +477,11 @@ public class TreeViewNodeHolderView : VerticalStackLayout
 
     protected internal virtual async void OnIsExpandedChanged(bool isExpanded)
     {
+        if (isReleased)
+        {
+            return;
+        }
+
         if (isExpanded && !IsLeaf)
         {
             if (!hasLoadedChildren && ChildrenBinding is Binding binding)

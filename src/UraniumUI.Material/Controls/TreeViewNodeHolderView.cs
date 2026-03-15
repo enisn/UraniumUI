@@ -233,12 +233,12 @@ public class TreeViewNodeHolderView : VerticalStackLayout
 
     protected override void OnHandlerChanging(HandlerChangingEventArgs args)
     {
+        base.OnHandlerChanging(args);
+
         if (args.NewHandler is null)
         {
             Release();
         }
-
-        base.OnHandlerChanging(args);
     }
 
     private void CreateChildContainer(Binding binding)

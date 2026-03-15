@@ -75,12 +75,12 @@ public partial class TreeView : ContentView
 
     protected override void OnHandlerChanging(HandlerChangingEventArgs args)
     {
+        base.OnHandlerChanging(args);
+
         if (args.NewHandler is null)
         {
             ReleaseRegisteredNodes();
         }
-
-        base.OnHandlerChanging(args);
     }
 
     // TODO: Remove default value and make default value as null in the next major version.

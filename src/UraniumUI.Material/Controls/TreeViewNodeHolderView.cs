@@ -285,6 +285,25 @@ public class TreeViewNodeHolderView : VerticalStackLayout
 
         isReleased = true;
 
+        // Stop receiving updates for expansion-related properties after release.
+        try
+        {
+            this.RemoveBinding(IsExpandedProperty);
+        }
+        catch
+        {
+            // Ignore if the binding was not set or the property is unavailable.
+        }
+
+        try
+        {
+            this.RemoveBinding(IsLeafProperty);
+        }
+        catch
+        {
+            // Ignore if the binding was not set or the property is unavailable.
+        }
+
         if (nodeChildren is not null)
         {
             nodeChildren.IsVisible = false;

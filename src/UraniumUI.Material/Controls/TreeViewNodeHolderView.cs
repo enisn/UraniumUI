@@ -205,12 +205,16 @@ public class TreeViewNodeHolderView : VerticalStackLayout
 
     protected override void OnBindingContextChanged()
     {
+        // Always let the base class propagate the BindingContext to children,
+        // even when this view has been "released".
+        base.OnBindingContextChanged();
+
         if (isReleased)
         {
+            // Skip TreeView-specific rebinding/selection logic when released.
             return;
         }
 
-        base.OnBindingContextChanged();
         OnSelectedItemChanged();
 
         if (nodeChildren == null && ChildrenBinding is Binding binding &&

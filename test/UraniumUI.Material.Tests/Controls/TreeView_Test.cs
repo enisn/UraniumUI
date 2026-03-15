@@ -67,6 +67,38 @@ public class TreeView_Test
         viewModel.SelectedItem.ShouldBe(itemSource[0]);
     }
 
+    [Fact]
+    public void Node_ShouldBeUnregistered_WhenHandlerIsReleased()
+    {
+        var tree = AnimationReadyHandler.Prepare(new TreeView());
+        var node = AnimationReadyHandler.Prepare(new TreeViewNodeHolderView(TreeView.DefaultItemTemplate, tree, new Binding("Children")));
+
+        tree.AllNodeViews.ShouldContain(node);
+
+        node.Handler = null;
+
+        tree.AllNodeViews.ShouldNotContain(node);
+    }
+
+    [Fact]
+    public void ReleasingNode_ShouldDetachChildItemsSource()
+    {
+        var tree = AnimationReadyHandler.Prepare(new TreeView());
+        var node = AnimationReadyHandler.Prepare(new TreeViewNodeHolderView(TreeView.DefaultItemTemplate, tree, new Binding(nameof(TestTreeNode.Children))));
+
+        node.BindingContext = new TestTreeNode
+        {
+            Children = new[] { new TestTreeNode() }
+        };
+
+        node.NodeChildren.ShouldNotBeNull();
+        node.NodeChildren.ItemsSource.ShouldNotBeNull();
+
+        node.Handler = null;
+
+        node.NodeChildren.ItemsSource.ShouldBeNull();
+    }
+
     public class TestViewModel : UraniumBindableObject
     {
         private IList itemSource;
@@ -75,5 +107,10 @@ public class TreeView_Test
         public IList ItemSource { get => itemSource; set => SetProperty(ref itemSource, value); }
 
         public object SelectedItem { get => selectedItem; set => SetProperty(ref selectedItem, value); }
+    }
+
+    public class TestTreeNode
+    {
+        public IEnumerable<TestTreeNode> Children { get; set; }
     }
 }

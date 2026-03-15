@@ -24,6 +24,7 @@ public class TreeViewNodeHolderView : VerticalStackLayout
 
     internal protected CollectionView nodeChildren;
     private Grid childContainer;
+    private bool isReleased;
 
     public DataTemplate DataTemplate { get; }
 
@@ -229,6 +230,17 @@ public class TreeViewNodeHolderView : VerticalStackLayout
             this.SetBinding(IsLeafProperty, new Binding(TreeView.IsLeafPropertyName, BindingMode.TwoWay));
         }
     }
+
+    protected override void OnHandlerChanging(HandlerChangingEventArgs args)
+    {
+        if (args.NewHandler is null)
+        {
+            Release();
+        }
+
+        base.OnHandlerChanging(args);
+    }
+
     private void CreateChildContainer(Binding binding)
     {
         nodeChildren = new CollectionView
@@ -262,6 +274,30 @@ public class TreeViewNodeHolderView : VerticalStackLayout
         nodeChildren.SetBinding(CollectionView.ItemsSourceProperty, new Binding(binding.Path));
         nodeChildren.ChildAdded += (s, e) => OnPropertyChanged(nameof(IsLeaf));
         nodeChildren.ChildRemoved += (s, e) => OnPropertyChanged(nameof(IsLeaf));
+    }
+
+    internal void Release()
+    {
+        if (isReleased)
+        {
+            return;
+        }
+
+        isReleased = true;
+
+        if (nodeChildren is not null)
+        {
+            nodeChildren.IsVisible = false;
+            nodeChildren.ItemsSource = null;
+        }
+
+        if (childContainer is not null)
+        {
+            childContainer.IsVisible = false;
+            childContainer.HeightRequest = 0;
+        }
+
+        TreeView?.UnregisterNode(this);
     }
 
 

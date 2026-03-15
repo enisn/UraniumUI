@@ -24,7 +24,25 @@ public partial class TreeView : ContentView
 
     internal void RegisterNode(TreeViewNodeHolderView node)
     {
-        registeredNodes.Add(node);
+        if (!registeredNodes.Contains(node))
+        {
+            registeredNodes.Add(node);
+        }
+    }
+
+    internal void UnregisterNode(TreeViewNodeHolderView node)
+    {
+        registeredNodes.Remove(node);
+    }
+
+    internal void ReleaseRegisteredNodes()
+    {
+        foreach (var node in registeredNodes.ToList())
+        {
+            node.Release();
+        }
+
+        registeredNodes.Clear();
     }
 
     internal IEnumerable<TreeViewNodeHolderView> GetChildViewsOf(TreeViewNodeHolderView parent)
@@ -56,6 +74,16 @@ public partial class TreeView : ContentView
             else
                 observableSelectedItems.CollectionChanged += SelectedItemsChanged;
         }
+    }
+
+    protected override void OnHandlerChanging(HandlerChangingEventArgs args)
+    {
+        if (args.NewHandler is null)
+        {
+            ReleaseRegisteredNodes();
+        }
+
+        base.OnHandlerChanging(args);
     }
 
     // TODO: Remove default value and make default value as null in the next major version.

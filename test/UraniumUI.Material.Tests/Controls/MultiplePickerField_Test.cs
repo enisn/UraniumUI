@@ -59,7 +59,7 @@ public class MultiplePickerField_Test
     [Fact]
     public void ChangeSelectedItemsColor_ShouldUpdateExistingChips()
     {
-        var control = AnimationReadyHandler.Prepare(new TestMultiplePickerField());
+        var control = AnimationReadyHandler.Prepare(new MultiplePickerField());
         control.SelectedItems = new ObservableCollection<object>
         {
             "Option 1"
@@ -67,7 +67,7 @@ public class MultiplePickerField_Test
 
         control.SelectedItemsColor = Colors.Red;
 
-        control.Chips.Single().BackgroundColor.ShouldBe(Colors.Red);
+        GetChips(control).Single().BackgroundColor.ShouldBe(Colors.Red);
     }
 
     [Fact]
@@ -112,7 +112,6 @@ public class MultiplePickerField_Test
     private sealed class TestMultiplePickerField : MultiplePickerField
     {
         public int RefreshChipLayoutCallCount { get; private set; }
-        public IReadOnlyList<Chip> Chips => chipsHolderLayout.Children.OfType<Chip>().ToList();
 
         protected override void RefreshChipLayout()
         {
@@ -120,6 +119,9 @@ public class MultiplePickerField_Test
             base.RefreshChipLayout();
         }
     }
+
+    private static IReadOnlyList<Chip> GetChips(MultiplePickerField control)
+        => ((FlexLayout)control.MainContentView.Content).Children.OfType<Chip>().ToList();
 
     public class TestViewModel : UraniumBindableObject
     {

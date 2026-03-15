@@ -271,7 +271,7 @@ public class TreeViewNodeHolderView : VerticalStackLayout
             return childNode;
         });
 
-        nodeChildren.SetBinding(CollectionView.ItemsSourceProperty, new Binding(binding.Path));
+        nodeChildren.SetBinding(ItemsView.ItemsSourceProperty, new Binding(binding.Path));
         nodeChildren.ChildAdded += (s, e) => OnPropertyChanged(nameof(IsLeaf));
         nodeChildren.ChildRemoved += (s, e) => OnPropertyChanged(nameof(IsLeaf));
     }

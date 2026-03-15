@@ -288,6 +288,8 @@ public class TreeViewNodeHolderView : VerticalStackLayout
         if (nodeChildren is not null)
         {
             nodeChildren.IsVisible = false;
+            nodeChildren.RemoveBinding(ItemsView.ItemsSourceProperty);
+            nodeChildren.ClearValue(ItemsView.ItemsSourceProperty);
             nodeChildren.ItemsSource = null;
         }
 

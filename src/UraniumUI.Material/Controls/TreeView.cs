@@ -24,10 +24,7 @@ public partial class TreeView : ContentView
 
     internal void RegisterNode(TreeViewNodeHolderView node)
     {
-        if (!registeredNodes.Contains(node))
-        {
-            registeredNodes.Add(node);
-        }
+        registeredNodes.Add(node);
     }
 
     internal void UnregisterNode(TreeViewNodeHolderView node)

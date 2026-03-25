@@ -10,7 +10,7 @@ using Path = Microsoft.Maui.Controls.Shapes.Path;
 namespace UraniumUI.Material.Controls;
 
 [ContentProperty(nameof(NodeView))]
-public class TreeViewNodeHolderView : VerticalStackLayout
+public class TreeViewNodeHolderView : Grid
 {
     public View NodeView { get => nodeContainer.Content; set => nodeContainer.Content = value; }
 
@@ -33,7 +33,8 @@ public class TreeViewNodeHolderView : VerticalStackLayout
         {
             new ColumnDefinition(40),
             new ColumnDefinition(GridLength.Star),
-        }
+        },
+        RowSpacing = 0
     };
     private readonly int indentLevel;
     private bool hasLoadedChildren;
@@ -68,6 +69,10 @@ public class TreeViewNodeHolderView : VerticalStackLayout
 
         TreeView = treeView ?? throw new ArgumentNullException(nameof(treeView));
         treeView.RegisterNode(this);
+
+        RowDefinitions.Add(new RowDefinition(GridLength.Auto));
+        RowDefinitions.Add(new RowDefinition(GridLength.Auto));
+        RowSpacing = 0;
 
         this.indentLevel = indentLevel;
 
@@ -247,7 +252,7 @@ public class TreeViewNodeHolderView : VerticalStackLayout
             IsVisible = false
         };
         childContainer.Children.Add(nodeChildren);
-        this.Add(childContainer);
+        this.Add(childContainer, row: 1);
 
 
         nodeChildren.ItemTemplate = new DataTemplate(() =>

@@ -67,6 +67,30 @@ public class TreeView_Test
         viewModel.SelectedItem.ShouldBe(itemSource[0]);
     }
 
+    [Fact]
+    public void TreeViewNodeHolderView_ShouldUseGridContainer()
+    {
+        var item = new TestTreeItem
+        {
+            Children = Enumerable.Range(1, 200)
+                .Select(i => new TestTreeItem { Name = $"Child {i}" })
+                .ToList()
+        };
+
+        var treeView = new TreeView
+        {
+            UseAnimation = false,
+            ItemsSource = new[] { item }
+        };
+        var holder = new TreeViewNodeHolderView(TreeView.DefaultItemTemplate, treeView, new Binding(nameof(TestTreeItem.Children)));
+
+        AnimationReadyHandler.Prepare(treeView, out var handler);
+        holder.Handler = handler;
+        holder.BindingContext = item;
+
+        (holder is Grid).ShouldBeTrue();
+    }
+
     public class TestViewModel : UraniumBindableObject
     {
         private IList itemSource;
@@ -75,5 +99,12 @@ public class TreeView_Test
         public IList ItemSource { get => itemSource; set => SetProperty(ref itemSource, value); }
 
         public object SelectedItem { get => selectedItem; set => SetProperty(ref selectedItem, value); }
+    }
+
+    public class TestTreeItem
+    {
+        public string Name { get; set; }
+
+        public IList<TestTreeItem> Children { get; set; } = new List<TestTreeItem>();
     }
 }

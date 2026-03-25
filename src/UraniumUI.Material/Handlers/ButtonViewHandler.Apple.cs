@@ -6,28 +6,57 @@ using UIKit;
 namespace UraniumUI.Material.Handlers;
 public partial class ButtonViewHandler
 {
+    private UIContinousGestureRecognizer _tapRecognizer;
+    private UIHoverGestureRecognizer _hoverRecognizer;
+    private UILongPressGestureRecognizer _longPressRecognizer;
+
     protected override void ConnectHandler(Microsoft.Maui.Platform.ContentView platformView)
     {
         base.ConnectHandler(platformView);
-        var tapRecognizer = new UIContinousGestureRecognizer(Tapped)
+
+        _tapRecognizer = new UIContinousGestureRecognizer(Tapped)
         {
             CancelsTouchesInView = false,
             Delegate = new IgnoreInteractiveChildTouchesGestureDelegate(platformView)
         };
 
-        platformView.AddGestureRecognizer(tapRecognizer);
+        platformView.AddGestureRecognizer(_tapRecognizer);
         if (OperatingSystem.IsIOSVersionAtLeast(13))
         {
-            platformView.AddGestureRecognizer(new UIHoverGestureRecognizer(OnHover));
+            _hoverRecognizer = new UIHoverGestureRecognizer(OnHover);
+            platformView.AddGestureRecognizer(_hoverRecognizer);
         }
 
-        var longPressRecognizer = new UILongPressGestureRecognizer(OnLongPress)
+        _longPressRecognizer = new UILongPressGestureRecognizer(OnLongPress)
         {
             CancelsTouchesInView = false,
             Delegate = new IgnoreInteractiveChildTouchesGestureDelegate(platformView)
         };
 
-        platformView.AddGestureRecognizer(longPressRecognizer);
+        platformView.AddGestureRecognizer(_longPressRecognizer);
+    }
+
+    protected override void DisconnectHandler(Microsoft.Maui.Platform.ContentView platformView)
+    {
+        if (_tapRecognizer != null)
+        {
+            platformView.RemoveGestureRecognizer(_tapRecognizer);
+            _tapRecognizer = null;
+        }
+
+        if (_hoverRecognizer != null)
+        {
+            platformView.RemoveGestureRecognizer(_hoverRecognizer);
+            _hoverRecognizer = null;
+        }
+
+        if (_longPressRecognizer != null)
+        {
+            platformView.RemoveGestureRecognizer(_longPressRecognizer);
+            _longPressRecognizer = null;
+        }
+
+        base.DisconnectHandler(platformView);
     }
 
     internal sealed class IgnoreInteractiveChildTouchesGestureDelegate(UIView ownerView) : UIGestureRecognizerDelegate

@@ -88,7 +88,24 @@ public class TreeView_Test
         holder.Handler = handler;
         holder.BindingContext = item;
 
-        (holder is Grid).ShouldBeTrue();
+        var grid = holder.ShouldBeOfType<Grid>();
+
+        // Ensure the layout has two rows: one for header/button (row 0) and one for children container (row 1).
+        grid.RowDefinitions.Count.ShouldBe(2);
+
+        // There should be exactly two direct children: header and children container.
+        grid.Children.Count.ShouldBe(2);
+
+        // Validate that one child is placed in row 0 and one in row 1.
+        var row0Children = grid.Children
+            .Where(child => Grid.GetRow((BindableObject)child) == 0)
+            .ToList();
+        var row1Children = grid.Children
+            .Where(child => Grid.GetRow((BindableObject)child) == 1)
+            .ToList();
+
+        row0Children.Count.ShouldBe(1);
+        row1Children.Count.ShouldBe(1);
     }
 
     public class TestViewModel : UraniumBindableObject

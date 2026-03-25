@@ -33,8 +33,7 @@ public class TreeViewNodeHolderView : Grid
         {
             new ColumnDefinition(40),
             new ColumnDefinition(GridLength.Star),
-        },
-        RowSpacing = 0
+        }
     };
     private readonly int indentLevel;
     private bool hasLoadedChildren;

@@ -23,6 +23,8 @@ public partial class StatefulContentViewHandler
     protected override void ConnectHandler(Microsoft.Maui.Platform.ContentView platformView)
     {
         _tapRecognizer = new UIContinousGestureRecognizer(Tapped);
+        _tapRecognizer.CancelsTouchesInView = false;
+        _tapRecognizer.Delegate = new IgnoreInteractiveChildTouchesGestureDelegate(platformView);
         platformView.AddGestureRecognizer(_tapRecognizer);
         if (OperatingSystem.IsIOSVersionAtLeast(13))
         {
@@ -30,6 +32,8 @@ public partial class StatefulContentViewHandler
             platformView.AddGestureRecognizer(_hoverRecognizer);
         }
         _longPressRecognizer = new UILongPressGestureRecognizer(OnLongPress);
+        _longPressRecognizer.CancelsTouchesInView = false;
+        _longPressRecognizer.Delegate = new IgnoreInteractiveChildTouchesGestureDelegate(platformView);
         platformView.AddGestureRecognizer(_longPressRecognizer);
         _isConnected = true;
         base.ConnectHandler(platformView);
@@ -154,6 +158,26 @@ public partial class StatefulContentViewHandler
     internal void UpdateFocusable()
     {
         
+    }
+
+    internal sealed class IgnoreInteractiveChildTouchesGestureDelegate(UIView ownerView) : UIGestureRecognizerDelegate
+    {
+        public override bool ShouldReceiveTouch(UIGestureRecognizer recognizer, UITouch touch)
+        {
+            var view = touch.View;
+
+            while (view is not null && view != ownerView)
+            {
+                if (view is UIControl)
+                {
+                    return false;
+                }
+
+                view = view.Superview;
+            }
+
+            return true;
+        }
     }
 
     // TODO: Move it to the different file

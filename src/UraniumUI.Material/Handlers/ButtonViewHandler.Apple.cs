@@ -9,12 +9,45 @@ public partial class ButtonViewHandler
     protected override void ConnectHandler(Microsoft.Maui.Platform.ContentView platformView)
     {
         base.ConnectHandler(platformView);
-        platformView.AddGestureRecognizer(new UIContinousGestureRecognizer(Tapped));
+        var tapRecognizer = new UIContinousGestureRecognizer(Tapped)
+        {
+            CancelsTouchesInView = false,
+            Delegate = new IgnoreInteractiveChildTouchesGestureDelegate(platformView)
+        };
+
+        platformView.AddGestureRecognizer(tapRecognizer);
         if (OperatingSystem.IsIOSVersionAtLeast(13))
         {
             platformView.AddGestureRecognizer(new UIHoverGestureRecognizer(OnHover));
         }
-        platformView.AddGestureRecognizer(new UILongPressGestureRecognizer(OnLongPress));
+
+        var longPressRecognizer = new UILongPressGestureRecognizer(OnLongPress)
+        {
+            CancelsTouchesInView = false,
+            Delegate = new IgnoreInteractiveChildTouchesGestureDelegate(platformView)
+        };
+
+        platformView.AddGestureRecognizer(longPressRecognizer);
+    }
+
+    internal sealed class IgnoreInteractiveChildTouchesGestureDelegate(UIView ownerView) : UIGestureRecognizerDelegate
+    {
+        public override bool ShouldReceiveTouch(UIGestureRecognizer recognizer, UITouch touch)
+        {
+            var view = touch.View;
+
+            while (view is not null && view != ownerView)
+            {
+                if (view is UIControl)
+                {
+                    return false;
+                }
+
+                view = view.Superview;
+            }
+
+            return true;
+        }
     }
 
     private void OnLongPress(UILongPressGestureRecognizer recognizer)

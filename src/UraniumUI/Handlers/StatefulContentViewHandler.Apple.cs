@@ -54,27 +54,33 @@ public partial class StatefulContentViewHandler
 
     private void Tapped(UIGestureRecognizer recognizer)
     {
+        var statefulView = StatefulView;
+        if (statefulView is null)
+        {
+            return;
+        }
+
         switch (recognizer.State)
         {
             case UIGestureRecognizerState.Began:
-                GoToState(StatefulView, "Pressed");
-                StatefulView.InvokePressed();
-                ExecuteCommandIfCan(StatefulView.PressedCommand);
+                GoToState(statefulView, "Pressed");
+                statefulView.InvokePressed();
+                ExecuteCommandIfCan(statefulView.PressedCommand);
 
                 break;
             case UIGestureRecognizerState.Ended:
-                GoToState(StatefulView, CommonStates.Normal);
-                StatefulView.InvokeTapped();
-                ExecuteCommandIfCan(StatefulView.TappedCommand);
+                // The tap handler may remove the view from the tree, which disconnects the handler.
+                var tapGestureRecognizers = statefulView.GestureRecognizers.OfType<TapGestureRecognizer>().ToArray();
+
+                GoToState(statefulView, CommonStates.Normal);
+                statefulView.InvokeTapped();
+                ExecuteCommandIfCan(statefulView.TappedCommand);
 
                 //// TODO: Fix working of native gesture recognizers of MAUI
-                foreach (var item in StatefulView.GestureRecognizers)
+                foreach (var item in tapGestureRecognizers)
                 {
                     Debug.WriteLine(item.GetType().Name);
-                    if (item is TapGestureRecognizer tgr)
-                    {
-                        tgr.Command?.Execute(StatefulView);
-                    }
+                    item.Command?.Execute(statefulView);
                 }
 
                 break;

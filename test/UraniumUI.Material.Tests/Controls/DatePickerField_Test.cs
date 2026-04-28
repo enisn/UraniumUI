@@ -45,6 +45,33 @@ public class DatePickerField_Test
     }
 
     [Fact]
+    public void Date_BindingForInitialization_FromExplicitSource_WhenValueIsToday_ShouldShowDate()
+    {
+        var control = new DatePickerField();
+        var viewModel = new TestViewModel { Date = DateTime.Today };
+
+        // Mimics source-based XAML bindings that are applied before the control is loaded.
+        control.SetBinding(DatePickerField.DateProperty, new Binding(nameof(TestViewModel.Date), source: viewModel));
+        AnimationReadyHandler.Prepare(control);
+
+        control.Date.ShouldBe(viewModel.Date);
+        control.DatePickerView.Opacity.ShouldBe(1);
+    }
+
+    [Fact]
+    public void Date_SetForInitialization_WhenValueIsToday_ShouldShowDate()
+    {
+        var control = new DatePickerField
+        {
+            Date = DateTime.Today
+        };
+
+        AnimationReadyHandler.Prepare(control);
+
+        control.DatePickerView.Opacity.ShouldBe(1);
+    }
+
+    [Fact]
     public void Date_Binding_FromSource()
     {
         var control = AnimationReadyHandler.Prepare(new DatePickerField());

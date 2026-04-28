@@ -23,6 +23,28 @@ public class DatePickerField_Test
     }
 
     [Fact]
+    public void Date_ShouldStartHidden_WhenNoValueIsAssigned()
+    {
+        var control = AnimationReadyHandler.Prepare(new DatePickerField());
+
+        control.DatePickerView.Opacity.ShouldBe(0);
+    }
+
+    [Fact]
+    public void Date_BindingForInitialization_FromSource_WhenValueIsToday_ShouldShowDate()
+    {
+        var control = AnimationReadyHandler.Prepare(new DatePickerField());
+        var viewModel = new TestViewModel { Date = DateTime.Today };
+
+        // Mimics the XAML flow where the binding exists before the BindingContext arrives.
+        control.SetBinding(DatePickerField.DateProperty, new Binding(nameof(TestViewModel.Date)));
+        control.BindingContext = viewModel;
+
+        control.Date.ShouldBe(viewModel.Date);
+        control.DatePickerView.Opacity.ShouldBe(1);
+    }
+
+    [Fact]
     public void Date_Binding_FromSource()
     {
         var control = AnimationReadyHandler.Prepare(new DatePickerField());

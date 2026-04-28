@@ -42,6 +42,7 @@ public class DatePickerField : InputField
     public DatePickerField()
     {
         base.RegisterForEvents();
+        Loaded += (_, _) => EnsureInitialBoundDateState();
         iconClear.TappedCommand = new Command(OnClearTapped);
 #if WINDOWS
         if (DatePickerView.Parent is Microsoft.Maui.Controls.ContentView cv)
@@ -78,6 +79,12 @@ public class DatePickerField : InputField
             })
         });
 #endif
+    }
+
+    protected override void OnBindingContextChanged()
+    {
+        base.OnBindingContextChanged();
+        EnsureInitialBoundDateState();
     }
 
     protected override object GetValueForValidator()
@@ -133,6 +140,18 @@ public class DatePickerField : InputField
         }
 
         UpdateState();
+    }
+
+    private void EnsureInitialBoundDateState()
+    {
+        // When the bound value matches the bindable property's default (today), MAUI keeps the
+        // value but skips the property-changed callback that normally reveals the picker.
+        if (DatePickerView.Opacity != 0 || BindingContext is null || !IsSet(DateProperty))
+        {
+            return;
+        }
+
+        OnDateChanged();
     }
 
     protected override void OnIconChanged()

@@ -45,6 +45,30 @@
             ]]>
         </x:String>
 
+        <x:String x:Key="SourceCode4">
+            <![CDATA[
+<Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+    <VerticalStackLayout Spacing="12">
+        <material:TextField Title="Sample Text">
+            <material:TextField.Triggers>
+                <DataTrigger TargetType="material:TextField"
+                             Binding="{Binding Source={x:Reference ShowIconCheckBox}, Path=IsChecked}"
+                             Value="True">
+                    <Setter Property="Icon"
+                            Value="{FontImageSource FontFamily=MaterialSharp,
+                                                    Glyph={x:Static m:MaterialSharp.Visibility}}"/>
+                </DataTrigger>
+            </material:TextField.Triggers>
+        </material:TextField>
+
+        <!-- Reference field that never had an icon. When the CheckBox is unchecked, the two should be layout-identical. -->
+        <material:TextField Title="Sample Text" />
+    </VerticalStackLayout>
+    <CheckBox x:Name="ShowIconCheckBox" Grid.Column="1" IsChecked="True" VerticalOptions="Center" />
+</Grid>
+            ]]>
+        </x:String>
+
         <x:String x:Key="DocLink">https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/TextField</x:String>
         <x:String x:Key="SourceLink">https://github.com/enisn/UraniumUI/blob/develop/demo/UraniumApp/Pages/InputFields/TextFieldPage.xaml</x:String>
     </ContentPage.Resources>
@@ -107,7 +131,44 @@
                     </uranium:ExpanderView>
                 </VerticalStackLayout>
             </Border>
-            
+
+            <BoxView StyleClass="Divider" />
+
+            <Border Margin="{OnIdiom 10, Phone=0}" StyleClass="SurfaceContainer, Rounded" StrokeThickness="0">
+                <VerticalStackLayout>
+                    <Label Text="Dynamic Icon (toggle via CheckBox)" FontSize="Subtitle" Margin="20"/>
+                    <Label Margin="20,0,20,10"
+                           Text="Toggling the CheckBox sets the TextField's Icon to a value or null. The leading icon slot must collapse to zero width when null so the text starts at the leading edge (see #1002)." />
+                    <Grid StyleClass="ControlPreview" ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                        <VerticalStackLayout Spacing="12">
+                            <material:TextField Title="Sample Text">
+                                <material:TextField.Triggers>
+                                    <DataTrigger TargetType="material:TextField"
+                                                 Binding="{Binding Source={x:Reference ShowIconCheckBox}, Path=IsChecked}"
+                                                 Value="True">
+                                        <Setter Property="Icon"
+                                                Value="{FontImageSource FontFamily=MaterialSharp, Glyph={x:Static m:MaterialSharp.Visibility}}"/>
+                                    </DataTrigger>
+                                </material:TextField.Triggers>
+                            </material:TextField>
+
+                            <material:TextField Title="Sample Text" />
+                        </VerticalStackLayout>
+                        <CheckBox x:Name="ShowIconCheckBox" Grid.Column="1" IsChecked="True" VerticalOptions="Center" />
+                    </Grid>
+
+                    <uranium:ExpanderView>
+                        <uranium:ExpanderView.Header>
+                            <Label Text="Source Code (XAML)" Padding="10" />
+                        </uranium:ExpanderView.Header>
+                        <Grid>
+                            <uranium:CodeView Language="xml" SourceCode="{StaticResource SourceCode4}" HeightRequest="240"/>
+                            <local:CopyButton TextToCopy="{StaticResource SourceCode4}" />
+                        </Grid>
+                    </uranium:ExpanderView>
+                </VerticalStackLayout>
+            </Border>
+
             <BoxView StyleClass="Divider" />
             
             <Border Margin="{OnIdiom 10, Phone=0}" StyleClass="SurfaceContainer, Rounded" StrokeThickness="0">

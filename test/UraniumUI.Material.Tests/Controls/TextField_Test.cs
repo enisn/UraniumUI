@@ -94,6 +94,40 @@ public class TextField_Test
     }
 
     [Fact]
+    public void Icon_ClearedToNull_CollapsesLeadingIconSlot()
+    {
+        // Repro for #1002 AND assertion of the InputField invariant maintained by OnIconChanged:
+        //   imageIcon is materialized, in the grid, and visible iff Icon != null (i.e. iff HasIcon).
+        // Also: Content.Margin must match a TextField that never had an icon when Icon is null,
+        // so the cleared field is layout-identical to a never-iconed field.
+        var iconA = new FontImageSource { FontFamily = "MaterialSharp", Glyph = "A" };
+
+        var reference = AnimationReadyHandler.Prepare(new TextField());
+        var referenceMargin = reference.Content.Margin;
+
+        var control = AnimationReadyHandler.Prepare(new TextField { Icon = iconA });
+        var imageIcon = control.FindByViewQueryIdInVisualTreeDescendants<Image>("IconImage");
+
+        imageIcon.ShouldNotBeNull();
+        imageIcon.IsVisible.ShouldBeTrue();
+        imageIcon.Source.ShouldBe(iconA);
+
+        // Clear the Icon (e.g. the binding now resolves to null).
+        control.Icon = null;
+
+        // The same Image instance is still in the visual tree but collapsed.
+        imageIcon.IsVisible.ShouldBeFalse();
+        imageIcon.Source.ShouldBeNull();
+        // And Content.Margin must match a TextField that never had an icon.
+        control.Content.Margin.ShouldBe(referenceMargin);
+
+        // Restoring a non-null Icon must un-collapse it.
+        control.Icon = iconA;
+        imageIcon.IsVisible.ShouldBeTrue();
+        imageIcon.Source.ShouldBe(iconA);
+    }
+
+    [Fact]
     public void TextChanges_ShouldShouldCorrectlyUpdateClearButtonVisibility()
     {
         var control = AnimationReadyHandler.Prepare(new TextField() { AllowClear = true });

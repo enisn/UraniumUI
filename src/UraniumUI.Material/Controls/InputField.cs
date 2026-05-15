@@ -47,7 +47,7 @@ public partial class InputField : ContentView
 
     protected Lazy<Image> imageIcon = new Lazy<Image>(() =>
     {
-        return new Image
+        var image = new Image
         {
             StyleClass = new[] { "InputField.Icon" },
             HorizontalOptions = LayoutOptions.Start,
@@ -56,6 +56,9 @@ public partial class InputField : ContentView
             HeightRequest = 20,
             Margin = new Thickness(10, 0, 0, 0),
         };
+        image.SetId("IconImage");
+
+        return image;
     });
 
     protected HorizontalStackLayout endIconsContainer => this.FindByViewQueryIdInVisualTreeDescendants<HorizontalStackLayout>("EndIconsContainer");
@@ -64,7 +67,12 @@ public partial class InputField : ContentView
 
     private Color LastFontimageColor;
 
+    private Thickness? originalContentMargin;
+
     private bool hasValue;
+
+    // Leading-icon predicate. Invariant: imageIcon is materialized, in the grid, and visible iff this is true.
+    protected bool HasIcon => Icon != null;
 
     private static Binding GetRelativeBinding(string path, BindingMode mode = BindingMode.Default) => new Binding(path, mode: mode, source: new RelativeBindingSource(RelativeBindingSourceMode.TemplatedParent));
 
@@ -327,12 +335,12 @@ public partial class InputField : ContentView
 
                 labelTitle.CancelAnimations();
 
-                var x = imageIcon.IsValueCreated ? imageIcon.Value.Width : 0;
+                var x = HasIcon ? imageIcon.Value.Width : 0;
 
 #if ANDROID
                 if (this.IsRtl())
                 {
-                    x = imageIcon.IsValueCreated ? -imageIcon.Value.Width : 0;
+                    x = HasIcon ? -imageIcon.Value.Width : 0;
                 }
 #endif
 
@@ -412,24 +420,49 @@ public partial class InputField : ContentView
 
     protected virtual void OnIconChanged()
     {
-        imageIcon.Value.Source = Icon;
-
-        if (Icon is FontImageSource font && font.Color.IsNullOrTransparent())
+        if (this.Content != null && originalContentMargin == null)
         {
-            // TODO: Add IconColor bindable property.??? What if it's not FontImage?
-            font.SetAppThemeColor(
-                FontImageSource.ColorProperty,
-                ColorResource.GetColor("OnBackground", Colors.Gray),
-                ColorResource.GetColor("OnBackgroundDark", Colors.Gray));
+            originalContentMargin = this.Content.Margin;
         }
 
-        if (innerGrid != null && !innerGrid.Contains(imageIcon.Value))
+        if (HasIcon)
         {
-            innerGrid.Add(imageIcon.Value, column: 0);
+            imageIcon.Value.Source = Icon;
+            imageIcon.Value.IsVisible = true;
+
+            if (Icon is FontImageSource font && font.Color.IsNullOrTransparent())
+            {
+                // TODO: Add IconColor bindable property.??? What if it's not FontImage?
+                font.SetAppThemeColor(
+                    FontImageSource.ColorProperty,
+                    ColorResource.GetColor("OnBackground", Colors.Gray),
+                    ColorResource.GetColor("OnBackgroundDark", Colors.Gray));
+            }
+
+            if (innerGrid != null && !innerGrid.Contains(imageIcon.Value))
+            {
+                innerGrid.Add(imageIcon.Value, column: 0);
+            }
+
+            this.Content.Margin = new Thickness(5, 0, 0, 0);
+        }
+        else
+        {
+            if (imageIcon.IsValueCreated)
+            {
+                // Collapse the leading Auto column when Icon is cleared (e.g. binding goes back to null).
+                imageIcon.Value.Source = null;
+                imageIcon.Value.IsVisible = false;
+            }
+
+            if (this.Content != null && originalContentMargin.HasValue)
+            {
+                this.Content.Margin = originalContentMargin.Value;
+            }
         }
 
-        var leftMargin = Icon != null ? 5 : 10;
-        this.Content.Margin = new Thickness(leftMargin, 0, 0, 0);
+        // Re-run the title-position logic so the floating Label tracks the icon's new presence/absence.
+        UpdateState();
     }
 
     protected virtual void OnCornerRadiusChanged()

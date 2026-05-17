@@ -39,10 +39,11 @@ public static class CommunityToolkitDialogExtensions
         IEnumerable<T> selectedItems = default,
         string accept = "OK",
         string cancel = "Cancel",
-        string displayMember = null)
+        string displayMember = null,
+        Color color = null)
     {
         return GetService().WithPage(page)
-            .DisplayCheckBoxPromptAsync(message, selectionSource, selectedItems, accept, cancel, displayMember);
+            .DisplayCheckBoxPromptAsync(message, selectionSource, selectedItems, accept, cancel, displayMember, color);
     }
 
     public static Task<T> DisplayRadioButtonPromptAsync<T>(

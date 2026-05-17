@@ -122,7 +122,7 @@ public class MopupsDialogService : IDialogService
         return cancelAction;
     }
 
-    public virtual async Task<IEnumerable<T>> DisplayCheckBoxPromptAsync<T>(string message, IEnumerable<T> selectionSource, IEnumerable<T> selectedItems = null, string accept = "OK", string cancel = "Cancel", string displayMember = null)
+    public virtual async Task<IEnumerable<T>> DisplayCheckBoxPromptAsync<T>(string message, IEnumerable<T> selectionSource, IEnumerable<T> selectedItems = null, string accept = "OK", string cancel = "Cancel", string displayMember = null, Color color = null)
     {
         var tcs = new TaskCompletionSource<IEnumerable<T>>();
 
@@ -138,12 +138,17 @@ public class MopupsDialogService : IDialogService
 
         foreach (var item in selectionSource)
         {
-            checkBoxGroup.Add(new CheckBox
+            var checkBox = new CheckBox
             {
                 Text = prop != null ? prop.GetValue(item)?.ToString() : item.ToString(),
                 CommandParameter = item,
                 IsChecked = selectedItems?.Contains(item) ?? false,
-            });
+            };
+            if (color != null)
+            {
+                checkBox.Color = color;
+            }
+            checkBoxGroup.Add(checkBox);
         }
 
         var rootGrid = new Grid

@@ -189,7 +189,8 @@ public class DefaultDialogService : IDialogService
         IEnumerable<T> selectedItems = null,
         string accept = "OK",
         string cancel = "Cancel",
-        string displayMember = null)
+        string displayMember = null,
+        Color color = null)
     {
         var tcs = new TaskCompletionSource<IEnumerable<T>>();
 
@@ -205,12 +206,17 @@ public class DefaultDialogService : IDialogService
 
         foreach (var item in selectionSource)
         {
-            checkBoxGroup.Add(new CheckBox
+            var checkBox = new CheckBox
             {
                 Text = prop != null ? prop.GetValue(item)?.ToString() : item.ToString(),
                 CommandParameter = item,
                 IsChecked = selectedItems?.Contains(item) ?? false,
-            });
+            };
+            if (color != null)
+            {
+                checkBox.Color = color;
+            }
+            checkBoxGroup.Add(checkBox);
         }
 
         var rootGrid = new Grid

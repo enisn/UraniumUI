@@ -52,7 +52,8 @@ public partial class MultiplePickerField : InputField
             var result = await DialogService.DisplayCheckBoxPromptAsync(
                 this.Title,
                 ItemsSource as IEnumerable<object>,
-                SelectedItems as IEnumerable<object>
+                SelectedItems as IEnumerable<object>,
+                color: SelectedItemsColor
                 );
 
             if (result != null)
@@ -103,6 +104,10 @@ public partial class MultiplePickerField : InputField
             chip.SetBinding(Chip.TextProperty, new Binding("."));
             chip.SelfDestruct = false;
             chip.DestroyCommand = _destroyChipCommand;
+            if (SelectedItemsColor != null)
+            {
+                chip.BackgroundColor = SelectedItemsColor;
+            }
             return chip;
         }));
 
@@ -187,4 +192,34 @@ public partial class MultiplePickerField : InputField
         nameof(SelectedValuesChangedCommand),
         typeof(ICommand), typeof(MultiplePickerField),
         defaultValue: null);
+
+    public Color SelectedItemsColor { get => (Color)GetValue(SelectedItemsColorProperty); set => SetValue(SelectedItemsColorProperty, value); }
+
+    public static readonly BindableProperty SelectedItemsColorProperty = BindableProperty.Create(
+        nameof(SelectedItemsColor),
+        typeof(Color),
+        typeof(MultiplePickerField),
+        defaultValue: null,
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as MultiplePickerField).OnSelectedItemsColorChanged());
+
+    protected virtual void OnSelectedItemsColorChanged()
+    {
+        if (chipsHolderLayout != null)
+        {
+            foreach (var child in chipsHolderLayout.Children)
+            {
+                if (child is Chip chip)
+                {
+                    if (SelectedItemsColor != null)
+                    {
+                        chip.BackgroundColor = SelectedItemsColor;
+                    }
+                    else
+                    {
+                        chip.ClearValue(View.BackgroundColorProperty);
+                    }
+                }
+            }
+        }
+    }
 }

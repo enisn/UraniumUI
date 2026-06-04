@@ -141,6 +141,12 @@ public partial class TreeView : ContentView
         {
             childHolder.OnSelectedItemChanged();
         }
+
+        // Execute SelectedItemCommand if it's set
+        if (SelectedItemCommand?.CanExecute(SelectedItem) == true)
+        {
+            SelectedItemCommand.Execute(SelectedItem);
+        }
     }
 
     protected virtual void OnSelectedItemsChanged(IList oldValue, IList newValue)
@@ -270,6 +276,15 @@ public partial class TreeView : ContentView
 
     public static readonly BindableProperty LoadChildrenCommandProperty = BindableProperty.Create(
         nameof(LoadChildrenCommand), typeof(ICommand), typeof(TreeView), null);
+
+    public ICommand SelectedItemCommand
+    {
+        get => (ICommand)GetValue(SelectedItemCommandProperty);
+        set => SetValue(SelectedItemCommandProperty, value);
+    }
+
+    public static readonly BindableProperty SelectedItemCommandProperty = BindableProperty.Create(
+        nameof(SelectedItemCommand), typeof(ICommand), typeof(TreeView), null);
 
     public Color SelectionColor
     {

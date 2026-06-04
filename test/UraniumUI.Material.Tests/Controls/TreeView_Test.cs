@@ -67,6 +67,50 @@ public class TreeView_Test
         viewModel.SelectedItem.ShouldBe(itemSource[0]);
     }
 
+    [Fact]
+    public void SelectedItemCommand_ShouldBeExecuted_WhenSelectedItemChanges()
+    {
+        // Arrange
+        var itemSource = new[] { "1", "2", "3", "4" };
+        var viewModel = new TestViewModel { ItemSource = itemSource };
+        object executedParameter = null;
+        var command = new Command<object>(param => executedParameter = param);
+
+        var control = AnimationReadyHandler.Prepare(new TreeView());
+        control.SelectionMode = SelectionMode.Single;
+        control.BindingContext = viewModel;
+        control.SetBinding(TreeView.ItemsSourceProperty, new Binding(nameof(TestViewModel.ItemSource)));
+        control.SelectedItemCommand = command;
+
+        // Act
+        control.SelectedItem = itemSource[2];
+
+        // Assert
+        executedParameter.ShouldBe(itemSource[2]);
+    }
+
+    [Fact]
+    public void SelectedItemCommand_ShouldNotBeExecuted_WhenSelectionModeIsNone()
+    {
+        // Arrange
+        var itemSource = new[] { "1", "2", "3", "4" };
+        var viewModel = new TestViewModel { ItemSource = itemSource };
+        object executedParameter = null;
+        var command = new Command<object>(param => executedParameter = param);
+
+        var control = AnimationReadyHandler.Prepare(new TreeView());
+        control.SelectionMode = SelectionMode.None;
+        control.BindingContext = viewModel;
+        control.SetBinding(TreeView.ItemsSourceProperty, new Binding(nameof(TestViewModel.ItemSource)));
+        control.SelectedItemCommand = command;
+
+        // Act
+        control.SelectedItem = itemSource[2];
+
+        // Assert
+        executedParameter.ShouldBeNull();
+    }
+
     public class TestViewModel : UraniumBindableObject
     {
         private IList itemSource;

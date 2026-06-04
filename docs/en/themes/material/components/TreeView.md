@@ -163,6 +163,72 @@ TreeView supports single selection and multiple selection. You can set `Selectio
 | --- | --- |
 | ![TreeView Light](../../../../images/treeview-selection-light.gif) | ![TreeView Dark](../../../../images/treeview-selection-dark.gif) |
 
+### SelectedItemCommand
+You can execute a command when a node is selected by using the `SelectedItemCommand` property. The command will be executed with the selected item as the parameter. This is useful when you want to perform an action when a node is selected, such as displaying details of the selected item or navigating to another page.
+
+```xml
+<StackLayout>
+    <Label Text="Selected Node:" FontAttributes="Bold" />
+    <Label Text="{Binding SelectedNodeName}" FontSize="18" />
+    <material:TreeView 
+        ItemsSource="{Binding Nodes}" 
+        SelectionMode="Single" 
+        SelectedItem="{Binding SelectedNode}"
+        SelectedItemCommand="{Binding NodeSelectedCommand}" />
+</StackLayout>
+```
+
+In your ViewModel:
+
+```csharp
+public class MyViewModel : BindableObject
+{
+    private MyItem selectedNode;
+    private string selectedNodeName = "None";
+
+    public ICommand NodeSelectedCommand { get; set; }
+
+    public MyItem SelectedNode
+    {
+        get => selectedNode;
+        set
+        {
+            selectedNode = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public string SelectedNodeName
+    {
+        get => selectedNodeName;
+        set
+        {
+            selectedNodeName = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public MyViewModel()
+    {
+        NodeSelectedCommand = new Command<MyItem>((node) =>
+        {
+            if (node != null)
+            {
+                SelectedNodeName = node.Name;
+                // You can perform any action here, such as:
+                // - Load details of the selected item
+                // - Navigate to another page
+                // - Update other properties
+            }
+            else
+            {
+                SelectedNodeName = "None";
+            }
+        });
+    }
+}
+```
+
 ### Multiple Selection
 
 ```xml

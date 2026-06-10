@@ -103,17 +103,22 @@ public class CommunityToolkitDialogServiceBase
         var layout = new FlexLayout
         {
             JustifyContent = Microsoft.Maui.Layouts.FlexJustify.End,
+            AlignItems = Microsoft.Maui.Layouts.FlexAlignItems.Center,
+            Wrap = Microsoft.Maui.Layouts.FlexWrap.Wrap,
             Margin = new Thickness(10),
         };
 
         foreach (var button in footerButtons.Reverse())
         {
-            layout.Children.Add(new Button
+            var footerButton = new Button
             {
                 Text = button.Key,
                 StyleClass = new[] { "TextButton", "Dialog.Button" + layout.Children.Count },
                 Command = button.Value
-            });
+            };
+
+            FlexLayout.SetShrink(footerButton, 0);
+            layout.Children.Add(footerButton);
         }
 
         return layout;

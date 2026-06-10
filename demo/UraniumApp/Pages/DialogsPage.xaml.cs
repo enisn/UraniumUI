@@ -69,6 +69,18 @@ public partial class DialogsPage : ContentPage
         labelTextPrompt.Text = "Result: " + lastTextInput;
     }
 
+    private DateTime? lastDateInput = DateTime.Today;
+    private async void AskDatePrompt(object sender, EventArgs e)
+    {
+        lastDateInput = await DialogService.DisplayDatePromptAsync(
+            "Select Date",
+            lastDateInput,
+            DateTime.Today.AddDays(-30),
+            DateTime.Today.AddDays(30));
+
+        labelDatePrompt.Text = "Result: " + (lastDateInput?.ToString("d") ?? "null");
+    }
+
     private async void AskConfirmation(object sender, EventArgs e)
     {
         var result = await DialogService.ConfirmAsync("Confirmation", "Are you sure?", "Yes", "No");

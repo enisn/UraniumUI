@@ -9,6 +9,7 @@ TimePickerField is included in the `UraniumUI.Material.Controls` namespace. You 
 
 ```xml
 xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+xmlns:m="clr-namespace:UraniumUI.Icons.MaterialSymbols;assembly=UraniumUI.Icons.MaterialSymbols"
 ```
 
 Then you can use it like this:
@@ -49,7 +50,7 @@ TimePickerFields support clearing the selected time by setting the `AllowClear` 
 TimePickerField supports validation rules such as `MinValueValidation` and `MaxValueValidation`. You can use them like this:
 
 ```xml
-<material:TimePickerField Title="Pick a time" Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Alarm}}">
+<material:TimePickerField Title="Pick a time" Icon="{FontImageSource FontFamily=MaterialOutlined, Glyph={x:Static m:MaterialOutlined.Alarm}}">
     <validation:MinValueValidation MinValue="09:00" />
     <validation:MaxValueValidation MaxValue="12:00" />
 </material:TimePickerField>
@@ -65,7 +66,7 @@ TimePickerField is fully compatible with [FormView](https://enisn-projects.io/do
 
 ```xml
  <input:FormView Spacing="20">
-    <material:TimePickerField Title="Pick a time" Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Alarm}}">
+    <material:TimePickerField Title="Pick a time" Icon="{FontImageSource FontFamily=MaterialOutlined, Glyph={x:Static m:MaterialOutlined.Alarm}}">
         <validation:MinValueValidation MinValue="09:00" />
         <validation:MaxValueValidation MaxValue="12:00" />
     </material:TimePickerField>

@@ -34,6 +34,41 @@ public class MultiplePickerField_Test
         control.SelectedItems[0].ShouldBe(viewModel.ItemsSource[0]);
     }
 
+    [Fact]
+    public void SetSelectedItems_ShouldRefreshLayout()
+    {
+        var control = AnimationReadyHandler.Prepare(new TestMultiplePickerField());
+
+        control.SelectedItems = new ObservableCollection<object>
+        {
+            "Option 1"
+        };
+
+        control.RefreshChipLayoutCallCount.ShouldBe(1);
+    }
+
+    [Fact]
+    public void ChangeSelectedItems_ShouldRefreshLayout()
+    {
+        var selectedItems = new ObservableCollection<object>();
+        var control = AnimationReadyHandler.Prepare(new TestMultiplePickerField());
+        control.SelectedItems = selectedItems;
+
+        selectedItems.Add("Option 1");
+
+        control.RefreshChipLayoutCallCount.ShouldBe(2);
+    }
+
+    private sealed class TestMultiplePickerField : MultiplePickerField
+    {
+        public int RefreshChipLayoutCallCount { get; private set; }
+
+        protected override void RefreshChipLayout()
+        {
+            RefreshChipLayoutCallCount++;
+        }
+    }
+
     public class TestViewModel : UraniumBindableObject
     {
         public string[] ItemsSource { get; set; } = new string[] { "Option 1", "Option 2", "Option 3", "Option 4", };

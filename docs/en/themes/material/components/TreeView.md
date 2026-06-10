@@ -6,6 +6,7 @@ TreeView is included in the `UraniumUI.Material.Controls` namespace. You should 
 
 ```xml
 xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+xmlns:m="clr-namespace:UraniumUI.Icons.MaterialSymbols;assembly=UraniumUI.Icons.MaterialSymbols"
 ```
 
 Then you can use it like this:
@@ -98,7 +99,7 @@ You can customize nodes with `ItemTemplate`. It's just like a `ListView` or `Col
     <material:TreeView.ItemTemplate>
         <DataTemplate>
             <HorizontalStackLayout Spacing="5">
-                <Image Source="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Folder}, Color={StaticResource Primary}}" />
+                <Image Source="{FontImageSource FontFamily=MaterialOutlined, Glyph={x:Static m:MaterialOutlined.Folder}, Color={StaticResource Primary}}" />
                 <Label Text="{Binding Name}" FontAttributes="Bold" />
                 <Label Text="{Binding Children.Count, StringFormat='({0})'}" />
             </HorizontalStackLayout>
@@ -377,10 +378,10 @@ public class TreeViewFileSystemViewModel : UraniumBindableObject
                 <Image>
                     <Image.Triggers>
                         <DataTrigger TargetType="Image" Binding="{Binding IsDirectory}" Value="True">
-                            <Setter Property="Source" Value="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Folder}, Color={AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}}" />
+                            <Setter Property="Source" Value="{FontImageSource FontFamily=MaterialOutlined, Glyph={x:Static m:MaterialOutlined.Folder}, Color={AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}}" />
                         </DataTrigger>
                         <DataTrigger TargetType="Image" Binding="{Binding IsDirectory}" Value="False">
-                            <Setter Property="Source" Value="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Insert_drive_file}, Color={AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}}" />
+                            <Setter Property="Source" Value="{FontImageSource FontFamily=MaterialOutlined, Glyph={x:Static m:MaterialOutlined.File_present}, Color={AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}}" />
                         </DataTrigger>
                     </Image.Triggers>
                 </Image>

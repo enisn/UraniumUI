@@ -20,12 +20,20 @@
           "path": "infrastructure/GridLayout.md"
         },
         {
+          "text": "CalendarView",
+          "path": "infrastructure/CalendarView.md"
+        },
+        {
           "text": "Auto Form View",
           "path": "infrastructure/AutoFormView.md"
         },
         {
           "text": "Dropdown",
           "path": "infrastructure/Dropdown.md"
+        },
+        {
+          "text": "SelectableLabel",
+          "path": "infrastructure/SelectableLabel.md"
         },
         {
           "text": "ExpanderView",
@@ -82,7 +90,10 @@
     {
       "text": "Web Components",
       "items":[
-        
+        {
+          "text": "CodeView",
+          "path": "web-components/CodeView.md"
+        }
       ]
     },
     {
@@ -131,6 +142,10 @@
           "path": "themes/material/Buttons.md"
         },
         {
+          "text": "Chip",
+          "path": "themes/material/Chip.md"
+        },
+        {
           "text": "InputFields",
           "path": "themes/material/components/InputField.md",
           "items": [
@@ -145,6 +160,10 @@
             {
               "text": "AutoCompleteTextField",
               "path": "themes/material/components/AutoCompleteTextField.md"
+            },
+            {
+              "text": "DropdownField",
+              "path": "themes/material/components/DropdownField.md"
             },
             {
               "text": "PickerField",

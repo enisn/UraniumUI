@@ -9,6 +9,7 @@ TabView is a component that allows you to switch between different views by sele
 
 ```xml
 xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+xmlns:m="clr-namespace:UraniumUI.Icons.MaterialSymbols;assembly=UraniumUI.Icons.MaterialSymbols"
 ```
 
 Then you can use it like this:
@@ -102,7 +103,7 @@ Also, tabs can be customized using [Triggers](https://docs.microsoft.com/en-us/d
                     <DataTrigger TargetType="Button" Binding="{Binding IsSelected}" Value="True">
                         <Setter Property="BackgroundColor" Value="{StaticResource SurfaceTint1}" />
                         <Setter Property="TextColor" Value="{StaticResource SurfaceTint3}" />
-                        <Setter Property="ImageSource" Value="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Home}, Color={StaticResource SurfaceTint1}}" />
+                        <Setter Property="ImageSource" Value="{FontImageSource FontFamily=MaterialOutlinedFilled, Glyph={x:Static m:MaterialOutlined.Home}, Color={StaticResource SurfaceTint1}}" />
                     </DataTrigger>
                     <DataTrigger TargetType="Button" Binding="{Binding IsSelected}" Value="False">
                         <Setter Property="BackgroundColor" Value="Transparent" />

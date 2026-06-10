@@ -248,6 +248,40 @@ private async void Button_Clicked(object sender, EventArgs e)
 
 ---
 
+### Date Prompt
+
+Date prompt can be used to select a nullable date with the custom `CalendarView`. It supports OK, Cancel, Clear, and Today actions. Tap the month/year header to jump by year, which is useful for birthdates and other historical dates.
+
+![MAUI Date Prompt Dialog](../images/dialogs-date-prompt-dark-windows.png)
+
+```csharp
+private DateTime? selectedDate = DateTime.Today;
+
+private async void Button_Clicked(object sender, EventArgs e)
+{
+    selectedDate = await this.DisplayDatePromptAsync(
+        "Select Date",
+        selectedDate,
+        minimumDate: DateTime.Today.AddDays(-30),
+        maximumDate: DateTime.Today.AddDays(30));
+
+    await DisplayAlert("Result:", selectedDate?.ToString("d") ?? "null", "OK");
+}
+```
+
+`DisplayDatePromptAsync` returns the selected date when OK is pressed. Clear closes the dialog and returns `null`. Cancel closes the dialog and returns the original `selectedDate`, so assigning the result back to the same variable does not mutate the caller state.
+
+Manual verification steps for each dialog provider:
+
+- Open the Dialogs demo page.
+- Select each implementation from the Implementation selector.
+- Open Date Prompt and verify OK returns the selected date.
+- Select Clear and verify the result becomes `null`.
+- Change the visible selection, select Cancel, and verify the previous result is preserved.
+- Select Today and verify today is selected when it is within the min/max range.
+
+---
+
 ### Progress
 
 Progress dialog can be used to show a progress dialog to the user. There are 2 types of progress dialogs in UraniumUI. They are blocking and cancellable. Blocking progress dialog will block the UI until it's closed. Cancellable progress dialog will have a cancel button to allow user to cancel the operation. It returns an `IDisposable` and it'll be visible until you dispose it. You can use it with `using` statement to show a progress dialog.

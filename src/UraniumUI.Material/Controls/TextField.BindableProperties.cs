@@ -82,6 +82,14 @@ public partial class TextField
         typeof(TextField),
         defaultBindingMode: BindingMode.TwoWay);
 
+    public ICommand ClearCommand { get => (ICommand)GetValue(ClearCommandProperty); set => SetValue(ClearCommandProperty, value); }
+
+    public static readonly BindableProperty ClearCommandProperty = BindableProperty.Create(
+        nameof(ClearCommand),
+        typeof(ICommand),
+        typeof(TextField),
+        defaultBindingMode: BindingMode.TwoWay);
+
     public double CharacterSpacing { get => (double)GetValue(CharacterSpacingProperty); set => SetValue(CharacterSpacingProperty, value); }
 
     public static readonly BindableProperty CharacterSpacingProperty = BindableProperty.Create(

@@ -321,6 +321,56 @@ public class MopupsDialogService : IDialogService
         return await tcs.Task;
     }
 
+    public virtual async Task<DateTime?> DisplayDatePromptAsync(
+        string title,
+        DateTime? selectedDate = null,
+        DateTime? minimumDate = null,
+        DateTime? maximumDate = null,
+        string accept = "OK",
+        string cancel = "Cancel",
+        string clear = "Clear",
+        string today = "Today")
+    {
+        var tcs = new TaskCompletionSource<DateTime?>();
+        var originalSelectedDate = selectedDate;
+        var normalizedSelectedDate = selectedDate?.Date;
+
+        var calendarView = CreateDatePromptCalendar(normalizedSelectedDate, minimumDate, maximumDate);
+        var popup = new PopupPage
+        {
+            BackgroundColor = DialogOptions.GetBackdropColor(),
+            CloseWhenBackgroundIsClicked = false,
+        };
+
+        popup.Content = GetFrame(Page.Width, new VerticalStackLayout
+        {
+            Children =
+            {
+                GetHeader(title),
+                new ScrollView
+                {
+                    Content = calendarView,
+                    Margin = new Thickness(12, 16, 12, 0),
+                    MaximumHeightRequest = Page.Height * .75,
+                },
+                GetDivider(),
+                GetFooter(CreateDatePromptFooterButtons(
+                    calendarView,
+                    tcs,
+                    originalSelectedDate,
+                    accept,
+                    cancel,
+                    clear,
+                    today,
+                    () => MopupService.Instance.RemovePageAsync(popup)))
+            }
+        });
+
+        await MopupService.Instance.PushAsync(popup);
+
+        return await tcs.Task;
+    }
+
     public virtual Task DisplayViewAsync(string title, View content, string okText = "OK")
     {
         var popup = new PopupPage
@@ -396,6 +446,78 @@ public class MopupsDialogService : IDialogService
         MopupService.Instance.PushAsync(popup);
 
         return tcs.Task;
+    }
+
+    private static CalendarView CreateDatePromptCalendar(DateTime? selectedDate, DateTime? minimumDate, DateTime? maximumDate)
+    {
+        var displayDate = selectedDate ?? GetFallbackDisplayDate(minimumDate, maximumDate);
+
+        return new CalendarView
+        {
+            SelectedDate = selectedDate,
+            DisplayDate = displayDate,
+            MinimumDate = minimumDate,
+            MaximumDate = maximumDate,
+            HorizontalOptions = LayoutOptions.Fill,
+        };
+    }
+
+    private static DateTime GetFallbackDisplayDate(DateTime? minimumDate, DateTime? maximumDate)
+    {
+        var today = DateTime.Today;
+
+        if ((!minimumDate.HasValue || today >= minimumDate.Value.Date)
+            && (!maximumDate.HasValue || today <= maximumDate.Value.Date))
+        {
+            return today;
+        }
+
+        return minimumDate?.Date ?? maximumDate?.Date ?? today;
+    }
+
+    private static Dictionary<string, Command> CreateDatePromptFooterButtons(
+        CalendarView calendarView,
+        TaskCompletionSource<DateTime?> tcs,
+        DateTime? selectedDate,
+        string accept,
+        string cancel,
+        string clear,
+        string today,
+        Func<Task> close)
+    {
+        var footerButtons = new Dictionary<string, Command>
+        {
+            {
+                accept, new Command(async () =>
+                {
+                    tcs.TrySetResult(calendarView.SelectedDate);
+                    await close();
+                })
+            },
+            {
+                cancel, new Command(async () =>
+                {
+                    tcs.TrySetResult(selectedDate);
+                    await close();
+                })
+            }
+        };
+
+        if (!string.IsNullOrEmpty(today))
+        {
+            footerButtons.Add(today, new Command(() => calendarView.TrySelectDate(DateTime.Today)));
+        }
+
+        if (!string.IsNullOrEmpty(clear))
+        {
+            footerButtons.Add(clear, new Command(async () =>
+            {
+                tcs.TrySetResult(null);
+                await close();
+            }));
+        }
+
+        return footerButtons;
     }
 
     public MopupsDialogService WithPage(Page page)
@@ -494,6 +616,8 @@ public class MopupsDialogService : IDialogService
         var layout = new FlexLayout
         {
             JustifyContent = Microsoft.Maui.Layouts.FlexJustify.End,
+            AlignItems = Microsoft.Maui.Layouts.FlexAlignItems.Center,
+            Wrap = Microsoft.Maui.Layouts.FlexWrap.Wrap,
             Margin = new Thickness(10),
         };
 
@@ -504,13 +628,16 @@ public class MopupsDialogService : IDialogService
 
         foreach (var (text, command) in footerButtons.Reverse())
         {
-            layout.Children.Add(new Button
+            var button = new Button
             {
                 Text = text,
                 // Can be styled with StyleClass `Dialog.Button0`, `Dialog.Button1`, etc
                 StyleClass = new[] { "TextButton", "Dialog.Button" + layout.Children.Count },
                 Command = command
-            });
+            };
+
+            FlexLayout.SetShrink(button, 0);
+            layout.Children.Add(button);
         }
 
         return layout;

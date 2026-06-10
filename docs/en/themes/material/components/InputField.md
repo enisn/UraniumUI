@@ -4,7 +4,11 @@ InputField is an abstraction on MAUI Level for material inputs such as Entry, Ed
 ## Existing Controls
 
 - [TextField](TextField.md)
+- [EditorField](EditorField.md)
+- [AutoCompleteTextField](AutoCompleteTextField.md)
+- [DropdownField](DropdownField.md)
 - [PickerField](PickerField.md)
+- [MultiplePickerField](MultiplePickerField.md)
 - [DatePickerField](DatePickerField.md)
 - [TimePickerField](TimePickerField.md)
 

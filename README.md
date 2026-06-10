@@ -32,24 +32,25 @@ Or watch the video:
 ## Features ✨
 
 - Startup [Templates](https://enisn-projects.io/docs/en/uranium/latest/Getting-Started#new-projects)
-- Multiple Target Frameworks: `.NET9` _(LTS)_ & `.NET 10` _(Preview)_
+- Multiple target frameworks: `.NET 10` _(LTS)_ and `.NET 9`
   - _Use UraniumUI **v2.6 - v2.12** for `.NET8`_
   - _Use UraniumUI **v2.5** for `.NET6` and `.NET7`._
 - Pre-built layouts and flexible controls.
 - Dark/light mode support.
-- All MAUI Platforms are supported.
-  - `net9.0-android`
-  - `net9.0-ios`
-  - `net9.0-maccatalyst`
-  - `net9.0-windows`
-  - `net9.0-tizen` _(limited support)_.
+- MAUI platform support for `net9.0-*` and `net10.0-*` targets.
+  - `Android`
+  - `iOS`
+  - `MacCatalyst`
+  - `Windows`
+  - `Tizen` _(limited support / optional setup)_
 - Infrastructure for building custom controls.
   - [Plainer](https://github.com/enisn/Xamarin.Forms.Plainer)
   - [InputField](https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/InputField)
-- [Color System](https://enisn-projects.io/docs/en/uranium/latest/theming/ColorSystem) with easy to customize.
+- [Color System](https://enisn-projects.io/docs/en/uranium/latest/theming/ColorSystem) with easy customization.
 - Accessibility
-    -  _(All controls with [Keyboard Accesibility](https://learn.microsoft.com/en-us/windows/apps/design/accessibility/keyboard-accessibility) unlike drawn controls)_
+    - _(All controls support [keyboard accessibility](https://learn.microsoft.com/en-us/windows/apps/design/accessibility/keyboard-accessibility), unlike drawn controls)_
 - Extensible styling.
+- [Blur effects](https://enisn-projects.io/docs/en/uranium/latest/Blurs) with `UraniumUI.Blurs`.
 - Dialogs
   - [Mopups](https://enisn-projects.io/docs/en/uranium/latest/dialogs/Index#mopups)
   - [CommunityToolkit](https://enisn-projects.io/docs/en/uranium/latest/dialogs/Index#communitytoolkit) 
@@ -57,9 +58,9 @@ Or watch the video:
   - [Data Annotations](https://enisn-projects.io/docs/en/uranium/latest/validations/DataAnnotations)
   - [InputKit](https://enisn-projects.io/docs/en/inputkit/latest/components/controls/FormView#validations)
 - Font icon support.
+  - [Material Symbols](https://enisn-projects.io/docs/en/uranium/latest/theming/Icons#material-symbols)
+  - [Fluent Icons](https://enisn-projects.io/docs/en/uranium/latest/theming/Icons#segoe-fluent-icons)
   - [FontAwesome](https://enisn-projects.io/docs/en/uranium/latest/theming/Icons#fontawesome)
-  - [Material](https://enisn-projects.io/docs/en/uranium/latest/theming/Icons#material-icons)
-  - [Fluent](https://enisn-projects.io/docs/en/uranium/latest/theming/Icons#segoe-fluent-icons)
 - Theming
   - [Material Theme](https://enisn-projects.io/docs/en/uranium/latest/themes/material/Index)
 

@@ -8,6 +8,7 @@ You can use the material namespace of UraniumUI in XAML files like the following
 
 ```
 xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+xmlns:m="clr-namespace:UraniumUI.Icons.MaterialSymbols;assembly=UraniumUI.Icons.MaterialSymbols"
 ```
 
 DataGrid can't be used standalone without csharp code. You need to bind some data to `ItemsSource` property.
@@ -175,19 +176,19 @@ You can define a custom view for the header of the column by using `TitleView` p
 	<material:DataGrid.Columns>
 		<material:DataGridColumn ValueBinding="{Binding Id}">
 			<material:DataGridColumn.TitleView>
-				<Image Source="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Fingerprint}, Color={StaticResource Primary}}" />
+				<Image Source="{FontImageSource FontFamily=MaterialOutlined, Glyph={x:Static m:MaterialOutlined.Fingerprint}, Color={StaticResource Primary}}" />
 			</material:DataGridColumn.TitleView>
 		</material:DataGridColumn>
 
 		<material:DataGridColumn ValueBinding="{Binding Name}">
 			<material:DataGridColumn.TitleView>
-				<Image Source="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Badge}, Color={StaticResource Primary}}" />
+				<Image Source="{FontImageSource FontFamily=MaterialOutlined, Glyph={x:Static m:MaterialOutlined.Badge}, Color={StaticResource Primary}}" />
 			</material:DataGridColumn.TitleView>
 		</material:DataGridColumn>
 
 		<material:DataGridColumn ValueBinding="{Binding Age}">
 			<material:DataGridColumn.TitleView>
-				<Image Source="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Calendar_today}, Color={StaticResource Primary}}" />
+				<Image Source="{FontImageSource FontFamily=MaterialOutlined, Glyph={x:Static m:MaterialOutlined.Calendar_today}, Color={StaticResource Primary}}" />
 			</material:DataGridColumn.TitleView>
 		</material:DataGridColumn>
 	</material:DataGrid.Columns>

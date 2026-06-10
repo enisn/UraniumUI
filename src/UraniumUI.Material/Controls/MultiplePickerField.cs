@@ -124,6 +124,7 @@ public partial class MultiplePickerField : InputField
     protected virtual void OnSelectedItemsSet(IList oldValue, IList newValue)
     {
         BindableLayout.SetItemsSource(chipsHolderLayout, SelectedItems);
+        RefreshChipLayout();
         UpdateState();
 
         if (oldValue is INotifyCollectionChanged oldObservable)
@@ -140,9 +141,28 @@ public partial class MultiplePickerField : InputField
 
     private void SelectedItemsChanged(object sender, NotifyCollectionChangedEventArgs e)
     {
+        RefreshChipLayout();
         UpdateState();
         SelectedValuesChangedCommand?.Execute(SelectedItems);
         SelectedValuesChanged?.Invoke(sender, SelectedItems);
+    }
+
+    protected virtual void RefreshChipLayout()
+    {
+        if (Dispatcher?.IsDispatchRequired ?? false)
+        {
+            Dispatcher.Dispatch(RefreshChipLayoutCore);
+            return;
+        }
+
+        RefreshChipLayoutCore();
+    }
+
+    private void RefreshChipLayoutCore()
+    {
+        chipsHolderLayout?.InvalidateMeasure();
+        MainContentView?.InvalidateMeasure();
+        InvalidateMeasure();
     }
 
     public IList ItemsSource { get => (IList)GetValue(ItemsSourceProperty); set => SetValue(ItemsSourceProperty, value); }

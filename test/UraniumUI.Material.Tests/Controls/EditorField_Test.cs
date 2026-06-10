@@ -58,10 +58,87 @@ public class EditorField_Test
         viewModel.Text.ShouldBe(control.Text);
     }
 
+    [Fact]
+    public void TextColor_ShouldBeSet_FromViewModel()
+    {
+        var control = AnimationReadyHandler.Prepare(new EditorField());
+        var viewModel = new EditorFieldTestViewModel { TextColor = Colors.Blue };
+        control.BindingContext = viewModel;
+
+        // Act
+        control.SetBinding(EditorField.TextColorProperty, new Binding(nameof(EditorFieldTestViewModel.TextColor)));
+
+        // Assert
+        control.EditorView.TextColor.ShouldBe(viewModel.TextColor);
+    }
+
+    [Fact]
+    public void TextColor_ShouldOverride_ExistingThemeBinding_WhenValueMatchesLightTheme()
+    {
+        var originalTheme = Application.Current.UserAppTheme;
+
+        try
+        {
+            Application.Current.UserAppTheme = AppTheme.Light;
+
+            var control = AnimationReadyHandler.Prepare(new EditorField());
+            control.EditorView.SetAppThemeColor(Editor.TextColorProperty, Colors.Black, Colors.White);
+
+            // Act
+            control.TextColor = Colors.Black;
+            Application.Current.UserAppTheme = AppTheme.Dark;
+
+            // Assert
+            control.EditorView.TextColor.ShouldBe(Colors.Black);
+        }
+        finally
+        {
+            Application.Current.UserAppTheme = originalTheme;
+        }
+    }
+
     internal class EditorFieldTestViewModel : UraniumBindableObject
     {
         private string text;
+        private Color textColor;
 
         public string Text { get => text; set => SetProperty(ref text, value); }
+
+        public Color TextColor { get => textColor; set => SetProperty(ref textColor, value); }
+    }
+
+    [Fact]
+    public void FontFamily_CanBeSetViaImplicitStyle()
+    {
+        // Arrange: Create an implicit style that sets FontFamily
+        var style = new Style(typeof(EditorField));
+        style.Setters.Add(new Setter { Property = EditorField.FontFamilyProperty, Value = "Arial" });
+
+        // Create a ResourceDictionary and add the style
+        var resources = new ResourceDictionary();
+        resources.Add(style);
+
+        var control = AnimationReadyHandler.Prepare(new EditorField());
+
+        // Act
+        control.Resources = resources;
+
+        // Assert
+        control.FontFamily.ShouldBe("Arial");
+        control.EditorView.FontFamily.ShouldBe("Arial");
+    }
+
+    [Fact]
+    public void FontFamily_CanBeSetDirectly()
+    {
+        // Arrange
+        var control = AnimationReadyHandler.Prepare(new EditorField());
+
+        // Act
+        control.FontFamily = "Courier New";
+
+        // Assert
+        control.FontFamily.ShouldBe("Courier New");
+        control.EditorView.FontFamily.ShouldBe("Courier New");
     }
 }

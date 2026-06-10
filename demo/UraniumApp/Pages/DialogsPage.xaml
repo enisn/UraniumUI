@@ -65,6 +65,14 @@
                         </VerticalStackLayout>
                     </material:TabItem>
 
+                    <material:TabItem Title="Date Prompt">
+                        <VerticalStackLayout Padding="20">
+                            <Label Text="Min/max window: today -30 days to today +30 days" />
+                            <Button Text="Ask Date Prompt" Clicked="AskDatePrompt" StyleClass="FilledButton" HorizontalOptions="Center" />
+                            <Label Text="Result: " x:Name="labelDatePrompt"/>
+                        </VerticalStackLayout>
+                    </material:TabItem>
+
                     <material:TabItem Title="Confirmation">
                         <VerticalStackLayout Padding="20">
                             <Button Text="Ask Confirmation Prompt" Clicked="AskConfirmation" StyleClass="FilledButton" HorizontalOptions="Center" />

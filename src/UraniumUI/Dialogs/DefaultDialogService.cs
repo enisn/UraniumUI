@@ -408,6 +408,56 @@ public class DefaultDialogService : IDialogService
         return tcs.Task;
     }
 
+    public virtual Task<DateTime?> DisplayDatePromptAsync(
+        string title,
+        DateTime? selectedDate = null,
+        DateTime? minimumDate = null,
+        DateTime? maximumDate = null,
+        string accept = "OK",
+        string cancel = "Cancel",
+        string clear = "Clear",
+        string today = "Today")
+    {
+        var tcs = new TaskCompletionSource<DateTime?>();
+        var originalSelectedDate = selectedDate;
+        var normalizedSelectedDate = selectedDate?.Date;
+
+        var calendarView = CreateDatePromptCalendar(normalizedSelectedDate, minimumDate, maximumDate);
+        var footerButtons = CreateDatePromptFooterButtons(
+            calendarView,
+            tcs,
+            originalSelectedDate,
+            accept,
+            cancel,
+            clear,
+            today,
+            ClosePopup);
+
+        var popupPage = new DefaultDialogAnimatedContentPage
+        {
+            BackgroundColor = GetBackdropColor(),
+            Content = GetFrame(Page.Width, new VerticalStackLayout
+            {
+                Children =
+                {
+                    GetHeader(title),
+                    new ScrollView
+                    {
+                        Content = calendarView,
+                        Margin = new Thickness(12, 16, 12, 0),
+                        MaximumHeightRequest = Page.Height * .75,
+                    },
+                    GetDivider(),
+                    GetFooter(footerButtons)
+                }
+            })
+        };
+
+        Page.Navigation.PushModalAsync(ConfigurePopupPage(popupPage), animated: false);
+
+        return tcs.Task;
+    }
+
     public Task<TViewModel> DisplayFormViewAsync<TViewModel>(string title, TViewModel viewModel = null, string submit = "OK", string cancel = "Cancel") where TViewModel : class
     {
         var tcs = new TaskCompletionSource<TViewModel>();
@@ -459,6 +509,78 @@ public class DefaultDialogService : IDialogService
         Page.Navigation.PushModalAsync(ConfigurePopupPage(popupPage), animated: false);
 
         return tcs.Task;
+    }
+
+    private static CalendarView CreateDatePromptCalendar(DateTime? selectedDate, DateTime? minimumDate, DateTime? maximumDate)
+    {
+        var displayDate = selectedDate ?? GetFallbackDisplayDate(minimumDate, maximumDate);
+
+        return new CalendarView
+        {
+            SelectedDate = selectedDate,
+            DisplayDate = displayDate,
+            MinimumDate = minimumDate,
+            MaximumDate = maximumDate,
+            HorizontalOptions = LayoutOptions.Fill,
+        };
+    }
+
+    private static DateTime GetFallbackDisplayDate(DateTime? minimumDate, DateTime? maximumDate)
+    {
+        var today = DateTime.Today;
+
+        if ((!minimumDate.HasValue || today >= minimumDate.Value.Date)
+            && (!maximumDate.HasValue || today <= maximumDate.Value.Date))
+        {
+            return today;
+        }
+
+        return minimumDate?.Date ?? maximumDate?.Date ?? today;
+    }
+
+    private static Dictionary<string, Command> CreateDatePromptFooterButtons(
+        CalendarView calendarView,
+        TaskCompletionSource<DateTime?> tcs,
+        DateTime? selectedDate,
+        string accept,
+        string cancel,
+        string clear,
+        string today,
+        Func<Task> close)
+    {
+        var footerButtons = new Dictionary<string, Command>
+        {
+            {
+                accept, new Command(async () =>
+                {
+                    tcs.TrySetResult(calendarView.SelectedDate);
+                    await close();
+                })
+            },
+            {
+                cancel, new Command(async () =>
+                {
+                    tcs.TrySetResult(selectedDate);
+                    await close();
+                })
+            }
+        };
+
+        if (!string.IsNullOrEmpty(today))
+        {
+            footerButtons.Add(today, new Command(() => calendarView.TrySelectDate(DateTime.Today)));
+        }
+
+        if (!string.IsNullOrEmpty(clear))
+        {
+            footerButtons.Add(clear, new Command(async () =>
+            {
+                tcs.TrySetResult(null);
+                await close();
+            }));
+        }
+
+        return footerButtons;
     }
 
     protected virtual Color GetBackdropColor()
@@ -541,6 +663,8 @@ public class DefaultDialogService : IDialogService
         var layout = new FlexLayout
         {
             JustifyContent = Microsoft.Maui.Layouts.FlexJustify.End,
+            AlignItems = Microsoft.Maui.Layouts.FlexAlignItems.Center,
+            Wrap = Microsoft.Maui.Layouts.FlexWrap.Wrap,
             Margin = new Thickness(10),
         };
 
@@ -551,13 +675,16 @@ public class DefaultDialogService : IDialogService
 
         foreach (var item in footerButtons.Reverse())
         {
-            layout.Children.Add(new Button
+            var button = new Button
             {
                 Text = item.Key,
                 // Can be styled with StyleClass `Dialog.Button0`, `Dialog.Button1`, etc
                 StyleClass = new[] { "TextButton", "Dialog.Button" + layout.Children.Count },
                 Command = item.Value
-            });
+            };
+
+            FlexLayout.SetShrink(button, 0);
+            layout.Children.Add(button);
         }
 
         return layout;

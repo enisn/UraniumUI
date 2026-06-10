@@ -19,6 +19,11 @@ Uranium UI provides a project template to start a new project with Uranium UI. Y
   dotnet new uraniumui-app -n MyProject
   ```
 
+- Or create the blank starter:
+  ```bash
+  dotnet new uraniumui-blank-app -n MyProject
+  ```
+
 ### Visual Studio
 Also, templates has `ide.host.json` implementation that allows to create a new project from Visual Studio.
 
@@ -26,9 +31,17 @@ Also, templates has `ide.host.json` implementation that allows to create a new p
 
 ### Parameters
 
-- `icons`: Defines icon library to use. Default is `MaterialIcons`. Available values are `FontAwesome`, `MaterialIcons`, and `None`.
+- `Icons`: Defines the icon package configured by the template. Default is `MaterialSymbols` (Material Symbols). Available values are `FontAwesome`, `MaterialSymbols`, `FluentIcons`, and `None`.
 
-    Example: `dotnet new uraniumui -n MyProject -icons FontAwesome`
+    Example: `dotnet new uraniumui-app -n MyProject --Icons FluentIcons`
+
+- `Dialogs`: Configures dialog integration. Available values are `Mopups`, `CommunityToolkit`, and `None`.
+
+    Example: `dotnet new uraniumui-app -n MyProject --Dialogs CommunityToolkit`
+
+- `Blurs`: Adds `UraniumUI.Blurs` setup to the starter project.
+
+    Example: `dotnet new uraniumui-app -n MyProject --Blurs true`
 
 ## Existing Projects
 - Install the [UraniumUI.Material](https://www.nuget.org/packages/UraniumUI.Material/) NuGet package to your MAUI application.
@@ -71,10 +84,10 @@ Also, templates has `ide.host.json` implementation that allows to create a new p
         > ```
 
 
-- (Optional) Installing a font icon library is recommended. Choose one of the icons and install it.
+- (Optional) Installing a font icon library is recommended. Material Symbols is the current recommended path.
+  -  [Material Symbols](theming/Icons.md#material-symbols)
+  -  [Segoe Fluent Icons](theming/Icons.md#segoe-fluent-icons)
   -  [FontAwesome](theming/Icons.md#fontawesome)
-  -  [Material](theming/Icons.md#material-icons)
-  -  [Segoe](theming/Icons.md#segoe-fluent-icons)
 
 ## Themes available
  - [Material Theme](themes/material/Index.md)

@@ -21,6 +21,7 @@ public partial class EditorField : InputField
     {
         base.RegisterForEvents();
         EditorView.SetBinding(Editor.TextProperty, new Binding(nameof(Text), source: this));
+        EditorView.SetBinding(Editor.TextColorProperty, new Binding(nameof(TextColor), BindingMode.OneWay, source: this));
         EditorView.SetBinding(Editor.SelectionLengthProperty, new Binding(nameof(SelectionLength), source: this));
         EditorView.SetBinding(Editor.CursorPositionProperty, new Binding(nameof(CursorPosition), source: this));
     }

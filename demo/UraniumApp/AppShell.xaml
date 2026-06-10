@@ -87,6 +87,10 @@
         <ShellContent ContentTemplate="{DataTemplate pages:ExpanderViewPage}"/>
     </FlyoutItem>
 
+    <FlyoutItem Title="CalendarView" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Calendar_view_month}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
+        <ShellContent ContentTemplate="{DataTemplate pages:CalendarViewPage}"/>
+    </FlyoutItem>
+
     <FlyoutItem Title="GridLayout" Icon="{FontImageSource Glyph={x:Static m:MaterialOutlined.Grid_3x3}, FontFamily=MaterialOutlined, Color={AppThemeBinding {StaticResource Primary}, Dark={StaticResource PrimaryDark}}}">
         <ShellContent ContentTemplate="{DataTemplate pages:GridLayoutPage}"/>
     </FlyoutItem>

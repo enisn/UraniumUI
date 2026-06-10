@@ -146,8 +146,16 @@ public class Paginator : ContentView
 
     protected virtual void ApplyCurrentPageState()
     {
+        foreach (var button in PagesStackLayout.Children.OfType<Button>().Where(x => ViewQuery.GetId(x) == "paginator-btn"))
+        {
+            button.IsEnabled = true;
+        }
+
         var currentPageBtn = this.FindInChildrenHierarchy<Button>(x => ViewQuery.GetId(x) == "paginator-btn" && x.CommandParameter.Equals(CurrentPage));
-        currentPageBtn.IsEnabled = false;
+        if (currentPageBtn is not null)
+        {
+            currentPageBtn.IsEnabled = false;
+        }
     }
 
     protected virtual void UpdateCanGoProperties()

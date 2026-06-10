@@ -73,6 +73,21 @@ public static class CommunityToolkitDialogExtensions
             .DisplayTextPromptAsync(title, message, accept, cancel, placeholder, maxLength, keyboard, initialValue, isPassword);
     }
 
+    public static Task<DateTime?> DisplayDatePromptAsync(
+        this Page page,
+        string title,
+        DateTime? selectedDate = null,
+        DateTime? minimumDate = null,
+        DateTime? maximumDate = null,
+        string accept = "OK",
+        string cancel = "Cancel",
+        string clear = "Clear",
+        string today = "Today")
+    {
+        return GetService().WithPage(page)
+            .DisplayDatePromptAsync(title, selectedDate, minimumDate, maximumDate, accept, cancel, clear, today);
+    }
+
     public static Task DisplayViewAsync(this Page page, string title, View content, string okText = "OK")
     {
         return GetService().WithPage(page)

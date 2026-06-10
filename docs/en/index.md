@@ -22,8 +22,9 @@ Uranium is available on [GitHub](https://github.com/enisn/UraniumUI)
   - [Data Annotations](https://enisn-projects.io/docs/en/uranium/latest/validations/DataAnnotations)
   - [InputKit](https://enisn-projects.io/docs/en/inputkit/latest/components/controls/FormView#validations)
 - Font icon support.
+  - [Material Symbols](https://enisn-projects.io/docs/en/uranium/latest/theming/Icons#material-symbols)
+  - [Fluent Icons](https://enisn-projects.io/docs/en/uranium/latest/theming/Icons#segoe-fluent-icons)
   - [FontAwesome](https://enisn-projects.io/docs/en/uranium/latest/theming/Icons#fontawesome)
-  - [Material](https://enisn-projects.io/docs/en/uranium/latest/theming/Icons#material-icons)
 - Theming
   - [Material Theme](https://enisn-projects.io/docs/en/uranium/latest/themes/material/Index)
 

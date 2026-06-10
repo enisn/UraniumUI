@@ -64,7 +64,7 @@ BlurEffect is a `Effect` which means you can use it on any control.
 
 ## Properties
 
-- Mode: `BlurMode` (Default: `BlurMode.Light`) - Defines the blur mode. It can be `Light` or `Dark`.
+- Mode: `BlurMode` - Defines the blur mode. It can be `Light` or `Dark`. By default it follows the current application theme.
 
 
     ```xml
@@ -78,7 +78,7 @@ BlurEffect is a `Effect` which means you can use it on any control.
 
     ![MAUI Blur Effect Dark](images/blurs-example-simple-dark.png)
 
-- Accent: `Color` - Defines the tint color of the blur effect.
+- AccentColor: `Color` - Defines the tint color of the blur effect.
 
 
     ```xml

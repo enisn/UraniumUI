@@ -19,7 +19,7 @@
   </PropertyGroup>
 
   <ItemGroup Condition="$(TargetFramework.Contains('net9'))">
-    <PackageReference Include="InputKit.Maui" Version="4.5.1" />
+    <PackageReference Include="InputKit.Maui" Version="4.5.2" />
   </ItemGroup>
   <ItemGroup Condition="$(TargetFramework.Contains('net10'))">
     <PackageReference Include="InputKit.Maui" Version="4.6.0" />

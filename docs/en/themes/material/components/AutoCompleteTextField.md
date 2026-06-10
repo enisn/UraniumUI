@@ -6,6 +6,7 @@ AutoCompleteTextField is included in the `UraniumUI.Material.Controls` namespace
 
 ```xml
 xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+xmlns:m="clr-namespace:UraniumUI.Icons.MaterialSymbols;assembly=UraniumUI.Icons.MaterialSymbols"
 ```
 
 Then you can use it in a page like this:
@@ -63,7 +64,7 @@ AutoCompleteTextFields support setting an icon on the left side of the control. 
 ```xml
 <material:AutoCompleteTextField
     Title="Fruit"
-    Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Forest}}"/>
+    Icon="{FontImageSource FontFamily=MaterialOutlined, Glyph={x:Static m:MaterialOutlined.Forest}}"/>
 ```
 
 ![MAUI AutoComplete Entry with icon](../../../../images/autocompletetextfield-icon-android-light.png)

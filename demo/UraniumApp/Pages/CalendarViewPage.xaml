@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
+             xmlns:root="clr-namespace:UraniumApp"
+             x:Class="UraniumApp.Pages.CalendarViewPage"
+             Title="CalendarView">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="16">
+            <Label Text="CalendarView" FontSize="Title" />
+            <Label Text="UraniumUI.Controls" FontSize="Micro" Opacity=".6" />
+
+            <Label Text="A custom MAUI calendar layout that supports nullable single-date selection without relying on native date picker behavior." />
+
+            <Border StyleClass="SurfaceContainer, Rounded" StrokeThickness="0" Padding="16" MaximumWidthRequest="480">
+                <uranium:CalendarView x:Name="calendarView" MinimumDate="1970-01-01" />
+            </Border>
+
+            <Label Text="{Binding Source={x:Reference calendarView}, Path=SelectedDate, StringFormat='Selected date: {0:yyyy-MM-dd}'}" />
+
+            <HorizontalStackLayout Spacing="8">
+                <Button Text="Today" Clicked="TodayClicked" StyleClass="OutlinedButton" />
+                <Button Text="Clear" Clicked="ClearClicked" StyleClass="OutlinedButton" />
+            </HorizontalStackLayout>
+
+            <root:PropertyEditorView MaximumHeightRequest="600"
+                                     Value="{x:Reference calendarView}" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

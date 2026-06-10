@@ -4,7 +4,7 @@
 [assembly: XmlnsDefinition(Constants.XamlNamespace, Constants.NamespacePrefix + nameof(UraniumUI.Material.Resources))]
 
 [assembly: Microsoft.Maui.Controls.XmlnsPrefix(Constants.XamlNamespace, "material")]
-
+[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("UraniumUI.Material.Tests")]
 
 class Constants
 {

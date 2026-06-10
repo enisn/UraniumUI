@@ -22,6 +22,12 @@ public partial class DataGrid
         BindableProperty.Create(nameof(TitleTemplate), typeof(DataTemplate), typeof(DataGrid), defaultValue: null,
             propertyChanged: (bo, ov, nv) => (bo as DataGrid).OnTitleTemplateChanged());
 
+    public bool ShowHeaders { get => (bool)GetValue(ShowHeadersProperty); set => SetValue(ShowHeadersProperty, value); }
+
+    public static readonly BindableProperty ShowHeadersProperty =
+        BindableProperty.Create(nameof(ShowHeaders), typeof(bool), typeof(DataGrid), defaultValue: true,
+            propertyChanged: (bo, ov, nv) => (bo as DataGrid).Render());
+
     public Color LineSeparatorColor { get => (Color)GetValue(LineSeparatorColorProperty); set => SetValue(LineSeparatorColorProperty, value); }
 
     public static readonly BindableProperty LineSeparatorColorProperty =

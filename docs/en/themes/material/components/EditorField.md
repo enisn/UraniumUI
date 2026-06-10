@@ -6,6 +6,7 @@ EditorField is included in the `UraniumUI.Material.Controls` namespace. You shou
 
 ```xml
 xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+xmlns:m="clr-namespace:UraniumUI.Icons.MaterialSymbols;assembly=UraniumUI.Icons.MaterialSymbols"
 ```
 
 Then you can use it like this:
@@ -25,7 +26,7 @@ TextFields support setting an icon on the left side of the control. You can set 
 ```xml
  <material:EditorField
     Title="Description"
-    Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Edit}}"/>
+    Icon="{FontImageSource FontFamily=MaterialOutlined, Glyph={x:Static m:MaterialOutlined.Edit}}"/>
 ```
 
 ![MAUI EditorView icon](../../../../images/editorfield-icon-android-dark.png)
@@ -36,7 +37,7 @@ The color that is used to fill border and icon of control when it's focused. You
 ```xml
  <material:EditorField
     Title="Description"
-    Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Edit}}"
+    Icon="{FontImageSource FontFamily=MaterialOutlined, Glyph={x:Static m:MaterialOutlined.Edit}}"
     AccentColor="DeepSkyBlue"/>
 ```
 
@@ -53,7 +54,7 @@ You can define validations by using `Validations` property. It is a collection o
 UraniumUI provides an easier way than InputKit and allows defining validations without using `Validations` property. Validations can be placed inside `EditorField` tags.
 
 ```xml
-<material:EditorField Title="E-mail" Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Email}}">
+<material:EditorField Title="E-mail" Icon="{FontImageSource FontFamily=MaterialOutlined, Glyph={x:Static m:MaterialOutlined.Mail}}">
     <validation:RequiredValidation />
     <validation:RegexValidation Pattern="{x:Static input:AdvancedEntry.REGEX_EMAIL}" Message="Invalid email address" />
 </material:EditorField>

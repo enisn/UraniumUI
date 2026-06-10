@@ -7,6 +7,7 @@ TextField is included in the `UraniumUI.Material.Controls` namespace. You should
 
 ```xml
 xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+xmlns:m="clr-namespace:UraniumUI.Icons.MaterialSymbols;assembly=UraniumUI.Icons.MaterialSymbols"
 ```
 
 Then you can use it like this:
@@ -35,6 +36,7 @@ Then you can use it like this:
 
 ### Behavior Properties
 - `AllowClear` - Gets or sets whether a clear button is shown to clear the text
+- `ClearCommand` - Gets or sets the command to execute when the clear button is pressed
 - `DisallowClearButtonFocus` - Gets or sets whether the clear button can receive focus
 - `SelectAllTextOnFocus` - Gets or sets whether all text should be selected when the field receives focus
 - `IsReadOnly` - Gets or sets whether the TextField is read-only
@@ -65,7 +67,7 @@ TextFields support setting an icon on the left side of the control. You can set 
 ```xml
  <material:TextField
     Title="E-mail"
-    Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Email}}"/>
+    Icon="{FontImageSource FontFamily=MaterialOutlined, Glyph={x:Static m:MaterialOutlined.Mail}}"/>
 ```
 
 | Light | Dark |
@@ -78,7 +80,7 @@ The color that is used to fill border and icon of control when it's focused. You
 ```xml
  <material:TextField
     Title="Description"
-    Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Edit}}"
+    Icon="{FontImageSource FontFamily=MaterialOutlined, Glyph={x:Static m:MaterialOutlined.Edit}}"
     AccentColor="DeepSkyBlue"/>
 ```
 
@@ -156,18 +158,18 @@ TextField is fully compatible with [FormView](https://enisn-projects.io/docs/en/
 ```xml
  <input:FormView Spacing="20">
 
-    <material:TextField Title="E-mail" Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Email}}">
+    <material:TextField Title="E-mail" Icon="{FontImageSource FontFamily=MaterialOutlined, Glyph={x:Static m:MaterialOutlined.Mail}}">
         <validation:RequiredValidation />
         <validation:RegexValidation Pattern="{x:Static input:AdvancedEntry.REGEX_EMAIL}" Message="Invalid email address" />
     </material:TextField>
 
-    <material:TextField Title="Name" Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Person}}">
+    <material:TextField Title="Name" Icon="{FontImageSource FontFamily=MaterialOutlined, Glyph={x:Static m:MaterialOutlined.Person}}">
         <validation:LettersOnlyValidation AllowSpaces="True" />
         <validation:RequiredValidation />
         <validation:MinLengthValidation MinLength="5" />
     </material:TextField>
 
-    <material:TextField Title="Surname" Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Tag}}" >
+    <material:TextField Title="Surname" Icon="{FontImageSource FontFamily=MaterialOutlined, Glyph={x:Static m:MaterialOutlined.Tag}}" >
         <material:TextField.Validations>
             <validation:RequiredValidation />
             <validation:LettersOnlyValidation AllowSpaces="True" />
@@ -175,7 +177,7 @@ TextField is fully compatible with [FormView](https://enisn-projects.io/docs/en/
         </material:TextField.Validations>
     </material:TextField>
 
-    <material:TextField Title="Age" Keyboard="Numeric" Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Calendar_month}}">
+    <material:TextField Title="Age" Keyboard="Numeric" Icon="{FontImageSource FontFamily=MaterialOutlined, Glyph={x:Static m:MaterialOutlined.Calendar_month}}">
         <material:TextField.Validations>
             <validation:MinValueValidation MinValue="18" />
             <validation:DigitsOnlyValidation />

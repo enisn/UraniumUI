@@ -15,8 +15,7 @@ public partial class InputField : IValidatable
     {
         VerticalOptions = LayoutOptions.Center,
         HorizontalOptions = LayoutOptions.End,
-        Padding = new Thickness(5, 0),
-        Margin = new Thickness(0, 0, 5, 0),
+        Padding = new Thickness(BuiltInAttachmentLeftPadding, 0, 0, 0),
         Content = new Path
         {
             StyleClass = new[] { "InputField.ValidationIcon" },

@@ -26,7 +26,6 @@ public partial class DropdownHandler : ButtonHandler
         button.TintColor = ColorResource.GetColor("Primary", "PrimaryDark", Colors.Azure).ToPlatform();
         if (UIDevice.CurrentDevice.CheckSystemVersion(15, 0))
         {
-            button.ChangesSelectionAsPrimaryAction = true;
             var configuration = UIButtonConfiguration.PlainButtonConfiguration;
             button.Configuration = configuration;
         }
@@ -43,51 +42,47 @@ public partial class DropdownHandler : ButtonHandler
 
     private static void SetItemsSource(Dropdown dropdown, UIKit.UIButton button)
     {
+        // Always reconstruct the menu so that it is also cleared when ItemsSource becomes null.
+        ReconstructMenu(dropdown, button);
+
         if (dropdown.ItemsSource is not null)
         {
-            var items = new UIKit.UIMenuElement[dropdown.ItemsSource.Count];
-            var selectedIndex = dropdown.ItemsSource.IndexOf(dropdown.SelectedItem);
-            for (int i = 0; i < dropdown.ItemsSource.Count; i++)
-            {
-                var item = dropdown.ItemsSource[i];
-                var action = UIKit.UIAction.Create(GetTextForItem(dropdown, dropdown.ItemsSource[i]), null, dropdown.ItemsSource[i].ToString(), _ => { dropdown.SelectedItem = item; });
-                action.State = i == selectedIndex ? UIMenuElementState.On : UIMenuElementState.Off;
-                items[i] = action;
-            }
-            button.Menu = UIKit.UIMenu.Create(items);
-
             dropdown.ItemsSourceCollectionChangedCallback = (e) =>
             {
-                switch (e.Action)
-                {
-                    case NotifyCollectionChangedAction.Add:
-                        {
-                            Array.Resize(ref items, items.Length + e.NewItems.Count);
-                            for (int i = 0; i < e.NewItems.Count; i++)
-                            {
-                                var item = e.NewItems[i];
-                                var act = UIKit.UIAction.Create(e.NewItems[i].ToString(), null, e.NewItems[i].ToString(), _ => { dropdown.SelectedItem = item; });
-                                items[items.Length - e.NewItems.Count + i] = act;
-                            }
-                        }
-                        break;
-                    case NotifyCollectionChangedAction.Remove:
-                        {
-                            for (int i = 0; i < e.OldItems.Count; i++)
-                            {
-                                items = items.Where(x => x.Title != e.OldItems[i].ToString()).ToArray();
-                            }
-                            button.Menu = UIKit.UIMenu.Create(items);
-                        }
-                        break;
-                }
+                ReconstructMenu(dropdown, button);
             };
         }
+        else
+        {
+            // Clear any previous callback when there is no ItemsSource.
+            dropdown.ItemsSourceCollectionChangedCallback = null;
+        }
+    }
+
+    private static void ReconstructMenu(Dropdown dropdown, UIKit.UIButton button)
+    {
+        if (dropdown.ItemsSource is null)
+        {
+            button.Menu = null;
+            return;
+        }
+
+        var items = new UIKit.UIMenuElement[dropdown.ItemsSource.Count];
+        var selectedIndex = dropdown.ItemsSource.IndexOf(dropdown.SelectedItem);
+        for (int i = 0; i < dropdown.ItemsSource.Count; i++)
+        {
+            var item = dropdown.ItemsSource[i];
+            var action = UIKit.UIAction.Create(GetTextForItem(dropdown, item), null, null, _ => { dropdown.SelectedItem = item; });
+            action.State = i == selectedIndex ? UIMenuElementState.On : UIMenuElementState.Off;
+            items[i] = action;
+        }
+        button.Menu = UIKit.UIMenu.Create(items);
     }
 
     public static void MapItemsSource(DropdownHandler handler, Dropdown dropdown)
     {
         SetItemsSource(dropdown, handler.PlatformView);
+        handler.ArrangeText();
     }
 
     public static void MapSelectedItem(DropdownHandler handler, Dropdown dropdown)
@@ -99,13 +94,21 @@ public partial class DropdownHandler : ButtonHandler
     {
         var selectedIndex = VirtualViewDropdown.ItemsSource?.IndexOf(VirtualViewDropdown.SelectedItem) ?? -1;
 
-        for (int i = 0; i < PlatformView.Menu.Children.Length; i++)
+        if (UIDevice.CurrentDevice.CheckSystemVersion(15, 0))
         {
-            var menuItem = PlatformView.Menu.Children[i];
+            PlatformView.ChangesSelectionAsPrimaryAction = selectedIndex != -1;
+        }
 
-            if (menuItem is UIAction action)
+        if (PlatformView.Menu is not null)
+        {
+            for (int i = 0; i < PlatformView.Menu.Children.Length; i++)
             {
-                action.State = i == selectedIndex ? UIMenuElementState.On : UIMenuElementState.Off;
+                var menuItem = PlatformView.Menu.Children[i];
+
+                if (menuItem is UIAction action)
+                {
+                    action.State = i == selectedIndex ? UIMenuElementState.On : UIMenuElementState.Off;
+                }
             }
         }
 
@@ -157,16 +160,8 @@ public partial class DropdownHandler : ButtonHandler
 
     public static void MapItemDisplayBinding(DropdownHandler handler, Dropdown dropdown)
     {
-        if (handler.PlatformView.Menu != null)
-        {
-            for (int i = 0; i < handler.PlatformView.Menu.Children.Length; i++)
-            {
-                if (handler.PlatformView.Menu.Children[i] is UIAction action)
-                {
-                    action.Title = GetTextForItem(dropdown, dropdown.ItemsSource[i]);
-                }
-            }
-        }
+        ReconstructMenu(dropdown, handler.PlatformView);
+        handler.ArrangeText();
     }
 
     private static string GetTextForItem(Dropdown dropdown, object item)

@@ -14,12 +14,12 @@
             <![CDATA[
  <material:DatePickerField 
     Title="Pick a date"
-    Icon="{FontImageSource FontFamily=MaterialSharp, Glyph={x:Static m:MaterialSharp.Access_time}}"
+    Icon="{FontImageSource FontFamily=MaterialSharp, Glyph={x:Static m:MaterialSharp.Calendar_month}}"
     />
             ]]>
         </x:String>
         <x:String x:Key="DocLink">https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/DatePickerField</x:String>
-        <x:String x:Key="SourceLink">https://github.com/enisn/UraniumUI/blob/develop/demo/UraniumApp/Pages/InputFields/DatePickerFieldPage.xam</x:String>
+        <x:String x:Key="SourceLink">https://github.com/enisn/UraniumUI/blob/develop/demo/UraniumApp/Pages/InputFields/DatePickerFieldPage.xaml</x:String>
     </ContentPage.Resources>
 
     <ScrollView>
@@ -33,7 +33,7 @@
                 <Button Text="Reset" Clicked="Reset" StyleClass="OutlinedButton" ImageSource="{FontImageSource Glyph={x:Static m:MaterialSharp.Refresh}, FontFamily=MaterialSharp, Color={AppThemeBinding {StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}}" />
             </HorizontalStackLayout>
 
-            <Label Text="TimePickerField is a control that allows users to select a time. It is a wrapper around the TimePicker control and makes it in line with the material design guidelines." />
+            <Label Text="DatePickerField opens the UraniumUI CalendarView date prompt, supports nullable dates, and keeps Material input-field styling across platforms." />
 
             <VerticalStackLayout Padding="{OnIdiom 10, Phone=0}" Spacing="10">
                 <Border StyleClass="SurfaceContainer, Rounded" StrokeThickness="0">
@@ -41,7 +41,7 @@
                         <ContentView StyleClass="ControlPreview">
                             <material:DatePickerField 
                                 Title="Pick a date"
-                                Icon="{FontImageSource FontFamily=MaterialSharp, Glyph={x:Static m:MaterialSharp.Timer}}"
+                                Icon="{FontImageSource FontFamily=MaterialSharp, Glyph={x:Static m:MaterialSharp.Calendar_month}}"
                                 />
                         </ContentView>
                         <uranium:ExpanderView>

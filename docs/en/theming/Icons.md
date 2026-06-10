@@ -1,10 +1,10 @@
 # Uranium UI: Icons
 
-Uranium UI uses font icons to render icons on all platforms. Uranium Core provides a set of icons that can be used in your application. Themes provide their own icon sets. You can also use your own icons.
+Uranium UI uses font icons to render icons on all platforms. Icon packs are shipped as separate packages so you can choose the one that fits your app. Themes can also provide their own icon sets, and you can always use your own fonts.
 
 ## Using icons
 
-Uranium Core provides [Font Awesome](https://fontawesome.com/) by default. Each theme can provide its own icon set. Visit the theme documentation to learn more about the icons it provides.
+For new projects, [Material Symbols](#material-symbols) is the recommended/default icon path. Font Awesome and Segoe Fluent Icons are also available as optional packages.
 
 ### Fontawesome
 It's included and configured in [UraniumUI.Icons.FontAwesome](https://www.nuget.org/packages/UraniumUI.Icons.FontAwesome) package.
@@ -69,13 +69,13 @@ builder
 
 - `MaterialOutlined`
 - `MaterialOutlinedFilled`
-- `MaterialRound`
-- `MaterialRoundFilled`
+- `MaterialRounded`
+- `MaterialRoundedFilled`
 - `MaterialSharp`
 - `MaterialSharpFilled`
 
 #### Glyphs
-Glyphs are provided with `MaterialOutlined`, `MaterialRound` and `MaterialSharp` classes. They can be accessed like `MaterialSharp.Account_circle`. This class is included in `UraniumUI` namespace. You should include the following xml namespace to use it.
+Glyphs are provided with `MaterialOutlined`, `MaterialRounded` and `MaterialSharp` classes. They can be accessed like `MaterialSharp.Account_circle`. This class is included in `UraniumUI` namespace. You should include the following xml namespace to use it.
 
 ```xml
 xmlns:m="clr-namespace:UraniumUI.Icons.MaterialSymbols;assembly=UraniumUI.Icons.MaterialSymbols"

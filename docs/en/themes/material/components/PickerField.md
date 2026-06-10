@@ -6,6 +6,7 @@ PickerField is included in the `UraniumUI.Material.Controls` namespace. You shou
 
 ```xml
 xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+xmlns:m="clr-namespace:UraniumUI.Icons.MaterialSymbols;assembly=UraniumUI.Icons.MaterialSymbols"
 ```
 
 Then you can use it like this:
@@ -27,7 +28,7 @@ PickerFields support setting an icon on the left side of the control. You can se
 <material:PickerField 
     Title="Pick an option"
     ItemsSource="{Binding Items}"
-    Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Expand_circle_down}}"
+    Icon="{FontImageSource FontFamily=MaterialOutlined, Glyph={x:Static m:MaterialOutlined.Expand_circle_down}}"
     />
 ```
 
@@ -65,7 +66,7 @@ PickerField supports validation rules since it uses `object` as its **SelectedIt
 <material:PickerField 
     Title="Pick an option"
     ItemsSource="{Binding Items}"
-    Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Expand_circle_down}}">
+    Icon="{FontImageSource FontFamily=MaterialOutlined, Glyph={x:Static m:MaterialOutlined.Expand_circle_down}}">
     <validation:RequiredValidation />
 </material:PickerField>
 ```

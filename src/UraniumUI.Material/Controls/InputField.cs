@@ -1,4 +1,4 @@
-﻿using Microsoft.Maui.Controls.Shapes;
+using Microsoft.Maui.Controls.Shapes;
 using System.ComponentModel;
 using UraniumUI.Extensions;
 using UraniumUI.Resources;
@@ -11,6 +11,17 @@ public partial class InputField : ContentView
 {
     internal const double FirstDash = 6;
     internal const double MaxCornerRadius = 24;
+    internal const double EdgePadding = 10;                  // gap to the field border (leading Icon margin / trailing Attachments margin)
+    internal const double AttachmentsSpacing = 8;            // gap between sibling attachments
+    internal const double BuiltInAttachmentLeftPadding = 5;  // left tap-area extension on built-in attachments toward the text content
+
+    private Label titleLabelPart;
+    private Border borderPart;
+    private Grid rootGridPart;
+    private Grid innerGridPart;
+    private HorizontalStackLayout endIconsContainerPart;
+    private bool isTemplateApplied;
+
     public virtual new View Content { get => (View)GetValue(ContentProperty); set => SetValue(ContentProperty, value); }
 
     public static readonly new BindableProperty ContentProperty = BindableProperty.Create(
@@ -37,34 +48,42 @@ public partial class InputField : ContentView
             inputField.OnPropertyChanged(nameof(Content));
         }, defaultBindingMode: BindingMode.TwoWay);
 
-    protected Label labelTitle => this.FindByViewQueryIdInVisualTreeDescendants<Label>("TitleLabel");
+    protected Label labelTitle => titleLabelPart ??= FindTemplatePart<Label>("TitleLabel");
 
-    protected Border border => this.FindByViewQueryIdInVisualTreeDescendants<Border>("Border");
+    protected Border border => borderPart ??= FindTemplatePart<Border>("Border");
 
-    protected Grid rootGrid => this.FindByViewQueryIdInVisualTreeDescendants<Grid>("RootGrid");
+    protected Grid rootGrid => rootGridPart ??= FindTemplatePart<Grid>("RootGrid");
 
-    protected Grid innerGrid => this.FindByViewQueryIdInVisualTreeDescendants<Grid>("InnerGrid");
+    protected Grid innerGrid => innerGridPart ??= FindTemplatePart<Grid>("InnerGrid");
 
     protected Lazy<Image> imageIcon = new Lazy<Image>(() =>
     {
-        return new Image
+        var image = new Image
         {
             StyleClass = new[] { "InputField.Icon" },
             HorizontalOptions = LayoutOptions.Start,
             VerticalOptions = LayoutOptions.Center,
             WidthRequest = 20,
             HeightRequest = 20,
-            Margin = new Thickness(10, 0, 0, 0),
+            Margin = new Thickness(EdgePadding, 0, 0, 0),
         };
+        image.SetId("IconImage");
+
+        return image;
     });
 
-    protected HorizontalStackLayout endIconsContainer => this.FindByViewQueryIdInVisualTreeDescendants<HorizontalStackLayout>("EndIconsContainer");
+    protected HorizontalStackLayout endIconsContainer => endIconsContainerPart ??= FindTemplatePart<HorizontalStackLayout>("EndIconsContainer");
 
     public IList<IView> Attachments => endIconsContainer?.Children;
 
     private Color LastFontimageColor;
 
+    private Thickness? originalContentMargin;
+
     private bool hasValue;
+
+    // Leading-icon predicate. Invariant: imageIcon is materialized, in the grid, and visible iff this is true.
+    protected bool HasIcon => Icon != null;
 
     private static Binding GetRelativeBinding(string path, BindingMode mode = BindingMode.Default) => new Binding(path, mode: mode, source: new RelativeBindingSource(RelativeBindingSourceMode.TemplatedParent));
 
@@ -133,6 +152,8 @@ public partial class InputField : ContentView
         var endIconsContainer = new HorizontalStackLayout
         {
             StyleClass = new[] { "InputField.Attachments" },
+            Margin = new Thickness(0, 0, EdgePadding, 0),
+            Spacing = AttachmentsSpacing,
         };
 
         endIconsContainer.SetId("EndIconsContainer");
@@ -159,12 +180,34 @@ public partial class InputField : ContentView
         }
     }
 
+    private T FindTemplatePart<T>(string id)
+        where T : VisualElement
+    {
+        if (!isTemplateApplied && Handler is null)
+        {
+            return null;
+        }
+
+        return this.FindByViewQueryIdInVisualTreeDescendants<T>(id);
+    }
+
+    private void ResetTemplateParts()
+    {
+        titleLabelPart = null;
+        borderPart = null;
+        rootGridPart = null;
+        innerGridPart = null;
+        endIconsContainerPart = null;
+    }
+
     protected override void OnHandlerChanging(HandlerChangingEventArgs args)
     {
         base.OnHandlerChanging(args);
 
         if (args.NewHandler is null)
         {
+            isTemplateApplied = false;
+            ResetTemplateParts();
             ReleaseEvents();
         }
     }
@@ -213,7 +256,10 @@ public partial class InputField : ContentView
 
     protected virtual void OnFocusChanged(object sender, FocusEventArgs args)
     {
-        (this.rootGrid as IGridLayout).IsFocused = args.IsFocused;
+        if (rootGrid is IGridLayout gridLayout)
+        {
+            gridLayout.IsFocused = args.IsFocused;
+        }
     }
 #endif
 
@@ -253,7 +299,10 @@ public partial class InputField : ContentView
 
     private void InitializeBorder()
     {
-        if (labelTitle is null)
+        var currentLabelTitle = labelTitle;
+        var currentBorder = border;
+
+        if (currentLabelTitle is null || currentBorder is null)
         {
             return;
         }
@@ -261,38 +310,39 @@ public partial class InputField : ContentView
         var perimeter = (this.Width + this.Height) * 2;
         var calculatedFirstDash = FirstDash + CornerRadius.Clamp(FirstDash, double.MaxValue);
 
-        var space = (labelTitle.Width + calculatedFirstDash) * .8;
-        if (labelTitle.Width <= 0)
+        var space = (currentLabelTitle.Width + calculatedFirstDash) * .8;
+        if (currentLabelTitle.Width <= 0)
             space = 0;
 
 #if ANDROID
         if (this.IsRtl())
         {
-            calculatedFirstDash += this.Width - labelTitle.Width;
+            calculatedFirstDash += this.Width - currentLabelTitle.Width;
         }
 #endif
 
-
-
-        border.StrokeDashArray = new DoubleCollection { calculatedFirstDash * 0.9 / BorderThickness, space / BorderThickness, perimeter, 0 };
+        currentBorder.StrokeDashArray = new DoubleCollection { calculatedFirstDash * 0.9 / BorderThickness, space / BorderThickness, perimeter, 0 };
 
         UpdateState();
     }
 
     protected virtual void UpdateState()
     {
+        var currentBorder = border;
+        var currentLabelTitle = labelTitle;
+
         if (Content is null)
         {
             return;
         }
 
-        if (border.StrokeDashArray == null || border.StrokeDashArray.Count == 0 || labelTitle.Width <= 0)
+        if (currentBorder?.StrokeDashArray == null || currentBorder.StrokeDashArray.Count == 0 || currentLabelTitle is null || currentLabelTitle.Width <= 0)
         {
             return;
         }
 
-        using (border.Batch())
-        using (labelTitle.Batch())
+        using (currentBorder.Batch())
+        using (currentLabelTitle.Batch())
         {
             if (HasValue || Content.IsFocused)
             {
@@ -300,54 +350,57 @@ public partial class InputField : ContentView
 
                 UpdateOffset(0.01);
 
-                labelTitle.AnchorX = 0;
+                currentLabelTitle.AnchorX = 0;
 
-                labelTitle.CancelAnimations();
+                currentLabelTitle.CancelAnimations();
                 if (HasValue)
                 {
-                    labelTitle.TranslationX = x;
-                    labelTitle.TranslationY = -25;
-                    labelTitle.Scale = .8;
+                    currentLabelTitle.TranslationX = x;
+                    currentLabelTitle.TranslationY = -25;
+                    currentLabelTitle.Scale = .8;
                 }
                 else
                 {
-                    labelTitle.TranslateToSafely(x, -25, 90, Easing.BounceOut);
-                    labelTitle.ScaleToSafely(.8, 90);
+                    currentLabelTitle.TranslateToSafely(x, -25, 90, Easing.BounceOut);
+                    currentLabelTitle.ScaleToSafely(.8, 90);
                 }
 
 #if ANDROID
                 if (this.IsRtl())
                 {
-                    labelTitle.AnchorX = .5;
+                    currentLabelTitle.AnchorX = .5;
                 }
 #endif
             }
             else
             {
-                var offsetToGo = border.StrokeDashArray[0] + border.StrokeDashArray[1] + FirstDash;
+                var offsetToGo = currentBorder.StrokeDashArray[0] + currentBorder.StrokeDashArray[1] + FirstDash;
                 UpdateOffset(offsetToGo);
 
-                labelTitle.CancelAnimations();
+                currentLabelTitle.CancelAnimations();
 
-                var x = imageIcon.IsValueCreated ? imageIcon.Value.Width : 0;
+                var x = HasIcon ? imageIcon.Value.Width : 0;
 
 #if ANDROID
                 if (this.IsRtl())
                 {
-                    x = imageIcon.IsValueCreated ? -imageIcon.Value.Width : 0;
+                    x = HasIcon ? -imageIcon.Value.Width : 0;
                 }
 #endif
 
-                labelTitle.AnchorX = 0;
-                labelTitle.TranslateToSafely(x, 0, 90, Easing.BounceOut);
-                labelTitle.ScaleToSafely(1, 90);
+                currentLabelTitle.AnchorX = 0;
+                currentLabelTitle.TranslateToSafely(x, 0, 90, Easing.BounceOut);
+                currentLabelTitle.ScaleToSafely(1, 90);
             }
         }
     }
 
     protected virtual void UpdateOffset(double value)
     {
-        border.StrokeDashOffset = value;
+        if (border is not null)
+        {
+            border.StrokeDashOffset = value;
+        }
     }
 
     protected virtual void RegisterForEvents()
@@ -372,8 +425,11 @@ public partial class InputField : ContentView
 
     private void Content_Unfocused(object sender, FocusEventArgs e)
     {
-        border.SetBinding(Border.StrokeProperty, GetRelativeBinding(nameof(BorderColor)));
-        labelTitle.SetBinding(Label.TextColorProperty, GetRelativeBinding(nameof(TitleColor)));
+        var currentBorder = border;
+        var currentLabelTitle = labelTitle;
+
+        currentBorder?.SetBinding(Border.StrokeProperty, GetRelativeBinding(nameof(BorderColor)));
+        currentLabelTitle?.SetBinding(Label.TextColorProperty, GetRelativeBinding(nameof(TitleColor)));
         UpdateState();
 
         if (Icon is FontImageSource fontImageSource)
@@ -384,8 +440,16 @@ public partial class InputField : ContentView
 
     private void Content_Focused(object sender, FocusEventArgs e)
     {
-        border.Stroke = AccentColor;
-        labelTitle.TextColor = AccentColor;
+        if (border is not null)
+        {
+            border.Stroke = AccentColor;
+        }
+
+        if (labelTitle is not null)
+        {
+            labelTitle.TextColor = AccentColor;
+        }
+
         UpdateState();
 
         if (Icon is FontImageSource fontImageSource && fontImageSource.Color != AccentColor)
@@ -403,35 +467,69 @@ public partial class InputField : ContentView
     protected override void OnApplyTemplate()
     {
         base.OnApplyTemplate();
+
+        isTemplateApplied = true;
+
+        ResetTemplateParts();
+
         if (Icon != null)
         {
-            if (innerGrid != null && !innerGrid.Contains(imageIcon.Value))
-            {
-                innerGrid.Add(imageIcon.Value, column: 0);
-            }
+            OnIconChanged();
+        }
+
+        OnCornerRadiusChanged();
+
+        if (!string.IsNullOrEmpty(ContentAutomationId) && Content != null)
+        {
+            Content.AutomationId = ContentAutomationId;
         }
     }
 
     protected virtual void OnIconChanged()
     {
-        imageIcon.Value.Source = Icon;
-
-        if (Icon is FontImageSource font && font.Color.IsNullOrTransparent())
+        if (this.Content != null && originalContentMargin == null)
         {
-            // TODO: Add IconColor bindable property.??? What if it's not FontImage?
-            font.SetAppThemeColor(
-                FontImageSource.ColorProperty,
-                ColorResource.GetColor("OnBackground", Colors.Gray),
-                ColorResource.GetColor("OnBackgroundDark", Colors.Gray));
+            originalContentMargin = this.Content.Margin;
         }
 
-        if (innerGrid != null && !innerGrid.Contains(imageIcon.Value))
+        if (HasIcon)
         {
-            innerGrid.Add(imageIcon.Value, column: 0);
+            imageIcon.Value.Source = Icon;
+            imageIcon.Value.IsVisible = true;
+
+            if (Icon is FontImageSource font && font.Color.IsNullOrTransparent())
+            {
+                // TODO: Add IconColor bindable property.??? What if it's not FontImage?
+                font.SetAppThemeColor(
+                    FontImageSource.ColorProperty,
+                    ColorResource.GetColor("OnBackground", Colors.Gray),
+                    ColorResource.GetColor("OnBackgroundDark", Colors.Gray));
+            }
+
+            if (innerGrid != null && !innerGrid.Contains(imageIcon.Value))
+            {
+                innerGrid.Add(imageIcon.Value, column: 0);
+            }
+
+            this.Content.Margin = new Thickness(5, 0, 0, 0);
+        }
+        else
+        {
+            if (imageIcon.IsValueCreated)
+            {
+                // Collapse the leading Auto column when Icon is cleared (e.g. binding goes back to null).
+                imageIcon.Value.Source = null;
+                imageIcon.Value.IsVisible = false;
+            }
+
+            if (this.Content != null && originalContentMargin.HasValue)
+            {
+                this.Content.Margin = originalContentMargin.Value;
+            }
         }
 
-        var leftMargin = Icon != null ? 5 : 10;
-        this.Content.Margin = new Thickness(leftMargin, 0, 0, 0);
+        // Re-run the title-position logic so the floating Label tracks the icon's new presence/absence.
+        UpdateState();
     }
 
     protected virtual void OnCornerRadiusChanged()
@@ -442,7 +540,7 @@ public partial class InputField : ContentView
             return;
         }
 
-        if (border.StrokeShape is RoundRectangle roundRectangle)
+        if (border?.StrokeShape is RoundRectangle roundRectangle)
         {
             roundRectangle.CornerRadius = CornerRadius;
 #if WINDOWS
@@ -559,7 +657,14 @@ public partial class InputField : ContentView
 
     public static readonly BindableProperty FontAutoScalingEnabledProperty = BindableProperty.Create(
         nameof(FontAutoScalingEnabled), typeof(bool), typeof(InputField), Picker.FontAutoScalingEnabledProperty.DefaultValue,
-        propertyChanged: (bindable, oldValue, newValue) => (bindable as InputField).labelTitle.FontAutoScalingEnabled = (bool)newValue);
+        propertyChanged: (bindable, oldValue, newValue) =>
+        {
+            var titleLabel = (bindable as InputField)?.labelTitle;
+            if (titleLabel != null)
+            {
+                titleLabel.FontAutoScalingEnabled = (bool)newValue;
+            }
+        });
 
     public string ContentAutomationId { get => (string)GetValue(ContentAutomationIdProperty); set => SetValue(ContentAutomationIdProperty, value); }
 

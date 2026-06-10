@@ -51,6 +51,16 @@ public interface IDialogService
         string initialValue = "",
         bool isPassword = false);
 
+    Task<DateTime?> DisplayDatePromptAsync(
+        string title,
+        DateTime? selectedDate = null,
+        DateTime? minimumDate = null,
+        DateTime? maximumDate = null,
+        string accept = "OK",
+        string cancel = "Cancel",
+        string clear = "Clear",
+        string today = "Today");
+
     Task<TViewModel> DisplayFormViewAsync<TViewModel>(
         string title,
         TViewModel viewModel = default,

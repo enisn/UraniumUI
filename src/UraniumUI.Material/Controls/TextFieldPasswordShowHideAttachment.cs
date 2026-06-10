@@ -14,8 +14,7 @@ public class TextFieldPasswordShowHideAttachment : StatefulContentView
     public TextFieldPasswordShowHideAttachment()
     {
         VerticalOptions = LayoutOptions.Center;
-        Padding = new Thickness(5, 0);
-        Margin = new Thickness(0, 0, 5, 0);
+        Padding = new Thickness(InputField.BuiltInAttachmentLeftPadding, 0, 0, 0);
         TappedCommand = new Command(SwitchPassword);
     }
 

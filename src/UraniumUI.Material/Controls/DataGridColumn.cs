@@ -1,9 +1,32 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
+using System.Globalization;
 
 namespace UraniumUI.Material.Controls;
 
 public class DataGridColumn : BindableObject
 {
+    public string CellStyleClass
+    {
+        get => (string)GetValue(CellStyleClassProperty);
+        set => SetValue(CellStyleClassProperty, value);
+    }
+
+    public static readonly BindableProperty CellStyleClassProperty = BindableProperty.Create(
+        nameof(CellStyleClass),
+        typeof(string),
+        typeof(DataGridColumn));
+
+    public string HeaderStyleClass
+    {
+        get => (string)GetValue(HeaderStyleClassProperty);
+        set => SetValue(HeaderStyleClassProperty, value);
+    }
+
+    public static readonly BindableProperty HeaderStyleClassProperty = BindableProperty.Create(
+        nameof(HeaderStyleClass),
+        typeof(string),
+        typeof(DataGridColumn));
+
     public string Title { get => (string)GetValue(TitleProperty); set => SetValue(TitleProperty, value); }
 
     public static readonly BindableProperty TitleProperty = BindableProperty.Create(

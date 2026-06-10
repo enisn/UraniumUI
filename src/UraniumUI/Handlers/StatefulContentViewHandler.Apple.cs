@@ -15,15 +15,45 @@ public partial class StatefulContentViewHandler
         return platformView;
     }
 
+    private UIContinousGestureRecognizer _tapRecognizer;
+    private UIHoverGestureRecognizer _hoverRecognizer;
+    private UILongPressGestureRecognizer _longPressRecognizer;
+    private bool _isConnected;
+
     protected override void ConnectHandler(Microsoft.Maui.Platform.ContentView platformView)
     {
-        platformView.AddGestureRecognizer(new UIContinousGestureRecognizer(Tapped));
+        _tapRecognizer = new UIContinousGestureRecognizer(Tapped);
+        platformView.AddGestureRecognizer(_tapRecognizer);
         if (OperatingSystem.IsIOSVersionAtLeast(13))
         {
-            platformView.AddGestureRecognizer(new UIHoverGestureRecognizer(OnHover));
+            _hoverRecognizer = new UIHoverGestureRecognizer(OnHover);
+            platformView.AddGestureRecognizer(_hoverRecognizer);
         }
-        platformView.AddGestureRecognizer(new UILongPressGestureRecognizer(OnLongPress));
+        _longPressRecognizer = new UILongPressGestureRecognizer(OnLongPress);
+        platformView.AddGestureRecognizer(_longPressRecognizer);
+        _isConnected = true;
         base.ConnectHandler(platformView);
+    }
+
+    protected override void DisconnectHandler(Microsoft.Maui.Platform.ContentView platformView)
+    {
+        _isConnected = false;
+        if (_tapRecognizer != null)
+        {
+            platformView.RemoveGestureRecognizer(_tapRecognizer);
+            _tapRecognizer = null;
+        }
+        if (_hoverRecognizer != null)
+        {
+            platformView.RemoveGestureRecognizer(_hoverRecognizer);
+            _hoverRecognizer = null;
+        }
+        if (_longPressRecognizer != null)
+        {
+            platformView.RemoveGestureRecognizer(_longPressRecognizer);
+            _longPressRecognizer = null;
+        }
+        base.DisconnectHandler(platformView);
     }
 
     private void OnLongPress(UILongPressGestureRecognizer recognizer)
@@ -54,6 +84,9 @@ public partial class StatefulContentViewHandler
 
     private void Tapped(UIGestureRecognizer recognizer)
     {
+        if (!_isConnected)
+            return;
+
         switch (recognizer.State)
         {
             case UIGestureRecognizerState.Began:

@@ -1,17 +1,19 @@
 # RadioButton
-The `RadioButton` component is used to select a single option from a set of options. UraniumU UI uses [InputKit CheckBox](https://enisn-projects.io/docs/en/inputkit/latest/components/controls/CheckBox) instead of MAUI one. It is because InputKit CheckBox is more customizable and already has a Material theme.
+The `RadioButton` component is used to select a single option from a set of options. UraniumUI uses [InputKit RadioButton](https://enisn-projects.io/docs/en/inputkit/latest/components/controls/RadioButton) instead of the MAUI one because it is more customizable and already has a Material theme.
 
 ![MAUI Material Design Radio Button](https://lh3.googleusercontent.com/7IADEr51nTh9IXxTqAYHJ50lpdDR8ZiBLvpAckIhRgD66Xtn-kkX2I8iVx3vZZ8sh6_fAqscCyxkbpdlDdzbRVukOOgB5SHxBXJF9KI=w1064-v0)
 
 
 ## Features
 
-You can visit [InputKit CheckBox Documentation](https://enisn-projects.io/docs/en/inputkit/latest/components/controls/CheckBox) to see features. UraniumUI applies only visual changes on it.
+You can visit [InputKit RadioButton Documentation](https://enisn-projects.io/docs/en/inputkit/latest/components/controls/RadioButton) to see features. UraniumUI applies only visual changes on it.
 
 
 ## Usage
 
-CheckBox is defined in `UraniumUI.Material.Controls` namespace. You can use it like this:
+RadioButtons should be grouped together in a `RadioButtonGroupView`. Otherwise, they will work independently.
+
+RadioButton is defined in `UraniumUI.Material.Controls` namespace. You can use it like this:
 
 
 ```xml

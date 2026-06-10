@@ -11,6 +11,7 @@ MultiplePickerField is included in the `UraniumUI.Material.Controls` namespace. 
 
 ```xml
 xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+xmlns:m="clr-namespace:UraniumUI.Icons.MaterialSymbols;assembly=UraniumUI.Icons.MaterialSymbols"
 ```
 
 Then you can use it like this:
@@ -36,7 +37,7 @@ TextFields support setting an icon on the left side of the control. You can set 
 ```xml
  <material:MultiplePickerField
     Title="Pick some options"
-    Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Email}}"/>
+    Icon="{FontImageSource FontFamily=MaterialOutlined, Glyph={x:Static m:MaterialOutlined.Mail}}"/>
 ```
 
 ## AccentColor

@@ -94,6 +94,77 @@ public class TextField_Test
     }
 
     [Fact]
+    public void Attachments_Container_HasDefaultSpacingFromBorderAndBetweenChildren()
+    {
+        // The Attachments container provides a default gap to the field border and
+        // between sibling attachments. Container defaults stay independent of children.
+        var control = AnimationReadyHandler.Prepare(new TextField());
+
+        var endIconsContainer = control.FindByViewQueryIdInVisualTreeDescendants<HorizontalStackLayout>("EndIconsContainer");
+
+        endIconsContainer.ShouldNotBeNull();
+        endIconsContainer.Margin.ShouldBe(new Thickness(0, 0, InputField.EdgePadding, 0));
+        endIconsContainer.Spacing.ShouldBe(InputField.AttachmentsSpacing);
+
+        var first = new ActivityIndicator { IsRunning = true };
+        var second = new ActivityIndicator { IsRunning = true };
+        control.Attachments.Add(first);
+        control.Attachments.Add(second);
+
+        endIconsContainer.Margin.ShouldBe(new Thickness(0, 0, InputField.EdgePadding, 0));
+        endIconsContainer.Spacing.ShouldBe(InputField.AttachmentsSpacing);
+        control.Attachments.ShouldContain(first);
+        control.Attachments.ShouldContain(second);
+    }
+
+    [Fact]
+    public void ClearIcon_HasAsymmetricLeftHitPadding()
+    {
+        // Clear X uses asymmetric Padding: right edge flush with the container margin
+        // (matching a user-supplied attachment), left side extended for a wider tap target.
+        var control = AnimationReadyHandler.Prepare(new TextField { AllowClear = true });
+        var clearIcon = control.FindByViewQueryIdInVisualTreeDescendants<StatefulContentView>("ClearIcon");
+
+        clearIcon.ShouldNotBeNull();
+        clearIcon.Margin.ShouldBe(default(Thickness));
+        clearIcon.Padding.ShouldBe(new Thickness(5, 0, 0, 0));
+    }
+  
+    [Fact]
+    public void Icon_ClearedToNull_CollapsesLeadingIconSlot()
+    {
+        // Repro for #1002 AND assertion of the InputField invariant maintained by OnIconChanged:
+        //   imageIcon is materialized, in the grid, and visible iff Icon != null (i.e. iff HasIcon).
+        // Also: Content.Margin must match a TextField that never had an icon when Icon is null,
+        // so the cleared field is layout-identical to a never-iconed field.
+        var iconA = new FontImageSource { FontFamily = "MaterialSharp", Glyph = "A" };
+
+        var reference = AnimationReadyHandler.Prepare(new TextField());
+        var referenceMargin = reference.Content.Margin;
+
+        var control = AnimationReadyHandler.Prepare(new TextField { Icon = iconA });
+        var imageIcon = control.FindByViewQueryIdInVisualTreeDescendants<Image>("IconImage");
+
+        imageIcon.ShouldNotBeNull();
+        imageIcon.IsVisible.ShouldBeTrue();
+        imageIcon.Source.ShouldBe(iconA);
+
+        // Clear the Icon (e.g. the binding now resolves to null).
+        control.Icon = null;
+
+        // The same Image instance is still in the visual tree but collapsed.
+        imageIcon.IsVisible.ShouldBeFalse();
+        imageIcon.Source.ShouldBeNull();
+        // And Content.Margin must match a TextField that never had an icon.
+        control.Content.Margin.ShouldBe(referenceMargin);
+
+        // Restoring a non-null Icon must un-collapse it.
+        control.Icon = iconA;
+        imageIcon.IsVisible.ShouldBeTrue();
+        imageIcon.Source.ShouldBe(iconA);
+    }
+
+    [Fact]
     public void TextChanges_ShouldShouldCorrectlyUpdateClearButtonVisibility()
     {
         var control = AnimationReadyHandler.Prepare(new TextField() { AllowClear = true });
@@ -300,6 +371,35 @@ public class TextField_Test
 
         // Assert
         control.EntryView.ReturnCommand.ShouldBe(viewModel.Command);
+    }
+
+    [Fact]
+    public void ClearCommand_ShouldBeSet_FromViewModel()
+    {
+        var control = AnimationReadyHandler.Prepare(new TextField());
+        var viewModel = new TestViewModel();
+        viewModel.Command = new Command(() => Console.WriteLine("Clear Command"));
+        control.BindingContext = viewModel;
+
+        control.SetBinding(TextField.ClearCommandProperty, new Binding(nameof(TestViewModel.Command)));
+
+        control.ClearCommand.ShouldBe(viewModel.Command);
+    }
+
+    [Fact]
+    public void ClearIcon_ShouldExecute_ClearCommand_WhenProvided()
+    {
+        var control = AnimationReadyHandler.Prepare(new TextField { AllowClear = true });
+        var clearIcon = control.FindByViewQueryIdInVisualTreeDescendants<StatefulContentView>("ClearIcon");
+        object parameter = null;
+
+        control.ClearCommand = new Command<object>(value => parameter = value);
+        control.Text = "Test";
+
+        clearIcon.TappedCommand.Execute(null);
+
+        parameter.ShouldBe(control);
+        control.Text.ShouldBe("Test");
     }
 
     [Fact]

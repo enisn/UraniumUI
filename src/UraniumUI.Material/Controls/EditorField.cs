@@ -57,7 +57,7 @@ public partial class EditorField : InputField
                 {
                     _editor.AutoSize = EditorAutoSizeOption.Disabled;
                     //this.HeightRequest = EditorHeightRequest; // Фиксированная высота с прокруткой
-                    _editor.HeightRequest = EditorHeightRequest - 10; ;
+                    _editor.HeightRequest = EditorHeightRequest - 10;
                     scrollView.HeightRequest = EditorHeightRequest - 10;
                 }
                 else

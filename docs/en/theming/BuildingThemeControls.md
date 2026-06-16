@@ -1,8 +1,8 @@
 # Building Theme Controls
 
-This page is the advanced companion to [Creating a Theme](CreatingTheme.md). It explains how to build custom theme controls by composing UraniumUI primitives instead of starting with platform handlers.
+This page is the advanced companion to [Creating a Theme](CreatingTheme.md). It explains how to build app-specific controls by composing UraniumUI primitives instead of starting with platform handlers.
 
-Most theme controls should be MAUI controls, UraniumUI primitives, and styles. Add a platform handler only when composition cannot provide the required native behavior.
+Most app controls should be MAUI controls, UraniumUI primitives, and styles. Add a platform handler only when composition cannot provide the required native behavior.
 
 ## Primitive Selection
 
@@ -76,7 +76,7 @@ Use this wrapper approach when you do not need a reusable control class.
 
 ## Reusable Text Field Control
 
-Create a subclass when the app or theme needs a reusable control API.
+Create a subclass when your app needs a reusable control API.
 
 ```csharp
 using Microsoft.Maui;
@@ -85,9 +85,9 @@ using Microsoft.Maui.Graphics;
 using Plainer.Maui.Controls;
 using UraniumUI.Material.Controls;
 
-namespace MyCompany.UraniumUI.Brand.Controls;
+namespace MyApp.Controls;
 
-public class BrandTextField : InputField
+public class AppTextField : InputField
 {
     private readonly EntryView entryView = new()
     {
@@ -96,7 +96,7 @@ public class BrandTextField : InputField
         VerticalOptions = LayoutOptions.Center,
     };
 
-    public BrandTextField()
+    public AppTextField()
     {
         Content = entryView;
 
@@ -114,10 +114,10 @@ public class BrandTextField : InputField
     public static readonly BindableProperty TextProperty = BindableProperty.Create(
         nameof(Text),
         typeof(string),
-        typeof(BrandTextField),
+        typeof(AppTextField),
         string.Empty,
         BindingMode.TwoWay,
-        propertyChanged: (bindable, _, _) => ((BrandTextField)bindable).UpdateState());
+        propertyChanged: (bindable, _, _) => ((AppTextField)bindable).UpdateState());
 
     public Keyboard Keyboard
     {
@@ -128,7 +128,7 @@ public class BrandTextField : InputField
     public static readonly BindableProperty KeyboardProperty = BindableProperty.Create(
         nameof(Keyboard),
         typeof(Keyboard),
-        typeof(BrandTextField),
+        typeof(AppTextField),
         Keyboard.Default);
 
     public bool IsReadOnly
@@ -140,7 +140,7 @@ public class BrandTextField : InputField
     public static readonly BindableProperty IsReadOnlyProperty = BindableProperty.Create(
         nameof(IsReadOnly),
         typeof(bool),
-        typeof(BrandTextField),
+        typeof(AppTextField),
         false);
 
     public override bool HasValue
@@ -293,23 +293,23 @@ This keeps page markup simple and makes the container responsible for its own lo
 
 ## AutoFormView Integration
 
-If a theme provides its own input controls, configure `AutoFormView` mappings so generated forms use them.
+If your app provides its own input controls, configure `AutoFormView` mappings so generated forms use them.
 
-Material does this in `ConfigureAutoFormViewForMaterial()`. A custom theme can follow the same pattern:
+Material does this in `ConfigureAutoFormViewForMaterial()`. An app can follow the same pattern in its own startup extension:
 
 ```csharp
-public static MauiAppBuilder ConfigureAutoFormViewForBrand(this MauiAppBuilder builder)
+public static MauiAppBuilder ConfigureAutoFormViewForAppTheme(this MauiAppBuilder builder)
 {
     builder.Services.Configure<AutoFormViewOptions>(options =>
     {
         options.EditorMapping[typeof(string)] = (property, propertyNameFactory, source) =>
         {
-            var editor = new BrandTextField
+            var editor = new AppTextField
             {
                 Title = propertyNameFactory(property),
             };
 
-            editor.SetBinding(BrandTextField.TextProperty, new Binding(property.Name, source: source));
+            editor.SetBinding(AppTextField.TextProperty, new Binding(property.Name, source: source));
 
             return editor;
         };
@@ -319,11 +319,11 @@ public static MauiAppBuilder ConfigureAutoFormViewForBrand(this MauiAppBuilder b
 }
 ```
 
-Keep mappings in the theme registration method so app startup remains predictable.
+Keep mappings in app startup or an app-level startup extension so form generation remains predictable.
 
 ## Accessibility Checklist
 
-Custom theme controls must preserve accessibility behavior from the primitives they use.
+Custom app controls must preserve accessibility behavior from the primitives they use.
 
 1. Use `Title`, visible `Label` text, or `SemanticProperties.Description` for every input.
 2. Use `ContentAutomationId` when tests need to locate the inner input of an `InputField`.
@@ -342,4 +342,4 @@ See [Accessibility Best Practices](../best-practices/Accessibility.md) for the a
 - Put visuals in styles. Put behavior and value APIs in controls.
 - Use existing UraniumUI style class names for common concepts and app-specific names for app-only variants.
 - Keep validation text close to the field.
-- Document every public XAML namespace, style class, and control property that theme consumers must use.
+- Document shared style classes and custom control properties that the app team should use consistently.

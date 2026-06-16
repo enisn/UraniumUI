@@ -1,8 +1,8 @@
 # Creating a Theme
 
-UraniumUI themes are ordinary .NET MAUI resource dictionaries plus a small set of conventions for color tokens, keyed styles, `StyleClass` styles, and reusable control primitives. A theme can be as small as an app-specific palette over the Material theme, or as large as a separate package with its own controls, resource dictionaries, XAML namespace, and `Use...` registration method.
+In a UraniumUI app, a theme is a set of .NET MAUI resource dictionaries that define your app's colors, base styles, style classes, and reusable visual patterns. You do not need to create another library to theme an app. Most apps can keep the Material controls and replace the parts that make the UI feel like your product.
 
-This page is the handbook for building and maintaining those themes.
+This page is a handbook for app developers who want to create their own visual system on top of UraniumUI.
 
 ## Theme Scope
 
@@ -15,9 +15,8 @@ Choose the smallest scope that solves the problem.
 | Add app-specific visual variants | Add your own `StyleClass` styles after the theme resources are merged. |
 | Style a group of child controls together | Use `CascadingStyle.Resources` and `CascadingStyle.StyleClass`. |
 | Build reusable field or button controls | Compose UraniumUI primitives such as `InputField`, `StatefulContentView`, `ButtonView`, `Select`, and `EntryView`. |
-| Ship a reusable theme package | Create a package that references `UraniumUI`, exposes XAML resources, registers handlers/options, and maps XAML namespaces. |
 
-Most applications should customize the Material theme instead of creating a new package. Create a new theme package when the visual system, control set, or public API will be reused across multiple applications.
+Start with colors and styles in your app. Create custom controls only when a repeated pattern needs behavior, bindable properties, validation integration, or a cleaner API for page authors.
 
 ## Runtime Setup
 
@@ -58,18 +57,18 @@ The common app setup is:
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary x:Name="brandColors" Source="Resources/Themes/BrandColors.xaml" />
-                <ResourceDictionary x:Name="brandBaseStyles" Source="Resources/Themes/BrandBaseStyles.xaml" />
+                <ResourceDictionary x:Name="appColors" Source="Resources/Themes/AppColors.xaml" />
+                <ResourceDictionary x:Name="appBaseStyles" Source="Resources/Themes/AppBaseStyles.xaml" />
 
                 <material:StyleResource
-                    ColorsOverride="{x:Reference brandColors}"
-                    BasedOn="{x:Reference brandBaseStyles}">
+                    ColorsOverride="{x:Reference appColors}"
+                    BasedOn="{x:Reference appBaseStyles}">
                     <material:StyleResource.Overrides>
-                        <ResourceDictionary Source="Resources/Themes/BrandMaterialOverrides.xaml" />
+                        <ResourceDictionary Source="Resources/Themes/AppMaterialOverrides.xaml" />
                     </material:StyleResource.Overrides>
                 </material:StyleResource>
 
-                <ResourceDictionary Source="Resources/Themes/BrandStyleClasses.xaml" />
+                <ResourceDictionary Source="Resources/Themes/AppStyleClasses.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
@@ -78,10 +77,10 @@ The common app setup is:
 
 Use this order deliberately:
 
-1. `BrandColors.xaml` provides color keys that `ColorsOverride` can copy into Material's color dictionary.
-2. `BrandBaseStyles.xaml` can provide keyed base styles that match Material style keys; Material styles inherit missing setters from those styles.
-3. `BrandMaterialOverrides.xaml` can override setters on existing Material keyed styles with matching keys.
-4. `BrandStyleClasses.xaml` can add new app-specific styles after Material resources exist.
+1. `AppColors.xaml` provides color keys that `ColorsOverride` can copy into Material's color dictionary.
+2. `AppBaseStyles.xaml` can provide keyed base styles that match Material style keys; Material styles inherit missing setters from those styles.
+3. `AppMaterialOverrides.xaml` can override setters on existing Material keyed styles with matching keys.
+4. `AppStyleClasses.xaml` can add new app-specific styles after Material resources exist.
 
 `StyleResource.Overrides` changes existing theme styles. It is not a general merge point for new styles. Put new styles in a normal merged dictionary after `material:StyleResource`.
 
@@ -139,15 +138,15 @@ Keep contrast in mind when choosing every `On...` token. `OnPrimary` must be rea
 
 ## Style Layers
 
-Theme styles normally use three layers.
+App theme styles normally use three layers.
 
 | Layer | Example | Usage |
 | --- | --- | --- |
-| Keyed base style | `x:Key="UraniumUI.Styles.Button.Filled"` | Stable extension point for theme authors. |
+| Keyed base style | `x:Key="UraniumUI.Styles.Button.Filled"` | Stable extension point for app-level overrides. |
 | Implicit style | `<Style TargetType="Label" />` | Default appearance for a type. |
 | Class style | `Class="FilledButton"` | Variant selected by `StyleClass`. |
 
-The Material theme defines keyed styles first, then maps public classes to those keyed styles:
+The Material theme defines keyed styles first, then maps built-in `StyleClass` names to those keyed styles:
 
 ```xml
 <Style x:Key="UraniumUI.Styles.Button.Filled"
@@ -170,7 +169,7 @@ That lets app code stay simple:
 <Button Text="Save" StyleClass="FilledButton" />
 ```
 
-It also gives theme authors a stable style key to override:
+It also gives your app a stable style key to override:
 
 ```xml
 <Style x:Key="UraniumUI.Styles.Button.Filled" TargetType="Button">
@@ -257,7 +256,7 @@ Use `BaseResourceKey` to create variants from existing styles:
 Use `ApplyToDerivedTypes="True"` when a base control style should also apply to subclasses:
 
 ```xml
-<Style x:Key="Brand.Styles.InputField"
+<Style x:Key="App.Styles.InputField"
        TargetType="material:InputField"
        ApplyToDerivedTypes="True">
     <Setter Property="CornerRadius" Value="10" />
@@ -306,9 +305,9 @@ Usage:
 
 See [Cascading Styling](CascadingStyling.md) for the full cascading style API.
 
-## Theme Control Primitives
+## App Control Primitives
 
-Themes should prefer composition over platform-specific handlers. UraniumUI already provides primitives that solve common interaction and accessibility problems.
+App themes should prefer composition over platform-specific handlers. UraniumUI already provides primitives that solve common interaction and accessibility problems.
 
 | Primitive | Use it for |
 | --- | --- |
@@ -321,105 +320,29 @@ Themes should prefer composition over platform-specific handlers. UraniumUI alre
 
 For example, a fully custom text input does not need a new handler just to draw a border. Wrap a chrome-free entry in a `Border`, or use `InputField` when you need the Material floating label and validation behavior. See [Building Theme Controls](BuildingThemeControls.md) for advanced examples.
 
-## Theme Package Structure
+## App Theme Folder Structure
 
-A reusable theme package should keep the same dependency direction as UraniumUI itself: the theme references core UraniumUI, and applications reference the theme. Core UraniumUI should not reference the theme.
-
-Recommended package shape:
+Keep app theme files close to the MAUI resource files that developers already know. A practical structure is:
 
 ```text
-src/MyCompany.UraniumUI.Brand/
-  AssemblyInfo.cs
-  MauiProgramExtensions.cs
-  Resources/
-    ColorResource.xaml
-    ColorResource.xaml.cs
-    StyleResource.xaml
-    StyleResource.xaml.cs
-  Controls/
-    BrandTextField.cs
-    BrandButtonView.cs
+Resources/
+  Themes/
+    AppColors.xaml
+    AppBaseStyles.xaml
+    AppMaterialOverrides.xaml
+    AppStyleClasses.xaml
+  Styles/
+    Colors.xaml
+    Styles.xaml
 ```
 
-Expose a XAML namespace for public controls and resources:
+Use `Resources/Styles/Colors.xaml` and `Resources/Styles/Styles.xaml` for ordinary MAUI starter-template resources. Use `Resources/Themes` for UraniumUI-specific tokens, Material overrides, and style classes. This separation makes it easier to see which files are part of your UraniumUI visual system.
 
-```csharp
-[assembly: XmlnsDefinition(Constants.XamlNamespace, "MyCompany.UraniumUI.Brand.Controls")]
-[assembly: XmlnsDefinition(Constants.XamlNamespace, "MyCompany.UraniumUI.Brand.Resources")]
-[assembly: Microsoft.Maui.Controls.XmlnsPrefix(Constants.XamlNamespace, "brand")]
-
-internal static class Constants
-{
-    public const string XamlNamespace = "http://schemas.mycompany.com/dotnet/maui/uraniumui/brand";
-}
-```
-
-Expose one registration method:
-
-```csharp
-public static class BrandThemeMauiProgramExtensions
-{
-    public static MauiAppBuilder UseUraniumUIBrand(this MauiAppBuilder builder)
-    {
-        builder.UseUraniumUI();
-
-        builder.ConfigureMauiHandlers(handlers =>
-        {
-            // Register only handlers that belong to this theme package.
-        });
-
-        return builder;
-    }
-}
-```
-
-If your theme depends on Material controls, reference `UraniumUI.Material` and call `UseUraniumUIMaterial()` from your app or from your theme registration method. If your theme is independent, reference only `UraniumUI`.
-
-## StyleResource for a Custom Theme
-
-A custom theme can start with a normal `ResourceDictionary`:
-
-```xml
-<?xml version="1.0" encoding="UTF-8" ?>
-<ResourceDictionary x:Class="MyCompany.UraniumUI.Brand.Resources.StyleResource"
-                    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                    xmlns:local="clr-namespace:MyCompany.UraniumUI.Brand.Resources">
-
-    <ResourceDictionary.MergedDictionaries>
-        <local:ColorResource />
-
-        <ResourceDictionary>
-            <Style x:Key="Brand.Styles.Page" TargetType="Page" ApplyToDerivedTypes="True" CanCascade="True">
-                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Background}, Dark={StaticResource BackgroundDark}}" />
-            </Style>
-
-            <Style x:Key="Brand.Styles.Button.Filled" TargetType="Button" CanCascade="True">
-                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
-                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnPrimary}, Dark={StaticResource OnPrimaryDark}}" />
-                <Setter Property="CornerRadius" Value="18" />
-            </Style>
-
-            <Style BaseResourceKey="Brand.Styles.Page" TargetType="Page" ApplyToDerivedTypes="True" CanCascade="True" />
-            <Style BaseResourceKey="Brand.Styles.Button.Filled" TargetType="Button" Class="FilledButton" CanCascade="True" />
-        </ResourceDictionary>
-    </ResourceDictionary.MergedDictionaries>
-</ResourceDictionary>
-```
-
-Then app projects can merge it:
-
-```xml
-<ResourceDictionary.MergedDictionaries>
-    <brand:StyleResource />
-</ResourceDictionary.MergedDictionaries>
-```
-
-If you want app-level `ColorsOverride`, `BasedOn`, or `Overrides` behavior like Material has, implement those properties in your theme's `StyleResource.xaml.cs`. Material's `StyleResource` is a good reference implementation.
+If your app only needs a small color change, you may only need `AppColors.xaml`. Add the other files when the app starts to need shared button variants, card styles, input-field changes, or custom control styles.
 
 ## Accessibility Contract
 
-Accessibility is part of the theme contract. Every interactive style and custom control should preserve these behaviors:
+Accessibility is part of the app theme contract. Every interactive style and custom control should preserve these behaviors:
 
 | Area | Requirement |
 | --- | --- |
@@ -431,21 +354,6 @@ Accessibility is part of the theme contract. Every interactive style and custom 
 | Contrast | Text and icons have sufficient contrast against their container tokens. |
 
 Use `StatefulContentView` or `ButtonView` for custom clickable surfaces instead of a passive layout with only `TapGestureRecognizer`. See [Accessibility Best Practices](../best-practices/Accessibility.md) and [Clickable Areas](../best-practices/ClickableAreas.md).
-
-## Theme Review Checklist
-
-Before publishing a theme or opening a theme PR, check:
-
-1. App startup calls the required `UseUraniumUI...` methods.
-2. Resource dictionaries are merged in the correct order.
-3. Light and dark color tokens exist for every style that uses `AppThemeBinding`.
-4. New public controls and resources have `XmlnsDefinition` entries.
-5. Keyed styles are stable and class styles are easy to use from app XAML.
-6. New style variants use `BaseResourceKey` instead of copying large styles.
-7. Interactive controls are keyboard reachable and have visible focus.
-8. Validation messages are readable and mapped to the correct field.
-9. `AutoFormView` mappings are configured if the theme provides replacement editors.
-10. Documentation shows the required XML namespace, resource setup, and control examples.
 
 ## Related Pages
 

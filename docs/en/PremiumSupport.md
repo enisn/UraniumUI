@@ -1,5 +1,5 @@
 # Premium Support
-UraniumUI is an Open-Source project with MIT License. There is no limitation for using UraniumUI in your projects including commercial usage. UraniumUI is Free to use. You can always get support from the community. You can also get support from the author of UraniumUI via using GitHub issues or discussions. See [Support](Support.md) for more information.
+UraniumUI is an Open-Source project with Apache-2.0 License. There is no limitation for using UraniumUI in your projects including commercial usage. UraniumUI is Free to use. You can always get support from the community. You can also get support from the author of UraniumUI via using GitHub issues or discussions. See [Support](Support.md) for more information.
 
 If you're looking for premium support for special cases or specific implementations, you're in the right place. You can get premium support from the author of UraniumUI via booking a session [here](https://superpeer.com/enisn)
 

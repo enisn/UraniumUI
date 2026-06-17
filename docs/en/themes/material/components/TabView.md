@@ -273,11 +273,29 @@ Set the strategy with the **CachingStrategy** property of `TabView`.
 <material:TabView CachingStrategy="CacheOnCodeBehind" />
 ```
 
-| Strategy | What it does | Best fit | Tradeoff |
+| Strategy | Memory use | Switch performance | Clean state on return |
 | --- | --- | --- | --- |
-| `CacheOnCodeBehind` | Creates the tab content once, removes it from the visual tree when the tab is deselected, and reuses the same view instance when the tab is selected again. | The default choice for most tabs, especially forms, settings pages, and tabs that should keep user input, selected values, or scroll position. | Uses less memory than keeping every visited tab in the layout, but large views may take a short time to reattach when selected again. |
-| `CacheOnLayout` | Creates the tab content once and keeps each visited tab in the layout. Switching tabs only changes which content is visible. | Complex tabs that are expensive to detach and attach, such as dashboards, charts, maps, editors, or `WebView` content where fast switching is more important than memory usage. | Usually gives the fastest switching after a tab has been opened, but visited tabs stay in the layout and continue to use memory. |
-| `RecreateAlways` | Removes the previous tab content and creates a new view instance when the tab is selected again. | Simple tabs, rarely used tabs, or content that should be reset or reloaded each time the user returns to it. | View-local state is lost when leaving the tab. Store state in the view model if it must survive tab changes. |
+| `CacheOnCodeBehind` | Medium | Good | No |
+| `CacheOnLayout` | Highest | Fastest after opening | No |
+| `RecreateAlways` | Lowest | Depends on content size | Yes |
+
+### CacheOnCodeBehind
+
+`CacheOnCodeBehind` is the default strategy. It creates the tab content once, removes it from the visual tree when the tab is deselected, and reuses the same view instance when the tab is selected again.
+
+Use it for most tabs, especially forms, settings pages, and tabs that should keep user input, selected values, or scroll position. It uses less memory than keeping every visited tab in the layout, but large views may take a short time to reattach when selected again.
+
+### CacheOnLayout
+
+`CacheOnLayout` creates the tab content once and keeps each visited tab in the layout. Switching tabs only changes which content is visible.
+
+Use it for complex tabs that are expensive to detach and attach, such as dashboards, charts, maps, editors, or `WebView` content where fast switching is more important than memory usage. This usually gives the fastest switching after a tab has been opened, but visited tabs stay in the layout and continue to use memory.
+
+### RecreateAlways
+
+`RecreateAlways` removes the previous tab content and creates a new view instance when the tab is selected again.
+
+Use it for simple tabs, rarely used tabs, or content that should be reset or reloaded each time the user returns to it. View-local state is lost when leaving the tab, so store state in the view model if it must survive tab changes.
 
 Use `CacheOnCodeBehind` when you are not sure which option to pick. Move to `CacheOnLayout` only when users switch between heavy tabs often and the default strategy feels slow. Use `RecreateAlways` when a clean view is more important than preserving the previous UI state.
 

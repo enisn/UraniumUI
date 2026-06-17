@@ -113,6 +113,10 @@
           "path": "theming/CreatingTheme.md"
         },
         {
+          "text": "Building Theme Controls",
+          "path": "theming/BuildingThemeControls.md"
+        },
+        {
           "text": "Icons",
           "path": "theming/Icons.md",
           "items": [

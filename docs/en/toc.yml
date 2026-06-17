@@ -52,6 +52,8 @@
       href: theming/CascadingStyling.md
     - name: Creating a Theme
       href: theming/CreatingTheme.md
+    - name: Building Theme Controls
+      href: theming/BuildingThemeControls.md
     - name: Icons
       href: theming/Icons.md
       items:

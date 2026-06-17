@@ -16,6 +16,16 @@ public static class AutoFormViewOptionsExtensions
             options.EditorMapping[typeof(Enum)] = AutoFormView.EditorForEnum;
             options.EditorMapping[typeof(DateTime)] = AutoFormView.EditorForDateTime;
             options.EditorMapping[typeof(TimeSpan)] = AutoFormView.EditorForTimeSpan;
+
+            options.PropertyEditorMapping[typeof(string)] = AutoFormView.EditorForString;
+            options.PropertyEditorMapping[typeof(int)] = AutoFormView.EditorForNumeric;
+            options.PropertyEditorMapping[typeof(double)] = AutoFormView.EditorForNumeric;
+            options.PropertyEditorMapping[typeof(float)] = AutoFormView.EditorForNumeric;
+            options.PropertyEditorMapping[typeof(bool)] = AutoFormView.EditorForBoolean;
+            options.PropertyEditorMapping[typeof(Keyboard)] = AutoFormView.EditorForKeyboard;
+            options.PropertyEditorMapping[typeof(Enum)] = AutoFormView.EditorForEnum;
+            options.PropertyEditorMapping[typeof(DateTime)] = AutoFormView.EditorForDateTime;
+            options.PropertyEditorMapping[typeof(TimeSpan)] = AutoFormView.EditorForTimeSpan;
         });
 
         return builder;

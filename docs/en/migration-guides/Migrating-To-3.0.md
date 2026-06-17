@@ -1,6 +1,6 @@
 # Migration Guide to v3.0
 
-Version 3.0 is the migration from UraniumUI v2.16 to the .NET 10 generation. v3.0.0 has not been published yet; the `develop` branch represents the current v3 code.
+Version 3.0 is the migration from UraniumUI v2.16 to the .NET 10 generation.
 
 You can see the related v3 breaking-change PRs [from here](https://github.com/enisn/UraniumUI/pulls?q=is%3Apr+milestone%3Av3.0+label%3A%22breaking-change+%F0%9F%92%94%22) and all v3 milestone PRs [from here](https://github.com/enisn/UraniumUI/pulls?q=is%3Apr+milestone%3Av3.0).
 

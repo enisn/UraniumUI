@@ -22,7 +22,15 @@ public class StatefulButtonHandler : ButtonHandler
     {
         if (VirtualView is Microsoft.Maui.Controls.View element)
         {
-            GoToState(element, CommonStates.Normal);
+            GoToStateIfConnected(element, CommonStates.Normal);
+        }
+    }
+
+    private void GoToStateIfConnected(Microsoft.Maui.Controls.View element, string state)
+    {
+        if (element.Handler == this && PlatformView is not null)
+        {
+            GoToState(element, state);
         }
     }
 
@@ -188,9 +196,17 @@ public class StatefulButtonHandler : ButtonHandler
 
     protected override void DisconnectHandler(Microsoft.UI.Xaml.Controls.Button platformView)
     {
+        platformView.PointerEntered -= NativeView_PointerEntered;
+        platformView.PointerExited -= NativeView_PointerExited;
         platformView.PointerCanceled -= NativeView_PointerCanceled;
         platformView.PointerCaptureLost -= NativeView_PointerCaptureLost;
         platformView.Unloaded -= NativeView_Unloaded;
+        platformView.RemoveHandler(
+            Microsoft.UI.Xaml.Controls.Button.PointerPressedEvent,
+            new PointerEventHandler(NativeView_PointerPressed));
+        platformView.RemoveHandler(
+            Microsoft.UI.Xaml.Controls.Button.PointerReleasedEvent,
+            new PointerEventHandler(NativeView_PointerReleased));
 
         DisconnectVirtualViewEvents();
         ResetState();
@@ -201,10 +217,8 @@ public class StatefulButtonHandler : ButtonHandler
     {
         var nativeView = base.CreatePlatformView();
 
-        var element = VirtualView as View;
-
-        nativeView.PointerEntered += (s, e) => VisualStateManager.GoToState(element, "Hover");
-        nativeView.PointerExited += (s, e) => VisualStateManager.GoToState(element, "Normal");
+        nativeView.PointerEntered += NativeView_PointerEntered;
+        nativeView.PointerExited += NativeView_PointerExited;
 
         nativeView.AddHandler(
             Microsoft.UI.Xaml.Controls.Button.PointerPressedEvent,
@@ -216,18 +230,37 @@ public class StatefulButtonHandler : ButtonHandler
 
         return nativeView;
     }
+
+    private void NativeView_PointerEntered(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
+    {
+        if (VirtualView is View element)
+        {
+            GoToStateIfConnected(element, "Hover");
+        }
+    }
+
+    private void NativeView_PointerExited(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
+    {
+        if (VirtualView is View element)
+        {
+            GoToStateIfConnected(element, "Normal");
+        }
+    }
+
     private void NativeView_PointerPressed(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
     {
-        var element = VirtualView as View;
-
-        VisualStateManager.GoToState(element, "Pressed");
+        if (VirtualView is View element)
+        {
+            GoToStateIfConnected(element, "Pressed");
+        }
     }
 
     private void NativeView_PointerReleased(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
     {
-        var element = VirtualView as View;
-
-        VisualStateManager.GoToState(element, "Normal");
+        if (VirtualView is View element)
+        {
+            GoToStateIfConnected(element, "Normal");
+        }
     }
 
     private void NativeView_PointerCanceled(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e) => ResetState();

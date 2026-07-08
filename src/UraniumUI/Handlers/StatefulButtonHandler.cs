@@ -17,6 +17,17 @@ using Microsoft.UI.Xaml.Input;
 namespace UraniumUI.Handlers;
 public class StatefulButtonHandler : ButtonHandler
 {
+#if WINDOWS
+    private readonly PointerEventHandler pointerPressedHandler;
+    private readonly PointerEventHandler pointerReleasedHandler;
+
+    public StatefulButtonHandler()
+    {
+        pointerPressedHandler = NativeView_PointerPressed;
+        pointerReleasedHandler = NativeView_PointerReleased;
+    }
+#endif
+
     // Navigation can interrupt a press before the native release event arrives.
     private void ResetState()
     {
@@ -203,10 +214,10 @@ public class StatefulButtonHandler : ButtonHandler
         platformView.Unloaded -= NativeView_Unloaded;
         platformView.RemoveHandler(
             Microsoft.UI.Xaml.Controls.Button.PointerPressedEvent,
-            new PointerEventHandler(NativeView_PointerPressed));
+            pointerPressedHandler);
         platformView.RemoveHandler(
             Microsoft.UI.Xaml.Controls.Button.PointerReleasedEvent,
-            new PointerEventHandler(NativeView_PointerReleased));
+            pointerReleasedHandler);
 
         DisconnectVirtualViewEvents();
         ResetState();
@@ -222,11 +233,11 @@ public class StatefulButtonHandler : ButtonHandler
 
         nativeView.AddHandler(
             Microsoft.UI.Xaml.Controls.Button.PointerPressedEvent,
-            new PointerEventHandler(NativeView_PointerPressed), true);
+            pointerPressedHandler, true);
 
         nativeView.AddHandler(
             Microsoft.UI.Xaml.Controls.Button.PointerReleasedEvent,
-            new PointerEventHandler(NativeView_PointerReleased), true);
+            pointerReleasedHandler, true);
 
         return nativeView;
     }

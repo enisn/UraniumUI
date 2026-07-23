@@ -2,6 +2,7 @@ using Shouldly;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Microsoft.Maui.Controls.Xaml;
 using UraniumUI.Material.Controls;
 using UraniumUI.Tests.Core;
 using UraniumUI.ViewExtensions;
@@ -106,6 +107,24 @@ public class PickerField_Test
         // Assert
         control.ItemDisplayBinding.ShouldBeSameAs(itemDisplayBinding);
         control.PickerView.ItemDisplayBinding.ShouldBeSameAs(itemDisplayBinding);
+    }
+
+    [Fact]
+    public void ItemDisplayBinding_ShouldPopulateItemText_WhenSetFromXaml()
+    {
+        var control = new PickerField().LoadFromXaml("""
+            <material:PickerField
+                xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                xmlns:material="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
+                ItemDisplayBinding="{Binding DisplayName}" />
+            """);
+        AnimationReadyHandler.Prepare(control);
+        control.BindingContext = new TestViewModel();
+
+        control.ItemsSource = new[] { new TestItem { DisplayName = "Expected display name" } };
+
+        control.PickerView.Items.Count.ShouldBe(1);
+        control.PickerView.Items[0].ShouldBe("Expected display name");
     }
 
     [Fact]

@@ -263,7 +263,8 @@ public class PickerField : InputField
 
     public BindingBase ItemDisplayBinding { get => (BindingBase)GetValue(ItemDisplayBindingProperty); set => SetValue(ItemDisplayBindingProperty, value); }
 
-    public static readonly BindableProperty ItemDisplayBindingProperty = BindableProperty.Create(
+    // A field with this name makes MAUI bind the wrapper instead of passing the item binding through.
+    public static BindableProperty ItemDisplayBindingProperty { get; } = BindableProperty.Create(
         nameof(ItemDisplayBinding), typeof(BindingBase), typeof(PickerField),
         propertyChanged: (bindable, oldValue, newValue) => (bindable as PickerField).OnItemDisplayBindingChanged());
 

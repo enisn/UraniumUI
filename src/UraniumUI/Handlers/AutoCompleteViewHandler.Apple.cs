@@ -98,6 +98,16 @@ public partial class AutoCompleteViewHandler : ViewHandler<IAutoCompleteView, UI
         }
     }
 
+    public static void MapTextColor(AutoCompleteViewHandler handler, AutoCompleteView view)
+    {
+        if (view.TextColor is null)
+        {
+            return;
+        }
+
+        handler.PlatformView.TextColor = view.TextColor.ToPlatform();
+    }
+
     public static void MapItemsSource(AutoCompleteViewHandler handler, AutoCompleteView view)
     {
         handler.SetItemsSource();

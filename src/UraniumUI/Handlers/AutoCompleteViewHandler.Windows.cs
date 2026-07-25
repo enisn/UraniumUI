@@ -7,6 +7,7 @@ using Microsoft.UI.Xaml.Media;
 using UraniumUI.Controls;
 
 namespace UraniumUI.Handlers;
+
 public partial class AutoCompleteViewHandler : ViewHandler<IAutoCompleteView, AutoSuggestBox>
 {
     protected override AutoSuggestBox CreatePlatformView()
@@ -89,6 +90,16 @@ public partial class AutoCompleteViewHandler : ViewHandler<IAutoCompleteView, Au
         {
             handler.PlatformView.Text = view.Text;
         }
+    }
+
+    public static void MapTextColor(AutoCompleteViewHandler handler, AutoCompleteView view)
+    {
+        if (view.TextColor is null)
+        {
+            return;
+        }
+
+        handler.PlatformView.Foreground = view.TextColor.ToPlatform();
     }
 
     public static void MapItemsSource(AutoCompleteViewHandler handler, AutoCompleteView view)

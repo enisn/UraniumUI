@@ -1,4 +1,4 @@
-﻿using Shouldly;
+using Shouldly;
 using UraniumUI.Material.Controls;
 using UraniumUI.Tests.Core;
 using UraniumUI.Views;
@@ -194,9 +194,96 @@ public class TimePickerField_Test
         SemanticProperties.GetHint(clearIcon).ShouldBe("Clears the selected time.");
     }
 
-    public class TestViewModel : UraniumBindableObject
+    [Fact]
+    public void Time_Binding_ShouldSupportNonNullableTimeSpan()
+    {
+        var control = AnimationReadyHandler.Prepare(new TimePickerField());
+        var viewModel = new NonNullableTimeViewModel { Time = TimeSpan.FromHours(2) };
+        control.BindingContext = viewModel;
+        control.SetBinding(TimePickerField.TimeProperty, new Binding(nameof(NonNullableTimeViewModel.Time)));
+
+        // Assert source to control binding.
+        control.Time.ShouldBe(viewModel.Time);
+
+        // Act
+        control.Time = TimeSpan.Parse("09:05");
+
+        // Assert control to source binding.
+        viewModel.Time.ShouldBe(control.Time.Value);
+    }
+
+    [Fact]
+    public void Time_Binding_ShouldAcceptNull_FromSource()
+    {
+        var control = AnimationReadyHandler.Prepare(new TimePickerField());
+        var viewModel = new TestViewModel { Time = null };
+        control.BindingContext = viewModel;
+
+        // Act
+        control.SetBinding(TimePickerField.TimeProperty, new Binding(nameof(TestViewModel.Time)));
+
+        // Assert
+        control.Time.ShouldBeNull();
+        control.HasValue.ShouldBeFalse();
+    }
+
+    [Fact]
+    public void Time_Binding_ShouldAcceptNull_ToSource()
+    {
+        var control = AnimationReadyHandler.Prepare(new TimePickerField());
+        var viewModel = new TestViewModel { Time = TimeSpan.FromHours(2) };
+        control.BindingContext = viewModel;
+        control.SetBinding(TimePickerField.TimeProperty, new Binding(nameof(TestViewModel.Time)));
+
+        // Act
+        control.Time = null;
+
+        // Assert
+        viewModel.Time.ShouldBeNull();
+        control.HasValue.ShouldBeFalse();
+    }
+
+    [Fact]
+    public void Clear_ShouldSetTimeToNull()
+    {
+        var control = AnimationReadyHandler.Prepare(new TestTimePickerField());
+        control.Time = TimeSpan.FromHours(2);
+
+        // Act
+        control.Clear();
+
+        // Assert
+        control.Time.ShouldBeNull();
+        control.HasValue.ShouldBeFalse();
+    }
+
+    [Fact]
+    public void TimePickerView_UserSelection_ShouldUpdateTime()
+    {
+        var control = AnimationReadyHandler.Prepare(new TimePickerField());
+
+        // Act
+        control.TimePickerView.Time = TimeSpan.FromHours(3);
+
+        // Assert
+        control.Time.ShouldBe(TimeSpan.FromHours(3));
+    }
+
+    private class TestTimePickerField : TimePickerField
+    {
+        public void Clear() => OnClearTapped(null);
+    }
+
+    private class NonNullableTimeViewModel : UraniumBindableObject
     {
         private TimeSpan time;
+
+        public TimeSpan Time { get => time; set => SetProperty(ref time, value); }
+    }
+
+    public class TestViewModel : UraniumBindableObject
+    {
+        private TimeSpan? time;
         private string format;
         private Color textColor;
         private double characterSpacing;
@@ -204,7 +291,7 @@ public class TimePickerField_Test
         private string fontFamily;
         private double fontSize;
 
-        public TimeSpan Time { get => time; set => SetProperty(ref time, value); }
+        public TimeSpan? Time { get => time; set => SetProperty(ref time, value); }
 
         public string Format { get => format; set => SetProperty(ref format, value); }
 

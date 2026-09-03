@@ -1,4 +1,4 @@
-﻿using Plainer.Maui.Controls;
+using Plainer.Maui.Controls;
 using System.ComponentModel;
 using UraniumUI.Controls;
 using UraniumUI.Pages;
@@ -76,11 +76,7 @@ public class TimePickerField : InputField
     {
         if (IsEnabled)
         {
-            // Workaround for the selecting the same time again:
-            TimePickerView.Time += TimeSpan.FromSeconds(1);
-            // End of workaround
-
-            Time = (TimeSpan)TimePicker.TimeProperty.DefaultValue;
+            Time = null;
         }
     }
 
@@ -137,14 +133,15 @@ public class TimePickerField : InputField
 
     public override void ResetValidation()
     {
-        Time = (TimeSpan)TimePicker.TimeProperty.DefaultValue;
+        Time = null;
         base.ResetValidation();
     }
 
-    public TimeSpan Time { get => (TimeSpan)GetValue(TimeProperty); set => SetValue(TimeProperty, value); }
+    public TimeSpan? Time { get => (TimeSpan?)GetValue(TimeProperty); set => SetValue(TimeProperty, value); }
 
     public static readonly BindableProperty TimeProperty = BindableProperty.Create(
-        nameof(Time), typeof(TimeSpan), typeof(TimePickerField), TimePicker.TimeProperty.DefaultValue, defaultBindingMode: BindingMode.TwoWay,
+        nameof(Time), typeof(TimeSpan?), typeof(TimePickerField),
+        defaultValue: null, defaultBindingMode: BindingMode.TwoWay,
             propertyChanged: (bindable, oldValue, newValue) => (bindable as TimePickerField).OnTimeChanged());
 
     public string Format { get => (string)GetValue(FormatProperty); set => SetValue(FormatProperty, value); }

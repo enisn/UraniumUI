@@ -116,7 +116,9 @@ public partial class InputField : ContentView
 
     public IList<IView> Attachments { get => endIconsContainer?.Children ?? BindableAttachments; set => SetValue(AttachmentsProperty, value); }
 
-    private Color LastFontimageColor;
+    private Color focusedIconColor;
+
+    private FontImageSource focusedIcon;
 
     /// <summary>
     /// The font icon whose color this field owns, i.e. one that had no explicit color of its own
@@ -559,19 +561,48 @@ public partial class InputField : ContentView
         currentLabelTitle?.SetBinding(Label.TextColorProperty, GetRelativeBinding(nameof(TitleColor)));
         UpdateState();
 
-        if (Icon is FontImageSource fontImageSource)
+        RestoreFocusedIconColor();
+    }
+
+    private void ApplyFocusedIconColor()
+    {
+        if (Icon is not FontImageSource fontImageSource || fontImageSource.Color == AccentColor)
         {
-            // Restoring the captured color as a plain value would clear the app theme binding
-            // that Content_Focused overwrote, freezing the icon at the theme it was focused in.
-            if (ReferenceEquals(fontImageSource, themedIcon))
-            {
-                ApplyDefaultIconColor(fontImageSource);
-            }
-            else
-            {
-                fontImageSource.Color = LastFontimageColor;
-            }
+            return;
         }
+
+        if (!ReferenceEquals(fontImageSource, focusedIcon))
+        {
+            RestoreFocusedIconColor();
+            focusedIcon = fontImageSource;
+            focusedIconColor = fontImageSource.Color?.WithAlpha(1);
+        }
+
+        fontImageSource.Color = AccentColor;
+    }
+
+    private void RestoreFocusedIconColor()
+    {
+        var icon = focusedIcon;
+        if (icon is null)
+        {
+            return;
+        }
+
+        focusedIcon = null;
+
+        // Restoring the captured color as a plain value would clear the app theme binding
+        // that focus overwrote, freezing an owned icon at the theme it was focused in.
+        if (ReferenceEquals(icon, themedIcon))
+        {
+            ApplyDefaultIconColor(icon);
+        }
+        else
+        {
+            icon.Color = focusedIconColor;
+        }
+
+        focusedIconColor = null;
     }
 
     /// <summary>
@@ -600,11 +631,7 @@ public partial class InputField : ContentView
 
         UpdateState();
 
-        if (Icon is FontImageSource fontImageSource && fontImageSource.Color != AccentColor)
-        {
-            LastFontimageColor = fontImageSource.Color?.WithAlpha(1); // To create a new instance.
-            fontImageSource.Color = AccentColor;
-        }
+        ApplyFocusedIconColor();
     }
 
     /// <summary>
@@ -627,10 +654,7 @@ public partial class InputField : ContentView
             labelTitle.TextColor = AccentColor;
         }
 
-        if (Icon is FontImageSource fontImageSource)
-        {
-            fontImageSource.Color = AccentColor;
-        }
+        ApplyFocusedIconColor();
     }
 
     protected virtual bool IsContentReadOnly => false;
@@ -845,6 +869,11 @@ public partial class InputField : ContentView
         if (this.Content != null && originalContentMargin == null)
         {
             originalContentMargin = this.Content.Margin;
+        }
+
+        if (!ReferenceEquals(Icon, focusedIcon))
+        {
+            RestoreFocusedIconColor();
         }
 
         if (!ReferenceEquals(Icon, themedIcon))

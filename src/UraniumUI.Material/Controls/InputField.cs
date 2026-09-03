@@ -847,6 +847,11 @@ public partial class InputField : ContentView
             originalContentMargin = this.Content.Margin;
         }
 
+        if (!ReferenceEquals(Icon, themedIcon))
+        {
+            themedIcon = null;
+        }
+
         if (HasIcon)
         {
             imageIcon.Value.Source = Icon;

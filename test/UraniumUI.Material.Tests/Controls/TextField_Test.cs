@@ -463,6 +463,25 @@ public class TextField_Test
     }
 
     [Fact]
+    public void DefaultIcon_ReassignedWithExplicitColor_AfterReplacement_ShouldKeepExplicitColor()
+    {
+        var defaultIcon = new FontImageSource { FontFamily = "MaterialSharp", Glyph = "A" };
+        var replacementIcon = new FontImageSource
+        {
+            FontFamily = "MaterialSharp",
+            Glyph = "B",
+            Color = Colors.Green,
+        };
+        var control = AnimationReadyHandler.Prepare(new TextField { Icon = defaultIcon });
+
+        control.Icon = replacementIcon;
+        defaultIcon.Color = Colors.Red;
+        control.Icon = defaultIcon;
+
+        defaultIcon.Color.ShouldBe(Colors.Red);
+    }
+
+    [Fact]
     public void TextChanges_ShouldShouldCorrectlyUpdateClearButtonVisibility()
     {
         var control = AnimationReadyHandler.Prepare(new TextField() { AllowClear = true });

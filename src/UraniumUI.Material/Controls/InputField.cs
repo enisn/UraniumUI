@@ -385,17 +385,25 @@ public partial class InputField : ContentView
 
     void AlignIconColor()
     {
-        if (Icon is not FontImageSource fontImageSource || LastFontimageColor.IsNullOrTransparent())
+        if (Icon is not FontImageSource fontImageSource
+            || !ReferenceEquals(fontImageSource, focusedIcon)
+            || focusedIconColor.IsNullOrTransparent())
         {
             return;
         }
 
+        var colorToRestore = focusedIconColor;
         var isThemedIcon = ReferenceEquals(fontImageSource, themedIcon);
 
         fontImageSource.Color = null;
 
         Dispatcher.Dispatch(() =>
         {
+            if (!ReferenceEquals(fontImageSource, focusedIcon))
+            {
+                return;
+            }
+
             // Same reasoning as Content_Unfocused: an icon whose color this field owns has to get
             // its app theme binding back, not the plain color captured when it was focused.
             if (isThemedIcon)
@@ -404,7 +412,7 @@ public partial class InputField : ContentView
             }
             else
             {
-                fontImageSource.Color = LastFontimageColor;
+                fontImageSource.Color = colorToRestore;
             }
         });
     }

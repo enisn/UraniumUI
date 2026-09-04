@@ -405,6 +405,137 @@ public class TextField_Test
     }
 
     [Fact]
+    public void AccentColor_ChangedWhileFocused_ShouldRepaintFocusedVisuals()
+    {
+        var icon = new FontImageSource
+        {
+            FontFamily = "MaterialSharp",
+            Glyph = "A",
+            Color = Colors.Blue,
+        };
+        var control = AnimationReadyHandler.Prepare(new TextField
+        {
+            AccentColor = Colors.Blue,
+            Icon = icon,
+        });
+        var border = control.FindByViewQueryIdInVisualTreeDescendants<Border>("Border");
+        var titleLabel = control.FindByViewQueryIdInVisualTreeDescendants<Label>("TitleLabel");
+
+        control.EntryView.SetValue(VisualElement.IsFocusedPropertyKey, true);
+        control.AccentColor = Colors.Green;
+
+        border.Stroke.ShouldBeOfType<SolidColorBrush>().Color.ShouldBe(Colors.Green);
+        titleLabel.TextColor.ShouldBe(Colors.Green);
+        icon.Color.ShouldBe(Colors.Green);
+
+        control.EntryView.SetValue(VisualElement.IsFocusedPropertyKey, false);
+        icon.Color.ShouldBe(Colors.Blue);
+    }
+
+    [Fact]
+    public void ExplicitIconColorMatchingAccent_ShouldRemainAfterFocusCycle()
+    {
+        var icon = new FontImageSource
+        {
+            FontFamily = "MaterialSharp",
+            Glyph = "A",
+            Color = Colors.Blue,
+        };
+        var control = AnimationReadyHandler.Prepare(new TextField
+        {
+            AccentColor = Colors.Blue,
+            Icon = icon,
+        });
+
+        control.EntryView.SetValue(VisualElement.IsFocusedPropertyKey, true);
+        control.EntryView.SetValue(VisualElement.IsFocusedPropertyKey, false);
+
+        icon.Color.ShouldBe(Colors.Blue);
+    }
+
+    [Fact]
+    public void Icon_ReplacedWhileFocused_ShouldRestorePreviousIconColor()
+    {
+        var originalIcon = new FontImageSource
+        {
+            FontFamily = "MaterialSharp",
+            Glyph = "A",
+            Color = Colors.Black,
+        };
+        var replacementIcon = new FontImageSource
+        {
+            FontFamily = "MaterialSharp",
+            Glyph = "B",
+            Color = Colors.Green,
+        };
+        var control = AnimationReadyHandler.Prepare(new TextField
+        {
+            AccentColor = Colors.Blue,
+            Icon = originalIcon,
+        });
+
+        control.EntryView.SetValue(VisualElement.IsFocusedPropertyKey, true);
+        control.Icon = replacementIcon;
+
+        originalIcon.Color.ShouldBe(Colors.Black);
+
+        control.EntryView.SetValue(VisualElement.IsFocusedPropertyKey, false);
+        replacementIcon.Color.ShouldBe(Colors.Green);
+    }
+
+    [Fact]
+    public void DefaultIconColor_ShouldResumeFollowingTheme_AfterUnfocus()
+    {
+        var originalTheme = Application.Current.UserAppTheme;
+
+        try
+        {
+            Application.Current.UserAppTheme = AppTheme.Light;
+            Application.Current.Resources["OnBackground"] = Colors.Purple;
+            Application.Current.Resources["OnBackgroundDark"] = Colors.White;
+            var icon = new FontImageSource { FontFamily = "MaterialSharp", Glyph = "A" };
+            var control = AnimationReadyHandler.Prepare(new TextField
+            {
+                AccentColor = Colors.Blue,
+                Icon = icon,
+            });
+
+            control.EntryView.SetValue(VisualElement.IsFocusedPropertyKey, true);
+            icon.Color.ShouldBe(Colors.Blue);
+
+            control.EntryView.SetValue(VisualElement.IsFocusedPropertyKey, false);
+            var colorBinding = GetBinding(icon, FontImageSource.ColorProperty);
+
+            colorBinding.GetType().Name.ShouldBe("AppThemeBinding");
+            GetAppThemeColor(colorBinding, "Light").ShouldBe(Colors.Purple);
+            GetAppThemeColor(colorBinding, "Dark").ShouldBe(Colors.White);
+        }
+        finally
+        {
+            Application.Current.UserAppTheme = originalTheme;
+        }
+    }
+
+    [Fact]
+    public void DefaultIcon_ReassignedWithExplicitColor_AfterReplacement_ShouldKeepExplicitColor()
+    {
+        var defaultIcon = new FontImageSource { FontFamily = "MaterialSharp", Glyph = "A" };
+        var replacementIcon = new FontImageSource
+        {
+            FontFamily = "MaterialSharp",
+            Glyph = "B",
+            Color = Colors.Green,
+        };
+        var control = AnimationReadyHandler.Prepare(new TextField { Icon = defaultIcon });
+
+        control.Icon = replacementIcon;
+        defaultIcon.Color = Colors.Red;
+        control.Icon = defaultIcon;
+
+        defaultIcon.Color.ShouldBe(Colors.Red);
+    }
+
+    [Fact]
     public void TextChanges_ShouldShouldCorrectlyUpdateClearButtonVisibility()
     {
         var control = AnimationReadyHandler.Prepare(new TextField() { AllowClear = true });
@@ -846,6 +977,14 @@ public class TextField_Test
             .GetProperty(propertyName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
             .GetValue(appThemeBinding)
             .ShouldBeOfType<SolidColorBrush>();
+    }
+
+    private static Color GetAppThemeColor(object appThemeBinding, string propertyName)
+    {
+        return appThemeBinding.GetType()
+            .GetProperty(propertyName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
+            .GetValue(appThemeBinding)
+            .ShouldBeOfType<Color>();
     }
 
     private sealed class FailingValidation : IValidation

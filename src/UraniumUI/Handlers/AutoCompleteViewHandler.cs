@@ -16,6 +16,7 @@ public partial class AutoCompleteViewHandler
         => new PropertyMapper<AutoCompleteView, AutoCompleteViewHandler>(ViewHandler.ViewMapper)
         {
             [nameof(AutoCompleteView.Text)] = MapText,
+            [nameof(AutoCompleteView.TextColor)] = MapTextColor,
             [nameof(AutoCompleteView.ItemsSource)] = MapItemsSource,
             [nameof(AutoCompleteView.Threshold)] = MapThreshold,
             [nameof(AutoCompleteView.Keyboard)] = MapKeyboard,
@@ -38,6 +39,10 @@ public partial class AutoCompleteViewHandler : ViewHandler<AutoCompleteView, obj
     }
     
     public static void MapText(AutoCompleteViewHandler handler, AutoCompleteView view)
+    {
+    }
+
+    public static void MapTextColor(AutoCompleteViewHandler handler, AutoCompleteView view)
     {
     }
 

@@ -116,7 +116,16 @@ public partial class InputField : ContentView
 
     public IList<IView> Attachments { get => endIconsContainer?.Children ?? BindableAttachments; set => SetValue(AttachmentsProperty, value); }
 
-    private Color LastFontimageColor;
+    private Color focusedIconColor;
+
+    private FontImageSource focusedIcon;
+
+    /// <summary>
+    /// The font icon whose color this field owns, i.e. one that had no explicit color of its own
+    /// and was given the theme-aware default. Tracked so focus changes can restore that default
+    /// as an app theme binding rather than a color frozen at focus time.
+    /// </summary>
+    private FontImageSource themedIcon;
 
     private Thickness? originalContentMargin;
 
@@ -376,16 +385,35 @@ public partial class InputField : ContentView
 
     void AlignIconColor()
     {
-        if (Icon is not FontImageSource fontImageSource || LastFontimageColor.IsNullOrTransparent())
+        if (Icon is not FontImageSource fontImageSource
+            || !ReferenceEquals(fontImageSource, focusedIcon)
+            || focusedIconColor.IsNullOrTransparent())
         {
             return;
         }
+
+        var colorToRestore = focusedIconColor;
+        var isThemedIcon = ReferenceEquals(fontImageSource, themedIcon);
 
         fontImageSource.Color = null;
 
         Dispatcher.Dispatch(() =>
         {
-            fontImageSource.Color = LastFontimageColor;
+            if (!ReferenceEquals(fontImageSource, focusedIcon))
+            {
+                return;
+            }
+
+            // Same reasoning as Content_Unfocused: an icon whose color this field owns has to get
+            // its app theme binding back, not the plain color captured when it was focused.
+            if (isThemedIcon)
+            {
+                ApplyDefaultIconColor(fontImageSource);
+            }
+            else
+            {
+                fontImageSource.Color = colorToRestore;
+            }
         });
     }
 #endif
@@ -541,10 +569,60 @@ public partial class InputField : ContentView
         currentLabelTitle?.SetBinding(Label.TextColorProperty, GetRelativeBinding(nameof(TitleColor)));
         UpdateState();
 
-        if (Icon is FontImageSource fontImageSource)
+        RestoreFocusedIconColor();
+    }
+
+    private void ApplyFocusedIconColor()
+    {
+        if (Icon is not FontImageSource fontImageSource || fontImageSource.Color == AccentColor)
         {
-            fontImageSource.Color = LastFontimageColor;
+            return;
         }
+
+        if (!ReferenceEquals(fontImageSource, focusedIcon))
+        {
+            RestoreFocusedIconColor();
+            focusedIcon = fontImageSource;
+            focusedIconColor = fontImageSource.Color?.WithAlpha(1);
+        }
+
+        fontImageSource.Color = AccentColor;
+    }
+
+    private void RestoreFocusedIconColor()
+    {
+        var icon = focusedIcon;
+        if (icon is null)
+        {
+            return;
+        }
+
+        focusedIcon = null;
+
+        // Restoring the captured color as a plain value would clear the app theme binding
+        // that focus overwrote, freezing an owned icon at the theme it was focused in.
+        if (ReferenceEquals(icon, themedIcon))
+        {
+            ApplyDefaultIconColor(icon);
+        }
+        else
+        {
+            icon.Color = focusedIconColor;
+        }
+
+        focusedIconColor = null;
+    }
+
+    /// <summary>
+    /// Applies the theme-aware default color to a font icon as an app theme binding, so it keeps
+    /// following light/dark changes for as long as the field owns that icon's color.
+    /// </summary>
+    protected virtual void ApplyDefaultIconColor(FontImageSource fontImageSource)
+    {
+        fontImageSource.SetAppThemeColor(
+            FontImageSource.ColorProperty,
+            ColorResource.GetColor("OnBackground", Colors.Gray),
+            ColorResource.GetColor("OnBackgroundDark", Colors.Gray));
     }
 
     private void Content_Focused(object sender, FocusEventArgs e)
@@ -561,11 +639,30 @@ public partial class InputField : ContentView
 
         UpdateState();
 
-        if (Icon is FontImageSource fontImageSource && fontImageSource.Color != AccentColor)
+        ApplyFocusedIconColor();
+    }
+
+    /// <summary>
+    /// Re-applies the accent color when a focused field's accent changes.
+    /// </summary>
+    protected virtual void OnAccentColorChanged()
+    {
+        if (Content?.IsFocused != true)
         {
-            LastFontimageColor = fontImageSource.Color?.WithAlpha(1); // To create a new instance.
-            fontImageSource.Color = AccentColor;
+            return;
         }
+
+        if (border is not null)
+        {
+            border.Stroke = AccentColor;
+        }
+
+        if (labelTitle is not null)
+        {
+            labelTitle.TextColor = AccentColor;
+        }
+
+        ApplyFocusedIconColor();
     }
 
     protected virtual bool IsContentReadOnly => false;
@@ -782,18 +879,28 @@ public partial class InputField : ContentView
             originalContentMargin = this.Content.Margin;
         }
 
+        if (!ReferenceEquals(Icon, focusedIcon))
+        {
+            RestoreFocusedIconColor();
+        }
+
+        if (!ReferenceEquals(Icon, themedIcon))
+        {
+            themedIcon = null;
+        }
+
         if (HasIcon)
         {
             imageIcon.Value.Source = Icon;
             imageIcon.Value.IsVisible = true;
 
-            if (Icon is FontImageSource font && font.Color.IsNullOrTransparent())
+            // TODO: Add IconColor bindable property.??? What if it's not FontImage?
+            // Re-theme an icon we already own even though its color is no longer transparent,
+            // otherwise reassigning the same source would hand its color back to the caller.
+            if (Icon is FontImageSource font && (font.Color.IsNullOrTransparent() || ReferenceEquals(font, themedIcon)))
             {
-                // TODO: Add IconColor bindable property.??? What if it's not FontImage?
-                font.SetAppThemeColor(
-                    FontImageSource.ColorProperty,
-                    ColorResource.GetColor("OnBackground", Colors.Gray),
-                    ColorResource.GetColor("OnBackgroundDark", Colors.Gray));
+                themedIcon = font;
+                ApplyDefaultIconColor(font);
             }
 
             if (innerGrid != null && !innerGrid.Contains(imageIcon.Value))
@@ -901,7 +1008,8 @@ public partial class InputField : ContentView
         nameof(AccentColor),
         typeof(Color),
         typeof(InputField),
-        ColorResource.GetColor("Primary", "PrimaryDark", Colors.Purple));
+        ColorResource.GetColor("Primary", "PrimaryDark", Colors.Purple),
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as InputField)?.OnAccentColorChanged());
 
     public Color TitleColor { get => (Color)GetValue(TitleColorProperty); set => SetValue(TitleColorProperty, value); }
 

@@ -57,7 +57,7 @@
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
 		<PackageReference Include="ReactiveUI.Fody" Version="19.5.41" />
 		<PackageReference Include="Bogus" Version="35.6.5" />
-        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.9" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.12" />
         <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
 	</ItemGroup>
 

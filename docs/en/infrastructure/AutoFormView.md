@@ -15,7 +15,7 @@ xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
 Then you can use it like this:
 
 ```xml
-<uranium:FormView Source="{Binding .}" />
+<uranium:AutoFormView Source="{Binding .}" />
 ```
 
 ### Example
@@ -39,6 +39,9 @@ public class AutoFormViewPageViewModel : ViewModelBase
 
 ![AutoFormView](../images/autoformview-example-dark.png)
 
+> [!NOTE]
+> `[Reactive]` is not required by `AutoFormView`. It works with public properties from plain classes, ReactiveUI, or source generators such as MVVM Toolkit `[ObservableProperty]` as long as the generated property is public.
+
 
 ## Configuration
 
@@ -51,6 +54,41 @@ builder.Services.Configure<AutoFormViewOptions>(options =>
 });
 ```
 
+### AOT-safe property definitions
+
+By default, `AutoFormView` discovers public properties from `Source` by reflection. For NativeAOT or trimming-sensitive apps, provide property metadata explicitly with `PropertyDefinitions` or `PropertyProvider`.
+
+```csharp
+using UraniumUI.Options;
+
+public class RegisterViewModel
+{
+    public string Email { get; set; }
+    public int? NumberOfSeats { get; set; }
+    public bool AcceptTerms { get; set; }
+
+    public IReadOnlyList<AutoFormProperty> FormProperties { get; } = new AutoFormProperty[]
+    {
+        new(nameof(Email), typeof(string), "Email"),
+        new(nameof(NumberOfSeats), typeof(int?), "Number of seats", isNullable: true),
+        new(nameof(AcceptTerms), typeof(bool), "I accept terms and conditions")
+    };
+}
+```
+
+```xml
+<uranium:AutoFormView Source="{Binding .}"
+                      PropertyDefinitions="{Binding FormProperties}" />
+```
+
+You can also provide metadata in code:
+
+```csharp
+formView.PropertyProvider = source => RegisterFormMetadata.Properties;
+```
+
+If neither `PropertyDefinitions` nor `PropertyProvider` is set, `AutoFormView` keeps the reflection-based behavior for compatibility.
+
 ### DataAnnotations
 It's not supported DataAnnotations by default. You can add `UraniumUI.Validations.DataAnnotations` package to project and configure `AutoFormViewOptions` to use DataAnnotations.
 
@@ -58,6 +96,17 @@ It's not supported DataAnnotations by default. You can add `UraniumUI.Validation
 builder.Services.Configure<AutoFormViewOptions>(options =>
 {
     options.ValidationFactory = DataAnnotationValidation.CreateValidations;
+});
+```
+
+For AOT-safe descriptors, provide validation metadata through `PropertyValidationFactory`:
+
+```csharp
+builder.Services.Configure<AutoFormViewOptions>(options =>
+{
+    options.PropertyValidationFactory = property => property
+        .GetCustomAttributes<ValidationAttribute>()
+        .Select(attribute => new DataAnnotationValidation(attribute, property.GetDefaultDisplayName()));
 });
 ```
 
@@ -97,12 +146,12 @@ For busy UI, place your own indicator in the form and mark it with `uranium:Form
 > Unlike manually created `uranium:FormView` fields, `AutoFormView` assigns `uranium:FormView.ValidationPath` automatically for generated editors. Property errors returned with `FormValidationResult.PropertyError(nameof(UserName), "...")` can therefore map to the generated field without extra XAML.
 
 ### EditorMapping
-You can configure the `AutoFormView` to use a specific editor for a type. For example, you can configure the `AutoFormViewOptions` to use a `Editor` for `string` properties.
+You can configure the `AutoFormView` to use a specific editor for a type. For descriptor-based metadata, configure `PropertyEditorMapping`.
 
 ```csharp
 builder.Services.Configure<AutoFormViewOptions>(options =>
 {
-    options.EditorMapping[typeof(string)] = (property, propertyNameFactory, source) =>
+    options.PropertyEditorMapping[typeof(string)] = (property, propertyNameFactory, source) =>
     {
         var editor = new Entry();
         editor.Placeholder = propertyNameFactory(property);
@@ -114,6 +163,8 @@ builder.Services.Configure<AutoFormViewOptions>(options =>
 
 > [!NOTE]  
 > The following types are already mapped by default: `string`, `int`, `float`, `double`, `DateTime`, `TimeSpan`, `bool`, `Enum`, `Keyboard`.
+
+`EditorMapping` is still available for existing `PropertyInfo`-based customizations when `AutoFormView` uses reflection-discovered properties.
 
 
 ### Property Name Mapping
@@ -139,6 +190,8 @@ builder.Services.Configure<AutoFormViewOptions>(options =>
     };
 });
 ```
+
+For descriptor-based property metadata, set `displayName` on `AutoFormProperty` or configure `PropertyDisplayNameFactory`.
 
 ## Customization
 
@@ -188,7 +241,7 @@ You can configure the `AutoFormView` to show missing properties using the `ShowM
 ## Other Properties
 
 - `ShowSubmitButton`: Indicates whether the submit button is visible. The default value is `true`.
-- `SohwResetButton`: Indicates whether the reset button is visible. The default value is `true`.
+- `ShowResetButton`: Indicates whether the reset button is visible. The default value is `true`.
 - `SubmitButtonText`: The text of the submit button. The default value is `Submit`.
 - `ResetButtonText`: The text of the reset button. The default value is `Reset`.
 

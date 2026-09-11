@@ -17,7 +17,23 @@ public class AutoFormView : FormView
         typeof(AutoFormView),
         propertyChanged: (bindable, oldValue, newValue) => (bindable as AutoFormView).OnSourceChanged());
 
-    public PropertyInfo[] EditingProperties { get; protected set; }
+    public IEnumerable<AutoFormProperty> PropertyDefinitions { get => (IEnumerable<AutoFormProperty>)GetValue(PropertyDefinitionsProperty); set => SetValue(PropertyDefinitionsProperty, value); }
+    public static readonly BindableProperty PropertyDefinitionsProperty = BindableProperty.Create(
+        nameof(PropertyDefinitions),
+        typeof(IEnumerable<AutoFormProperty>),
+        typeof(AutoFormView),
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as AutoFormView).OnSourceChanged());
+
+    public Func<object, IEnumerable<AutoFormProperty>> PropertyProvider { get => (Func<object, IEnumerable<AutoFormProperty>>)GetValue(PropertyProviderProperty); set => SetValue(PropertyProviderProperty, value); }
+    public static readonly BindableProperty PropertyProviderProperty = BindableProperty.Create(
+        nameof(PropertyProvider),
+        typeof(Func<object, IEnumerable<AutoFormProperty>>),
+        typeof(AutoFormView),
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as AutoFormView).OnSourceChanged());
+
+    public PropertyInfo[] EditingProperties { get; protected set; } = Array.Empty<PropertyInfo>();
+
+    public IReadOnlyList<AutoFormProperty> EditingPropertyDefinitions { get; protected set; } = Array.Empty<AutoFormProperty>();
 
     public bool ShowSubmitButton { get => (bool)GetValue(ShowSubmitbuttonProperty); set => SetValue(ShowSubmitbuttonProperty, value); }
 
@@ -97,34 +113,62 @@ public class AutoFormView : FormView
         }
     }
 
-    protected Dictionary<Type, AutoFormViewOptions.EditorForType> EditorMapping { get; }
-
     protected AutoFormViewOptions Options { get; }
     public AutoFormView()
     {
         Children.Add(_itemsLayout);
 
         Options = UraniumServiceProvider.Current.GetRequiredService<IOptions<AutoFormViewOptions>>().Value;
-        EditorMapping = Options.EditorMapping;
     }
 
     protected void OnSourceChanged()
     {
         ValidationModel = Source;
 
+        EditingPropertyDefinitions = Source is null
+            ? Array.Empty<AutoFormProperty>()
+            : ResolvePropertyDefinitions().ToArray();
+        EditingProperties = EditingPropertyDefinitions
+            .Select(x => x.PropertyInfo)
+            .Where(x => x != null)
+            .ToArray();
+
+        Render();
+    }
+
+    protected virtual IEnumerable<AutoFormProperty> ResolvePropertyDefinitions()
+    {
+        if (PropertyDefinitions != null)
+        {
+            return PropertyDefinitions;
+        }
+
+        if (PropertyProvider != null)
+        {
+            return PropertyProvider(Source) ?? Enumerable.Empty<AutoFormProperty>();
+        }
+
+        if (Options.PropertyProvider != null)
+        {
+            return Options.PropertyProvider(Source) ?? Enumerable.Empty<AutoFormProperty>();
+        }
+
+        return CreatePropertyDefinitionsFromReflection();
+    }
+
+    protected virtual IEnumerable<AutoFormProperty> CreatePropertyDefinitionsFromReflection()
+    {
         var flags = BindingFlags.Public | BindingFlags.Instance;
         if (Hierarchical)
         {
             flags |= BindingFlags.FlattenHierarchy;
         }
-        var props = Source?.GetType()
+
+        return Source?.GetType()
             .GetProperties(flags)
             .Where(x => HierarchyLimitType.IsAssignableFrom(x.PropertyType))
-            .ToArray();
-
-        EditingProperties = props;
-
-        Render();
+            .Select(AutoFormProperty.FromPropertyInfo)
+            ?? Enumerable.Empty<AutoFormProperty>();
     }
 
     private void Render()
@@ -137,22 +181,31 @@ public class AutoFormView : FormView
 
         using (_itemsLayout.Batch())
         {
-            foreach (var property in EditingProperties)
+            _itemsLayout.Children.Clear();
+
+            foreach (var property in EditingPropertyDefinitions)
             {
-                var createEditor = EditorMapping.FirstOrDefault(x => x.Key.IsAssignableFrom(property.PropertyType.AsNonNullable())).Value;
-                if (createEditor != null)
+                var editor = CreateEditor(property);
+                if (editor != null)
                 {
-                    var editor = createEditor(property, Options.PropertyNameFactory, Source);
                     SetEditorValidationPath(editor, property.Name);
 
-                    foreach (var action in Options.PostEditorActions)
+                    if (property.PropertyInfo != null)
+                    {
+                        foreach (var action in Options.PostEditorActions)
+                        {
+                            action(editor, property.PropertyInfo);
+                        }
+                    }
+
+                    foreach (var action in Options.PostPropertyEditorActions)
                     {
                         action(editor, property);
                     }
 
-                    if (editor is IValidatable validatable && Options.ValidationFactory != null)
+                    if (editor is IValidatable validatable)
                     {
-                        validatable.Validations.AddRange(Options.ValidationFactory(property));
+                        validatable.Validations.AddRange(Options.CreateValidations(property));
                     }
 
                     _itemsLayout.Children.Add(editor);
@@ -174,6 +227,18 @@ public class AutoFormView : FormView
                 OnShowResetButtonChanged();
             }
         }
+    }
+
+    protected virtual View CreateEditor(AutoFormProperty property)
+    {
+        var createLegacyEditor = Options.GetLegacyEditor(property);
+        if (createLegacyEditor != null)
+        {
+            return createLegacyEditor(property.PropertyInfo, Options.PropertyNameFactory, Source);
+        }
+
+        var createEditor = Options.GetPropertyEditor(property);
+        return createEditor?.Invoke(property, Options.GetPropertyDisplayName, Source);
     }
 
     Button? submitButton;
@@ -287,6 +352,11 @@ public class AutoFormView : FormView
 
     public static View EditorForString(PropertyInfo property, Func<PropertyInfo, string> propertyNameFactory, object source)
     {
+        return EditorForString(AutoFormProperty.FromPropertyInfo(property), _ => propertyNameFactory(property), source);
+    }
+
+    public static View EditorForString(AutoFormProperty property, Func<AutoFormProperty, string> propertyNameFactory, object source)
+    {
         var editor = new Entry();
         editor.SetBinding(Entry.TextProperty, new Binding(property.Name, source: source));
 
@@ -298,6 +368,11 @@ public class AutoFormView : FormView
     }
 
     public static View EditorForNumeric(PropertyInfo property, Func<PropertyInfo, string> propertyNameFactory, object source)
+    {
+        return EditorForNumeric(AutoFormProperty.FromPropertyInfo(property), _ => propertyNameFactory(property), source);
+    }
+
+    public static View EditorForNumeric(AutoFormProperty property, Func<AutoFormProperty, string> propertyNameFactory, object source)
     {
         var editor = new Entry();
         editor.SetBinding(Entry.TextProperty, new Binding(property.Name, source: source));
@@ -312,6 +387,11 @@ public class AutoFormView : FormView
 
     public static View EditorForBoolean(PropertyInfo property, Func<PropertyInfo, string> propertyNameFactory, object source)
     {
+        return EditorForBoolean(AutoFormProperty.FromPropertyInfo(property), _ => propertyNameFactory(property), source);
+    }
+
+    public static View EditorForBoolean(AutoFormProperty property, Func<AutoFormProperty, string> propertyNameFactory, object source)
+    {
         var editor = new InputCheckBox();
         editor.SetBinding(InputCheckBox.IsCheckedProperty, new Binding(property.Name, source: source));
         editor.Text = propertyNameFactory(property);
@@ -320,6 +400,11 @@ public class AutoFormView : FormView
     }
 
     public static View EditorForEnum(PropertyInfo property, Func<PropertyInfo, string> propertyNameFactory, object source)
+    {
+        return EditorForEnum(AutoFormProperty.FromPropertyInfo(property), _ => propertyNameFactory(property), source);
+    }
+
+    public static View EditorForEnum(AutoFormProperty property, Func<AutoFormProperty, string> propertyNameFactory, object source)
     {
         var editor = new Picker();
 
@@ -341,6 +426,11 @@ public class AutoFormView : FormView
     }
 
     public static View CreateSelectionViewForValues(Array values, PropertyInfo property, Func<PropertyInfo, string> propertyNameFactory, object source)
+    {
+        return CreateSelectionViewForValues(values, AutoFormProperty.FromPropertyInfo(property), _ => propertyNameFactory(property), source);
+    }
+
+    public static View CreateSelectionViewForValues(Array values, AutoFormProperty property, Func<AutoFormProperty, string> propertyNameFactory, object source)
     {
         var shouldUseSingleColumn = values.Length > 3;
         var editor = new SelectionView
@@ -367,6 +457,11 @@ public class AutoFormView : FormView
 
     public static View EditorForKeyboard(PropertyInfo property, Func<PropertyInfo, string> propertyNameFactory, object source)
     {
+        return EditorForKeyboard(AutoFormProperty.FromPropertyInfo(property), _ => propertyNameFactory(property), source);
+    }
+
+    public static View EditorForKeyboard(AutoFormProperty property, Func<AutoFormProperty, string> propertyNameFactory, object source)
+    {
         var editor = new Picker();
 
         editor.ItemsSource = typeof(Keyboard)
@@ -386,6 +481,11 @@ public class AutoFormView : FormView
 
     public static View EditorForDateTime(PropertyInfo property, Func<PropertyInfo, string> propertyNameFactory, object source)
     {
+        return EditorForDateTime(AutoFormProperty.FromPropertyInfo(property), _ => propertyNameFactory(property), source);
+    }
+
+    public static View EditorForDateTime(AutoFormProperty property, Func<AutoFormProperty, string> propertyNameFactory, object source)
+    {
         var editor = new DatePicker();
         editor.SetBinding(DatePicker.DateProperty, new Binding(property.Name, source: source));
 
@@ -397,6 +497,11 @@ public class AutoFormView : FormView
     }
 
     public static View EditorForTimeSpan(PropertyInfo property, Func<PropertyInfo, string> propertyNameFactory, object source)
+    {
+        return EditorForTimeSpan(AutoFormProperty.FromPropertyInfo(property), _ => propertyNameFactory(property), source);
+    }
+
+    public static View EditorForTimeSpan(AutoFormProperty property, Func<AutoFormProperty, string> propertyNameFactory, object source)
     {
         var editor = new TimePicker();
         editor.SetBinding(TimePicker.TimeProperty, new Binding(property.Name, source: source));

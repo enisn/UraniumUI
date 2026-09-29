@@ -691,7 +691,7 @@ public partial class TabView : Grid
             return;
         }
 
-        if (content.BindingContext is null)
+        if (!content.IsSet(BindingContextProperty))
         {
             content.SetBinding(BindingContextProperty, new Binding(nameof(BindingContext), source: this));
         }

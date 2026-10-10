@@ -1,5 +1,5 @@
 <Project>
     <PropertyGroup Condition="$(TargetFramework.Contains('net10'))">
-        <MauiVersion>10.0.71</MauiVersion>
+        <MauiVersion>10.0.101</MauiVersion>
     </PropertyGroup>
 </Project>

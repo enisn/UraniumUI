@@ -916,27 +916,15 @@ public class TextField_Test
     public void ForwardedProperties_DefaultToTheEntryDefaults()
     {
         // A property forwards only when it changes, so a default that differs from the entry's is never applied.
-        string[] intentional = [nameof(TextField.TextProperty), nameof(TextField.TextColorProperty)];
-
-        var mismatches = typeof(TextField)
-            .GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly)
-            .Where(field => field.FieldType == typeof(BindableProperty) && !intentional.Contains(field.Name))
-            .Select(field => (Own: (BindableProperty)field.GetValue(null), Entry: typeof(Entry).GetField(field.Name, BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy)?.GetValue(null) as BindableProperty))
-            .Where(pair => pair.Entry is not null && !Equals(pair.Own.DefaultValue, pair.Entry.DefaultValue))
-            .Select(pair => $"{pair.Own.PropertyName}: {pair.Own.DefaultValue} instead of {pair.Entry.DefaultValue}")
-            .ToList();
-
-        mismatches.ShouldBeEmpty();
+        ForwardedProperties.WithDivergingDefaults<TextField, Entry>(nameof(TextField.Text), nameof(TextField.TextColor)).ShouldBeEmpty();
     }
 
     [Fact]
-    public void IsTextPredictionEnabled_SetToFalse_ReachesTheEntry()
+    public void ForwardedProperties_ReachTheEntry()
     {
         var control = AnimationReadyHandler.Prepare(new TextField());
 
-        control.IsTextPredictionEnabled = false;
-
-        control.EntryView.IsTextPredictionEnabled.ShouldBeFalse();
+        ForwardedProperties.NotReaching(control, control.EntryView).ShouldBeEmpty();
     }
 
     [Fact]

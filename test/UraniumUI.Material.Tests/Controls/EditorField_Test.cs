@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using UraniumUI.Material.Controls;
@@ -140,5 +141,34 @@ public class EditorField_Test
         // Assert
         control.FontFamily.ShouldBe("Courier New");
         control.EditorView.FontFamily.ShouldBe("Courier New");
+    }
+
+    [Fact]
+    public void ForwardedProperties_DefaultToTheEditorDefaults()
+    {
+        // A property forwards only when it changes, so a default that differs from the editor's is never applied.
+        string[] intentional = [nameof(EditorField.TextProperty), nameof(EditorField.TextColorProperty)];
+
+        var mismatches = typeof(EditorField)
+            .GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly)
+            .Where(field => field.FieldType == typeof(BindableProperty) && !intentional.Contains(field.Name))
+            .Select(field => (Own: (BindableProperty)field.GetValue(null), Editor: typeof(Editor).GetField(field.Name, BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy)?.GetValue(null) as BindableProperty))
+            .Where(pair => pair.Editor is not null && !Equals(pair.Own.DefaultValue, pair.Editor.DefaultValue))
+            .Select(pair => $"{pair.Own.PropertyName}: {pair.Own.DefaultValue} instead of {pair.Editor.DefaultValue}")
+            .ToList();
+
+        mismatches.ShouldBeEmpty();
+    }
+
+    [Fact]
+    public void TextPredictionAndSpellCheck_SetToFalse_ReachTheEditor()
+    {
+        var control = AnimationReadyHandler.Prepare(new EditorField());
+
+        control.IsTextPredictionEnabled = false;
+        control.IsSpellCheckEnabled = false;
+
+        control.EditorView.IsTextPredictionEnabled.ShouldBeFalse();
+        control.EditorView.IsSpellCheckEnabled.ShouldBeFalse();
     }
 }

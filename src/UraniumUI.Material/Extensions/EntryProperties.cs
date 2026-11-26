@@ -23,6 +23,11 @@ public static class EntryProperties
             throw new InvalidOperationException($"The type of the parameter of {typeof(EntryProperties).FullName}.{nameof(SelectionHighlightColorProperty)} must be a {typeof(Color).FullName}.");
         }
 
+        UpdateSelectionHighlightColor(entry, color);
+    }
+
+    internal static void UpdateSelectionHighlightColor(Entry entry, Color color)
+    {
 #if WINDOWS
         if (entry.Handler?.PlatformView is Microsoft.UI.Xaml.Controls.TextBox textBox)
         {

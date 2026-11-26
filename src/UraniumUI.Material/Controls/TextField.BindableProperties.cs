@@ -48,7 +48,7 @@ public partial class TextField
         nameof(ClearButtonVisibility),
         typeof(ClearButtonVisibility),
         typeof(TextField),
-        ClearButtonVisibility.WhileEditing,
+        Entry.ClearButtonVisibilityProperty.DefaultValue,
         propertyChanged: (bindable, oldValue, newValue) =>
         {
             (bindable as TextField).EntryView.ClearButtonVisibility = (ClearButtonVisibility)newValue;
@@ -134,6 +134,7 @@ public partial class TextField
         nameof(IsTextPredictionEnabled),
         typeof(bool),
         typeof(TextField),
+        Entry.IsTextPredictionEnabledProperty.DefaultValue,
         propertyChanged: (bindable, oldValue, newValue) =>
         {
             (bindable as TextField).EntryView.IsTextPredictionEnabled = (bool)newValue;
@@ -157,6 +158,7 @@ public partial class TextField
         nameof(MaxLength),
         typeof(int),
         typeof(TextField),
+        Entry.MaxLengthProperty.DefaultValue,
         propertyChanged: (bindable, oldValue, newValue) =>
         {
             (bindable as TextField).EntryView.MaxLength = (int)newValue;
@@ -225,7 +227,7 @@ public partial class TextField
         defaultValue: EntryProperties.SelectionHighlightColorProperty.DefaultValue,
         propertyChanged: (bindable, oldValue, newValue) =>
         {
-            EntryProperties.SetSelectionHighlightColor(bindable, (Color)newValue);
+            EntryProperties.SetSelectionHighlightColor((bindable as TextField).EntryView, (Color)newValue);
         });
 
     public bool DisallowClearButtonFocus { get => (bool)GetValue(DisallowClearButtonFocusProperty); set => SetValue(DisallowClearButtonFocusProperty, value); }

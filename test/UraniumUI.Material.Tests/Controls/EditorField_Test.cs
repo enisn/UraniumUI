@@ -141,4 +141,19 @@ public class EditorField_Test
         control.FontFamily.ShouldBe("Courier New");
         control.EditorView.FontFamily.ShouldBe("Courier New");
     }
+
+    [Fact]
+    public void ForwardedProperties_DefaultToTheEditorDefaults()
+    {
+        // A property forwards only when it changes, so a default that differs from the editor's is never applied.
+        ForwardedProperties.WithDivergingDefaults<EditorField, Editor>(nameof(EditorField.Text), nameof(EditorField.TextColor)).ShouldBeEmpty();
+    }
+
+    [Fact]
+    public void ForwardedProperties_ReachTheEditor()
+    {
+        var control = AnimationReadyHandler.Prepare(new EditorField());
+
+        ForwardedProperties.NotReaching(control, control.EditorView).ShouldBeEmpty();
+    }
 }

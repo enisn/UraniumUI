@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Reflection;
 using System.Windows.Input;
 using UraniumUI.Material.Controls;
+using UraniumUI.Material.Extensions;
 using UraniumUI.Options;
 using UraniumUI.Tests.Core;
 using UraniumUI.ViewExtensions;
@@ -909,6 +910,31 @@ public class TextField_Test
         public double CharacterSpacing { get => characterSpacing; set => SetProperty(ref characterSpacing, value); }
 
         public IList<IView> Attachments { get => attachments; set => SetProperty(ref attachments, value); }
+    }
+
+    [Fact]
+    public void ForwardedProperties_DefaultToTheEntryDefaults()
+    {
+        // A property forwards only when it changes, so a default that differs from the entry's is never applied.
+        ForwardedProperties.WithDivergingDefaults<TextField, Entry>(nameof(TextField.Text), nameof(TextField.TextColor)).ShouldBeEmpty();
+    }
+
+    [Fact]
+    public void ForwardedProperties_ReachTheEntry()
+    {
+        var control = AnimationReadyHandler.Prepare(new TextField());
+
+        ForwardedProperties.NotReaching(control, control.EntryView).ShouldBeEmpty();
+    }
+
+    [Fact]
+    public void SelectionHighlightColor_Changed_ReachesTheEntry()
+    {
+        var control = AnimationReadyHandler.Prepare(new TextField());
+
+        control.SelectionHighlightColor = Colors.Red;
+
+        control.EntryView.GetValue(EntryProperties.SelectionHighlightColorProperty).ShouldBe(Colors.Red);
     }
 
     private sealed class TemplateAwareTextField : TextField

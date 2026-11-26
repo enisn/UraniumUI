@@ -81,6 +81,7 @@ public partial class EditorField
         nameof(IsTextPredictionEnabled),
         typeof(bool),
         typeof(EditorField),
+        Editor.IsTextPredictionEnabledProperty.DefaultValue,
         propertyChanged: (bindable, oldValue, newValue) => (bindable as EditorField).EditorView.IsTextPredictionEnabled = (bool)newValue);
 
     public int MaxLength { get => (int)GetValue(MaxLengthProperty); set => SetValue(MaxLengthProperty, value); }
@@ -89,6 +90,7 @@ public partial class EditorField
         nameof(MaxLength),
         typeof(int),
         typeof(EditorField),
+        Editor.MaxLengthProperty.DefaultValue,
         propertyChanged: (bindable, oldValue, newValue) => (bindable as EditorField).EditorView.MaxLength = (int)newValue);
 
     public bool IsReadOnly { get => (bool)GetValue(IsReadOnlyProperty); set => SetValue(IsReadOnlyProperty, value); }
@@ -111,6 +113,6 @@ public partial class EditorField
         nameof(IsSpellCheckEnabled),
         typeof(bool),
         typeof(EditorField),
-        false,
+        Editor.IsSpellCheckEnabledProperty.DefaultValue,
         propertyChanged: (bindable, oldValue, newValue) => (bindable as EditorField).EditorView.IsSpellCheckEnabled = (bool)newValue);
 }

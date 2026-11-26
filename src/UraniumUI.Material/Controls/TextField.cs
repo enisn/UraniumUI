@@ -91,7 +91,7 @@ public partial class TextField : InputField
 
     protected virtual void ApplyAttachedProperties()
     {
-        EntryProperties.SetSelectionHighlightColor(EntryView, SelectionHighlightColor);
+        EntryProperties.UpdateSelectionHighlightColor(EntryView, SelectionHighlightColor);
     }
 
     private void EntryView_TextChanged(object sender, TextChangedEventArgs e)
